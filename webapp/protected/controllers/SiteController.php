@@ -69,7 +69,8 @@ class SiteController extends Controller
             {
 		$model->attributes=$_POST['Patient'];
             }
-            $this->render('affichepatient',array('model'=>$model));
+            $dataProvider = new EMongoDocumentDataProvider('Patient');
+            $this->render('affichepatient',array('model'=>$model, 'dataProvider' => $dataProvider));
 	}
 
 	/**

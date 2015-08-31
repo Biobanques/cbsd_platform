@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Questionnaires',
+	'AffichagePatient',
 );
 ?>
 <h1>Questionnaires</h1>
