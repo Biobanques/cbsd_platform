@@ -10,7 +10,7 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 // CWebApplication properties can be configured here.
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'Biobanques Quality Forms',
+    'name' => 'Biobanques CBSDForms',
      //par defaut en français
     'language' => 'fr',
     // page au démarrage
