@@ -5,6 +5,7 @@
  */
 class Patient extends CFormModel
 {
+    public $id;
     public $nom;
     public $prenom;
     public $date_naissance;

@@ -1,10 +1,10 @@
 <?php
 
-class AnswerController extends Controller {
-
+class AnswerController extends Controller
+{
     /**
      *  NB : boostrap theme need this column2 layout
-     * 
+     *
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
@@ -83,7 +83,9 @@ class AnswerController extends Controller {
      * Lists all models.
      */
     public function actionIndex() {
-        $dataProvider = new EMongoDocumentDataProvider('Answer');
+        $criteria = new EMongoCriteria;
+        $criteria->login = Yii::app()->user->id;
+        $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
         $this->render('index', array(
             'dataProvider' => $dataProvider,
         ));

@@ -62,7 +62,7 @@ class SiteController extends Controller
         if (isset($_POST['Patient'])) {
             $model->attributes = $_POST['Patient'];
             $patient = (object) null;
-//            $patient->id = null;
+            $patient->id = null;
             $patient->source = '1'; //à identifier en fonction de l'app
             $patient->sourceId = null;
             $patient->birthName = $model->nom_naissance;
@@ -70,9 +70,16 @@ class SiteController extends Controller
             $patient->firstName = $model->prenom;
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
+            $patient->id = CommonTools::wsGetPatient($patient);
+            $model->id = $patient->id;
         }
-        $dataProvider = new EMongoDocumentDataProvider('Patient');
+
+        $criteria = new EMongoCriteria();
+        $criteria->login = Yii::app()->user->id;
+
+        $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
         $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider));
+        //$this->render('affichepatient', array('model' => $model));
     }
 
     /**

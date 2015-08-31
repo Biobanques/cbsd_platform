@@ -1,10 +1,10 @@
 <?php
 
-class QuestionnaireController extends Controller {
-
+class QuestionnaireController extends Controller
+{
     /**
      *  NB : boostrap theme need this column2 layout
-     * 
+     *
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
@@ -82,7 +82,7 @@ class QuestionnaireController extends Controller {
         $answer = new Answer;
         $answer->last_updated = new MongoDate();
         $answer->copy($model);
-        $answer->login = Yii::app()->user->name;
+        $answer->login = Yii::app()->user->id;
         $flagNoInputToSave = true;
         foreach ($answer->answers_group as $answer_group) {
             foreach ($answer_group->answers as $answerQuestion) {
@@ -108,7 +108,7 @@ class QuestionnaireController extends Controller {
                         }
                     }
                     $answerQuestion->setAnswer($answerArray);
-                }  
+                }
             }
         }if ($flagNoInputToSave == false) {
             if ($answer->save())
@@ -160,7 +160,7 @@ class QuestionnaireController extends Controller {
           }else {
           Yii::app()->user->setFlash('error', "Questionnaire not updated. A problem occured.");
           }
-         * 
+         *
          */
 
         $this->render('edit', array(
