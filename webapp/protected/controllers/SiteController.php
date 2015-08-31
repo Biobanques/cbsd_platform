@@ -93,6 +93,19 @@ class SiteController extends Controller
                 Yii::app()->user->setFlash('contact', 'Thank you for contacting us. We will respond to you as soon as possible.');
                 $this->refresh();
             }
+            $this->render('patient',array('model'=>$model));
+	}
+        
+	public function actionAffichepatient()
+	{
+            $model=new Patient;
+            if(isset($_POST['Patient']))
+            {
+		$model->attributes=$_POST['Patient'];
+            }
+            $dataProvider = new EMongoDocumentDataProvider('Patient');
+            $this->render('affichepatient',array('model'=>$model, 'dataProvider' => $dataProvider));
+	}
         }
         $this->render('contact', array('model' => $model));
     }
