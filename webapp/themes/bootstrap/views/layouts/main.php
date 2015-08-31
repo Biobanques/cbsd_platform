@@ -22,11 +22,12 @@ $this->widget('bootstrap.widgets.TbNavbar',array(
         array(
             'class'=>'bootstrap.widgets.TbMenu',
             'items'=>array(
-                array('label'=>Yii::t('common', 'accueil'), 'url'=>array('/site/index')),
-                array('label'=>'Questionnaires', 'url'=>array('/questionnaire/index')),
-                array('label'=>Yii::t('common', 'mydocuments'), 'url'=>array('/answer/index')),
+                array('label'=>Yii::t('common', 'accueil'), 'url'=>array('/site/index'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Questionnaires', 'url'=>array('/questionnaire/index'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>Yii::t('common', 'mydocuments'), 'url'=>array('/answer/index'), 'visible'=>!Yii::app()->user->isGuest),
                // array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-                array('label'=>'Contact', 'url'=>array('/site/contact')),
+                array('label'=>'Patient', 'url'=>array('/site/patient'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Contact', 'url'=>array('/site/contact'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>Yii::t('common', 'seconnecter'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                 array('label'=>Yii::t('common', 'sedeconnecter').' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
             ),

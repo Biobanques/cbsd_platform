@@ -13,6 +13,8 @@ return array(
     'name' => 'Biobanques Quality Forms',
      //par defaut en français
     'language' => 'fr',
+    // page au démarrage
+    'defaultController' => 'site/login',
     // preloading 'log' component
     'preload' => array('log'),
     // autoloading model and component classes
@@ -26,17 +28,34 @@ return array(
     /* theme : classic , bootstrap */
     'theme'=>'bootstrap',
     'modules' => array(
+        		'gii'=>array(
+			'class'=>'system.gii.GiiModule',
+			'password'=>'sakuragigou',
+			// If removed, Gii defaults to localhost only. Edit carefully to taste.
+			'ipFilters'=>array('127.0.0.1','::1'),
+			'generatorPaths'=>array('ext.YiiMongoDbSuite.gii'),
+		),
     ),
     // application components
     'components' => array(
         'user' => array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
+            'returnUrl' => array('/site/patient'),
         ),
+        
+        'db'=>array(
+            'connectionString' => 'mysql:host=localhost;dbname=cbsdforms',
+            'emulatePrepare' => true,
+            'username' => 'root',
+            'password' => 'root',
+            'charset' => 'utf8',
+        ),
+        
         'mongodb' => array(
             'class' => 'EMongoDB',
             'connectionString' => CommonProperties::$CONNECTION_STRING,
-            'dbName' => 'qualityformsdb',
+            'dbName' => 'cbsdforms',
             'fsyncFlag' => true,
             'safeFlag' => true,
             'useCursor' => false,

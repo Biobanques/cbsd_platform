@@ -51,6 +51,26 @@ class SiteController extends Controller
 				$this->render('error', $error);
 		}
 	}
+        
+	public function actionPatient()
+	{
+            $model=new Patient;
+            if(isset($_POST['Patient']))
+            {
+		$model->attributes=$_POST['Patient'];
+            }
+            $this->render('patient',array('model'=>$model));
+	}
+        
+	public function actionAffichepatient()
+	{
+            $model=new Patient;
+            if(isset($_POST['Patient']))
+            {
+		$model->attributes=$_POST['Patient'];
+            }
+            $this->render('affichepatient',array('model'=>$model));
+	}
 
 	/**
 	 * Displays the contact page
