@@ -71,7 +71,8 @@ class SiteController extends Controller
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
         }
-        $this->render('affichepatient', array('model' => $model));
+        $dataProvider = new EMongoDocumentDataProvider('Patient');
+        $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider));
     }
 
     /**
@@ -93,21 +94,8 @@ class SiteController extends Controller
                 Yii::app()->user->setFlash('contact', 'Thank you for contacting us. We will respond to you as soon as possible.');
                 $this->refresh();
             }
-            $this->render('patient',array('model'=>$model));
-	}
-        
-	public function actionAffichepatient()
-	{
-            $model=new Patient;
-            if(isset($_POST['Patient']))
-            {
-		$model->attributes=$_POST['Patient'];
-            }
-            $dataProvider = new EMongoDocumentDataProvider('Patient');
-            $this->render('affichepatient',array('model'=>$model, 'dataProvider' => $dataProvider));
-	}
+            $this->render('patient', array('model' => $model));
         }
-        $this->render('contact', array('model' => $model));
     }
 
     /**
