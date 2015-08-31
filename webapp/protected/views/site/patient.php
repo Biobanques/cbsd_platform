@@ -4,6 +4,8 @@
 /* @var $form CActiveForm */
 ?>
 
+<h1> Saisie patient </h1>
+
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
