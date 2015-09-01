@@ -10,9 +10,19 @@ class CommonTools
 {
 
     public function wsGetPatient($patient) {
-        $soapClient = new SoapClient(CommonProperties::$SIP_WSDL);
-        $token = $soapClient->login(CommonProperties::$SIP_LOGIN, CommonProperties::$SIP_PASSWORD);
-        return $soapClient->getIdWs($token, $patient);
+        try {
+            $soapClient = new SoapClient(CommonProperties::$SIP_WSDL);
+            $token = $soapClient->login(CommonProperties::$SIP_LOGIN, CommonProperties::$SIP_PASSWORD);
+            try {
+                return $soapClient->getIdWs($token, $patient);
+            } catch (Exception $ex) {
+                Yii::log($ex->getMessage(), CLogger::LEVEL_ERROR);
+
+                return -1;
+            }
+        } catch (Exception $ex) {
+            return -1;
+        }
     }
 
 }
