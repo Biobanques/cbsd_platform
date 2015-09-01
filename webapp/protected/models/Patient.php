@@ -41,8 +41,8 @@ class Patient extends CFormModel
     public function attributeLabels() {
         return array(
             'nom' => 'Nom',
-            'prenom' => 'Prenom',
-            'date_naissance' => 'Date Naissance',
+            'prenom' => 'Prénom',
+            'date_naissance' => 'Date de naissance',
             'nom_naissance' => 'Nom Naissance',
             'sexe' => 'Sexe',
         );
