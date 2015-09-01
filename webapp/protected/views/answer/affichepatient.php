@@ -6,7 +6,9 @@ $this->breadcrumbs = array(
 ?>
 
 <p><?php echo Yii::app()->user->name ?>, voici les formulaires dont vous disposez pour ce patient.</p>
-
+<hr />
+<div>
+    <h4>Patient</h4>
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
@@ -14,15 +16,18 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'template' => "{items}",
     'columns' => array(
         array('value' => '$data["id"]', 'name' => 'Patient Id'),
-        array('value' => '$data["nom"]', 'header' => 'nom'),
-        array('value' => '$data["nom_naissance"]', 'header' => 'nom de naissance'),
-        array('value' => '$data["prenom"]', 'header' => 'prenom'),
+        array('value' => '$data["nom"]', 'header' => 'Nom'),
+        //array('value' => '$data["nom_naissance"]', 'header' => 'nom de naissance'),
+        array('value' => '$data["prenom"]', 'header' => 'Prénom'),
         array('value' => '$data["date_naissance"]', 'header' => 'Date de naissance'),
     ),
 ));
 ?>
+    
+</div>
+<hr />
 
-<p> Formulaires patient renseignés : </p>
+<h4> Formulaires patient renseignés : </h4>
 
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
@@ -31,7 +36,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'template' => "{items}",
     'columns' => array(
         array('name' => 'id', 'header' => 'Identifiant de la fiche'),
-        array('name' => 'Date de modification', 'value' => '$data->getLastModified()'),
+        array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'htmlOptions' => array('style' => 'width: 50px'),
@@ -39,3 +44,12 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ),
 ));
 ?>
+
+<p> Saisir un nouveau formulaire : 
+    <select>
+        <option selected="selected" disabled="disabled">Sélection du formulaire</option>
+        <option value="demence">Formulaire Démence</option>
+        <option value="parkinson">Formulaire Parkinson</option>
+    </select>
+    <?php echo CHtml::submitButton('Saisir', array('class' => "btn btn-primary")); ?>
+</p>

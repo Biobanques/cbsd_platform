@@ -41,9 +41,13 @@ class AnswerController extends Controller
      */
     public function actionView($id) {
         $model = $this->loadModel($id);
-        $this->render('view', array(
-            'model' => $model,
-        ));
+        if (isset($_SESSION['datapatient'])) {
+            $patient = $_SESSION['datapatient'];
+            $this->render('view', array(
+                'model' => $model,
+                'patient' => $patient,
+            ));
+        }
     }
 
     public function actionAffichepatient() {
@@ -69,6 +73,7 @@ class AnswerController extends Controller
         $criteria->login = Yii::app()->user->id;
 
         $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
+        $_SESSION['datapatient'] = $patient;
         $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider));
         //$this->render('affichepatient', array('model' => $model));
     }

@@ -153,7 +153,7 @@ class Answer extends EMongoDocument {
      */
     public function getLastModified(){
         if($this->last_modified!=null)
-            return date("d/m/Y",$this->last_modified->sec);
+            return date("d/m/Y H:m",$this->last_modified->sec);
         else 
             return null;
             }
