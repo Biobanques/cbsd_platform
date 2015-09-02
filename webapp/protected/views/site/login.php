@@ -9,9 +9,11 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Login</h1>
+<h1>Se connecter</h1>
 
-<p>Please fill out the following form with your login credentials:</p>
+<h5>Merci de renseigner vos identifiants et mots de passe :</h5>
+
+<hr />
 
 <div class="form">
 
@@ -24,7 +26,7 @@ $this->breadcrumbs=array(
 	),
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
 
 	<?php echo $form->textFieldRow($model,'username'); ?>
 
@@ -33,11 +35,15 @@ $this->breadcrumbs=array(
 	<?php echo $form->checkBoxRow($model,'rememberMe'); ?>
 
 	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
-            'buttonType'=>'submit',
-            'type'=>'primary',
-            'label'=>'Login',
-        )); ?>
+            <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'buttonType'=>'submit',
+                    'type'=>'primary',
+                    'label'=>'Se connecter',
+            )); ?>
+            <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'buttonType'=>'reset',
+                    'label'=>'Annuler',
+            )); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
