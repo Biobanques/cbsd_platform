@@ -16,6 +16,7 @@
 
     <?php
     $this->widget('bootstrap.widgets.TbNavbar', array(
+        'brandUrl'=> array('/site/index'),
         'items' => array(
             array(
                 'class' => 'bootstrap.widgets.TbMenu',
