@@ -9,6 +9,7 @@
 if [ ! -d "/var/www/html/cbsd_platform/" ];then
     git clone https://github.com/Biobanques/cbsd_platform.git
 fi
+
 chmod -R ugo+rwx /var/www/html/cbsd_platform/
 mkdir /var/www/html/cbsd_platform/webapp/assets
 chmod -R ugo+rwx /var/www/html/cbsd_platform/webapp/assets
