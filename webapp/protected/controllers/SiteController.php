@@ -98,6 +98,9 @@ class SiteController extends Controller
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login())
                 $this->redirect(Yii::app()->user->returnUrl);
+            else
+                Yii::app()->user->setFlash('error', 'Une erreur est survenue, merci de vérifier vos identifiants');
+            
         }
         // display the login form
         $this->render('login', array('model' => $model));
