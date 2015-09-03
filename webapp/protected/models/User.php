@@ -16,6 +16,8 @@ class User extends EMongoDocument {
      * @var type 
      */
     public $password;
+    
+    public $profil;
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
@@ -60,9 +62,30 @@ class User extends EMongoDocument {
             'criteria' => $criteria
         ));
     }
+  
+    /**
+     * profils : 0: clinicien, 1 : administrateur, 2: neuropathologiste, 3: généticien
+     * @return type
+     */
+    public function getProfil() {
+        $result = $this->profil;
+        $arr = $this->getArrayProfil();
+        if ($result != "" && $arr [$result] != null) {
+            $result = $arr [$result];
+        } else {
+            $result = "Not defined";
+        }
+        return $result;
+    }
 
-   
-    
+    public function getArrayProfil() {
+        $res = array();
+        $res ['0'] = "clinicien";
+        $res ['1'] = "administrateur";
+        $res ['2'] = "neuropathologiste";
+        $res ['3'] = "généticien";
+        return $res;
+    }
 
 }
 
