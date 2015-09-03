@@ -5,7 +5,7 @@
 
 $this->pageTitle=Yii::app()->name . ' - Login';
 $this->breadcrumbs=array(
-	'Login',
+	'Connexion',
 );
 ?>
 
@@ -14,6 +14,8 @@ $this->breadcrumbs=array(
 <h5>Merci de renseigner vos identifiants et mots de passe :</h5>
 
 <hr />
+
+
 
 <div class="form">
 
@@ -26,13 +28,14 @@ $this->breadcrumbs=array(
 	),
 )); ?>
 
-	<p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
+                <p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
 
-	<?php echo $form->textFieldRow($model,'username'); ?>
+                <?php echo $form->textFieldRow($model,'username'); ?>
 
-	<?php echo $form->passwordFieldRow($model,'password',array(    )); ?>
+                <?php echo $form->passwordFieldRow($model,'password',array(    )); ?>
 
-	<?php echo $form->checkBoxRow($model,'rememberMe'); ?>
+                <?php echo $form->checkBoxRow($model,'rememberMe'); ?>
+                <p> Pas encore de compte cbsdforms? <?php echo CHtml::link('S\'inscrire',Yii::app()->request->baseUrl . '/index.php?r=user/create'); ?></p>
 
 	<div class="form-actions">
             <?php $this->widget('bootstrap.widgets.TbButton', array(
@@ -49,3 +52,4 @@ $this->breadcrumbs=array(
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+       

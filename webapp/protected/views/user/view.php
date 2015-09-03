@@ -21,6 +21,10 @@ $this->menu=array(
 		'login',
 		'password',
 		'profil',
+		'nom',
+		'prenom',
+		'email',
+		'tel',
 		'_id',
 	),
 )); ?>

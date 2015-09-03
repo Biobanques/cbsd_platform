@@ -18,6 +18,14 @@ class User extends EMongoDocument {
     public $password;
     
     public $profil;
+    
+    public $nom;
+    
+    public $prenom;
+    
+    public $email;
+    
+    public $tel;
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
@@ -31,7 +39,7 @@ class User extends EMongoDocument {
 
     public function rules() {
         return array(
-            array('login, password', 'required'),
+            array('login, password, profil, nom, prenom, email, tel', 'required'),
             array(
                 'login',
                 'safe',
