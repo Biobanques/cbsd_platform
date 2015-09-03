@@ -6,7 +6,11 @@
 # @version 1.0 
 ####################################################################
 
+# Log in as Superuser (root user)
+
 # test existing cbsd_platform project into /var/www/html/, if not, clone the project from GitHub
+
+cd /var/www/html/
 
 if [ ! -d "/var/www/html/cbsd_platform/" ];then
     git clone https://github.com/Biobanques/cbsd_platform.git
@@ -22,15 +26,7 @@ chmod -R ugo+rwx /var/www/html/cbsd_platform/webapp/protected/runtime
 
 # copy a new CommonProperties and set database
 
-cp /var/www/html/cbsd_platform/webapp/protected/CommonProperties_default_1_1.php /var/www/html/cbsd_platform/webapp/protected/CommonProperties.php
+cp /var/www/html/cbsd_platform/webapp/protected/components/CommonProperties_default_1_1.php /var/www/html/cbsd_platform/webapp/protected/components/CommonProperties.php
 
 DATABASE="'mongodb:\/\/admin_cbsd:cbsd2015@localhost\/cbsdforms'"
-sed -i -e "s/'mongodb:\/\/qfuseradmin:bbanques2015@localhost\/qualityformsdb'/$DATABASE/g" /var/www/html/cbsd_platform/webapp/protected/CommonProperties.php
-
-# import "questionnaire", "answer" and "users"
-
-mongo cbsdforms --port 27017 -u admin_cbsd -p 'cbsd2015' ./parkinson.json.js
-mongo cbsdforms --port 27017 -u admin_cbsd -p 'cbsd2015' ./questionnaire.json.js
-mongo cbsdforms --port 27017 -u admin_cbsd -p 'cbsd2015' ./questionnaire_cession.json.js
-mongo cbsdforms --port 27017 -u admin_cbsd -p 'cbsd2015' ./answer.json.js
-mongo admin --port 27017 -u admin_cbsd -p 'cbsd2015' ./users.json.js
+sed -i -e "s/'mongodb:\/\/qfuseradmin:bbanques2015@localhost\/qualityformsdb'/$DATABASE/g" /var/www/html/cbsd_platform/webapp/protected/components/CommonProperties.php
