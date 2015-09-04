@@ -1,7 +1,7 @@
 <?php
 
-class AnswerController extends Controller
-{
+class AnswerController extends Controller {
+
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -106,8 +106,12 @@ class AnswerController extends Controller
                 Yii::app()->user->setFlash('error', "Document not saved. No Input to save.");
             }
         }
+        if (isset($_SESSION['datapatient'])) {
+            $patient = $_SESSION['datapatient'];
+        }
         $this->render('update', array(
             'model' => $model,
+            'patient' => $patient,
         ));
     }
 
