@@ -71,6 +71,7 @@ class AnswerController extends Controller {
 
         $criteria = new EMongoCriteria();
         $criteria->login = Yii::app()->user->id;
+        $criteria->id_patient = $patient->id;
 
         $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
         $_SESSION['datapatient'] = $patient;

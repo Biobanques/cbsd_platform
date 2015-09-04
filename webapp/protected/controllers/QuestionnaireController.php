@@ -1,7 +1,7 @@
 <?php
 
-class QuestionnaireController extends Controller
-{
+class QuestionnaireController extends Controller {
+
     /**
      *  NB : boostrap theme need this column2 layout
      *
