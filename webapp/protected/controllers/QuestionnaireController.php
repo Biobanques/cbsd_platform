@@ -79,10 +79,14 @@ class QuestionnaireController extends Controller
      * @param questionnaire
      */
     public function saveQuestionnaireAnswers($model) {
+        if (isset($_SESSION['datapatient'])) {
+            $patients = $_SESSION['datapatient'];
+        }
         $answer = new Answer;
         $answer->last_updated = new MongoDate();
         $answer->copy($model);
         $answer->login = Yii::app()->user->id;
+        $answer->id_patient = $patients->id;
         $flagNoInputToSave = true;
         foreach ($answer->answers_group as $answer_group) {
             foreach ($answer_group->answers as $answerQuestion) {
