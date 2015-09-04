@@ -34,6 +34,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $dataProvider,
     'template' => "{items}",
+    'emptyText' => 'Vous n\'avez pas de formulaires associées à ce patient.',
     'columns' => array(
         array('name' => 'id', 'header' => 'Identifiant de la fiche'),
         array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
