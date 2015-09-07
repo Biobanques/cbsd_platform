@@ -6,8 +6,22 @@
 # @version 1.0 
 ####################################################################
 
-mongo cbsdforms --port 27017 -u admin_cbsd -p 'cbsd2015' ./parkinson.json.js
-mongo cbsdforms --port 27017 -u admin_cbsd -p 'cbsd2015' ./questionnaire.json.js
-mongo cbsdforms --port 27017 -u admin_cbsd -p 'cbsd2015' ./questionnaire_cession.json.js
-mongo cbsdforms --port 27017 -u admin_cbsd -p 'cbsd2015' ./answer.json.js
-mongo admin --port 27017 -u admin_cbsd -p 'cbsd2015' ./users.json.js
+# Create admin user and set admin acces privilege 
+# mongo
+# db.createUser( {user: "admin_cbsd",pwd: "cbsd2015",roles: [ { role: "userAdmin", db: "cbsdforms" } ]})
+# db.grantRolesToUser("admin_cbsd", [ { role: "userAdminAnyDatabase", db: "cbsdforms" }])
+
+
+# Reset dabatase and import datas
+ 
+DBB="cbsdforms"
+LOGIN="admin_cbsd"
+PASSWORD="cbsd2015"
+HOST="localhost"
+PORT="27017"
+
+mongo $DBB --port $PORT -u $LOGIN -p $PASSWORD ./parkinson.json.js
+mongo $DBB --port $PORT -u $LOGIN -p $PASSWORD ./questionnaire.json.js
+mongo $DBB --port $PORT -u $LOGIN -p $PASSWORD ./questionnaire_cession.json.js
+mongo $DBB --port $PORT -u $LOGIN -p $PASSWORD ./answer.json.js
+mongo $DBB --port $PORT -u $LOGIN -p $PASSWORD ./users.json.js

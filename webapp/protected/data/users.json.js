@@ -48,3 +48,13 @@ db.user.insert({
     "email":"généticien@généticien.com",
     "tel":"0123456789"
 });
+
+db.user.insert({
+    "login":"invité",
+    "password":"invité",
+    "profil":"0",
+    "nom":"invité",
+    "prenom":"invité",
+    "email":"",
+    "tel":""
+});
