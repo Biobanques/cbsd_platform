@@ -2,17 +2,49 @@ db.user.drop();
 db.user.insert({
     "login":"bernard",
     "password":"bernard",
-    "role":"admin"
+    "profil":"1",
+    "nom":"te",
+    "prenom":"bernard",
+    "email":"bernardte90@gmail.com",
+    "tel":"0625004713"
 });
 
 db.user.insert({
     "login":"nicolas",
     "password":"nicolas",
-    "role":"admin"
+    "profil":"1",
+    "nom":"malservet",
+    "prenom":"nicolas",
+    "email":"nicolas@nicolas.com",
+    "tel":"0625004713"
 });
 
 db.user.insert({
-    "login":"maha",
-    "password":"maha",
-    "role":"user"
+    "login":"clinicien",
+    "password":"clinicien",
+    "profil":"0",
+    "nom":"clinicien",
+    "prenom":"clinicien",
+    "email":"clinicien@clinicien.com",
+    "tel":"0123456789"
+});
+
+db.user.insert({
+    "login":"neuropathologiste",
+    "password":"neuropathologiste",
+    "profil":"2",
+    "nom":"neuropathologiste",
+    "prenom":"neuropathologiste",
+    "email":"neuropathologiste@neuropathologiste.com",
+    "tel":"0123456789"
+});
+
+db.user.insert({
+    "login":"généticien",
+    "password":"généticien",
+    "profil":"3",
+    "nom":"généticien",
+    "prenom":"généticien",
+    "email":"généticien@généticien.com",
+    "tel":"0123456789"
 });

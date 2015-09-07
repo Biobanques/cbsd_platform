@@ -1,16 +1,16 @@
 #!/bin/bash
 
 ####################################################################
-# script to apply json commands to start the db usage
+# script to install cbsdforms
 # @author  bernard te
 # @version 1.0 
 ####################################################################
 
 # Log in as Superuser (root user)
 
-# test existing cbsd_platform project into /var/www/html/, if not, clone the project from GitHub
-
 cd /var/www/html/
+
+# test existing cbsd_platform project into /var/www/html/, if not, clone the project from GitHub
 
 if [ ! -d "/var/www/html/cbsd_platform/" ];then
     git clone https://github.com/Biobanques/cbsd_platform.git
@@ -28,5 +28,10 @@ chmod -R ugo+rwx /var/www/html/cbsd_platform/webapp/protected/runtime
 
 cp /var/www/html/cbsd_platform/webapp/protected/components/CommonProperties_default_1_1.php /var/www/html/cbsd_platform/webapp/protected/components/CommonProperties.php
 
-DATABASE="'mongodb:\/\/admin_cbsd:cbsd2015@localhost\/cbsdforms'"
+DBB="cbsdforms"
+LOGIN="admin_cbsd"
+PASSWORD="cbsd2015"
+HOST="localhost"
+
+DATABASE="'mongodb:\/\/$LOGIN:$PASSWORD@$HOST\/$DBB'"
 sed -i -e "s/'mongodb:\/\/qfuseradmin:bbanques2015@localhost\/qualityformsdb'/$DATABASE/g" /var/www/html/cbsd_platform/webapp/protected/components/CommonProperties.php

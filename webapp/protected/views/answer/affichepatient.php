@@ -34,7 +34,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $dataProvider,
     'template' => "{items}",
-    'emptyText' => 'Vous n\'avez pas de formulaires associées à ce patient.',
+    'emptyText' => 'Vous n\'avez pas de formulaires associés à ce patient.',
     'columns' => array(
         array('name' => 'id', 'header' => 'Identifiant de la fiche'),
         array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
@@ -45,12 +45,18 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ),
 ));
 ?>
-
+<?php
+$form = $this->beginWidget('CActiveForm', array(
+    'action' => Yii::app()->createUrl('questionnaire/update'),
+    'enableAjaxValidation' => false,
+));
+?>
 <p> Saisir un nouveau formulaire : 
     <select>
         <option selected="selected" disabled="disabled">Sélection du formulaire</option>
         <option value="demence">Formulaire Démence</option>
         <option value="parkinson">Formulaire Parkinson</option>
     </select>
-    <?php echo CHtml::submitButton('Saisir', array('class' => "btn btn-primary")); ?>
+    <?php echo CHtml::submitButton('Saisir', array('class'=>'btn btn-primary')); ?>
 </p>
+<?php $this->endWidget(); ?>
