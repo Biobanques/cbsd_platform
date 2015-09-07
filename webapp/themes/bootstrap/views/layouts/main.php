@@ -22,7 +22,7 @@
                 'class' => 'bootstrap.widgets.TbMenu',
                 'items' => array(
                     array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest),
-                    //array('label'=>'Questionnaires', 'url'=>array('/questionnaire/index'), 'visible'=>!Yii::app()->user->isGuest),
+                    array('label'=>'Questionnaires', 'url'=>array('/questionnaire/index'), 'visible'=>!Yii::app()->user->isGuest),
                     //array('label'=>Yii::t('common', 'mydocuments'), 'url'=>array('/answer/index'), 'visible'=>!Yii::app()->user->isGuest),
                     // array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
                     array('label' => 'Patient', 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest),
