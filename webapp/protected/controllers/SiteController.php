@@ -18,7 +18,7 @@ class SiteController extends Controller {
     public function accessRules() {
         return array(
             array(
-                'allow', // allow all users to perform 'index' and 'dashboard' actions
+                'allow',
                 'actions' => array(
                     'index',
                     'login',
@@ -33,17 +33,11 @@ class SiteController extends Controller {
                 )
             ),
             array(
-                'allow', // allow authenticated user to perform 'search' actions
+                'allow',
                 'actions' => array(
-                    'catalog',
-                    'search',
-                    'contacts',
-                    'view',
-                    'changerDemandeEchantillon',
-                    'addDemandeAllEchantillon',
-                    'removeDemandeAllEchantillon'
-                )
-                ,
+                    'patient',
+                    'affichepatient'
+                ),
                 'users' => array(
                     '@'
                 )
@@ -113,29 +107,6 @@ class SiteController extends Controller {
     }
 
     /**
-     * Displays the contact page
-     */
-    public function actionContact() {
-        $model = new ContactForm;
-        if (isset($_POST['ContactForm'])) {
-            $model->attributes = $_POST['ContactForm'];
-            if ($model->validate()) {
-                $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
-                $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
-                $headers = "From: $name <{$model->email}>\r\n" .
-                        "Reply-To: {$model->email}\r\n" .
-                        "MIME-Version: 1.0\r\n" .
-                        "Content-Type: text/plain; charset=UTF-8";
-
-                mail(Yii::app()->params['adminEmail'], $subject, $model->body, $headers);
-                Yii::app()->user->setFlash('contact', 'Thank you for contacting us. We will respond to you as soon as possible.');
-                $this->refresh();
-            }
-            $this->render('contact', array('model' => $model));
-        }
-    }
-
-    /**
      * Displays the login page
      */
     public function actionLogin() {
@@ -173,7 +144,6 @@ class SiteController extends Controller {
      */
     public function actionSubscribe() {
         $model = new User ();
-        //$model->setScenario('subscribe');
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
             $model->profil = 0;

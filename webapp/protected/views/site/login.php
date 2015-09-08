@@ -5,6 +5,7 @@
 ?>
 
 <h1>Connexion utilisateur</h1>
+<hr />
 
 <table>
     <tr>

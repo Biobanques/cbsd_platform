@@ -14,7 +14,8 @@ class UserController extends Controller
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
+                    'accessControl', // perform access control for CRUD operations
+                    'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -25,23 +26,15 @@ class UserController extends Controller
 	 */
 	public function accessRules()
 	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
+        return array(
+            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                'actions' => array('create', 'update', 'index', 'admin', 'view', 'delete', 'validate', 'desactivate', 'refuseRegistration'),
+                'expression' => '$user->isAdmin()'
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            ),
+        );
 	}
 
 	/**
@@ -59,76 +52,52 @@ class UserController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
-	{
-		$model=new User;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-                            //$this->redirect(array('site/index','id'=>$model->_id));
-                            if ((!Yii::app()->user->isGuest)) {
-                                Yii::app()->user->setFlash('success','Utilisateur ajouté avec succès !');
-                                $this->redirect(array('view','id'=>$model->_id));
-                            }
-                            else {
-                                Yii::app()->user->setFlash('success','Succès de l\'inscription, vous allez recevoir un email de confirmation. Vous devez vous reconnecter pour accéder à l\'application.');
-                                $this->redirect(array('site/index','id'=>$model->login));
-                            }
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
+    public function actionCreate() {
+        $model = new User;
+        if (isset($_POST['User'])) {
+            $model->attributes = $_POST['User'];
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
+                $this->redirect(array('view', 'id' => $model->_id));
+            }
+        }
+        $this->render('create', array(
+            'model' => $model,
+        ));
+    }
 
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->_id));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
+    public function actionUpdate($id) {
+        $model = $this->loadModel($id);
+        if (isset($_POST['User'])) {
+            $model->attributes = $_POST['User'];
+            if ($model->validate()) {
+                if ($model->update()) {
+                    Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
+                    $this->redirect(array('view', 'id' => $model->_id));
+                }
+            }
+        }
+        $this->render('update', array(
+            'model' => $model,
+        ));
+    }
 
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
-	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-	}
+    public function actionDelete($id) {
+        $this->loadModel($id)->delete();
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+    }
 
 	/**
 	 * Lists all models.
@@ -170,6 +139,48 @@ class UserController extends Controller
 		return $model;
 	}
 
+    /**
+     * Creates a new model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     */
+    public function actionValidate($id) {
+        $model = $this->loadModel($id);
+        // Uncomment the following line if AJAX validation is needed
+        $this->performAjaxValidation($model);
+        $model->inactif = 0;
+        if ($model->update()) {
+            CommonMailer::sendUserRegisterConfirmationMail($model);
+            Yii::app()->user->setFlash('success', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') a bien été validé.');
+        } else {
+            Yii::app()->user->setFlash('error', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') n\'a pas pu être validé. Consultez les logs pour plus de détails.');
+        }
+        $this->redirect(array(
+            'admin',
+// 				'id' => $id
+        ));
+    }
+    public function actionRefuseRegistration($id) {
+        $model = $this->loadModel($id);
+        CommonMailer::sendUserRegisterRefusedMail($model);
+        $this->redirect(array(
+            'desactivate', 'id' => $id,
+        ));
+    }
+    public function actionDesactivate($id) {
+        $model = $this->loadModel($id);
+        // Uncomment the following line if AJAX validation is needed
+        $this->performAjaxValidation($model);
+        $model->inactif = 1;
+        if ($model->update()) {
+            Yii::app()->user->setFlash('success', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') a bien été désactivé.');
+        } else {
+            Yii::app()->user->setFlash('error', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') n\'a pas pu être désactivé. Consultez les logs pour plus de détails.');
+        }
+        $this->redirect(array(
+            'admin',
+        ));
+    }
+        
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

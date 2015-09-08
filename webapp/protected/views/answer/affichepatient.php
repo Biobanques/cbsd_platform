@@ -57,6 +57,6 @@ $form = $this->beginWidget('CActiveForm', array(
         <option value="demence">Formulaire Démence</option>
         <option value="parkinson">Formulaire Parkinson</option>
     </select>
-    <?php echo CHtml::submitButton('Saisir', array('class'=>'btn btn-primary')); ?>
+    <?php echo CHtml::submitButton('Saisir'); ?>
 </p>
 <?php $this->endWidget(); ?>

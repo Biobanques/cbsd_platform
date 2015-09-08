@@ -43,6 +43,7 @@ return array(
         'user' => array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
+            'class' => 'WebUser',
             'returnUrl' => array('/site/patient'),
         ),
         'db' => array(
