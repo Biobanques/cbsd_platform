@@ -90,6 +90,7 @@ return array(
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
-        'adminEmail' => 'nicolas.malservet@inserm.fr',
+        'adminEmail' => CommonProperties::$ADMIN_EMAIL,
+        'mailSystemActif' => CommonProperties::$MAIL_SYSTEM_ACTIVE,
     ),
 );

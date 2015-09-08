@@ -149,8 +149,7 @@ class SiteController extends Controller {
             $model->profil = 0;
             $model->inactif = 1;
             if ($model->save()) {
-                //CommonMailer::sendSubscribeAdminMail($model);
-                //CommonMailer::sendSubscribeUserMail($model);
+                $this->sendMail();
                 Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
                 $this->redirect(array(
                     'site/index'
@@ -164,5 +163,33 @@ class SiteController extends Controller {
                 )
         );
     }
+    
+    public function sendMail() {
+     Yii::import('application.extensions.phpmailer.JPhpMailer');
+     $mailer = new JPhpMailer;
+     $mailer->IsSMTP();
+     $mailer->IsHTML(true);
+     $mailer->SMTPAuth = true;
+     $mailer->SMTPSecure = "ssl";
+     $mailer->Host = $SMTP_SENDER_HOST;     
+     $mailer->Port = $SMTP_SENDER_PORT;
+ 
+     $mailer->Username = $SMTP_SENDER_USERNAME;
+     $mailer->Password = $SMTP_SENDER_PASSWORD;
+     $mailer->From = $SMTP_SENDER_FROM_EMAIL;
+     $mailer->FromName = $SMTP_SENDER_FROM_EMAIL;
+     $mailer->Subject = "Confirmation de votre adresse email";
+     $mailer->Body = "Pour pouvoir profiter pleinement des services de cbsdforms.fr, il nous faut confirmer votre adresse email.<br>
+                    Pouvez-vous cliquer sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de finaliser la proc&eacute;dure de confirmation:.";
+     if($mailer->Send()) {
+          echo "Le mail a été envoyé avec succès.";
+     }
+     else {
+          echo "Une erreur est survenue, le mail n'a pas été envoyé : " . $mailer->ErrorInfo;;
+     }
+     $mailer->SmtpClose();
+     unset($mailer);
+ 
+}
 
 }
