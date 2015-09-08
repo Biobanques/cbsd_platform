@@ -7,9 +7,8 @@
 <h1>Connexion utilisateur</h1>
 <hr />
 
-<table>
-    <tr>
-        <td>
+<div class="row">
+    <div class="span4" style="margin-left:60px;">
             <div class="form">
                 <?php
                 $form = $this->beginWidget('CActiveForm', array(
@@ -52,8 +51,8 @@
 
 
             </div><!-- form -->
-        </td>
-        <td>
+    </div>
+    <div class="span3" style="margin-top:70px;">
             <div align='center'>
                 <?php echo Yii::t('common', 'noAccount') ?><br><br>
                 <?php
@@ -62,6 +61,5 @@
                 ));
                 ?>
             </div>
-        </td>
-    </tr>
-</table>
+    </div>
+</div>

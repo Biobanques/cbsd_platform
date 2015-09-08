@@ -194,13 +194,13 @@ class SiteController extends Controller {
      $mailer->IsHTML(true);
      $mailer->SMTPAuth = true;
      $mailer->SMTPSecure = "ssl";
-     $mailer->Host = $SMTP_SENDER_HOST;     
-     $mailer->Port = $SMTP_SENDER_PORT;
+     $mailer->Host = CommonProperties::$SMTP_SENDER_HOST;     
+     $mailer->Port = CommonProperties::$SMTP_SENDER_PORT;
  
-     $mailer->Username = $SMTP_SENDER_USERNAME;
-     $mailer->Password = $SMTP_SENDER_PASSWORD;
-     $mailer->From = $SMTP_SENDER_FROM_EMAIL;
-     $mailer->FromName = $SMTP_SENDER_FROM_EMAIL;
+     $mailer->Username = CommonProperties::$SMTP_SENDER_USERNAME;
+     $mailer->Password = CommonProperties::$SMTP_SENDER_PASSWORD;
+     $mailer->From = CommonProperties::$SMTP_SENDER_FROM_EMAIL;
+     $mailer->FromName = CommonProperties::$SMTP_SENDER_FROM_EMAIL;
      $mailer->Subject = "Confirmation de votre adresse email";
      $mailer->Body = "Pour pouvoir profiter pleinement des services de cbsdforms.fr, il nous faut confirmer votre adresse email.<br>
                     Pouvez-vous cliquer sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de finaliser la proc&eacute;dure de confirmation:.";
