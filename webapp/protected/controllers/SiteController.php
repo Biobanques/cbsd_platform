@@ -24,7 +24,6 @@ class SiteController extends Controller {
                     'login',
                     'logout',
                     'error',
-                    'contactus',
                     'captcha', 'recoverPwd',
                     'subscribe',
                 ),
@@ -137,6 +136,30 @@ class SiteController extends Controller {
     public function actionLogout() {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
+    }
+    
+// username and password are required
+    // rememberMe needs to be a boolean
+    /**
+     * display the recover password page
+     */
+    public function actionRecoverPwd() {
+        $model = new RecoverPwdForm();
+        $result = '';
+        if (isset($_POST['RecoverPwdForm'])) {
+            $model->attributes = $_POST['RecoverPwdForm'];
+            if ($model->validate()) {
+                $mixedResult = $model->validateFields();
+                if ($mixedResult['result'] == true) {
+                    $result = 'success';
+                    CommonMailer::sendMailRecoverPassword($mixedResult['user']);
+                } else {
+                    $result = 'error';
+                }
+                $message = $mixedResult['message'];
+                Yii::app()->user->setFlash($result, $message);
+            }
+        }$this->render('recoverPwd', array('model' => $model,));
     }
 
     /**
