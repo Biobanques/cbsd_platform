@@ -24,7 +24,11 @@ $this->menu=array(
 		'nom',
 		'prenom',
 		'email',
-		'tel',
+		'telephone',
+		'gsm',
+		'inactif',
+		'cbsdforms_id',
+		'verifyCode',
 		'_id',
 	),
 )); ?>

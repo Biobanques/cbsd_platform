@@ -25,7 +25,15 @@ class User extends EMongoDocument {
     
     public $email;
     
-    public $tel;
+    public $telephone;
+    
+    public $gsm;
+    
+    public $inactif;
+    
+    public $cbsdforms_id;
+    
+    public $verifyCode;
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
@@ -38,14 +46,21 @@ class User extends EMongoDocument {
     }
 
     public function rules() {
-        return array(
-            array('login, password, profil, nom, prenom, email, tel', 'required'),
-            array(
-                'login',
-                'safe',
-                'on' => 'search'
-            )
+        $result = array(
+            array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false, 'on' => 'subscribe'),
+            array('profil, inactif, gsm, telephone', 'numerical', 'integerOnly' => true),
+            array('prenom, nom, login, password, email', 'length', 'max' => 250),
+            array('gsm', 'telPresent'),
+            array('gsm, telephone', 'length', 'min' => 8),
+            array('prenom, nom, login, password, email', 'required'),
+            array('email', 'CEmailValidator', 'allowEmpty' => false),
+            array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
+            array('password', 'pwdStrength'),
+            array('password', 'length', 'min' => 6),
+            array('prenom, nom, login, password, email, telephone, gsm, profil, inactif, cbsdforms_id', 'safe', 'on' => 'search'),
+            array('biobank_id', 'safe'),
         );
+        return $result;
     }
 
        /**
@@ -85,6 +100,21 @@ class User extends EMongoDocument {
         }
         return $result;
     }
+    
+
+    /**
+     * @return type
+     */
+    public function getInactif() {
+        $result = $this->inactif;
+        $arr = $this->getArrayInactif();
+        if ($result != "" && $arr [$result] != null) {
+            $result = $arr [$result];
+        } else {
+            $result = "Not defined";
+        }
+        return $result;
+    }
 
     public function getArrayProfil() {
         $res = array();
@@ -94,7 +124,51 @@ class User extends EMongoDocument {
         $res ['3'] = "généticien";
         return $res;
     }
+    
+    /**
+     * get an array of inactif
+     */
+    public function getArrayInactif() {
+        $res = array();
+        $res ['0'] = "actif";
+        $res ['1'] = "inactif";
+        return $res;
+    }
 
+    /**
+     * Custom validation rules
+     */
+    public function pwdStrength() {
+        $nbDigit = 0;
+        $length = strlen($this->password);
+        for ($i = 0; $i < $length; $i++) {
+            if (is_numeric($this->password[$i]))
+                $nbDigit++;
+        }
+        if ($nbDigit < 2)
+            $this->addError('password', Yii::t('common', 'notEnoughDigits'));
+    }
+    public function telPresent() {
+        if (in_array($this->telephone, array("", null)) && in_array($this->gsm, array("", null)))
+            $this->addError('gsm', Yii::t('common', 'atLeastOneTel'));
+    }
+    /**
+     * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only.
+     */
+    public function alphaOnly() {
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ -]*$/i", $this->nom))
+            $this->addError('nom', Yii::t('common', 'onlyAlpha'));
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ -]*$/i", $this->prenom))
+            $this->addError('prenom', Yii::t('common', 'onlyAlpha'));
+    }
+    /**
+     * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only. + numeric
+     */
+    public function alphaNumericOnly() {
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ0-9 -]*$/i", $this->login))
+            $this->addError('login', Yii::t('common', 'onlyAlphaNumeric'));
+    }
+    
 }
 
 ?>

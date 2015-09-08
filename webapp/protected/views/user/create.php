@@ -1,5 +1,4 @@
 <?php
-
 if (!Yii::app()->user->isGuest) {
     $this->breadcrumbs=array(
             'Gestion des utilisateurs'=>array('index'),

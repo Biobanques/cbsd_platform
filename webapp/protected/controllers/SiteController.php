@@ -1,7 +1,7 @@
 <?php
 
-class SiteController extends Controller
-{
+class SiteController extends Controller {
+
     /**
      * NB : boostrap theme need this column2 layout
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -10,20 +10,74 @@ class SiteController extends Controller
     public $layout = '//layouts/column2';
 
     /**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     *
+     * @return array access control rules
+     */
+    public function accessRules() {
+        return array(
+            array(
+                'allow', // allow all users to perform 'index' and 'dashboard' actions
+                'actions' => array(
+                    'index',
+                    'login',
+                    'logout',
+                    'error',
+                    'contactus',
+                    'captcha', 'recoverPwd',
+                    'subscribe',
+                ),
+                'users' => array(
+                    '*'
+                )
+            ),
+            array(
+                'allow', // allow authenticated user to perform 'search' actions
+                'actions' => array(
+                    'catalog',
+                    'search',
+                    'contacts',
+                    'view',
+                    'changerDemandeEchantillon',
+                    'addDemandeAllEchantillon',
+                    'removeDemandeAllEchantillon'
+                )
+                ,
+                'users' => array(
+                    '@'
+                )
+            ),
+            array(
+                'deny', // deny all users
+                'users' => array(
+                    '*'
+                )
+            )
+        );
+    }
+
+    /**
      * Declares class-based actions.
      */
     public function actions() {
+        $captcha = array(
+            'class' => 'CaptchaExtendedAction',
+            'mode' => CaptchaExtendedAction::MODE_WORDS,
+        );
+        //ajout de fixed value si mode de dev
+        if (CommonTools::isInDevMode()) {
+            $captchaplus = array('fixedVerifyCode' => "bernard");
+            $captcha = array_merge($captcha, $captchaplus);
+        }
         return array(
             // captcha action renders the CAPTCHA image displayed on the contact page
-            'captcha' => array(
-                'class' => 'CCaptchaAction',
-                'backColor' => 0xFFFFFF,
-            ),
+            'captcha' => $captcha,
             // page action renders "static" pages stored under 'protected/views/site/pages'
             // They can be accessed via: index.php?r=site/page&view=FileName
             'page' => array(
-                'class' => 'CViewAction',
-            ),
+                'class' => 'CViewAction'
+            )
         );
     }
 
@@ -101,7 +155,6 @@ class SiteController extends Controller
                 $this->redirect(Yii::app()->user->returnUrl);
             else
                 Yii::app()->user->setFlash('error', 'Une erreur est survenue, merci de vérifier vos identifiants');
-            
         }
         // display the login form
         $this->render('login', array('model' => $model));
@@ -113,6 +166,33 @@ class SiteController extends Controller
     public function actionLogout() {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
+    }
+
+    /**
+     * action to subscribe a new user account.
+     */
+    public function actionSubscribe() {
+        $model = new User ();
+        //$model->setScenario('subscribe');
+        if (isset($_POST ['User'])) {
+            $model->attributes = $_POST ['User'];
+            $model->profil = 0;
+            $model->inactif = 1;
+            if ($model->save()) {
+                //CommonMailer::sendSubscribeAdminMail($model);
+                //CommonMailer::sendSubscribeUserMail($model);
+                Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                $this->redirect(array(
+                    'site/index'
+                ));
+            } else {
+                Yii::app()->user->setFlash('error', Yii::t('common', 'error_register'));
+            }
+        }
+        $this->render('subscribe', array(
+            'model' => $model
+                )
+        );
     }
 
 }

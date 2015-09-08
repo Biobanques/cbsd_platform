@@ -5,20 +5,19 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-    <hr />
-	<p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
-        <div style="margin-left:30px;">
+	<p class="note">Fields with <span class="required">*</span> are required.</p>
+
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'login'); ?>
-		<?php echo $form->textField($model,'login'); ?>
+		<?php echo $form->textField($model,'login', array('size' => 60, 'maxlength' => 250)); ?>
 		<?php echo $form->error($model,'login'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->textField($model,'password'); ?>
+		<?php echo $form->textField($model,'password', array('size' => 60, 'maxlength' => 250)); ?>
 		<?php echo $form->error($model,'password'); ?>
 	</div>
 
@@ -30,32 +29,44 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'nom'); ?>
-		<?php echo $form->textField($model,'nom'); ?>
+		<?php echo $form->textField($model,'nom', array('size' => 60, 'maxlength' => 250)); ?>
 		<?php echo $form->error($model,'nom'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'prenom'); ?>
-		<?php echo $form->textField($model,'prenom'); ?>
+		<?php echo $form->textField($model,'prenom', array('size' => 60, 'maxlength' => 250)); ?>
 		<?php echo $form->error($model,'prenom'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email'); ?>
+		<?php echo $form->textField($model,'email', array('size' => 60, 'maxlength' => 250)); ?>
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'tel'); ?>
-		<?php echo $form->textField($model,'tel'); ?>
-		<?php echo $form->error($model,'tel'); ?>
+		<?php echo $form->labelEx($model,'telephone'); ?>
+		<?php echo $form->textField($model,'telephone', array('size' => 60, 'maxlength' => 250)); ?>
+		<?php echo $form->error($model,'telephone'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'gsm'); ?>
+		<?php echo $form->textField($model,'gsm', array('size' => 60, 'maxlength' => 250)); ?>
+		<?php echo $form->error($model,'gsm'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'inactif'); ?>
+		<?php echo $form->dropDownList($model, 'inactif', User::model()->getArrayInactif(), array('prompt' => '----')); ?>
+		<?php echo $form->error($model,'inactif'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'S\'inscrire' : 'Enregistrer', array('class' => 'btn btn-primary')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
-</div>
+
 </div><!-- form -->

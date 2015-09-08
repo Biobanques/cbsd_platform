@@ -6,7 +6,11 @@ db.user.insert({
     "nom":"te",
     "prenom":"bernard",
     "email":"bernardte90@gmail.com",
-    "tel":"0625004713"
+    "telephone":"0625004713",
+    "gsm":"",
+    "inactif":"1",
+    "cbsdforms_id": "",
+    "verifyCode":""
 });
 
 db.user.insert({
@@ -16,7 +20,11 @@ db.user.insert({
     "nom":"malservet",
     "prenom":"nicolas",
     "email":"nicolas@nicolas.com",
-    "tel":"0625004713"
+    "telephone":"0625004713",
+    "gsm":"",
+    "inactif":"1",
+    "cbsdforms_id": "",
+    "verifyCode":""
 });
 
 db.user.insert({
@@ -26,7 +34,11 @@ db.user.insert({
     "nom":"clinicien",
     "prenom":"clinicien",
     "email":"clinicien@clinicien.com",
-    "tel":"0123456789"
+    "telephone":"0123456789",
+    "gsm":"",
+    "inactif":"1",
+    "cbsdforms_id": "",
+    "verifyCode":""
 });
 
 db.user.insert({
@@ -36,7 +48,11 @@ db.user.insert({
     "nom":"neuropathologiste",
     "prenom":"neuropathologiste",
     "email":"neuropathologiste@neuropathologiste.com",
-    "tel":"0123456789"
+    "telephone":"0123456789",
+    "gsm":"",
+    "inactif":"1",
+    "cbsdforms_id": "",
+    "verifyCode":""
 });
 
 db.user.insert({
@@ -46,7 +62,11 @@ db.user.insert({
     "nom":"généticien",
     "prenom":"généticien",
     "email":"généticien@généticien.com",
-    "tel":"0123456789"
+    "telephone":"0123456789",
+    "gsm":"",
+    "inactif":"1",
+    "cbsdforms_id": "",
+    "verifyCode":""
 });
 
 db.user.insert({
@@ -56,5 +76,9 @@ db.user.insert({
     "nom":"invité",
     "prenom":"invité",
     "email":"",
-    "tel":""
+    "telephone":"",
+    "gsm":"",
+    "inactif":"1",
+    "cbsdforms_id": "",
+    "verifyCode":""
 });
