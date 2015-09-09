@@ -11,11 +11,13 @@
         'enableAjaxValidation' => false,
     ));
     ?>
-
+    
+    <hr />
+    
     <p class="note"><?php echo Yii::t('common', 'ChampsObligatoires'); ?></p>
 
     <?php echo $form->errorSummary($model); ?>
-    <table><tr>
+    <table cellpadding="10" style="margin-left:-10px"><tr>
             <td>
                 <?php echo $form->labelEx($model, 'prenom'); ?>
                 <?php echo $form->textField($model, 'prenom', array('size' => 20, 'maxlength' => 250)); ?>
@@ -45,6 +47,11 @@
                 <?php echo $form->textField($model, 'email', array('size' => 20, 'maxlength' => 250)); ?>
                 <?php echo $form->error($model, 'email'); ?>
             </td>
+            <td>
+                <?php echo $form->labelEx($model, 'profil'); ?>
+                <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfil(), array('prompt' => '----')); ?>
+                <?php echo $form->error($model, 'profil'); ?>
+            </td>
         </tr>
         <tr>
             <td>
@@ -68,13 +75,16 @@
                 echo $form->textField($model, 'verifyCode');
                 echo $form->error($model, 'verifyCode');
                 ?>
-
-
-
-                <div class="row buttons">
+            </td>
+        </tr>
+        <tr>
+            <td style="float:right;">
+                <div class="row buttons" style="float:left;">
                     <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save')); ?>
                 </div>
-            </td></tr></table>
+            </td>
+        </tr>
+    </table>
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->
