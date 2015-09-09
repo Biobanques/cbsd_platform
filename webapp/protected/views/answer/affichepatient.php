@@ -51,12 +51,21 @@ $form = $this->beginWidget('CActiveForm', array(
     'enableAjaxValidation' => false,
 ));
 ?>
-<p> Saisir un nouveau formulaire : 
+
+<div class="row">
+    <div class="span3">
+        <p>Saisir un nouveau formulaire : </p>
+    </div>
+    <div class="span3" style="margin:-5px;">
     <select name="form">
         <option selected="selected" disabled="disabled">Sélection du formulaire</option>
         <option value="demence">Formulaire Démence</option>
         <option value="parkinson">Formulaire Parkinson</option>
     </select>
+    </div>
+    <div class="span3" style="margin:-5px;">
     <?php echo CHtml::submitButton('Saisir'); ?>
-</p>
+    </div>
+
 <?php $this->endWidget(); ?>
+</div>

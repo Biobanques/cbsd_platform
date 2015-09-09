@@ -52,6 +52,13 @@ class AnswerController extends Controller {
 
     public function actionAffichepatient() {
         $model = new Patient;
+        if (isset($_SESSION['datapatient'])) {
+            $patient = $_SESSION['datapatient'];
+            $model->id = $patient->id;
+            $model->nom = $patient->useName;
+            $model->prenom = $patient->firstName;
+            $model->date_naissance = $patient->birthDate;
+        }
         if (isset($_POST['Patient'])) {
             $model->attributes = $_POST['Patient'];
             $patient = (object) null;
@@ -75,8 +82,10 @@ class AnswerController extends Controller {
 
         $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
         $_SESSION['datapatient'] = $patient;
+        if (isset($_SESSION['datapatient']))
         $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider));
-        //$this->render('affichepatient', array('model' => $model));
+        else
+        $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'patient' => $patient));
     }
 
     /**
