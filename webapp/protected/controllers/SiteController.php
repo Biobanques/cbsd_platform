@@ -169,14 +169,20 @@ class SiteController extends Controller {
         $model = new User ();
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            $model->profil = 0;
+            //$model->profil = 0;
             $model->inactif = 1;
             if ($model->save()) {
+                if ($model->profil == 0) {
+                    $model->inactif = 0;
+                    $model->update();
+                    if ($model->update()) {
+                        Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDForms !');
+                        $this->redirect(array('site/index'));
+                    }
+                }
                 $this->sendMail();
                 Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                $this->redirect(array(
-                    'site/index'
-                ));
+                $this->redirect(array('site/index'));
             } else {
                 Yii::app()->user->setFlash('error', Yii::t('common', 'error_register'));
             }
