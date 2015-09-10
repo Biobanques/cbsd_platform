@@ -27,7 +27,8 @@ class Patient extends CFormModel
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nom, prenom, date_naissance, nom_naissance', 'required'),
+            array('date_naissance', 'dateFormat'),
+            array('nom, prenom, date_naissance', 'required'),
             array('nom, prenom, nom_naissance', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
@@ -46,6 +47,23 @@ class Patient extends CFormModel
             'nom_naissance' => 'Nom Naissance',
             'sexe' => 'Sexe',
         );
+    }
+    
+    public function dateFormat() {
+        $ok = true;
+        if (preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/", $this->date_naissance, $matches)) {
+            if (!checkdate($matches[2], $matches[1], $matches[3])) {
+                $ok = false;
+                Yii::app()->user->setFlash('error', "Entrez une date valide au format - dd/mm/yyyy");
+            }
+        } else if ($this->date_naissance == null){
+            $ok = false;
+            Yii::app()->user->setFlash('error', "date ne peut pas être vide");
+        } else {
+            $ok = false;
+            Yii::app()->user->setFlash('error', "Seul le format - dd/mm/yyyy - est accepté.");
+        }
+        return $ok;
     }
 
 }

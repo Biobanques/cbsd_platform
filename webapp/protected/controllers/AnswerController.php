@@ -71,8 +71,10 @@ class AnswerController extends Controller {
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
             $patient->id = CommonTools::wsGetPatient($patient);
-            if ($patient->id === -1)
+            if ($patient->id === -1) {
                 Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "An error occured with search, please contact webabb admin");
+                $this->redirect(array('site/patient'));
+            }
             $model->id = $patient->id;
         }
 
