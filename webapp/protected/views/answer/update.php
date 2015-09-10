@@ -24,8 +24,8 @@ $this->breadcrumbs = array(
 
 <hr />
 
-<h3 align="center">Formulaire Parkinson v3.5</h3>
-<p>Description: Formulaire Parkinson avec items 2015</p>
+<h3 align="center">Formulaire <?php echo $model->id; ?> v3.5</h3>
+<p>Description: Formulaire <?php echo $model->id; ?> avec items 2015</p>
 <hr />
 
 <br><bR>

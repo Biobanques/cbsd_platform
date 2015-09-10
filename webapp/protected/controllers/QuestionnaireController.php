@@ -49,8 +49,12 @@ class QuestionnaireController extends Controller {
         }
         if ($answer != null)
             $model = $answer;
+        if (isset($_SESSION['datapatient'])) {
+            $patient = $_SESSION['datapatient'];
+        }
         $this->render('view', array(
             'model' => $model,
+            'patient' => $patient,
         ));
     }
 
@@ -66,8 +70,12 @@ class QuestionnaireController extends Controller {
         }
         if ($answer != null)
             $model = $answer;
+        if (isset($_SESSION['datapatient'])) {
+            $patient = $_SESSION['datapatient'];
+        }
         $this->render('update', array(
             'model' => $model,
+            'patient' => $patient,
         ));
     }
 

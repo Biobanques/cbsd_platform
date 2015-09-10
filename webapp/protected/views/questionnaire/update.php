@@ -4,7 +4,29 @@ $this->breadcrumbs = array(
     $model->id,
 );
 ?>
-<h1>Fill in Questionnaire #<?php echo $model->id; ?></h1>
+<?php echo Yii::app()->user->name ?>
+
+<hr />
+
+<h4>Patient</h4>
+<div class="well">
+    <table cellpadding="20">
+        <tr>
+            <td><b>Nom : </b><?php echo $patient->useName; ?></td> 
+            <td><b>Date de naissance : </b><?php echo $patient->birthDate; ?></td>
+        </tr>
+        <tr>
+            <td><b>Prénom : </b><?php echo $patient->firstName; ?></td>
+            <td><b>Patient ID : </b><?php echo $patient->id; ?></td>
+        </tr>
+    </table>  
+</div>
+
+<hr />
+
+<h3 align="center">Formulaire <?php echo $model->id; ?> v3.5</h3>
+<p>Description: Formulaire <?php echo $model->id; ?> avec items 2015</p>
+<hr />
 
 <br><bR>
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id' => 'myModalContributors')); ?>
