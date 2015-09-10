@@ -50,20 +50,22 @@ class Patient extends CFormModel
     }
     
     public function dateFormat() {
+        $result = array();
         $ok = true;
         if (preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/", $this->date_naissance, $matches)) {
             if (!checkdate($matches[2], $matches[1], $matches[3])) {
                 $ok = false;
-                Yii::app()->user->setFlash('error', "Entrez une date valide au format - dd/mm/yyyy");
+                Yii::app()->user->setFlash('error', "Entrez une date valide  - dd/mm/yyyy");
             }
         } else if ($this->date_naissance == null){
             $ok = false;
             Yii::app()->user->setFlash('error', "date ne peut pas être vide");
         } else {
             $ok = false;
-            Yii::app()->user->setFlash('error', "Seul le format - dd/mm/yyyy - est accepté.");
+            Yii::app()->user->setFlash('error', "Seulement le format - dd/mm/yyyy - est accepté.");
         }
-        return $ok;
+        $result['result'] = $ok;
+        return $result;
     }
 
 }
