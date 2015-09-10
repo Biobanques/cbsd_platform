@@ -190,13 +190,21 @@ class QuestionnaireController extends Controller {
      * Lists all models.
      */
     public function actionIndex() {
+        $model = new Questionnaire;
         if (isset($_POST["form"])) {
             switch ($_POST["form"]) {
                 case "demence": 
-                    $this->redirect('index.php?r=questionnaire/update&id=55eea98d12679b7021dde494');
+                    $criteria = new EMongoCriteria();
+                    $criteria->id = 'parkinsonform';
+                    $id = Questionnaire::model()->find($criteria);
+                    $this->redirect('index.php?r=questionnaire/update&id=' . $id->_id);
                     break;
                 case "parkinson":
-                    $this->redirect('index.php?r=questionnaire/update&id=55eea98d79e60b1e3d38ab4b');
+                    $criteria = new EMongoCriteria();
+                    $criteria->id = 'depositform';
+                    $id = Questionnaire::model()->find($criteria);
+                    $this->redirect('index.php?r=questionnaire/update&id=' . $id->_id);
+                    break;
             }
         }
         $dataProvider = new EMongoDocumentDataProvider('Questionnaire');

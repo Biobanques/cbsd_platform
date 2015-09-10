@@ -207,6 +207,7 @@ class SiteController extends Controller {
      $mailer->Password = CommonProperties::$SMTP_SENDER_PASSWORD;
      $mailer->From = CommonProperties::$SMTP_SENDER_FROM_EMAIL;
      $mailer->FromName = CommonProperties::$SMTP_SENDER_FROM_EMAIL;
+     $mailer->AddAddress(CommonProperties::$SMTP_SENDER_USERNAME, 'Bernard Te');
      $mailer->Subject = "Confirmation de votre adresse email";
      $mailer->Body = "Pour pouvoir profiter pleinement des services de cbsdforms.fr, il nous faut confirmer votre adresse email.<br>
                     Pouvez-vous cliquer sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de finaliser la proc&eacute;dure de confirmation:.";
