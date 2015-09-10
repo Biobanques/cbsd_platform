@@ -52,7 +52,7 @@ class User extends EMongoDocument {
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('gsm', 'telPresent'),
             array('gsm, telephone', 'length', 'min' => 8),
-            array('prenom, nom, login, password, email', 'required'),
+            array('prenom, nom, login, password, email, profil, verifyCode', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('password', 'pwdStrength'),
@@ -68,8 +68,18 @@ class User extends EMongoDocument {
      */
     public function attributeLabels() {
         return array(
+            '_id' => 'ID',
+            'prenom' => Yii::t('common', 'firstname'),
+            'nom' => Yii::t('common', 'lastname'),
             'login' => Yii::t('common', 'Login'),
             'password' => Yii::t('common', 'password'),
+            'email' => Yii::t('common', 'email'),
+            'telephone' => Yii::t('common', 'phone'),
+            'gsm' => Yii::t('common', 'gsm'),
+            'profil' => Yii::t('common', 'profil'),
+            'inactif' => Yii::t('common', 'inactif'),
+            'cbsdforms_id' => 'ID cbsdforms',
+            'verifyCode' => Yii::t('common', 'verifyCode'),
         );
     }
 
@@ -116,6 +126,9 @@ class User extends EMongoDocument {
         return $result;
     }
 
+    /**
+     * get an array of consent used by dropDownLIst.
+     */
     public function getArrayProfil() {
         $res = array();
         $res ['0'] = "clinicien";
@@ -150,7 +163,7 @@ class User extends EMongoDocument {
     }
     public function telPresent() {
         if (in_array($this->telephone, array("", null)) && in_array($this->gsm, array("", null)))
-            $this->addError('gsm', Yii::t('common', 'atLeastOneTel'));
+            $this->addError('gsm', 'Au moins un numéro de téléphone');
     }
     /**
      * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only.
