@@ -71,24 +71,32 @@ class AnswerController extends Controller {
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
             $patient->id = CommonTools::wsGetPatient($patient);
+            $mixedResult = $model->dateformat($patient->birthDate);
+            if ($mixedResult['result'] == false)
+                $this->redirect(array('site/patient'));
             if ($patient->id === -1) {
                 Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "An error occured with search, please contact webabb admin");
                 $this->redirect(array('site/patient'));
             }
+
             $model->id = $patient->id;
         }
+        if ($model->validate()){
+            $criteria = new EMongoCriteria();
+            $criteria->login = Yii::app()->user->id;
+            $criteria->id_patient = $patient->id;
+            $criteria->date_naissance = $patient->birthDate;
 
-        $criteria = new EMongoCriteria();
-        $criteria->login = Yii::app()->user->id;
-        $criteria->id_patient = $patient->id;
-        $criteria->date_naissance = $patient->birthDate;
-
-        $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
-        $_SESSION['datapatient'] = $patient;
-        if (isset($_SESSION['datapatient']))
-        $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider));
-        else
-        $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'patient' => $patient));
+            $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
+            $_SESSION['datapatient'] = $patient;
+            if (isset($_SESSION['datapatient']))
+                $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider));
+            else
+                $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'patient' => $patient));
+        } else {
+            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Tous les champs ne sont pas remplis");
+            $this->redirect(array('site/patient'));
+        }
     }
 
     /**
