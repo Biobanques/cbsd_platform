@@ -29,8 +29,7 @@ class UserController extends Controller
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('create', 'update', 'index', 'admin', 'view', 'delete', 'validate', 'desactivate', 'refuseRegistration'),
-                //'expression' => '$user->isAdmin()'
-                'users'=>array('*')
+                'expression' => '$user->isAdmin()'
             ),
             array('deny', // deny all users
                 'users' => array('*'),

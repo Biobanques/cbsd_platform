@@ -8,7 +8,7 @@ db.user.insert({
     "email":"bernardte90@gmail.com",
     "telephone":"0625004713",
     "gsm":"",
-    "inactif":"1",
+    "inactif":"0",
     "cbsdforms_id": "",
     "verifyCode":""
 });
@@ -22,7 +22,7 @@ db.user.insert({
     "email":"nicolas@nicolas.com",
     "telephone":"0625004713",
     "gsm":"",
-    "inactif":"1",
+    "inactif":"0",
     "cbsdforms_id": "",
     "verifyCode":""
 });
@@ -36,7 +36,7 @@ db.user.insert({
     "email":"clinicien@clinicien.com",
     "telephone":"0123456789",
     "gsm":"",
-    "inactif":"1",
+    "inactif":"0",
     "cbsdforms_id": "",
     "verifyCode":""
 });

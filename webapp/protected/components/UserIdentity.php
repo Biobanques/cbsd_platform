@@ -7,6 +7,8 @@
  */
 class UserIdentity extends CUserIdentity
 {
+        const ERROR_INACTIVE=3;
+        
 	private $_id;
 	/**
 	 * Authenticates a user.
@@ -19,10 +21,13 @@ class UserIdentity extends CUserIdentity
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		elseif($record->password!=$this->password)
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
+                elseif($record->inactif==1)
+ 			$this->errorCode=self::ERROR_INACTIVE;
 		else{
 			$this->errorCode=self::ERROR_NONE;
 			$this->_id=$record->_id;
-			
+                        //on stocke le profil pour checker plus tard si admin
+			$this->setState('profil', $record->profil);			
 		}
 		return $this->errorCode;
 	}
