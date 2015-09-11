@@ -25,22 +25,31 @@ class WebUser extends CWebUser{
  public function isAdmin(){
   return $this->getState('profil','0')==1;
  }
- /**
-  * set the cbsdformsAdmin value
-  * @param boolean $val
-  */
  
- public function SetBiobankAdmin($val){
- 	$cbsdformsAdmin=$val;
- }
- 
- /**
-  * return true if user is biobank admin
+  /**
+  * return true if user is clinicien
   * @return boolean
   */
- public function isBiobankAdmin(){
- 	return $this->getState('cbsdforms_id')!=null;
+ public function isClinicien(){
+  return $this->getState('profil','0')==0;
  }
+ 
+  /**
+  * return true if user is neuropathologiste
+  * @return boolean
+  */
+ public function isNeuropathologiste(){
+  return $this->getState('profil','0')==2;
+ }
+ 
+  /**
+  * return true if user is généticien
+  * @return boolean
+  */
+ public function isGeneticien(){
+  return $this->getState('profil','0')==3;
+ }
+
  //get the logged user
  public function getUser(){
   return $this->_user;
