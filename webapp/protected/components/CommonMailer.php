@@ -12,7 +12,7 @@ class CommonMailer
     /**
      * from by default
      */
-    const MAIL_FROM = "contact@cbsdforms.fr";
+    const MAIL_FROM = "contact@cbsdplatform.fr";
 
     /**
      * "send" an email. To do it, store an email into db and a crontask will pull emails to send them.
@@ -199,7 +199,7 @@ class CommonMailer
     public static function sendSubscribeAdminMail($user) {
         $base = CommonTools::isInDevMode() ? CommonMailer::DEV_URL : CommonMailer::PROD_URL;
         $to = Yii::app()->params['adminEmail'];
-        $subject = "Inscription d'un nouvel utilisateur sur cbsdforms.fr";
+        $subject = "Inscription d'un nouvel utilisateur sur cbsdplatform.fr";
         $userDetails = '';
         foreach ($user->getAttributes() as $label => $value) {
             $userDetails.="<li>$label : $value</li>";
@@ -209,7 +209,7 @@ class CommonMailer
 				<html><head>
 				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Inscription d'un nouvel utilisateur sur ebiobanques.fr</title>
 				</head><body>
-				$user->prenom $user->nom s'est inscrit sur le site cbsdforms.fr.<br>
+				$user->prenom $user->nom s'est inscrit sur le site cbsdplatform.fr.<br>
 						Détails :<br>
 	<ul>$userDetails</ul><br>
 	Vous pouvez valider cet utilisateur en cliquant sur ce lien : <a href=$base/index.php/user/validate/id/$user->_id\">Valider l'utilisateur</a>, le <a href=$base/index.php/user/refuseRegistration/id/$user->_id\">désactiver</a>
@@ -226,15 +226,15 @@ class CommonMailer
      */
     public static function sendSubscribeUserMail($user) {
         $to = $user->email;
-        $subject = "Welcome on cbsdforms.fr " . $user->prenom . " " . $user->nom;
+        $subject = "Welcome on cbsdplatform.fr " . $user->prenom . " " . $user->nom;
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 				<?xml version=\"1.0\" encoding=\"utf-8\"?>
 				<html><head>
 				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
-                                <title>Welcome " . $user->prenom . " " . $user->nom . " on cbsdforms.fr</title>
+                                <title>Welcome " . $user->prenom . " " . $user->nom . " on cbsdplatform.fr</title>
 				</head><body>
                                 Welcome " . $user->prenom . " " . $user->nom . " on cbsdforms.fr.
-			Your account is waiting for a validation by the administrator of ebiobanques.<br>
+			Your account is waiting for a validation by the administrator of cbsdplatform.<br>
                         If you have any problem during your experience with cbsdforms.fr feel free to send an email to " . Yii::app()->params['adminEmail'] . "<br>
                             Best
 	</body>
@@ -249,14 +249,14 @@ class CommonMailer
      */
     public static function sendUserRegisterConfirmationMail($user) {
         $to = $user->email;
-        $subject = "Confirmation de votre inscription sur cbsdforms.fr";
+        $subject = "Confirmation de votre inscription sur cbsdplatform.fr";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 		<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		<html><head>
 		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation de votre inscription sur ebiobanques.fr</title>
 		</head><body>
 		Cher (Chère) $user->prenom $user->nom,<br><br>
-		Merci de vous être inscrit sur le site <a href=\"http://www.ebiobanques.fr/index.php\">ebiobanques.fr</a>.<br>
+		Merci de vous être inscrit sur le site <a href=\"http://www.ebiobanques.fr/index.php\">cbsdplatform.fr</a>.<br>
 		Vous pouvez vous connecter dès à présent sur le site avec vos identifiants : <br>
 		<ul><li>Nom d'utilisateur : $user->login </li>
 		<li>Mot de passe : $user->password </li></ul>
@@ -274,11 +274,11 @@ class CommonMailer
 		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation de votre inscription sur ebiobanques.fr</title>
 		</head><body>
 		Cher (Chère) $user->prenom $user->nom,<br><br>
-		Merci de vous être intéressé à la plate-forme <a href=\"http://www.ebiobanques.fr/index.php\">ebiobanques.fr</a>.<br>
+		Merci de vous être intéressé à la plate-forme <a href=\"http://www.ebiobanques.fr/index.php\">cbsdplatform.fr</a>.<br>
 		Malheureusement, nous ne pouvons donner suite à votre inscription.<br>
                 Pour toute question, merci de contacter l'administrateur de la plate-forme.<br><br>
                 Cordialement<br>
-                L'équipe cbsdforms
+                L'équipe cbsdplatform
 
 		</body>
 		";
@@ -298,14 +298,14 @@ class CommonMailer
             $lname = $user->nom;
             $login = $user->login;
             $password = $user->password;
-            $subject = "Informations perdues sur cbsdforms.fr";
+            $subject = "Informations perdues sur cbsdplatform.fr";
             $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 		<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		<html><head>
-		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Vos exports sur ebiobanques.fr</title>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Vos exports sur cbsdplatform.fr</title>
 		</head><body>
 		Cher (Chère) $fname $lname,<br><br>
-		Suite à votre demande effectuée sur le site cbsdforms.fr, nous vous rappelons vos codes d'accès :<br>
+		Suite à votre demande effectuée sur le site cbsdplatform.fr, nous vous rappelons vos codes d'accès :<br>
                 Identifiant : $login<br>
                 Password : $password <br>
                 Vous pouvez dès à présent vous connecter avec ces identifiants.

@@ -10,7 +10,7 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap')
 // CWebApplication properties can be configured here.
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'Biobanques CBSDForms',
+    'name' => 'Biobanques CBSDPlatform',
     //par defaut en français
     'language' => 'fr',
     // preloading 'log' component
@@ -64,11 +64,11 @@ return array(
             'routes' => array(
                 array(
                     'class' => 'CFileLogRoute',
-                    'levels' => 'error, trace',
+                    'levels' => 'error, warning',
                 ),
                 array(
                     'class' => 'CWebLogRoute',
-                    'levels' => 'error, trace',
+                    'levels' => 'error, warning',
                     'enabled' => true,
                     'showInFireBug' => true
                 ),
