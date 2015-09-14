@@ -6,7 +6,7 @@
 # @version 1.0 
 ####################################################################
 
-PATH="/var/www/html/cbsdplatform"
+PATH="/var/www/html/cbsd_platform"
 
 # Log in as Superuser (root user)
 
@@ -37,7 +37,7 @@ PASSWORD="cbsd2015"
 HOST="localhost"
 
 DATABASE="'mongodb:\/\/$LOGIN:$PASSWORD@$HOST\/$DBB'"
-sed -i -e "s/'mongodb:\/\/qfuseradmin:bbanques2015@localhost\/qualityformsdb'/$DATABASE/g" $PATH/cbsd_platform/webapp/protected/components/CommonProperties.php
+sed -i -e "s/'mongodb:\/\/qfuseradmin:bbanques2015@localhost\/qualityformsdb'/$DATABASE/g" $PATH/webapp/protected/components/CommonProperties.php
 sed -i -e "s/'qualityformsdb'/$DBB/g" $PATH/webapp/protected/config/main.php
 
 # reset database
