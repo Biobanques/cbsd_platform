@@ -44,7 +44,7 @@ class CommonProperties
     /*
      * SIP web service info
      */
-    public static $SIP_WSDL = '';
-    public static $SIP_LOGIN = '';
-    public static $SIP_PASSWORD = '';
+    public static $SIP_WSDL = 'http://sip.biobankhub.fr/index.php?r=webService/getWs';
+    public static $SIP_LOGIN = 'cbsd_platform';
+    public static $SIP_PASSWORD = 'cbsd_platform';
 }
