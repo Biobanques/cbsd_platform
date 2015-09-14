@@ -49,14 +49,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 				'nom',
 				'prenom',
 				'email',
-				/*
-				'telephone',
-				'gsm',
-				'inactif',
-				'cbsdforms_id',
-				'verifyCode',
-				'_id',
-				*/
 			),
 		),
 	)),
@@ -68,14 +60,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'nom',
 		'prenom',
 		'email',
-		/*
-		'telephone',
-		'gsm',
-		'inactif',
-		'cbsdforms_id',
-		'verifyCode',
-		'_id',
-		*/
 		array(
 			'class'=>'CButtonColumn',
 		),

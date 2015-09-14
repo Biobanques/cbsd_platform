@@ -3,15 +3,15 @@
 /**
  * This is the MongoDB Document model class based on table "patient".
  */
-class Patient extends CFormModel
-{
+class Patient extends CFormModel {
+
     public $id;
     public $nom;
     public $prenom;
     public $date_naissance;
     public $nom_naissance;
     public $sexe;
-
+    
     /**
      * Returns the static model of the specified AR class.
      * @return Patient the static model class
@@ -45,10 +45,10 @@ class Patient extends CFormModel
             'prenom' => 'Prénom',
             'date_naissance' => 'Date de naissance',
             'nom_naissance' => 'Nom Naissance',
-            'sexe' => 'Sexe',
+            'sexe' => 'Sexe',        
         );
     }
-    
+
     public function dateFormat($date_naissance) {
         $result = array();
         $ok = true;
@@ -59,9 +59,8 @@ class Patient extends CFormModel
             }
         } else {
             $ok = false;
-            //Yii::app()->user->setFlash('error', "Seul le format - dd/mm/yyyy - est accepté.");
         }
-        if ($this->date_naissance == null){
+        if ($this->date_naissance == null) {
             $ok = false;
             Yii::app()->user->setFlash('error', "La date de naissance ne peut pas être vide");
         }

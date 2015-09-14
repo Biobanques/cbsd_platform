@@ -27,7 +27,6 @@ $this->menu=array(
 		'telephone',
 		'gsm',
 		'inactif',
-		'cbsdforms_id',
 		'verifyCode',
 		'_id',
 	),

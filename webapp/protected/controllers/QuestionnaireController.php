@@ -162,19 +162,7 @@ class QuestionnaireController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionEdit($id) {
-//$model = $this->loadModel($id);
-//$form = new QuestionnaireGroupForm;
         Yii::app()->user->setFlash('warning', '<strong>Warning!</strong> Feature not available at this thime!.');
-        /* if (isset($_POST['QuestionnaireGroupForm'])) {
-          $form->attributes = $_POST['QuestionnaireGroupForm'];
-          if ($model->updateForm($form))
-          Yii::app()->user->setFlash('success', "Questionnaire updated with success");
-          }else {
-          Yii::app()->user->setFlash('error', "Questionnaire not updated. A problem occured.");
-          }
-         *
-         */
-
         $this->render('edit', array(
             'model' => $model,
             'form' => $form,
@@ -201,7 +189,7 @@ class QuestionnaireController extends Controller {
         $model = new Questionnaire;
         if (isset($_POST["form"])) {
             switch ($_POST["form"]) {
-                case "demence": 
+                case "demence":
                     $criteria = new EMongoCriteria();
                     $criteria->id = 'parkinsonform';
                     $id = Questionnaire::model()->find($criteria);

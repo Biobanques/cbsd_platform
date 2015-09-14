@@ -46,11 +46,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'cbsdforms_id'); ?>
-		<?php echo $form->textField($model,'cbsdforms_id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'verifyCode'); ?>
 		<?php echo $form->textField($model,'verifyCode'); ?>
 	</div>

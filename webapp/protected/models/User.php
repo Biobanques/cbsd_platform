@@ -31,8 +31,6 @@ class User extends EMongoDocument {
     
     public $inactif;
     
-    public $cbsdforms_id;
-    
     public $verifyCode;
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
@@ -57,8 +55,7 @@ class User extends EMongoDocument {
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
-            array('prenom, nom, login, password, email, telephone, gsm, profil, inactif, cbsdforms_id', 'safe', 'on' => 'search'),
-            array('biobank_id', 'safe'),
+            array('prenom, nom, login, password, email, telephone, gsm, profil, inactif', 'safe', 'on' => 'search'),
         );
         return $result;
     }
@@ -78,7 +75,6 @@ class User extends EMongoDocument {
             'gsm' => Yii::t('common', 'gsm'),
             'profil' => Yii::t('common', 'profil'),
             'inactif' => Yii::t('common', 'inactif'),
-            'cbsdforms_id' => 'ID cbsdforms',
             'verifyCode' => Yii::t('common', 'verifyCode'),
         );
     }

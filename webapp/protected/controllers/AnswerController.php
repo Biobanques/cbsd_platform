@@ -81,7 +81,7 @@ class AnswerController extends Controller {
 
             $model->id = $patient->id;
         }
-        if ($model->validate()){
+        if ($model->validate()) {
             $criteria = new EMongoCriteria();
             $criteria->login = Yii::app()->user->id;
             $criteria->id_patient = $patient->id;

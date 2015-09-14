@@ -13,8 +13,6 @@ return array(
     'name' => 'Biobanques CBSDForms',
     //par defaut en français
     'language' => 'fr',
-    // page au démarrage
-    //'defaultController' => 'site/login',
     // preloading 'log' component
     'preload' => array('log'),
     // autoloading model and component classes
@@ -46,13 +44,6 @@ return array(
             'class' => 'WebUser',
             'returnUrl' => array('/site/patient'),
         ),
-        'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=cbsdforms',
-            'emulatePrepare' => true,
-            'username' => 'root',
-            'password' => 'root',
-            'charset' => 'utf8',
-        ),
         'mongodb' => array(
             'class' => 'EMongoDB',
             'connectionString' => CommonProperties::$CONNECTION_STRING,
@@ -78,8 +69,6 @@ return array(
                 array(
                     'class' => 'CWebLogRoute',
                     'levels' => 'error, trace',
-                    //'categories'=>'system.db.*',
-                    //'except'=>'system.db.ar.*', // shows all db level logs but nothing in the ar category
                     'enabled' => true,
                     'showInFireBug' => true
                 ),

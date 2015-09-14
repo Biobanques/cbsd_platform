@@ -28,27 +28,4 @@
 	<?php echo CHtml::encode($data->email); ?>
 	<br />
 
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('telephone')); ?>:</b>
-	<?php echo CHtml::encode($data->telephone); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('gsm')); ?>:</b>
-	<?php echo CHtml::encode($data->gsm); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('inactif')); ?>:</b>
-	<?php echo CHtml::encode($data->inactif); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('cbsdforms_id')); ?>:</b>
-	<?php echo CHtml::encode($data->cbsdforms_id); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('verifyCode')); ?>:</b>
-	<?php echo CHtml::encode($data->verifyCode); ?>
-	<br />
-
-	*/ ?>
-
 </div>

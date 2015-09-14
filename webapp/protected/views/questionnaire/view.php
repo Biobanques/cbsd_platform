@@ -69,7 +69,7 @@ echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), ar
 </div>
 
 <div class="modal-body span5" >
-<?php echo $model->renderContributors(); ?>
+    <?php echo $model->renderContributors(); ?>
 </div>
 
 <div class="modal-footer">
@@ -94,11 +94,11 @@ $this->widget('bootstrap.widgets.TbButton', array(
     ),
 ));
 ?>
-    <?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
 <div>
-<?php
-echo $model->renderTabbedGroup(Yii::app()->language);
-?>
+    <?php
+    echo $model->renderTabbedGroup(Yii::app()->language);
+    ?>
 </div>
 <?php ?>
     

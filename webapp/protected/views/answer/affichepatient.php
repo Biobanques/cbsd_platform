@@ -17,7 +17,6 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'columns' => array(
         array('value' => '$data["id"]', 'name' => 'Patient Id'),
         array('value' => '$data["nom"]', 'header' => 'Nom'),
-        //array('value' => '$data["nom_naissance"]', 'header' => 'nom de naissance'),
         array('value' => '$data["prenom"]', 'header' => 'Prénom'),
         array('value' => '$data["date_naissance"]', 'header' => 'Date de naissance'),
     ),
