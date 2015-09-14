@@ -197,7 +197,7 @@ class QuestionnaireController extends Controller {
                     break;
                 case "parkinson":
                     $criteria = new EMongoCriteria();
-                    $criteria->id = 'depositform';
+                    $criteria->id = 'parkinsonform';
                     $id = Questionnaire::model()->find($criteria);
                     $this->redirect('index.php?r=questionnaire/update&id=' . $id->_id);
                     break;
