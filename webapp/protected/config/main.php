@@ -47,7 +47,7 @@ return array(
         'mongodb' => array(
             'class' => 'EMongoDB',
             'connectionString' => CommonProperties::$CONNECTION_STRING,
-            'dbName' => 'cbsdforms',
+            'dbName' => 'cbsdplatformdb',
             'fsyncFlag' => true,
             'safeFlag' => true,
             'useCursor' => false,
