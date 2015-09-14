@@ -8,13 +8,13 @@
 
 # Create admin user and set admin acces privilege 
 # mongo
-# db.createUser( {user: "admin_cbsd",pwd: "cbsd2015",roles: [ { role: "userAdmin", db: "cbsdforms" } ]})
-# db.grantRolesToUser("admin_cbsd", [ { role: "userAdminAnyDatabase", db: "cbsdforms" }])
+# db.createUser( {user: "admin_cbsd",pwd: "cbsd2015",roles: [ { role: "userAdmin", db: "cbsdplatformdb" } ]})
+# db.grantRolesToUser("admin_cbsd", [ { role: "userAdminAnyDatabase", db: "cbsdplatformdb" }])
 
 
 # Reset dabatase and import datas
  
-DBB="cbsdforms"
+DBB="cbsdplatformdb"
 LOGIN="admin_cbsd"
 PASSWORD="cbsd2015"
 HOST="localhost"
