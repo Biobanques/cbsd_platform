@@ -75,7 +75,7 @@ class AnswerController extends Controller {
             if ($mixedResult['result'] == false)
                 $this->redirect(array('site/patient'));
             if ($patient->id === -1) {
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "An error occured with search, please contact webabb admin");
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ses informations n’existe dans le système, veuillez contacter l’administrateur des identités de patient pour en créer un.");
                 $this->redirect(array('site/patient'));
             }
 
@@ -94,7 +94,7 @@ class AnswerController extends Controller {
             else
                 $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'patient' => $patient));
         } else {
-            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Tous les champs ne sont pas remplis");
+            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Tous les champs ne sont pas remplis.");
             $this->redirect(array('site/patient'));
         }
     }
