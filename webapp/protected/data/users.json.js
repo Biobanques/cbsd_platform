@@ -8,9 +8,7 @@ db.user.insert({
     "email":"bernardte90@gmail.com",
     "telephone":"0625004713",
     "gsm":"",
-    "inactif":"0",
-    "cbsdforms_id": "",
-    "verifyCode":""
+    "inactif":"0"
 });
 
 db.user.insert({
@@ -22,9 +20,7 @@ db.user.insert({
     "email":"nicolas@nicolas.com",
     "telephone":"0625004713",
     "gsm":"",
-    "inactif":"0",
-    "cbsdforms_id": "",
-    "verifyCode":""
+    "inactif":"0"
 });
 
 db.user.insert({
@@ -36,9 +32,7 @@ db.user.insert({
     "email":"clinicien@clinicien.com",
     "telephone":"0123456789",
     "gsm":"",
-    "inactif":"0",
-    "cbsdforms_id": "",
-    "verifyCode":""
+    "inactif":"0"
 });
 
 db.user.insert({
@@ -50,9 +44,7 @@ db.user.insert({
     "email":"neuropathologiste@neuropathologiste.com",
     "telephone":"0123456789",
     "gsm":"",
-    "inactif":"1",
-    "cbsdforms_id": "",
-    "verifyCode":""
+    "inactif":"1"
 });
 
 db.user.insert({
@@ -64,9 +56,7 @@ db.user.insert({
     "email":"généticien@généticien.com",
     "telephone":"0123456789",
     "gsm":"",
-    "inactif":"1",
-    "cbsdforms_id": "",
-    "verifyCode":""
+    "inactif":"1"
 });
 
 db.user.insert({
@@ -78,7 +68,5 @@ db.user.insert({
     "email":"",
     "telephone":"",
     "gsm":"",
-    "inactif":"1",
-    "cbsdforms_id": "",
-    "verifyCode":""
+    "inactif":"1"
 });
