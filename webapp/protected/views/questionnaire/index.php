@@ -1,8 +1,3 @@
-<?php
-$this->breadcrumbs=array(
-	'AffichagePatient',
-);
-?>
 <h1>Questionnaires</h1>
 <div>List of questionnaires available.  </div>
 <?php

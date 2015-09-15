@@ -1,12 +1,3 @@
-<?php
-/* @var $this EchantillonController */
-/* @var $model Echantillon */
-
-$this->breadcrumbs = array(
-    'Questionnaires' => array('index'),
-    $model->id,
-);
-?>
 <?php echo Yii::app()->user->name ?>
 
 <hr />

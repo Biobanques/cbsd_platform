@@ -1,8 +1,5 @@
 <?php
 $this->pageTitle = Yii::app()->name . ' - Affiche patient';
-$this->breadcrumbs = array(
-    'Affichepatient',
-);
 ?>
 
 <p><?php echo Yii::app()->user->name ?>, voici les formulaires dont vous disposez pour ce patient.</p>

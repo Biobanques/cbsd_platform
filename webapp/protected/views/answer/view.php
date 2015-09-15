@@ -1,9 +1,3 @@
-<?php
-$this->breadcrumbs = array(
-    'My documents' => array('index'),
-    $model->id,
-);
-?>
 <?php echo Yii::app()->user->name ?>
 
 <hr />
