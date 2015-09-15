@@ -111,6 +111,15 @@ class Questionnaire extends EMongoSoftDocument {
     }
 
     /**
+     * Restitue le formulaire en mode edition. Permet de le modifier
+     * @param type $lang
+     * @return type
+     */
+    public function renderTabbedGroupEditMode($lang) {
+        return QuestionnaireHTMLRenderer::renderTabbedGroupEditMode($this, $lang);
+    }
+
+    /**
      * update questionnaire with fields filled.
      * Add question group if necessary
      */

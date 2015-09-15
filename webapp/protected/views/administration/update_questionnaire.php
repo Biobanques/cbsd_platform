@@ -1,6 +1,6 @@
 
-<h3 align="center">Formulaire <?php echo $model->id; ?> v3.5</h3>
-<p>Description: Formulaire <?php echo $model->id; ?> avec items 2015</p>
+<h3 align="center">Formulaire <?php echo $model->id; ?></h3>
+<p>Description: Formulaire <?php echo $model->description; ?></p>
 <hr />
 
 <br><bR>
@@ -37,7 +37,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
     ),
 ));
 ?>
-    <?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -45,20 +45,22 @@ $this->widget('bootstrap.widgets.TbButton', array(
         'enableAjaxValidation' => false,
     ));
     ?>
-    <div style="text-align:center;">
-        <?php
-        echo "<div style=\"text-align:center\">" . CHtml::submitButton('Save', array('class' => 'btn btn-default', 'style' => 'margin:5px;')) . "</div>";
-        echo CHtml::link('Retour', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default'));
-        ?>
-    </div>
     <br>
     <div>
         <?php
-        echo $model->renderTabbedGroup(Yii::app()->language);
+        echo $model->renderTabbedGroupEditMode(Yii::app()->language);
         ?>
     </div>
     <?php
     $this->endWidget();
     ?>
 
+</div>
+<div class="panel panel-primary">
+    <div class="panel-heading"><h4>Ajouter une question</h4></div>
+    <div class="panel-body">
+        <?php
+        echo $this->renderPartial('_form_question', array('model' => $questionForm));
+        ?>
+    </div>
 </div>

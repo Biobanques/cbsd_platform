@@ -45,6 +45,18 @@ class Question extends EMongoEmbeddedDocument {
     public $precomment_fr;
 
     /**
+     * init a question with params setted into a questionForm
+     * @param type $questionForm
+     */
+    public function setAttributesByQuestionForm($questionForm){
+        $this->id=$questionForm->id;
+        $this->label=$questionForm->label;
+        $this->label_fr=$questionForm->label;
+        $this->style=$questionForm->style;
+        $this->values=$questionForm->values;
+        $this->type=$questionForm->type;
+    }
+    /**
      *
      * @return array validation rules for model attributes.
      */
