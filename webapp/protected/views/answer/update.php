@@ -1,7 +1,3 @@
-<?php echo Yii::app()->user->name ?>
-
-<hr />
-
 <h4>Patient</h4>
 <div class="well">
     <table cellpadding="20">
