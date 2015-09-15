@@ -56,4 +56,27 @@ class AdministrationController extends Controller {
         ));
     }
 
+      /**
+     * Mise  àjour d un formulaire
+     * @param $id the ID of the model to be displayed
+     */
+    public function actionUpdate($id) {
+         $model = Questionnaire::model()->findByPk(new MongoID($id));
+        $this->render('update_questionnaire', array(
+            'model' => $model,
+        ));
+    }
+    
+        /**
+     * Delete un formulaire
+     * If deletion is successful, the browser will be redirected to the 'admin' page.
+     * @param integer $id the ID of the model to be deleted
+     */
+    public function actionDelete($id) {
+        $model = Questionnaire::model()->findByPk(new MongoID($id));
+        $model->delete();
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('formulaires'));
+    }
 }
