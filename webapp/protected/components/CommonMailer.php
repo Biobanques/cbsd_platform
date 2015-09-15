@@ -7,7 +7,6 @@
  */
 class CommonMailer
 {
-    //const PROD_URL = "\"http://www.ebiobanques.fr/";
     const DEV_URL = "\"http://localhost/cbsd_platform/webapp/";
     /**
      * from by default
@@ -48,12 +47,12 @@ class CommonMailer
     function sendMailInscriptionUser($to, $identifiant, $prenom, $nom, $pass) {
         $subject = "Bienvenue!";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\"><html><head>
-				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Message de ebiobanques.fr</title>
+				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Message de cbsdplatform.fr</title>
 				</head><body>
 				<table style=\"font-family:Verdana,sans-serif; font-size:11px; color:#374953; width: 550px;\">
 				<tr>
 				<td align=\"left\">
-				<a href=\"http://ebiobanques.fr/\" title=\"ebiobanques.fr\"><img alt=\"ebiobanques.fr\" height=\"70px\" width=\"458px\" src=\"http://www.ebiobanques.fr/wp-content/uploads/2012/08/logo211.jpg\" style=\"border:none;\" ></a>
+				<a href=\"http://ebiobanques.fr/\" title=\"cbsdplatform.fr\"><img alt=\"cbsdplatform.fr\" height=\"70px\" width=\"458px\" src=\"http://www.ebiobanques.fr/wp-content/uploads/2012/08/logo211.jpg\" style=\"border:none;\" ></a>
 				</td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
@@ -64,7 +63,7 @@ class CommonMailer
 						<tr>
 						<td align=\"left\" style=\"background-color:#DB3484; color:#FFF; font-size: 12px; font-weight:bold; padding: 0.5em 1em;\">
 
-						Merci d'avoir cr&eacute;&eacute; un compte sur ebiobanques.fr. Voici un rappel de vos codes d'acc&egrave;s</td>
+						Merci d'avoir cr&eacute;&eacute; un compte sur cbsdplatform.fr. Voici un rappel de vos codes d'acc&egrave;s</td>
 						</tr>
 						<tr><td>&nbsp;</td></tr>
 						<tr>
@@ -76,15 +75,15 @@ class CommonMailer
 										<tr><td>&nbsp;</td></tr>
 										<tr>
 										<td align=\"left\">
-										Vous pouvez d&egrave;s &agrave; pr&eacute;sent utiliser notre site internet <a href=\"http://ebiobanques.fr/\">ebiobanques.fr</a> pour g&eacute;rer vos r&eacute;servations de studios.
+										Vous pouvez d&egrave;s &agrave; pr&eacute;sent utiliser notre site internet <a href=\"http://ebiobanques.fr/\">cbsdplatform.fr</a> pour g&eacute;rer vos r&eacute;servations de studios.
 										</td>
 										</tr>
 										<tr><td>&nbsp;</td></tr>
 										<tr>
 										<td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
 										<a href=\"http://ebiobanques.fr/\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
-										ebiobanques.fr </a> - copyright BioSoftware Factory
-										<a href=\"http://www.gap-consulting.fr/\" style=\"text-decoration:none; color:#374953;\">www.biobanques.eu</a>
+										cbsdplatform.fr </a> - copyright y Biobanques
+										<a href=\"http://www.gap-consulting.fr/\" style=\"text-decoration:none; color:#374953;\">www.cbsdplatform.eu</a>
 										</td>
 										</tr>
 										</table>
@@ -114,7 +113,7 @@ class CommonMailer
 				<table style=\"font-family:Verdana,sans-serif; font-size:11px; color:#374953; width: 550px;\">
 				<tr>
 				<td align=\"left\">
-				<a href=\"http://ebiobanques.fr/\" title=\"ebiobanques.fr\"><img alt=\"ebiobanques.fr\" height=\"70px\" width=\"458px\" src=\"http://www.ebiobanques.fr/logo211.jpg\" style=\"border:none;\" ></a>
+				<a href=\"http://ebiobanques.fr/\" title=\"cbsdplatform.fr\"><img alt=\"cbsdplatform.fr\" height=\"70px\" width=\"458px\" src=\"http://www.ebiobanques.fr/logo211.jpg\" style=\"border:none;\" ></a>
 				</td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
@@ -125,7 +124,7 @@ class CommonMailer
 						<tr>
 						<td align=\"left\" style=\"background-color:#DB3484; color:#FFF; font-size: 12px; font-weight:bold; padding: 0.5em 1em;\">
 
-						Pour pouvoir profiter pleinement des services de ebiobanques.fr, il nous faut confirmer votre adresse email.<br>
+						Pour pouvoir profiter pleinement des services de cbsdplatform.fr, il nous faut confirmer votre adresse email.<br>
 						Pouvez-vous cliquer sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de finaliser la proc&eacute;dure de confirmation:
 						</td>
 						</tr>
@@ -139,7 +138,7 @@ class CommonMailer
 								<tr><td>&nbsp;</td></tr>
 								<tr>
 								<td align=\"left\">
-								Rendez-vous sur notre site internet <a href=\"http://ebiobanques.fr/\">ebiobanques.fr</a> pour g&eacute;rer vos r&eacute;servations d'échantillons biologiques.
+								Rendez-vous sur notre site internet <a href=\"http://ebiobanques.fr/\">cbsdplatform.fr</a> pour g&eacute;rer vos r&eacute;servations d'échantillons biologiques.
 								</td>
 								</tr>
 								<tr><td>&nbsp;</td></tr>
@@ -147,7 +146,7 @@ class CommonMailer
 								<td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
 								<a href=\"http://ebiobanques.fr/\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
 								ebiobanques.fr </a> - copyright BioSoftware Factory
-								<a href=\"http://www.gap-consulting.fr/\" style=\"text-decoration:none; color:#374953;\">www.biobanques.eu</a>
+								<a href=\"http://www.gap-consulting.fr/\" style=\"text-decoration:none; color:#374953;\">www.cbsdplatform.eu</a>
 								</td>
 								</tr>
 								</table>
@@ -155,40 +154,6 @@ class CommonMailer
 								</html>";
 
         CommonMailer::sendMail($to, $subject, $body);
-    }
-
-    /**
-     * envoi mail demande d'echantillons
-     */
-    function sendDemande($contact, $title, $detail, $sampleList) {
-        $to = Yii::app()->params ['adminEmail'];
-        if ($contact == null && $contact->email != null) {
-            $to = $contact->email;
-        }
-        $user = User::model()->findByPk(Yii::app()->user->id);
-        if ($user != null) {
-            $listEchantillons = '';
-            $subject = Yii::t('common', 'mailDemandeSubject') . ' : ' . $title;
-            if ($sampleList != null) {
-                foreach ($sampleList as $concernSample) {
-                    $listEchantillons .= '<li>' . $concernSample->id_sample . '</li>';
-                }
-
-                $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
-				<?xml version=\"1.0\" encoding=\"utf-8\"?>
-				<html><head>
-				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation email de ebiobanques.fr</title>
-				</head><body>
-				Cet email est une demande d'échantillons de $user->prenom $user->nom, par le biais du site <a href = \"http://www.ebiobanques.fr\">" .
-                        "ebiobanques.fr</a>.<br>Titre de la demande : $title <br>Détail de la demande : $detail<br>Cette demande concerne les échantillons suivants :" .
-                        " <br><ul>$listEchantillons </ul><br>Merci de vous mettre en relation avec " .
-                        "<a href=\"mailto:$user->email?subject=Re : Demande d'échantillons \"> $user->prenom $user->nom </a> pour avoir plus de détail sur cette demande.
-				<br><br>L'équipe <a href = \"http://www.ebiobanques.fr\">ebiobanques.fr</a>.</body>";
-                return CommonMailer::sendMail($to, $subject, $body);
-            } else {
-                return CommonMailer::sendMail(Yii::app()->params ['adminEmail'], $subject . ">anomalie : liste null", $body);
-            }
-        }
     }
 
     /**
@@ -220,29 +185,6 @@ class CommonMailer
     }
 
     /**
-     * send an email to confirm that the subscritption is valid and the account waiting for validatin by admin
-     * @param type $user
-     * @return type
-     */
-    public static function sendSubscribeUserMail($user) {
-        $to = $user->email;
-        $subject = "Welcome on cbsdplatform.fr " . $user->prenom . " " . $user->nom;
-        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
-				<?xml version=\"1.0\" encoding=\"utf-8\"?>
-				<html><head>
-				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
-                                <title>Welcome " . $user->prenom . " " . $user->nom . " on cbsdplatform.fr</title>
-				</head><body>
-                                Welcome " . $user->prenom . " " . $user->nom . " on cbsdforms.fr.
-			Your account is waiting for a validation by the administrator of cbsdplatform.<br>
-                        If you have any problem during your experience with cbsdforms.fr feel free to send an email to " . Yii::app()->params['adminEmail'] . "<br>
-                            Best
-	</body>
-		";
-        return CommonMailer::sendMail($to, $subject, $body);
-    }
-
-    /**
      * send an email to confirm that the account is valid.
      * @param type $user
      * @return type
@@ -253,7 +195,7 @@ class CommonMailer
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 		<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		<html><head>
-		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation de votre inscription sur ebiobanques.fr</title>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation de votre inscription sur cbsdplatform.fr</title>
 		</head><body>
 		Cher (Chère) $user->prenom $user->nom,<br><br>
 		Merci de vous être inscrit sur le site <a href=\"http://www.ebiobanques.fr/index.php\">cbsdplatform.fr</a>.<br>
@@ -267,7 +209,7 @@ class CommonMailer
 
     public static function sendUserRegisterRefusedMail($user) {
         $to = $user->email;
-        $subject = "Refus de votre inscription sur cbsdforms.fr";
+        $subject = "Refus de votre inscription sur cbsdplatform.fr";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 		<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		<html><head>
@@ -309,7 +251,7 @@ class CommonMailer
                 Identifiant : $login<br>
                 Password : $password <br>
                 Vous pouvez dès à présent vous connecter avec ces identifiants.
-A bientôt sur cbsdforms.fr
+A bientôt sur cbsdplatform.fr
 		</body>
 		";
             return CommonMailer::sendMail($to, $subject, $body);
