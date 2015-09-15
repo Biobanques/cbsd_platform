@@ -58,8 +58,14 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="span3" style="margin:-5px;">
     <select name="form">
         <option selected="selected" disabled="disabled">Sélection du formulaire</option>
-        <option value="demence">Formulaire Démence</option>
-        <option value="parkinson">Formulaire Parkinson</option>
+        <?php 
+        foreach($questionnaire as $fiche=>$value){
+            foreach($value as $k=>$v){
+                if ($k=='id')
+                echo "<option value=\"". $value['id'] . "\">" . $value['name_fr'] . "</option>";
+            }
+        }
+        ?>
     </select>
     </div>
     <div class="span3" style="margin:-5px;">
