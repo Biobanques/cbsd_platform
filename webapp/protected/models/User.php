@@ -50,7 +50,7 @@ class User extends EMongoDocument {
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('gsm', 'telPresent'),
             array('gsm, telephone', 'length', 'min' => 8),
-            array('prenom, nom, login, password, email, profil, verifyCode', 'required'),
+            array('prenom, nom, login, password, email, profil', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('password', 'pwdStrength'),

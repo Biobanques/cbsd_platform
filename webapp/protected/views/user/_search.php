@@ -30,31 +30,6 @@
 		<?php echo $form->textField($model,'email'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->label($model,'telephone'); ?>
-		<?php echo $form->textField($model,'telephone'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'gsm'); ?>
-		<?php echo $form->textField($model,'gsm'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'inactif'); ?>
-		<?php echo $form->textField($model,'inactif'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'verifyCode'); ?>
-		<?php echo $form->textField($model,'verifyCode'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'_id'); ?>
-		<?php echo $form->textField($model,'_id'); ?>
-	</div>
-
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

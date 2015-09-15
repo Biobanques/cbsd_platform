@@ -6,7 +6,7 @@
  * @author nmalservet
  *
  */
-class Questionnaire extends EMongoDocument {
+class Questionnaire extends EMongoSoftDocument {
 
     /**
      * champs classiques d echantillons

@@ -6,7 +6,7 @@ class UserController extends Controller {
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout = '//layouts/column2';
+    public $layout = '//layouts/menu_administration';
 
     /**
      * @return array action filters
@@ -112,7 +112,6 @@ class UserController extends Controller {
     public function actionAdmin() {
         $model = new User('search');
         $model->unsetAttributes();
-
         if (isset($_GET['User']))
             $model->setAttributes($_GET['User']);
 

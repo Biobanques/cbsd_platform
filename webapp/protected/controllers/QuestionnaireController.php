@@ -209,7 +209,19 @@ class QuestionnaireController extends Controller {
         ));
     }
 
+    /**
+     * Manages all models.
+     */
+    public function actionAdmin() {
+        $model = new Sample('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['Questionnaire']))
+            $model->attributes = $_GET['Questionnaire'];
 
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
 
     /**
      * Returns the data model based on the primary key given in the GET variable.
