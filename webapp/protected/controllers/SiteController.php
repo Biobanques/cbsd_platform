@@ -169,7 +169,6 @@ class SiteController extends Controller {
         $model = new User ();
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            //$model->profil = 0;
             $model->inactif = 1;
             if ($model->save()) {
                 if ($model->profil == 0) {
@@ -180,7 +179,8 @@ class SiteController extends Controller {
                         $this->redirect(array('site/index'));
                     }
                 }
-                $this->sendMail();
+                CommonMailer::sendSubscribeAdminMail($model);
+                CommonMailer::sendSubscribeUserMail($model);
                 Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
                 $this->redirect(array('site/index'));
             } else {
@@ -191,34 +191,6 @@ class SiteController extends Controller {
             'model' => $model
                 )
         );
-    }
-
-    public function sendMail() {
-        Yii::import('application.extensions.phpmailer.JPhpMailer');
-        $mailer = new JPhpMailer;
-        $mailer->IsSMTP();
-        $mailer->IsHTML(true);
-        $mailer->SMTPAuth = true;
-        $mailer->SMTPSecure = "ssl";
-        $mailer->Host = CommonProperties::$SMTP_SENDER_HOST;
-        $mailer->Port = CommonProperties::$SMTP_SENDER_PORT;
-
-        $mailer->Username = CommonProperties::$SMTP_SENDER_USERNAME;
-        $mailer->Password = CommonProperties::$SMTP_SENDER_PASSWORD;
-        $mailer->From = CommonProperties::$SMTP_SENDER_FROM_EMAIL;
-        $mailer->FromName = CommonProperties::$SMTP_SENDER_FROM_EMAIL;
-        $mailer->AddAddress(CommonProperties::$SMTP_SENDER_USERNAME, 'Bernard Te');
-        $mailer->Subject = "Confirmation de votre adresse email";
-        $mailer->Body = "Pour pouvoir profiter pleinement des services de cbsdforms.fr, il nous faut confirmer votre adresse email.<br>
-                    Pouvez-vous cliquer sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de finaliser la proc&eacute;dure de confirmation:.";
-        if ($mailer->Send()) {
-            echo "Le mail a été envoyé avec succès.";
-        } else {
-            echo "Une erreur est survenue, le mail n'a pas été envoyé : " . $mailer->ErrorInfo;
-            ;
-        }
-        $mailer->SmtpClose();
-        unset($mailer);
     }
 
 }

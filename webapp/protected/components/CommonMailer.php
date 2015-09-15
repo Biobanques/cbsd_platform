@@ -183,6 +183,29 @@ class CommonMailer
 		";
         return CommonMailer::sendMail($to, $subject, $body);
     }
+    
+    /**
+     * send an email to confirm that the subscritption is valid and the account waiting for validatin by admin
+     * @param type $user
+     * @return type
+     */
+    public static function sendSubscribeUserMail($user) {
+        $to = $user->email;
+        $subject = "Bienvenue sur cbsdplatform.fr " . $user->prenom . " " . $user->nom;
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+				<?xml version=\"1.0\" encoding=\"utf-8\"?>
+				<html><head>
+				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
+                                <title>Welcome " . $user->prenom . " " . $user->nom . " on cbsdplatform.fr</title>
+				</head><body>
+                                Bienvenue " . $user->prenom . " " . $user->nom . " sur cbsdplatform.fr.
+			Votre compte est en attente de confirmation par l'administrateur de cbsdplatform.<br>
+                        Si vous rencontrez des problèmes sur cbsdplatform.fr n'hésitez pas à envoyer un email à " . Yii::app()->params['adminEmail'] . "<br>
+                            Cordialement,
+	</body>
+		";
+        return CommonMailer::sendMail($to, $subject, $body);
+    }
 
     /**
      * send an email to confirm that the account is valid.
