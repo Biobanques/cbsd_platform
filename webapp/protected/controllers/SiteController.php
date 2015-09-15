@@ -98,9 +98,9 @@ class SiteController extends Controller {
     }
 
     public function actionPatient() {
-        $model = new Patient;
-        if (isset($_POST['Patient'])) {
-            $model->attributes = $_POST['Patient'];
+        $model = new PatientForm;
+        if (isset($_POST['PatientForm'])) {
+            $model->attributes = $_POST['PatientForm'];
         }
         $this->render('patient', array('model' => $model));
     }

@@ -51,7 +51,7 @@ class AnswerController extends Controller {
     }
 
     public function actionAffichepatient() {
-        $model = new Patient;
+        $model = new PatientForm;
         if (isset($_SESSION['datapatient'])) {
             $patient = $_SESSION['datapatient'];
             $model->id = $patient->id;
@@ -59,8 +59,8 @@ class AnswerController extends Controller {
             $model->prenom = $patient->firstName;
             $model->date_naissance = $patient->birthDate;
         }
-        if (isset($_POST['Patient'])) {
-            $model->attributes = $_POST['Patient'];
+        if (isset($_POST['PatientForm'])) {
+            $model->attributes = $_POST['PatientForm'];
             $patient = (object) null;
             $patient->id = null;
             $patient->source = '1'; //à identifier en fonction de l'app

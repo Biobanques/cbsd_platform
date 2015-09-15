@@ -3,7 +3,7 @@
 /**
  * This is the MongoDB Document model class based on table "patient".
  */
-class Patient extends CFormModel {
+class PatientForm extends CFormModel {
 
     public $id;
     public $nom;
