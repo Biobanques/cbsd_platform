@@ -1,7 +1,7 @@
 <?php
 
-class AnswerController extends Controller
-{
+class AnswerController extends Controller {
+
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -51,9 +51,16 @@ class AnswerController extends Controller
     }
 
     public function actionAffichepatient() {
-        $model = new Patient;
-        if (isset($_POST['Patient'])) {
-            $model->attributes = $_POST['Patient'];
+        $model = new PatientForm;
+        if (isset($_SESSION['datapatient'])) {
+            $patient = $_SESSION['datapatient'];
+            $model->id = $patient->id;
+            $model->nom = $patient->useName;
+            $model->prenom = $patient->firstName;
+            $model->date_naissance = $patient->birthDate;
+        }
+        if (isset($_POST['PatientForm'])) {
+            $model->attributes = $_POST['PatientForm'];
             $patient = (object) null;
             $patient->id = null;
             $patient->source = '1'; //à identifier en fonction de l'app
@@ -64,18 +71,32 @@ class AnswerController extends Controller
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
             $patient->id = CommonTools::wsGetPatient($patient);
-            if ($patient->id === -1)
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "An error occured with search, please contact webabb admin");
+            $mixedResult = $model->dateformat($patient->birthDate);
+            if ($mixedResult['result'] == false)
+                $this->redirect(array('site/patient'));
+            if ($patient->id === -1) {
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ses informations n’existe dans le système, veuillez contacter l’administrateur des identités de patient pour en créer un.");
+                $this->redirect(array('site/patient'));
+            }
+
             $model->id = $patient->id;
         }
+        if ($model->validate()) {
+            $criteria = new EMongoCriteria();
+            $criteria->login = Yii::app()->user->id;
+            $criteria->id_patient = $patient->id;
 
-        $criteria = new EMongoCriteria();
-        $criteria->login = Yii::app()->user->id;
-
-        $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
-        $_SESSION['datapatient'] = $patient;
-        $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider));
-        //$this->render('affichepatient', array('model' => $model));
+            $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
+            $questionnaire = Questionnaire::model()->findAll();
+            $_SESSION['datapatient'] = $patient;
+            if (isset($_SESSION['datapatient']))
+                $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'questionnaire' => $questionnaire));
+            else
+                $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'patient' => $patient));
+        } else {
+            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Tous les champs ne sont pas remplis.");
+            $this->redirect(array('site/patient'));
+        }
     }
 
     /**
@@ -106,8 +127,12 @@ class AnswerController extends Controller
                 Yii::app()->user->setFlash('error', "Document not saved. No Input to save.");
             }
         }
+        if (isset($_SESSION['datapatient'])) {
+            $patient = $_SESSION['datapatient'];
+        }
         $this->render('update', array(
             'model' => $model,
+            'patient' => $patient,
         ));
     }
 

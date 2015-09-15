@@ -25,5 +25,9 @@ class CommonTools
         }
     }
 
+    public static function isInDevMode() {
+        return CommonProperties::$DEV_MODE;
+    }
+    
 }
 ?>

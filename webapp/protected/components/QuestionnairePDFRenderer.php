@@ -59,7 +59,7 @@ class QuestionnairePDFRenderer {
         $pdf->setFormDefaultProp(array('lineWidth' => 1, 'borderStyle' => 'solid', 'fillColor' => "lightGray", 'strokeColor' => "gray"));
         
         $pdf->SetFont('helvetica', 'B', 18);
-        $pdf->Cell(0, 5, 'Biobanques Quality Form ', 0, 1, 'C');
+        $pdf->Cell(0, 5, 'Biobanques CBSDForms ', 0, 1, 'C');
         $pdf->Ln(10);
         $pdf->Cell(0, 5, $questionnaire->name, 0, 1, 'C');
         $pdf->Ln(10);

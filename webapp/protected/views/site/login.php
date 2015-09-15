@@ -2,44 +2,64 @@
 /* @var $this SiteController */
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
-
-$this->pageTitle=Yii::app()->name . ' - Login';
-$this->breadcrumbs=array(
-	'Login',
-);
 ?>
 
-<h1>Login</h1>
+<h1>Connexion utilisateur</h1>
+<hr />
 
-<p>Please fill out the following form with your login credentials:</p>
+<div class="row">
+    <div class="span4" style="margin-left:60px;">
+            <div class="form">
+                <?php
+                $form = $this->beginWidget('CActiveForm', array(
+                    'id' => 'login-form',
+                    'enableClientValidation' => true,
+                    'clientOptions' => array(
+                        'validateOnSubmit' => true,
+                    ),
+                ));
+                ?>
 
-<div class="form">
+                <p class="note"><?php echo Yii::t('common', 'ChampsObligatoires'); ?></p>
 
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-	'id'=>'login-form',
-    'type'=>'horizontal',
-	'enableClientValidation'=>true,
-	'clientOptions'=>array(
-		'validateOnSubmit'=>true,
-	),
-)); ?>
+                <div class="row">
+                    <?php echo $form->labelEx($model, 'username'); ?>
+                    <?php echo $form->textField($model, 'username'); ?>
+                    <?php echo $form->error($model, 'username'); ?>
+                </div>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+                <div class="row">
+                    <?php echo $form->labelEx($model, 'password'); ?>
+                    <?php echo $form->passwordField($model, 'password'); ?>
+                    <?php echo $form->error($model, 'password'); ?>
+                </div>
 
-	<?php echo $form->textFieldRow($model,'username'); ?>
+                <div class="row rememberMe">
+                    <?php echo $form->checkBox($model, 'rememberMe'); ?>
+                    <?php echo $form->label($model, 'rememberMe'); ?>
+                    <?php echo $form->error($model, 'rememberMe'); ?>
+                </div>
 
-	<?php echo $form->passwordFieldRow($model,'password',array(    )); ?>
+                <div class="row buttons">
+                    <?php echo CHtml::submitButton(Yii::t('common', 'seconnecter')); ?>
+                </div>
 
-	<?php echo $form->checkBoxRow($model,'rememberMe'); ?>
+                <?php
+                $this->endWidget();
+                echo CHtml::link(Yii::t('common', 'forgotedPwd'), array_merge(array("site/recoverPwd"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array()));
+                ?>
 
-	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
-            'buttonType'=>'submit',
-            'type'=>'primary',
-            'label'=>'Login',
-        )); ?>
-	</div>
 
-<?php $this->endWidget(); ?>
-
-</div><!-- form -->
+            </div><!-- form -->
+    </div>
+    <div class="span3" style="margin-top:70px;">
+            <div align='center'>
+                <?php echo Yii::t('common', 'noAccount') ?><br><br>
+                <?php
+                echo CHtml::button(Yii::t('common', 'subscribe'), array(
+                    'submit' => array_merge(array("site/subscribe"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())
+                ));
+                ?>
+            </div>
+    </div>
+</div>

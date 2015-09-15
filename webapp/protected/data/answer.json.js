@@ -1,3 +1,5 @@
+db.questionnaire_answer.drop()
+db.answer.drop()
 db.questionnaire_answer.insert({
     "questionnaireid":"depositform",
     "userid":"",

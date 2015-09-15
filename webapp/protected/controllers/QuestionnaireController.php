@@ -1,7 +1,7 @@
 <?php
 
-class QuestionnaireController extends Controller
-{
+class QuestionnaireController extends Controller {
+
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -49,8 +49,12 @@ class QuestionnaireController extends Controller
         }
         if ($answer != null)
             $model = $answer;
+        if (isset($_SESSION['datapatient'])) {
+            $patient = $_SESSION['datapatient'];
+        }
         $this->render('view', array(
             'model' => $model,
+            'patient' => $patient,
         ));
     }
 
@@ -66,8 +70,12 @@ class QuestionnaireController extends Controller
         }
         if ($answer != null)
             $model = $answer;
+        if (isset($_SESSION['datapatient'])) {
+            $patient = $_SESSION['datapatient'];
+        }
         $this->render('update', array(
             'model' => $model,
+            'patient' => $patient,
         ));
     }
 
@@ -79,10 +87,14 @@ class QuestionnaireController extends Controller
      * @param questionnaire
      */
     public function saveQuestionnaireAnswers($model) {
+        if (isset($_SESSION['datapatient'])) {
+            $patients = $_SESSION['datapatient'];
+        }
         $answer = new Answer;
         $answer->last_updated = new MongoDate();
         $answer->copy($model);
         $answer->login = Yii::app()->user->id;
+        $answer->id_patient = $patients->id;
         $flagNoInputToSave = true;
         foreach ($answer->answers_group as $answer_group) {
             foreach ($answer_group->answers as $answerQuestion) {
@@ -150,19 +162,7 @@ class QuestionnaireController extends Controller
      * @param integer $id the ID of the model to be updated
      */
     public function actionEdit($id) {
-//$model = $this->loadModel($id);
-//$form = new QuestionnaireGroupForm;
         Yii::app()->user->setFlash('warning', '<strong>Warning!</strong> Feature not available at this thime!.');
-        /* if (isset($_POST['QuestionnaireGroupForm'])) {
-          $form->attributes = $_POST['QuestionnaireGroupForm'];
-          if ($model->updateForm($form))
-          Yii::app()->user->setFlash('success', "Questionnaire updated with success");
-          }else {
-          Yii::app()->user->setFlash('error', "Questionnaire not updated. A problem occured.");
-          }
-         *
-         */
-
         $this->render('edit', array(
             'model' => $model,
             'form' => $form,
@@ -186,6 +186,14 @@ class QuestionnaireController extends Controller
      * Lists all models.
      */
     public function actionIndex() {
+        $model = new Questionnaire;
+        if (isset($_POST["form"])) {
+                    $criteria = new EMongoCriteria();
+                    $criteria->id = $_POST["form"];
+                    $id = Questionnaire::model()->find($criteria);
+                    $this->redirect('index.php?r=questionnaire/update&id=' . $id->_id);
+
+        }
         $dataProvider = new EMongoDocumentDataProvider('Questionnaire');
         $this->render('index', array(
             'dataProvider' => $dataProvider,

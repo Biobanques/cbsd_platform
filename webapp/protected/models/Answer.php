@@ -32,6 +32,12 @@ class Answer extends EMongoDocument {
      * user unique login filling this answer.
      */
     public $login;
+    
+    /**
+     * user unique patient id filling this answer.
+     */
+    public $id_patient;
+    
     /*
      * unique id of the questionnaire
      */

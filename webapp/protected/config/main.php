@@ -10,11 +10,9 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap')
 // CWebApplication properties can be configured here.
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'Biobanques CBSDForms',
+    'name' => 'Biobanques CBSDPlatform',
     //par defaut en français
     'language' => 'fr',
-    // page au démarrage
-    'defaultController' => 'site/login',
     // preloading 'log' component
     'preload' => array('log'),
     // autoloading model and component classes
@@ -32,7 +30,7 @@ return array(
     'modules' => array(
         'gii' => array(
             'class' => 'system.gii.GiiModule',
-            'password' => 'sakuragigou',
+            'password' => 'password',
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters' => array('127.0.0.1', '::1'),
             'generatorPaths' => array('ext.YiiMongoDbSuite.gii'),
@@ -43,19 +41,13 @@ return array(
         'user' => array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
+            'class' => 'WebUser',
             'returnUrl' => array('/site/patient'),
-        ),
-        'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=cbsdforms',
-            'emulatePrepare' => true,
-            'username' => 'root',
-            'password' => 'root',
-            'charset' => 'utf8',
         ),
         'mongodb' => array(
             'class' => 'EMongoDB',
             'connectionString' => CommonProperties::$CONNECTION_STRING,
-            'dbName' => 'cbsdforms',
+            'dbName' => 'cbsdplatformdb',
             'fsyncFlag' => true,
             'safeFlag' => true,
             'useCursor' => false,
@@ -72,13 +64,11 @@ return array(
             'routes' => array(
                 array(
                     'class' => 'CFileLogRoute',
-                    'levels' => 'error, trace',
+                    'levels' => 'error, warning',
                 ),
                 array(
                     'class' => 'CWebLogRoute',
-                    'levels' => 'error, trace',
-                    //'categories'=>'system.db.*',
-                    //'except'=>'system.db.ar.*', // shows all db level logs but nothing in the ar category
+                    'levels' => 'error, warning',
                     'enabled' => true,
                     'showInFireBug' => true
                 ),
@@ -89,6 +79,7 @@ return array(
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
-        'adminEmail' => 'nicolas.malservet@inserm.fr',
+        'adminEmail' => CommonProperties::$ADMIN_EMAIL,
+        'mailSystemActif' => CommonProperties::$MAIL_SYSTEM_ACTIVE,
     ),
 );

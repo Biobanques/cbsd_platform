@@ -1,8 +1,3 @@
-<?php
-$this->breadcrumbs=array(
-	'Questionnaires',
-);
-?>
 <h1>My documents filled</h1>
 <div>List of my questionnaires filled.  </div>
 <?php

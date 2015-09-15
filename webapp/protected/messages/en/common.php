@@ -76,7 +76,7 @@ return array(
     'rememberMe' => 'Remember me next time',
     'userName' => 'Username',
     'password' => 'Password',
-    'noAccount' => 'No account yet on ebiobanques.fr?',
+    'noAccount' => 'No account yet on cbsdforms.fr?',
     'subscribe' => 'Subscribe',
     'invalidUsername' => 'Invalid username.',
     'invalidPassword' => 'Incorrect password.',

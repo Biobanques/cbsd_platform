@@ -77,7 +77,7 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'rememberMe' => 'Se souvenir de moi',
     'userName' => 'Identifiant',
     'password' => 'Mot de passe',
-    'noAccount' => 'Pas encore de compte sur ebiobanques.fr?',
+    'noAccount' => 'Pas encore de compte sur cbsdforms.fr?',
     'subscribe' => 'S\'inscrire',
     'invalidUsername' => 'Nom d\'utilisateur invalide',
     'invalidPassword' => 'Mot de passe incorrect',

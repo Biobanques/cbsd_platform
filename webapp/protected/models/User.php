@@ -16,6 +16,22 @@ class User extends EMongoDocument {
      * @var type 
      */
     public $password;
+    
+    public $profil;
+    
+    public $nom;
+    
+    public $prenom;
+    
+    public $email;
+    
+    public $telephone;
+    
+    public $gsm;
+    
+    public $inactif;
+    
+    public $verifyCode;
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
@@ -28,14 +44,20 @@ class User extends EMongoDocument {
     }
 
     public function rules() {
-        return array(
-            array('login, password', 'required'),
-            array(
-                'login',
-                'safe',
-                'on' => 'search'
-            )
+        $result = array(
+            array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false, 'on' => 'subscribe'),
+            array('profil, inactif, gsm, telephone', 'numerical', 'integerOnly' => true),
+            array('prenom, nom, login, password, email', 'length', 'max' => 250),
+            array('gsm', 'telPresent'),
+            array('gsm, telephone', 'length', 'min' => 8),
+            array('prenom, nom, login, password, email, profil', 'required'),
+            array('email', 'CEmailValidator', 'allowEmpty' => false),
+            array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
+            array('password', 'pwdStrength'),
+            array('password', 'length', 'min' => 6),
+            array('prenom, nom, login, password, email, telephone, gsm, profil, inactif', 'safe', 'on' => 'search'),
         );
+        return $result;
     }
 
        /**
@@ -43,8 +65,17 @@ class User extends EMongoDocument {
      */
     public function attributeLabels() {
         return array(
+            '_id' => 'ID',
+            'prenom' => Yii::t('common', 'firstname'),
+            'nom' => Yii::t('common', 'lastname'),
             'login' => Yii::t('common', 'Login'),
             'password' => Yii::t('common', 'password'),
+            'email' => Yii::t('common', 'email'),
+            'telephone' => Yii::t('common', 'phone'),
+            'gsm' => Yii::t('common', 'gsm'),
+            'profil' => Yii::t('common', 'profil'),
+            'inactif' => Yii::t('common', 'inactif'),
+            'verifyCode' => Yii::t('common', 'verifyCode'),
         );
     }
 
@@ -60,10 +91,93 @@ class User extends EMongoDocument {
             'criteria' => $criteria
         ));
     }
-
-   
+  
+    /**
+     * profils : 0: clinicien, 1 : administrateur, 2: neuropathologiste, 3: généticien
+     * @return type
+     */
+    public function getProfil() {
+        $result = $this->profil;
+        $arr = $this->getArrayProfil();
+        if ($result != "" && $arr [$result] != null) {
+            $result = $arr [$result];
+        } else {
+            $result = "Not defined";
+        }
+        return $result;
+    }
     
 
+    /**
+     * @return type
+     */
+    public function getInactif() {
+        $result = $this->inactif;
+        $arr = $this->getArrayInactif();
+        if ($result != "" && $arr [$result] != null) {
+            $result = $arr [$result];
+        } else {
+            $result = "Not defined";
+        }
+        return $result;
+    }
+
+    /**
+     * get an array of consent used by dropDownLIst.
+     */
+    public function getArrayProfil() {
+        $res = array();
+        $res ['0'] = "clinicien";
+        $res ['1'] = "administrateur";
+        $res ['2'] = "neuropathologiste";
+        $res ['3'] = "généticien";
+        return $res;
+    }
+    
+    /**
+     * get an array of inactif
+     */
+    public function getArrayInactif() {
+        $res = array();
+        $res ['0'] = "actif";
+        $res ['1'] = "inactif";
+        return $res;
+    }
+
+    /**
+     * Custom validation rules
+     */
+    public function pwdStrength() {
+        $nbDigit = 0;
+        $length = strlen($this->password);
+        for ($i = 0; $i < $length; $i++) {
+            if (is_numeric($this->password[$i]))
+                $nbDigit++;
+        }
+        if ($nbDigit < 2)
+            $this->addError('password', Yii::t('common', 'notEnoughDigits'));
+    }
+    public function telPresent() {
+        if (in_array($this->telephone, array("", null)) && in_array($this->gsm, array("", null)))
+            $this->addError('gsm', 'Au moins un numéro de téléphone');
+    }
+    /**
+     * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only.
+     */
+    public function alphaOnly() {
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ -]*$/i", $this->nom))
+            $this->addError('nom', Yii::t('common', 'onlyAlpha'));
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ -]*$/i", $this->prenom))
+            $this->addError('prenom', Yii::t('common', 'onlyAlpha'));
+    }
+    /**
+     * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only. + numeric
+     */
+    public function alphaNumericOnly() {
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ0-9 -]*$/i", $this->login))
+            $this->addError('login', Yii::t('common', 'onlyAlphaNumeric'));
+    }
+    
 }
 
 ?>
