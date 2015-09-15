@@ -87,9 +87,10 @@ class AnswerController extends Controller {
             $criteria->id_patient = $patient->id;
 
             $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
+            $questionnaire = Questionnaire::model()->findAll();
             $_SESSION['datapatient'] = $patient;
             if (isset($_SESSION['datapatient']))
-                $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider));
+                $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'questionnaire' => $questionnaire));
             else
                 $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'patient' => $patient));
         } else {
