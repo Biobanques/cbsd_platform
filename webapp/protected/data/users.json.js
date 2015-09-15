@@ -16,3 +16,11 @@ db.user.insert({
     "password":"maha",
     "role":"user"
 });
+
+   db.user.insert( {
+   
+    "login" : "matth",
+    "password" : "guizmo",
+    "role" : "admin"
+
+});
