@@ -8,6 +8,8 @@
 class CommonMailer
 {
     const DEV_URL = "\"http://localhost/cbsd_platform/webapp/";
+    
+    const PROD_URL = "\"http://cbsd_platform.local";
     /**
      * from by default
      */
@@ -21,8 +23,9 @@ class CommonMailer
      * @param unknown $body
      */
     public static function sendMail($to, $subject, $body) {
+       $mailq = new mailqueue ();
         try {
-            $mailq = new mailqueue ();
+            
             $headers = 'MIME-Version: 1.0' . "\r\n";
             $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
             $headers .= 'From: ' . CommonMailer::MAIL_FROM . "\r\n" . 'Reply-To: ' . CommonMailer::MAIL_FROM . "\r\n" . 'X-Mailer: PHP/' . phpversion();
@@ -35,9 +38,12 @@ class CommonMailer
             $mailq->subject = $subject;
             $mailq->body = $body;
             $mailq->headers = $headers;
+            if(!$mailq->validate())
+               Yii::log("pb sur validation mail", "error"); 
+            
             return $mailq->save();
         } catch (Exception $e) {
-            Yii::log("exception sur save mail", "error");
+            Yii::log("exception sur save mail".print_r($mailq->errors), "error");
         }
     }
 

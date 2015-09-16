@@ -6,7 +6,7 @@
  * The followings are the available columns in table 'mail_queue':
  *
  */
-class mailqueue extends LoggableActiveRecord
+class mailqueue extends EMongoDocument
 {
 	
 	public $emailto;
