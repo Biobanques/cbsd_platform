@@ -6,7 +6,7 @@
  * ${PATH_TO_PROJECT}/protected/yiic sendmail
  * exemple POUR AUTOMATISER CET ENVOI :
  * >crontab -e
- * >* * * * * /data/developpement/workspace_zend_eclipse_php/ebiobanques.fr/ebiobanques/protected/yiic sendmail
+ * >* * * * * /Volumes/antares/NetBeansProjects/cbsd_platform/webapp/protected/yiic sendmail
  * //ancienne methoide longue avec php car block le thread courant si serveur smtp ne repond pas : mail($model->emailto, $model->subject, $model->body,$model->headers);
  * @author nicolas
  *
