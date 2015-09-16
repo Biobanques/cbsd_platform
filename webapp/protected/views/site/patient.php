@@ -21,7 +21,7 @@
     ?>
     
     <p>Bienvenue <?php echo Yii::app()->user->name ?></p>
-    <p>Veuillez renseigner les informations identifiantes patient pour accéder à son dossier.</p>
+    <p>Cet outil vous permet de retrouver les fiches patient à partir de son identité.</p>
 <hr />
     <p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
 
