@@ -14,7 +14,7 @@ $this->pageTitle = Yii::app()->name;
     <div class="span10">
         <?php
         $this->beginWidget('bootstrap.widgets.TbHeroUnit', array(
-            'heading' => 'Welcome to ' . CHtml::encode(Yii::app()->name),
+            'heading' => 'Bienvenue sur ' . CHtml::encode(Yii::app()->name),
         ));
         ?>
         <?php $this->endWidget(); ?>
