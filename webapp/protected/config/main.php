@@ -24,6 +24,8 @@ return array(
         'ext.YiiMongoDbSuite.extra.*',
         'application.models.*',
         'application.components.*',
+        'application.modules.auditTrail.models.AuditTrail',
+        'application.modules.auditTrail.behaviors.LoggableBehavior',
     ),
     /* theme : classic , bootstrap */
     'theme' => 'bootstrap',
