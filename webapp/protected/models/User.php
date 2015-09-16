@@ -131,6 +131,7 @@ class User extends EMongoDocument {
         $res ['1'] = "administrateur";
         $res ['2'] = "neuropathologiste";
         $res ['3'] = "généticien";
+        $res ['4'] = "chercheur";
         return $res;
     }
     

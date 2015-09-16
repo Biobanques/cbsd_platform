@@ -47,6 +47,14 @@ class WebUser extends CWebUser {
     public function isGeneticien() {
         return $this->getState('profil', '0') == 3;
     }
+    
+    /**
+     * return true if user is chercheur
+     * @return boolean
+     */
+    public function isChercheur() {
+        return $this->getState('profil', '0') == 4;
+    }
 
 }
 
