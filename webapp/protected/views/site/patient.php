@@ -27,19 +27,19 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-    <div class="row" style="float:left; margin-left:5px">
+    <div class="row" style="float:left; margin-left:0">
         <?php echo $form->labelEx($model, 'prenom'); ?>
         <?php echo $form->textField($model, 'prenom'); ?>
         <?php echo $form->error($model, 'prenom'); ?>
     </div>
     
-    <div class="row" style="float:left; margin-left:5px">
+    <div class="row" style="float:left; margin-left:35px">
         <?php echo $form->labelEx($model, 'nom'); ?>
         <?php echo $form->textField($model, 'nom'); ?>
         <?php echo $form->error($model, 'nom'); ?>
     </div>
 
-    <div class="row" style="float:left; margin-left:5px">
+    <div class="row" style="float:left; margin-left:35px">
         <?php echo $form->labelEx($model, 'date_naissance'); ?>
         <?php echo $form->textField($model, 'date_naissance'); ?>
         <?php echo $form->error($model, 'date_naissance'); ?>
