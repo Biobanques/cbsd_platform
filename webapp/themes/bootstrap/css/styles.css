@@ -1,3 +1,9 @@
 #page {
     padding-top: 60px;
 }
+
+.logo {
+    height: 120px;
+    width: 200px;
+    margin: 10px;
+}
