@@ -170,22 +170,23 @@ class SiteController extends Controller {
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
             $model->inactif = 1;
-            if ($model->save()) {
-                if ($model->profil == 0) {
-                    $model->inactif = 0;
-                    $model->update();
-                    if ($model->update()) {
-                        Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDForms !');
-                        $this->redirect(array('site/index'));
+            if ($model->validate())
+                if ($model->save()) {
+                    if ($model->profil == 0) {
+                        $model->inactif = 0;
+                        $model->update();
+                        if ($model->update()) {
+                            Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDForms !');
+                            $this->redirect(array('site/index'));
+                        }
                     }
+                    CommonMailer::sendSubscribeAdminMail($model);
+                    CommonMailer::sendSubscribeUserMail($model);
+                    Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                    $this->redirect(array('site/index'));
+                } else {
+                    Yii::app()->user->setFlash('error', Yii::t('common', 'error_register'));
                 }
-                CommonMailer::sendSubscribeAdminMail($model);
-                CommonMailer::sendSubscribeUserMail($model);
-                Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                $this->redirect(array('site/index'));
-            } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'error_register'));
-            }
         }
         $this->render('subscribe', array(
             'model' => $model
