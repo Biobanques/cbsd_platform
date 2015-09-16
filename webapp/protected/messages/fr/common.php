@@ -66,7 +66,7 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'folder_done' => 'Dossier fait',
     'passphrase' => 'Phrase de cryptage',
     'echUpdate' => 'Mise à jour de l\'échantillon ',
-    'Login' => 'Nom d\'utilisateur',
+    'Login' => 'Login',
     'notUnique' => 'existe déjà dans la base de données. Merci d\'en choisir un autre.',
     'notEnoughDigits' => 'Le mot de passe doit contenir au minimum 2 chiffres.',
     'FiReAct' => 'Reception de fichiers',
