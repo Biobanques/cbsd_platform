@@ -7,7 +7,9 @@
         </tr>
         <tr>
             <td><b>Prénom : </b><?php echo $patient->firstName; ?></td>
-            <td><b>Patient ID : </b><?php echo $patient->id; ?></td>
+            <?php if (Yii::app()->user->profil == 1)
+                echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
+            ?>
         </tr>
     </table>  
 </div>
