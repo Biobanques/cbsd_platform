@@ -2,7 +2,7 @@
 $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 ?>
 
-<p><?php echo Yii::app()->user->name ?>, voici les formulaires dont vous disposez pour ce patient.</p>
+<p><?php echo Yii::app()->user->name ?>, voici les fiches dont vous disposez pour ce patient.</p>
 <hr />
 <div>
     <h4>Patient</h4>
@@ -23,14 +23,14 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 </div>
 <hr />
 
-<h4> Formulaires patient renseignés : </h4>
+<h4> Fiches patient renseignés : </h4>
 
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $dataProvider,
     'template' => "{items}",
-    'emptyText' => 'Vous n\'avez pas de formulaires associés à ce patient.',
+    'emptyText' => 'Vous n\'avez pas de fiches associés à ce patient.',
     'columns' => array(
         array('name' => 'id', 'header' => 'Identifiant de la fiche'),
         array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
@@ -50,7 +50,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <div class="row">
     <div class="span3">
-        <p>Saisir un nouveau formulaire : </p>
+        <p>Saisir une nouvelle fiche : </p>
     </div>
     <div class="span3" style="margin:-5px;">
     <select name="form">

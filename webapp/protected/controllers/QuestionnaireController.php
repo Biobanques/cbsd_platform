@@ -193,6 +193,9 @@ class QuestionnaireController extends Controller {
                     $id = Questionnaire::model()->find($criteria);
                     $this->redirect('index.php?r=questionnaire/update&id=' . $id->_id);
 
+        } else {
+            Yii::app()->user->setFlash('warning', 'Veuillez sélectionner une fiche à remplir.');
+            $this->redirect('index.php?r=answer/affichepatient');
         }
         $dataProvider = new EMongoDocumentDataProvider('Questionnaire');
         $this->render('index', array(
