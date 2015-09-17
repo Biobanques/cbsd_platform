@@ -151,7 +151,7 @@ db.questionnaire.insert({
                     "id": "adl",
                     "title": "",
                     "title_fr": "ACTIVITES DE LA VIE QUOTIDIENNE (ADL)",
-                    "parent_group": "parkinsonform",
+                    "parent_group": "demenceform",
                     "questions": [{
                             "id": "adl1",
                             "label": "",
@@ -303,7 +303,7 @@ db.questionnaire.insert({
                     "id": "iadl",
                     "title": "",
                     "title_fr": "IADL",
-                    "parent_group": "parkinsonform",
+                    "parent_group": "demenceform",
                     "questions": [{
                             "id": "iadl1",
                             "label": "",
@@ -438,7 +438,7 @@ db.questionnaire.insert({
                             "values": "1,2,3",
                             "values_fr": "1,2,3",
                             "order": "47"
-                        }
+                        },
                     ]
                 }
             ]
