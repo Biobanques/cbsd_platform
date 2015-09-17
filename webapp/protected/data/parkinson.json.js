@@ -27,9 +27,9 @@ db.questionnaire.insert({
                             "order": "1"
                         },
                         {
-                            "id": "age",
-                            "label": "Age",
-                            "label_fr": "Age",
+                            "id": "born",
+                            "label": "Date of birth",
+                            "label_fr": "Date de naissance",
                             "type": "input",
                             "order": "2",
                             "style": "float:right"
