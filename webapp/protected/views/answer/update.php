@@ -63,16 +63,16 @@ $this->widget('bootstrap.widgets.TbButton', array(
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
     ));
     ?>
-    <div style="text-align:center;">
-        <?php
-        echo "<div style=\"text-align:center\">" . CHtml::submitButton('Save', array('class' => 'btn btn-default', 'style' => 'margin:5px;')) . "</div>";
-        echo CHtml::link('Retour', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default'));
-        ?>
-    </div>
     <br>
     <div>
         <?php
         echo $model->renderTabbedGroup(Yii::app()->language);
+        ?>
+    </div>
+    <div style="display:inline; margin-left: 35%; width: 100px; ">
+        <?php
+        echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-primary', 'style' => 'margin-top: 10px;'));
+        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: 10px; margin-left:20px;'));
         ?>
     </div>
     <?php

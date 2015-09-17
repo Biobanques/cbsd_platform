@@ -118,9 +118,9 @@ class AnswerController extends Controller {
                 }
             }if ($flagNoInputToSave == false) {
                 if ($model->save())
-                    Yii::app()->user->setFlash('success', "Document saved with success");
+                    Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardé.");
                 else {
-                    Yii::app()->user->setFlash('error', "Document not saved. A problem occured.");
+                    Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé.");
                     Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
                 }
             } else {
@@ -154,7 +154,7 @@ class AnswerController extends Controller {
     public function actionDelete($id) {
         $model = $this->loadModel($id);
         $model->delete();
-        Yii::app()->user->setFlash('success', 'The document has been deleted with success.');
+        Yii::app()->user->setFlash('success', 'La fiche a bien été supprimé.');
         $dataProvider = new EMongoDocumentDataProvider('Answer');
         $this->render('index', array(
             'dataProvider' => $dataProvider,

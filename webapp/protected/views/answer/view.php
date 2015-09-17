@@ -29,11 +29,6 @@ echo CHtml::link('Vue une page HTML', array('questionnaire/viewOnePage', 'id' =>
 $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
 echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), array());
 ?>
-<div style="text-align:center;">
-    <?php
-    echo CHtml::link('Retour', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default'));
-    ?>
-</div>
 
 <br /><br />
 
@@ -46,6 +41,11 @@ echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), ar
     echo $model->renderTabbedGroup(Yii::app()->language);
     ?>
 </div>
+    <div style="display:inline; margin:40%; width: 100px; ">
+        <?php
+        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:20px;'));
+        ?>
+    </div>
 <?php
 $this->endWidget();
 ?>

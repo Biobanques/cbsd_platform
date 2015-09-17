@@ -1,10 +1,10 @@
-//questionnaire deposit form
+//questionnaire demence form
 db.questionnaire.drop()
 db.questionnaire.insert({
-    "id": "parkinsonform",
-    "name": "Parkinson form",
-    "name_fr": "Formulaire Parkinson",
-    "description": "Formulaire Parkinson",
+    "id": "demenceform",
+    "name": "Demence form",
+    "name_fr": "Formulaire Démence",
+    "description": "Formulaire Démence",
     "last_modified": new Date(),
     "message_start": "Welcome to the deposit form for DNA/RNA, cells, fluids and tissues<br />(*)1 form per patient and per sampling date<br /> (*) 1 fiche par patient et par date de prélèvement",
     "message_end": "Thanks for your job",
@@ -16,9 +16,9 @@ db.questionnaire.insert({
 <b>Microbiology/Microbiologie</b><br>ChristineChaumeil,CRBduCHNOdesQuinze-VingtParis; équipe de Chantal BizetCRB Institut Pasteur–CRBIPParis,Anne Favel, I ; Villena, CRB Toxoplasma CHU Reims.",
     "questions_group":
             [{
-                    "id": "parkinsonform",
-                    "title": "Parkinson form",
-                    "title_fr": "Formulaire Parkinson",
+                    "id": "demenceform",
+                    "title": "Demence form",
+                    "title_fr": "Formulaire Démence",
                     "questions": [{
                             "id": "anonymouseidentificationnumber",
                             "label": "N°anonymous identification",

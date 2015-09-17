@@ -23,6 +23,6 @@ PORT="27017"
 
 # Reset dabatase and import datas
 
-mongo $DBB --port $PORT -u $LOGIN -p $PASSWORD ./parkinson.json.js
+mongo $DBB --port $PORT -u $LOGIN -p $PASSWORD ./demence.json.js
 mongo $DBB --port $PORT -u $LOGIN -p $PASSWORD ./answer.json.js
 mongo $DBB --port $PORT -u $LOGIN -p $PASSWORD ./users.json.js
