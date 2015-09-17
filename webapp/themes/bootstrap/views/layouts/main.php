@@ -65,7 +65,7 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
                 All Rights Reserved.<br/>
                 <div>
                     <?php echo CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class'=>'logo')); ?>
-                    <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.jpg', 'Arsep Fondation', array('class'=>'logo')); ?>
+                    <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class'=>'logo')); ?>
                     <?php echo CHtml::image(Base . '/images/logo FP.jpg', 'France Parkinson'); ?>
                     <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class'=>'logo')); ?>
                     <?php echo CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class'=>'logo')); ?>
