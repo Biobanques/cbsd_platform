@@ -167,6 +167,7 @@ db.questionnaire.insert({
                     "id" : "3b51",
                     "label" : "préciser",
                     "label_fr" : "préciser",
+                    "type" : "input",
                     "style" : "float:right"
                 },
                 {
@@ -304,6 +305,7 @@ db.questionnaire.insert({
                     "id" : "4d3d",
                     "label" : "préciser",
                     "label_fr" : "préciser",
+                    "type" : "input",
                     "style" : "float:right"
                 }, 
                 {
@@ -456,7 +458,105 @@ db.questionnaire.insert({
                     "label_fr" : "Si OUI : préciser",
                     "type" : "input",
                     "style" : "float:right"
-                }
+                }, 
+                {
+                    "id" : "4g1",
+                    "label" : "Addiction à la Dopa",
+                    "label_fr" : "Addiction à la Dopa",
+                    "type" : "radio",
+                    "values" : "Oui,Non"
+                }, 
+                {
+                    "id" : "4g1a",
+                    "label" : "Date",
+                    "label_fr" : "Date",
+                    "type" : "input",
+                    "style" : "float:right"
+                }, 
+                {
+                    "id" : "4g2",
+                    "label" : "Impulsivité / Trouble du contrôle",
+                    "label_fr" : "Impulsivité / Trouble du contrôle",
+                    "type" : "radio",
+                    "values" : "Oui,Non"
+                }, 
+                {
+                    "id" : "4g2a",
+                    "label" : "Date",
+                    "label_fr" : "Date",
+                    "type" : "input",
+                    "style" : "float:right"
+                }, 
+                {
+                    "id" : "4g3",
+                    "label" : "hypersexualité",
+                    "label_fr" : "hypersexualité",
+                    "type" : "radio",
+                    "values" : "Oui,Non"
+                }, 
+                {
+                    "id" : "4g3a",
+                    "label" : "Date",
+                    "label_fr" : "Date",
+                    "type" : "input",
+                    "style" : "float:right"
+                }, 
+                {
+                    "id" : "4g4",
+                    "label" : "achats pathologiques",
+                    "label_fr" : "achats pathologiques",
+                    "type" : "radio",
+                    "values" : "Oui,Non"
+                }, 
+                {
+                    "id" : "4g4a",
+                    "label" : "Date",
+                    "label_fr" : "Date",
+                    "type" : "input",
+                    "style" : "float:right"
+                }, 
+                {
+                    "id" : "4g5",
+                    "label" : "Appétence pour les aliments sucrés",
+                    "label_fr" : "Appétence pour les aliments sucrés",
+                    "type" : "radio",
+                    "values" : "Oui,Non"
+                }, 
+                {
+                    "id" : "4g5a",
+                    "label" : "Date",
+                    "label_fr" : "Date",
+                    "type" : "input",
+                    "style" : "float:right"
+                }, 
+                {
+                    "id" : "4g6",
+                    "label" : "Punding",
+                    "label_fr" : "Punding",
+                    "type" : "radio",
+                    "values" : "Oui,Non"
+                }, 
+                {
+                    "id" : "4g6a",
+                    "label" : "Date",
+                    "label_fr" : "Date",
+                    "type" : "input",
+                    "style" : "float:right"
+                }, 
+                {
+                    "id" : "4g7",
+                    "label" : "Autre",
+                    "label_fr" : "Autre",
+                    "type" : "radio",
+                    "values" : "Oui,Non"
+                }, 
+                {
+                    "id" : "4g7a",
+                    "label" : "préciser",
+                    "label_fr" : "préciser",
+                    "type" : "input",
+                    "style" : "float:right"
+                }           
             ],
             "parent_group" : "parkinsonform"
         }
