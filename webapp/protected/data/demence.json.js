@@ -19,19 +19,12 @@ db.questionnaire.insert({
                     "id": "demenceform",
                     "title": "Demence form",
                     "title_fr": "Formulaire Démence",
-                    "questions": [{
-                            "id": "anonymouseidentificationnumber",
-                            "label": "N°anonymous identification",
-                            "label_fr": "N°anonyme d’identification",
-                            "type": "input",
-                            "order": "1"
-                        },
+                    "questions": [
                         {
                             "id": "born",
                             "label": "Date of birth",
                             "label_fr": "Date de naissance",
                             "type": "input",
-                            "order": "2",
                             "style": "float:right"
                         },
                         {
@@ -39,15 +32,13 @@ db.questionnaire.insert({
                             "label": "Gender",
                             "label_fr": "Genre",
                             "type": "radio",
-                            "values": "M,F",
-                            "order": "3"
+                            "values": "M,F"
                         },
                         {
                             "id": "birth",
                             "label": "Place of birth",
                             "label_fr": "Lieu de naissance",
                             "type": "input",
-                            "order": "4",
                             "style": "float:right"
                         },
                         {
@@ -55,95 +46,83 @@ db.questionnaire.insert({
                             "label": "Place of life",
                             "label_fr": "Lieu de vie",
                             "type": "radio",
-                            "values": "Maison,EPHAD,Autre (à préciser)",
-                            "order": "5"
+                            "values": "Maison,EPHAD,Autre (à préciser)"
                         },
                         {
                             "id": "lastjob",
                             "label": "Last job",
                             "label_fr": "Dernier métier",
                             "type": "checkbox",
-                            "values": "Cultivateur-agriculteur,Artisan,Commerçant et chef d'entreprise,Cadres et professions intellectuelles supérieures,Professions intermédiaires,Employé,Ouvrier,Femme au foyer,Autres,Sans",
-                            "order": "6"
+                            "values": "Cultivateur-agriculteur,Artisan,Commerçant et chef d'entreprise,Cadres et professions intellectuelles supérieures,Professions intermédiaires,Employé,Ouvrier,Femme au foyer,Autres,Sans"
                         },
                         {
                             "id": "stopactivity",
                             "label": "Date of stop activity",
                             "label_fr": "Date de l’arrêt de l’activité",
-                            "type": "input",
-                            "order": "7"
+                            "type": "input"
                         },
                         {
                             "id": "stopactivity1",
                             "label": "",
                             "label_fr": "",
                             "type": "radio",
-                            "values": "Maladie,Retraite,Retraite anticipé",
-                            "order": "8"
+                            "values": "Maladie,Retraite,Retraite anticipé"
                         },
                         {
                             "id": "stopactivity2",
                             "label": "",
                             "label_fr": "",
                             "type": "radio",
-                            "values": "Maladie,Autres,Non déterminé",
-                            "order": "9"
+                            "values": "Maladie,Autres,Non déterminé"
                         },
                         {
                             "id": "trouble_memoire",
                             "label": "",
                             "label_fr": "Trouble de la mémoire épisodique",
                             "type": "radio",
-                            "values": "Oui,Non",
-                            "order": "10"
+                            "values": "Oui,Non"
                         },
                         {
                             "id": "life",
                             "label": "",
                             "label_fr": "Entravant la vie quotidienne",
                             "type": "radio",
-                            "values": "Oui,Non",
-                            "order": "11"
+                            "values": "Oui,Non"
                         },
                         {
                             "id": "six_months",
                             "label": "",
                             "label_fr": "Depuis plus de 6 mois",
                             "type": "radio",
-                            "values": "Oui,Non",
-                            "order": "12"
+                            "values": "Oui,Non"
                         },
                         {
                             "id": "trouble_comportement",
                             "label": "",
                             "label_fr": "Troubles du comportement",
                             "type": "radio",
-                            "values": "Oui,Non",
-                            "order": "13"
+                            "values": "Oui,Non"
                         },
                         {
                             "id": "aphasie",
                             "label": "",
                             "label_fr": "Aphasie",
                             "type": "radio",
-                            "values": "Oui,Non",
-                            "order": "14"
+                            "values": "Oui,Non"
                         },
                         {
                             "id": "apraxie",
                             "label": "",
                             "label_fr": "Apraxie",
                             "type": "radio",
-                            "values": "Oui,Non",
-                            "order": "15"
+                            "values": "Oui,Non"
                         },
                         {
                             "id": "agnosie_visuelle",
                             "label": "",
                             "label_fr": "Agnosie visuelle",
                             "type": "radio",
-                            "values": "Oui,Non",
-                            "order": "16"
+                            "values": "Oui,Non"
                         }
                     ]
                 },
@@ -158,8 +137,7 @@ db.questionnaire.insert({
                             "label_fr": "Ne reçoit aucune aide (rentre et sort seul de la baignoire si celle-ci est le moyen habituel de toilette.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "17"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl2",
@@ -167,8 +145,7 @@ db.questionnaire.insert({
                             "label_fr": "Reçoit de l'aide pour laver certaines parties du corps (comme le dos ou une jambe).",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "18"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl3",
@@ -176,8 +153,7 @@ db.questionnaire.insert({
                             "label_fr": "Reçoit de 1'aide pour laver plus d'une partie du corps.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "19"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl4",
@@ -185,8 +161,7 @@ db.questionnaire.insert({
                             "label_fr": "Prend les vêtements et s'habille complètement sans aide.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "20"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl5",
@@ -194,8 +169,7 @@ db.questionnaire.insert({
                             "label_fr": "Prend les habits et s'habille sans aide sauf pour les chaussures.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "21"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl6",
@@ -203,8 +177,7 @@ db.questionnaire.insert({
                             "label_fr": "Reçoit de l'aide pour prendre les habits et/ou s'habiller ou reste partiellement ou totalement dévêtu.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "22"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl7",
@@ -212,8 +185,7 @@ db.questionnaire.insert({
                             "label_fr": "Va aux toilettes, se nettoie et arrange ses vêtements sans aide (peut s'aider d'un support comme une canne, un déambulateur, une chaise roulante et peut utiliser un bassin ou une chaise percée).",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "23"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl8",
@@ -221,8 +193,7 @@ db.questionnaire.insert({
                             "label_fr": "Reçoit de l'aide pour aller aux toilettes... ne va pas aux toilettes.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "24"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl9",
@@ -230,8 +201,7 @@ db.questionnaire.insert({
                             "label_fr": "Se couche et se lève du lit aussi bien qu'il s'assoit ou se lève d'une chaise, sans aide (peut s'aider d'un support comme un déambulateur ou une canne).",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "25"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl10",
@@ -239,8 +209,7 @@ db.questionnaire.insert({
                             "label_fr": "Se couche ou se lève avec aide.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "26"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl11",
@@ -248,8 +217,7 @@ db.questionnaire.insert({
                             "label_fr": "Reste alité.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "27"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl12",
@@ -257,8 +225,7 @@ db.questionnaire.insert({
                             "label_fr": "Contrôle parfaitement seul son élimination.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "28"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl13",
@@ -266,8 +233,7 @@ db.questionnaire.insert({
                             "label_fr": "A quelques petits accidents ou est incotinent (urine ou selles).",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "29"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl14",
@@ -275,8 +241,7 @@ db.questionnaire.insert({
                             "label_fr": "Mange sans aide.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "30"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl15",
@@ -284,8 +249,7 @@ db.questionnaire.insert({
                             "label_fr": "Mange seul mais a besoin d'une aide pour couper la viande ou pour beurrer les tartines.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "31"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "adl16",
@@ -293,8 +257,7 @@ db.questionnaire.insert({
                             "label_fr": "Reçoit une aide pour manger ou et nourrit partiellement ou totalement à l’aide d'une sonde ou de solutés intraveineux.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "32"
+                            "values_fr": "1,2,3"
                         },
   
                     ]
@@ -310,8 +273,7 @@ db.questionnaire.insert({
                             "label_fr": "Se sert normalement du téléphone.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "33"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl2",
@@ -319,8 +281,7 @@ db.questionnaire.insert({
                             "label_fr": "Compose quelques numéros très connus.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "34"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl3",
@@ -328,8 +289,7 @@ db.questionnaire.insert({
                             "label_fr": "N’utilise pas du tout le téléphone spontanément.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "35"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl4",
@@ -337,8 +297,7 @@ db.questionnaire.insert({
                             "label_fr": "Incapable d’utiliser le téléphone.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "36"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl5",
@@ -346,8 +305,7 @@ db.questionnaire.insert({
                             "label_fr": "Utilise les moyens de transports de façon indépendante ou conduit sa propre voiture.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "37"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl6",
@@ -355,8 +313,7 @@ db.questionnaire.insert({
                             "label_fr": "Organise ses déplacements en taxi ou n’utilise aucun moyen de transport public.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "38"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl7",
@@ -364,8 +321,7 @@ db.questionnaire.insert({
                             "label_fr": "Utilise les transports publics avec l’aide de quelqu’un.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "39"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl8",
@@ -373,8 +329,7 @@ db.questionnaire.insert({
                             "label_fr": "Déplacement limité en taxi ou en voiture avec l’aide de quelqu’un.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "40"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl9",
@@ -382,8 +337,7 @@ db.questionnaire.insert({
                             "label_fr": "Est responsable de la prise de ses médicaments (dose et rythmes corrects).",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "41"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl10",
@@ -391,8 +345,7 @@ db.questionnaire.insert({
                             "label_fr": "Est responsable de la prise de ses médicaments si les doses ont été préparées à l’avance.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "42"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl11",
@@ -400,8 +353,7 @@ db.questionnaire.insert({
                             "label_fr": "Est incapable de prendre seul ses médicaments même si ceux-ci ont été à l’avance.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "43"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl12",
@@ -409,8 +361,7 @@ db.questionnaire.insert({
                             "label_fr": "Non applicable, n’a jamais manipulé l’argent.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "44"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl13",
@@ -418,8 +369,7 @@ db.questionnaire.insert({
                             "label_fr": "Gère ses finances de façon autonome.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "45"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl14",
@@ -427,8 +377,7 @@ db.questionnaire.insert({
                             "label_fr": "Se débrouille pour les achats quotidiens, mais a besoin d’aide pour les opérations à la banque et les achats importants.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "46"
+                            "values_fr": "1,2,3"
                         },
                         {
                             "id": "iadl15",
@@ -436,8 +385,7 @@ db.questionnaire.insert({
                             "label_fr": "Incapable de manipuler l’argent.",
                             "type": "list",
                             "values": "1,2,3",
-                            "values_fr": "1,2,3",
-                            "order": "47"
+                            "values_fr": "1,2,3"
                         },
                     ]
                 }
