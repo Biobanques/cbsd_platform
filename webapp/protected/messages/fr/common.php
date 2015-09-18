@@ -106,8 +106,11 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'atLeastOneField' => 'Vous devez remplir au moins un champs pour récupérer votre mot de passe.',
     'recoverMessageSent' => 'Un message contenant vos identifiants de connexion a été envoyé à l\'adresse : {userEmail}',
     'noUserWithEmailAndIdentifier' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'identifiant \'{badIdentifier}\' et l\'email \'{badEmail}\'',
+    'noUserWithLastnameAndFirstname' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec le nom \'{badLastname}\' et le prénom \'{badFirstname}\'',
     'noUserWithEmail' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'email \'{badEmail}\'',
     'noUserWithIdentifier' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'identifiant \'{badIdentifier}\'',
+    'noUserWithLastname' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec le nom \'{badLastname}\'',
+    'noUserWithFirstname' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec le prénom \'{badFirstname}\'',
     'download' => 'Télécharger \'filename\'',
 );
 ?>

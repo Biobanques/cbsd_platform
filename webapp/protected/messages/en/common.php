@@ -105,8 +105,11 @@ To participate to feeding of system, a simple request to the infrastructure Biob
     'atLeastOneField' => 'You have to fill at least one field to get your password back.',
     'recoverMessageSent' => 'A message with your credentials was sent at the following mail adress : {userEmail}',
     'noUserWithEmailAndIdentifier' => 'There is no user in our database with the identifier \'{badIdentifier}\' and the email \'{badEmail}\'',
+    'noUserWithLastnameAndFirstname' => 'There is no user in our database with the lastname \'{badLastname}\' and the firstname \'{badFirstname}\'',
     'noUserWithEmail' => 'There is no user in our database with the email \'{badEmail}\'',
     'noUserWithIdentifier' => 'There is no user in our database with the identifier \'{badIdentifier}\'',
+    'noUserWithLastname' => 'There is no user in our database with the lastname \'{badLastname}\'',
+    'noUserWithFirstname' => 'There is no user in our database with the firstname \'{badFirstname}\'',
     'download' => 'Download {filename}',
 );
 ?>
