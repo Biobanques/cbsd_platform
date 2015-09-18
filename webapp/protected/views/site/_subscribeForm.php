@@ -86,3 +86,10 @@
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var select = document.getElementById("User_profil");
+            select.removeChild(select.options[1]);
+        }
+    </script>

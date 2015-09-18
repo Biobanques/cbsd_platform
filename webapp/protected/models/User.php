@@ -132,7 +132,10 @@ class User extends EMongoDocument {
         $res ['2'] = "neuropathologiste";
         $res ['3'] = "généticien";
         $res ['4'] = "chercheur";
-        return $res;
+        $resArrayObject = new ArrayObject($res);
+        $resArrayObject->asort();
+
+        return $resArrayObject;
     }
     
     /**
