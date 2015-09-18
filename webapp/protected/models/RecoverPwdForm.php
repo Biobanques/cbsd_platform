@@ -7,8 +7,8 @@
  */
 class RecoverPwdForm extends CFormModel
 {
-    public $email;
-    public $identifier;
+    public $nom;
+    public $prenom;
 
     /**
      * Declares the validation rules.
@@ -17,8 +17,7 @@ class RecoverPwdForm extends CFormModel
      */
     public function rules() {
         return array(
-            array('email', 'CEmailValidator', 'allowEmpty' => true),
-            array('identifier', 'type', 'type' => 'string')
+            array('nom, prenom', 'type', 'type' => 'string')
         );
     }
 
@@ -27,8 +26,8 @@ class RecoverPwdForm extends CFormModel
      */
     public function attributeLabels() {
         return array(
-            'email' => Yii::t('common', 'email'),
-            'identifier' => Yii::t('common', 'identifier')
+            'nom' => Yii::t('common', 'lastname'),
+            'prenom' => Yii::t('common', 'firstname')
         );
     }
 
@@ -37,40 +36,40 @@ class RecoverPwdForm extends CFormModel
         $result = false;
         $message = '';
         $user = null;
-        if (!empty($this->email) || !empty($this->identifier)) {
-            if (!empty($this->email) && !empty($this->identifier)) {
+        if (!empty($this->nom) || !empty($this->prenom)) {
+            if (!empty($this->nom) && !empty($this->prenom)) {
                 $criteria = new EMongoCriteria();
-                $criteria->email = $this->email;
-                $criteria->login = $this->identifier;
+                $criteria->nom = $this->nom;
+                $criteria->prenom = $this->prenom;
                 $user = User::model()->find($criteria);
                 if ($user != null) {
                     $result = true;
                     $message = Yii::t('common', 'recoverMessageSent', array('{userEmail}' => $user->email));
                 } else {
                     $result = false;
-                    $message = Yii::t('common', 'noUserWithEmailAndIdentifier', array('{badEmail}' => $this->email, '{badIdentifier}' => $this->identifier));
+                    $message = Yii::t('common', 'noUserWithEmailAndIdentifier', array('{badEmail}' => $this->nom, '{badIdentifier}' => $this->prenom));
                 }
-            } elseif (!empty($this->email)) {
+            } elseif (!empty($this->nom)) {
                 $criteria = new EMongoCriteria();
-                $criteria->email = $this->email;
+                $criteria->nom = $this->nom;
                 $user = User::model()->find($criteria);
                 if ($user != null) {
                     $result = true;
                     $message = Yii::t('common', 'recoverMessageSent', array('{userEmail}' => $user->email));
                 } else {
                     $result = false;
-                    $message = Yii::t('common', 'noUserWithEmail', array('{badEmail}' => $this->email));
+                    $message = Yii::t('common', 'noUserWithEmail', array('{badEmail}' => $this->nom));
                 }
-            } elseif (!empty($this->identifier)) {
+            } elseif (!empty($this->prenom)) {
                 $criteria = new EMongoCriteria();
-                $criteria->login = $this->identifier;
+                $criteria->prenom = $this->prenom;
                 $user = User::model()->find($criteria);
                 if ($user != null) {
                     $result = true;
                     $message = Yii::t('common', 'recoverMessageSent', array('{userEmail}' => $user->email));
                 } else {
                     $result = false;
-                    $message = Yii::t('common', 'noUserWithIdentifier', array('{badIdentifier}' => $this->identifier));
+                    $message = Yii::t('common', 'noUserWithIdentifier', array('{badIdentifier}' => $this->prenom));
                 }
             }
         } else {
