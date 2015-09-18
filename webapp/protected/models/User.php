@@ -50,7 +50,7 @@ class User extends EMongoDocument {
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('login', 'telPresent'),
             array('gsm, telephone', 'length', 'min' => 8),
-            array('prenom, nom, login, password, email, profil, telephone', 'required'),
+            array('prenom, nom, login, password, email, profil, telephone, verifyCode', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('password', 'pwdStrength'),
@@ -155,7 +155,7 @@ class User extends EMongoDocument {
             if (is_numeric($this->password[$i]))
                 $nbDigit++;
         }
-        if ($nbDigit < 2)
+        if ($nbDigit < 2 && $this->password != "")
             $this->addError('password', Yii::t('common', 'notEnoughDigits'));
     }
     public function telPresent() {

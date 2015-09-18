@@ -11,80 +11,78 @@
         'enableAjaxValidation' => false,
     ));
     ?>
-    
+
     <hr />
-    
+
     <p class="note"><?php echo Yii::t('common', 'ChampsObligatoires'); ?></p>
 
     <?php echo $form->errorSummary($model); ?>
-    <table cellpadding="10" style="margin-left:-10px"><tr>
-            <td>
-                <?php echo $form->labelEx($model, 'prenom'); ?>
-                <?php echo $form->textField($model, 'prenom', array('size' => 20, 'maxlength' => 250)); ?>
-                <?php echo $form->error($model, 'prenom'); ?>
-            </td>
-            <td>
-                <?php echo $form->labelEx($model, 'nom'); ?>
-                <?php echo $form->textField($model, 'nom', array('size' => 20, 'maxlength' => 250)); ?>
-                <?php echo $form->error($model, 'nom'); ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <?php echo $form->labelEx($model, 'login'); ?>
-                <?php echo $form->textField($model, 'login', array('size' => 20, 'maxlength' => 250)); ?>
-                <?php echo $form->error($model, 'login'); ?>
-            </td>
-            <td>
-                <?php echo $form->labelEx($model, 'password'); ?>
-                <?php echo $form->passwordField($model, 'password', array('size' => 20, 'maxlength' => 250)); ?>
-                <?php echo $form->error($model, 'password'); ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <?php echo $form->labelEx($model, 'email'); ?>
-                <?php echo $form->textField($model, 'email', array('size' => 20, 'maxlength' => 250)); ?>
-                <?php echo $form->error($model, 'email'); ?>
-            </td>
-            <td>
-                <?php echo $form->labelEx($model, 'profil'); ?>
-                <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfil(), array('prompt' => '----')); ?>
-                <?php echo $form->error($model, 'profil'); ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <?php echo $form->labelEx($model, 'telephone'); ?>
-                <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250)); ?>
-                <?php echo $form->error($model, 'telephone'); ?>
-            </td>
-            <td>
-                <?php echo $form->labelEx($model, 'gsm'); ?>
-                <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250)); ?>
-                <?php echo $form->error($model, 'gsm'); ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p class="note">Cliquez sur l'image pour rafraichir</p>
-                <?php
-                $this->widget('CCaptcha', array('clickableImage' => true, 'showRefreshButton' => false));
-                echo '<br>';
-                echo $form->labelEx($model, 'verifyCode');
-                echo $form->textField($model, 'verifyCode');
-                echo $form->error($model, 'verifyCode');
-                ?>
-            </td>
-        </tr>
-        <tr>
-            <td style="float:right;">
-                <div class="row buttons" style="float:left;">
-                    <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save')); ?>
-                </div>
-            </td>
-        </tr>
-    </table>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'prenom'); ?>
+        <?php echo $form->textField($model, 'prenom', array('size' => 20, 'maxlength' => 250)); ?>
+        <?php echo $form->error($model, 'prenom'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'nom'); ?>
+        <?php echo $form->textField($model, 'nom', array('size' => 20, 'maxlength' => 250)); ?>
+        <?php echo $form->error($model, 'nom'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'login'); ?>
+        <?php echo $form->textField($model, 'login', array('size' => 20, 'maxlength' => 250)); ?>
+        <?php echo $form->error($model, 'login'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'password'); ?>
+        <?php echo $form->passwordField($model, 'password', array('size' => 20, 'maxlength' => 250)); ?>
+        <?php echo $form->error($model, 'password'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'email'); ?>
+        <?php echo $form->textField($model, 'email', array('size' => 20, 'maxlength' => 250)); ?>
+        <?php echo $form->error($model, 'email'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'profil'); ?>
+        <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfil(), array('prompt' => '----')); ?>
+        <?php echo $form->error($model, 'profil'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'telephone'); ?>
+        <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250)); ?>
+        <?php echo $form->error($model, 'telephone'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'gsm'); ?>
+        <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250)); ?>
+        <?php echo $form->error($model, 'gsm'); ?>
+    </div>
+
+    <div class="row">
+        <p class="note">Cliquez sur l'image pour rafraichir</p>
+        <?php
+        $this->widget('CCaptcha', array('clickableImage' => true, 'showRefreshButton' => false));
+        echo '<br>';
+        echo $form->labelEx($model, 'verifyCode');
+        echo $form->textField($model, 'verifyCode');
+        echo $form->error($model, 'verifyCode');
+        ?>
+    </div>
+
+    <div class="row">
+
+        <div class="row buttons" style="float:left;">
+            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save')); ?>
+        </div>
+    </div>
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->
