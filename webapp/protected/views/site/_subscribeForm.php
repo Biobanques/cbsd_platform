@@ -68,7 +68,7 @@
     
     <div class="row">
         <div id="address" style="display:none;">
-        <?php echo $form->labelEx($model, 'addresse'); ?>
+        <?php echo $form->labelEx($model, 'address'); ?>
         <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
         <?php echo $form->error($model, 'address'); ?>
         </div>
