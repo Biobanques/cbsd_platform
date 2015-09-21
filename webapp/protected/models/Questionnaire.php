@@ -170,6 +170,38 @@ class Questionnaire extends EMongoSoftDocument {
             $qg->title_fr = $title;
             $this->questions_group[] = $qg;
     }
+    
+      /**
+     * get array questions for a questionnaire
+     * filtered by idQuestionGroup
+     */
+    public function getArrayQuestions($idQuestionGroup) {
+        $res = array();
+        if ($this->questions_group != null) {
+            foreach ($this->questions_group as $group) {
+                if($group->id==$idQuestionGroup)
+                if ($group->questions != null) {
+                    foreach ($group->questions as $question) {
+                        $res [$question->id] = $question->label;
+                    }
+                }
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * get array groups for a questionnaire
+     */
+    public function getArrayGroups() {
+        $res = array();
+        if ($this->questions_group != null) {
+            foreach ($this->questions_group as $group) {
+                $res [$group->id] = $group->title;
+            }
+        }
+        return $res;
+    }
 
 }
 

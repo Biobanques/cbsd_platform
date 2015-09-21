@@ -18,7 +18,7 @@ class FormulaireController extends Controller {
             array(
                 'allow',
                 'actions' => array(
-                    'index',
+                    'index', 'dynamicquestions'
                 ),
                 'users' => array(
                     '@'
@@ -119,7 +119,7 @@ class FormulaireController extends Controller {
 
     /**
      * save a new question into the questionnaire
-     * si pas de positionnement on ajoute la questionen fin du premier groupe
+     * si pas de positionnement on ajoute la questionen au debut du  groupe
      * @param questionnaire
      */
     public function saveQuestionnaireNewQuestion($questionnaire, $questionForm) {
@@ -130,8 +130,11 @@ class FormulaireController extends Controller {
         //si pas de position fournie, on ajoute la question a la fin, dans le premier groupe de question
         if (!isset($questionForm->idQuestionBefore) || empty($questionForm->idQuestionBefore)) {
             if ($questionnaire->questions_group != null && count($questionnaire->questions_group) > 0) {
-                $group = $questionnaire->questions_group[0];
-                $group->questions[] = $cquestion;
+                foreach ($questionnaire->questions_group as $group) {
+                    if ($group->id == $questionForm->idQuestionGroup) {
+                        array_unshift($group->questions, $cquestion);
+                    }
+                }
             }
         } else {
             //sinon positionnement relatif
@@ -154,6 +157,26 @@ class FormulaireController extends Controller {
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $questionnaire;
+    }
+
+    /**
+     * action pour afficher dynamiquement la liste de questions dans le formulaire 
+     * d ajout de question pour gerer le positionnement
+     * @param id is questionnaire id
+     */
+    public function actionDynamicquestions($id) {
+        Yii::log("dynamic question", CLogger::LEVEL_TRACE);
+        $questionForm = new QuestionForm;
+        $questionForm->attributes = $_POST['QuestionForm'];
+        //$idQuestionGroup = $_POST['QuestionForm'];
+        $questionnaire = Questionnaire::model()->findByPk(new MongoID($id));
+        $data = $questionnaire->getArrayQuestions($questionForm->idQuestionGroup);
+        Yii::log("count questions:" . count($data), CLogger::LEVEL_TRACE);
+        //add the empty option si l on veut mettre la question au debut
+        echo CHtml::tag('option', array('value' => ''), CHtml::encode("----"), true);
+        foreach ($data as $value => $name) {
+            echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
+        }
     }
 
     /**

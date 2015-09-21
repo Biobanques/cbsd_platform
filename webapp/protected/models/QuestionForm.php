@@ -31,6 +31,10 @@ class QuestionForm extends CFormModel {
     public $type;
 
     /**
+     * group of the question
+     */
+    public $idQuestionGroup;
+    /**
      * position of the question id of the question before
      */
     public $idQuestionBefore;
@@ -54,7 +58,7 @@ class QuestionForm extends CFormModel {
             // name, email, subject and body are required
             array('id,label, type', 'required'),
             array('label', 'length', 'max' => 50),
-            array('id,idQuestionBefore', 'length', 'max' => 50),
+            array('id,idQuestionBefore,idQuestionGroup', 'length', 'max' => 50),
             array('type', 'length', 'max' => 10),
             array('style', 'length', 'max' => 100),
             array('values', 'length', 'max' => 500),
@@ -68,7 +72,8 @@ class QuestionForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'idQuestionBefore' => 'Position de la question précédente'
+            'idQuestionBefore' => 'Position de la question précédente',
+             'idQuestionGroup' => 'Onglet de questions'
         );
     }
 
@@ -85,22 +90,11 @@ class QuestionForm extends CFormModel {
         $res ['image'] = "image";
         return $res;
     }
-
-    /**
-     * get array questions for a questionnaire
-     */
-    public function getArrayQuestions() {
-        $res = array();
-        if ($this->questionnaire->questions_group != null) {
-            foreach ($this->questionnaire->questions_group as $group) {
-                if ($group->questions != null) {
-                    foreach ($group->questions as $question) {
-                        $res [$question->id] = $group->title . "::" . $question->id . "::" . $question->label;
-                    }
-                }
-            }
-        }
-        return $res;
+    
+    public function getArrayGroups(){
+        return $this->questionnaire->getArrayGroups();
     }
+
+  
 
 }
