@@ -75,6 +75,14 @@
     </div>
 
     <div class="row">
+        <div id="centre" style="display:none;">
+        <?php echo $form->labelEx($model, 'centre'); ?>
+        <?php echo $form->textField($model, 'centre', array('size' => 20, 'maxlength' => 250)); ?>
+        <?php echo $form->error($model, 'centre'); ?>
+        </div>
+    </div>
+    
+    <div class="row">
         <p class="note">Cliquez sur l'image pour rafraichir</p>
         <?php
         $this->widget('CCaptcha', array('clickableImage' => true, 'showRefreshButton' => false));
@@ -100,11 +108,18 @@
             var select = document.getElementById("User_profil");
             select.removeChild(select.options[1]);
         }
-        function validate_dropdown(id) {
-            $('#address').hide();
-            if (id == 0)
+        function validate_dropdown(id) {           
+            if (id === "0") {
                 $('#address').show();
-            else
+                //$('#centre').hide();
+            }
+            else if (id === "2") {
                 $('#address').hide();
+                $('#centre').show();
+            }
+            else {
+                $('#address').hide();
+                $('#centre').hide();
+            }
         }
     </script>
