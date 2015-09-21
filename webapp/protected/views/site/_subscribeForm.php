@@ -50,7 +50,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'profil'); ?>
-        <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfil(), array('prompt' => '----', 'onchange'=>'js:validate_dropdown(this.value)')); ?>
+        <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfilFiltered(), array('prompt' => '----', 'onchange'=>'js:validate_dropdown(this.value)')); ?>
         <?php echo $form->error($model, 'profil'); ?>
     </div>
 
@@ -104,10 +104,6 @@
 </div><!-- form -->
 
     <script type="text/javascript">
-        window.onload = function () {
-            var select = document.getElementById("User_profil");
-            select.removeChild(select.options[1]);
-        }
         function validate_dropdown(id) {           
             if (id === "0") {
                 $('#address').show();

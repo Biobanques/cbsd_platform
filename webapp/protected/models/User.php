@@ -138,10 +138,29 @@ class User extends EMongoDocument {
         $res ['2'] = "neuropathologiste";
         $res ['3'] = "généticien";
         $res ['4'] = "chercheur";
-        $resArrayObject = new ArrayObject($res);
-        $resArrayObject->asort();
 
-        return $resArrayObject;
+        return $res;
+    }
+    
+    /**
+     * get an array sorted by value.
+     */
+    public function getArrayProfilSorted() {
+        $resArraySorted = new ArrayObject($this->getArrayProfil());
+        $resArraySorted->asort();
+        return $resArraySorted;
+    }
+    
+    /**
+     * get an array filtered.
+     */
+    public function getArrayProfilFiltered() {
+        $resArrayFiltered = (array) $this->getArrayProfilSorted();
+        foreach ($resArrayFiltered AS $key => $value) {
+            if ($value == "administrateur")
+                unset($resArrayFiltered[$key]);
+        }
+        return $resArrayFiltered;
     }
     
     /**
