@@ -38,7 +38,7 @@ class QuestionGroup extends EMongoEmbeddedDocument {
 	public function rules() {
 		return array (
 				array (
-						'id',
+						'id,title',
 						'required'
 				));
 	}		
@@ -50,10 +50,10 @@ class QuestionGroup extends EMongoEmbeddedDocument {
 	 */
 	public function attributeLabels() {
 		return array (
-				'id' => 'Id',
-				'title' => 'title',
+				'id' => 'id',
+				'title' => 'titre',
                                 'title_fr' => 'titre',
-                                'parent_group'=>'parent_group'
+                                'parent_group'=>'Groupe parent'
 		);
 	}
         

@@ -78,17 +78,29 @@ class FormulaireController extends Controller {
     public function actionUpdate($id) {
         $model = Questionnaire::model()->findByPk(new MongoID($id));
         $questionForm = new QuestionForm;
+        $questionGroup = new QuestionGroup;
         // collect user input data
         if (isset($_POST['QuestionForm'])) {
             $questionForm->attributes = $_POST['QuestionForm'];
             //traitement ajout de question
-            $model = $this->saveQuestionnaireNewQuestion($model, $questionForm);
+            if ($questionForm->validate()) {
+                $model = $this->saveQuestionnaireNewQuestion($model, $questionForm);
+            }
         }
+        if (isset($_POST['QuestionGroup'])) {
+            $questionGroup->attributes = $_POST['QuestionGroup'];
+            //copie du titre sur l option fr
+            $questionGroup->title_fr = $questionGroup->title;
+            if ($questionGroup->validate()) {
+                $model = $this->saveQuestionnaireNewGroup($model, $questionGroup);
+            }
+        }
+        //set du model sur la questionForm pour generer l arborescende de position de question
         $questionForm->questionnaire = $model;
-
         $this->render('update', array(
             'model' => $model,
-            'questionForm' => $questionForm
+            'questionForm' => $questionForm,
+            'questionGroup' => $questionGroup
         ));
     }
 
@@ -133,6 +145,28 @@ class FormulaireController extends Controller {
                         }
                     }
                 }
+            }
+        }
+        if ($questionnaire->save())
+            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+        else {
+            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+            Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+        }
+        return $questionnaire;
+    }
+
+    /**
+     * save a new group into the questionnaire
+     * si pas de positionnement on ajoute la questionen fin du premier groupe
+     * @param questionnaire
+     */
+    public function saveQuestionnaireNewGroup($questionnaire, $questionGroup) {
+        $questionnaire->last_modified = new MongoDate();
+        if ($questionGroup != null) {
+            //sinon positionnement relatif
+            if ($questionnaire->questions_group != null) {
+                $questionnaire->questions_group[] = $questionGroup;
             }
         }
         if ($questionnaire->save())

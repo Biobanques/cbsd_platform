@@ -44,7 +44,8 @@ class QuestionnaireHTMLRenderer {
                     //par defaut lang = en
                     $title = $group->title;
                     if ($lang == "fr") {
-                        $title = $group->title_fr;
+                        if (!empty($group->title_fr))
+                            $title = $group->title_fr;
                     }
                     if ($lang == "both") {
                         $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
@@ -79,7 +80,9 @@ class QuestionnaireHTMLRenderer {
         //en par defaut
         $title = $group->title;
         if ($lang == "fr") {
-            $title = $group->title_fr;
+            if (!empty($group->title_fr)) {
+                $title = $group->title_fr;
+            }
         }
         if ($lang == "both") {
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
@@ -234,7 +237,8 @@ class QuestionnaireHTMLRenderer {
                     //par defaut lang = en
                     $title = $group->title;
                     if ($lang == "fr") {
-                        $title = $group->title_fr;
+                        if (!empty($group->title_fr))
+                            $title = $group->title_fr;
                     }
                     if ($lang == "both") {
                         $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
