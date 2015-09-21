@@ -50,7 +50,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'profil'); ?>
-        <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfil(), array('prompt' => '----')); ?>
+        <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfil(), array('prompt' => '----', 'onchange'=>'js:validate_dropdown(this.value)')); ?>
         <?php echo $form->error($model, 'profil'); ?>
     </div>
 
@@ -64,6 +64,14 @@
         <?php echo $form->labelEx($model, 'gsm'); ?>
         <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250)); ?>
         <?php echo $form->error($model, 'gsm'); ?>
+    </div>
+    
+    <div class="row">
+        <div id="address" style="display:none;">
+        <?php echo $form->labelEx($model, 'addresse'); ?>
+        <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
+        <?php echo $form->error($model, 'address'); ?>
+        </div>
     </div>
 
     <div class="row">
@@ -91,5 +99,12 @@
         window.onload = function () {
             var select = document.getElementById("User_profil");
             select.removeChild(select.options[1]);
+        }
+        function validate_dropdown(id) {
+            $('#address').hide();
+            if (id == 0)
+                $('#address').show();
+            else
+                $('#address').hide();
         }
     </script>

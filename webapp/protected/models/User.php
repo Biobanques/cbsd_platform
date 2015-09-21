@@ -29,6 +29,8 @@ class User extends EMongoDocument {
     
     public $gsm;
     
+    public $address;
+    
     public $inactif;
     
     public $verifyCode;
@@ -74,6 +76,7 @@ class User extends EMongoDocument {
             'telephone' => Yii::t('common', 'phone'),
             'gsm' => Yii::t('common', 'gsm'),
             'profil' => Yii::t('common', 'profil'),
+            'adresse' => 'Adresse',
             'inactif' => Yii::t('common', 'inactif'),
             'verifyCode' => Yii::t('common', 'verifyCode'),
         );
