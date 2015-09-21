@@ -10,7 +10,7 @@
                 $this->widget('bootstrap.widgets.TbMenu', array(
                     'items' => array(
                         array('label' => 'Utilisateurs', 'url' => array('/user/admin')),
-                        array('label' => 'Formulaires', 'url' => array('/administration/formulaires')),
+                        array('label' => 'Formulaires', 'url' => array('/formulaire/admin')),
                         array('label' => 'Fiches', 'url' => array('/contact/admin')),
                         array('label' => 'Log système', 'url' => array('/auditTrail/admin')),
                     ),
