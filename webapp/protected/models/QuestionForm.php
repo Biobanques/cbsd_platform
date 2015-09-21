@@ -6,11 +6,12 @@
 class QuestionForm extends CFormModel {
 
     /**
-     *working questionnaire.
+     * working questionnaire.
      * set a the beginning
      * @var type 
      */
     public $questionnaire;
+
     /**
      * identifiant unique de la question
      * @var type 
@@ -56,7 +57,7 @@ class QuestionForm extends CFormModel {
             array('id,idQuestionBefore', 'length', 'max' => 50),
             array('type', 'length', 'max' => 10),
             array('style', 'length', 'max' => 100),
-             array('values', 'length', 'max' => 500),
+            array('values', 'length', 'max' => 500),
         );
     }
 
@@ -67,7 +68,7 @@ class QuestionForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'idQuestionBefore'=>'Position de la question précédente'
+            'idQuestionBefore' => 'Position de la question précédente'
         );
     }
 
@@ -90,9 +91,13 @@ class QuestionForm extends CFormModel {
      */
     public function getArrayQuestions() {
         $res = array();
-        foreach ($this->questionnaire->questions_group as $group) {
-            foreach ($group->questions as $question) {
-                $res [$question->id] = $group->title . "::" . $question->id . "::" . $question->label;
+        if ($this->questionnaire->questions_group != null) {
+            foreach ($this->questionnaire->questions_group as $group) {
+                if ($group->questions != null) {
+                    foreach ($group->questions as $question) {
+                        $res [$question->id] = $group->title . "::" . $question->id . "::" . $question->label;
+                    }
+                }
             }
         }
         return $res;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * controller de formulaire. Permet d aiguiller les actions sur l objet formulaire côté admin.
  * @author nmalservet
@@ -50,15 +51,16 @@ class FormulaireController extends Controller {
             'model' => $model,
         ));
     }
-    
+
     /**
      * action de création d'un questionnaire.
      * Permet de saisir les éléments de base
      */
-    public function actionCreate(){
+    public function actionCreate() {
         $model = new Questionnaire;
         if (isset($_POST['Questionnaire'])) {
             $model->attributes = $_POST['Questionnaire'];
+            $model->addQuestionGroup("firstgroup", "Questionnaire principal");
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Le questionnaire a été enregistré avec succès.');
                 $this->redirect(array('view', 'id' => $model->_id));
@@ -67,7 +69,6 @@ class FormulaireController extends Controller {
         $this->render('create', array(
             'model' => $model,
         ));
-        
     }
 
     /**
@@ -106,16 +107,31 @@ class FormulaireController extends Controller {
 
     /**
      * save a new question into the questionnaire
+     * si pas de positionnement on ajoute la questionen fin du premier groupe
      * @param questionnaire
      */
     public function saveQuestionnaireNewQuestion($questionnaire, $questionForm) {
         $questionnaire->last_modified = new MongoDate();
-        foreach ($questionnaire->questions_group as $group) {
-            foreach ($group->questions as $key => $question) {
-                if ($question->id == $questionForm->idQuestionBefore) {
-                    $question = new Question;
-                    $question->setAttributesByQuestionForm($questionForm);
-                    array_splice($group->questions, ($key+1), 0, array($question));
+        $cquestion = new Question;
+        $cquestion->setAttributesByQuestionForm($questionForm);
+        Yii::log("save questionnaire", CLogger::LEVEL_TRACE);
+        //si pas de position fournie, on ajoute la question a la fin, dans le premier groupe de question
+        if (!isset($questionForm->idQuestionBefore) || empty($questionForm->idQuestionBefore)) {
+            if ($questionnaire->questions_group != null && count($questionnaire->questions_group) > 0) {
+                $group = $questionnaire->questions_group[0];
+                $group->questions[] = $cquestion;
+            }
+        } else {
+            //sinon positionnement relatif
+            if ($questionnaire->questions_group != null) {
+                foreach ($questionnaire->questions_group as $group) {
+                    if ($group->questions != null) {
+                        foreach ($group->questions as $key => $question) {
+                            if ($question->id == $questionForm->idQuestionBefore) {
+                                array_splice($group->questions, ($key + 1), 0, array($cquestion));
+                            }
+                        }
+                    }
                 }
             }
         }

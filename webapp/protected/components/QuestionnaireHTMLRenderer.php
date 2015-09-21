@@ -38,25 +38,27 @@ class QuestionnaireHTMLRenderer {
         } else {
             $groups = $questionnaire->questions_group;
         }
-        foreach ($groups as $group) {
-            if ($group->parent_group == null) {
-                //par defaut lang = en
-                $title = $group->title;
-                if ($lang == "fr") {
-                    $title = $group->title_fr;
+        if ($groups != null) {
+            foreach ($groups as $group) {
+                if ($group->parent_group == null) {
+                    //par defaut lang = en
+                    $title = $group->title;
+                    if ($lang == "fr") {
+                        $title = $group->title_fr;
+                    }
+                    if ($lang == "both") {
+                        $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
+                    }
+                    $extraActive = "";
+                    $extraActive2 = "";
+                    if ($firstTab == false) {
+                        $firstTab = true;
+                        $extraActive = "class=\"active\"";
+                        $extraActive2 = " active";
+                    }
+                    $divTabs.= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
+                    $divPans.= " <div class=\"tab-pane " . $extraActive2 . "\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTML($questionnaire, $group, $lang, $isAnswered) . "</div>";
                 }
-                if ($lang == "both") {
-                    $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
-                }
-                $extraActive = "";
-                $extraActive2 = "";
-                if ($firstTab == false) {
-                    $firstTab = true;
-                    $extraActive = "class=\"active\"";
-                    $extraActive2 = " active";
-                }
-                $divTabs.= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
-                $divPans.= " <div class=\"tab-pane " . $extraActive2 . "\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTML($questionnaire, $group, $lang, $isAnswered) . "</div>";
             }
         }
         $divPans.="</div>";
@@ -226,25 +228,27 @@ class QuestionnaireHTMLRenderer {
         $divPans = "<div class=\"tab-content\">";
         $firstTab = false;
         $groups = $questionnaire->questions_group;
-        foreach ($groups as $group) {
-            if ($group->parent_group == null) {
-                //par defaut lang = en
-                $title = $group->title;
-                if ($lang == "fr") {
-                    $title = $group->title_fr;
+        if ($groups != null) {
+            foreach ($groups as $group) {
+                if ($group->parent_group == null) {
+                    //par defaut lang = en
+                    $title = $group->title;
+                    if ($lang == "fr") {
+                        $title = $group->title_fr;
+                    }
+                    if ($lang == "both") {
+                        $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
+                    }
+                    $extraActive = "";
+                    $extraActive2 = "";
+                    if ($firstTab == false) {
+                        $firstTab = true;
+                        $extraActive = "class=\"active\"";
+                        $extraActive2 = " active";
+                    }
+                    $divTabs.= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
+                    $divPans.= " <div class=\"tab-pane " . $extraActive2 . "\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang) . "</div>";
                 }
-                if ($lang == "both") {
-                    $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
-                }
-                $extraActive = "";
-                $extraActive2 = "";
-                if ($firstTab == false) {
-                    $firstTab = true;
-                    $extraActive = "class=\"active\"";
-                    $extraActive2 = " active";
-                }
-                $divTabs.= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
-                $divPans.= " <div class=\"tab-pane " . $extraActive2 . "\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang) . "</div>";
             }
         }
         $divPans.="</div>";
@@ -289,8 +293,6 @@ class QuestionnaireHTMLRenderer {
         $result .= "<div class=\"end-question-group\"></div>";
         return $result;
     }
-    
-    
 
     /*
      * render a question in html
@@ -322,7 +324,7 @@ class QuestionnaireHTMLRenderer {
         if ($lang == "both") {
             $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
         }
-        $label.="<br><font color=\"blue\"><b><i>".$question->id."</i></b></font>";
+        $label.="<br><font color=\"blue\"><b><i>" . $question->id . "</i></b></font>";
 
         $result.="<div class=\"question-label\" >" . $label;
         if (isset($question->help)) {

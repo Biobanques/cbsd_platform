@@ -53,7 +53,7 @@ class Questionnaire extends EMongoSoftDocument {
     public function rules() {
         return array(
             array(
-                'id',
+                'id,name',
                 'required'
             ),
             array(
@@ -68,6 +68,10 @@ class Questionnaire extends EMongoSoftDocument {
 
         return array(
             'id' => 'id',
+            'name' => 'Nom',
+            'message_start' => 'Message de début',
+            'message_end' => 'Message de fin',
+            'contributors' => 'Contributeurs'
         );
     }
 
@@ -151,9 +155,22 @@ class Questionnaire extends EMongoSoftDocument {
      * get the last modified value into a french date format JJ/MM/AAAA
      * @return type
      */
-    public function getLastModified(){
-            return date("d/m/Y",$this->last_modified->sec);
-            }
+    public function getLastModified() {
+        return date("d/m/Y", $this->last_modified->sec);
+    }
+
+    /**
+     * methode pour ajouter un groupe de question en fin de groupes
+     * @param type $title
+     */
+    public function addQuestionGroup($id,$title) {
+        $qg = new QuestionGroup;
+            $qg->id = $id;
+            $qg->title = $title;
+            $qg->title_fr = $title;
+            $this->questions_group[] = $qg;
+    }
+
 }
 
 ?>
