@@ -163,15 +163,15 @@ class Questionnaire extends EMongoSoftDocument {
      * methode pour ajouter un groupe de question en fin de groupes
      * @param type $title
      */
-    public function addQuestionGroup($id,$title) {
+    public function addQuestionGroup($id, $title) {
         $qg = new QuestionGroup;
-            $qg->id = $id;
-            $qg->title = $title;
-            $qg->title_fr = $title;
-            $this->questions_group[] = $qg;
+        $qg->id = $id;
+        $qg->title = $title;
+        $qg->title_fr = $title;
+        $this->questions_group[] = $qg;
     }
-    
-      /**
+
+    /**
      * get array questions for a questionnaire
      * filtered by idQuestionGroup
      */
@@ -179,12 +179,12 @@ class Questionnaire extends EMongoSoftDocument {
         $res = array();
         if ($this->questions_group != null) {
             foreach ($this->questions_group as $group) {
-                if($group->id==$idQuestionGroup)
-                if ($group->questions != null) {
-                    foreach ($group->questions as $question) {
-                        $res [$question->id] = $question->label;
+                if ($group->id == $idQuestionGroup)
+                    if ($group->questions != null) {
+                        foreach ($group->questions as $question) {
+                            $res [$question->id] = $question->label;
+                        }
                     }
-                }
             }
         }
         return $res;
@@ -203,6 +203,18 @@ class Questionnaire extends EMongoSoftDocument {
         return $res;
     }
 
+    /**
+     * delete a question into the questionnaire by his id
+     * true if the question is deleted
+     */
+    public function deleteQuestion($idQuestion) {
+        if ($this->questions_group != null && count($this->questions_group) > 0) {
+            foreach ($this->questions_group as $group) {
+                if ($group->deleteQuestion($idQuestion)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
-
-?>

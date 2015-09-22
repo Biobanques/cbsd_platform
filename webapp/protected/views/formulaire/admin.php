@@ -15,7 +15,7 @@ $('.search-form form').submit(function(){
 
 <h1>Gestion des formulaires</h1>
 
-<?php echo CHtml::link('Créer un nouveau formulaire', Yii::app()->createUrl('formulaire/create')) ?>
+<?php echo CHtml::link('Créer un nouveau formulaire', Yii::app()->createUrl('formulaire/create')); ?>
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'questionnaires-grid',

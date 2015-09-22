@@ -284,7 +284,7 @@ class QuestionnaireHTMLRenderer {
 
         if (isset($quests)) {
             foreach ($quests as $question) {
-                $result.=QuestionnaireHTMLRenderer::renderQuestionHTMLEditMode($group->id, $question, $lang);
+                $result.=QuestionnaireHTMLRenderer::renderQuestionHTMLEditMode($questionnaire->_id,$group->id, $question, $lang);
             }
         }
         //add question groups that have parents for this group
@@ -303,7 +303,7 @@ class QuestionnaireHTMLRenderer {
      * render html the current question.
      */
 
-    public function renderQuestionHTMLEditMode($idquestiongroup, $question, $lang) {
+    public function renderQuestionHTMLEditMode($idMongoQuestionnaire,$idquestiongroup, $question, $lang) {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "") {
@@ -385,7 +385,12 @@ class QuestionnaireHTMLRenderer {
             $result.="</select>";
         }
         //close question input
+          //add link delete
+        $imghtml=CHtml::image('images/cross.png');
+         $result.="<div style=\"float:right;margin-left:5px;\">".CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion',array('idFormulaire'=>$idMongoQuestionnaire,'idQuestion'=>$question->id)))."</div>";
+       
         $result.="</div>";
+      
         //close row input
         $result.="</div>";
         return $result;

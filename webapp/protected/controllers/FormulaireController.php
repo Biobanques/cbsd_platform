@@ -118,6 +118,32 @@ class FormulaireController extends Controller {
     }
 
     /**
+     * Supprime une question du formulaire
+     * If deletion is successful, the browser will be redirected to the 'admin' page.
+     * @param integer $id the ID of the model to be deleted
+     */
+    public function actionDeleteQuestion($idFormulaire, $idQuestion) {
+        $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
+        if ($model->deleteQuestion($idQuestion)) {
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+            } else {
+                Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+                Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
+            }
+        }
+        //go back on update mode
+        $questionForm = new QuestionForm;
+        $questionGroup = new QuestionGroup;
+        $questionForm->questionnaire = $model;
+        $this->render('update', array(
+            'model' => $model,
+            'questionForm' => $questionForm,
+            'questionGroup' => $questionGroup
+        ));
+    }
+
+    /**
      * save a new question into the questionnaire
      * si pas de positionnement on ajoute la questionen au debut du  groupe
      * @param questionnaire
