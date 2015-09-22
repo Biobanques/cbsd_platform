@@ -23,7 +23,7 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
 
     <?php
     $this->widget('bootstrap.widgets.TbNavbar', array(
-        'brandUrl'=> array('/site/index'),
+        'brandUrl' => array('/site/index'),
         'items' => array(
             array(
                 'class' => 'bootstrap.widgets.TbMenu',
@@ -32,12 +32,22 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
                     array('label' => 'Patient', 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest),
                     array('label' => 'Administration', 'url' => array('/administration/index'), 'visible' => !Yii::app()->user->isGuest),
                     array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                    array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
-                ),
+                    array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                    array('label' => 'Accédez en tant que : ', 'url' => '#', 'visible' => !Yii::app()->user->isGuest),
+                    array(
+                        'label' => '{menu}',
+                        'template' =>   '
+                                        <form class="navbar-form pull-left">
+                                            <select style="width:150px; margin-top: 0px;">
+                                                <option value="">----</option>' . GetProfil::getHTML() . '
+                                            </select>
+                                        </form>',
+                        'visible' => !Yii::app()->user->isGuest
+                    ),
+                )
             )
         )
-            )
-    );
+    ));
     ?>
     <body>
         <div class="container" id="page">
@@ -74,7 +84,6 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
                 </div>
 
             </div><!-- footer -->
-
         </div><!-- page -->
 
     </body>
