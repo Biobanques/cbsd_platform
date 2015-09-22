@@ -59,7 +59,7 @@ $form = $this->beginWidget('CActiveForm', array(
         foreach($questionnaire as $fiche=>$value){
             foreach($value as $k=>$v){
                 if ($k=='id')
-                echo "<option value=\"". $value['id'] . "\">" . $value['name_fr'] . "</option>";
+                echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
             }
         }
         ?>

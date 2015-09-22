@@ -2,7 +2,7 @@
 db.questionnaire.drop()
 db.questionnaire.insert({
     "id": "demenceform",
-    "name": "Demence form",
+    "name": "Formulaire Démence",
     "name_fr": "Formulaire Démence",
     "description": "Formulaire Démence",
     "last_modified": new Date(),

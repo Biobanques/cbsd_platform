@@ -1,7 +1,7 @@
 //questionnaire demence form
 db.questionnaire.insert({
     "id": "parkinsonform",
-    "name": "Parkinson form",
+    "name": "Formulaire Parkinson",
     "name_fr": "Formulaire Parkinson",
     "description": "Formulaire Parkinson",
     "last_modified": new Date(),
