@@ -217,4 +217,21 @@ class Questionnaire extends EMongoSoftDocument {
         }
         return false;
     }
+
+    /**
+     * delete a question group  by his idQuestionGroup
+     * return true if the question group is deleted
+     */
+    public function deleteQuestionGroup($idQuestionGroup) {
+        if ($this->questions_group != null && count($this->questions_group) > 0) {
+            foreach ($this->questions_group as $key => $group) {
+                if ($group->id == $idQuestionGroup) {
+                    unset($this->questions_group[$key]);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

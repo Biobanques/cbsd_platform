@@ -143,6 +143,31 @@ class FormulaireController extends Controller {
         ));
     }
 
+     /**
+     * Supprime un groupe de questions du formulaire
+     * @param $idFormulaire
+     * @param $idQuestionGroup
+     */
+    public function actionDeleteQuestionGroup($idFormulaire, $idQuestionGroup) {
+        $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
+        if ($model->deleteQuestionGroup($idQuestionGroup)) {
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+            } else {
+                Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+                Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
+            }
+        }
+        //go back on update mode
+        $questionForm = new QuestionForm;
+        $questionGroup = new QuestionGroup;
+        $questionForm->questionnaire = $model;
+        $this->render('update', array(
+            'model' => $model,
+            'questionForm' => $questionForm,
+            'questionGroup' => $questionGroup
+        ));
+    }
     /**
      * save a new question into the questionnaire
      * si pas de positionnement on ajoute la questionen au debut du  groupe

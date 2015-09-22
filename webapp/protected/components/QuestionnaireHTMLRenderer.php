@@ -278,7 +278,10 @@ class QuestionnaireHTMLRenderer {
         if ($lang == "both") {
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
-        $result.="<div class=\"question_group\">" . $title . "</div>";
+          $imghtml=CHtml::image('images/cross.png');
+         $lienSupprimer="<div style=\"float:right;margin-left:5px;\">".CHtml::link($imghtml." Supprimer l'onglet de questions", Yii::app()->createUrl('formulaire/deleteQuestionGroup',array('idFormulaire'=>$questionnaire->_id,'idQuestionGroup'=>$group->id)))."</div>";
+      
+        $result.="<div class=\"question_group\">" . $title . $lienSupprimer."</div>";
 
         $quests = $group->questions;
 
