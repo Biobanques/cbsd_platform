@@ -50,7 +50,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'profil'); ?>
-        <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfilFiltered(), array('prompt' => '----', 'onchange'=>'js:validate_dropdown(this.value)')); ?>
+        <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfilFiltered(), array('prompt' => '----', 'onchange' => 'js:validate_dropdown()')); ?>
         <?php echo $form->error($model, 'profil'); ?>
     </div>
 
@@ -65,23 +65,23 @@
         <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250)); ?>
         <?php echo $form->error($model, 'gsm'); ?>
     </div>
-    
+
     <div class="row">
         <div id="address" style="display:none;">
-        <?php echo $form->labelEx($model, 'address'); ?>
-        <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
-        <?php echo $form->error($model, 'address'); ?>
+            <?php echo $form->labelEx($model, 'address'); ?>
+            <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'address'); ?>
         </div>
     </div>
 
     <div class="row">
         <div id="centre" style="display:none;">
-        <?php echo $form->labelEx($model, 'centre'); ?>
-        <?php echo $form->textField($model, 'centre', array('size' => 20, 'maxlength' => 250)); ?>
-        <?php echo $form->error($model, 'centre'); ?>
+            <?php echo $form->labelEx($model, 'centre'); ?>
+            <?php echo $form->textField($model, 'centre', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'centre'); ?>
         </div>
     </div>
-    
+
     <div class="row">
         <p class="note">Cliquez sur l'image pour rafraichir</p>
         <?php
@@ -103,19 +103,28 @@
 
 </div><!-- form -->
 
-    <script type="text/javascript">
-        function validate_dropdown(id) {           
-            if (id === "0") {
-                $('#address').show();
-                //$('#centre').hide();
-            }
-            else if (id === "2") {
-                $('#address').hide();
-                $('#centre').show();
-            }
-            else {
-                $('#address').hide();
-                $('#centre').hide();
-            }
+<script type="text/javascript">
+    $(document).ready(function () {
+        var userProfil = document.getElementById("User_profil");
+        var profil = userProfil.options[userProfil.selectedIndex].text;
+        switch (profil) {
+            case "clinicien":           $('#address').show(); break;
+            case "neuropathologiste":   $('#centre').show(); break;    
+        }                                      
+    });
+    function validate_dropdown() {
+        var userProfil = document.getElementById("User_profil");
+        var profil = userProfil.options[userProfil.selectedIndex].text;
+        switch (profil) {
+            case "clinicien":           $('#address').show();
+                                        $('#centre').hide();
+                                        break;
+            case "neuropathologiste":   $('#address').hide();
+                                        $('#centre').show();
+                                        break;
+            default:
+                                        $('#address').hide();
+                                        $('#centre').hide();
         }
-    </script>
+    }
+</script>

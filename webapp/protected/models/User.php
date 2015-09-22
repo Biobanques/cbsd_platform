@@ -57,6 +57,8 @@ class User extends EMongoDocument {
             array('prenom, nom, login, password, email, profil, telephone, verifyCode', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
+            array('address', 'addressValidator'),
+            array('centre', 'centreValidator'),
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
             array('prenom, nom, login, password, email, telephone, gsm, profil, inactif', 'safe', 'on' => 'search'),
@@ -206,6 +208,21 @@ class User extends EMongoDocument {
         if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ0-9 -]*$/i", $this->login))
             $this->addError('login', Yii::t('common', 'onlyAlphaNumeric'));
     }
+    
+    public function addressValidator() {
+        if (($this->profil == "0") && ($this->address == "")) {
+            $this->validatorList->add(CValidator::createValidator('required',$this,'address',array()));
+            $this->addError('address', 'Adresse ne peut pas être vide.');
+        }
+    }
+    
+    public function centreValidator() {
+        if (($this->profil == "2") && ($this->centre == "")) {
+            $this->validatorList->add(CValidator::createValidator('required',$this,'centre',array()));
+            $this->addError('centre', 'Centre ne peut pas être vide.');
+        }
+    }
+
     
 }
 
