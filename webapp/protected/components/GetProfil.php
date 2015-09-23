@@ -23,4 +23,16 @@ class GetProfil {
         $html .= "</select></form>";
         return $html;
     }
+    
+    public static function profilClinicien() {
+        $_SESSION['currentProfil'] = "clinicien";
+    }
+    
+    public static function profilNeuropathologiste() {
+        $_SESSION['currentProfil'] = "neuropathologiste";
+    }
+    
+    public static function profilGénéticien() {
+        $_SESSION['currentProfil'] = "généticien";
+    }
 }

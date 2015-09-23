@@ -133,133 +133,52 @@ db.questionnaire.insert({
                     "parent_group": "demenceform",
                     "questions": [{
                             "id": "adl1",
-                            "label": "",
-                            "label_fr": "Ne reçoit aucune aide (rentre et sort seul de la baignoire si celle-ci est le moyen habituel de toilette.",
+                            "label": "SOINS PERSONNELS (lavabo baignoire ou douche)",
+                            "label_fr": "SOINS PERSONNELS (lavabo baignoire ou douche)",
                             "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
+                            "values": "Ne reçoit aucune aide (rentre et sort seul de la baignoire si celle-ci est le moyen habituel de toilette,Reçoit de l'aide pour laver certaines parties du corps (comme le dos ou une jambe),Reçoit de l'aide pour laver plus d'une partie du corps",
+                            "values_fr": "Ne reçoit aucune aide (rentre et sort seul de la baignoire si celle-ci est le moyen habituel de toilette,Reçoit de l'aide pour laver certaines parties du corps (comme le dos ou une jambe),Reçoit de l'aide pour laver plus d'une partie du corps"
                         },
                         {
                             "id": "adl2",
-                            "label": "",
-                            "label_fr": "Reçoit de l'aide pour laver certaines parties du corps (comme le dos ou une jambe).",
+                            "label": "HABILLAGE (prend les habits de l'armoire et des tiroirs c'est-à-dire sous-vêtements, vêtements de dessus et sait manipuler les fermetures incluant les bretelles)",
+                            "label_fr": "HABILLAGE (prend les habits de l'armoire et des tiroirs c'est-à-dire sous-vêtements, vêtements de dessus et sait manipuler les fermetures incluant les bretelles)",
                             "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
+                            "values": "Prend les vêtements et s'habille complètement sans aide,Prend les habits et s'habille sans aide sauf pour les chaussures,Reçoit de l'aide pour prendre les habits et/ou s'habiller ou reste partiellement ou totalement dévêtu",
+                            "values_fr": "Prend les vêtements et s'habille complètement sans aide,Prend les habits et s'habille sans aide sauf pour les chaussures,Reçoit de l'aide pour prendre les habits et/ou s'habiller ou reste partiellement ou totalement dévêtu"
                         },
                         {
                             "id": "adl3",
-                            "label": "",
-                            "label_fr": "Reçoit de 1'aide pour laver plus d'une partie du corps.",
+                            "label": "ALLER AUX TOILETTES (va aux toilettes, se nettoie ensuite et arrange ses vêtements)",
+                            "label_fr": "ALLER AUX TOILETTES (va aux toilettes, se nettoie ensuite et arrange ses vêtements)",
                             "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
+                            "values": "Va aux toilettes Se nettoie et arrange ses vêtements sans aide (peut s'aider d'un support comme une canne un déambulateur une chaise roulante et peut utiliser un bassin ou une chaise percée), Reçoit de l'aide pour aller aux toilettes... ne va pas aux toilettes",
+                            "values_fr": "Va aux toilettes Se nettoie et arrange ses vêtements sans aide (peut s'aider d'un support comme une canne un déambulateur une chaise roulante et peut utiliser un bassin ou une chaise percée),Reçoit de l'aide pour aller aux toilettes... ne va pas aux toilettes"
                         },
                         {
                             "id": "adl4",
-                            "label": "",
-                            "label_fr": "Prend les vêtements et s'habille complètement sans aide.",
+                            "label": "DEPLACEMENTS",
+                            "label_fr": "DEPLACEMENTS",
                             "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
+                            "values": "Se couche et se lève du lit aussi bien qu'il s'assoit ou se lève d'une chaise sans aide (peut s'aider d'un support comme un déambulateur ou une canne),Se couche ou se lève avec aide ,Reste alité",
+                            "values_fr": "Se couche et se lève du lit aussi bien qu'il s'assoit ou se lève d'une chaise sans aide (peut s'aider d'un support comme un déambulateur ou une canne),Se couche ou se lève avec aide ,Reste alité"
                         },
                         {
                             "id": "adl5",
-                            "label": "",
-                            "label_fr": "Prend les habits et s'habille sans aide sauf pour les chaussures.",
+                            "label": "CONTINENCE",
+                            "label_fr": "CONTINENCE",
                             "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
+                            "values": "Contrôle parfaitement seul son élimination,A quelques petits accidents ou est incotinent (urine ou selles)",
+                            "values_fr": "Contrôle parfaitement seul son élimination,A quelques petits accidents ou est incotinent (urine ou selles)"
                         },
                         {
                             "id": "adl6",
-                            "label": "",
-                            "label_fr": "Reçoit de l'aide pour prendre les habits et/ou s'habiller ou reste partiellement ou totalement dévêtu.",
+                            "label": "ALIMENTATION",
+                            "label_fr": "ALIMENTATION",
                             "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "adl7",
-                            "label": "",
-                            "label_fr": "Va aux toilettes, se nettoie et arrange ses vêtements sans aide (peut s'aider d'un support comme une canne, un déambulateur, une chaise roulante et peut utiliser un bassin ou une chaise percée).",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "adl8",
-                            "label": "",
-                            "label_fr": "Reçoit de l'aide pour aller aux toilettes... ne va pas aux toilettes.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "adl9",
-                            "label": "",
-                            "label_fr": "Se couche et se lève du lit aussi bien qu'il s'assoit ou se lève d'une chaise, sans aide (peut s'aider d'un support comme un déambulateur ou une canne).",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "adl10",
-                            "label": "",
-                            "label_fr": "Se couche ou se lève avec aide.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "adl11",
-                            "label": "",
-                            "label_fr": "Reste alité.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "adl12",
-                            "label": "",
-                            "label_fr": "Contrôle parfaitement seul son élimination.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "adl13",
-                            "label": "",
-                            "label_fr": "A quelques petits accidents ou est incotinent (urine ou selles).",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "adl14",
-                            "label": "",
-                            "label_fr": "Mange sans aide.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "adl15",
-                            "label": "",
-                            "label_fr": "Mange seul mais a besoin d'une aide pour couper la viande ou pour beurrer les tartines.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "adl16",
-                            "label": "",
-                            "label_fr": "Reçoit une aide pour manger ou et nourrit partiellement ou totalement à l’aide d'une sonde ou de solutés intraveineux.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-  
+                            "values": "Mange sans aide,Mange seul mais a besoin d'une aide pour couper la viande ou pour beurrer les tartines,Reçoit une aide pour manger ou et nourrit partiellement ou totalement à l’aide d'une sonde ou de solutés intraveineux",
+                            "values_fr": "Mange sans aide,Mange seul mais a besoin d'une aide pour couper la viande ou pour beurrer les tartines,Reçoit une aide pour manger ou et nourrit partiellement ou totalement à l’aide d'une sonde ou de solutés intraveineux"
+                        }
                     ]
                 },
                 {
@@ -269,124 +188,36 @@ db.questionnaire.insert({
                     "parent_group": "demenceform",
                     "questions": [{
                             "id": "iadl1",
-                            "label": "",
-                            "label_fr": "Se sert normalement du téléphone.",
+                            "label": "Aptitude à utiliser le téléphone",
+                            "label_fr": "Aptitude à utiliser le téléphone",
                             "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
+                            "values": "Se sert normalement du téléphone,Compose quelques numéros très connus,N’utilise pas du tout le téléphone spontanément,Incapable d’utiliser le téléphone",
+                            "values_fr": "Se sert normalement du téléphone,Compose quelques numéros très connus,N’utilise pas du tout le téléphone spontanément,Incapable d’utiliser le téléphone"
                         },
                         {
                             "id": "iadl2",
-                            "label": "",
-                            "label_fr": "Compose quelques numéros très connus.",
+                            "label": "Moyens de transport",
+                            "label_fr": "Moyens de transport",
                             "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
+                            "values": "Utilise les moyens de transports de façon indépendante ou conduit sa propre voiture,Organise ses déplacements en taxi ou n’utilise aucun moyen de transport public,Utilise les transports publics avec l’aide de quelqu’un,Déplacement limité en taxi ou en voiture avec l’aide de quelqu’un",
+                            "values_fr": "Utilise les moyens de transports de façon indépendante ou conduit sa propre voiture,Organise ses déplacements en taxi ou n’utilise aucun moyen de transport public,Utilise les transports publics avec l’aide de quelqu’un,Déplacement limité en taxi ou en voiture avec l’aide de quelqu’un"
                         },
                         {
                             "id": "iadl3",
-                            "label": "",
-                            "label_fr": "N’utilise pas du tout le téléphone spontanément.",
+                            "label": "Responsabilité à l’égard de son traitement",
+                            "label_fr": "Responsabilité à l’égard de son traitement",
                             "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
+                            "values": "Est responsable de la prise de ses médicaments (dose et rythmes corrects),Est responsable de la prise de ses médicaments si les doses ont été préparées à l’avance,Est incapable de prendre seul ses médicaments même si ceux-ci ont été à l’avance",
+                            "values_fr": "Est responsable de la prise de ses médicaments (dose et rythmes corrects),Est responsable de la prise de ses médicaments si les doses ont été préparées à l’avance,Est incapable de prendre seul ses médicaments même si ceux-ci ont été à l’avance"
                         },
                         {
                             "id": "iadl4",
-                            "label": "",
-                            "label_fr": "Incapable d’utiliser le téléphone.",
+                            "label": "Aptitude à manipuler l’argent",
+                            "label_fr": "Aptitude à manipuler l’argent",
                             "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl5",
-                            "label": "",
-                            "label_fr": "Utilise les moyens de transports de façon indépendante ou conduit sa propre voiture.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl6",
-                            "label": "",
-                            "label_fr": "Organise ses déplacements en taxi ou n’utilise aucun moyen de transport public.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl7",
-                            "label": "",
-                            "label_fr": "Utilise les transports publics avec l’aide de quelqu’un.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl8",
-                            "label": "",
-                            "label_fr": "Déplacement limité en taxi ou en voiture avec l’aide de quelqu’un.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl9",
-                            "label": "",
-                            "label_fr": "Est responsable de la prise de ses médicaments (dose et rythmes corrects).",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl10",
-                            "label": "",
-                            "label_fr": "Est responsable de la prise de ses médicaments si les doses ont été préparées à l’avance.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl11",
-                            "label": "",
-                            "label_fr": "Est incapable de prendre seul ses médicaments même si ceux-ci ont été à l’avance.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl12",
-                            "label": "",
-                            "label_fr": "Non applicable, n’a jamais manipulé l’argent.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl13",
-                            "label": "",
-                            "label_fr": "Gère ses finances de façon autonome.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl14",
-                            "label": "",
-                            "label_fr": "Se débrouille pour les achats quotidiens, mais a besoin d’aide pour les opérations à la banque et les achats importants.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
-                        {
-                            "id": "iadl15",
-                            "label": "",
-                            "label_fr": "Incapable de manipuler l’argent.",
-                            "type": "list",
-                            "values": "1,2,3",
-                            "values_fr": "1,2,3"
-                        },
+                            "values": "Non applicable N’a jamais manipulé l’argent,Gère ses finances de façon autonome,Se débrouille pour les achats quotidiens  mais a besoin d’aide pour les opérations à la banque et les achats importants,Incapable de manipuler l’argent",
+                            "values_fr": "Non applicable N’a jamais manipulé l’argent,Gère ses finances de façon autonome,Se débrouille pour les achats quotidiens  mais a besoin d’aide pour les opérations à la banque et les achats importants,Incapable de manipuler l’argent"
+                        }
                     ]
                 }
             ]

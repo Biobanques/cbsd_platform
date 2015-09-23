@@ -80,6 +80,22 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
 
             </div><!-- footer -->
         </div><!-- page -->
-
+        <script type="text/javascript">
+            function checkProfil() {
+                var option = document.getElementById("profil").value;
+                if(option == "clinicien"){
+                    <?php $test = GetProfil::profilClinicien();?>
+                        alert('<?php echo $_SESSION['currentProfil'];?>');
+                }
+                if(option == "neuropathologiste"){
+                    <?php $test = GetProfil::profilNeuropathologiste();?>
+                        alert('<?php echo $_SESSION['currentProfil'];?>');
+                }
+                if(option == "généticien"){
+                    <?php $test = GetProfil::profilGénéticien();?>
+                        alert('<?php echo $_SESSION['currentProfil'];?>');
+                }
+            }
+        </script>
     </body>
 </html>
