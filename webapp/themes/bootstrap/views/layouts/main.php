@@ -83,6 +83,10 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
         <script type="text/javascript">
             function checkProfil() {
                 var option = document.getElementById("profil").value;
+                if(option == "chercheur"){
+                    <?php $test = GetProfil::profilChercheur();?>
+                        alert('<?php echo $_SESSION['currentProfil'];?>');
+                }
                 if(option == "clinicien"){
                     <?php $test = GetProfil::profilClinicien();?>
                         alert('<?php echo $_SESSION['currentProfil'];?>');

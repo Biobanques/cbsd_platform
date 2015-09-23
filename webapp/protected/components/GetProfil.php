@@ -24,6 +24,10 @@ class GetProfil {
         return $html;
     }
     
+    public static function profilChercheur() {
+        $_SESSION['currentProfil'] = "chercheur";
+    }
+    
     public static function profilClinicien() {
         $_SESSION['currentProfil'] = "clinicien";
     }
