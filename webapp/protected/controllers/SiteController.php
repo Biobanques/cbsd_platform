@@ -124,7 +124,7 @@ class SiteController extends Controller {
             if ($model->validate() && $model->login())
                 $this->redirect(Yii::app()->user->returnUrl);
             else
-                Yii::app()->user->setFlash('error', 'Une erreur est survenue, merci de vérifier vos identifiants');
+                Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
         }
         // display the login form
         $this->render('login', array('model' => $model));
