@@ -36,12 +36,7 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
                     array('label' => 'Accédez en tant que : ', 'url' => '#', 'visible' => !Yii::app()->user->isGuest),
                     array(
                         'label' => '{menu}',
-                        'template' =>   '
-                                        <form class="navbar-form pull-left">
-                                            <select style="width:150px; margin-top: -3px; margin-left: -25px;">
-                                                <option value="">----</option>' . GetProfil::getHTML() . '
-                                            </select>
-                                        </form>',
+                        'template' => GetProfil::getHTML(),
                         'visible' => !Yii::app()->user->isGuest
                     ),
                 )

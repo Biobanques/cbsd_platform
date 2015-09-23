@@ -13,11 +13,14 @@
  */
 class GetProfil {
     public static function getHTML(){
-        $html = "";
+        $html = "<form class=\"navbar-form pull-left\">
+                 <select id=\"profil\" style=\"width:150px; margin-top: -3px; margin-left: -25px;\" onchange=\"checkProfil()\">
+                 <option value=\"\">----</option>";
         $items = User::model()->getArrayProfilFiltered();
         foreach($items as $item) {
            $html .= "<option value=\"". $item . "\">". $item . "</option>";
         }
+        $html .= "</select></form>";
         return $html;
     }
 }
