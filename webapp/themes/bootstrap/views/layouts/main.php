@@ -29,7 +29,7 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
                 'class' => 'bootstrap.widgets.TbMenu',
                 'items' => array(
                     array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest),
-                    array('label' => 'Patient', 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest),
+                    array('label' => 'Saisir une fiche patient', 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest),
                     array('label' => 'Administration', 'url' => array('/administration/index'), 'visible' => !Yii::app()->user->isGuest),
                     array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                     array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
@@ -38,7 +38,7 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
                         'label' => '{menu}',
                         'template' =>   '
                                         <form class="navbar-form pull-left">
-                                            <select style="width:150px; margin-top: 0px;">
+                                            <select style="width:150px; margin-top: -3px; margin-left: -25px;">
                                                 <option value="">----</option>' . GetProfil::getHTML() . '
                                             </select>
                                         </form>',
