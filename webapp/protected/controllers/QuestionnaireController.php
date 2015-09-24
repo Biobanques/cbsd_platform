@@ -124,13 +124,13 @@ class QuestionnaireController extends Controller {
             }
         }if ($flagNoInputToSave == false) {
             if ($answer->save())
-                Yii::app()->user->setFlash('success', "Questionnaire saved with success");
+                Yii::app()->user->setFlash('success', "Le questionnaire a été sauvegardé avec succès.");
             else {
-                Yii::app()->user->setFlash('error', "Questionnaire not saved. A problem occured.");
+                Yii::app()->user->setFlash('error', "Le questionnaire n'a pas été sauvegardé.");
                 Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
             }
         } else {
-            Yii::app()->user->setFlash('error', "Questionnaire not saved. No Input to save.");
+            Yii::app()->user->setFlash('error', "Le questionnaire n'a pas été sauvegardé.");
 //null result
             $answer = null;
         }
