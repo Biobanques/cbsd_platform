@@ -72,7 +72,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
     <div style="display:inline; margin-left: 35%; width: 100px; ">
         <?php
         echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-primary', 'style' => 'margin-top: 10px;'));
-        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: 10px; margin-left:20px;'));
+        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: 3px; margin-left:20px;'));
         ?>
     </div>
     <?php
