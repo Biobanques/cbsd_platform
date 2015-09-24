@@ -17,7 +17,7 @@ class RecoverPwdForm extends CFormModel
      */
     public function rules() {
         return array(
-            array('nom, prenom', 'type', 'type' => 'string')
+            array('nom, prenom', 'required')
         );
     }
 
