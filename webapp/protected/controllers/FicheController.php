@@ -48,7 +48,7 @@ class FicheController extends Controller {
      * @param $id the ID of the model to be displayed
      */
     public function actionView($id) {
-        $model = Questionnaire::model()->findByPk(new MongoID($id));
+        $model = Answer::model()->findByPk(new MongoID($id));
         $this->render('view', array(
             'model' => $model,
         ));
