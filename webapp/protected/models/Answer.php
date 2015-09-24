@@ -29,20 +29,22 @@ class Answer extends EMongoDocument {
     public $id;
 
     /**
-     * user unique login filling this answer.
+     * user id mongo unique login filling this answer.
+     * TODO refactor this attribute id au lieu de login
      */
     public $login;
-    
+
     /**
      * user unique patient id filling this answer.
      */
     public $id_patient;
-    
+
     /*
      * unique id of the questionnaire
      */
     public $questionnaireMongoId;
     public $name;
+
     /**
      * field last modified from the questionnaire source.
      * @var type 
@@ -57,13 +59,11 @@ class Answer extends EMongoDocument {
      */
     public $last_updated;
 
-       /**
+    /**
      * contributors are people working on thi squetsionnaire
      */
     public $contributors;
-    
-    
-    
+
     public function behaviors() {
         return array('embeddedArrays' => array(
                 'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',
@@ -91,8 +91,8 @@ class Answer extends EMongoDocument {
 
         return array(
             'id' => 'id',
-            'last_updated'=>'Dernière sauvegarde',
-            'last_modified'=>'Date du questionnaire',
+            'last_updated' => 'Dernière sauvegarde',
+            'last_modified' => 'Date du questionnaire',
         );
     }
 
@@ -119,18 +119,18 @@ class Answer extends EMongoDocument {
         }
         return $result;
     }
-    
+
     public function renderTabbedGroup($lang) {
-        return QuestionnaireHTMLRenderer::renderTabbedGroup($this,$lang,true);
+        return QuestionnaireHTMLRenderer::renderTabbedGroup($this, $lang, true);
     }
-    
+
     /**
      * copy attributes of questionnaire recursively to the final state answer-question.
      * @param type $questionnaire
      */
     public function copy($questionnaire) {
         $this->id = $questionnaire->id;
-        $this->questionnaireMongoId=$questionnaire->_id;
+        $this->questionnaireMongoId = $questionnaire->_id;
         $this->name = $questionnaire->name;
         $this->description = $questionnaire->description;
         $this->message_start = $questionnaire->message_start;
@@ -142,8 +142,7 @@ class Answer extends EMongoDocument {
             $this->answers_group[] = $answerGroup;
         }
     }
-    
-    
+
     /**
      * render contributors
      * used in plain page and tab page
@@ -153,27 +152,39 @@ class Answer extends EMongoDocument {
         return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
 
-        /**
+    /**
      * get the last modified value into a french date format JJ/MM/AAAA
      * @return type
      */
-    public function getLastModified(){
-        if($this->last_modified!=null)
-            return date("d/m/Y H:m",$this->last_modified->sec);
-        else 
+    public function getLastModified() {
+        if ($this->last_modified != null)
+            return date("d/m/Y H:m", $this->last_modified->sec);
+        else
             return null;
-            }
-            
-                 /**
+    }
+
+    /**
      * get the last updatedvalue into a french date format JJ/MM/AAAA
      * @return type
      */
-    public function getLastUpdated(){
-        if($this->last_updated!=null)
-            return date("d/m/Y H:i",$this->last_updated->sec);
-        else 
+    public function getLastUpdated() {
+        if ($this->last_updated != null)
+            return date("d/m/Y H:i", $this->last_updated->sec);
+        else
             return null;
-            }
+    }
+
+    /**
+     * retourne le user qui a renseigné le formulaire
+     * @return type
+     */
+    public function getUserRecorderName() {
+        $result = "-";
+        $user = User::model()->findByPk(new MongoID($this->login));
+        if ($user != null)
+            $result = $user->nom;
+        return $result;
+    }
 
 }
 

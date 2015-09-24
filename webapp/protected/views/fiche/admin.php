@@ -22,7 +22,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'filter' => $model,
     'columns' => array(
         'name',
-        'login',
+        array('header'=>'user','value'=>'$data->getUserRecorderName()'),
         'last_updated',
         array(
             'class' => 'CButtonColumn',
