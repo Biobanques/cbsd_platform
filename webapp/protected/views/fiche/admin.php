@@ -13,18 +13,20 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Gestion des formulaires</h1>
+<h1>Gestion des fiches</h1>
 
-<?php echo CHtml::link('Créer un nouveau formulaire', Yii::app()->createUrl('formulaire/create')); ?>
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'questionnaires-grid',
+    'id' => 'answers-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
         'name',
+        'login',
+        'last_updated',
         array(
             'class' => 'CButtonColumn',
+              'template'=>'{view}'
         ),
     ),
 ));

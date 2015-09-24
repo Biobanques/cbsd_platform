@@ -183,7 +183,12 @@ class FormulaireController extends Controller {
             if ($questionnaire->questions_group != null && count($questionnaire->questions_group) > 0) {
                 foreach ($questionnaire->questions_group as $group) {
                     if ($group->id == $questionForm->idQuestionGroup) {
+                        if($group->questions==null){
+                           $group->questions=array();
+                           $group->questions[]=$cquestion;
+                        }else{
                         array_unshift($group->questions, $cquestion);
+                        }
                     }
                 }
             }
