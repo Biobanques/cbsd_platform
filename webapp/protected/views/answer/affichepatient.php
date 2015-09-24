@@ -74,6 +74,5 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="span3" style="margin:-5px;">
     <?php echo CHtml::submitButton('Saisir'); ?>
     </div>
-
 <?php $this->endWidget(); ?>
 </div>
