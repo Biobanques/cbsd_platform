@@ -17,6 +17,7 @@ $this->pageTitle = Yii::app()->name;
             'heading' => 'Bienvenue sur ' . CHtml::encode(Yii::app()->name),
         ));
         ?>
+        CBSDPlatform vous permet de gérer les formulaires standardisés pour les informations cliniques, génétiques et neuropathologiques diffusées aux cliniciens.
         <?php $this->endWidget(); ?>
     </div>
 </div>
