@@ -67,6 +67,7 @@ class QuestionnaireController extends Controller {
         $answer = null;
         if (isset($_POST['Questionnaire'])) {
             $answer = $this->saveQuestionnaireAnswers($model);
+            $this->redirect('index.php?r=answer/affichepatient');
         }
         if ($answer != null)
             $model = $answer;
