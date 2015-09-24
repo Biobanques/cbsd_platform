@@ -59,6 +59,8 @@ $form = $this->beginWidget('CActiveForm', array(
         foreach($questionnaire as $fiche=>$value){
             foreach($value as $k=>$v){
                 if ($k=='id') {
+                    if (!isset($_POST['profil']))
+                            echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
                     if (isset($_POST['profil']) && $_POST['profil'] == 'neuropathologiste' && $value['name'] == 'Formulaire Parkinson')
                         echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
                     else if (isset($_POST['profil']) && $_POST['profil'] == 'généticien' && $value['name'] == 'Formulaire Démence')
