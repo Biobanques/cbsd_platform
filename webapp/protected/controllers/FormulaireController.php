@@ -246,6 +246,9 @@ class FormulaireController extends Controller {
             //sinon positionnement relatif
             if ($questionnaire->questions_group != null) {
                 $questionnaire->questions_group[] = $questionGroup;
+            }  else {
+                $questionnaire->questions_group=array();
+                $questionnaire->questions_group[] = $questionGroup;
             }
         }
         if ($questionnaire->save())
