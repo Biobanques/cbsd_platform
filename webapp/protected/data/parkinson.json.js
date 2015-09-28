@@ -21,30 +21,23 @@ db.questionnaire.insert({
             "questions" : [ 
                 {
                     "id" : "1a",
-                    "label" : "Form number",
-                    "label_fr" : "N° de fiche",
-                    "type" : "input"
-                }, 
-                {
-                    "id" : "1b",
                     "label" : "Name of the doctor",
                     "label_fr" : "Nom du médecin",
-                    "type" : "input",
+                    "type" : "input"
+                },
+                {
+                    "id" : "1b",
+                    "label" : "Propositus",
+                    "label_fr" : "Propositus",
+                    "type" : "radio",
+                    "values" : "Oui,Non",
                     "style" : "float:right"
                 }, 
                 {
                     "id" : "1c",
-                    "label" : "Propositus",
-                    "label_fr" : "Propositus",
-                    "type" : "radio",
-                    "values" : "Oui,Non"
-                }, 
-                {
-                    "id" : "1d",
                     "label" : "Reiew date",
                     "label_fr" : "Date examen",
-                    "type" : "input",
-                    "style" : "float:right"
+                    "type" : "input"
                 }
             ]
         }, 
