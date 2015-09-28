@@ -68,7 +68,7 @@
 
     <div class="row">
         <div id="address" style="display:none;">
-            <?php echo $form->labelEx($model, 'address'); ?>
+            <?php echo CHtml::activeLabel($model, 'address', array('required' => true)); ?>
             <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
             <?php echo $form->error($model, 'address'); ?>
         </div>
@@ -76,7 +76,7 @@
 
     <div class="row">
         <div id="centre" style="display:none;">
-            <?php echo $form->labelEx($model, 'centre'); ?>
+            <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
             <?php echo $form->textField($model, 'centre', array('size' => 20, 'maxlength' => 250)); ?>
             <?php echo $form->error($model, 'centre'); ?>
         </div>
