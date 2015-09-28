@@ -57,7 +57,7 @@ class AnswerController extends Controller {
             $model->id = $patient->id;
             $model->nom = $patient->useName;
             $model->prenom = $patient->firstName;
-            $model->date_naissance = $patient->birthDate;
+            $model->nom_naissance = $patient->birthName;
         }
         if (isset($_POST['PatientForm'])) {
             $model->attributes = $_POST['PatientForm'];
@@ -71,9 +71,6 @@ class AnswerController extends Controller {
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
             $patient->id = CommonTools::wsGetPatient($patient);
-            $mixedResult = $model->dateformat($patient->birthDate);
-            if ($mixedResult['result'] == false)
-                $this->redirect(array('site/patient'));
             if ($patient->id === -1) {
                 Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ses informations n’existe dans le système, veuillez contacter l’administrateur des identités de patient pour en créer un.");
                 $this->redirect(array('site/patient'));
@@ -81,7 +78,6 @@ class AnswerController extends Controller {
 
             $model->id = $patient->id;
         }
-        if ($model->validate()) {
             $criteria = new EMongoCriteria();
             $criteria->login = Yii::app()->user->id;
             $criteria->id_patient = $patient->id;
@@ -93,10 +89,6 @@ class AnswerController extends Controller {
                 $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'questionnaire' => $questionnaire));
             else
                 $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'patient' => $patient));
-        } else {
-            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Tous les champs ne sont pas remplis.");
-            $this->redirect(array('site/patient'));
-        }
     }
 
     /**

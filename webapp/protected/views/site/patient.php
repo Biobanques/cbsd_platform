@@ -40,9 +40,9 @@
     </div>
 
     <div class="row" style="float:left; margin-left:35px">
-        <?php echo $form->labelEx($model, 'date_naissance'); ?>
-        <?php echo $form->textField($model, 'date_naissance'); ?>
-        <?php echo $form->error($model, 'date_naissance'); ?>
+        <?php echo $form->labelEx($model, 'nom_naissance'); ?>
+        <?php echo $form->textField($model, 'nom_naissance'); ?>
+        <?php echo $form->error($model, 'nom_naissance'); ?>
     </div>
     
     <div style="clear:both;"></div>
