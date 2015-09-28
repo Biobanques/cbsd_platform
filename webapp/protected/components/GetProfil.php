@@ -14,7 +14,7 @@
 class GetProfil {
     public static function getHTML(){
         $html = "<form class=\"navbar-form pull-left\" action=\"#\" method=\"POST\">
-                 <select id=\"profil\" name=\"profil\" style=\"width:150px; margin-top: -3px; margin-left: -25px;\" onchange=\"this.form.submit()\">
+                 <select id=\"profil\" name=\"profil\" style=\"width:140px; margin-top: -3px; margin-left: -25px;\" onchange=\"this.form.submit()\">
                  <option value=\"\">----</option>";
         $items = User::model()->getArrayProfilFiltered();
         foreach($items as $item) {

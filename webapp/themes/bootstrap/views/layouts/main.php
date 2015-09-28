@@ -70,14 +70,20 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
             <div id="footer">
                 Copyright &copy; <?php echo date('Y'); ?> by Biobanques.<br/>
                 All Rights Reserved.<br/>
-                <div>
-                    <?php echo CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class'=>'logo')); ?>
-                    <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class'=>'logo')); ?>
-                    <?php echo CHtml::image(Base . '/images/logo FP.jpg', 'France Parkinson'); ?>
-                    <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class'=>'logo')); ?>
-                    <?php echo CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class'=>'logo')); ?>
+                <div class="container">
+                    <div class="row">
+                        <?php echo CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class'=>'col-xs-7 col-sm-5 col-md-2', 'style'=>'margin-top:50px;')); ?>
+                        <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class'=>'col-xs-7 col-sm-5 col-md-2')); ?>
+                        <?php echo CHtml::image(Base . '/images/logo FP.jpg', 'France Parkinson', array('class'=>'col-xs-7 col-sm-5 col-md-3')); ?>
+                        <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class'=>'col-xs-7 col-sm-5 col-md-2')); ?> 
+                    </div>
+                    <br /><br />
+                    <div class="row">
+                        <?php echo CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class'=>'col-xs-7 col-sm-5 col-md-2')); ?>
+                        <?php echo CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class'=>'col-xs-7 col-sm-5 col-md-2')); ?>
+                        <?php echo CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class'=>'col-xs-7 col-sm-5 col-md-3', 'style'=>'margin-top:20px;')); ?>
+                    </div>
                 </div>
-
             </div><!-- footer -->
         </div><!-- page -->
         <?php if (isset($_POST['profil'])){ $_SESSION['profile'] = $_POST['profil'];}?>
