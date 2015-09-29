@@ -21,7 +21,7 @@ class WebUser extends CWebUser {
      * @return boolean
      */
     public function isAdmin() {
-        return $this->getState('profil', '0') == 1;
+        return $this->getState('profil', 'clinicien') == "administrateur";
     }
 
     /**
@@ -29,7 +29,7 @@ class WebUser extends CWebUser {
      * @return boolean
      */
     public function isClinicien() {
-        return $this->getState('profil', '0') == 0;
+        return $this->getState('profil', 'clinicien') == "clinicien";
     }
 
     /**
@@ -37,7 +37,7 @@ class WebUser extends CWebUser {
      * @return boolean
      */
     public function isNeuropathologiste() {
-        return $this->getState('profil', '0') == 2;
+        return $this->getState('profil', 'clinicien') == "neuropathologiste";
     }
 
     /**
@@ -45,7 +45,7 @@ class WebUser extends CWebUser {
      * @return boolean
      */
     public function isGeneticien() {
-        return $this->getState('profil', '0') == 3;
+        return $this->getState('profil', 'clinicien') == "généticien";
     }
     
     /**
@@ -53,7 +53,7 @@ class WebUser extends CWebUser {
      * @return boolean
      */
     public function isChercheur() {
-        return $this->getState('profil', '0') == 4;
+        return $this->getState('profil', 'clinicien') == "chercheur";
     }
 
 }
