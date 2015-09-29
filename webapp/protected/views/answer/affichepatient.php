@@ -12,7 +12,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'dataProvider' => new CArrayDataProvider(array($model->getAttributes())),
     'template' => "{items}",
     'columns' => array(
-        array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->profil == 1),
+        array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->profil == "1"),
         array('value' => '$data["nom"]', 'header' => 'Nom'),
         array('value' => '$data["prenom"]', 'header' => 'Prénom'),
         array('value' => '$data["nom_naissance"]', 'header' => 'Nom de naissance'),

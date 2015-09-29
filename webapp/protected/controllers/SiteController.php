@@ -172,7 +172,7 @@ class SiteController extends Controller {
             $model->inactif = 1;
             if ($model->validate())
                 if ($model->save()) {
-                    if ($model->profil == 0) {
+                    if ($model->profil == "clinicien") {
                         $model->inactif = 0;
                         $model->update();
                         if ($model->update()) {

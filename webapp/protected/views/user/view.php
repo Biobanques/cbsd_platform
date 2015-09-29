@@ -22,6 +22,8 @@ $this->menu=array(
 		'email',
 		'telephone',
 		'gsm',
+                'address',
+                'centre',
 		'inactif',
 		'_id',
 	),

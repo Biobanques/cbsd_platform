@@ -50,7 +50,7 @@ class User extends EMongoDocument {
     public function rules() {
         $result = array(
             array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false, 'on' => 'subscribe'),
-            array('profil, inactif, gsm, telephone', 'numerical', 'integerOnly' => true),
+            array('inactif, gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('login', 'telPresent'),
             array('gsm, telephone', 'length', 'min' => 8),
@@ -135,11 +135,11 @@ class User extends EMongoDocument {
      */
     public function getArrayProfil() {
         $res = array();
-        $res ['0'] = "clinicien";
-        $res ['1'] = "administrateur";
-        $res ['2'] = "neuropathologiste";
-        $res ['3'] = "généticien";
-        $res ['4'] = "chercheur";
+        $res ['clinicien'] = "clinicien";
+        $res ['administrateur'] = "administrateur";
+        $res ['neuropathologiste'] = "neuropathologiste";
+        $res ['généticien'] = "généticien";
+        $res ['chercheur'] = "chercheur";
 
         return $res;
     }
