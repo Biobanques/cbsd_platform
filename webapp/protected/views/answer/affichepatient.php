@@ -36,7 +36,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'htmlOptions' => array('style' => 'width: 50px'),
+            'htmlOptions' => array('style' => 'width: 70px'),
         ),
     ),
 ));

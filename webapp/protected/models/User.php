@@ -131,7 +131,7 @@ class User extends EMongoDocument {
     }
 
     /**
-     * get an array of consent used by dropDownLIst.
+     * get an array of profil used by dropDownLIst.
      */
     public function getArrayProfil() {
         $res = array();
@@ -172,6 +172,29 @@ class User extends EMongoDocument {
         $res = array();
         $res ['0'] = "actif";
         $res ['1'] = "inactif";
+        return $res;
+    }
+    
+    /**
+     * get an array of centre used by dropDownLIst.
+     */
+    public function getArrayCentre() {
+        $res = array();
+        $res ['0'] = "Bordeaux";
+        $res ['1'] = "Caen";
+        $res ['2'] = "Clermont-Ferrand";
+        $res ['3'] = "Lille";
+        $res ['4'] = "Lyon";
+        $res ['5'] = "Marseille";
+        $res ['6'] = "Montpellier";
+        $res ['7'] = "Nice";
+        $res ['8'] = "Paris";
+        $res ['9'] = "Poitiers";
+        $res ['10'] = "Rennes";
+        $res ['11'] = "Rouen";
+        $res ['12'] = "Strasbourg";
+        $res ['13'] = "Toulouse";
+
         return $res;
     }
 
