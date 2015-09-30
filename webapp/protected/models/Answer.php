@@ -7,7 +7,7 @@
  * @author nmalservet
  *
  */
-class Answer extends EMongoDocument {
+class Answer extends LoggableActiveRecord {
 
     /**
      * 
@@ -43,6 +43,10 @@ class Answer extends EMongoDocument {
      * unique id of the questionnaire
      */
     public $questionnaireMongoId;
+    /**
+     * nom du formulaire
+     * @var type 
+     */
     public $name;
 
     /**
@@ -90,7 +94,8 @@ class Answer extends EMongoDocument {
     public function attributeLabels() {
 
         return array(
-            'id' => 'id',
+            'id' => 'Id',
+            'name'=>'Nom',
             'last_updated' => 'Dernière sauvegarde',
             'last_modified' => 'Date du questionnaire',
         );

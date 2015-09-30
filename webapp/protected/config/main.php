@@ -31,14 +31,8 @@ return array(
     ),
     /* theme : classic , bootstrap */
     'theme' => 'bootstrap',
-    'modules' => array(
-        'gii' => array(
-            'class' => 'system.gii.GiiModule',
-            'password' => 'password',
-            // If removed, Gii defaults to localhost only. Edit carefully to taste.
-            'ipFilters' => array('127.0.0.1', '::1'),
-            'generatorPaths' => array('ext.YiiMongoDbSuite.gii'),
-        ),
+     'modules' => array(
+        'auditTrail' => array(),
     ),
     // application components
     'components' => array(

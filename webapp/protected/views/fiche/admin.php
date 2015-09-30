@@ -19,11 +19,10 @@ $('.search-form form').submit(function(){
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'answers-grid',
     'dataProvider' => $model->search(),
-    'filter' => $model,
     'columns' => array(
         'name',
         array('header'=>'user','value'=>'$data->getUserRecorderName()'),
-        'last_updated',
+        array('header'=>'Dernière mise à jour','value'=>'$data->getLastUpdated()'),
         array(
             'class' => 'CButtonColumn',
               'template'=>'{view}'

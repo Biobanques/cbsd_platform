@@ -12,11 +12,105 @@ abstract class LoggableActiveRecord extends EMongoSoftDocument
      * ajout du comportement pour log audittrail
      * @return multitype:string
      */
-    public function behaviors() {
+   /* public function behaviors() {
         return array(
             'LoggableBehavior' =>
             'application.modules.auditTrail.behaviors.LoggableBehavior',
         );
+    }*/
+    
+    /*$
+     * *
+     * todo action before save to save old attribute sinto an instance
+     */
+    public function afterSave() {
+        parent::afterSave();
+        Yii::log("go on aftersave", CLogger::LEVEL_ERROR);
+         Yii::log("go on loggable behaviors", CLogger::LEVEL_ERROR);
+        try {
+            $username = Yii::app()->user->nom;
+            $userid = Yii::app()->user->_id;
+        } catch (Exception $e) { //If we have no user object, this must be a command line program
+            $username = 'NO_USER';
+            $userid = null;
+        }
+
+        if (empty($username)) {
+            $username = 'NO_USER';
+        }
+
+        if (empty($userid)) {
+            $userid = null;
+        }
+
+        $newattributes = $this->getAttributes();
+        $oldattributes = $this->getOldAttributes();
+
+        if (!$this->isNewRecord) {
+            // compare old and new
+            foreach ($newattributes as $name => $value) {
+                if (!empty($oldattributes) && isset($oldattributes[$name])) {
+                    $old = $oldattributes[$name];
+                } elseif (!empty($oldattributes) && !isset($oldattributes[$name])) {
+                    $old = 'Undefined : new attribute';
+                } else {
+                    $old = '';
+                }
+
+                if ($value != $old) {
+//                if (is_string($value) && ($value != $old)) {
+                    $log = new AuditTrail();
+
+                    $log->old_value = $old;
+
+                    if (is_string($value))
+                        $log->new_value = $value;
+                    else {
+
+                        $log->new_value = json_decode(json_encode($value));
+                    }
+                    $log->action = 'CHANGE';
+                    $log->model = get_class($this->Owner);
+                    $log->model_id = $this->Owner->getPrimaryKey();
+                    $log->field = $name;
+                    $log->stamp = date('Y-m-d H:i:s');
+                    $log->user_id = $userid;
+
+                    $log->save();
+                }
+            }
+        } else {
+            $log = new AuditTrail();
+            $log->old_value = '';
+            $log->new_value = '';
+            $log->action = 'CREATE';
+            $log->model = get_class($this->Owner);
+            $log->model_id = $this->Owner->_id;
+            $log->field = 'N/A';
+            $log->stamp = date('Y-m-d H:i:s');
+            $log->user_id = $userid;
+
+            $log->save();
+
+
+            foreach ($newattributes as $name => $value) {
+                $log = new AuditTrail();
+                $log->old_value = '';
+                if (is_string($value))
+                    $log->new_value = $value;
+                else {
+
+                    $log->new_value = json_decode(json_encode($value));
+                }
+                $log->action = 'SET';
+                $log->model = get_class($this->Owner);
+                $log->model_id = $this->Owner->getPrimaryKey();
+                $log->field = $name;
+                $log->stamp = date('Y-m-d H:i:s');
+                $log->user_id = $userid;
+                $log->save();
+            }
+        }
     }
 
     /**
