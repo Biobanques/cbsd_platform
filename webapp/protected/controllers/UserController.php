@@ -140,7 +140,7 @@ class UserController extends Controller {
         $model = $this->loadModel($id);
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
-        $model->inactif = 0;
+        $model->statut = "actif";
         if ($model->update()) {
             CommonMailer::sendUserRegisterConfirmationMail($model);
             Yii::app()->user->setFlash('success', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') a bien été validé.');
@@ -164,7 +164,7 @@ class UserController extends Controller {
         $model = $this->loadModel($id);
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
-        $model->inactif = 1;
+        $model->statut = "inactif";
         if ($model->update()) {
             Yii::app()->user->setFlash('success', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') a bien été désactivé.');
         } else {

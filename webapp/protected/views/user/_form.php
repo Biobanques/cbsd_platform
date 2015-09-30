@@ -74,6 +74,14 @@
             <?php echo $form->error($model, 'centre'); ?>
         </div>
     </div>
+    
+    <div class="row">
+        <div id="statut" <?php if (Yii::app()->user->isGuest) echo "style=\"display:none;\""; ?>>
+            <?php echo CHtml::activeLabel($model, 'statut', array('required' => true)); ?>
+            <?php echo $form->dropDownList($model, 'statut', User::model()->getArrayStatut(), array('prompt' => '----')); ?>
+            <?php echo $form->error($model, 'statut'); ?>
+        </div>
+    </div>
 
     <div class="row buttons" style="float:left;">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Créer' : 'Enregistrer'); ?>

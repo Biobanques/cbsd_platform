@@ -33,7 +33,7 @@ class User extends EMongoDocument {
     
     public $centre;
     
-    public $inactif;
+    public $statut;
     
     public $verifyCode;
 
@@ -50,7 +50,7 @@ class User extends EMongoDocument {
     public function rules() {
         $result = array(
             array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false, 'on' => 'subscribe'),
-            array('inactif, gsm, telephone', 'numerical', 'integerOnly' => true),
+            array('gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('login', 'telPresent'),
             array('gsm, telephone', 'length', 'min' => 8),
@@ -61,7 +61,7 @@ class User extends EMongoDocument {
             array('centre', 'centreValidator'),
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
-            array('prenom, nom, login, password, email, telephone, gsm, profil, inactif', 'safe', 'on' => 'search'),
+            array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre, statut', 'safe', 'on' => 'search, update'),
         );
         return $result;
     }
@@ -82,7 +82,7 @@ class User extends EMongoDocument {
             'profil' => Yii::t('common', 'profil'),
             'address' => 'Adresse',
             'centre' => 'Centre de référence',
-            'inactif' => Yii::t('common', 'inactif'),
+            'statut' => 'Statut',
             'verifyCode' => Yii::t('common', 'verifyCode'),
         );
     }
@@ -119,9 +119,9 @@ class User extends EMongoDocument {
     /**
      * @return type
      */
-    public function getInactif() {
-        $result = $this->inactif;
-        $arr = $this->getArrayInactif();
+    public function getStatut() {
+        $result = $this->statut;
+        $arr = $this->getArrayStatut();
         if ($result != "" && $arr [$result] != null) {
             $result = $arr [$result];
         } else {
@@ -166,12 +166,12 @@ class User extends EMongoDocument {
     }
     
     /**
-     * get an array of inactif
+     * get an array of statut
      */
-    public function getArrayInactif() {
+    public function getArrayStatut() {
         $res = array();
-        $res ['0'] = "actif";
-        $res ['1'] = "inactif";
+        $res ['actif'] = "actif";
+        $res ['inactif'] = "inactif";
         return $res;
     }
     
@@ -180,20 +180,20 @@ class User extends EMongoDocument {
      */
     public function getArrayCentre() {
         $res = array();
-        $res ['0'] = "Bordeaux";
-        $res ['1'] = "Caen";
-        $res ['2'] = "Clermont-Ferrand";
-        $res ['3'] = "Lille";
-        $res ['4'] = "Lyon";
-        $res ['5'] = "Marseille";
-        $res ['6'] = "Montpellier";
-        $res ['7'] = "Nice";
-        $res ['8'] = "Paris";
-        $res ['9'] = "Poitiers";
-        $res ['10'] = "Rennes";
-        $res ['11'] = "Rouen";
-        $res ['12'] = "Strasbourg";
-        $res ['13'] = "Toulouse";
+        $res ['Bordeaux'] = "Bordeaux";
+        $res ['Caen'] = "Caen";
+        $res ['Clermont-Ferrand'] = "Clermont-Ferrand";
+        $res ['Lille'] = "Lille";
+        $res ['Lyon'] = "Lyon";
+        $res ['Marseille'] = "Marseille";
+        $res ['Montpellier'] = "Montpellier";
+        $res ['Nice'] = "Nice";
+        $res ['Paris'] = "Paris";
+        $res ['Poitiers'] = "Poitiers";
+        $res ['Rennes'] = "Rennes";
+        $res ['Rouen'] = "Rouen";
+        $res ['Strasbourg'] = "Strasbourg";
+        $res ['Toulouse'] = "Toulouse";
 
         return $res;
     }
@@ -233,14 +233,14 @@ class User extends EMongoDocument {
     }
     
     public function addressValidator() {
-        if (($this->profil == "0") && ($this->address == "")) {
+        if (($this->profil == "clinicien") && ($this->address == "")) {
             $this->validatorList->add(CValidator::createValidator('required',$this,'address',array()));
             $this->addError('address', 'Adresse ne peut pas être vide.');
         }
     }
     
     public function centreValidator() {
-        if (($this->profil == "2") && ($this->centre == "")) {
+        if (($this->profil == "neuropathologiste") && ($this->centre == "")) {
             $this->validatorList->add(CValidator::createValidator('required',$this,'centre',array()));
             $this->addError('centre', 'Centre ne peut pas être vide.');
         }

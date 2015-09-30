@@ -8,7 +8,7 @@ db.user.insert({
     "email":"bernard.te@inserm.fr",
     "telephone":"0625004713",
     "gsm":"",
-    "inactif":"0"
+    "statut":"actif"
 });
 
 db.user.insert({
@@ -20,7 +20,7 @@ db.user.insert({
     "email":"nicolas.malservet@inserm.fr",
     "telephone":"0123456789",
     "gsm":"",
-    "inactif":"0"
+    "statut":"actif"
 });
 
 db.user.insert( {
@@ -33,7 +33,7 @@ db.user.insert( {
     "email":"matthieu.penicaud@inserm.fr",
     "telephone":"0123456789",
     "gsm":"",
-    "inactif":"0"
+    "statut":"actif"
 });
 
 db.user.insert({
@@ -45,7 +45,7 @@ db.user.insert({
     "email":"clinicien@clinicien.com",
     "telephone":"0123456789",
     "gsm":"",
-    "inactif":"0",
+    "statut":"actif",
     "address":"24 rue de Paris"
 });
 
@@ -58,8 +58,8 @@ db.user.insert({
     "email":"neuropath@neuropath.com",
     "telephone":"0123456789",
     "gsm":"",
-    "inactif":"1",
-    "centre":"CHU"
+    "statut":"actif",
+    "centre":"Paris"
 });
 
 db.user.insert({
@@ -71,5 +71,5 @@ db.user.insert({
     "email":"geneticien@geneticien.com",
     "telephone":"0123456789",
     "gsm":"",
-    "inactif":"1"
+    "statut":"actif"
 });

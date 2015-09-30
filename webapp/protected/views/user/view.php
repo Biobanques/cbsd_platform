@@ -24,7 +24,7 @@ $this->menu=array(
 		'gsm',
                 'address',
                 'centre',
-		'inactif',
+		'statut',
 		'_id',
 	),
 )); ?>
