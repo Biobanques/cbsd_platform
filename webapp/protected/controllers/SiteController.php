@@ -169,11 +169,11 @@ class SiteController extends Controller {
         $model = new User ();
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            $model->inactif = 1;
+            $model->statut = "inactif";
             if ($model->validate())
                 if ($model->save()) {
-                    if ($model->profil == 0) {
-                        $model->inactif = 0;
+                    if ($model->profil == "clinicien") {
+                        $model->statut = "actif";
                         $model->update();
                         if ($model->update()) {
                             Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDForms !');

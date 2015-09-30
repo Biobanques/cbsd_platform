@@ -6,12 +6,7 @@ $this->pageTitle = Yii::app()->name;
 ?>
 
 <div class="row-fluid">
-    <div class="span2">
-        <?php
-        echo CHtml::image("./images/logobb.png", "Biobanques");
-        ?>
-    </div>
-    <div class="span10">
+    <div class="col-xs-12 col-sm-12 col-md-12">
         <?php
         $this->beginWidget('bootstrap.widgets.TbHeroUnit', array(
             'heading' => 'Bienvenue sur ' . CHtml::encode(Yii::app()->name),

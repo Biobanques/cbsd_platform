@@ -11,6 +11,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'email',
         array(
             'class' => 'CButtonColumn',
+            'htmlOptions' => array('style' => 'width: 70px')
         ),
     ),
 ));

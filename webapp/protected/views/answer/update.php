@@ -3,11 +3,11 @@
     <table cellpadding="20">
         <tr>
             <td><b>Nom : </b><?php echo $patient->useName; ?></td> 
-            <td><b>Date de naissance : </b><?php echo $patient->birthDate; ?></td>
+            <td><b>Nom de naissance : </b><?php echo $patient->birthName; ?></td>
         </tr>
         <tr>
             <td><b>Prénom : </b><?php echo $patient->firstName; ?></td>
-            <?php if (Yii::app()->user->profil == 1)
+            <?php if (Yii::app()->user->profil == "administrateur")
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
             ?>
         </tr>

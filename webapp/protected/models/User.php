@@ -33,7 +33,7 @@ class User extends LoggableActiveRecord {
     
     public $centre;
     
-    public $inactif;
+    public $statut;
     
     public $verifyCode;
 
@@ -50,18 +50,18 @@ class User extends LoggableActiveRecord {
     public function rules() {
         $result = array(
             array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false, 'on' => 'subscribe'),
-            array('profil, inactif, gsm, telephone', 'numerical', 'integerOnly' => true),
+            array('gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('login', 'telPresent'),
             array('gsm, telephone', 'length', 'min' => 8),
-            array('prenom, nom, login, password, email, profil, telephone, verifyCode', 'required'),
+            array('prenom, nom, login, password, email, profil, telephone', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('address', 'addressValidator'),
             array('centre', 'centreValidator'),
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
-            array('prenom, nom, login, password, email, telephone, gsm, profil, inactif', 'safe', 'on' => 'search'),
+            array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre, statut', 'safe', 'on' => 'search, update'),
         );
         return $result;
     }
@@ -82,7 +82,7 @@ class User extends LoggableActiveRecord {
             'profil' => Yii::t('common', 'profil'),
             'address' => 'Adresse',
             'centre' => 'Centre de référence',
-            'inactif' => Yii::t('common', 'inactif'),
+            'statut' => 'Statut',
             'verifyCode' => Yii::t('common', 'verifyCode'),
         );
     }
@@ -119,9 +119,9 @@ class User extends LoggableActiveRecord {
     /**
      * @return type
      */
-    public function getInactif() {
-        $result = $this->inactif;
-        $arr = $this->getArrayInactif();
+    public function getStatut() {
+        $result = $this->statut;
+        $arr = $this->getArrayStatut();
         if ($result != "" && $arr [$result] != null) {
             $result = $arr [$result];
         } else {
@@ -131,15 +131,15 @@ class User extends LoggableActiveRecord {
     }
 
     /**
-     * get an array of consent used by dropDownLIst.
+     * get an array of profil used by dropDownLIst.
      */
     public function getArrayProfil() {
         $res = array();
-        $res ['0'] = "clinicien";
-        $res ['1'] = "administrateur";
-        $res ['2'] = "neuropathologiste";
-        $res ['3'] = "généticien";
-        $res ['4'] = "chercheur";
+        $res ['clinicien'] = "clinicien";
+        $res ['administrateur'] = "administrateur";
+        $res ['neuropathologiste'] = "neuropathologiste";
+        $res ['généticien'] = "généticien";
+        $res ['chercheur'] = "chercheur";
 
         return $res;
     }
@@ -166,12 +166,35 @@ class User extends LoggableActiveRecord {
     }
     
     /**
-     * get an array of inactif
+     * get an array of statut
      */
-    public function getArrayInactif() {
+    public function getArrayStatut() {
         $res = array();
-        $res ['0'] = "actif";
-        $res ['1'] = "inactif";
+        $res ['actif'] = "actif";
+        $res ['inactif'] = "inactif";
+        return $res;
+    }
+    
+    /**
+     * get an array of centre used by dropDownLIst.
+     */
+    public function getArrayCentre() {
+        $res = array();
+        $res ['Bordeaux'] = "Bordeaux";
+        $res ['Caen'] = "Caen";
+        $res ['Clermont-Ferrand'] = "Clermont-Ferrand";
+        $res ['Lille'] = "Lille";
+        $res ['Lyon'] = "Lyon";
+        $res ['Marseille'] = "Marseille";
+        $res ['Montpellier'] = "Montpellier";
+        $res ['Nice'] = "Nice";
+        $res ['Paris'] = "Paris";
+        $res ['Poitiers'] = "Poitiers";
+        $res ['Rennes'] = "Rennes";
+        $res ['Rouen'] = "Rouen";
+        $res ['Strasbourg'] = "Strasbourg";
+        $res ['Toulouse'] = "Toulouse";
+
         return $res;
     }
 
@@ -210,14 +233,14 @@ class User extends LoggableActiveRecord {
     }
     
     public function addressValidator() {
-        if (($this->profil == "0") && ($this->address == "")) {
+        if (($this->profil == "clinicien") && ($this->address == "")) {
             $this->validatorList->add(CValidator::createValidator('required',$this,'address',array()));
             $this->addError('address', 'Adresse ne peut pas être vide.');
         }
     }
     
     public function centreValidator() {
-        if (($this->profil == "2") && ($this->centre == "")) {
+        if (($this->profil == "neuropathologiste") && ($this->centre == "")) {
             $this->validatorList->add(CValidator::createValidator('required',$this,'centre',array()));
             $this->addError('centre', 'Centre ne peut pas être vide.');
         }

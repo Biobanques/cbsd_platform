@@ -22,7 +22,9 @@ $this->menu=array(
 		'email',
 		'telephone',
 		'gsm',
-		'inactif',
+                'address',
+                'centre',
+		'statut',
 		'_id',
 	),
 )); ?>
