@@ -6,7 +6,7 @@
  * @author nmalservet
  *
  */
-class Questionnaire extends LoggableActiveRecord {
+class Questionnaire extends EMongoDocument {
 
     /**
      * champs classiques d echantillons

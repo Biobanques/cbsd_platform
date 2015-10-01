@@ -43,7 +43,7 @@ class PatientForm extends CFormModel {
             'nom' => 'Nom',
             'prenom' => 'Prénom',
             'date_naissance' => 'Date de naissance',
-            'nom_naissance' => 'Nom Naissance',
+            'nom_naissance' => 'Nom de naissance',
             'sexe' => 'Sexe',        
         );
     }
