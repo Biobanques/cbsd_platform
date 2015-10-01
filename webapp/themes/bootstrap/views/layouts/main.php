@@ -72,16 +72,13 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
                 All Rights Reserved.<br/>
                 <div class="container">
                     <div class="row">
-                        <?php echo CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class'=>'col-xs-7 col-sm-5 col-md-2 col-md-offset-1', 'style'=>'margin-top:50px;')); ?>
-                        <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class'=>'col-xs-7 col-sm-5 col-md-2')); ?>
-                        <?php echo CHtml::image(Base . '/images/logo FP.jpg', 'France Parkinson', array('class'=>'col-xs-7 col-sm-5 col-md-3')); ?>
-                        <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class'=>'col-xs-7 col-sm-5 col-md-2')); ?> 
-                    </div>
-                    <br /><br />
-                    <div class="row">
-                        <?php echo CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class'=>'col-xs-7 col-sm-5 col-md-2 col-md-offset-1')); ?>
-                        <?php echo CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class'=>'col-xs-7 col-sm-5 col-md-2')); ?>
-                        <?php echo CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class'=>'col-xs-7 col-sm-5 col-md-3', 'style'=>'margin-top:20px;')); ?>
+                        <?php echo CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?>
+                        <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class'=>'col-xs-7 col-sm-5 col-md-2 col-lg-2 logo')); ?>
+                        <?php echo CHtml::image(Base . '/images/logo FP.jpg', 'France Parkinson', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?>
+                        <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?> 
+                        <?php echo CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?>
+                        <?php echo CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?>
+                        <?php echo CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?>
                     </div>
                 </div>
             </div><!-- footer -->
