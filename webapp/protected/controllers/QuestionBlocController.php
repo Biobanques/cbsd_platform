@@ -50,7 +50,8 @@ class QuestionBlocController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new QuestionBloc;
+                $model=new QuestionBloc;
+		$questionForm=new QuestionForm;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -58,12 +59,19 @@ class QuestionBlocController extends Controller
 		if(isset($_POST['QuestionBloc']))
 		{
 			$model->attributes=$_POST['QuestionBloc'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->_id));
+		}     
+                
+		if(isset($_POST['QuestionForm']))
+		{
+			$questionForm->attributes=$_POST['QuestionForm'];
+			if($questionForm->validate()) {
+                            $model = $this->saveBlocNewQuestion($model, $questionForm);
+                        }
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+                        'model'=>$model,
+			'questionForm'=>$questionForm,
 		));
 	}
 
@@ -163,4 +171,16 @@ class QuestionBlocController extends Controller
 			Yii::app()->end();
 		}
 	}
+        
+    public function saveBlocNewQuestion($bloc, $questionForm) {
+        $cquestion = new Question;
+        $cquestion->setAttributesByQuestionForm($questionForm);
+        $bloc->questions = $questionForm->id;
+        if ($bloc->save())
+            Yii::app()->user->setFlash('success', "Bloc enregistré avec sucès");
+        else {
+            Yii::app()->user->setFlash('error', "Bloc non enregistré. Un problème est apparu.");
+        }
+        return $bloc;
+    }
 }

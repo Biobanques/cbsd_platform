@@ -45,6 +45,21 @@ class Question extends EMongoEmbeddedDocument {
     public $precomment_fr;
 
     /**
+     * Returns the static model of the specified AR class.
+     * @return Question the static model class
+     */
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
+
+    /**
+     * @return string the associated collection name
+     */
+    public function getCollectionName() {
+        return 'Question';
+    }
+    
+    /**
      * init a question with params setted into a questionForm
      * @param type $questionForm
      */

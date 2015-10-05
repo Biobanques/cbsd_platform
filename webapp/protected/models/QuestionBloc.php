@@ -31,7 +31,7 @@ class QuestionBloc extends LoggableActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, questions', 'required'),
+			array('title', 'required'),
 			array('title', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
