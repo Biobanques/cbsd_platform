@@ -4,7 +4,7 @@ class LoggableBehavior extends CActiveRecordBehavior
 {
     private $_oldattributes = array();
 
-    public function afterSave() {
+    public function afterSave($event) {
         Yii::log("go on loggable behaviors", CLogger::LEVEL_ERROR);
         try {
             $username = Yii::app()->user->nom;
@@ -25,7 +25,7 @@ class LoggableBehavior extends CActiveRecordBehavior
         $newattributes = $this->Owner->getAttributes();
         $oldattributes = $this->getOldAttributes();
 
-        if (!$this->isNewRecord) {
+        if (!$this->Owner->isNewRecord) {
             // compare old and new
             foreach ($newattributes as $name => $value) {
                 if (!empty($oldattributes) && isset($oldattributes[$name])) {

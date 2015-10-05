@@ -31,7 +31,7 @@ return array(
     ),
     /* theme : classic , bootstrap */
     'theme' => 'bootstrap',
-     'modules' => array(
+    'modules' => array(
         'auditTrail' => array(),
     ),
     // application components
