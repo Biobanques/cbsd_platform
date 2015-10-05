@@ -6,6 +6,7 @@
 class QuestionBloc extends EMongoDocument
 {
 	public $title;
+        public $questions;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -32,7 +33,7 @@ class QuestionBloc extends EMongoDocument
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title', 'required'),
+			array('title, questions', 'required'),
 			array('title', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -47,6 +48,8 @@ class QuestionBloc extends EMongoDocument
 	{
 		return array(
 			'title' => 'Titre',
+                        'questions' => 'Questions',
 		);
 	}
+
 }
