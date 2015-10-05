@@ -12,6 +12,7 @@
                         array('label' => 'Utilisateurs', 'url' => array('/user/admin')),
                         array('label' => 'Formulaires', 'url' => array('/formulaire/admin')),
                         array('label' => 'Fiches', 'url' => array('/fiche/admin')),
+                        array('label' => 'Gestion des blocs', 'url' => array('/questionBloc/admin')),
                         array('label' => 'Log système', 'url' => array('/auditTrail/admin')),
                     ),
                     'htmlOptions' => array('class' => 'operations'),

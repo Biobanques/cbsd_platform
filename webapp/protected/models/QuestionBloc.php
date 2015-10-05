@@ -1,50 +1,52 @@
 <?php
 
 /**
- * classe embarquée Question, définit les objets Question dans les questionnaires
- * @author matthieu
- *
+ * This is the MongoDB Document model class based on table "QuestionBloc".
  */
-class QuestionBloc extends EMongoEmbeddedDocument {
+class QuestionBloc extends EMongoDocument
+{
+	public $title;
 
-    public $id;
-    public $title;
-    public $title_fr;
-    public $questions;
-    
-    /**
-     * parent group if setted.
-     * @var type 
-     */
-    public $parent_group;
-    
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @return QuestionBloc the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
 
+	/**
+	 * @return string the associated collection name
+	 */
+	public function getCollectionName()
+	{
+		return 'QuestionBloc';
+	}
 
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('title', 'required'),
+			array('title', 'length', 'max'=>255),
+			// The following rule is used by search().
+			// Please remove those attributes that should not be searched.
+			array('title', 'safe', 'on'=>'search'),
+		);
+	}
 
-    /**
-     *
-     * @return array validation rules for model attributes.
-     */
-    public function rules() {
-        return array(
-            array(
-                'id,title, parent_group',
-                'required'
-        ));
-    }
-
-    /**
-     *
-     * @return array customized attribute labels (name=>label)
-     */
-    public function attributeLabels() {
-        return array(
-            'id' => 'id',
-            'title' => 'titre',
-            'title_fr' => 'titre',
-            'parent_group' => 'Groupe parent'
-        );
-    }
-
-
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'title' => 'Titre',
+		);
+	}
 }

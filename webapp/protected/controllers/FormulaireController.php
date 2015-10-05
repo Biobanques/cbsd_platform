@@ -79,7 +79,6 @@ class FormulaireController extends Controller {
         $model = Questionnaire::model()->findByPk(new MongoID($id));
         $questionForm = new QuestionForm;
         $questionGroup = new QuestionGroup;
-        $questionBloc = new QuestionBloc;
         // collect user input data
         if (isset($_POST['QuestionForm'])) {
             $questionForm->attributes = $_POST['QuestionForm'];
@@ -96,23 +95,13 @@ class FormulaireController extends Controller {
                 $model = $this->saveQuestionnaireNewGroup($model, $questionGroup);
             }
         }
-        
-        if (isset($_POST['QuestionBloc'])) {
-            $questionBloc->attributes = $_POST['QuestionBloc'];
-            //copie du titre sur l option fr
-            $questionBloc->title_fr = $questionBloc->title;
-            if ($questionBloc->validate()) {
-                $model = $this->saveQuestionnaireNewBloc($model, $questionBloc);
-            }
-        }
 
         //set du model sur la questionForm pour generer l arborescende de position de question
         $questionForm->questionnaire = $model;
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,
-            'questionGroup' => $questionGroup,
-            'questionBloc' => $questionBloc
+            'questionGroup' => $questionGroup
         ));
     }
 
@@ -147,13 +136,11 @@ class FormulaireController extends Controller {
         //go back on update mode
         $questionForm = new QuestionForm;
         $questionGroup = new QuestionGroup;
-        $questionBloc = new QuestionBloc;
         $questionForm->questionnaire = $model;
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,
-            'questionGroup' => $questionGroup,
-            'questionBloc' => $questionBloc
+            'questionGroup' => $questionGroup
         ));
     }
 
@@ -175,13 +162,11 @@ class FormulaireController extends Controller {
         //go back on update mode
         $questionForm = new QuestionForm;
         $questionGroup = new QuestionGroup;
-        $questionBloc = new QuestionBloc;
         $questionForm->questionnaire = $model;
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,
-            'questionGroup' => $questionGroup,
-            'questionBloc' => $questionBloc
+            'questionGroup' => $questionGroup
         ));
     }
     /**
@@ -265,25 +250,6 @@ class FormulaireController extends Controller {
             }  else {
                 $questionnaire->questions_group=array();
                 $questionnaire->questions_group[] = $questionGroup;
-            }
-        }
-        if ($questionnaire->save())
-            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
-        else {
-            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
-            Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
-        }
-        return $questionnaire;
-    }
-    
-    public function saveQuestionnaireNewBloc($questionnaire, $questionBloc) {
-        if ($questionBloc != null) {
-            //sinon positionnement relatif
-            if ($questionnaire->questions_group != null) {
-                $questionnaire->questions_group[] = $questionBloc;
-            }  else {
-                $questionnaire->questions_group=array();
-                $questionnaire->questions_group[] = $questionBloc;
             }
         }
         if ($questionnaire->save())
