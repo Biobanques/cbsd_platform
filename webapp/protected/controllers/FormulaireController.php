@@ -126,6 +126,7 @@ class FormulaireController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDeleteQuestion($idFormulaire, $idQuestion) {
+        $questionBloc = new QuestionBloc;
         $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
         if ($model->deleteQuestion($idQuestion)) {
             if ($model->save()) {
@@ -142,7 +143,8 @@ class FormulaireController extends Controller {
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,
-            'questionGroup' => $questionGroup
+            'questionGroup' => $questionGroup,
+            'questionBloc' => $questionBloc
         ));
     }
 
