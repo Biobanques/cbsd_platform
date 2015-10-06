@@ -21,21 +21,23 @@
         </div>
     </div>
     <?php
-    $this->widget('bootstrap.widgets.TbGridView', array(
-        'type' => 'striped bordered condensed',
-        'dataProvider' => $dataProvider,
-        'template' => "{items}",
-        'emptyText' => 'Il n\'y a pas de questions associées à ce bloc.',
-        'columns' => array(
-            array('name' => 'id', 'header' => 'id'),
-            array('name' => 'label', 'header' => 'label'),
-            array('name' => 'type', 'header' => 'type'),
-            array(
-                'class' => 'bootstrap.widgets.TbButtonColumn',
-                'htmlOptions' => array('style' => 'width: 70px'),
+    if (isset($dataProvider)) {
+        $this->widget('bootstrap.widgets.TbGridView', array(
+            'type' => 'striped bordered condensed',
+            'dataProvider' => $dataProvider,
+            'template' => "{items}",
+            'emptyText' => 'Il n\'y a pas de questions associées à ce bloc.',
+            'columns' => array(
+                array('name' => 'id', 'header' => 'id'),
+                array('name' => 'label', 'header' => 'label'),
+                array('name' => 'type', 'header' => 'type'),
+                array(
+                    'class' => 'bootstrap.widgets.TbButtonColumn',
+                    'htmlOptions' => array('style' => 'width: 70px'),
+                ),
             ),
-        ),
-    ));
+        ));
+    }
     ?>
 
     <div class="panel panel-primary">
