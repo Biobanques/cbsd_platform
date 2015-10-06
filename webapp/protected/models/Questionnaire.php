@@ -196,7 +196,40 @@ class Questionnaire extends EMongoDocument
         $res = array();
         if ($this->questions_group != null) {
             foreach ($this->questions_group as $group) {
-                $res [$group->id] = $group->title;
+                $res [$group->id] = $group->title != "" ? $group->title : $group->title_fr;
+            }
+        }
+        return $res;
+    }
+
+    public function getOnglets() {
+        $res = array();
+        if ($this->questions_group != null) {
+            foreach ($this->questions_group as $group) {
+                if ($group->parent_group == null)
+                    $res [$group->id] = $group->title != "" ? $group->title : $group->title_fr;
+            }
+        }
+        return $res;
+    }
+
+    public function getGroups() {
+        $res = array();
+        if ($this->questions_group != null) {
+            foreach ($this->questions_group as $group) {
+                if ($group->parent_group != null)
+                    $res [$group->id] = $group->title != "" ? $group->title : $group->title_fr;
+            }
+        }
+        return $res;
+    }
+
+    public function getGroupsInOnglet($parent) {
+        $res = array();
+        if ($this->questions_group != null) {
+            foreach ($this->questions_group as $group) {
+                if ($group->parent_group != null && $group->parent_group == $parent)
+                    $res [$group->id] = $group->title != "" ? $group->title : $group->title_fr;
             }
         }
         return $res;

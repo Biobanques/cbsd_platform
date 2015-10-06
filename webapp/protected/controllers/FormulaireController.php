@@ -4,8 +4,8 @@
  * controller de formulaire. Permet d aiguiller les actions sur l objet formulaire côté admin.
  * @author nmalservet
  */
-class FormulaireController extends Controller {
-
+class FormulaireController extends Controller
+{
     /**
      * NB : boostrap theme need this column2 layout
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -71,7 +71,7 @@ class FormulaireController extends Controller {
         ));
     }
 
-	    /**
+    /**
      * Mise  àjour d un formulaire /mode edition
      * @param $id the ID of the model to be displayed
      */
@@ -98,6 +98,7 @@ class FormulaireController extends Controller {
 
         //set du model sur la questionForm pour generer l arborescende de position de question
         $questionForm->questionnaire = $model;
+        $questionGroup->questionnaire = $model;
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,
@@ -134,17 +135,10 @@ class FormulaireController extends Controller {
             }
         }
         //go back on update mode
-        $questionForm = new QuestionForm;
-        $questionGroup = new QuestionGroup;
-        $questionForm->questionnaire = $model;
-        $this->render('update', array(
-            'model' => $model,
-            'questionForm' => $questionForm,
-            'questionGroup' => $questionGroup
-        ));
+        $this->redirect($this->createUrl('update', array('id' => $model->_id)));
     }
 
-     /**
+    /**
      * Supprime un groupe de questions du formulaire
      * @param $idFormulaire
      * @param $idQuestionGroup
@@ -160,15 +154,11 @@ class FormulaireController extends Controller {
             }
         }
         //go back on update mode
-        $questionForm = new QuestionForm;
-        $questionGroup = new QuestionGroup;
-        $questionForm->questionnaire = $model;
-        $this->render('update', array(
-            'model' => $model,
-            'questionForm' => $questionForm,
-            'questionGroup' => $questionGroup
-        ));
+
+
+        $this->redirect($this->createUrl('update', array('id' => $model->_id)));
     }
+
     /**
      * save a new question into the questionnaire
      * si pas de positionnement on ajoute la questionen au debut du  groupe
@@ -184,11 +174,11 @@ class FormulaireController extends Controller {
             if ($questionnaire->questions_group != null && count($questionnaire->questions_group) > 0) {
                 foreach ($questionnaire->questions_group as $group) {
                     if ($group->id == $questionForm->idQuestionGroup) {
-                        if($group->questions==null){
-                           $group->questions=array();
-                           $group->questions[]=$cquestion;
-                        }else{
-                        array_unshift($group->questions, $cquestion);
+                        if ($group->questions == null) {
+                            $group->questions = array();
+                            $group->questions[] = $cquestion;
+                        } else {
+                            array_unshift($group->questions, $cquestion);
                         }
                     }
                 }
@@ -217,7 +207,7 @@ class FormulaireController extends Controller {
     }
 
     /**
-     * action pour afficher dynamiquement la liste de questions dans le formulaire 
+     * action pour afficher dynamiquement la liste de questions dans le formulaire
      * d ajout de question pour gerer le positionnement
      * @param id is questionnaire id
      */
@@ -244,11 +234,12 @@ class FormulaireController extends Controller {
     public function saveQuestionnaireNewGroup($questionnaire, $questionGroup) {
         $questionnaire->last_modified = new MongoDate();
         if ($questionGroup != null) {
+
             //sinon positionnement relatif
             if ($questionnaire->questions_group != null) {
                 $questionnaire->questions_group[] = $questionGroup;
-            }  else {
-                $questionnaire->questions_group=array();
+            } else {
+                $questionnaire->questions_group = array();
                 $questionnaire->questions_group[] = $questionGroup;
             }
         }

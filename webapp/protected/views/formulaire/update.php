@@ -57,13 +57,21 @@ $this->widget('bootstrap.widgets.TbButton', array(
 
 </div>
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4>Ajouter un onglet</h4></div>
+    <div class="panel-heading"><h4>Ajouter un onglet ou un groupe</h4></div>
     <div class="panel-body">
         <?php
         echo $this->renderPartial('_form_question_group', array('model' => $questionGroup));
         ?>
     </div>
 </div>
+<!--<div class="panel panel-primary">
+    <div class="panel-heading"><h4>Ajouter un groupe de questions</h4></div>
+    <div class="panel-body">
+<?php
+//        echo $this->renderPartial('_form_question_bloc', array('model' => $questionGroup));
+?>
+    </div>
+</div>-->
 <div class="panel panel-primary">
     <div class="panel-heading"><h4>Ajouter une question</h4></div>
     <div class="panel-body">

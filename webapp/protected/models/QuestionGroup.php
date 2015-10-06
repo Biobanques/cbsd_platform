@@ -7,6 +7,7 @@
  */
 class QuestionGroup extends EMongoEmbeddedDocument
 {
+    public $questionnaire;
     public $id;
     public $title;
     public $title_fr;
@@ -41,7 +42,12 @@ class QuestionGroup extends EMongoEmbeddedDocument
             array(
                 'id,title',
                 'required'
-        ));
+            ),
+            array(
+                'questionnaire', 'unsafe'
+            ),
+            array('parent_group', 'safe')
+        );
     }
 
     /**
@@ -77,6 +83,14 @@ class QuestionGroup extends EMongoEmbeddedDocument
             }
         }
         return false;
+    }
+
+    public function getArrayGroups() {
+        return $this->questionnaire->getArrayGroups();
+    }
+
+    public function getOnglets() {
+        return $this->questionnaire->getOnglets();
     }
 
 }
