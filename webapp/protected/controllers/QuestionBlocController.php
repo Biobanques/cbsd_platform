@@ -64,7 +64,10 @@ class QuestionBlocController extends Controller
                 $model->questions[] = $idQuestion;
             }
 
-            $model->save();
+            if ($model->save())
+                $this->redirect(array('admin'));
+            else
+                Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
         }
 
         $this->render('create', array(
@@ -80,18 +83,33 @@ class QuestionBlocController extends Controller
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        $questionForm = new QuestionForm;
+        $questionModel = new Question;
+        $questionModel = Question::model()->findByPk(new MongoId($id));
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
+        }
+        
+        if (isset($_POST['QuestionForm'])) {
+            $questionModel->attributes = $_POST['QuestionForm'];
+            if ($questionModel->save()) {
+                $idQuestion = (string) $questionModel->_id;
+                $model->questions[] = $idQuestion;
+            }
+
             if ($model->save())
-                $this->redirect(array('view', 'id' => $model->_id));
+                $this->redirect(array('admin'));
+            else
+                Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
         }
 
         $this->render('update', array(
             'model' => $model,
+            'questionForm' => $questionForm,
         ));
     }
 
