@@ -112,10 +112,11 @@ class QuestionBlocController extends Controller
             else
                 Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
         }
-
+        $dataProvider = new EMongoDocumentDataProvider('Question');
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,
+            'dataProvider' => $dataProvider
         ));
     }
 

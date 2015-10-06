@@ -20,40 +20,63 @@
             <?php echo $form->error($model, 'title'); ?>
         </div>
     </div>
-    <div >
-        <div class="col-lg-6">
-            <?php echo $form->labelEx($questionForm, 'id'); ?>
-            <?php echo $form->textField($questionForm, 'id', array('size' => 5, 'maxlength' => 45)); ?>
-            <?php echo $form->error($questionForm, 'id'); ?>
-        </div>
-        <div class="col-lg-6">
-            <?php echo $form->labelEx($questionForm, 'label'); ?>
-            <?php echo $form->textField($questionForm, 'label', array('size' => 5, 'maxlength' => 45)); ?>
-            <?php echo $form->error($questionForm, 'label'); ?>
+    <?php
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProvider,
+        'template' => "{items}",
+        'emptyText' => 'Il n\'y a pas de questions associées à ce bloc.',
+        'columns' => array(
+            array('name' => 'id', 'header' => 'id'),
+            array('name' => 'label', 'header' => 'label'),
+            array('name' => 'type', 'header' => 'type'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'htmlOptions' => array('style' => 'width: 70px'),
+            ),
+        ),
+    ));
+    ?>
 
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h4>Ajouter une nouvelle question</h4></div>
+        <div class="panel-body">
+            <div >
+                <div class="col-lg-6">
+                    <?php echo $form->labelEx($questionForm, 'id'); ?>
+                    <?php echo $form->textField($questionForm, 'id', array('size' => 5, 'maxlength' => 45)); ?>
+                    <?php echo $form->error($questionForm, 'id'); ?>
+                </div>
+                <div class="col-lg-6">
+                    <?php echo $form->labelEx($questionForm, 'label'); ?>
+                    <?php echo $form->textField($questionForm, 'label', array('size' => 5, 'maxlength' => 45)); ?>
+                    <?php echo $form->error($questionForm, 'label'); ?>
+
+                </div>
+            </div>
+            <div>
+                <div class="col-lg-12">
+                    <?php echo $form->labelEx($questionForm, 'type'); ?>
+                    <?php echo $form->dropDownList($questionForm, 'type', $questionForm->getArrayTypes(), array('prompt' => '----')); ?>
+                    <?php echo $form->error($questionForm, 'type'); ?>
+                </div>
+            </div>
+            <div>
+                <div class="col-lg-6">
+                    <?php echo $form->labelEx($questionForm, 'style'); ?>
+                    <?php echo $form->textField($questionForm, 'style', array('size' => 5, 'maxlength' => 45)); ?>
+                    <?php echo $form->error($questionForm, 'style'); ?>
+                </div>
+                <div class="col-lg-6">
+                    <?php echo $form->labelEx($questionForm, 'values'); ?>
+                    <?php echo $form->textField($questionForm, 'values', array('size' => 5, 'maxlength' => 45)); ?>
+                    <?php echo $form->error($questionForm, 'values'); ?>
+                </div>
+            </div>
+            <div class="buttons">
+                <?php echo CHtml::submitButton('Enregistrer'); ?>
+            </div>
         </div>
-    </div>
-    <div>
-        <div class="col-lg-12">
-            <?php echo $form->labelEx($questionForm, 'type'); ?>
-            <?php echo $form->dropDownList($questionForm, 'type', $questionForm->getArrayTypes(), array('prompt' => '----')); ?>
-            <?php echo $form->error($questionForm, 'type'); ?>
-        </div>
-    </div>
-    <div>
-        <div class="col-lg-6">
-            <?php echo $form->labelEx($questionForm, 'style'); ?>
-            <?php echo $form->textField($questionForm, 'style', array('size' => 5, 'maxlength' => 45)); ?>
-            <?php echo $form->error($questionForm, 'style'); ?>
-        </div>
-        <div class="col-lg-6">
-            <?php echo $form->labelEx($questionForm, 'values'); ?>
-            <?php echo $form->textField($questionForm, 'values', array('size' => 5, 'maxlength' => 45)); ?>
-            <?php echo $form->error($questionForm, 'values'); ?>
-        </div>
-    </div>
-    <div class="buttons">
-        <?php echo CHtml::submitButton('Enregistrer'); ?>
     </div>
 
     <?php $this->endWidget(); ?>
