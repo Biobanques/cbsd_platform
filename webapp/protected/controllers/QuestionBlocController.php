@@ -25,7 +25,7 @@ class QuestionBlocController extends Controller
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'index', 'view', 'update', 'admin', 'delete'),
+                'actions' => array('create', 'index', 'view', 'update', 'admin', 'delete', 'preview'),
                 'users' => array('@'),
             ),
         );
@@ -37,6 +37,12 @@ class QuestionBlocController extends Controller
      */
     public function actionView($id) {
         $this->render('view', array(
+            'model' => $this->loadModel($id),
+        ));
+    }
+
+    public function actionPreview($id) {
+        $this->render('preview', array(
             'model' => $this->loadModel($id),
         ));
     }
