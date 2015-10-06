@@ -13,13 +13,13 @@
     <p>*L'id doit être unique parmi les questions. Il permet de gérer des mécanismes liées à l'ordonnancement des questions et aux traitements de validation.</p>
     <p>*Les valeurs sont utilisés pour les listes (radio bouton et listes déroulantes). Le séparateur de valeurs est la virgule.</p>
     <p>*Le style permet d'affecter un style css à la question. Par exemple, si vous souahitez aligner votr equestion à droite de la précédente , saisissez dans le champ le texte en gras: <b>float:right</b></p>
-    <div>
-        <div class="col-lg-12">
-            <?php echo $form->labelEx($model, 'title'); ?>
-            <?php echo $form->textField($model, 'title'); ?>
-            <?php echo $form->error($model, 'title'); ?>
-        </div>
+
+    <div class="question_group" style="float: none">
+        <?php echo $form->labelEx($model, 'title'); ?>
+        <?php echo $form->textField($model, 'title'); ?>
+        <?php echo $form->error($model, 'title'); ?>
     </div>
+
     <?php
     if (isset($dataProvider)) {
         $this->widget('bootstrap.widgets.TbGridView', array(
