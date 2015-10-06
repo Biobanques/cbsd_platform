@@ -1,6 +1,6 @@
 
-<h3 align="center">Formulaire <?php echo $model->id; ?></h3>
-<p>Description: Formulaire <?php echo $model->description; ?></p>
+<h3 align="center">Formulaire <?php echo $model->name; ?></h3>
+<p>Description: <?php echo $model->description; ?></p>
 <hr />
 
 <br><bR>
@@ -55,6 +55,14 @@ $this->widget('bootstrap.widgets.TbButton', array(
     $this->endWidget();
     ?>
 
+</div>
+<div class="panel panel-primary">
+    <div class="panel-heading"><h4>Ajouter un bloc de questions</h4></div>
+    <div class="panel-body">
+        <?php
+        echo $this->renderPartial('_form_question_bloc', array('questionBloc' => $questionBloc, 'model' => $model));
+        ?>
+    </div>
 </div>
 <div class="panel panel-primary">
     <div class="panel-heading"><h4>Ajouter un onglet</h4></div>

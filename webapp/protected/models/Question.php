@@ -78,7 +78,7 @@ class Question extends LoggableActiveRecord
                 'required'
             ),
             array(
-                'label,label_fr,type,value,style', 'safe'
+                'label,label_fr,type,values,style', 'safe'
         ));
     }
 
