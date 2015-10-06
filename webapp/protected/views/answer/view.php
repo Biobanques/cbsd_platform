@@ -1,12 +1,12 @@
 <h4>Patient</h4>
 <div class="well">
-    <table>
+    <table cellpadding="20">
         <tr>
-            <td><b>Nom : </b><?php echo $patient->useName; ?></td> 
             <td><b>Nom de naissance : </b><?php echo $patient->birthName; ?></td>
+            <td><b>Prénom : </b><?php echo $patient->firstName; ?></td>
         </tr>
         <tr>
-            <td><b>Prénom : </b><?php echo $patient->firstName; ?></td>
+            <td><b>Date de naissance : </b><?php echo $patient->birthDate; ?></td>
             <?php if (Yii::app()->user->profil == "administrateur")
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
             ?>
