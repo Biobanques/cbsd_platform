@@ -6,8 +6,8 @@
  * @author nmalservet
  *
  */
-class Questionnaire extends EMongoDocument {
-
+class Questionnaire extends EMongoDocument
+{
     /**
      * champs classiques d echantillons
      */
@@ -22,14 +22,13 @@ class Questionnaire extends EMongoDocument {
      * date last modified.
      */
     public $last_modified;
-
     /**
      * contributors are people working on thi squetsionnaire
      */
     public $contributors;
 
     /**
-     * fields to manage add question 
+     * fields to manage add question
      */
 // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {

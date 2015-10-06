@@ -3,19 +3,15 @@
 /**
  * Formulaire pour enregistrer les valeurs saisies poru générer une question dans un formulaire
  */
-class QuestionForm extends CFormModel
+class QuestionBlocForm extends CFormModel
 {
+    public $title;
     /**
      * working questionnaire.
      * set a the beginning
      * @var type
      */
     public $questionnaire;
-    /**
-     * identifiant unique de la question
-     * @var type
-     */
-    public $id;
     /**
      * label de la question
      * @var type

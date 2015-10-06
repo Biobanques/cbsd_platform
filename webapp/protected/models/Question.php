@@ -5,8 +5,8 @@
  * @author matthieu
  *
  */
-class Question extends EMongoEmbeddedDocument {
-
+class Question extends LoggableActiveRecord
+{
     public $id;
     public $label;
     public $label_fr;
@@ -15,32 +15,27 @@ class Question extends EMongoEmbeddedDocument {
      * css style applied to the label.
      */
     public $style;
-
     /**
      * values if question type is radio
      */
     public $values;
-
     /**
      * values if question type is radio and french setted
      */
     public $values_fr;
-
     /**
      * help text to add meta information around the question, displayed as an help button
-     * @var type 
+     * @var type
      */
     public $help;
-
     /**
      * comment on the top of the question
-     * @var type 
+     * @var type
      */
     public $precomment;
-
     /**
      * comment on the top of the question
-     * @var type 
+     * @var type
      */
     public $precomment_fr;
 
@@ -58,19 +53,20 @@ class Question extends EMongoEmbeddedDocument {
     public function getCollectionName() {
         return 'Question';
     }
-    
+
     /**
      * init a question with params setted into a questionForm
      * @param type $questionForm
      */
-    public function setAttributesByQuestionForm($questionForm){
-        $this->id=$questionForm->id;
-        $this->label=$questionForm->label;
-        $this->label_fr=$questionForm->label;
-        $this->style=$questionForm->style;
-        $this->values=$questionForm->values;
-        $this->type=$questionForm->type;
+    public function setAttributesByQuestionForm($questionForm) {
+        $this->id = $questionForm->id;
+        $this->label = $questionForm->label;
+        $this->label_fr = $questionForm->label;
+        $this->style = $questionForm->style;
+        $this->values = $questionForm->values;
+        $this->type = $questionForm->type;
     }
+
     /**
      *
      * @return array validation rules for model attributes.
@@ -80,6 +76,9 @@ class Question extends EMongoEmbeddedDocument {
             array(
                 'id',
                 'required'
+            ),
+            array(
+                'label,label_fr,type,value,style', 'safe'
         ));
     }
 

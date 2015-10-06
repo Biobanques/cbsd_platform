@@ -5,19 +5,17 @@
  * @author matthieu
  *
  */
-class QuestionGroup extends EMongoEmbeddedDocument {
-
+class QuestionGroup extends EMongoEmbeddedDocument
+{
     public $id;
     public $title;
     public $title_fr;
     public $questions;
-
     /**
      * parent group if setted.
-     * @var type 
+     * @var type
      */
     public $parent_group;
-
     /**
      * display rule
      * condition to display the question group
@@ -64,7 +62,7 @@ class QuestionGroup extends EMongoEmbeddedDocument {
      * make the javascript display rule.
      */
     public function makeDisplayRule() {
-        
+
     }
 
     /**
@@ -80,6 +78,5 @@ class QuestionGroup extends EMongoEmbeddedDocument {
         }
         return false;
     }
-
 
 }
