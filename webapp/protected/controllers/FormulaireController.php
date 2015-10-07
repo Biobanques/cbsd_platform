@@ -96,12 +96,20 @@ class FormulaireController extends Controller
                 $model = $this->saveQuestionnaireNewGroup($model, $questionGroup);
             }
         }
-        
+
         if (isset($_POST['QuestionBloc'])) {
-            $questionBloc->attributes = $_POST['QuestionBloc'];
+            $questionBloc = QuestionBloc::model()->findByPk(new MongoId($_POST['QuestionBloc']['_id']));
+            //$bloc= QuestionBloc::model()->findByPk(new MongoId($questionBloc))
             $questionBloc->title_fr = $questionBloc->title;
-            if ($questionBloc->validate())
-                $model = $this->saveQuestionnaireNewBloc($model, $questionBloc);
+            $computedGroup = new QuestionGroup;
+            $computedGroup->id = $questionBloc->id;
+            $computedGroup->title = $questionBloc->title;
+            $computedGroup->title_fr = $questionBloc->title_fr;
+            $computedGroup->parent_group = $questionBloc->parent_group;
+            $computedGroup->parent_group = $questionBloc->parent_group;
+
+            //   if ($questionBloc->validate())
+            $model = $this->saveQuestionnaireNewGroup($model, $questionBloc);
         }
 
         //set du model sur la questionForm pour generer l arborescende de position de question
@@ -262,15 +270,15 @@ class FormulaireController extends Controller
         }
         return $questionnaire;
     }
-    
+
     public function saveQuestionnaireNewBloc($questionnaire, $questionBloc) {
         $questionBloc->id = $questionnaire->id;
         if ($questionBloc != null) {
             //sinon positionnement relatif
             if ($questionnaire->questions_group != null) {
                 $questionnaire->questions_group[] = $questionBloc;
-            }  else {
-                $questionnaire->questions_group=array();
+            } else {
+                $questionnaire->questions_group = array();
                 $questionnaire->questions_group[] = $questionBloc;
             }
         }
