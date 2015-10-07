@@ -102,17 +102,16 @@ class FormulaireController extends Controller
             //$bloc= QuestionBloc::model()->findByPk(new MongoId($questionBloc))
             $questionBloc->title_fr = $questionBloc->title;
             $computedGroup = new QuestionGroup;
-            $computedGroup->id = $questionBloc->id;
+            $computedGroup->id = $_POST['QuestionBloc']['id'];
             $computedGroup->title = $questionBloc->title;
             $computedGroup->title_fr = $questionBloc->title_fr;
             $computedGroup->parent_group = $questionBloc->parent_group;
-            $computedGroup->parent_group = $questionBloc->parent_group;
 
-            //   if ($questionBloc->validate())
-            $model = $this->saveQuestionnaireNewGroup($model, $questionBloc);
+
+            if ($computedGroup->validate())
+                $model = $this->saveQuestionnaireNewGroup($model, $computedGroup);
         }
-
-        //set du model sur la questionForm pour generer l arborescende de position de question
+        //  set du model sur la questionForm pour generer l arborescende de position de question
         $questionForm->questionnaire = $model;
         $questionGroup->questionnaire = $model;
         $this->render('update', array(
