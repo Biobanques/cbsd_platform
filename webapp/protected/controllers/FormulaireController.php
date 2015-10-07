@@ -63,7 +63,7 @@ class FormulaireController extends Controller
             $model->addQuestionGroup("firstgroup", "Questionnaire principal");
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Le questionnaire a été enregistré avec succès.');
-                $this->redirect(array('view', 'id' => $model->_id));
+                $this->redirect($this->createUrl('update', array('id' => $model->_id)));
             }
         }
         $this->render('create', array(
@@ -95,6 +95,13 @@ class FormulaireController extends Controller
             if ($questionGroup->validate()) {
                 $model = $this->saveQuestionnaireNewGroup($model, $questionGroup);
             }
+        }
+        
+        if (isset($_POST['QuestionBloc'])) {
+            $questionBloc->attributes = $_POST['QuestionBloc'];
+            $questionBloc->title_fr = $questionBloc->title;
+            if ($questionBloc->validate())
+                $model = $this->saveQuestionnaireNewBloc($model, $questionBloc);
         }
 
         //set du model sur la questionForm pour generer l arborescende de position de question
@@ -245,6 +252,26 @@ class FormulaireController extends Controller
             } else {
                 $questionnaire->questions_group = array();
                 $questionnaire->questions_group[] = $questionGroup;
+            }
+        }
+        if ($questionnaire->save())
+            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+        else {
+            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+            Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+        }
+        return $questionnaire;
+    }
+    
+    public function saveQuestionnaireNewBloc($questionnaire, $questionBloc) {
+        $questionBloc->id = $questionnaire->id;
+        if ($questionBloc != null) {
+            //sinon positionnement relatif
+            if ($questionnaire->questions_group != null) {
+                $questionnaire->questions_group[] = $questionBloc;
+            }  else {
+                $questionnaire->questions_group=array();
+                $questionnaire->questions_group[] = $questionBloc;
             }
         }
         if ($questionnaire->save())

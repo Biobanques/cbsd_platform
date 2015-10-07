@@ -7,6 +7,9 @@ class QuestionBloc extends LoggableActiveRecord
 {
     public $title;
     public $questions;
+    public $parent_group;
+    public $id;
+    public $title_fr;
 
     /**
      * Returns the static model of the specified AR class.
@@ -45,6 +48,7 @@ class QuestionBloc extends LoggableActiveRecord
         return array(
             'title' => 'Titre',
             'questions' => 'Questions',
+            'parent_group' => 'Groupe parent'
         );
     }
     
@@ -52,7 +56,7 @@ class QuestionBloc extends LoggableActiveRecord
         $blocTitle = array();
         $bloc = QuestionBloc::model()->findAll();
         foreach ($bloc as $key=>$values) 
-            $blocTitle[$values->title] = $values->title;
+            $blocTitle[(string)$values->_id] = $values->title;
         return $blocTitle;
     }
 
