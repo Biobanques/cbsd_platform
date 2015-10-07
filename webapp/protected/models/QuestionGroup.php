@@ -76,12 +76,13 @@ class QuestionGroup extends EMongoEmbeddedDocument
      * return true if the question is deleted
      */
     public function deleteQuestion($idQuestion) {
-        foreach ($this->questions as $key => $question) {
-            if ($question->id == $idQuestion) {
-                unset($this->questions[$key]);
-                return true;
+        if ($this->questions != null && count($this->questions) > 0)
+            foreach ($this->questions as $key => $question) {
+                if ($question->id == $idQuestion) {
+                    unset($this->questions[$key]);
+                    return true;
+                }
             }
-        }
         return false;
     }
 

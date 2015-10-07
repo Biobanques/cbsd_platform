@@ -98,7 +98,8 @@ class FormulaireController extends Controller
         }
 
         if (isset($_POST['QuestionBloc'])) {
-            $questionBloc = QuestionBloc::model()->findByPk(new MongoId($_POST['QuestionBloc']['_id']));
+//            $questionBloc = QuestionBloc::model()->findByPk(new MongoId($_POST['QuestionBloc']['_id']));
+            $questionBloc = QuestionBloc::model()->findByPk(new MongoId($_POST['QuestionBloc']['title']));
             //$bloc= QuestionBloc::model()->findByPk(new MongoId($questionBloc))
             $questionBloc->title_fr = $questionBloc->title;
             $computedGroup = new QuestionGroup;
@@ -106,6 +107,7 @@ class FormulaireController extends Controller
             $computedGroup->title = $questionBloc->title;
             $computedGroup->title_fr = $questionBloc->title_fr;
             $computedGroup->parent_group = $questionBloc->parent_group;
+            $computedGroup->questions = array();
 
 
             if ($computedGroup->validate())
@@ -114,6 +116,7 @@ class FormulaireController extends Controller
         //  set du model sur la questionForm pour generer l arborescende de position de question
         $questionForm->questionnaire = $model;
         $questionGroup->questionnaire = $model;
+        //  $questionBloc->questionnaire = $model;
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,

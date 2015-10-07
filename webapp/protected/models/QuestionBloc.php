@@ -51,12 +51,13 @@ class QuestionBloc extends LoggableActiveRecord
             'parent_group' => 'Groupe parent'
         );
     }
-    
+
     public function getBlocTitle() {
         $blocTitle = array();
         $bloc = QuestionBloc::model()->findAll();
-        foreach ($bloc as $key=>$values) 
-            $blocTitle[(string)$values->_id] = $values->title;
+        foreach ($bloc as $key => $values)
+            $blocTitle[(string) $values->_id] = $values->title;
+        $blocTitle[(string) $values->_id] = $values->title;
         return $blocTitle;
     }
 
