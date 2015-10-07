@@ -109,6 +109,11 @@ class FormulaireController extends Controller
             $computedGroup->parent_group = $questionBloc->parent_group;
             $computedGroup->questions = array();
 
+            if (isset($questionBloc) && ($questionBloc != null) && (count($questionBloc)>0)) {
+                foreach ($questionBloc->questions as $question => $value) {
+                    echo $value . "<br />";
+                }
+            }
 
             if ($computedGroup->validate())
                 $model = $this->saveQuestionnaireNewGroup($model, $computedGroup);
