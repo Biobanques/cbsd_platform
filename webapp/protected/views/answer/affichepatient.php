@@ -13,9 +13,9 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'template' => "{items}",
     'columns' => array(
         array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->profil == "administrateur"),
-        array('value' => '$data["nom"]', 'header' => 'Nom'),
-        array('value' => '$data["prenom"]', 'header' => 'Prénom'),
         array('value' => '$data["nom_naissance"]', 'header' => 'Nom de naissance'),
+        array('value' => '$data["prenom"]', 'header' => 'Prénom'),
+        array('value' => '$data["date_naissance"]', 'header' => 'Date de naissance'),
     ),
 ));
 ?>

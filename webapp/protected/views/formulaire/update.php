@@ -1,6 +1,6 @@
 
-<h3 align="center">Formulaire <?php echo $model->id; ?></h3>
-<p>Description: Formulaire <?php echo $model->description; ?></p>
+<h3 align="center">Formulaire <?php echo $model->name; ?></h3>
+<p>Description: <?php echo $model->description; ?></p>
 <hr />
 
 <br><bR>

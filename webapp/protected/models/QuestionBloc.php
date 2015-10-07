@@ -47,5 +47,13 @@ class QuestionBloc extends LoggableActiveRecord
             'questions' => 'Questions',
         );
     }
+    
+    public function getBlocTitle() {
+        $blocTitle = array();
+        $bloc = QuestionBloc::model()->findAll();
+        foreach ($bloc as $key=>$values) 
+            $blocTitle[$values->title] = $values->title;
+        return $blocTitle;
+    }
 
 }
