@@ -266,4 +266,72 @@ class Questionnaire extends EMongoDocument
         return false;
     }
 
+    /**
+     * save a new group into the questionnaire
+     * si pas de positionnement on ajoute la questionen fin du premier groupe
+     * @param questionnaire
+     */
+    public function saveQuestionnaireNewGroup($questionGroup) {
+        $this->last_modified = new MongoDate();
+        if ($questionGroup != null) {
+
+            //sinon positionnement relatif
+            if ($this->questions_group != null) {
+                $this->questions_group[] = $questionGroup;
+            } else {
+                $this->questions_group = array();
+                $this->questions_group[] = $questionGroup;
+            }
+        }
+        if ($this->save())
+            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+        else {
+            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+            Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+        }
+        return $this;
+    }
+
+    public function saveQuestionnaireNewQuestion($questionForm) {
+        $this->last_modified = new MongoDate();
+        $cquestion = new Question;
+        $cquestion->setAttributesByQuestionForm($questionForm);
+        Yii::log("save questionnaire", CLogger::LEVEL_TRACE);
+        //si pas de position fournie, on ajoute la question a la fin, dans le premier groupe de question
+        if (!isset($questionForm->idQuestionBefore) || empty($questionForm->idQuestionBefore)) {
+            if ($this->questions_group != null && count($this->questions_group) > 0) {
+                foreach ($this->questions_group as $group) {
+                    if ($group->id == $questionForm->idQuestionGroup) {
+                        if ($group->questions == null) {
+                            $group->questions = array();
+                            $group->questions[] = $cquestion;
+                        } else {
+                            array_unshift($group->questions, $cquestion);
+                        }
+                    }
+                }
+            }
+        } else {
+            //sinon positionnement relatif
+            if ($this->questions_group != null) {
+                foreach ($this->questions_group as $group) {
+                    if ($group->questions != null) {
+                        foreach ($group->questions as $key => $question) {
+                            if ($question->id == $questionForm->idQuestionBefore) {
+                                array_splice($group->questions, ($key + 1), 0, array($cquestion));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if ($this->save())
+            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+        else {
+            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+            Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+        }
+        return $this;
+    }
+
 }

@@ -1,7 +1,7 @@
 <?php
 
-class QuestionnaireController extends Controller {
-
+class QuestionnaireController extends Controller
+{
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -189,11 +189,10 @@ class QuestionnaireController extends Controller {
     public function actionIndex() {
         $model = new Questionnaire;
         if (isset($_POST["form"])) {
-                    $criteria = new EMongoCriteria();
-                    $criteria->id = $_POST["form"];
-                    $id = Questionnaire::model()->find($criteria);
-                    $this->redirect('index.php?r=questionnaire/update&id=' . $id->_id);
-
+            $criteria = new EMongoCriteria();
+            $criteria->id = $_POST["form"];
+            $id = Questionnaire::model()->find($criteria);
+            $this->redirect('index.php?r=questionnaire/update&id=' . $id->_id);
         } else {
             Yii::app()->user->setFlash('warning', 'Veuillez sélectionner une fiche à remplir.');
             $this->redirect('index.php?r=answer/affichepatient');

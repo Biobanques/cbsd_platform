@@ -8,8 +8,20 @@
 class Question extends LoggableActiveRecord
 {
     public $id;
+    /**
+     *
+     * @var type
+     */
     public $label;
+    /**
+     *
+     * @var type
+     */
     public $label_fr;
+    /**
+     *
+     * @var type
+     */
     public $type;
     /*
      * css style applied to the label.

@@ -57,12 +57,18 @@
                 </div>
             </div>
             <div>
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <?php echo $form->labelEx($questionForm, 'type'); ?>
                     <?php echo $form->dropDownList($questionForm, 'type', $questionForm->getArrayTypes(), array('prompt' => '----')); ?>
                     <?php echo $form->error($questionForm, 'type'); ?>
                 </div>
+                <div class="col-lg-6">
+                    <?php echo $form->labelEx($questionForm, 'idQuestionBefore'); ?>
+                    <?php echo $form->dropDownList($questionForm, 'idQuestionBefore', array()); ?>
+                    <?php echo $form->error($questionForm, 'idQuestionBefore'); ?>
+                </div>
             </div>
+
             <div>
                 <div class="col-lg-6">
                     <?php echo $form->labelEx($questionForm, 'style'); ?>

@@ -65,7 +65,6 @@ $this->widget('bootstrap.widgets.TbButton', array(
     </div>
 </div>
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4>Ajouter un onglet</h4></div>
     <div class="panel-heading"><h4>Ajouter un onglet ou un groupe</h4></div>
     <div class="panel-body">
         <?php

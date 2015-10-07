@@ -77,7 +77,7 @@ class FormulaireController extends Controller
      */
     public function actionUpdate($id) {
         $model = Questionnaire::model()->findByPk(new MongoID($id));
-        $questionBloc = new QuestionBloc;
+        $questionBlocForm = new QuestionBlocForm();
         $questionForm = new QuestionForm;
         $questionGroup = new QuestionGroup;
         // collect user input data
@@ -85,7 +85,8 @@ class FormulaireController extends Controller
             $questionForm->attributes = $_POST['QuestionForm'];
             //traitement ajout de question
             if ($questionForm->validate()) {
-                $model = $this->saveQuestionnaireNewQuestion($model, $questionForm);
+                $model = $model->saveQuestionnaireNewQuestion($questionForm);
+//                $model = $this->saveQuestionnaireNewQuestion($model, $questionForm);
             }
         }
         if (isset($_POST['QuestionGroup'])) {
@@ -93,30 +94,44 @@ class FormulaireController extends Controller
             //copie du titre sur l option fr
             $questionGroup->title_fr = $questionGroup->title;
             if ($questionGroup->validate()) {
-                $model = $this->saveQuestionnaireNewGroup($model, $questionGroup);
+                $model = $model->saveQuestionnaireNewGroup($questionGroup);
+//                $model = $this->saveQuestionnaireNewGroup($model, $questionGroup);
             }
         }
 
-        if (isset($_POST['QuestionBloc'])) {
+        if (isset($_POST['QuestionBlocForm'])) {
 //            $questionBloc = QuestionBloc::model()->findByPk(new MongoId($_POST['QuestionBloc']['_id']));
-            $questionBloc = QuestionBloc::model()->findByPk(new MongoId($_POST['QuestionBloc']['title']));
+            $questionBlocForm->attributes = $_POST['QuestionBlocForm'];
+            $questionBloc = QuestionBloc::model()->findByPk(new MongoId($questionBlocForm->title));
             //$bloc= QuestionBloc::model()->findByPk(new MongoId($questionBloc))
-            $questionBloc->title_fr = $questionBloc->title;
+            $questionBlocForm->title_fr = $questionBlocForm->title;
             $computedGroup = new QuestionGroup;
-            $computedGroup->id = $_POST['QuestionBloc']['id'];
+            $computedGroup->id = $questionBlocForm->id;
             $computedGroup->title = $questionBloc->title;
             $computedGroup->title_fr = $questionBloc->title_fr;
-            $computedGroup->parent_group = $questionBloc->parent_group;
+            $computedGroup->parent_group = $questionBlocForm->parent_group;
             $computedGroup->questions = array();
 
-            if (isset($questionBloc) && ($questionBloc != null) && (count($questionBloc)>0)) {
+            if ($computedGroup->validate())
+                $model = $model->saveQuestionnaireNewGroup($computedGroup);
+//                $model = $this->saveQuestionnaireNewGroup($model, $computedGroup);
+
+            if (isset($questionBloc->questions) && ($questionBloc->questions != null) && (count($questionBloc->questions) > 0)) {
                 foreach ($questionBloc->questions as $question => $value) {
-                    echo $value . "<br />";
+                    //echo $value . "<br />";
+                    $currentQuestion = Question::model()->findByPk(new MongoId($value));
+
+                    $questionForm->label = $currentQuestion->label;
+                    $questionForm->type = $currentQuestion->type;
+                    $questionForm->style = $currentQuestion->style;
+                    $questionForm->values = $currentQuestion->values;
+                    $questionForm->id = $currentQuestion->id;
+                    $questionForm->idQuestionGroup = $computedGroup->id;
+
+                    $model->saveQuestionnaireNewQuestion($questionForm);
+//                    $this->saveQuestionnaireNewQuestion($model, $questionForm);
                 }
             }
-
-            if ($computedGroup->validate())
-                $model = $this->saveQuestionnaireNewGroup($model, $computedGroup);
         }
         //  set du model sur la questionForm pour generer l arborescende de position de question
         $questionForm->questionnaire = $model;
@@ -126,7 +141,7 @@ class FormulaireController extends Controller
             'model' => $model,
             'questionForm' => $questionForm,
             'questionGroup' => $questionGroup,
-            'questionBloc' => $questionBloc
+            'questionBloc' => $questionBlocForm
         ));
     }
 
@@ -278,24 +293,23 @@ class FormulaireController extends Controller
         return $questionnaire;
     }
 
-    public function saveQuestionnaireNewBloc($questionnaire, $questionBloc) {
-        $questionBloc->id = $questionnaire->id;
-        if ($questionBloc != null) {
-            //sinon positionnement relatif
-            if ($questionnaire->questions_group != null) {
-                $questionnaire->questions_group[] = $questionBloc;
-            } else {
-                $questionnaire->questions_group = array();
-                $questionnaire->questions_group[] = $questionBloc;
-            }
-        }
-        if ($questionnaire->save())
-            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
-        else {
-            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
-            Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
-        }
-        return $questionnaire;
-    }
-
+//    public function saveQuestionnaireNewBloc($questionnaire, $questionBloc) {
+//        $questionBloc->id = $questionnaire->id;
+//        if ($questionBloc != null) {
+//            //sinon positionnement relatif
+//            if ($questionnaire->questions_group != null) {
+//                $questionnaire->questions_group[] = $questionBloc;
+//            } else {
+//                $questionnaire->questions_group = array();
+//                $questionnaire->questions_group[] = $questionBloc;
+//            }
+//        }
+//        if ($questionnaire->save())
+//            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+//        else {
+//            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+//            Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+//        }
+//        return $questionnaire;
+//    }
 }
