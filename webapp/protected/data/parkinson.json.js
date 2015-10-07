@@ -1,8 +1,8 @@
 //questionnaire demence form
 db.questionnaire.insert({
     "id": "parkinsonform",
-    "name": "Formulaire Parkinson",
-    "name_fr": "Formulaire Parkinson",
+    "name": "Parkinson",
+    "name_fr": "Parkinson",
     "description": "Formulaire Parkinson",
     "last_modified": new Date(),
     "message_start": "Welcome to the deposit form for DNA/RNA, cells, fluids and tissues<br />(*)1 form per patient and per sampling date<br /> (*) 1 fiche par patient et par date de prélèvement",

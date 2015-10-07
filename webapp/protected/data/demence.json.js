@@ -2,8 +2,8 @@
 db.questionnaire.drop()
 db.questionnaire.insert({
     "id": "demenceform",
-    "name": "Formulaire Démence",
-    "name_fr": "Formulaire Démence",
+    "name": "Démence",
+    "name_fr": "Démence",
     "description": "Formulaire Démence",
     "last_modified": new Date(),
     "message_start": "Welcome to the deposit form for DNA/RNA, cells, fluids and tissues<br />(*)1 form per patient and per sampling date<br /> (*) 1 fiche par patient et par date de prélèvement",
