@@ -11,6 +11,7 @@ class Questionnaire extends EMongoDocument
     /**
      * champs classiques d echantillons
      */
+    public $type;
     public $id;
     public $name;
     public $name_fr;
@@ -52,7 +53,7 @@ class Questionnaire extends EMongoDocument
     public function rules() {
         return array(
             array(
-                'id,name',
+                'type,id,name',
                 'required'
             ),
             array(
@@ -92,6 +93,26 @@ class Questionnaire extends EMongoDocument
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));
+    }
+    
+    /**
+     * get an array of form type used by dropDownLIst.
+     */
+    public function getArrayType() {
+        $res = array();
+        $res ['clinique'] = "clinique";
+        $res ['genetique'] = "genetique";
+        $res ['neuropathologique'] = "neuropathologique";
+        return $res;
+    }
+    
+    /**
+     * get an array sorted by value.
+     */
+    public function getArrayTypeSorted() {
+        $resArraySorted = new ArrayObject($this->getArrayType());
+        $resArraySorted->asort();
+        return $resArraySorted;
     }
 
     /**
