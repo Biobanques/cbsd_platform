@@ -16,10 +16,37 @@ db.questionnaire.insert({
 <b>Microbiology/Microbiologie</b><br>ChristineChaumeil,CRBduCHNOdesQuinze-VingtParis; équipe de Chantal BizetCRB Institut Pasteur–CRBIPParis,Anne Favel, I ; Villena, CRB Toxoplasma CHU Reims.",
     "questions_group":
             [{
-                    "id": "demenceform",
-                    "title": "Demence form",
-                    "title_fr": "Formulaire Démence",
-                    "questions": [
+                    "id" : "demenceform",
+                    "title" : "",
+                    "title_fr" : "Renseignements individuels",
+                    "questions" : [ 
+                            {
+                                "id" : "patientaddress",
+                                "label" : "Adresse du patient",
+                                "label_fr" : "Adresse du patient",
+                                "type" : "input"
+                            },
+                            {
+                                "id" : "examdate",
+                                "label" : "Date de l'examen",
+                                "label_fr" : "Date de l'examen",
+                                "type" : "input",
+                                "style" : "float:right"
+                            },
+                            {
+                                "id" : "doctorname",
+                                "label" : "Nom du médecin",
+                                "label_fr" : "Nom du médecin",
+                                "type" : "input"
+                            }
+                    ]
+                },
+                {
+                    "id" : "demence",
+                    "title" : "",
+                    "title_fr" : "Formulaire Démence",
+                    "parent_group": "demenceform",
+                    "questions" : [
                         {
                             "id": "born",
                             "label": "Date of birth",
@@ -129,7 +156,7 @@ db.questionnaire.insert({
                 {
                     "id": "adl",
                     "title": "",
-                    "title_fr": "ACTIVITES DE LA VIE QUOTIDIENNE (ADL)",
+                    "title_fr": "Activité de la vie quotidienne (ADL)",
                     "parent_group": "demenceform",
                     "questions": [{
                             "id": "adl1",

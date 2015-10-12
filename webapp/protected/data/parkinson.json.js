@@ -17,34 +17,33 @@ db.questionnaire.insert({
             [{
             "id" : "parkinsonform",
             "title" : "",
-            "title_fr" : "I - RENSEIGNEMENTS INDIVIDUELS",
-            "questions" : [ 
-                {
-                    "id" : "1a",
-                    "label" : "Name of the doctor",
-                    "label_fr" : "Nom du médecin",
-                    "type" : "input"
-                },
-                {
-                    "id" : "1b",
-                    "label" : "Propositus",
-                    "label_fr" : "Propositus",
-                    "type" : "radio",
-                    "values" : "Oui,Non",
-                    "style" : "float:right"
-                }, 
-                {
-                    "id" : "1c",
-                    "label" : "Reiew date",
-                    "label_fr" : "Date examen",
-                    "type" : "input"
+            "title_fr" : "Renseignements individuels",
+                    "questions" : [ 
+                            {
+                                "id" : "patientaddress",
+                                "label" : "Adresse du patient",
+                                "label_fr" : "Adresse du patient",
+                                "type" : "input"
+                            },
+                            {
+                                "id" : "examdate",
+                                "label" : "Date de l'examen",
+                                "label_fr" : "Date de l'examen",
+                                "type" : "input",
+                                "style" : "float:right"
+                            },
+                            {
+                                "id" : "doctorname",
+                                "label" : "Nom du médecin",
+                                "label_fr" : "Nom du médecin",
+                                "type" : "input"
                 }
             ]
         }, 
         {
             "id" : "diagnostic",
             "title" : "",
-            "title_fr" : "II - ELEMENTS DE DIAGNOSTIC",
+            "title_fr" : "Elements de diagnostic",
             "questions" : [  
                 {
                     "id" : "3a1",
@@ -55,8 +54,8 @@ db.questionnaire.insert({
                 }, 
                 {
                     "id" : "3a2",
-                    "label" : "Syndrome pyramidal franc",
-                    "label_fr" : "Syndrome pyramidal franc",
+                    "label" : "Syndrome pyramidal franc (ROT vifs + signe de Babinski)",
+                    "label_fr" : "Syndrome pyramidal franc (ROT vifs + signe de Babinski)",
                     "type" : "radio",
                     "values" : "Oui,Non"
                 }, 
@@ -76,8 +75,8 @@ db.questionnaire.insert({
                 }, 
                 {
                     "id" : "3a5",
-                    "label" : "Instabilité posturale sévère et précoce",
-                    "label_fr" : "Instabilité posturale sévère et précoce",
+                    "label" : "Instabilité posturale sévère et précoce (<1 an)",
+                    "label_fr" : "Instabilité posturale sévère et précoce (<1 an)",
                     "type" : "radio",
                     "values" : "Oui,Non"
                 }, 
@@ -217,7 +216,7 @@ db.questionnaire.insert({
         {
             "id" : "information",
             "title" : "",
-            "title_fr" : "IV - RENSEIGNEMENTS COMPLEMENTAIRES ",
+            "title_fr" : "Renseignements complémentaires",
             "questions" : [
                 {
                     "id" : "aaa",
@@ -454,8 +453,8 @@ db.questionnaire.insert({
                 }, 
                 {
                     "id" : "4g1",
-                    "label" : "Addiction à la Dopa",
-                    "label_fr" : "Addiction à la Dopa",
+                    "label" : "Addiction à la L-DOPA / syndrome d’hypperdopaminergie",
+                    "label_fr" : "Addiction à la L-DOPA / syndrome d’hypperdopaminergie",
                     "type" : "radio",
                     "values" : "Oui,Non"
                 }, 

@@ -1,4 +1,5 @@
-<?php /* @var $this Controller */ 
+<?php
+/* @var $this Controller */
 define('Base', Yii::app()->request->baseUrl);
 define('BaseTheme', Yii::app()->theme->baseUrl);
 ?>
@@ -11,14 +12,14 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css" />
 
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/questionnaire.css" />
-        
+
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
-        
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-        <?php Yii::app()->bootstrap->register(); ?>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+            <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+
+            <?php Yii::app()->bootstrap->register(); ?>
     </head>
 
     <?php
@@ -66,23 +67,29 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
             <?php echo $content; ?>
 
             <div class="clear"></div>
-
-            <div id="footer">
-                Copyright &copy; <?php echo date('Y'); ?> by Biobanques.<br/>
-                All Rights Reserved.<br/>
-                <div class="container">
-                    <div class="row">
-                        <?php echo CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?>
-                        <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class'=>'col-xs-7 col-sm-5 col-md-2 col-lg-2 logo')); ?>
-                        <?php echo CHtml::image(Base . '/images/logo FP.jpg', 'France Parkinson', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?>
-                        <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?> 
-                        <?php echo CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?>
-                        <?php echo CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?>
-                        <?php echo CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class'=>'col-xs-5 col-sm-4 col-md-3 col-lg-2 logo')); ?>
+            <div style="height:80px;"/>
+            <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+                <div id="footer">
+                    <div class="container">
+                        <div class="row">
+                            <?php echo CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class' => 'logo')); ?>
+                            <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class' => 'logo')); ?>
+                            <?php echo CHtml::image(Base . '/images/logo FP.jpg', 'France Parkinson', array('class' => 'logo')); ?>
+                            <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class' => 'logo')); ?> 
+                            <?php echo CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class' => 'logo')); ?>
+                            <?php echo CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class' => 'logo')); ?>
+                            <?php echo CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class' => 'logo')); ?>
+                        </div>
+                        Copyright &copy; <?php echo date('Y'); ?> by Biobanques.<br/>
+                        All Rights Reserved.
                     </div>
-                </div>
-            </div><!-- footer -->
+                </div><!-- footer -->
+            </nav>
         </div><!-- page -->
-        <?php if (isset($_POST['profil'])){ $_SESSION['profile'] = $_POST['profil'];}?>
+        <?php
+        if (isset($_POST['profil'])) {
+            $_SESSION['profile'] = $_POST['profil'];
+        }
+        ?>
     </body>
 </html>

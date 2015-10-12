@@ -50,7 +50,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'profil'); ?>
-        <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfilFiltered(), array('prompt' => '----', 'onchange' => 'js:validate_dropdown()')); ?>
+        <?php echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()')); ?>
         <?php echo $form->error($model, 'profil'); ?>
     </div>
 

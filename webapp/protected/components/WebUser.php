@@ -16,6 +16,15 @@ class WebUser extends CWebUser {
         $admin = $val;
     }
 
+    /*public function isAuthorized($profil, $link) {
+        $profil = $this->getState($profil);
+        if ($profil == "administrateur")
+            return true;
+        else {
+            return false;
+        }
+    }*/
+    
     /**
      * return true if user is admin
      * @return boolean

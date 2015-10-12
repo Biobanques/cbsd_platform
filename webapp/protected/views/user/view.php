@@ -16,7 +16,11 @@ $this->menu=array(
 	'attributes'=>array(
 		'login',
 		'password',
-		'profil',
+		array(
+                    'name'=>'profil',
+                    'type'=>'text',
+                    'value'=>implode(", " , $model->profil)
+                ),
 		'nom',
 		'prenom',
 		'email',

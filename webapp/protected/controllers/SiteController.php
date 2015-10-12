@@ -180,8 +180,8 @@ class SiteController extends Controller {
                             $this->redirect(array('site/index'));
                         }
                     }
-                    CommonMailer::sendSubscribeAdminMail($model);
-                    CommonMailer::sendSubscribeUserMail($model);
+                    //CommonMailer::sendSubscribeAdminMail($model);
+                    //CommonMailer::sendSubscribeUserMail($model);
                     Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
                     $this->redirect(array('site/index'));
                 } else {

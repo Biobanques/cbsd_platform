@@ -45,9 +45,9 @@
         <?php echo $form->labelEx($model, 'profil'); ?>
         <?php 
         if (Yii::app()->user->isGuest)
-            echo $form->dropDownList($model, 'profil', User::model()->getArrayProfilFiltered(), array('prompt' => '----', 'onchange' => 'js:validate_dropdown()'));
+            echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()'));
         else
-            echo $form->dropDownList($model, 'profil', User::model()->getArrayProfilSorted(), array('prompt' => '----', 'onchange' => 'js:validate_dropdown()'));
+            echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilSorted(), array('onchange' => 'js:validate_dropdown()'));
         ?>
         <?php echo $form->error($model, 'profil'); ?>
     </div>
