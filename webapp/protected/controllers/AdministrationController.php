@@ -9,6 +9,16 @@ class AdministrationController extends Controller {
      */
     public $layout = '//layouts/menu_administration';
 
+    /**
+     * @return array action filters
+     */
+    public function filters() {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+            'postOnly + delete', // we only allow deletion via POST request
+        );
+    }    
+    
     public function accessRules() {
         return array(
             array(
@@ -16,7 +26,7 @@ class AdministrationController extends Controller {
                 'actions' => array(
                     'index',
                 ),
-                'expression' => '$user->isAuthorized(Yii::app()->user->id, Yii::app()->controller->id)'
+                'expression' => '$user->isAdmin()'
             ),
             array('deny', // deny all users
                 'users' => array('*'),

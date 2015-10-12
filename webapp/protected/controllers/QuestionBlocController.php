@@ -26,7 +26,10 @@ class QuestionBlocController extends Controller
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create', 'index', 'view', 'update', 'admin', 'delete', 'preview'),
-                'expression' => '$user->isAuthorized(Yii::app()->user->id, Yii::app()->controller->id)'
+                'expression' => '$user->isAdmin()'
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
             ),
         );
     }
