@@ -16,21 +16,40 @@ class WebUser extends CWebUser {
         $admin = $val;
     }
 
-    /*public function isAuthorized($profil, $link) {
-        $profil = $this->getState($profil);
-        if ($profil == "administrateur")
-            return true;
-        else {
-            return false;
+    public function isAuthorized($user, $link) {
+        // Droits administrateur : Gestion des utilisateurs, Gestion des formulaires, Gestion des fiches, Gestion des blocs, Log système
+        if ($link == "user" || $link == "administration" || $link == "fiche" || $link == "questionBloc") {
+            // on stocke les profils dans un tableau
+            $profil =array();
+            // on récupère l'utilisateur courant
+            $criteria = new EMongoCriteria();
+            $criteria->_id('==', $user);
+            $profil = User::model()->findAll($criteria);
+            foreach ($profil as $p) {
+                foreach ($p->profil as $key=>$value)
+                    $profil[] = $value;
+            }
+            if (in_array("administrateur", $profil))
+                return true;
         }
-    }*/
+        return false;
+    }
     
     /**
      * return true if user is admin
      * @return boolean
      */
-    public function isAdmin() {
-        return $this->getState('profil', 'clinicien') == "administrateur";
+    public function isAdmin($user) {
+        $profil =array();
+        $criteria = new EMongoCriteria();
+        $criteria->_id('==', $user);
+        $profil = User::model()->findAll($criteria);
+        foreach ($profil as $p) {
+            foreach ($p->profil as $k=>$v)
+                $profil[] = $v;
+        }
+        if (in_array("administrateur", $profil))
+            return true;
     }
 
     /**

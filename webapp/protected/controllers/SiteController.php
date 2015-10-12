@@ -169,7 +169,7 @@ class SiteController extends Controller {
         $model = new User ();
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            $model->statut = "inactif";
+            $model->statut = "actif";
             if ($model->validate())
                 if ($model->save()) {
                     if ($model->profil == "clinicien") {

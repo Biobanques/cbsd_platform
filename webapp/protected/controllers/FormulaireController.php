@@ -20,9 +20,7 @@ class FormulaireController extends Controller
                 'actions' => array(
                     'index', 'dynamicquestions'
                 ),
-                'users' => array(
-                    '@'
-                )
+                'expression' => '$user->isAuthorized(Yii::app()->user->id, Yii::app()->controller->id)'
             ),
         );
     }

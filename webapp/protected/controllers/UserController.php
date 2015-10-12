@@ -27,7 +27,7 @@ class UserController extends Controller {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('create', 'update', 'index', 'admin', 'view', 'delete', 'validate', 'desactivate', 'refuseRegistration'),
-                'expression' => '$user->isAdmin()'
+                'expression' => '$user->isAuthorized(Yii::app()->user->id, Yii::app()->controller->id)'
             ),
             array('deny', // deny all users
                 'users' => array('*'),

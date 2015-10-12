@@ -16,9 +16,10 @@ class AdministrationController extends Controller {
                 'actions' => array(
                     'index',
                 ),
-                'users' => array(
-                    '@'
-                )
+                'expression' => '$user->isAuthorized(Yii::app()->user->id, Yii::app()->controller->id)'
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
             ),
         );
     }
