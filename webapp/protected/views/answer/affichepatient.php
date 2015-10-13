@@ -26,21 +26,104 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 <h4> Fiches patient renseignés : </h4>
 
 <?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
-    'dataProvider' => $dataProvider,
-    'template' => "{items}",
-    'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-    'columns' => array(
-        array('name' => 'id', 'header' => 'Identifiant de la fiche'),
-        array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-        array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'htmlOptions' => array('style' => 'width: 70px'),
+if (Yii::app()->user->getActiveProfil() == "clinicien") {
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProvider,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'htmlOptions' => array('style' => 'width: 70px'),
+            ),
         ),
-    ),
-));
+    ));
+}
 ?>
+
+<?php
+if (Yii::app()->user->getActiveProfil() == "geneticien") {
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProvider,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'buttons'=>array
+                (
+                    'update' => array
+                    (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    ),
+                    'delete' => array
+                    (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    )
+                ),
+                'htmlOptions' => array('style' => 'width: 70px'),
+            ),
+        ),
+    ));
+}
+?>
+
+<?php
+if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProvider,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'buttons'=>array
+                (
+                    'update' => array
+                    (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    ),
+                    'delete' => array
+                    (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    )
+                ),
+                'htmlOptions' => array('style' => 'width: 70px'),
+            ),
+        ),
+    ));
+}
+?>
+
+<?php
+if (Yii::app()->user->getActiveProfil() == "chercheur") {
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProvider,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'template'=>'{view}',
+                'htmlOptions' => array('style' => 'width: 70px'),
+            ),
+        ),
+    ));
+}
+?>
+
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl('questionnaire/index'),
@@ -54,18 +137,16 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
     <div class="span3" style="margin:-5px;">
     <select name="form">
-        <option selected="selected" disabled="disabled">Sélection du formulaire</option>
+        <option selected="selected" disabled="disabled">--- Sélectionner une fiche ---</option>
         <?php 
         foreach($questionnaire as $fiche=>$value){
             foreach($value as $k=>$v){
                 if ($k=='id') {
-                    if (!isset($_POST['profil']))
-                            echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
-                    if (isset($_POST['profil']) && $_POST['profil'] == 'neuropathologiste' && $value['name'] == 'Formulaire Parkinson')
+                    if (Yii::app()->user->getActiveProfil() == "clinicien" && $value['type'] == 'clinique')
                         echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
-                    else if (isset($_POST['profil']) && $_POST['profil'] == 'généticien' && $value['name'] == 'Formulaire Démence')
+                    else if (Yii::app()->user->getActiveProfil() == "geneticien" && $value['type'] == 'genetique')
                         echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
-                    else if (isset($_POST['profil']) && $_POST['profil'] == '')
+                    else if (Yii::app()->user->getActiveProfil() == "neuropathologiste" && $value['type'] == 'neuropathologique')
                         echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
                 }
             }

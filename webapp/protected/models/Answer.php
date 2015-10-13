@@ -27,6 +27,8 @@ class Answer extends EMongoDocument {
      * @var type 
      */
     public $id;
+    
+    public $type;
 
     /**
      * user id mongo unique login filling this answer.
@@ -189,6 +191,14 @@ class Answer extends EMongoDocument {
         if ($user != null)
             $result = $user->nom;
         return $result;
+    }
+    
+    /**
+     * retourne l'id de user qui a renseigné la fiche
+     * @return type
+     */
+    public function getUserId() {
+        return $this->login;
     }
 
 }

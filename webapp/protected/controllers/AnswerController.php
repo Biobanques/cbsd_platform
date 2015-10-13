@@ -84,9 +84,17 @@ class AnswerController extends Controller
         }
         if ($model->validate()) {
             $criteria = new EMongoCriteria();
-            $criteria->login = Yii::app()->user->id;
-            $criteria->id_patient = $patient->id;
-
+            if (Yii::app()->user->getActiveProfil() == "clinicien") {
+                $criteria->login = Yii::app()->user->id;
+                $criteria->id_patient = $patient->id;
+                $criteria->type = "clinique";
+            } else if (Yii::app()->user->getActiveProfil() == "geneticien") {
+                $criteria->id_patient = $patient->id;
+            } else if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
+                $criteria->id_patient = $patient->id;
+            } else if (Yii::app()->user->getActiveProfil() == "chercheur") {
+                $criteria->id_patient = $patient->id;
+            }
             $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
             $questionnaire = Questionnaire::model()->findAll();
             $_SESSION['datapatient'] = $patient;
