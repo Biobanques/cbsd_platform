@@ -115,18 +115,16 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
     <div class="span3" style="margin:-5px;">
     <select name="form">
-        <option selected="selected" disabled="disabled">Sélection du formulaire</option>
+        <option selected="selected" disabled="disabled">--- Sélectionner une fiche ---</option>
         <?php 
         foreach($questionnaire as $fiche=>$value){
             foreach($value as $k=>$v){
                 if ($k=='id') {
-                    if (!isset($_POST['profil']))
-                            echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
-                    if (isset($_POST['profil']) && $_POST['profil'] == 'neuropathologiste' && $value['name'] == 'Formulaire Parkinson')
+                    if (Yii::app()->user->getActiveProfil() == "clinicien" && $value['type'] == 'clinique')
                         echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
-                    else if (isset($_POST['profil']) && $_POST['profil'] == 'généticien' && $value['name'] == 'Formulaire Démence')
+                    else if (Yii::app()->user->getActiveProfil() == "geneticien" && $value['type'] == 'genetique')
                         echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
-                    else if (isset($_POST['profil']) && $_POST['profil'] == '')
+                    else if (Yii::app()->user->getActiveProfil() == "neuropathologiste" && $value['type'] == 'neuropathologique')
                         echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
                 }
             }

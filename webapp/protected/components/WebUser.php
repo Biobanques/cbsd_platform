@@ -57,8 +57,8 @@ class WebUser extends CWebUser {
     }
 
     /**
-     * return true if user is admin
-     * @return boolean
+     * profils : clinicien, geneticien, neuropathologiste, chercheur
+     * @return active profil
      */
     public function getActiveProfil() {
         return "clinicien";
