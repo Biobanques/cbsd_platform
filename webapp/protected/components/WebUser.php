@@ -61,7 +61,14 @@ class WebUser extends CWebUser {
      * @return active profil
      */
     public function getActiveProfil() {
-        return "clinicien";
+        if ($this->isClinicien())
+            return "clinicien";
+        else if ($this->isNeuropathologiste())
+            return "neuropathologiste";
+        else if ($this->isGeneticien())
+            return "geneticien";
+        else if ($this->isChercheur())
+            return "chercheur";
     }
     
 }

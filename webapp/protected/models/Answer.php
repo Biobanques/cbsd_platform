@@ -192,6 +192,14 @@ class Answer extends EMongoDocument {
             $result = $user->nom;
         return $result;
     }
+    
+    /**
+     * retourne l'id de user qui a renseigné la fiche
+     * @return type
+     */
+    public function getUserId() {
+        return $this->login;
+    }
 
 }
 

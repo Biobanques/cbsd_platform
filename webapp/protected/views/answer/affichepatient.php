@@ -56,6 +56,17 @@ if (Yii::app()->user->getActiveProfil() == "geneticien") {
             array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
+                'buttons'=>array
+                (
+                    'update' => array
+                    (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    ),
+                    'delete' => array
+                    (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    )
+                ),
                 'htmlOptions' => array('style' => 'width: 70px'),
             ),
         ),
@@ -75,6 +86,17 @@ if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
             array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
+                'buttons'=>array
+                (
+                    'update' => array
+                    (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    ),
+                    'delete' => array
+                    (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    )
+                ),
                 'htmlOptions' => array('style' => 'width: 70px'),
             ),
         ),
