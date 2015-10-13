@@ -26,21 +26,82 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 <h4> Fiches patient renseignés : </h4>
 
 <?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
-    'dataProvider' => $dataProvider,
-    'template' => "{items}",
-    'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-    'columns' => array(
-        array('name' => 'id', 'header' => 'Identifiant de la fiche'),
-        array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-        array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'htmlOptions' => array('style' => 'width: 70px'),
+if (Yii::app()->user->getActiveProfil() == "clinicien") {
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProvider,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'htmlOptions' => array('style' => 'width: 70px'),
+            ),
         ),
-    ),
-));
+    ));
+}
 ?>
+
+<?php
+if (Yii::app()->user->getActiveProfil() == "geneticien") {
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProvider,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'htmlOptions' => array('style' => 'width: 70px'),
+            ),
+        ),
+    ));
+}
+?>
+
+<?php
+if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProvider,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'htmlOptions' => array('style' => 'width: 70px'),
+            ),
+        ),
+    ));
+}
+?>
+
+<?php
+if (Yii::app()->user->getActiveProfil() == "chercheur") {
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProvider,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'template'=>'{view}',
+                'htmlOptions' => array('style' => 'width: 70px'),
+            ),
+        ),
+    ));
+}
+?>
+
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl('questionnaire/index'),

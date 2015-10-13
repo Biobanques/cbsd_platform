@@ -56,6 +56,14 @@ class WebUser extends CWebUser {
         return (in_array("chercheur", $this->getState('profil')));
     }
 
+    /**
+     * return true if user is admin
+     * @return boolean
+     */
+    public function getActiveProfil() {
+        return "clinicien";
+    }
+    
 }
 
 ?>
