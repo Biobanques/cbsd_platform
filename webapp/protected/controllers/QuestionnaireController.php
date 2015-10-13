@@ -94,6 +94,7 @@ class QuestionnaireController extends Controller
         $answer = new Answer;
         $answer->last_updated = new MongoDate();
         $answer->copy($model);
+        $answer->type = $model->type;
         $answer->login = Yii::app()->user->id;
         $answer->id_patient = $patients->id;
         $flagNoInputToSave = true;

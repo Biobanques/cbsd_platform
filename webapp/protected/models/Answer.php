@@ -27,6 +27,8 @@ class Answer extends EMongoDocument {
      * @var type 
      */
     public $id;
+    
+    public $type;
 
     /**
      * user id mongo unique login filling this answer.
