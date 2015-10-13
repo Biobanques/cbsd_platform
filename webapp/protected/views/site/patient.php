@@ -19,10 +19,10 @@
         'enableAjaxValidation' => false,
     ));
     ?>
-    
+
     <p>Bienvenue <?php echo Yii::app()->user->name ?></p>
     <p>Cet outil vous permet de retrouver les fiches patient à partir de son identité.</p>
-<hr />
+    <hr />
     <p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
 
     <?php echo $form->errorSummary($model); ?>
@@ -32,7 +32,7 @@
         <?php echo $form->textField($model, 'prenom'); ?>
         <?php echo $form->error($model, 'prenom'); ?>
     </div>
-    
+
     <div class="row" style="float:left; margin-left:35px">
         <?php echo $form->labelEx($model, 'nom_naissance'); ?>
         <?php echo $form->textField($model, 'nom_naissance'); ?>
@@ -44,7 +44,7 @@
         <?php echo $form->textField($model, 'date_naissance'); ?>
         <?php echo $form->error($model, 'date_naissance'); ?>
     </div>
-    
+
     <div style="clear:both;"></div>
 
     <div class="row buttons" style="margin-left:50%;">

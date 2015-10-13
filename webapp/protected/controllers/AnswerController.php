@@ -1,7 +1,7 @@
 <?php
 
-class AnswerController extends Controller {
-
+class AnswerController extends Controller
+{
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -94,7 +94,6 @@ class AnswerController extends Controller {
                 $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'questionnaire' => $questionnaire));
             else
                 $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'patient' => $patient));
-    
         } else {
             Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Tous les champs ne sont pas remplis.");
             $this->redirect(array('site/patient'));

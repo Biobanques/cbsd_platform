@@ -17,6 +17,7 @@ class CommonTools
                 return $soapClient->getIdWs($token, $patient);
             } catch (Exception $ex) {
                 Yii::log($ex->getMessage(), CLogger::LEVEL_ERROR);
+                Yii::log($ex->getTraceAsString(), CLogger::LEVEL_ERROR);
 
                 return -1;
             }
@@ -28,6 +29,6 @@ class CommonTools
     public static function isInDevMode() {
         return CommonProperties::$DEV_MODE;
     }
-    
+
 }
 ?>
