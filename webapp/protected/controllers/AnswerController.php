@@ -71,7 +71,9 @@ class AnswerController extends Controller
             $patient->firstName = $model->prenom;
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
-            $patient->id = CommonTools::wsGetPatient($patient);
+            $patient = CommonTools::wsGetPatient($patient);
+//            $patient->id = $idwsPat;
+            // $patient->id = CommonTools::wsGetPatient($patient)->id;
             $mixedResult = $model->dateformat($patient->birthDate);
             if ($mixedResult['result'] == false)
                 $this->redirect(array('site/patient'));
@@ -99,7 +101,7 @@ class AnswerController extends Controller
             $questionnaire = Questionnaire::model()->findAll();
             $_SESSION['datapatient'] = $patient;
             if (isset($_SESSION['datapatient']))
-                $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'questionnaire' => $questionnaire));
+                $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'questionnaire' => $questionnaire, 'patient' => $patient));
             else
                 $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'patient' => $patient));
         } else {

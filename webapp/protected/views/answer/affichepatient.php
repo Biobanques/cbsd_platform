@@ -6,20 +6,23 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 <hr />
 <div>
     <h4>Patient</h4>
-<?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
-    'dataProvider' => new CArrayDataProvider(array($model->getAttributes())),
-    'template' => "{items}",
-    'columns' => array(
-        array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->profil == "administrateur"),
-        array('value' => '$data["nom_naissance"]', 'header' => 'Nom de naissance'),
-        array('value' => '$data["prenom"]', 'header' => 'Prénom'),
-        array('value' => '$data["date_naissance"]', 'header' => 'Date de naissance'),
-    ),
-));
-?>
-    
+    <?php
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => new CArrayDataProvider(array(get_object_vars($patient))),
+//    'dataProvider' => new CArrayDataProvider(array($model->getAttributes())),
+        'template' => "{items}",
+        'columns' => array(
+            array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->profil == "administrateur"),
+            array('value' => '$data["birthName"]', 'header' => 'Nom de naissance'),
+            array('value' => '$data["useName"]', 'header' => 'Nom d\'usage'),
+            array('value' => '$data["firstName"]', 'header' => 'Prénom'),
+            array('value' => '$data["birthDate"]', 'header' => 'Date de naissance'),
+            array('value' => '$data["sex"]', 'header' => 'Genre'),
+        ),
+    ));
+    ?>
+
 </div>
 <hr />
 
@@ -56,14 +59,14 @@ if (Yii::app()->user->getActiveProfil() == "geneticien") {
             array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
-                'buttons'=>array
-                (
-                    'update' => array
+                'buttons' => array
                     (
+                    'update' => array
+                        (
                         'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
                     ),
                     'delete' => array
-                    (
+                        (
                         'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
                     )
                 ),
@@ -86,14 +89,14 @@ if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
             array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
-                'buttons'=>array
-                (
-                    'update' => array
+                'buttons' => array
                     (
+                    'update' => array
+                        (
                         'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
                     ),
                     'delete' => array
-                    (
+                        (
                         'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
                     )
                 ),
@@ -116,7 +119,7 @@ if (Yii::app()->user->getActiveProfil() == "chercheur") {
             array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
-                'template'=>'{view}',
+                'template' => '{view}',
                 'htmlOptions' => array('style' => 'width: 70px'),
             ),
         ),
@@ -128,7 +131,7 @@ if (Yii::app()->user->getActiveProfil() == "chercheur") {
 $form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl('questionnaire/index'),
     'enableAjaxValidation' => false,
-));
+        ));
 ?>
 
 <div class="row">
@@ -136,26 +139,26 @@ $form = $this->beginWidget('CActiveForm', array(
         <p>Saisir une nouvelle fiche : </p>
     </div>
     <div class="span3" style="margin:-5px;">
-    <select name="form">
-        <option selected="selected" disabled="disabled">--- Sélectionner une fiche ---</option>
-        <?php 
-        foreach($questionnaire as $fiche=>$value){
-            foreach($value as $k=>$v){
-                if ($k=='id') {
-                    if (Yii::app()->user->getActiveProfil() == "clinicien" && $value['type'] == 'clinique')
-                        echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
-                    else if (Yii::app()->user->getActiveProfil() == "geneticien" && $value['type'] == 'genetique')
-                        echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
-                    else if (Yii::app()->user->getActiveProfil() == "neuropathologiste" && $value['type'] == 'neuropathologique')
-                        echo "<option value=\"". $value['id'] . "\">" . $value['name'] . "</option>";
+        <select name="form">
+            <option selected="selected" disabled="disabled">--- Sélectionner une fiche ---</option>
+            <?php
+            foreach ($questionnaire as $fiche => $value) {
+                foreach ($value as $k => $v) {
+                    if ($k == 'id') {
+                        if (Yii::app()->user->getActiveProfil() == "clinicien" && $value['type'] == 'clinique')
+                            echo "<option value=\"" . $value['id'] . "\">" . $value['name'] . "</option>";
+                        else if (Yii::app()->user->getActiveProfil() == "geneticien" && $value['type'] == 'genetique')
+                            echo "<option value=\"" . $value['id'] . "\">" . $value['name'] . "</option>";
+                        else if (Yii::app()->user->getActiveProfil() == "neuropathologiste" && $value['type'] == 'neuropathologique')
+                            echo "<option value=\"" . $value['id'] . "\">" . $value['name'] . "</option>";
+                    }
                 }
             }
-        }
-        ?>
-    </select>
+            ?>
+        </select>
     </div>
     <div class="span3" style="margin:-5px;">
-    <?php echo CHtml::submitButton('Saisir'); ?>
+        <?php echo CHtml::submitButton('Saisir'); ?>
     </div>
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 </div>
