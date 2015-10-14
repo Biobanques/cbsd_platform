@@ -1,7 +1,7 @@
 <?php
 
-class SiteController extends Controller {
-
+class SiteController extends Controller
+{
     /**
      * NB : boostrap theme need this column2 layout
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -35,7 +35,8 @@ class SiteController extends Controller {
                 'allow',
                 'actions' => array(
                     'patient',
-                    'affichepatient'
+                    'affichepatient',
+                    'setActiveProfil'
                 ),
                 'users' => array(
                     '@'

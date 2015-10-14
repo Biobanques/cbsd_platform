@@ -5,22 +5,24 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 <p><?php echo Yii::app()->user->name ?>, voici les fiches dont vous disposez pour ce patient.</p>
 <hr />
 <div>
-    <h4>Patient</h4>
-    <?php
-    $this->widget('bootstrap.widgets.TbGridView', array(
-        'type' => 'striped bordered condensed',
-        'dataProvider' => new CArrayDataProvider(array(get_object_vars($patient))),
+    <?php if (Yii::app()->user->getState('activeProfil') != "chercheur") { ?>
+        <h4>Patient</h4>
+        <?php
+        $this->widget('bootstrap.widgets.TbGridView', array(
+            'type' => 'striped bordered condensed',
+            'dataProvider' => new CArrayDataProvider(array(get_object_vars($patient))),
 //    'dataProvider' => new CArrayDataProvider(array($model->getAttributes())),
-        'template' => "{items}",
-        'columns' => array(
-            array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->isAdmin()),
-            array('value' => '$data["birthName"]', 'header' => 'Nom de naissance'),
-            array('value' => '$data["useName"]', 'header' => 'Nom d\'usage'),
-            array('value' => '$data["firstName"]', 'header' => 'Prénom'),
-            array('value' => '$data["birthDate"]', 'header' => 'Date de naissance'),
-            array('value' => '$data["sex"]', 'header' => 'Genre'),
-        ),
-    ));
+            'template' => "{items}",
+            'columns' => array(
+                array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->isAdmin()),
+                array('value' => '$data["birthName"]', 'header' => 'Nom de naissance'),
+                array('value' => '$data["useName"]', 'header' => 'Nom d\'usage'),
+                array('value' => '$data["firstName"]', 'header' => 'Prénom'),
+                array('value' => '$data["birthDate"]', 'header' => 'Date de naissance'),
+                array('value' => '$data["sex"]', 'header' => 'Genre'),
+            ),
+        ));
+    }
     ?>
 
 </div>
