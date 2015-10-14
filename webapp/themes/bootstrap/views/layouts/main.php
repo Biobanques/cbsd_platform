@@ -61,7 +61,7 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
             <?php echo $content; ?>
 
             <div class="clear"></div>
-            <div style="height:80px;"/>
+            <div style="height:100px;"/>
             <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
                 <div id="footer">
                     <div class="container">

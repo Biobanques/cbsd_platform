@@ -36,7 +36,7 @@ if (Yii::app()->user->getActiveProfil() == "clinicien") {
         'template' => "{items}",
         'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
         'columns' => array(
-            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
             array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
@@ -55,7 +55,7 @@ if (Yii::app()->user->getActiveProfil() == "geneticien") {
         'template' => "{items}",
         'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
         'columns' => array(
-            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
             array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
@@ -85,7 +85,7 @@ if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
         'template' => "{items}",
         'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
         'columns' => array(
-            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
             array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
@@ -115,7 +115,7 @@ if (Yii::app()->user->getActiveProfil() == "chercheur") {
         'template' => "{items}",
         'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
         'columns' => array(
-            array('name' => 'id', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
             array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
