@@ -38,13 +38,7 @@
                     <?php echo $form->label($model, 'rememberMe'); ?>
                     <?php echo $form->checkBox($model, 'rememberMe'); ?>
                     <?php echo $form->error($model, 'rememberMe'); ?>
-                </div>
-
-                <div class="row">
-                    <?php echo $form->labelEx($model, 'profil'); ?>
-                    <?php echo $form->radioButtonList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()', 'labelOptions'=>array('style'=>'display:inline'))); ?>
-                    <?php echo $form->error($model, 'profil'); ?>                    
-                </div>                
+                </div>               
                 
                 <div class="row buttons">
                     <?php echo CHtml::submitButton(Yii::t('common', 'seconnecter')); ?>

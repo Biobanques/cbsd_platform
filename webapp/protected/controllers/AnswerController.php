@@ -75,7 +75,7 @@ class AnswerController extends Controller
             $patient->firstName = $model->prenom;
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
-            $patient = CommonTools::wsGetPatient($patient);
+            $patient->id = CommonTools::wsGetPatient($patient);
 //            $patient->id = $idwsPat;
             // $patient->id = CommonTools::wsGetPatient($patient)->id;
             $mixedResult = $model->dateformat($patient->birthDate);

@@ -10,3 +10,8 @@
 table {
     text-align: center;
 }
+
+div.form .rememberMe label
+{
+	display: inline;
+}
