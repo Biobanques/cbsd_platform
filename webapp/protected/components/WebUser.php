@@ -22,7 +22,7 @@ class WebUser extends CWebUser
      * @return boolean
      */
     public function isAdmin() {
-        return in_array("administrateur", $this->getState('profil'));
+        return $this->getState('profil') != null ? in_array("administrateur", $this->getState('profil')) : false;
     }
 
     /**

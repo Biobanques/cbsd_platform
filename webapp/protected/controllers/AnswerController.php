@@ -92,24 +92,42 @@ class AnswerController extends Controller
         }
         if ($model->validate()) {
             $criteria = new EMongoCriteria();
-            if (Yii::app()->user->getActiveProfil() == "clinicien") {
-                $criteria->login = Yii::app()->user->id;
-                $criteria->id_patient = (string) $patient->id;
-                $criteria->type = "clinique";
-            } else if (Yii::app()->user->getActiveProfil() == "geneticien") {
-                $criteria->id_patient = $patient->id;
-            } else if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
-                $criteria->id_patient = $patient->id;
-            } else if (Yii::app()->user->getActiveProfil() == "chercheur") {
-                $criteria->id_patient = $patient->id;
-            }
-            $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
+//            if (Yii::app()->user->getActiveProfil() == "clinicien") {
+//                $criteria->login = Yii::app()->user->id;
+//                $criteria->id_patient = (string) $patient->id;
+//                $criteria->type = "clinique";
+//            } else if (Yii::app()->user->getActiveProfil() == "geneticien") {
+//                $criteria->id_patient = $patient->id;
+//            } else if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
+//                $criteria->id_patient = $patient->id;
+//            } else if (Yii::app()->user->getActiveProfil() == "chercheur") {
+//                $criteria->id_patient = $patient->id;
+//            }
+//            $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
+            $criteria->id_patient = (string) $patient->id;
+            $criteriaCliniques = new EMongoCriteria($criteria);
+            $criteriaCliniques->type = "clinique";
+            $criteriaNeuropathologiques = new EMongoCriteria($criteria);
+            $criteriaNeuropathologiques->type = "neuropathologique";
+            $criteriaGenetiques = new EMongoCriteria($criteria);
+            $criteriaGenetiques->type = "genetique";
+
+
+//            $dataProviderCliniques = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteriaCliniques));
+//            $dataProviderNeuropathologiques = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteriaNeuropathologiques));
+//            $dataProviderGenetiques = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteriaGenetiques));
+            $dataProviderCliniques = new CArrayDataProvider(Answer::model()->findAll($criteriaCliniques));
+            $dataProviderNeuropathologiques = new CArrayDataProvider(Answer::model()->findAll($criteriaNeuropathologiques));
+            $dataProviderGenetiques = new CArrayDataProvider(Answer::model()->findAll($criteriaGenetiques));
+
+
+
             $questionnaire = Questionnaire::model()->findAll();
             $_SESSION['datapatient'] = $patient;
             if (isset($_SESSION['datapatient']))
-                $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'questionnaire' => $questionnaire, 'patient' => $patient));
+                $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'questionnaire' => $questionnaire, 'patient' => $patient));
             else
-                $this->render('affichepatient', array('model' => $model, 'dataProvider' => $dataProvider, 'patient' => $patient));
+                $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'patient' => $patient));
         } else {
             Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Tous les champs ne sont pas remplis.");
             $this->redirect(array('site/patient'));

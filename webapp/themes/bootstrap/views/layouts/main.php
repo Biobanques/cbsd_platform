@@ -23,24 +23,26 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
     </head>
 
     <?php
+    $menuItems = array(
+        array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest),
+        array('label' => 'Saisir une fiche patient', 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest),
+        array('label' => 'Administration', 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin()),
+        array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+        array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+        array('label' => 'Accédez en tant que : ', 'url' => '', 'visible' => !Yii::app()->user->isGuest));
+    if (!Yii::app()->user->isGuest)
+        $menuItems[] = array(
+            'template' => GetProfil::getHTML(),
+        );
+
+
+
     $this->widget('bootstrap.widgets.TbNavbar', array(
         'brandUrl' => array('/site/index'),
         'items' => array(
             array(
                 'class' => 'bootstrap.widgets.TbMenu',
-                'items' => array(
-                    array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest),
-                    array('label' => 'Saisir une fiche patient', 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest),
-                    array('label' => 'Administration', 'url' => array('/administration/index'), 'visible' => !Yii::app()->user->isGuest),
-                    array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                    array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-                    array('label' => 'Accédez en tant que : ', 'url' => '#', 'visible' => !Yii::app()->user->isGuest),
-                    array(
-                        'label' => '{menu}',
-                        'template' => GetProfil::getHTML(),
-                        'visible' => !Yii::app()->user->isGuest
-                    ),
-                )
+                'items' => $menuItems
             )
         )
     ));
@@ -75,7 +77,7 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
                             <?php echo CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class' => 'logo')); ?>
                             <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class' => 'logo')); ?>
                             <?php echo CHtml::image(Base . '/images/logo FP.jpg', 'France Parkinson', array('class' => 'logo')); ?>
-                            <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class' => 'logo')); ?> 
+                            <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class' => 'logo')); ?>
                             <?php echo CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class' => 'logo')); ?>
                             <?php echo CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class' => 'logo')); ?>
                             <?php echo CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class' => 'logo')); ?>
