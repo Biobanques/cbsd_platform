@@ -57,18 +57,29 @@ class WebUser extends CWebUser {
     }
 
     /**
-     * profils : clinicien, geneticien, neuropathologiste, chercheur
+     * profils dans l'ordre par défaut : neuropathologiste, geneticien, clinicien, chercheur
      * @return active profil
      */
     public function getActiveProfil() {
-        if ($this->isClinicien())
-            return "clinicien";
-        else if ($this->isNeuropathologiste())
+        if ($this->isNeuropathologiste())
             return "neuropathologiste";
         else if ($this->isGeneticien())
             return "geneticien";
+        else if ($this->isClinicien())
+            return "clinicien";
         else if ($this->isChercheur())
             return "chercheur";
+    }
+    
+    /**
+     * get user profil
+     * @return user profil
+     */
+    public function getUserProfil() {
+        $userProfil = array();
+        foreach (Yii::app()->user->profil as $profil)
+            $userProfil[] = $profil;
+        return $userProfil;
     }
     
 }
