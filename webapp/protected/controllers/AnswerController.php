@@ -60,6 +60,10 @@ class AnswerController extends Controller
             $model->nom_naissance = $patient->birthName;
             $model->date_naissance = $patient->birthDate;
         }
+
+
+
+
         if (isset($_POST['PatientForm'])) {
             $model->attributes = $_POST['PatientForm'];
             $patient = (object) null;
