@@ -13,7 +13,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 //    'dataProvider' => new CArrayDataProvider(array($model->getAttributes())),
         'template' => "{items}",
         'columns' => array(
-            array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->profil == "administrateur"),
+            array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->isAdmin()),
             array('value' => '$data["birthName"]', 'header' => 'Nom de naissance'),
             array('value' => '$data["useName"]', 'header' => 'Nom d\'usage'),
             array('value' => '$data["firstName"]', 'header' => 'Prénom'),

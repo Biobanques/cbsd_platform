@@ -70,18 +70,7 @@ class WebUser extends CWebUser {
         else if ($this->isChercheur())
             return "chercheur";
     }
-    
-    /**
-     * get user profil
-     * @return user profil
-     */
-    public function getUserProfil() {
-        $userProfil = array();
-        foreach (Yii::app()->user->profil as $profil)
-            $userProfil[] = $profil;
-        return $userProfil;
-    }
-    
+
 }
 
 ?>
