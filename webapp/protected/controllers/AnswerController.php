@@ -65,6 +65,8 @@ class AnswerController extends Controller
 
 
         if (isset($_POST['PatientForm'])) {
+
+            $model = new PatientForm;
             $model->attributes = $_POST['PatientForm'];
             $patient = (object) null;
             $patient->id = null;
@@ -75,7 +77,7 @@ class AnswerController extends Controller
             $patient->firstName = $model->prenom;
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
-            $patient->id = CommonTools::wsGetPatient($patient);
+            $patient = CommonTools::wsGetPatient($patient);
 //            $patient->id = $idwsPat;
             // $patient->id = CommonTools::wsGetPatient($patient)->id;
             $mixedResult = $model->dateformat($patient->birthDate);
