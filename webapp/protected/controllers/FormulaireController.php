@@ -115,7 +115,7 @@ class FormulaireController extends Controller
             $computedGroup = new QuestionGroup;
             $computedGroup->id = $questionBlocForm->id;
             $computedGroup->title = $questionBloc->title;
-            $computedGroup->title_fr = $questionBloc->title_fr;
+            $computedGroup->title_fr = $questionBloc->title;
             $computedGroup->parent_group = $questionBlocForm->parent_group;
             $computedGroup->questions = array();
 
