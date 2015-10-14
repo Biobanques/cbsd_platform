@@ -6,7 +6,8 @@
  * @author nicolas
  *
  */
-class WebUser extends CWebUser {
+class WebUser extends CWebUser
+{
 
     /**
      * set the admin value
@@ -15,7 +16,7 @@ class WebUser extends CWebUser {
     public function setAdmin($val) {
         $admin = $val;
     }
-    
+
     /**
      * return true if user is admin
      * @return boolean
@@ -47,7 +48,7 @@ class WebUser extends CWebUser {
     public function isGeneticien() {
         return in_array("geneticien", $this->getState('profil'));
     }
-    
+
     /**
      * return true if user is chercheur
      * @return boolean
@@ -61,27 +62,18 @@ class WebUser extends CWebUser {
      * @return active profil
      */
     public function getActiveProfil() {
-        if ($this->isNeuropathologiste())
-            return "neuropathologiste";
-        else if ($this->isGeneticien())
-            return "geneticien";
-        else if ($this->isClinicien())
-            return "clinicien";
-        else if ($this->isChercheur())
-            return "chercheur";
+        return $this->getState('activeProfil');
     }
-    
-    /**
-     * get user profil
-     * @return user profil
-     */
-    public function getUserProfil() {
-        $userProfil = array();
-        foreach (Yii::app()->user->profil as $profil)
-            $userProfil[] = $profil;
-        return $userProfil;
-    }
-    
-}
 
+    public function setActiveProfil($activeProfil) {
+        if ($activeProfil == "") {
+            $this->setState('activeProfil', $this->getState("defaultProfil"));
+        } else
+        if (in_array($activeProfil, $this->getState('profil'))) {
+            $this->setState('activeProfil', $activeProfil);
+        }
+        $this->setState('activeProfil', $this->getState("defaultProfil"));
+    }
+
+}
 ?>

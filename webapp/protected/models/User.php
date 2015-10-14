@@ -5,43 +5,33 @@
  * @author nmalservet
  *
  */
-class User extends EMongoDocument {
-
+class User extends EMongoDocument
+{
     /**
-     * 
+     *
      */
     public $login;
     /**
-     *embedded document with array of QuestionAnswer
-     * @var type 
+     * embedded document with array of QuestionAnswer
+     * @var type
      */
     public $password;
-    
     public $profil;
-    
     public $nom;
-    
     public $prenom;
-    
     public $email;
-    
     public $telephone;
-    
     public $gsm;
-    
     public $address;
-    
     public $centre;
-    
     public $statut;
-    
     public $verifyCode;
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
+
     // This method is required!
     public function getCollectionName() {
         return 'user';
@@ -66,7 +56,7 @@ class User extends EMongoDocument {
         return $result;
     }
 
-       /**
+    /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels() {
@@ -87,7 +77,6 @@ class User extends EMongoDocument {
         );
     }
 
-
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria ();
         if (isset($this->login) && !empty($this->login)) {
@@ -99,7 +88,7 @@ class User extends EMongoDocument {
             'criteria' => $criteria
         ));
     }
-  
+
     /**
      * profils : 0: clinicien, 1 : administrateur, 2: neuropathologiste, 3: généticien
      * @return type
@@ -114,7 +103,6 @@ class User extends EMongoDocument {
         }
         return $result;
     }
-    
 
     /**
      * @return type
@@ -143,7 +131,7 @@ class User extends EMongoDocument {
 
         return $res;
     }
-    
+
     /**
      * get an array sorted by value.
      */
@@ -152,7 +140,7 @@ class User extends EMongoDocument {
         $resArraySorted->asort();
         return $resArraySorted;
     }
-    
+
     /**
      * get an array filtered.
      */
@@ -164,7 +152,7 @@ class User extends EMongoDocument {
         }
         return $resArrayFiltered;
     }
-    
+
     /**
      * get an array of statut
      */
@@ -174,7 +162,7 @@ class User extends EMongoDocument {
         $res ['inactif'] = "inactif";
         return $res;
     }
-    
+
     /**
      * get an array of centre used by dropDownLIst.
      */
@@ -211,10 +199,12 @@ class User extends EMongoDocument {
         if ($nbDigit < 2 && $this->password != "")
             $this->addError('password', Yii::t('common', 'notEnoughDigits'));
     }
+
     public function telPresent() {
         if (in_array($this->telephone, array("", null)) && in_array($this->gsm, array("", null)))
             $this->addError('gsm', 'Au moins un numéro de téléphone');
     }
+
     /**
      * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only.
      */
@@ -224,6 +214,7 @@ class User extends EMongoDocument {
         if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ -]*$/i", $this->prenom))
             $this->addError('prenom', Yii::t('common', 'onlyAlpha'));
     }
+
     /**
      * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only. + numeric
      */
@@ -231,22 +222,34 @@ class User extends EMongoDocument {
         if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ0-9 -]*$/i", $this->login))
             $this->addError('login', Yii::t('common', 'onlyAlphaNumeric'));
     }
-    
+
     public function addressValidator() {
         if (($this->profil == "clinicien") && ($this->address == "")) {
-            $this->validatorList->add(CValidator::createValidator('required',$this,'address',array()));
+            $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
             $this->addError('address', 'Adresse ne peut pas être vide.');
         }
     }
-    
+
     public function centreValidator() {
         if (($this->profil == "neuropathologiste") && ($this->centre == "")) {
-            $this->validatorList->add(CValidator::createValidator('required',$this,'centre',array()));
+            $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
             $this->addError('centre', 'Centre ne peut pas être vide.');
         }
     }
 
-    
-}
+    public function getDefaultProfil() {
 
+        if (in_array("administrateur", $this->profil))
+            return "administrateur";
+        if (in_array("neuropathologiste", $this->profil))
+            return "neuropathologiste";
+        if (in_array("geneticien", $this->profil))
+            return "geneticien";
+        if (in_array("clinicien", $this->profil))
+            return "clinicien";
+        if (in_array("chercheur", $this->profil))
+            return "chercheur";
+    }
+
+}
 ?>

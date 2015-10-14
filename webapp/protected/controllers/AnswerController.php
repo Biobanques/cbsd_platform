@@ -94,7 +94,7 @@ class AnswerController extends Controller
             $criteria = new EMongoCriteria();
             if (Yii::app()->user->getActiveProfil() == "clinicien") {
                 $criteria->login = Yii::app()->user->id;
-                $criteria->id_patient = $patient->id;
+                $criteria->id_patient = (string) $patient->id;
                 $criteria->type = "clinique";
             } else if (Yii::app()->user->getActiveProfil() == "geneticien") {
                 $criteria->id_patient = $patient->id;
