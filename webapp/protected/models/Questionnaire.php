@@ -67,6 +67,7 @@ class Questionnaire extends EMongoDocument
     public function attributeLabels() {
 
         return array(
+            'type' => 'Type de formulaire',
             'id' => 'id',
             'name' => 'Nom',
             'message_start' => 'Message de début',

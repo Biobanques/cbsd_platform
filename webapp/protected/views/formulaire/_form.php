@@ -12,9 +12,9 @@
     <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
     <div class="row">
         <p>Choisissez le type de formulaire. </p>
-        <?php echo $form->labelEx($model, 'id'); ?>
+        <?php echo $form->labelEx($model, 'type'); ?>
         <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayTypeSorted(), array('prompt' => '--- Type de formulaire ---')); ?>
-        <?php echo $form->error($model, 'id'); ?>
+        <?php echo $form->error($model, 'type'); ?>
     </div>
     <div class="row">
         <p>Id doit être un indentifiant unique qui vous permettra de reconnaitre votre formulaire rapidement. </p>
