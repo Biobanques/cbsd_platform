@@ -105,11 +105,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 (
                 'update' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'genetique\')?true:false;'
+                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'geneticien\')?true:false;'
                 ),
                 'delete' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'genetique\')?true:false;'
+                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'geneticien\')?true:false;'
                 )
             ),
             'htmlOptions' => array('style' => 'width: 70px'),

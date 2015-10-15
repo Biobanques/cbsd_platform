@@ -96,7 +96,7 @@ class QuestionnaireController extends Controller
         $answer->copy($model);
         $answer->type = $model->type;
         $answer->login = Yii::app()->user->id;
-        $answer->id_patient = $patients->id;
+        $answer->id_patient = (string) $patients->id;
         $flagNoInputToSave = true;
         foreach ($answer->answers_group as $answer_group) {
             foreach ($answer_group->answers as $answerQuestion) {
