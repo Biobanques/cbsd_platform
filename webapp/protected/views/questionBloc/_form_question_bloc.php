@@ -33,7 +33,23 @@
                 array('name' => 'type', 'header' => 'type'),
                 array(
                     'class' => 'bootstrap.widgets.TbButtonColumn',
-                    'htmlOptions' => array('style' => 'width: 70px'),
+                    'template' => '{delete}',
+                    'buttons' => array
+                        (
+                        'delete' => array
+                            (
+                            'url' => " Yii::app()->createUrl('questionBloc/deleteQuestion', array('id' => " . '$data->_id' . ",'blocId'=>'$model->_id'))"
+                        ),
+//        'update' => array
+//        (
+//                            'url' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'genetique\')?true:false;'
+//                        ),
+//                        'delete' => array
+//                            (
+//                            'url' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'genetique\')?true:false;'
+//                        )
+                    ),
+                //'htmlOptions' => array('style' => 'width: 70px'),
                 ),
             ),
         ));

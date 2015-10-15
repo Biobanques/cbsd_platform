@@ -25,7 +25,7 @@ class QuestionBlocController extends Controller
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'index', 'view', 'update', 'admin', 'delete', 'preview'),
+                'actions' => array('create', 'index', 'view', 'update', 'admin', 'delete', 'deleteQuestion', 'preview'),
                 'expression' => '$user->isAdmin()'
             ),
             array('deny', // deny all users
@@ -127,6 +127,16 @@ class QuestionBlocController extends Controller
             'questionForm' => $questionForm,
             'dataProvider' => $dataProvider
         ));
+    }
+
+    public function actionDeleteQuestion($id, $blocId) {
+        $model = $this->loadModel($blocId);
+        $model->questions = array_diff($model->questions, array($id));
+        if ($model->save())
+            Yii::app()->user->setFlash('success', "La question a bien été supprimée");
+        else
+            Yii::app()->user->setFlash('error', "La question n'a pas pu être supprimée.");
+        $this->redirect($this->createUrl('update', array('id' => $model->_id)));
     }
 
     /**
