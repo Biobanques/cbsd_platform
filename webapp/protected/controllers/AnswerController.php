@@ -113,13 +113,15 @@ class AnswerController extends Controller
             $criteriaGenetiques->type = "genetique";
 
 
-//            $dataProviderCliniques = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteriaCliniques));
-//            $dataProviderNeuropathologiques = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteriaNeuropathologiques));
-//            $dataProviderGenetiques = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteriaGenetiques));
-            $dataProviderCliniques = new CArrayDataProvider(Answer::model()->findAll($criteriaCliniques));
-            $dataProviderNeuropathologiques = new CArrayDataProvider(Answer::model()->findAll($criteriaNeuropathologiques));
-            $dataProviderGenetiques = new CArrayDataProvider(Answer::model()->findAll($criteriaGenetiques));
-
+            $dataProviderCliniques = new EMongoDocumentDataProvider('Answer');
+            $dataProviderCliniques->setId('dpCli');
+            $dataProviderNeuropathologiques = new EMongoDocumentDataProvider('Answer');
+            $dataProviderCliniques->setId('dpNeuPa');
+            $dataProviderGenetiques = new EMongoDocumentDataProvider('Answer');
+            $dataProviderCliniques->setId('dpGen');
+            $dataProviderCliniques->setCriteria($criteriaCliniques);
+            $dataProviderNeuropathologiques->setCriteria($criteriaNeuropathologiques);
+            $dataProviderGenetiques->setCriteria($criteriaGenetiques);
 
 
             $questionnaire = Questionnaire::model()->findAll();
