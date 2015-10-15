@@ -46,11 +46,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 (
                 'update' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'clinicien\')?true:false;'
                 ),
                 'delete' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'clinicien\')?true:false;'
                 )
             ),
             'htmlOptions' => array('style' => 'width: 70px'),
@@ -75,11 +75,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 (
                 'update' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'neuropathologiste\')?true:false;'
                 ),
                 'delete' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'neuropathologiste\')?true:false;'
                 )
             ),
             'htmlOptions' => array('style' => 'width: 70px'),
@@ -105,11 +105,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 (
                 'update' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'genetique\')?true:false;'
                 ),
                 'delete' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
+                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'genetique\')?true:false;'
                 )
             ),
             'htmlOptions' => array('style' => 'width: 70px'),
