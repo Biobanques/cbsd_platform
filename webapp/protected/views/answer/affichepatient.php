@@ -58,6 +58,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ),
 ));
 ?>
+<?php if (Yii::app()->user->getState('activeProfil') != "clinicien") { ?>
 <h5> Fiches neuropathologiques </h5>
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
@@ -85,7 +86,9 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         ),
     ),
 ));
+}
 ?>
+<?php if (Yii::app()->user->getState('activeProfil') != "clinicien") { ?>
 <h5> Fiches génétiques </h5>
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
@@ -113,6 +116,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         ),
     ),
 ));
+}
 ?>
 
 

@@ -106,6 +106,8 @@ class AnswerController extends Controller
 //            $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
             $criteria->id_patient = (string) $patient->id;
             $criteriaCliniques = new EMongoCriteria($criteria);
+            if (Yii::app()->user->getState('activeProfil') == "clinicien")
+                $criteriaCliniques->login = Yii::app()->user->id;
             $criteriaCliniques->type = "clinique";
             $criteriaNeuropathologiques = new EMongoCriteria($criteria);
             $criteriaNeuropathologiques->type = "neuropathologique";
