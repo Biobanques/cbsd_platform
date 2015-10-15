@@ -78,15 +78,16 @@ class AnswerController extends Controller
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
             $patient = CommonTools::wsGetPatient($patient);
+            if ($patient === -1) {
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ses informations n’existe dans le système, veuillez contacter l’administrateur des identités de patient pour en créer un.");
+                $this->redirect(array('site/patient'));
+            }
 //            $patient->id = $idwsPat;
             // $patient->id = CommonTools::wsGetPatient($patient)->id;
             $mixedResult = $model->dateformat($patient->birthDate);
             if ($mixedResult['result'] == false)
                 $this->redirect(array('site/patient'));
-            if ($patient->id === -1) {
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ses informations n’existe dans le système, veuillez contacter l’administrateur des identités de patient pour en créer un.");
-                $this->redirect(array('site/patient'));
-            }
+
 
             $model->id = $patient->id;
         }
