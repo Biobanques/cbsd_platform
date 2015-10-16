@@ -4,56 +4,31 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/biobankapps/index.php?r=logiciel/create" />
-<title>CreateDemenceForm</title>
+<title>LoginChercheur</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CreateDemenceForm</td></tr>
+<tr><td rowspan="1" colspan="3">LoginChercheur</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/cbsd_platform/webapp/index.php?r=answer/affichepatient</td>
+	<td>/cbsd_platform/webapp/index.php</td>
 	<td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>name=form</td>
-	<td>label=Démence</td>
+	<td>type</td>
+	<td>id=LoginForm_username</td>
+	<td>chercheur</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>type</td>
+	<td>id=LoginForm_password</td>
+	<td>chercheur2015</td>
+</tr>
+<tr>
+	<td>click</td>
 	<td>name=yt0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=demenceform_examdate</td>
-	<td>Demence</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=demenceform_patientaddress</td>
-	<td>Dale2</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=demenceform_doctorname</td>
-	<td>clinicien</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Formulaire Démence</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=demence_gender</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Renseignements individuels</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,6 +36,7 @@
 	<td>name=yt0</td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

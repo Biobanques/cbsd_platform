@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/biobankapps/index.php?r=logiciel/create" />
-<title>CreateDemenceForm</title>
+<title>CreateGenetiqueForm</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CreateDemenceForm</td></tr>
+<tr><td rowspan="1" colspan="3">CreateGenetiqueForm</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -19,7 +19,7 @@
 <tr>
 	<td>select</td>
 	<td>name=form</td>
-	<td>label=Démence</td>
+	<td>label=Genetique</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -28,39 +28,25 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=demenceform_examdate</td>
-	<td>Demence</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=demenceform_patientaddress</td>
+	<td>id=situation_doctorname</td>
 	<td>Dale2</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=demenceform_doctorname</td>
-	<td>clinicien</td>
+	<td>id=situation_examdate</td>
+	<td>Genetique</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Formulaire Démence</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=demence_gender</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Renseignements individuels</td>
-	<td></td>
+	<td>type</td>
+	<td>id=situation_patientaddress</td>
+	<td>geneticien</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>
