@@ -1,5 +1,5 @@
 <h1>Gestion des utilisateurs</h1>
-<?php echo CHtml::link('Créer un utilisateur', array('user/create'));?>
+<?php echo CHtml::link('Créer un utilisateur', array('user/create')); ?>
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'user-grid',

@@ -4,8 +4,8 @@
  * controller de formulaire. Permet d aiguiller les actions sur l objet formulaire côté admin.
  * @author nmalservet
  */
-class FormulaireController extends Controller
-{
+class FormulaireController extends Controller {
+
     /**
      * NB : boostrap theme need this column2 layout
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -21,7 +21,7 @@ class FormulaireController extends Controller
             'accessControl', // perform access control for CRUD operations
         );
     }
-    
+
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -93,7 +93,6 @@ class FormulaireController extends Controller
             //traitement ajout de question
             if ($questionForm->validate()) {
                 $model = $model->saveQuestionnaireNewQuestion($questionForm);
-//                $model = $this->saveQuestionnaireNewQuestion($model, $questionForm);
             }
         }
         if (isset($_POST['QuestionGroup'])) {
@@ -102,15 +101,12 @@ class FormulaireController extends Controller
             $questionGroup->title_fr = $questionGroup->title;
             if ($questionGroup->validate()) {
                 $model = $model->saveQuestionnaireNewGroup($questionGroup);
-//                $model = $this->saveQuestionnaireNewGroup($model, $questionGroup);
             }
         }
 
         if (isset($_POST['QuestionBlocForm'])) {
-//            $questionBloc = QuestionBloc::model()->findByPk(new MongoId($_POST['QuestionBloc']['_id']));
             $questionBlocForm->attributes = $_POST['QuestionBlocForm'];
             $questionBloc = QuestionBloc::model()->findByPk(new MongoId($questionBlocForm->title));
-            //$bloc= QuestionBloc::model()->findByPk(new MongoId($questionBloc))
             $questionBlocForm->title_fr = $questionBlocForm->title;
             $computedGroup = new QuestionGroup;
             $computedGroup->id = $questionBlocForm->id;
@@ -121,11 +117,9 @@ class FormulaireController extends Controller
 
             if ($computedGroup->validate())
                 $model = $model->saveQuestionnaireNewGroup($computedGroup);
-//                $model = $this->saveQuestionnaireNewGroup($model, $computedGroup);
 
             if (isset($questionBloc->questions) && ($questionBloc->questions != null) && (count($questionBloc->questions) > 0)) {
                 foreach ($questionBloc->questions as $question => $value) {
-                    //echo $value . "<br />";
                     $currentQuestion = Question::model()->findByPk(new MongoId($value));
 
                     $questionForm->label = $currentQuestion->label;
@@ -136,14 +130,12 @@ class FormulaireController extends Controller
                     $questionForm->idQuestionGroup = $computedGroup->id;
 
                     $model->saveQuestionnaireNewQuestion($questionForm);
-//                    $this->saveQuestionnaireNewQuestion($model, $questionForm);
                 }
             }
         }
         //  set du model sur la questionForm pour generer l arborescende de position de question
         $questionForm->questionnaire = $model;
         $questionGroup->questionnaire = $model;
-        //  $questionBloc->questionnaire = $model;
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,
@@ -263,7 +255,6 @@ class FormulaireController extends Controller
         Yii::log("dynamic question", CLogger::LEVEL_TRACE);
         $questionForm = new QuestionForm;
         $questionForm->attributes = $_POST['QuestionForm'];
-        //$idQuestionGroup = $_POST['QuestionForm'];
         $questionnaire = Questionnaire::model()->findByPk(new MongoID($id));
         $data = $questionnaire->getArrayQuestions($questionForm->idQuestionGroup);
         Yii::log("count questions:" . count($data), CLogger::LEVEL_TRACE);
@@ -300,23 +291,4 @@ class FormulaireController extends Controller
         return $questionnaire;
     }
 
-//    public function saveQuestionnaireNewBloc($questionnaire, $questionBloc) {
-//        $questionBloc->id = $questionnaire->id;
-//        if ($questionBloc != null) {
-//            //sinon positionnement relatif
-//            if ($questionnaire->questions_group != null) {
-//                $questionnaire->questions_group[] = $questionBloc;
-//            } else {
-//                $questionnaire->questions_group = array();
-//                $questionnaire->questions_group[] = $questionBloc;
-//            }
-//        }
-//        if ($questionnaire->save())
-//            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
-//        else {
-//            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
-//            Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
-//        }
-//        return $questionnaire;
-//    }
 }

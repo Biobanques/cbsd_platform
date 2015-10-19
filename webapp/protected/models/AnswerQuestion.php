@@ -43,18 +43,18 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
      * @var type 
      */
     //public $rows;
-    
+
     /**
-         *comment on the top of the question
-         * @var type 
-         */
-        public $precomment;
-        
-            /**
-         *comment on the top of the question
-         * @var type 
-         */
-        public $precomment_fr;
+     * comment on the top of the question
+     * @var type 
+     */
+    public $precomment;
+
+    /**
+     * comment on the top of the question
+     * @var type 
+     */
+    public $precomment_fr;
 
     /**
      *
@@ -100,7 +100,7 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
      * @param type $val
      */
     public function setAnswer($val) {
-            $this->answer = $val;
+        $this->answer = $val;
     }
 
 }

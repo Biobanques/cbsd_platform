@@ -6,8 +6,7 @@
  * and open the template in the editor.
  */
 
-class CommonTools
-{
+class CommonTools {
 
     public function wsGetPatient($patient) {
         try {
@@ -15,7 +14,6 @@ class CommonTools
             $token = $soapClient->login(CommonProperties::$SIP_LOGIN, CommonProperties::$SIP_PASSWORD);
             try {
                 return $soapClient->getFullPatientWs($token, $patient);
-                //     return $soapClient->getIdWs($token, $patient);
             } catch (Exception $ex) {
                 Yii::log($ex->getMessage(), CLogger::LEVEL_ERROR);
                 Yii::log($ex->getTraceAsString(), CLogger::LEVEL_ERROR);
@@ -32,4 +30,5 @@ class CommonTools
     }
 
 }
+
 ?>

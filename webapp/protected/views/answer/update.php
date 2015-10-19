@@ -7,7 +7,8 @@
         </tr>
         <tr>
             <td><b>Date de naissance : </b><?php echo $patient->birthDate; ?></td>
-            <?php if (Yii::app()->user->profil == "administrateur")
+            <?php
+            if (Yii::app()->user->profil == "administrateur")
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
             ?>
         </tr>
@@ -29,7 +30,7 @@
 </div>
 
 <div class="modal-body span5" >
-    <?php echo $model->renderContributors(); ?>
+<?php echo $model->renderContributors(); ?>
 </div>
 
 <div class="modal-footer">
@@ -54,7 +55,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
     ),
 ));
 ?>
-<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+    <?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(

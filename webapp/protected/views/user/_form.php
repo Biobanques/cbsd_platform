@@ -43,11 +43,11 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'profil'); ?>
-        <?php 
+        <?php
         if (Yii::app()->user->isGuest)
-            echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()', 'labelOptions'=>array('style'=>'display:inline')));
+            echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()', 'labelOptions' => array('style' => 'display:inline')));
         else
-            echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilSorted(), array('onchange' => 'js:validate_dropdown()', 'labelOptions'=>array('style'=>'display:inline')));
+            echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilSorted(), array('onchange' => 'js:validate_dropdown()', 'labelOptions' => array('style' => 'display:inline')));
         ?>
         <?php echo $form->error($model, 'profil'); ?>
     </div>
@@ -79,7 +79,7 @@
             <?php echo $form->error($model, 'centre'); ?>
         </div>
     </div>
-    
+
     <div class="row">
         <div id="statut" <?php if (Yii::app()->user->isGuest) echo "style=\"display:none;\""; ?>>
             <?php echo CHtml::activeLabel($model, 'statut', array('required' => true)); ?>
@@ -101,23 +101,29 @@
         var userProfil = document.getElementById("User_profil");
         var profil = userProfil.options[userProfil.selectedIndex].text;
         switch (profil) {
-            case "clinicien":           $('#address').show(); break;
-            case "neuropathologiste":   $('#centre').show(); break;    
-        }                                      
+            case "clinicien":
+                $('#address').show();
+                break;
+            case "neuropathologiste":
+                $('#centre').show();
+                break;
+        }
     });
     function validate_dropdown() {
         var userProfil = document.getElementById("User_profil");
         var profil = userProfil.options[userProfil.selectedIndex].text;
         switch (profil) {
-            case "clinicien":           $('#address').show();
-                                        $('#centre').hide();
-                                        break;
-            case "neuropathologiste":   $('#address').hide();
-                                        $('#centre').show();
-                                        break;
+            case "clinicien":
+                $('#address').show();
+                $('#centre').hide();
+                break;
+            case "neuropathologiste":
+                $('#address').hide();
+                $('#centre').show();
+                break;
             default:
-                                        $('#address').hide();
-                                        $('#centre').hide();
+                $('#address').hide();
+                $('#centre').hide();
         }
     }
 </script>

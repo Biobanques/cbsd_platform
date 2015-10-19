@@ -83,7 +83,7 @@ class UserController extends Controller {
                 }
                 if ($model->profil == "neuropathologiste") {
                     $model->address = "";
-                }                
+                }
                 if ($model->update()) {
                     Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
                     $this->redirect(array('view', 'id' => $model->_id));

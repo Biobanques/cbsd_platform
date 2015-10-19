@@ -1,7 +1,7 @@
 <?php
 
-class QuestionBlocController extends Controller
-{
+class QuestionBlocController extends Controller {
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -44,12 +44,6 @@ class QuestionBlocController extends Controller
         ));
     }
 
-    public function actionPreview($id) {
-        $this->render('preview', array(
-            'model' => $this->loadModel($id),
-        ));
-    }
-
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -58,9 +52,6 @@ class QuestionBlocController extends Controller
         $model = new QuestionBloc;
         $questionForm = new QuestionForm;
         $questionModel = new Question;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
 
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
@@ -95,10 +86,6 @@ class QuestionBlocController extends Controller
         $questionForm = new QuestionForm;
         $questionModel = new Question;
 
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
         }
@@ -121,7 +108,6 @@ class QuestionBlocController extends Controller
             $listIds[] = new MongoId($question_id);
         $criteria->addCond('_id', 'in', $listIds);
         $dataProvider = new EMongoDocumentDataProvider('Question', array('criteria' => $criteria));
-//        $dataProvider = new EMongoDocumentDataProvider('Question');
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,
@@ -209,7 +195,7 @@ class QuestionBlocController extends Controller
         $cquestion->setAttributesByQuestionForm($questionForm);
         $bloc->questions = $questionForm->id;
         if ($bloc->save())
-            Yii::app()->user->setFlash('success', "Bloc enregistré avec sucès");
+            Yii::app()->user->setFlash('success', "Bloc enregistré avec succès");
         else {
             Yii::app()->user->setFlash('error', "Bloc non enregistré. Un problème est apparu.");
         }

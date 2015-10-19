@@ -50,7 +50,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'profil'); ?>
-        <?php echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()', 'labelOptions'=>array('style'=>'display:inline'))); ?>
+        <?php echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()', 'labelOptions' => array('style' => 'display:inline'))); ?>
         <?php echo $form->error($model, 'profil'); ?>
     </div>
 
@@ -108,23 +108,29 @@
         var userProfil = document.getElementById("User_profil");
         var profil = userProfil.options[userProfil.selectedIndex].text;
         switch (profil) {
-            case "clinicien":           $('#address').show(); break;
-            case "neuropathologiste":   $('#centre').show(); break;    
-        }                                      
+            case "clinicien":
+                $('#address').show();
+                break;
+            case "neuropathologiste":
+                $('#centre').show();
+                break;
+        }
     });
     function validate_dropdown() {
         var userProfil = document.getElementById("User_profil");
         var profil = userProfil.options[userProfil.selectedIndex].text;
         switch (profil) {
-            case "clinicien":           $('#address').show();
-                                        $('#centre').hide();
-                                        break;
-            case "neuropathologiste":   $('#address').hide();
-                                        $('#centre').show();
-                                        break;
+            case "clinicien":
+                $('#address').show();
+                $('#centre').hide();
+                break;
+            case "neuropathologiste":
+                $('#address').hide();
+                $('#centre').show();
+                break;
             default:
-                                        $('#address').hide();
-                                        $('#centre').hide();
+                $('#address').hide();
+                $('#centre').hide();
         }
     }
 </script>

@@ -1,7 +1,7 @@
 <?php
 
-class SiteController extends Controller
-{
+class SiteController extends Controller {
+
     /**
      * NB : boostrap theme need this column2 layout
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -181,8 +181,6 @@ class SiteController extends Controller
                             $this->redirect(array('site/index'));
                         }
                     }
-                    //CommonMailer::sendSubscribeAdminMail($model);
-                    //CommonMailer::sendSubscribeUserMail($model);
                     Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
                     $this->redirect(array('site/index'));
                 } else {

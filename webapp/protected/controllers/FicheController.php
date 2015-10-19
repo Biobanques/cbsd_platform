@@ -22,7 +22,7 @@ class FicheController extends Controller {
             'postOnly + delete', // we only allow deletion via POST request
         );
     }
-    
+
     public function accessRules() {
         return array(
             array(
@@ -64,8 +64,6 @@ class FicheController extends Controller {
             'model' => $model,
         ));
     }
-
-
 
     /**
      * Mise  àjour d une fiche
@@ -112,6 +110,5 @@ class FicheController extends Controller {
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
-
 
 }

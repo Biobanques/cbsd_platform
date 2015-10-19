@@ -11,22 +11,9 @@
  *
  * @author te
  */
-class GetProfil
-{
+class GetProfil {
 
     public static function getHTML() {
-//        $html = "<form class=\"navbar-form pull-left\" action=\"#\" method=\"POST\">
-//                 <select id=\"profil\" name=\"profil\" style=\"width:150px; margin-top: -3px; margin-left: -25px;\" onchange=\"this.form.submit()\">
-//                 <option value=\"\">----</option>";
-//        $items = Yii::app()->user->getState("profil");
-//        //  $items = User::model()->getArrayProfilFiltered();
-//        foreach ($items as $item) {
-//            $selected = '';
-//            if (isset($_POST['profil']) && $_POST['profil'] == $item)
-//                $selected = "selected";
-//            $html .= "<option value=\"" . $item . "\"" . $selected . ">" . $item . "</option>";
-//        }
-//        $html .= "</select></form>";
         $profilsList = array();
 
         foreach (Yii::app()->user->getState('profil') as $profil) {

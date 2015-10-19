@@ -11,7 +11,6 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
         $this->widget('bootstrap.widgets.TbGridView', array(
             'type' => 'striped bordered condensed',
             'dataProvider' => new CArrayDataProvider(array(get_object_vars($patient))),
-//    'dataProvider' => new CArrayDataProvider(array($model->getAttributes())),
             'template' => "{items}",
             'columns' => array(
                 array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->isAdmin()),
@@ -59,170 +58,64 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 ));
 ?>
 <?php if (Yii::app()->user->getState('activeProfil') != "clinicien") { ?>
-<h5> Fiches neuropathologiques </h5>
-<?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
-    'dataProvider' => $dataProviderNeuropathologiques,
-    'template' => "{items}",
-    'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-    'columns' => array(
-        array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-        array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-        array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'buttons' => array
-                (
-                'update' => array
+    <h5> Fiches neuropathologiques </h5>
+    <?php
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProviderNeuropathologiques,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'buttons' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'neuropathologiste\')?true:false;'
+                    'update' => array
+                        (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'neuropathologiste\')?true:false;'
+                    ),
+                    'delete' => array
+                        (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'neuropathologiste\')?true:false;'
+                    )
                 ),
-                'delete' => array
-                    (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'neuropathologiste\')?true:false;'
-                )
+                'htmlOptions' => array('style' => 'width: 70px'),
             ),
-            'htmlOptions' => array('style' => 'width: 70px'),
         ),
-    ),
-));
+    ));
 }
 ?>
 <?php if (Yii::app()->user->getState('activeProfil') != "clinicien") { ?>
-<h5> Fiches génétiques </h5>
-<?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
-    'dataProvider' => $dataProviderGenetiques,
-    'template' => "{items}",
-    'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-    'columns' => array(
-        array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-        array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-        array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'buttons' => array
-                (
-                'update' => array
+    <h5> Fiches génétiques </h5>
+    <?php
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProviderGenetiques,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'buttons' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'geneticien\')?true:false;'
+                    'update' => array
+                        (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'geneticien\')?true:false;'
+                    ),
+                    'delete' => array
+                        (
+                        'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'geneticien\')?true:false;'
+                    )
                 ),
-                'delete' => array
-                    (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'geneticien\')?true:false;'
-                )
+                'htmlOptions' => array('style' => 'width: 70px'),
             ),
-            'htmlOptions' => array('style' => 'width: 70px'),
         ),
-    ),
-));
+    ));
 }
-?>
-
-
-
-
-<?php
-//if (Yii::app()->user->getActiveProfil() == "clinicien") {
-//    $this->widget('bootstrap.widgets.TbGridView', array(
-//        'type' => 'striped bordered condensed',
-//        'dataProvider' => $dataProvider,
-//        'template' => "{items}",
-//        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-//        'columns' => array(
-//            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-//            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-//            array(
-//                'class' => 'bootstrap.widgets.TbButtonColumn',
-//                'htmlOptions' => array('style' => 'width: 70px'),
-//            ),
-//        ),
-//    ));
-//}
-//
-?>
-
-<?php
-//if (Yii::app()->user->getActiveProfil() == "geneticien") {
-//    $this->widget('bootstrap.widgets.TbGridView', array(
-//        'type' => 'striped bordered condensed',
-//        'dataProvider' => $dataProvider,
-//        'template' => "{items}",
-//        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-//        'columns' => array(
-//            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-//            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-//            array(
-//                'class' => 'bootstrap.widgets.TbButtonColumn',
-//                'buttons' => array
-//                    (
-//                    'update' => array
-//                        (
-//                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
-//                    ),
-//                    'delete' => array
-//                        (
-//                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
-//                    )
-//                ),
-//                'htmlOptions' => array('style' => 'width: 70px'),
-//            ),
-//        ),
-//    ));
-//}
-//
-?>
-
-<?php
-//if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
-//    $this->widget('bootstrap.widgets.TbGridView', array(
-//        'type' => 'striped bordered condensed',
-//        'dataProvider' => $dataProvider,
-//        'template' => "{items}",
-//        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-//        'columns' => array(
-//            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-//            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-//            array(
-//                'class' => 'bootstrap.widgets.TbButtonColumn',
-//                'buttons' => array
-//                    (
-//                    'update' => array
-//                        (
-//                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
-//                    ),
-//                    'delete' => array
-//                        (
-//                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
-//                    )
-//                ),
-//                'htmlOptions' => array('style' => 'width: 70px'),
-//            ),
-//        ),
-//    ));
-//}
-//
-?>
-
-<?php
-//if (Yii::app()->user->getActiveProfil() == "chercheur") {
-//    $this->widget('bootstrap.widgets.TbGridView', array(
-//        'type' => 'striped bordered condensed',
-//        'dataProvider' => $dataProvider,
-//        'template' => "{items}",
-//        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-//        'columns' => array(
-//            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-//            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-//            array(
-//                'class' => 'bootstrap.widgets.TbButtonColumn',
-//                'template' => '{view}',
-//                'htmlOptions' => array('style' => 'width: 70px'),
-//            ),
-//        ),
-//    ));
-//}
-//
 ?>
 
 <?php

@@ -30,25 +30,25 @@
     </div>
     <div class="row">
         <?php echo $form->labelEx($model, 'description'); ?>
-        <?php echo $form->textArea($model, 'description', array('size' => 5, 'style'=>'width: 400px; height: 80px;')); ?>
+        <?php echo $form->textArea($model, 'description', array('size' => 5, 'style' => 'width: 400px; height: 80px;')); ?>
         <?php echo $form->error($model, 'description'); ?>
     </div>
     <div class="row">
         <p>Le Message de début vous permet de laisser un court texte introductif positionné en début de votre formulaire.</p>
         <?php echo $form->labelEx($model, 'message_start'); ?>
-        <?php echo $form->textArea($model, 'message_start', array('size' => 5, 'style'=>'width: 400px; height: 80px;')); ?>
+        <?php echo $form->textArea($model, 'message_start', array('size' => 5, 'style' => 'width: 400px; height: 80px;')); ?>
         <?php echo $form->error($model, 'message_start'); ?>
     </div>
     <div class="row">
         <p>Le message de fin est le message apparaissant en bas du formulaire.<br>Il peut être utile pour effectuer des remericiemennts, ajouter des notes de suivi etc.</p>
         <?php echo $form->labelEx($model, 'message_end'); ?>
-        <?php echo $form->textArea($model, 'message_end', array('size' => 5,'style'=>'width: 400px; height: 80px;')); ?>
+        <?php echo $form->textArea($model, 'message_end', array('size' => 5, 'style' => 'width: 400px; height: 80px;')); ?>
         <?php echo $form->error($model, 'message_end'); ?>
     </div>
     <div class="row">
         <p>Le champ contributeurs vous permet de stocker les informations des personnes ayant élaboré le formulaire. <br>Ces informations sont visibles dans l'interface en ligne et exportée lors de la génération du PDF.</p> 
         <?php echo $form->labelEx($model, 'contributors'); ?>
-        <?php echo $form->textArea($model, 'contributors', array('size' => 5, 'style'=>'width: 400px; height: 80px;')); ?>
+        <?php echo $form->textArea($model, 'contributors', array('size' => 5, 'style' => 'width: 400px; height: 80px;')); ?>
         <?php echo $form->error($model, 'contributors'); ?>
     </div>
     <div class="row buttons">

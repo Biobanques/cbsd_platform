@@ -22,18 +22,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
-//        array(
-//            'class' => 'CButtonColumn',
-//            'buttons' => array(
-//                'preview' => array(
-//                    'label' => 'Preview',
-//                    'url' => 'Yii::app()->controller->createUrl("preview",array("id"=>$data->primaryKey))'
-////                    'url' => "'" . $this->createUrl('preview', array('mongoId' => '$data->_id')) . "'"
-//                )
-//            ),
-//            'template' => '{preview}',
-//            'htmlOptions' => array('style' => 'width: 70px')
-//        ),
         'title',
         array(
             'class' => 'CButtonColumn',

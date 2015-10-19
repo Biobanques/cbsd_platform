@@ -7,7 +7,8 @@
         </tr>
         <tr>
             <td><b>Date de naissance : </b><?php echo $patient->birthDate; ?></td>
-            <?php if (Yii::app()->user->profil == "administrateur")
+            <?php
+            if (Yii::app()->user->profil == "administrateur")
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
             ?>
         </tr>
@@ -41,11 +42,11 @@ echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), ar
     echo $model->renderTabbedGroup(Yii::app()->language);
     ?>
 </div>
-    <div style="display:inline; margin:40%; width: 100px; ">
-        <?php
-        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:20px;'));
-        ?>
-    </div>
+<div style="display:inline; margin:40%; width: 100px; ">
+    <?php
+    echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:20px;'));
+    ?>
+</div>
 <?php
 $this->endWidget();
 ?>

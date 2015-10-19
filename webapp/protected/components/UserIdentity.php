@@ -5,9 +5,10 @@
  * It contains the authentication method that checks if the provided
  * data can identity the user.
  */
-class UserIdentity extends CUserIdentity
-{
+class UserIdentity extends CUserIdentity {
+
     const ERROR_INACTIVE = 3;
+
     private $_id;
 
     /**
