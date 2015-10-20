@@ -74,6 +74,10 @@ class WebUser extends CWebUser
         }
         $this->setState('activeProfil', $this->getState("defaultProfil"));
     }
+    
+    public function isAuthorized($profil, $fiche) {
+        
+    }
 
 }
 ?>

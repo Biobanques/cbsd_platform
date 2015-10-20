@@ -13,6 +13,7 @@
                         array('label' => 'Formulaires', 'url' => array('/formulaire/admin')),
                         array('label' => 'Fiches', 'url' => array('/fiche/admin')),
                         array('label' => 'Gestion des blocs', 'url' => array('/questionBloc/admin')),
+                        array('label' => 'Gestion des droits', 'url' => array('/administration/admin')),
                         array('label' => 'Log système', 'url' => array('/auditTrail/admin')),
                     ),
                     'htmlOptions' => array('class' => 'operations'),
