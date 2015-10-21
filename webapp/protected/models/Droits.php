@@ -42,7 +42,7 @@ class Droits extends LoggableActiveRecord {
             array('profil', 'required'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('profil, role, _id', 'safe', 'on' => 'search'),
+            array('profil, role, _id', 'safe', 'on' => 'search,update'),
         );
     }
 

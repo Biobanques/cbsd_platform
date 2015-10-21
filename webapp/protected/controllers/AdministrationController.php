@@ -77,12 +77,9 @@ class AdministrationController extends Controller {
         $model = $this->loadModel($id);
         if (isset($_POST['Droits'])) {
             $model->attributes = $_POST['Droits'];
-            if ($model->validate()) {
-                // When update user, reset fields "adresse", "centre" or both, depend on user profile
-                if ($model->update()) {
-                    Yii::app()->user->setFlash('success', 'Le profil a été enregistré avec succès.');
-                    //$this->redirect(array('view', 'id' => $model->_id));
-                }
+            if ($model->update()) {
+                Yii::app()->user->setFlash('success', 'Le profil a été enregistré avec succès.');
+                $this->redirect(array('admin'));
             }
         }
         $this->render('update', array(

@@ -28,7 +28,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 <hr />
 
 <h4> Fiches patient renseignées : </h4>
-
+<?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "clinique")) { ?>
 <h5> Fiches cliniques </h5>
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
@@ -45,19 +45,19 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 (
                 'update' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'clinicien\')?true:false;'
+                    'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                 ),
                 'delete' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'clinicien\')?true:false;'
+                    'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                 )
             ),
             'htmlOptions' => array('style' => 'width: 70px'),
         ),
     ),
 ));
-?>
-<?php if (Yii::app()->user->getState('activeProfil') != "clinicien") { ?>
+} ?>
+<?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "neuropathologique")) { ?>
     <h5> Fiches neuropathologiques </h5>
     <?php
     $this->widget('bootstrap.widgets.TbGridView', array(
@@ -74,11 +74,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                     (
                     'update' => array
                         (
-                        'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'neuropathologiste\')?true:false;'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
                     ),
                     'delete' => array
                         (
-                        'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'neuropathologiste\')?true:false;'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
                     )
                 ),
                 'htmlOptions' => array('style' => 'width: 70px'),
@@ -87,7 +87,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ));
 }
 ?>
-<?php if (Yii::app()->user->getState('activeProfil') != "clinicien") { ?>
+<?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "genetique")) { ?>
     <h5> Fiches génétiques </h5>
     <?php
     $this->widget('bootstrap.widgets.TbGridView', array(
@@ -104,11 +104,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                     (
                     'update' => array
                         (
-                        'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'geneticien\')?true:false;'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
                     ),
                     'delete' => array
                         (
-                        'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'geneticien\')?true:false;'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
                     )
                 ),
                 'htmlOptions' => array('style' => 'width: 70px'),

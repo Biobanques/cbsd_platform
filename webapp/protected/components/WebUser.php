@@ -75,8 +75,46 @@ class WebUser extends CWebUser
         $this->setState('activeProfil', $this->getState("defaultProfil"));
     }
     
-    public function isAuthorized($profil, $fiche) {
-        
+    public function isAuthorizedView($profil, $fiche) {
+        $criteria = new EMongoCriteria();
+        $criteria->profil = $profil;
+        $criteria->type = $fiche;
+        $droit = Droits::model()->find($criteria);
+        foreach($droit as $key=>$value) {
+            if ($key == "role") {
+                if ($value == "") return false;
+                if (in_array("view", $value))
+                        return true;
+            }
+        }
+    }
+    
+    public function isAuthorizedUpdate($profil, $fiche) {
+        $criteria = new EMongoCriteria();
+        $criteria->profil = $profil;
+        $criteria->type = $fiche;
+        $droit = Droits::model()->find($criteria);
+        foreach($droit as $key=>$value) {
+            if ($key == "role") {
+                if ($value == "") return false;
+                if (in_array("update", $value))
+                        return true;
+            }
+        }
+    }
+    
+     public function isAuthorizedDelete($profil, $fiche) {
+        $criteria = new EMongoCriteria();
+        $criteria->profil = $profil;
+        $criteria->type = $fiche;
+        $droit = Droits::model()->find($criteria);
+        foreach($droit as $key=>$value) {
+            if ($key == "role") {
+                if ($value == "") return false;
+                if (in_array("delete", $value))
+                        return true;
+            }
+        }
     }
 
 }
