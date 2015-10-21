@@ -5,7 +5,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('user-grid', {
+	$.fn.yiiGridView.update('formulaire-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -17,8 +17,8 @@ $('.search-form form').submit(function(){
 
 <?php echo CHtml::link('Créer un nouveau formulaire', Yii::app()->createUrl('formulaire/create')); ?>
 <?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'questionnaires-grid',
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(

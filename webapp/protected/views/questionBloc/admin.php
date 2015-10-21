@@ -5,7 +5,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('user-grid', {
+	$.fn.yiiGridView.update('bloc-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -17,15 +17,16 @@ $('.search-form form').submit(function(){
 
 <?php echo CHtml::link('Créer un nouveau bloc', Yii::app()->createUrl('questionBloc/create')); ?>
 <?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'questionnaires-grid',
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'id' => 'bloc-grid',
+    'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
         'title',
         array(
             'class' => 'CButtonColumn',
-            'template' => '{update},{delete}',
+            'template' => '{update}{delete}',
             'htmlOptions' => array('style' => 'width: 70px')
         ),
     ),

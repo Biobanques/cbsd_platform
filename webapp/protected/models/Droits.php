@@ -55,6 +55,15 @@ class Droits extends LoggableActiveRecord {
             'role' => 'Role'
         );
     }
+    
+    public function getActions() {
+        return array(
+            'view' => 'Consulter une fiche',
+            'update' => 'Mettre à jour une fiche',
+            'delete' => 'Supprimer une fiche',
+            'create' => 'Créer une fiche'
+        );
+    }
 
 }
 
