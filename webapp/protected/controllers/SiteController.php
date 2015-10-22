@@ -124,11 +124,13 @@ class SiteController extends Controller {
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login() && in_array($model->profil, Yii::app()->user->getState('profil'))) {
                 $this->redirect(Yii::app()->user->returnUrl);
-            } else {
-                Yii::app()->session->destroy();
+            } else if ($model->login() && (!in_array($model->profil, Yii::app()->user->getState('profil')))) {
+                //Yii::app()->session->destroy();
                 Yii::app()->user->setFlash('error', 'Il n\'y a pas de profil associé à cet utilisateur.');
-            }
+            } else
+                Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
         }
+
         // display the login form
         $this->render('login', array('model' => $model));
     }
@@ -163,6 +165,22 @@ class SiteController extends Controller {
                 Yii::app()->user->setFlash($result, $message);
             }
         }$this->render('recoverPwd', array('model' => $model,));
+    }
+
+    public function actionUpdateSubscribe() {
+        $model = new User ();
+        if (isset(Yii::app()->user->id)) {
+            $model = User::model()->findByPk(new MongoID(Yii::app()->user->id));
+            if (isset($_POST ['User'])) {
+                $model->attributes = $_POST ['User'];
+                if ($model->update()) {
+                    Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDForms !');
+                    $this->redirect(array('site/index'));
+                } else
+                    Yii::app()->user->setFlash('error', 'Bienvenue sur CBSDForms !');
+            }
+            $this->render('subscribe', array('model' => $model));
+        }
     }
 
     /**

@@ -2,6 +2,11 @@
 /* @var $this SiteController */
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
+$action = "";
+if (isset(Yii::app()->user->id))
+    $action = Yii::app()->createUrl('site/updateSubscribe');
+else
+    $action = Yii::app()->createUrl('site/subscribe');
 ?>
 
 <h1>Connexion utilisateur</h1>
@@ -59,4 +64,41 @@
         </div>
         <?php $this->endWidget(); ?>
     </div><!-- form -->
+        <div class="span3" style="margin-top:70px;">
+        <?php
+            $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'subscribe-form',
+                'action' => $action,
+                'enableClientValidation' => true,
+                'clientOptions' => array(
+                    'validateOnSubmit' => true,
+                ),
+            ));
+            ?>
+        <div align='center'>
+            <?php echo "Vous êtes Clinicien ?" ?><br><br>
+            <?php
+            echo CHtml::submitButton('clinicien', array('name' => 'clinicien', 'value' => 'S\'inscrire'));
+            ?>
+        </div>
+        <div align='center'>
+            <?php echo "Vous êtes Neuropathologiste ?" ?><br><br>
+            <?php
+            echo CHtml::submitButton('neuropathologiste', array('name' => 'neuropathologiste', 'value' => 'S\'inscrire'));
+            ?>
+        </div>
+        <div align='center'>
+            <?php echo "Vous êtes Généticien ?" ?><br><br>
+            <?php
+            echo CHtml::submitButton('geneticien', array('name' => 'geneticien', 'value' => 'S\'inscrire'));
+            ?>
+        </div>
+        <div align='center'>
+            <?php echo "Vous êtes Chercheur ?" ?><br><br>
+            <?php
+            echo CHtml::submitButton('chercheur', array('name' => 'chercheur', 'value' => 'S\'inscrire'));
+            ?>
+        </div>
+        <?php $this->endWidget(); ?>
+    </div>
 </div>
