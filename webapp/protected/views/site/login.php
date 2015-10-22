@@ -8,8 +8,9 @@
 <hr />
 
 <div class="row">
-    <div class="span4" style="margin-left:60px;">
-        <div class="form">
+
+    <div class="form">
+        <div class="span3" style="margin-left:60px;">
             <?php
             $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'login-form',
@@ -38,28 +39,24 @@
                 <?php echo $form->label($model, 'rememberMe'); ?>
                 <?php echo $form->checkBox($model, 'rememberMe'); ?>
                 <?php echo $form->error($model, 'rememberMe'); ?>
-            </div>               
+            </div>
+
+            <div class="row">
+                <fieldset>
+                    <?php echo $form->labelEx($model, 'profil'); ?>
+                    <?php echo $form->radioButtonList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()', 'labelOptions' => array('style' => 'display:inline'))); ?>
+                    <?php echo $form->error($model, 'profil'); ?>
+                </fieldset>
+            </div>
+
+            <?php
+            echo CHtml::link(Yii::t('common', 'forgotedPwd'), array_merge(array("site/recoverPwd"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array()));
+            ?>
 
             <div class="row buttons">
                 <?php echo CHtml::submitButton(Yii::t('common', 'seconnecter')); ?>
             </div>
-
-            <?php
-            $this->endWidget();
-            echo CHtml::link(Yii::t('common', 'forgotedPwd'), array_merge(array("site/recoverPwd"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array()));
-            ?>
-
-
-        </div><!-- form -->
-    </div>
-    <div class="span3" style="margin-top:70px;">
-        <div align='center'>
-            <?php echo Yii::t('common', 'noAccount') ?><br><br>
-            <?php
-            echo CHtml::button(Yii::t('common', 'subscribe'), array(
-                'submit' => array_merge(array("site/subscribe"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())
-            ));
-            ?>
         </div>
-    </div>
+        <?php $this->endWidget(); ?>
+    </div><!-- form -->
 </div>

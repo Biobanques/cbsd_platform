@@ -122,10 +122,12 @@ class SiteController extends Controller {
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login())
+            if ($model->validate() && $model->login() && in_array($model->profil, Yii::app()->user->getState('profil'))) {
                 $this->redirect(Yii::app()->user->returnUrl);
-            else
-                Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
+            } else {
+                Yii::app()->session->destroy();
+                Yii::app()->user->setFlash('error', 'Il n\'y a pas de profil associé à cet utilisateur.');
+            }
         }
         // display the login form
         $this->render('login', array('model' => $model));
