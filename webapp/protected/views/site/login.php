@@ -64,7 +64,7 @@ else
         </div>
         <?php $this->endWidget(); ?>
     </div><!-- form -->
-        <div class="span3" style="margin-top:70px;">
+        <div class="span5" style="margin-top:70px;">
         <?php
             $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'subscribe-form',
@@ -75,30 +75,28 @@ else
                 ),
             ));
             ?>
-        <div align='center'>
-            <?php echo "Vous êtes Clinicien ?" ?><br><br>
-            <?php
-            echo CHtml::submitButton('clinicien', array('name' => 'clinicien', 'value' => 'S\'inscrire'));
+            <a href="#" class="btn btn-sq-lg btn-default userProfil">
+                <i class="fa fa-user fa-5x"></i><br/>
+                S'inscrire en tant que <br><?php echo CHtml::submitButton('clinicien', array('name' => 'clinicien')); ?>
+            </a>
+            <a href="#" class="btn btn-sq-lg btn-default userProfil">
+                <i class="fa fa-user fa-5x"></i><br/>
+                S'inscrire en tant que <br><?php
+            echo CHtml::submitButton('neuropathologiste', array('name' => 'neuropathologiste'));
             ?>
-        </div>
-        <div align='center'>
-            <?php echo "Vous êtes Neuropathologiste ?" ?><br><br>
-            <?php
-            echo CHtml::submitButton('neuropathologiste', array('name' => 'neuropathologiste', 'value' => 'S\'inscrire'));
+            </a>
+            <a href="#" class="btn btn-sq-lg btn-default userProfil">
+                <i class="fa fa-user fa-5x"></i><br/>
+                S'inscrire en tant que <br><?php
+            echo CHtml::submitButton('geneticien', array('name' => 'geneticien'));
             ?>
-        </div>
-        <div align='center'>
-            <?php echo "Vous êtes Généticien ?" ?><br><br>
-            <?php
-            echo CHtml::submitButton('geneticien', array('name' => 'geneticien', 'value' => 'S\'inscrire'));
+            </a>
+            <a href="#" class="btn btn-sq-lg btn-default userProfil">
+                <i class="fa fa-user fa-5x"></i><br/>
+                S'inscrire en tant que <br><?php
+            echo CHtml::submitButton('chercheur', array('name' => 'chercheur'));
             ?>
-        </div>
-        <div align='center'>
-            <?php echo "Vous êtes Chercheur ?" ?><br><br>
-            <?php
-            echo CHtml::submitButton('chercheur', array('name' => 'chercheur', 'value' => 'S\'inscrire'));
-            ?>
-        </div>
+            </a>
         <?php $this->endWidget(); ?>
     </div>
 </div>
