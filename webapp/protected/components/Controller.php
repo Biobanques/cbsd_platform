@@ -32,12 +32,6 @@ class Controller extends CController
         if (isset($app->session['_lang'])) {
             $app->language = $app->session['_lang'];
         }
-
-        // register class paths for extension captcha extended
-        Yii::$classMap = array_merge(Yii::$classMap, array(
-            'CaptchaExtendedAction' => Yii::getPathOfAlias('ext.captchaExtended') . DIRECTORY_SEPARATOR . 'CaptchaExtendedAction.php',
-            'CaptchaExtendedValidator' => Yii::getPathOfAlias('ext.captchaExtended') . DIRECTORY_SEPARATOR . 'CaptchaExtendedValidator.php'
-        ));
     }
 
 }

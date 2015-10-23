@@ -5,12 +5,13 @@
  * @author nmalservet
  *
  */
-class User extends EMongoDocument
-{
+class User extends EMongoDocument {
+
     /**
      *
      */
     public $login;
+
     /**
      * embedded document with array of QuestionAnswer
      * @var type
@@ -25,7 +26,6 @@ class User extends EMongoDocument
     public $address;
     public $centre;
     public $statut;
-    public $verifyCode;
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
@@ -39,7 +39,6 @@ class User extends EMongoDocument
 
     public function rules() {
         $result = array(
-            array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false, 'on' => 'subscribe'),
             array('gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('login', 'telPresent'),
@@ -73,7 +72,6 @@ class User extends EMongoDocument
             'address' => 'Adresse',
             'centre' => 'Centre de référence',
             'statut' => 'Statut',
-            'verifyCode' => Yii::t('common', 'verifyCode'),
         );
     }
 
@@ -224,14 +222,14 @@ class User extends EMongoDocument
     }
 
     public function addressValidator() {
-        if (($this->profil == "clinicien") && ($this->address == "")) {
+        if (($this->profil == array("clinicien")) && ($this->address == "")) {
             $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
             $this->addError('address', 'Adresse ne peut pas être vide.');
         }
     }
 
     public function centreValidator() {
-        if (($this->profil == "neuropathologiste") && ($this->centre == "")) {
+        if (($this->profil == array("neuropathologiste")) && ($this->centre == "")) {
             $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
             $this->addError('centre', 'Centre ne peut pas être vide.');
         }
@@ -252,4 +250,5 @@ class User extends EMongoDocument
     }
 
 }
+
 ?>

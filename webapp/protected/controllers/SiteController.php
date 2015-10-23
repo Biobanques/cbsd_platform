@@ -24,7 +24,7 @@ class SiteController extends Controller {
                     'login',
                     'logout',
                     'error',
-                    'captcha', 'recoverPwd',
+                    'recoverPwd',
                     'subscribe',
                 ),
                 'users' => array(
@@ -47,30 +47,6 @@ class SiteController extends Controller {
                 'users' => array(
                     '*'
                 )
-            )
-        );
-    }
-
-    /**
-     * Declares class-based actions.
-     */
-    public function actions() {
-        $captcha = array(
-            'class' => 'CaptchaExtendedAction',
-            'mode' => CaptchaExtendedAction::MODE_MATH,
-        );
-        //ajout de fixed value si mode de dev
-        if (CommonTools::isInDevMode()) {
-            $captchaplus = array('fixedVerifyCode' => "bernard");
-            $captcha = array_merge($captcha, $captchaplus);
-        }
-        return array(
-            // captcha action renders the CAPTCHA image displayed on the contact page
-            'captcha' => $captcha,
-            // page action renders "static" pages stored under 'protected/views/site/pages'
-            // They can be accessed via: index.php?r=site/page&view=FileName
-            'page' => array(
-                'class' => 'CViewAction'
             )
         );
     }
@@ -122,18 +98,23 @@ class SiteController extends Controller {
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login() && in_array($model->profil, Yii::app()->user->getState('profil'))) {
+            if ($model->login() && in_array($model->profil, Yii::app()->user->getState('profil'))) {
                 Yii::app()->user->setState('activeProfil', $model->profil);
                 $this->redirect(Yii::app()->user->returnUrl);
             } else if ($model->login() && (!in_array($model->profil, Yii::app()->user->getState('profil')))) {
-                //Yii::app()->session->destroy();
                 Yii::app()->user->setFlash('error', 'Il n\'y a pas de profil associé à cet utilisateur.');
             } else
                 Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
         }
 
+        $action = "";
+        if (isset(Yii::app()->user->id))
+            $action = Yii::app()->createUrl('site/updateSubscribe');
+        else
+            $action = Yii::app()->createUrl('site/subscribe');
+
         // display the login form
-        $this->render('login', array('model' => $model));
+        $this->render('login', array('model' => $model, 'action' => $action));
     }
 
     /**
@@ -180,7 +161,15 @@ class SiteController extends Controller {
                 } else
                     Yii::app()->user->setFlash('error', 'Bienvenue sur CBSDForms !');
             }
-            $this->render('subscribe', array('model' => $model));
+            if (isset($_POST['clinicien']))
+                $_SESSION['profil'] = $profil = "clinicien";
+            if (isset($_POST['neuropathologiste']))
+                $_SESSION['profil'] = $profil = "neuropathologiste";
+            if (isset($_POST['geneticien']))
+                $_SESSION['profil'] = $profil = "geneticien";
+            if (isset($_POST['chercheur']))
+                $_SESSION['profil'] = $profil = "chercheur";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
         }
     }
 
@@ -188,30 +177,35 @@ class SiteController extends Controller {
      * action to subscribe a new user account.
      */
     public function actionSubscribe() {
+        if (isset($_POST['clinicien']))
+            $_SESSION['profil'] = $profil = "clinicien";
+        if (isset($_POST['neuropathologiste']))
+            $_SESSION['profil'] = $profil = "neuropathologiste";
+        if (isset($_POST['geneticien']))
+            $_SESSION['profil'] = $profil = "geneticien";
+        if (isset($_POST['chercheur']))
+            $_SESSION['profil'] = $profil = "chercheur";
         $model = new User ();
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            $model->statut = "actif";
-            if ($model->validate())
-                if ($model->save()) {
-                    if ($model->profil == "clinicien") {
-                        $model->statut = "actif";
-                        $model->update();
-                        if ($model->update()) {
-                            Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDForms !');
-                            $this->redirect(array('site/index'));
-                        }
+            $model->statut = "inactif";
+            if ($model->save()) {
+                if ($model->profil == array("clinicien")) {
+                    $model->statut = "actif";
+                    $model->update();
+                    if ($model->update()) {
+                        Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDForms !');
+                        $this->redirect(array('site/index'));
                     }
-                    Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                    $this->redirect(array('site/index'));
-                } else {
-                    Yii::app()->user->setFlash('error', Yii::t('common', 'error_register'));
                 }
+                Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                $this->redirect(array('site/index'));
+            } else {
+                Yii::app()->user->setFlash('error', Yii::t('common', 'error_register'));
+                $profil = $_SESSION['profil'];
+            }
         }
-        $this->render('subscribe', array(
-            'model' => $model
-                )
-        );
+        $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
     }
 
 }

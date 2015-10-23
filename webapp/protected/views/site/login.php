@@ -2,11 +2,6 @@
 /* @var $this SiteController */
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
-$action = "";
-if (isset(Yii::app()->user->id))
-    $action = Yii::app()->createUrl('site/updateSubscribe');
-else
-    $action = Yii::app()->createUrl('site/subscribe');
 ?>
 
 <h1>Connexion utilisateur</h1>
@@ -49,7 +44,7 @@ else
             <div class="row">
                 <fieldset>
                     <?php echo $form->labelEx($model, 'profil'); ?>
-                    <?php echo $form->radioButtonList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()', 'labelOptions' => array('style' => 'display:inline'))); ?>
+                    <?php echo $form->radioButtonList($model, 'profil', User::model()->getArrayProfilFiltered(), array('labelOptions' => array('style' => 'display:inline'))); ?>
                     <?php echo $form->error($model, 'profil'); ?>
                 </fieldset>
             </div>
@@ -64,39 +59,37 @@ else
         </div>
         <?php $this->endWidget(); ?>
     </div><!-- form -->
-        <div class="span5" style="margin-top:70px;">
+    <div class="span5" style="margin-top:70px;">
         <?php
-            $form = $this->beginWidget('CActiveForm', array(
-                'id' => 'subscribe-form',
-                'action' => $action,
-                'enableClientValidation' => true,
-                'clientOptions' => array(
-                    'validateOnSubmit' => true,
-                ),
-            ));
-            ?>
-            <a href="#" class="btn btn-sq-lg btn-default userProfil">
-                <i class="fa fa-user fa-5x"></i><br/>
-                S'inscrire en tant que <br><?php echo CHtml::submitButton('clinicien', array('name' => 'clinicien')); ?>
-            </a>
-            <a href="#" class="btn btn-sq-lg btn-default userProfil">
-                <i class="fa fa-user fa-5x"></i><br/>
-                S'inscrire en tant que <br><?php
-            echo CHtml::submitButton('neuropathologiste', array('name' => 'neuropathologiste'));
-            ?>
-            </a>
-            <a href="#" class="btn btn-sq-lg btn-default userProfil">
-                <i class="fa fa-user fa-5x"></i><br/>
-                S'inscrire en tant que <br><?php
-            echo CHtml::submitButton('geneticien', array('name' => 'geneticien'));
-            ?>
-            </a>
-            <a href="#" class="btn btn-sq-lg btn-default userProfil">
-                <i class="fa fa-user fa-5x"></i><br/>
-                S'inscrire en tant que <br><?php
-            echo CHtml::submitButton('chercheur', array('name' => 'chercheur'));
-            ?>
-            </a>
+        $this->beginWidget('CActiveForm', array(
+            'id' => 'subscribe-form',
+            'action' => $action,
+            'enableClientValidation' => true,
+            'clientOptions' => array(
+                'validateOnSubmit' => true,
+            ),
+        ));
+        ?>
+        <a href="#" class="btn btn-sq-lg btn-default userProfil">
+            <i class="fa fa-user fa-5x"></i><br/>
+            S'inscrire en tant que <br>
+            <?php echo CHtml::submitButton('clinicien', array('name' => 'clinicien')); ?>
+        </a>
+        <a href="#" class="btn btn-sq-lg btn-default userProfil">
+            <i class="fa fa-user fa-5x"></i><br/>
+            S'inscrire en tant que <br>
+            <?php echo CHtml::submitButton('neuropathologiste', array('name' => 'neuropathologiste')); ?>
+        </a>
+        <a href="#" class="btn btn-sq-lg btn-default userProfil">
+            <i class="fa fa-user fa-5x"></i><br/>
+            S'inscrire en tant que <br>
+            <?php echo CHtml::submitButton('geneticien', array('name' => 'geneticien')); ?>
+        </a>
+        <a href="#" class="btn btn-sq-lg btn-default userProfil">
+            <i class="fa fa-user fa-5x"></i><br/>
+            S'inscrire en tant que <br>
+            <?php echo CHtml::submitButton('chercheur', array('name' => 'chercheur')); ?>
+        </a>
         <?php $this->endWidget(); ?>
     </div>
 </div>
