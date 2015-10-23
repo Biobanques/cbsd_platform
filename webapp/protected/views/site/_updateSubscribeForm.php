@@ -51,7 +51,8 @@
     <div class="row">
         <?php echo $form->labelEx($model, 'profil'); ?>
         <?php
-        echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()', 'labelOptions' => array('style' => 'display:inline')));
+        $preSelectedCategories = array(1=>true,2=>true);
+        echo $form->checkBoxList($model,'profil',  Yii::app()->user->setNewProfil($profil), array('labelOptions' => array('style' => 'display:inline'), 'checked' => 'checked'));
         ?>
 <?php echo $form->error($model, 'profil'); ?>
     </div>

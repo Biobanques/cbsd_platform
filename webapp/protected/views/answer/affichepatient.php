@@ -45,11 +45,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 (
                 'update' => array
                     (
-                    'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
+                    'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                 ),
                 'delete' => array
                     (
-                    'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
+                    'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                 )
             ),
             'htmlOptions' => array('style' => 'width: 70px'),
@@ -74,11 +74,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                     (
                     'update' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
                     ),
                     'delete' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
                     )
                 ),
                 'htmlOptions' => array('style' => 'width: 70px'),
@@ -104,11 +104,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                     (
                     'update' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
                     ),
                     'delete' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
                     )
                 ),
                 'htmlOptions' => array('style' => 'width: 70px'),

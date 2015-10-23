@@ -123,6 +123,7 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login() && in_array($model->profil, Yii::app()->user->getState('profil'))) {
+                Yii::app()->user->setState('activeProfil', $model->profil);
                 $this->redirect(Yii::app()->user->returnUrl);
             } else if ($model->login() && (!in_array($model->profil, Yii::app()->user->getState('profil')))) {
                 //Yii::app()->session->destroy();
@@ -174,8 +175,8 @@ class SiteController extends Controller {
             if (isset($_POST ['User'])) {
                 $model->attributes = $_POST ['User'];
                 if ($model->update()) {
-                    Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDForms !');
-                    $this->redirect(array('site/index'));
+                    Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté.');
+                    $this->redirect(array('site/patient'));
                 } else
                     Yii::app()->user->setFlash('error', 'Bienvenue sur CBSDForms !');
             }

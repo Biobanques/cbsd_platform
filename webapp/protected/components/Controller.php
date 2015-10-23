@@ -32,9 +32,6 @@ class Controller extends CController
         if (isset($app->session['_lang'])) {
             $app->language = $app->session['_lang'];
         }
-        if (isset($_POST['activeProfil'])) {
-            $app->user->setState('activeProfil', $_POST['activeProfil']);
-        }
 
         // register class paths for extension captcha extended
         Yii::$classMap = array_merge(Yii::$classMap, array(

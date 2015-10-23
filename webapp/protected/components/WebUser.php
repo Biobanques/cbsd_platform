@@ -6,8 +6,7 @@
  * @author nicolas
  *
  */
-class WebUser extends CWebUser
-{
+class WebUser extends CWebUser {
 
     /**
      * set the admin value
@@ -75,44 +74,72 @@ class WebUser extends CWebUser
         $this->setState('activeProfil', $this->getState("defaultProfil"));
     }
     
+    /**
+     * ajouter un nouveau profil lors de l'inscription de l'utilisateur connecté 
+     * @return array
+     */
+    public function setNewProfil($newProfil) {
+        $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
+        $userProfil = array();
+        array_push($user->profil, $newProfil);
+        foreach ($user->profil as $key => $profil)
+            $userProfil[$profil] = $profil;
+        return $userProfil;
+    }
+
+    /**
+     * affiche l'item "view" qui dépend du profil de l'utilisateur et de ses droits  
+     * @return boolean
+     */
     public function isAuthorizedView($profil, $fiche) {
         $criteria = new EMongoCriteria();
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        foreach($droit as $key=>$value) {
+        foreach ($droit as $key => $value) {
             if ($key == "role") {
-                if ($value == "") return false;
+                if ($value == "")
+                    return false;
                 if (in_array("view", $value))
-                        return true;
+                    return true;
             }
         }
     }
     
+    /**
+     * affiche l'item "update" qui dépend du profil de l'utilisateur et de ses droits  
+     * @return boolean
+     */
     public function isAuthorizedUpdate($profil, $fiche) {
         $criteria = new EMongoCriteria();
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        foreach($droit as $key=>$value) {
+        foreach ($droit as $key => $value) {
             if ($key == "role") {
-                if ($value == "") return false;
+                if ($value == "")
+                    return false;
                 if (in_array("update", $value))
-                        return true;
+                    return true;
             }
         }
     }
     
-     public function isAuthorizedDelete($profil, $fiche) {
+    /**
+     * affiche l'item "delete" qui dépend du profil de l'utilisateur et de ses droits  
+     * @return boolean
+     */
+    public function isAuthorizedDelete($profil, $fiche) {
         $criteria = new EMongoCriteria();
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        foreach($droit as $key=>$value) {
+        foreach ($droit as $key => $value) {
             if ($key == "role") {
-                if ($value == "") return false;
+                if ($value == "")
+                    return false;
                 if (in_array("delete", $value))
-                        return true;
+                    return true;
             }
         }
     }
