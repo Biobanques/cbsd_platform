@@ -36,7 +36,8 @@ class SiteController extends Controller {
                 'actions' => array(
                     'patient',
                     'affichepatient',
-                    'setActiveProfil'
+                    'setActiveProfil',
+                    'updateSubscribe'
                 ),
                 'users' => array(
                     '@'
@@ -74,6 +75,9 @@ class SiteController extends Controller {
         }
     }
 
+    /**
+     * Displays the search patient page
+     */
     public function actionPatient() {
         $model = new PatientForm;
         if (isset($_POST['PatientForm'])) {
@@ -149,6 +153,9 @@ class SiteController extends Controller {
         }$this->render('recoverPwd', array('model' => $model,));
     }
 
+    /**
+     * action to add a new profil to an user.
+     */
     public function actionUpdateSubscribe() {
         $model = new User ();
         if (isset(Yii::app()->user->id)) {
@@ -157,9 +164,8 @@ class SiteController extends Controller {
                 $model->attributes = $_POST ['User'];
                 if ($model->update()) {
                     Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté.');
-                    $this->redirect(array('site/patient'));
-                } else
-                    Yii::app()->user->setFlash('error', 'Bienvenue sur CBSDForms !');
+                    $this->redirect(array('site/index'));
+                }
             }
             if (isset($_POST['clinicien']))
                 $_SESSION['profil'] = $profil = "clinicien";
@@ -201,7 +207,7 @@ class SiteController extends Controller {
                 Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
                 $this->redirect(array('site/index'));
             } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'error_register'));
+                Yii::app()->user->setFlash('error', 'L\'utilisateur n\'a pas été enregistré.');
                 $profil = $_SESSION['profil'];
             }
         }
