@@ -45,11 +45,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 (
                 'update' => array
                     (
-                    'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
+                    'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                 ),
                 'delete' => array
                     (
-                    'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
+                    'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                 )
             ),
             'htmlOptions' => array('style' => 'width: 70px'),
@@ -74,11 +74,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                     (
                     'update' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
                     ),
                     'delete' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
                     )
                 ),
                 'htmlOptions' => array('style' => 'width: 70px'),
@@ -104,11 +104,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                     (
                     'update' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
                     ),
                     'delete' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() || Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
                     )
                 ),
                 'htmlOptions' => array('style' => 'width: 70px'),
@@ -131,24 +131,11 @@ if (Yii::app()->user->getState('activeProfil') != "chercheur" && Yii::app()->use
             <p>Saisir une nouvelle fiche : </p>
         </div>
         <div class="span3" style="margin:-5px;">
-            <select name="form">
-                <option selected="selected" disabled="disabled">--- Sélectionner une fiche ---</option>
-                <?php
-                foreach ($questionnaire as $fiche => $value) {
-                    foreach ($value as $k => $v) {
-                        if ($k == 'id') {
-                            if (Yii::app()->user->getActiveProfil() == "clinicien" && $value['type'] == 'clinique')
-                                echo "<option value=\"" . $value['id'] . "\">" . $value['name'] . "</option>";
-                            else if (Yii::app()->user->getActiveProfil() == "geneticien" && $value['type'] == 'genetique')
-                                echo "<option value=\"" . $value['id'] . "\">" . $value['name'] . "</option>";
-                            else if (Yii::app()->user->getActiveProfil() == "neuropathologiste" && $value['type'] == 'neuropathologique')
-                                echo "<option value=\"" . $value['id'] . "\">" . $value['name'] . "</option>";
-                        }
-                    }
-                }
-                ?>
-            </select>
+            <?php 
+            echo CHtml::dropDownList('form', 'Demence', Questionnaire::model()->getFiche(Yii::app()->user->getActiveProfil()), array('prompt' => '--- Choisir une fiche ---'));
+        ?>
         </div>
+        
         <div class="span3" style="margin:-5px;">
             <?php echo CHtml::submitButton('Saisir'); ?>
         </div>
