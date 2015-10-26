@@ -72,23 +72,10 @@ class UserController extends Controller {
         $model = $this->loadModel($id);
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
-            if ($model->validate()) {
-                // When update user, reset fields "adresse", "centre" or both, depend on user profile
-                if ($model->profil !== "clinicien" && $model->profil !== "neuropathologiste") {
-                    $model->address = "";
-                    $model->centre = "";
-                }
-                if ($model->profil == "clinicien") {
-                    $model->centre = "";
-                }
-                if ($model->profil == "neuropathologiste") {
-                    $model->address = "";
-                }
                 if ($model->update()) {
                     Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
                     $this->redirect(array('view', 'id' => $model->_id));
                 }
-            }
         }
         $this->render('update', array(
             'model' => $model,

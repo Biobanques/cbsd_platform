@@ -103,35 +103,3 @@
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        var userProfil = document.getElementById("User_profil");
-        var profil = userProfil.options[userProfil.selectedIndex].text;
-        switch (profil) {
-            case "clinicien":
-                $('#address').show();
-                break;
-            case "neuropathologiste":
-                $('#centre').show();
-                break;
-        }
-    });
-    function validate_dropdown() {
-        var userProfil = document.getElementById("User_profil");
-        var profil = userProfil.options[userProfil.selectedIndex].text;
-        switch (profil) {
-            case "clinicien":
-                $('#address').show();
-                $('#centre').hide();
-                break;
-            case "neuropathologiste":
-                $('#address').hide();
-                $('#centre').show();
-                break;
-            default:
-                $('#address').hide();
-                $('#centre').hide();
-        }
-    }
-</script>

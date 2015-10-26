@@ -20,7 +20,6 @@ $('.search-form form').submit(function(){
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
-    'filter' => $model,
     'columns' => array(
         'name',
         array(
