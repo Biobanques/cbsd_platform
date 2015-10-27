@@ -44,7 +44,7 @@
             <div class="row">
                 <fieldset>
                     <?php echo $form->labelEx($model, 'profil'); ?>
-                    <?php echo $form->radioButtonList($model, 'profil', User::model()->getArrayProfilFiltered(), array('labelOptions' => array('style' => 'display:inline'))); ?>
+                    <?php echo $form->radioButtonList($model, 'profil', User::model()->getArrayProfilSorted(), array('labelOptions' => array('style' => 'display:inline'))); ?>
                     <?php echo $form->error($model, 'profil'); ?>
                 </fieldset>
             </div>
