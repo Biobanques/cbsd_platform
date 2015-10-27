@@ -63,30 +63,6 @@
         <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250)); ?>
         <?php echo $form->error($model, 'gsm'); ?>
     </div>
-    
-    <?php if(in_array('clinicien', $model->profil)) { ?>
-
-    <div class="row">
-        <div id="address">
-            <?php echo CHtml::activeLabel($model, 'address', array('required' => true)); ?>
-            <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
-            <?php echo $form->error($model, 'address'); ?>
-        </div>
-    </div>
-    
-    <?php } ?>
-
-    <?php if(in_array('neuropathologiste', $model->profil)) { ?>
-    
-    <div class="row">
-        <div id="centre">
-            <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
-            <?php echo $form->dropDownList($model, 'centre', User::model()->getArrayCentre(), array('prompt' => '----')); ?>
-            <?php echo $form->error($model, 'centre'); ?>
-        </div>
-    </div>
-    
-    <?php } ?>
 
     <div class="row">
         <div id="statut" <?php if (Yii::app()->user->isGuest) echo "style=\"display:none;\""; ?>>
