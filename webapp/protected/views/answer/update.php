@@ -17,8 +17,8 @@
 
 <hr />
 
-<h3 align="center">Formulaire <?php echo $model->id; ?> v3.5</h3>
-<p>Description: Formulaire <?php echo $model->id; ?> avec items 2015</p>
+<h3 align="center">Formulaire <?php echo $model->name; ?></h3>
+<p>Description: <?php echo $model->description; ?></p>
 <hr />
 
 <br><bR>

@@ -78,6 +78,7 @@ class QuestionForm extends CFormModel
     public function getArrayTypes() {
         $res = array();
         $res ['input'] = "texte simple";
+        $res ['date'] = "date";
         $res ['radio'] = "radio bouton";
         $res ['list'] = "liste déroulante";
         $res ['checkbox'] = "case à cocher";

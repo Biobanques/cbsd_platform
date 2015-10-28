@@ -1,5 +1,4 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -153,11 +152,20 @@ class QuestionnaireHTMLRenderer {
         //affichage de l input selon son type
         $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
         $valueInput = "";
+        if (Yii::app()->controller->id != "formulaire") {
+            if ($question->id == "examdate")
+                $valueInput = date("d/m/Y");
+            if ($question->id == "doctorname")
+                $valueInput = Yii::app()->user->name;
+        }
         if ($isAnswered) {
             $valueInput = $question->answer;
         }
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+        }
+        if ($question->type == "date") {
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/yyyy\"/>";
         }
         if ($question->type == "radio") {
 
@@ -345,6 +353,9 @@ class QuestionnaireHTMLRenderer {
         $valueInput = "";
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
+        }
+        if ($question->type == "date") {
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/yyyy\"/>";
         }
         if ($question->type == "radio") {
 
