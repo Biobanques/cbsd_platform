@@ -67,8 +67,11 @@ class QuestionForm extends CFormModel
      */
     public function attributeLabels() {
         return array(
+            'label' => 'Etiquette',
             'idQuestionBefore' => 'Position de la question précédente',
-            'idQuestionGroup' => 'Onglet de questions'
+            'idQuestionGroup' => 'Onglet de questions',
+            'style' => 'Alignement de la question',
+            'values' => 'Valeurs'
         );
     }
 

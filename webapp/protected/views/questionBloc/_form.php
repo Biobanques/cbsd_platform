@@ -5,7 +5,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note"><?php echo Yii::t('common', 'ChampsObligatoires'); ?></p>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -14,15 +14,9 @@
 		<?php echo $form->textField($model,'title'); ?>
 		<?php echo $form->error($model,'title'); ?>
 	</div>
-        
-	<div class="row">
-		<?php echo $form->labelEx($model,'questions'); ?>
-		<?php echo $form->textField($model,'questions'); ?>
-		<?php echo $form->error($model,'questions'); ?>
-	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton('Enregistrer'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

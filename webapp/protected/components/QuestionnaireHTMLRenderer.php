@@ -1,4 +1,5 @@
 <?php
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -286,16 +287,19 @@ class QuestionnaireHTMLRenderer {
         if ($lang == "both") {
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
-          $imghtml=CHtml::image('images/cross.png');
-         $lienSupprimer="<div style=\"float:right;margin-left:5px;\">".CHtml::link($imghtml." Supprimer l'onglet de questions", Yii::app()->createUrl('formulaire/deleteQuestionGroup',array('idFormulaire'=>$questionnaire->_id,'idQuestionGroup'=>$group->id)))."</div>";
-      
-        $result.="<div class=\"question_group\">" . $title . $lienSupprimer."</div>";
+        if (Yii::app()->controller->id != "questionBloc") {
+            $imghtml = CHtml::image('images/cross.png');
+            $lienSupprimer = "<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml . " Supprimer l'onglet de questions", Yii::app()->createUrl('formulaire/deleteQuestionGroup', array('idFormulaire' => $questionnaire->_id, 'idQuestionGroup' => $group->id))) . "</div>";
 
+            $result.="<div class=\"question_group\">" . $title . $lienSupprimer . "</div>";
+        } else {
+            $result.="<div class=\"question_group\">" . $title . "</div>";
+        }
         $quests = $group->questions;
 
         if (isset($quests)) {
             foreach ($quests as $question) {
-                $result.=QuestionnaireHTMLRenderer::renderQuestionHTMLEditMode($questionnaire->_id,$group->id, $question, $lang);
+                $result.=QuestionnaireHTMLRenderer::renderQuestionHTMLEditMode($questionnaire->_id, $group->id, $question, $lang);
             }
         }
         //add question groups that have parents for this group
@@ -314,7 +318,7 @@ class QuestionnaireHTMLRenderer {
      * render html the current question.
      */
 
-    public function renderQuestionHTMLEditMode($idMongoQuestionnaire,$idquestiongroup, $question, $lang) {
+    public function renderQuestionHTMLEditMode($idMongoQuestionnaire, $idquestiongroup, $question, $lang) {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "") {
@@ -399,12 +403,13 @@ class QuestionnaireHTMLRenderer {
             $result.="</select>";
         }
         //close question input
-          //add link delete
-        $imghtml=CHtml::image('images/cross.png');
-         $result.="<div style=\"float:right;margin-left:5px;\">".CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion',array('idFormulaire'=>$idMongoQuestionnaire,'idQuestion'=>$question->id)))."</div>";
-       
+        //add link delete
+        if (Yii::app()->controller->id != "questionBloc") {
+            $imghtml = CHtml::image('images/cross.png');
+            $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion', array('idFormulaire' => $idMongoQuestionnaire, 'idQuestion' => $question->id))) . "</div>";
+        }
         $result.="</div>";
-      
+
         //close row input
         $result.="</div>";
         return $result;

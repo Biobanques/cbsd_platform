@@ -36,20 +36,6 @@
     </div>
     <div>
         <div class="col-lg-6">
-            <?php echo $form->labelEx($model, 'idQuestionGroup'); ?>
-            <?php
-            echo $form->dropDownList($model, 'idQuestionGroup', $model->getArrayGroups(), array('ajax' => array('type' => 'POST', 'url' => CController::createUrl('formulaire/dynamicquestions&id=' . $model->questionnaire->_id), 'update' => '#' . CHtml::activeId($model, 'idQuestionBefore'))));
-            ?>
-            <?php echo $form->error($model, 'idQuestionGroup'); ?>
-        </div>
-        <div class="col-lg-6">
-            <?php echo $form->labelEx($model, 'idQuestionBefore'); ?>
-            <?php echo $form->dropDownList($model, 'idQuestionBefore', array()); ?>
-            <?php echo $form->error($model, 'idQuestionBefore'); ?>
-        </div>
-    </div>
-    <div>
-        <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'style'); ?>
             <?php echo $form->textField($model, 'style', array('size' => 5, 'maxlength' => 45)); ?>
             <?php echo $form->error($model, 'style'); ?>

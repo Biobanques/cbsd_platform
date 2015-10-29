@@ -7,7 +7,7 @@ class QuestionBloc extends LoggableActiveRecord
 {
     public $title;
     public $questions;
-    //  public $parent_group;
+      public $parent_group;
     //   public $id;
     public $title_fr;
 
@@ -46,7 +46,7 @@ class QuestionBloc extends LoggableActiveRecord
      */
     public function attributeLabels() {
         return array(
-            'title' => 'Titre',
+            'title' => 'Titre du bloc',
             'questions' => 'Questions',
             'parent_group' => 'Groupe parent'
         );

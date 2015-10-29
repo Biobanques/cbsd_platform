@@ -50,29 +50,19 @@ class QuestionBlocController extends Controller {
      */
     public function actionCreate() {
         $model = new QuestionBloc;
-        $questionForm = new QuestionForm;
-        $questionModel = new Question;
 
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
-        }
-
-        if (isset($_POST['QuestionForm'])) {
-            $questionModel->attributes = $_POST['QuestionForm'];
-            if ($questionModel->save()) {
-                $idQuestion = (string) $questionModel->_id;
-                $model->questions[] = $idQuestion;
-            }
-
+            $model->title_fr = $model->title;
             if ($model->save())
-                $this->redirect($this->createUrl('update', array('id' => $model->_id)));
+            //$this->redirect($this->createUrl('update', array('id' => $model->_id)));
+                $this->redirect($this->createUrl('admin'));
             else
                 Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
         }
 
         $this->render('create', array(
-            'model' => $model,
-            'questionForm' => $questionForm,
+            'model' => $model
         ));
     }
 
@@ -85,6 +75,8 @@ class QuestionBlocController extends Controller {
         $model = $this->loadModel($id);
         $questionForm = new QuestionForm;
         $questionModel = new Question;
+        $questionnaire = new Questionnaire;
+        $questionGroup = new QuestionGroup;   
 
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
@@ -102,16 +94,24 @@ class QuestionBlocController extends Controller {
             else
                 Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
         }
-        $criteria = new EMongoCriteria;
-        $listIds = array();
-        foreach ($model->questions as $question_id)
-            $listIds[] = new MongoId($question_id);
-        $criteria->addCond('_id', 'in', $listIds);
-        $dataProvider = new EMongoDocumentDataProvider('Question', array('criteria' => $criteria));
+
+        $questionGroup->id = $model->title;
+        $questionGroup->title = $model->title;
+        $questionGroup->title_fr = $questionGroup->title;
+        $questionGroup->questions = array();
+        if (isset($model->questions) && ($model->questions != null) && (count($model->questions) > 0)) {
+            foreach ($model->questions as $question => $value) {
+                $currentQuestion = Question::model()->findByPk(new MongoId($value));
+                $currentQuestion->label_fr = $currentQuestion->label;
+                $questionGroup->questions[] = $currentQuestion;
+            }
+        }
+        $this->saveQuestionnaireNewGroup($questionnaire,$questionGroup);
+
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,
-            'dataProvider' => $dataProvider
+            'questionnaire' => $questionnaire
         ));
     }
 
@@ -200,6 +200,21 @@ class QuestionBlocController extends Controller {
             Yii::app()->user->setFlash('error', "Bloc non enregistré. Un problème est apparu.");
         }
         return $bloc;
+    }
+
+    public function saveQuestionnaireNewGroup($questionnaire, $questionGroup) {
+        $questionnaire->last_modified = new MongoDate();
+        if ($questionGroup != null) {
+
+            //sinon positionnement relatif
+            if ($questionnaire->questions_group != null) {
+                $questionnaire->questions_group[] = $questionGroup;
+            } else {
+                $questionnaire->questions_group = array();
+                $questionnaire->questions_group[] = $questionGroup;
+            }
+        }
+        return $questionnaire;
     }
 
 }
