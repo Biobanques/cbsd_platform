@@ -188,6 +188,16 @@ class AnswerController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
+    public function actionViewOnePage($id) {
+        $this->render('view_onepage', array(
+            'model' => $this->loadModel($id),
+        ));
+    }
+
+    /**
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
     public function actionExportPDF($id) {
         AnswerPDFRenderer::renderAnswer($this->loadModel($id));
     }    

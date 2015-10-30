@@ -23,7 +23,7 @@
 <hr />
 
 <?php
-echo CHtml::link('Vue une page HTML', array('questionnaire/viewOnePage', 'id' => $model->_id));
+echo CHtml::link('Vue une page HTML', array('answer/viewOnePage', 'id' => $model->_id));
 ?>
 <?php
 $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');

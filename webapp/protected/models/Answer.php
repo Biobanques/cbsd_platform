@@ -122,10 +122,10 @@ class Answer extends EMongoDocument {
     /**
      * render in html the questionnaire
      */
-    public function renderHTML() {
+    public function renderHTML($lang) {
         $result = "";
         foreach ($this->answers_group as $answer_group) {
-            $result.=$this->renderAnswerGroupHTML($answer_group);
+            $result.=AnswerHTMLRenderer::renderAnswerGroupHTML($this, $answer_group, $lang, false);
             $result.= "<br><div style=\”clear:both;\"></div>";
         }
         return $result;
