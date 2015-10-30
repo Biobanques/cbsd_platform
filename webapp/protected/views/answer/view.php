@@ -24,11 +24,10 @@
 
 <?php
 echo CHtml::link('Vue une page HTML', array('questionnaire/viewOnePage', 'id' => $model->_id));
-;
 ?>
 <?php
 $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
-echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), array());
+echo CHtml::link($img, array('answer/exportPDF', 'id' => $model->_id), array());
 ?>
 
 <br /><br />
