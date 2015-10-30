@@ -404,7 +404,10 @@ class QuestionnaireHTMLRenderer {
         }
         //close question input
         //add link delete
-        if (Yii::app()->controller->id != "questionBloc") {
+        if (Yii::app()->controller->id == "questionBloc") {
+           $imghtml = CHtml::image('images/cross.png');
+            $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('questionBloc/deleteQuestion', array('id' => $_GET['id'], 'idQuestion' => $question->_id))) . "</div>"; 
+        } else {
             $imghtml = CHtml::image('images/cross.png');
             $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion', array('idFormulaire' => $idMongoQuestionnaire, 'idQuestion' => $question->id))) . "</div>";
         }

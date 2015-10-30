@@ -10,7 +10,6 @@
     <br>
     <div>
         <?php
-        //var_dump($questionnaire);
         echo $questionnaire->renderTabbedGroupEditMode(Yii::app()->language);
         ?>
     </div>

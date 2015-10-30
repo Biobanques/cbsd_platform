@@ -1,12 +1,8 @@
 <h3 align="center">Bloc <?php echo $model->title; ?></h3>
+<hr />
 
-<?php
-$this->widget('zii.widgets.CDetailView', array(
-    'data' => $model,
-    'attributes' => array(
-        'title',
-        'questions',
-        '_id'
-    ),
-));
-?>
+<div>
+    <?php
+    echo $model->renderTabbedGroup(Yii::app()->language);
+    ?>
+</div>

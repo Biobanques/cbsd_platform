@@ -76,7 +76,7 @@ class QuestionBlocController extends Controller {
         $questionForm = new QuestionForm;
         $questionModel = new Question;
         $questionnaire = new Questionnaire;
-        $questionGroup = new QuestionGroup;   
+        $questionGroup = new QuestionGroup;
 
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
@@ -106,7 +106,7 @@ class QuestionBlocController extends Controller {
                 $questionGroup->questions[] = $currentQuestion;
             }
         }
-        $this->saveQuestionnaireNewGroup($questionnaire,$questionGroup);
+        $this->saveQuestionnaireNewGroup($questionnaire, $questionGroup);
 
         $this->render('update', array(
             'model' => $model,
@@ -115,14 +115,24 @@ class QuestionBlocController extends Controller {
         ));
     }
 
-    public function actionDeleteQuestion($id, $blocId) {
-        $model = $this->loadModel($blocId);
-        $model->questions = array_diff($model->questions, array($id));
-        if ($model->save())
-            Yii::app()->user->setFlash('success', "La question a bien été supprimée");
-        else
-            Yii::app()->user->setFlash('error', "La question n'a pas pu être supprimée.");
-        $this->redirect($this->createUrl('update', array('id' => $model->_id)));
+    public function actionDeleteQuestion($id, $idQuestion) {
+
+        $model = new QuestionBloc;
+        $criteria = new EMongoCriteria;
+        $criteria->questions = $idQuestion;
+        $questionId = QuestionBloc::model()->find($criteria);
+        if (in_array($idQuestion, $questionId->questions)) {
+            unset($questionId->questions[array_search($idQuestion, $questionId->questions)]);
+            $questionId->save();
+        }
+        $criteriaQuestion = new EMongoCriteria;
+        $criteriaQuestion->_id = new MongoId($idQuestion);
+        $question = Question::model()->find($criteriaQuestion);
+        print_r($question);
+        $question->delete();
+        $question->validate();
+
+        //$this->redirect('index.php?r=questionBloc/update');
     }
 
     /**

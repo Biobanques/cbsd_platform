@@ -159,7 +159,7 @@ class AnswerPDFRenderer {
             }
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
-                $pdf->RadioButton($id, 5, array('readonly' => 'true'), array(), $value, $answer->answer);
+                $pdf->RadioButton($id, 5, array('readonly' => 'true'), array(), $value, $answer->answer == $value ? true : false);
                 $pdf->Cell(20, 5, $value);
             }
         }
@@ -172,7 +172,7 @@ class AnswerPDFRenderer {
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
                 $pdf->Cell(20, 5, "");
-                $pdf->CheckBox($id . "_" . $value, 5, $answer->answer, array('readonly' => 'true'), array(), $value);
+                $pdf->CheckBox($id . "_" . $value, 5, false, array('readonly' => 'true'), array(), $value);
                 $pdf->Cell(35, 5, $value);
                 $pdf->Ln(10);
             }
