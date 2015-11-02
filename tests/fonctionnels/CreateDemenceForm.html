@@ -13,12 +13,12 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/cbsd_platform/webapp/index.php?r=answer/affichepatient</td>
+	<td>/cbsd_platform/webapp/index.php?r=answer/affichepatient&amp;id=561b82c2374148663636c365</td>
 	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>name=form</td>
+	<td>id=form</td>
 	<td>label=Démence</td>
 </tr>
 <tr>
@@ -28,18 +28,8 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=demenceform_examdate</td>
-	<td>Demence</td>
-</tr>
-<tr>
-	<td>type</td>
 	<td>id=demenceform_patientaddress</td>
-	<td>Dale2</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=demenceform_doctorname</td>
-	<td>clinicien</td>
+	<td>75 rue de Paris</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -52,9 +42,129 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>id=demence_born</td>
+	<td>02/11/2015</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>link=Renseignements individuels</td>
+	<td>id=demence_place</td>
 	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@id='demence_lastjob'])[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=demence_stopactivity</td>
+	<td>02/11/2015</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@id='demence_stopactivity1'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=demence_stopactivity2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=demence_trouble_memoire</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@id='demence_life'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=demence_six_months</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@id='demence_trouble_comportement'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@id='demence_aphasie'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=demence_apraxie</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=demence_agnosie_visuelle</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Activité de la vie quotidienne (ADL)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=adl_adl1</td>
+	<td>label=Ne reçoit aucune aide (rentre et sort seul de la baignoire si celle-ci est le moyen habituel de toilette</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=adl_adl2</td>
+	<td>label=Prend les habits et s'habille sans aide sauf pour les chaussures</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=adl_adl3</td>
+	<td>label=Reçoit de l'aide pour aller aux toilettes... ne va pas aux toilettes</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=adl_adl4</td>
+	<td>label=Se couche et se lève du lit aussi bien qu'il s'assoit ou se lève d'une chaise sans aide (peut s'aider d'un support comme un déambulateur ou une canne)</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=adl_adl5</td>
+	<td>label=A quelques petits accidents ou est incotinent (urine ou selles)</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=adl_adl6</td>
+	<td>label=Mange sans aide</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=IADL</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=iadl_iadl1</td>
+	<td>label=N’utilise pas du tout le téléphone spontanément</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=iadl_iadl2</td>
+	<td>label=Utilise les moyens de transports de façon indépendante ou conduit sa propre voiture</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=iadl_iadl3</td>
+	<td>label=Est responsable de la prise de ses médicaments (dose et rythmes corrects)</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=iadl_iadl4</td>
+	<td>label=Non applicable N’a jamais manipulé l’argent</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

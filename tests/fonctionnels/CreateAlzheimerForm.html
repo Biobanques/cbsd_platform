@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>name=form</td>
+	<td>id=form</td>
 	<td>label=Alzheimer</td>
 </tr>
 <tr>
@@ -29,17 +29,7 @@
 <tr>
 	<td>type</td>
 	<td>id=alzheimerform_patientaddress</td>
-	<td>Dale2</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=alzheimerform_examdate</td>
-	<td>Alzheimer</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=alzheimerform_doctorname</td>
-	<td>neuropathologiste</td>
+	<td>Biobanques</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -53,15 +43,54 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Renseignements individuels</td>
+	<td>xpath=(//input[@id='alzhparkform_entorhinal'])[2]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@id='alzhparkform_temporooccipital'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=alzhparkform_temporalmoyen</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=alzhparkform_parastrié</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@id='alzhparkform_strie'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Autres</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=other_grains</td>
+	<td>label=Dans l’hippocampe</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=other_angiopathie</td>
+	<td>label=Oui (Atteinte capillaire)</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=other_lewy</td>
+	<td>label=Dans le tronc cérébral</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
