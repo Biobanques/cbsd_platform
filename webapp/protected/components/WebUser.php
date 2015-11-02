@@ -9,6 +9,24 @@
 class WebUser extends CWebUser {
 
     /**
+     * return user last name
+     * @return last name
+     */
+    public function getNom() {
+        $model = User::model()->findByPk(new MongoId(Yii::app()->user->id));
+        return $model->nom;
+    }
+    
+    /**
+     * return user first name
+     * @return first name
+     */
+    public function getPrenom() {
+        $model = User::model()->findByPk(new MongoId(Yii::app()->user->id));
+        return $model->prenom;
+    }
+    
+    /**
      * set the admin value
      * @param boolean $val
      */

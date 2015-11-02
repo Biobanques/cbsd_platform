@@ -13,7 +13,7 @@ class AnswerPDFRenderer {
         $pdf->SetAuthor('Biobanques');
         $pdf->SetTitle($answer->name);
         $pdf->SetSubject($answer->name);
-        $pdf->SetKeywords('Biobanques, PDF, quality, form' . $answer->name);
+        $pdf->SetKeywords('Biobanques, PDF, cbsd, platform' . $answer->name);
 // set default header data
         $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 // set header and footer fonts
@@ -47,7 +47,7 @@ class AnswerPDFRenderer {
         $pdf->setFormDefaultProp(array('lineWidth' => 1, 'borderStyle' => 'solid', 'fillColor' => "lightGray", 'strokeColor' => "gray"));
 
         $pdf->SetFont('helvetica', 'B', 18);
-        $pdf->Cell(0, 5, 'Biobanques CBSDForms ', 0, 1, 'C');
+        $pdf->Cell(0, 5, 'Biobanques CBSDPlatform ', 0, 1, 'C');
         $pdf->Ln(10);
         $pdf->Cell(0, 5, $answer->name, 0, 1, 'C');
         $pdf->Ln(10);
@@ -57,7 +57,7 @@ class AnswerPDFRenderer {
         $pdf->Ln(30);
         $pdf->SetFont('helvetica', 'N', 12);
         $dd = $answer->last_modified; //mongo date
-        $html = '<span>' . "<b>Description :</b> " . $answer->description . '<br /><b>Last Modified :</b>' . date("d/m/Y", $dd->sec) . '</span>';
+        $html = '<span>' . "<b>Description :</b> " . $answer->description . '<br /><b>Dernière modification :</b>' . date("d/m/Y", $dd->sec) . '</span>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
         $pdf->Ln(10);
         $html = '<span>' . $answer->message_start . '</span>';
@@ -71,7 +71,7 @@ class AnswerPDFRenderer {
 
 // ---------------------------------------------------------
 //Close and output PDF document
-        $pdf->Output('biobanques_qualityform_' . $answer->id . '.pdf', 'D');
+        $pdf->Output('biobanques_cbsdplatform_' . $answer->id . '.pdf', 'D');
     }
 
     /**
@@ -172,7 +172,7 @@ class AnswerPDFRenderer {
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
                 $pdf->Cell(20, 5, "");
-                $pdf->CheckBox($id . "_" . $value, 5, false, array('readonly' => 'true'), array(), $value);
+                $pdf->CheckBox($id . "_" . $value, 5, in_array($value, $answer->answer) ? true : false, array('readonly' => 'true'), array(), $value);
                 $pdf->Cell(35, 5, $value);
                 $pdf->Ln(10);
             }

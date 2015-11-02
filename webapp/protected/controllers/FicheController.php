@@ -28,7 +28,7 @@ class FicheController extends Controller {
             array(
                 'allow',
                 'actions' => array(
-                    'index', 'dynamicquestions', 'admin', 'view', 'update', 'delete'
+                    'index', 'dynamicquestions', 'admin', 'view', 'update', 'delete', 'viewOnePage'
                 ),
                 'expression' => '$user->isAdmin()'
             ),
@@ -111,4 +111,21 @@ class FicheController extends Controller {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
+    /**
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
+    public function actionViewOnePage($id) {
+        $this->render('view_onepage', array(
+            'model' => $this->loadModel($id),
+        ));
+    }
+    
+    public function loadModel($id) {
+        $model = Answer::model()->findByPk(new MongoID($id));
+        if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        return $model;
+    }
+    
 }

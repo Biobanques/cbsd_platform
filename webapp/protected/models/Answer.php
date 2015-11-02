@@ -125,7 +125,7 @@ class Answer extends EMongoDocument {
     public function renderHTML($lang) {
         $result = "";
         foreach ($this->answers_group as $answer_group) {
-            $result.=AnswerHTMLRenderer::renderAnswerGroupHTML($this, $answer_group, $lang, false);
+            $result.=AnswerHTMLRenderer::renderAnswerGroupHTML($this, $answer_group, $lang);
             $result.= "<br><div style=\”clear:both;\"></div>";
         }
         return $result;

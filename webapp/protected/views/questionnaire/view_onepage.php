@@ -1,7 +1,3 @@
-<h1>View Questionnaire ( One printable page) #<?php echo $model->id; ?></h1>
+<h3 align="center">Vue HTML du formulaire <?php echo $model->name; ?></h3>
 
-
-<?php
-//
-echo $model->renderHTML(Yii::app()->language);
-?>
+<?php echo $model->renderHTML(Yii::app()->language); ?>

@@ -120,19 +120,17 @@ class QuestionBlocController extends Controller {
         $model = new QuestionBloc;
         $criteria = new EMongoCriteria;
         $criteria->questions = $idQuestion;
-        $questionId = QuestionBloc::model()->find($criteria);
-        if (in_array($idQuestion, $questionId->questions)) {
-            unset($questionId->questions[array_search($idQuestion, $questionId->questions)]);
-            $questionId->save();
+        $blocQuestionId = QuestionBloc::model()->find($criteria);
+        if (in_array($idQuestion, $blocQuestionId->questions)) {
+            unset($blocQuestionId->questions[array_search($idQuestion, $blocQuestionId->questions)]);
+            $blocQuestionId->save();
         }
         $criteriaQuestion = new EMongoCriteria;
         $criteriaQuestion->_id = new MongoId($idQuestion);
         $question = Question::model()->find($criteriaQuestion);
-        print_r($question);
         $question->delete();
-        $question->validate();
 
-        //$this->redirect('index.php?r=questionBloc/update');
+        $this->redirect('index.php?r=questionBloc/update&id=' . $id);
     }
 
     /**

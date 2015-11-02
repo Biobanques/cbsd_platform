@@ -23,12 +23,14 @@
 <hr />
 
 <?php
-echo CHtml::link('Vue une page HTML', array('answer/viewOnePage', 'id' => $model->_id));
+echo CHtml::link('Vue format HTML', array('answer/viewOnePage', 'id' => $model->_id));
 ?>
-<?php
-$img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
-echo CHtml::link($img, array('answer/exportPDF', 'id' => $model->_id), array());
-?>
+<div style="margin-top: -20px; text-align:right;">
+    <?php
+    $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
+    echo CHtml::link('Exporter au format PDF' . $img, array('answer/exportPDF', 'id' => $model->_id), array());
+    ?>
+</div>
 
 <br /><br />
 

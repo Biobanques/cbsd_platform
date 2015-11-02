@@ -63,7 +63,7 @@ class AnswerHTMLRenderer {
      * @param type $isAnswered
      * @return string
      */
-    public function renderAnswerGroupHTML($answer, $group, $lang, $isAnswered) {
+    public function renderAnswerGroupHTML($answer, $group, $lang) {
         $result = "";
         //en par defaut
         $title = $group->title;
@@ -79,15 +79,15 @@ class AnswerHTMLRenderer {
         $quests = $group->answers;
         if (isset($quests)) {
             foreach ($quests as $ans) {
-                $result.=AnswerHTMLRenderer::renderAnswerHTML($group->id, $ans, $lang, $isAnswered);
+                $result.=AnswerHTMLRenderer::renderAnswerHTML($group->id, $ans, $lang);
             }
         }
         //add question groups that have parents for this group
         $groups = $answer->answers_group;
-        
+
         foreach ($groups as $qg) {
             if ($qg->parent_group == $group->id) {
-                $result.=AnswerHTMLRenderer::renderAnswerGroupHTML($answer, $qg, $lang, $isAnswered);
+                $result.=AnswerHTMLRenderer::renderAnswerGroupHTML($answer, $qg, $lang);
             }
         }
         $result .= "<div class=\"end-question-group\"></div>";
@@ -98,7 +98,7 @@ class AnswerHTMLRenderer {
      * render html the current question.
      */
 
-    public function renderAnswerHTML($idanswergroup, $answer, $lang, $isAnswered) {
+    public function renderAnswerHTML($idanswergroup, $answer, $lang) {
         $result = "";
         $style = "style=\"\"";
         if ($answer->style != "") {
@@ -133,21 +133,11 @@ class AnswerHTMLRenderer {
 
         //affichage de l input selon son type
         $idInput = "id=\"" . $idanswergroup . "_" . $answer->id . "\" name=\"Questionnaire[" . $idanswergroup . "_" . $answer->id . "]" . ($answer->type == "checkbox" ? "[]" : "") . "\"";
-        $valueInput = "";
-        if (Yii::app()->controller->id != "formulaire") {
-            if ($answer->id == "examdate")
-                $valueInput = date("d/m/Y");
-            if ($answer->id == "doctorname")
-                $valueInput = Yii::app()->user->name;
-        }
-        if ($isAnswered) {
-            $valueInput = $answer->answer;
-        }
         if ($answer->type == "input") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\"/>";
         }
         if ($answer->type == "date") {
-            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/yyyy\"/>";
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . $answer->answer . "\" placeholder=\"Format jj/mm/yyyy\"/>";
         }
         if ($answer->type == "radio") {
 
@@ -159,7 +149,7 @@ class AnswerHTMLRenderer {
             $arvalue = split(",", $values);
 
             foreach ($arvalue as $value) {
-                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $valueInput ? 'checked' : '') . ">&nbsp;" . $value . "</input>&nbsp;";
+                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $answer->answer ? 'checked' : '') . ">&nbsp;" . $value . "</input>&nbsp;";
             }
         }
         if ($answer->type == "checkbox") {
@@ -171,8 +161,8 @@ class AnswerHTMLRenderer {
             foreach ($arvalue as $value) {
                 $checked = false;
                 //in case of check box $ValuesInput is stored into an array.
-                if ($valueInput != null) {
-                    foreach ($valueInput as $vInput) {
+                if ($answer->answer != null) {
+                    foreach ($answer->answer as $vInput) {
                         if ($vInput == $value) {
                             $checked = true;
                         }
@@ -182,17 +172,13 @@ class AnswerHTMLRenderer {
             }
         }
         if ($answer->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" >" . $valueInput . "</textarea>";
+            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" >" . $answer->answer . "</textarea>";
         }
         if ($answer->type == "image") {
-            if ($isAnswered) {
-                $result.="<input " . $idInput . " type=\"file\" />";
+            $result.="<input " . $idInput . " type=\"file\" />";
 
-                if ($answer->answer != null) {
-                    $result.="<div>here the image</div>";
-                }
-            } else {
-                $result.="<div style=\"width:128px;height:128px;background-repeat:no-repeat;background-image:url('http://localhost/cbsd_platform/webapp/images/gnome_mime_image.png');\"> </div>";
+            if ($answer->answer != null) {
+                $result.="<div>here the image</div>";
             }
         }
         if ($answer->type == "list") {
@@ -201,7 +187,7 @@ class AnswerHTMLRenderer {
             $result.="<select " . $idInput . ">";
             $result.="<option  value=\"\"></option>";
             foreach ($arvalue as $value) {
-                $result.="<option  value=\"" . $value . "\" " . ($valueInput == $value ? 'selected' : '') . ">" . $value . "</option>";
+                $result.="<option  value=\"" . $value . "\" " . ($answer->answer == $value ? 'selected' : '') . ">" . $value . "</option>";
             }
             $result.="</select>";
         }
@@ -385,10 +371,8 @@ class AnswerHTMLRenderer {
         }
         //close question input
         //add link delete
-        if (Yii::app()->controller->id != "questionBloc") {
-            $imghtml = CHtml::image('images/cross.png');
-            $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion', array('idFormulaire' => $idMongoQuestionnaire, 'idQuestion' => $question->id))) . "</div>";
-        }
+        $imghtml = CHtml::image('images/cross.png');
+        $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion', array('idFormulaire' => $idMongoQuestionnaire, 'idQuestion' => $question->id))) . "</div>";
         $result.="</div>";
 
         //close row input
