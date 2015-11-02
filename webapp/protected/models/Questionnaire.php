@@ -11,6 +11,7 @@ class Questionnaire extends EMongoDocument
     /**
      * champs classiques d echantillons
      */
+    public $creator;
     public $type;
     public $id;
     public $name;

@@ -67,6 +67,7 @@ class FormulaireController extends Controller {
         $model = new Questionnaire;
         if (isset($_POST['Questionnaire'])) {
             $model->attributes = $_POST['Questionnaire'];
+            $model->creator = Yii::app()->user->name;
             $model->addQuestionGroup("firstgroup", "Questionnaire principal");
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Le questionnaire a été enregistré avec succès.');
