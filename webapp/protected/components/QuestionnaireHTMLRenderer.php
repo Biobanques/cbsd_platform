@@ -387,7 +387,7 @@ class QuestionnaireHTMLRenderer {
             }
         }
         if ($question->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" ></textarea>";
+            $result.="<textarea rows=\"4\" cols=\"100\" " . $idInput . " style=\"width: 220px; height: 70px;\" ></textarea>";
         }
         if ($question->type == "image") {
             $result.="<div style=\"width:128px;height:128px;\"> </div>";
@@ -402,7 +402,6 @@ class QuestionnaireHTMLRenderer {
             }
             $result.="</select>";
         }
-        //close question input
         //add link delete
         if (Yii::app()->controller->id == "questionBloc") {
            $imghtml = CHtml::image('images/cross.png');

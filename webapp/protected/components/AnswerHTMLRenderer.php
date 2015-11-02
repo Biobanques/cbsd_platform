@@ -172,7 +172,7 @@ class AnswerHTMLRenderer {
             }
         }
         if ($answer->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" >" . $answer->answer . "</textarea>";
+            $result.="<textarea rows=\"4\" cols=\"100\" " . $idInput . " style=\"width: 220px; height: 70px;\" >" . $answer->answer . "</textarea>";
         }
         if ($answer->type == "image") {
             $result.="<input " . $idInput . " type=\"file\" />";
@@ -354,7 +354,7 @@ class AnswerHTMLRenderer {
             }
         }
         if ($question->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" ></textarea>";
+            $result.="<textarea rows=\"4\" cols=\"100\" " . $idInput . " style=\"width: 220px; height: 70px;\" ></textarea>";
         }
         if ($question->type == "image") {
             $result.="<div style=\"width:128px;height:128px;\"> </div>";

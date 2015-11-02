@@ -170,11 +170,13 @@ class AnswerPDFRenderer {
                 $values = $answer->values_fr;
             }
             $arvalue = split(",", $values);
-            foreach ($arvalue as $value) {
-                $pdf->Cell(20, 5, "");
-                $pdf->CheckBox($id . "_" . $value, 5, in_array($value, $answer->answer) ? true : false, array('readonly' => 'true'), array(), $value);
-                $pdf->Cell(35, 5, $value);
-                $pdf->Ln(10);
+            if (isset($answer->answer)) {
+                foreach ($arvalue as $value) {
+                    $pdf->Cell(20, 5, "");
+                    $pdf->CheckBox($id . "_" . $value, 5, in_array($value, $answer->answer) ? true : false, array('readonly' => 'true'), array(), $value);
+                    $pdf->Cell(35, 5, $value);
+                    $pdf->Ln(10);
+                }
             }
         }
         if ($answer->type == "text") {
@@ -195,6 +197,9 @@ class AnswerPDFRenderer {
                 $arrValuesPDF[$value] = $value;
             }
             $pdf->ComboBox($id, 30, 5, $arrValuesPDF);
+            if (strlen($label) > 25) {
+                $pdf->Ln(20);
+            }
         }
 
         if ($answer->type == "array") {
@@ -216,6 +221,7 @@ class AnswerPDFRenderer {
                 $pdf->Ln(6);
             }
         }
+        $pdf->Ln(11);
         return $pdf;
     }
 

@@ -117,11 +117,8 @@ class QuestionBlocController extends Controller {
 
     public function actionDeleteQuestion($id, $idQuestion) {
 
-        $model = new QuestionBloc;
-        $criteria = new EMongoCriteria;
-        $criteria->questions = $idQuestion;
-        $blocQuestionId = QuestionBloc::model()->find($criteria);
-        if (in_array($idQuestion, $blocQuestionId->questions)) {
+        $blocQuestionId = QuestionBloc::model()->findByPk(new MongoId($id));
+        if (isset($blocQuestionId->questions) && in_array($idQuestion, $blocQuestionId->questions)) {
             unset($blocQuestionId->questions[array_search($idQuestion, $blocQuestionId->questions)]);
             $blocQuestionId->save();
         }
