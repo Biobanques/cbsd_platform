@@ -11,18 +11,19 @@ class AnswerGroup extends EMongoEmbeddedDocument {
     public $title;
     public $title_fr;
     public $answers;
-    /**
-         * parent group if setted.
-         * @var type 
-         */
-        public $parent_group;
 
-        /**
-         *rule to add condition on display of an element
-         * @var type 
-         */
-        public $display_rule;
-        
+    /**
+     * parent group if setted.
+     * @var type 
+     */
+    public $parent_group;
+
+    /**
+     * rule to add condition on display of an element
+     * @var type 
+     */
+    public $display_rule;
+
     public function behaviors() {
         return array('embeddedArrays' => array(
                 'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',
@@ -64,12 +65,13 @@ class AnswerGroup extends EMongoEmbeddedDocument {
         $this->id = $questionGroup->id;
         $this->title = $questionGroup->title;
         $this->title_fr = $questionGroup->title_fr;
-        $this->parent_group=$questionGroup->parent_group;
-        $this->display_rule=$questionGroup->display_rule;
+        $this->parent_group = $questionGroup->parent_group;
+        $this->display_rule = $questionGroup->display_rule;
         foreach ($questionGroup->questions as $question) {
             $aq = new AnswerQuestion;
             $aq->copy($question);
-            $this->answers[]=$aq;
+            $this->answers[] = $aq;
         }
     }
+
 }

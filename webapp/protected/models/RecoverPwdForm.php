@@ -5,8 +5,8 @@
  * LoginForm is the data structure for keeping
  * user login form data. It is used by the 'login' action of 'SiteController'.
  */
-class RecoverPwdForm extends CFormModel
-{
+class RecoverPwdForm extends CFormModel {
+
     public $nom;
     public $prenom;
 

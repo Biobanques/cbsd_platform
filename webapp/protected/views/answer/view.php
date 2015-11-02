@@ -7,7 +7,8 @@
         </tr>
         <tr>
             <td><b>Date de naissance : </b><?php echo $patient->birthDate; ?></td>
-            <?php if (Yii::app()->user->profil == "administrateur")
+            <?php
+            if (Yii::app()->user->profil == "administrateur")
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
             ?>
         </tr>
@@ -16,19 +17,20 @@
 
 <hr />
 
-<h3 align="center">Formulaire <?php echo $model->id; ?></h3>
-<p>Description: Formulaire <?php echo $model->id; ?> avec items 2015</p>
+<h3 align="center">Formulaire <?php echo $model->name; ?></h3>
+<p>Description: <?php echo $model->description; ?></p>
 
 <hr />
 
 <?php
-echo CHtml::link('Vue une page HTML', array('questionnaire/viewOnePage', 'id' => $model->_id));
-;
+echo CHtml::link('Vue format HTML', array('answer/viewOnePage', 'id' => $model->_id));
 ?>
-<?php
-$img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
-echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), array());
-?>
+<div style="margin-top: -20px; text-align:right;">
+    <?php
+    $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
+    echo CHtml::link('Exporter au format PDF' . $img, array('answer/exportPDF', 'id' => $model->_id), array());
+    ?>
+</div>
 
 <br /><br />
 
@@ -41,11 +43,11 @@ echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), ar
     echo $model->renderTabbedGroup(Yii::app()->language);
     ?>
 </div>
-    <div style="display:inline; margin:40%; width: 100px; ">
-        <?php
-        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:20px;'));
-        ?>
-    </div>
+<div style="display:inline; margin:40%; width: 100px; ">
+    <?php
+    echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:20px;'));
+    ?>
+</div>
 <?php
 $this->endWidget();
 ?>

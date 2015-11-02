@@ -15,6 +15,7 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
 
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
             <title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -29,13 +30,7 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
         array('label' => 'Administration', 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin()),
         array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
         array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-        array('label' => 'Accédez en tant que : ', 'url' => '', 'visible' => !Yii::app()->user->isGuest));
-    if (!Yii::app()->user->isGuest)
-        $menuItems[] = array(
-            'template' => GetProfil::getHTML(),
-        );
-
-
+    );
 
     $this->widget('bootstrap.widgets.TbNavbar', array(
         'brandUrl' => array('/site/index'),

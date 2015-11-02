@@ -153,11 +153,20 @@ class QuestionnaireHTMLRenderer {
         //affichage de l input selon son type
         $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
         $valueInput = "";
+        if (Yii::app()->controller->id != "formulaire") {
+            if ($question->id == "examdate")
+                $valueInput = date("d/m/Y");
+            if ($question->id == "doctorname")
+                $valueInput = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
+        }
         if ($isAnswered) {
             $valueInput = $question->answer;
         }
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+        }
+        if ($question->type == "date") {
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/yyyy\"/>";
         }
         if ($question->type == "radio") {
 
@@ -278,16 +287,19 @@ class QuestionnaireHTMLRenderer {
         if ($lang == "both") {
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
-          $imghtml=CHtml::image('images/cross.png');
-         $lienSupprimer="<div style=\"float:right;margin-left:5px;\">".CHtml::link($imghtml." Supprimer l'onglet de questions", Yii::app()->createUrl('formulaire/deleteQuestionGroup',array('idFormulaire'=>$questionnaire->_id,'idQuestionGroup'=>$group->id)))."</div>";
-      
-        $result.="<div class=\"question_group\">" . $title . $lienSupprimer."</div>";
+        if (Yii::app()->controller->id != "questionBloc") {
+            $imghtml = CHtml::image('images/cross.png');
+            $lienSupprimer = "<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml . " Supprimer l'onglet de questions", Yii::app()->createUrl('formulaire/deleteQuestionGroup', array('idFormulaire' => $questionnaire->_id, 'idQuestionGroup' => $group->id))) . "</div>";
 
+            $result.="<div class=\"question_group\">" . $title . $lienSupprimer . "</div>";
+        } else {
+            $result.="<div class=\"question_group\">" . $title . "</div>";
+        }
         $quests = $group->questions;
 
         if (isset($quests)) {
             foreach ($quests as $question) {
-                $result.=QuestionnaireHTMLRenderer::renderQuestionHTMLEditMode($questionnaire->_id,$group->id, $question, $lang);
+                $result.=QuestionnaireHTMLRenderer::renderQuestionHTMLEditMode($questionnaire->_id, $group->id, $question, $lang);
             }
         }
         //add question groups that have parents for this group
@@ -306,7 +318,7 @@ class QuestionnaireHTMLRenderer {
      * render html the current question.
      */
 
-    public function renderQuestionHTMLEditMode($idMongoQuestionnaire,$idquestiongroup, $question, $lang) {
+    public function renderQuestionHTMLEditMode($idMongoQuestionnaire, $idquestiongroup, $question, $lang) {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "") {
@@ -346,6 +358,9 @@ class QuestionnaireHTMLRenderer {
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
         }
+        if ($question->type == "date") {
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/yyyy\"/>";
+        }
         if ($question->type == "radio") {
 
             if ($lang == "fr" && $question->values_fr != "") {
@@ -372,7 +387,7 @@ class QuestionnaireHTMLRenderer {
             }
         }
         if ($question->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" ></textarea>";
+            $result.="<textarea rows=\"4\" cols=\"100\" " . $idInput . " style=\"width: 220px; height: 70px;\" ></textarea>";
         }
         if ($question->type == "image") {
             $result.="<div style=\"width:128px;height:128px;\"> </div>";
@@ -387,13 +402,16 @@ class QuestionnaireHTMLRenderer {
             }
             $result.="</select>";
         }
-        //close question input
-          //add link delete
-        $imghtml=CHtml::image('images/cross.png');
-         $result.="<div style=\"float:right;margin-left:5px;\">".CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion',array('idFormulaire'=>$idMongoQuestionnaire,'idQuestion'=>$question->id)))."</div>";
-       
+        //add link delete
+        if (Yii::app()->controller->id == "questionBloc") {
+           $imghtml = CHtml::image('images/cross.png');
+            $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('questionBloc/deleteQuestion', array('id' => $_GET['id'], 'idQuestion' => $question->_id))) . "</div>"; 
+        } else {
+            $imghtml = CHtml::image('images/cross.png');
+            $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion', array('idFormulaire' => $idMongoQuestionnaire, 'idQuestion' => $question->id))) . "</div>";
+        }
         $result.="</div>";
-      
+
         //close row input
         $result.="</div>";
         return $result;

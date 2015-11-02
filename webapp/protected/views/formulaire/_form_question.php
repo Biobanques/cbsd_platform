@@ -11,8 +11,8 @@
 
     <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
     <p>*L'id doit être unique parmi les questions. Il permet de gérer des mécanismes liées à l'ordonnancement des questions et aux traitements de validation.</p>
-    <p>*Les valeurs sont utilisés pour les listes (radio bouton et listes déroulantes). Le séparateur de valeurs est la virgule.</p>
-    <p>*Le style permet d'affecter un style css à la question. Par exemple, si vous souahitez aligner votr equestion à droite de la précédente , saisissez dans le champ le texte en gras: <b>float:right</b></p>
+    <p>*Les valeurs sont utilisées pour les listes (radio bouton et listes déroulantes). Le séparateur de valeurs est la virgule.</p>
+    <p>*Le style permet d'affecter un style css à la question. Par exemple, si vous souhaitez aligner votre question à droite de la précédente , saisissez dans le champ le texte en gras: <b>float:right</b></p>
 
     <div >
         <div class="col-lg-6">
@@ -38,7 +38,7 @@
         <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'idQuestionGroup'); ?>
             <?php
-            echo $form->dropDownList($model, 'idQuestionGroup', $model->getArrayGroups(), array('ajax' => array('type' => 'POST', 'url' => CController::createUrl('formulaire/dynamicquestions&id='.$model->questionnaire->_id), 'update' => '#'.CHtml::activeId($model, 'idQuestionBefore'))));
+            echo $form->dropDownList($model, 'idQuestionGroup', $model->getArrayGroups(), array('ajax' => array('type' => 'POST', 'url' => CController::createUrl('formulaire/dynamicquestions&id=' . $model->questionnaire->_id), 'update' => '#' . CHtml::activeId($model, 'idQuestionBefore'))));
             ?>
             <?php echo $form->error($model, 'idQuestionGroup'); ?>
         </div>

@@ -9,4 +9,10 @@
 /webapp/protected/CommonProperties.php
 /webapp/protected/CommonProperties_Prod.php
 /webapp/protected/components/CommonProperties.php
-/webapp/protected/data/
+/tests/fonctionnels/selenium-java-2.44.0.zip
+/tests/fonctionnels/selenium-server-standalone-2.44.0.jar
+/tests/fonctionnels/selenium_adm.log
+/tests/fonctionnels/testSelenium.sh
+/tests/fonctionnels/localhost_mongo_parameters.txt
+/tests/fonctionnels/selenium_mbb.log
+/tests/fonctionnels/selenium_vsc.log

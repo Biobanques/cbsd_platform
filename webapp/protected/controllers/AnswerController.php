@@ -1,7 +1,7 @@
 <?php
 
-class AnswerController extends Controller
-{
+class AnswerController extends Controller {
+
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -61,9 +61,6 @@ class AnswerController extends Controller
             $model->date_naissance = $patient->birthDate;
         }
 
-
-
-
         if (isset($_POST['PatientForm'])) {
 
             $model = new PatientForm;
@@ -82,8 +79,6 @@ class AnswerController extends Controller
                 Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ses informations n’existe dans le système, veuillez contacter l’administrateur des identités de patient pour en créer un.");
                 $this->redirect(array('site/patient'));
             }
-//            $patient->id = $idwsPat;
-            // $patient->id = CommonTools::wsGetPatient($patient)->id;
             $mixedResult = $model->dateformat($patient->birthDate);
             if ($mixedResult['result'] == false)
                 $this->redirect(array('site/patient'));
@@ -93,18 +88,6 @@ class AnswerController extends Controller
         }
         if ($model->validate()) {
             $criteria = new EMongoCriteria();
-//            if (Yii::app()->user->getActiveProfil() == "clinicien") {
-//                $criteria->login = Yii::app()->user->id;
-//                $criteria->id_patient = (string) $patient->id;
-//                $criteria->type = "clinique";
-//            } else if (Yii::app()->user->getActiveProfil() == "geneticien") {
-//                $criteria->id_patient = $patient->id;
-//            } else if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
-//                $criteria->id_patient = $patient->id;
-//            } else if (Yii::app()->user->getActiveProfil() == "chercheur") {
-//                $criteria->id_patient = $patient->id;
-//            }
-//            $dataProvider = new EMongoDocumentDataProvider('Answer', array('criteria' => $criteria));
             $criteria->id_patient = (string) $patient->id;
             $criteriaCliniques = new EMongoCriteria($criteria);
             if (Yii::app()->user->getState('activeProfil') == "clinicien")
@@ -201,6 +184,24 @@ class AnswerController extends Controller
         ));
     }
 
+    /**
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
+    public function actionViewOnePage($id) {
+        $this->render('view_onepage', array(
+            'model' => $this->loadModel($id),
+        ));
+    }
+
+    /**
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
+    public function actionExportPDF($id) {
+        AnswerPDFRenderer::renderAnswer($this->loadModel($id));
+    }    
+    
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.

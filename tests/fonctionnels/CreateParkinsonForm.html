@@ -12,9 +12,14 @@
 <tr><td rowspan="1" colspan="3">CreateParkinsonForm</td></tr>
 </thead><tbody>
 <tr>
+	<td>open</td>
+	<td>/cbsd_platform/webapp/index.php?r=answer/affichepatient</td>
+	<td></td>
+</tr>
+<tr>
 	<td>select</td>
-	<td>name=form</td>
-	<td>label=Formulaire Parkinson</td>
+	<td>id=form</td>
+	<td>label=Parkinson</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -23,18 +28,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=parkinsonform_1a</td>
-	<td>Bernard</td>
+	<td>id=parkinsonform_patientaddress</td>
+	<td>5 rue Paris</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=parkinsonform_1b</td>
+	<td>link=Elements de diagnostic</td>
 	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=parkinsonform_1c</td>
-	<td>28/09/2015</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -58,12 +58,12 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='diagnostic_3a5'])[2]</td>
+	<td>id=diagnostic_3a5</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=diagnostic_3a6</td>
+	<td>xpath=(//input[@id='diagnostic_3a6'])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -73,23 +73,23 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=diagnostic_3b1</td>
+	<td>xpath=(//input[@id='diagnostic_3b1'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=diagnostic_3b1a</td>
-	<td>08/07/1990</td>
+	<td>02/11/2015</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=diagnostic_3b1b</td>
-	<td>25</td>
+	<td>5</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=diagnostic_3b1d</td>
-	<td>A1</td>
+	<td>2</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -113,17 +113,22 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='diagnostic_3b5'])[2]</td>
+	<td>id=diagnostic_3b5</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='diagnostic_3c1'])[2]</td>
+	<td>xpath=(//input[@id='diagnostic_3c1'])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=diagnostic_3c2a</td>
+	<td>xpath=(//input[@id='diagnostic_3c2a'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@id='diagnostic_3c2b'])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,12 +138,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='diagnostic_3c2b'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//input[@id='diagnostic_3c2d'])[3]</td>
+	<td>id=diagnostic_3c2d</td>
 	<td></td>
 </tr>
 <tr>
@@ -148,37 +148,42 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='information_aaa'])[2]</td>
+	<td>link=Renseignements complémentaires</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@id='information_aaa'])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=information_4a</td>
-	<td>0</td>
+	<td>25</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=information_4b</td>
-	<td>25</td>
+	<td>75</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='information_4c'])[2]</td>
+	<td>xpath=(//input[@id='information_4c1'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=information_4c1</td>
+	<td>id=information_4c</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='information_4c2'])[2]</td>
+	<td>id=information_4c2</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='information_4d1'])[2]</td>
+	<td>id=information_4d1</td>
 	<td></td>
 </tr>
 <tr>
@@ -188,17 +193,17 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=information_4d3a</td>
+	<td>xpath=(//input[@id='information_4d3a'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=information_4d3b</td>
+	<td>xpath=(//input[@id='information_4d3b'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='information_4d3c'])[2]</td>
+	<td>id=information_4d3c</td>
 	<td></td>
 </tr>
 <tr>
@@ -212,44 +217,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>id=information_4d6</td>
-	<td></td>
+	<td>type</td>
+	<td>id=information_4d5a</td>
+	<td>Biobanques</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=information_4d6a</td>
-	<td>18</td>
+	<td>id=information_4d5b</td>
+	<td>15h</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=information_4d7</td>
+	<td>xpath=(//input[@id='information_4d6'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='information_4d8'])[2]</td>
+	<td>xpath=(//input[@id='information_4d7'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='information_4e1'])[2]</td>
+	<td>id=information_4d8</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=information_4e2</td>
+	<td>id=information_4e1</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='information_4e3'])[2]</td>
+	<td>xpath=(//input[@id='information_4e2'])[2]</td>
 	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=information_4e3a</td>
-	<td>S1</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -258,82 +258,17 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='information_4f2'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=information_4f3</td>
+	<td>id=information_4f2</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=information_4f3a</td>
-	<td>20</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//input[@id='information_4f4a'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//input[@id='information_4f4b'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=information_4f4c</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//input[@id='information_4f5'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//input[@id='information_4g1'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=information_4g2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=information_4g3</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//input[@id='information_4g4'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//input[@id='information_4g5'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//input[@id='information_4g6'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=information_4g7</td>
-	<td></td>
+	<td>100</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/cbsd_platform/webapp/index.php?r=answer/affichepatient</td>
 	<td></td>
 </tr>
 </tbody></table>

@@ -67,8 +67,11 @@ class QuestionForm extends CFormModel
      */
     public function attributeLabels() {
         return array(
+            'label' => 'Etiquette',
             'idQuestionBefore' => 'Position de la question précédente',
-            'idQuestionGroup' => 'Onglet de questions'
+            'idQuestionGroup' => 'Onglet de questions',
+            'style' => 'Alignement de la question',
+            'values' => 'Valeurs'
         );
     }
 
@@ -78,6 +81,7 @@ class QuestionForm extends CFormModel
     public function getArrayTypes() {
         $res = array();
         $res ['input'] = "texte simple";
+        $res ['date'] = "date";
         $res ['radio'] = "radio bouton";
         $res ['list'] = "liste déroulante";
         $res ['checkbox'] = "case à cocher";

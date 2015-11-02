@@ -5,7 +5,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('user-grid', {
+	$.fn.yiiGridView.update('fiche-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -16,16 +16,17 @@ $('.search-form form').submit(function(){
 <h1>Gestion des fiches</h1>
 
 <?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'answers-grid',
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'id' => 'fiche-grid',
+    'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'columns' => array(
         'name',
-        array('header'=>'user','value'=>'$data->getUserRecorderName()'),
-        array('header'=>'Dernière mise à jour','value'=>'$data->getLastUpdated()'),
+        array('header' => 'user', 'value' => '$data->getUserRecorderName()'),
+        array('header' => 'Dernière mise à jour', 'value' => '$data->getLastUpdated()'),
         array(
             'class' => 'CButtonColumn',
-              'template'=>'{view}'
+            'template' => '{view}'
         ),
     ),
 ));

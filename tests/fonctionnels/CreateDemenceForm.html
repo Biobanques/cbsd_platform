@@ -13,13 +13,13 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/cbsd_platform/webapp/index.php?r=answer/affichepatient</td>
+	<td>/cbsd_platform/webapp/index.php?r=answer/affichepatient&amp;id=561b82c2374148663636c365</td>
 	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>name=form</td>
-	<td>label=Formulaire Démence</td>
+	<td>id=form</td>
+	<td>label=Démence</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -27,83 +27,88 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>id=demenceform_patientaddress</td>
+	<td>75 rue de Paris</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>id=demenceform_gender</td>
+	<td>link=Formulaire Démence</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=demence_gender</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=demenceform_born</td>
-	<td>08/07/1990</td>
+	<td>id=demence_born</td>
+	<td>02/11/2015</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=demence_place</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@id='demence_lastjob'])[6]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=demenceform_birth</td>
-	<td>Lyon</td>
+	<td>id=demence_stopactivity</td>
+	<td>02/11/2015</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=demenceform_place</td>
+	<td>xpath=(//input[@id='demence_stopactivity1'])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='demenceform_lastjob'])[6]</td>
+	<td>id=demence_stopactivity2</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='demenceform_stopactivity1'])[3]</td>
+	<td>id=demence_trouble_memoire</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=demenceform_stopactivity2</td>
+	<td>xpath=(//input[@id='demence_life'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=demenceform_trouble_memoire</td>
+	<td>id=demence_six_months</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=demenceform_life</td>
+	<td>xpath=(//input[@id='demence_trouble_comportement'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='demenceform_six_months'])[2]</td>
+	<td>xpath=(//input[@id='demence_aphasie'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=demenceform_trouble_comportement</td>
+	<td>id=demence_apraxie</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=(//input[@id='demenceform_trouble_comportement'])[2]</td>
+	<td>id=demence_agnosie_visuelle</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=demenceform_trouble_comportement</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//input[@id='demenceform_aphasie'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=demenceform_apraxie</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//input[@id='demenceform_agnosie_visuelle'])[2]</td>
+	<td>link=Activité de la vie quotidienne (ADL)</td>
 	<td></td>
 </tr>
 <tr>
@@ -114,7 +119,7 @@
 <tr>
 	<td>select</td>
 	<td>id=adl_adl2</td>
-	<td>label=Reçoit de l'aide pour prendre les habits et/ou s'habiller ou reste partiellement ou totalement dévêtu</td>
+	<td>label=Prend les habits et s'habille sans aide sauf pour les chaussures</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -137,14 +142,19 @@
 	<td>label=Mange sans aide</td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>link=IADL</td>
+	<td></td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=iadl_iadl1</td>
-	<td>label=Se sert normalement du téléphone</td>
+	<td>label=N’utilise pas du tout le téléphone spontanément</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>id=iadl_iadl2</td>
-	<td>label=Utilise les transports publics avec l’aide de quelqu’un</td>
+	<td>label=Utilise les moyens de transports de façon indépendante ou conduit sa propre voiture</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -161,7 +171,6 @@
 	<td>name=yt0</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

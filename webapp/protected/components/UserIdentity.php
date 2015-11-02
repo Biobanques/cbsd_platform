@@ -5,9 +5,10 @@
  * It contains the authentication method that checks if the provided
  * data can identity the user.
  */
-class UserIdentity extends CUserIdentity
-{
+class UserIdentity extends CUserIdentity {
+
     const ERROR_INACTIVE = 3;
+
     private $_id;
 
     /**
@@ -27,7 +28,6 @@ class UserIdentity extends CUserIdentity
             $this->_id = $record->_id;
             //on stocke le profil pour checker plus tard si admin
             $this->setState('profil', $record->profil);
-            $this->setState('defaultProfil', $record->getDefaultProfil());
             $this->setState('activeProfil', $record->getDefaultProfil());
         }
         return $this->errorCode;

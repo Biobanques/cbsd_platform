@@ -11,6 +11,7 @@ class Questionnaire extends EMongoDocument
     /**
      * champs classiques d echantillons
      */
+    public $creator;
     public $type;
     public $id;
     public $name;
@@ -116,6 +117,23 @@ class Questionnaire extends EMongoDocument
         return $resArraySorted;
     }
 
+    public function getFiche($activeProfil) {
+        if ($activeProfil == "clinicien")
+            $typeFiche = "clinique";
+        if ($activeProfil == "neuropathologiste")
+            $typeFiche = "neuropathologique";
+        if ($activeProfil == "geneticien")
+            $typeFiche = "genetique";
+        $criteria = new EMongoCriteria();
+        $criteria->type = $typeFiche;
+        $questionnaire = Questionnaire::model()->findAll($criteria);
+        $res = array();
+        foreach ($questionnaire as $fiche => $value) {
+            $res[$value['id']] = $value['name'];
+        }
+        return $res;
+    }
+    
     /**
      * render in html the questionnaire
      */

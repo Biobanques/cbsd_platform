@@ -1,7 +1,7 @@
 <?php
 
-class QuestionBlocController extends Controller
-{
+class QuestionBlocController extends Controller {
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -44,44 +44,25 @@ class QuestionBlocController extends Controller
         ));
     }
 
-    public function actionPreview($id) {
-        $this->render('preview', array(
-            'model' => $this->loadModel($id),
-        ));
-    }
-
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
         $model = new QuestionBloc;
-        $questionForm = new QuestionForm;
-        $questionModel = new Question;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
 
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
-        }
-
-        if (isset($_POST['QuestionForm'])) {
-            $questionModel->attributes = $_POST['QuestionForm'];
-            if ($questionModel->save()) {
-                $idQuestion = (string) $questionModel->_id;
-                $model->questions[] = $idQuestion;
-            }
-
+            $model->title_fr = $model->title;
             if ($model->save())
-                $this->redirect($this->createUrl('update', array('id' => $model->_id)));
+            //$this->redirect($this->createUrl('update', array('id' => $model->_id)));
+                $this->redirect($this->createUrl('admin'));
             else
                 Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
         }
 
         $this->render('create', array(
-            'model' => $model,
-            'questionForm' => $questionForm,
+            'model' => $model
         ));
     }
 
@@ -94,10 +75,8 @@ class QuestionBlocController extends Controller
         $model = $this->loadModel($id);
         $questionForm = new QuestionForm;
         $questionModel = new Question;
-
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+        $questionnaire = new Questionnaire;
+        $questionGroup = new QuestionGroup;
 
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
@@ -115,28 +94,40 @@ class QuestionBlocController extends Controller
             else
                 Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
         }
-        $criteria = new EMongoCriteria;
-        $listIds = array();
-        foreach ($model->questions as $question_id)
-            $listIds[] = new MongoId($question_id);
-        $criteria->addCond('_id', 'in', $listIds);
-        $dataProvider = new EMongoDocumentDataProvider('Question', array('criteria' => $criteria));
-//        $dataProvider = new EMongoDocumentDataProvider('Question');
+
+        $questionGroup->id = $model->title;
+        $questionGroup->title = $model->title;
+        $questionGroup->title_fr = $questionGroup->title;
+        $questionGroup->questions = array();
+        if (isset($model->questions) && ($model->questions != null) && (count($model->questions) > 0)) {
+            foreach ($model->questions as $question => $value) {
+                $currentQuestion = Question::model()->findByPk(new MongoId($value));
+                $currentQuestion->label_fr = $currentQuestion->label;
+                $questionGroup->questions[] = $currentQuestion;
+            }
+        }
+        $this->saveQuestionnaireNewGroup($questionnaire, $questionGroup);
+
         $this->render('update', array(
             'model' => $model,
             'questionForm' => $questionForm,
-            'dataProvider' => $dataProvider
+            'questionnaire' => $questionnaire
         ));
     }
 
-    public function actionDeleteQuestion($id, $blocId) {
-        $model = $this->loadModel($blocId);
-        $model->questions = array_diff($model->questions, array($id));
-        if ($model->save())
-            Yii::app()->user->setFlash('success', "La question a bien été supprimée");
-        else
-            Yii::app()->user->setFlash('error', "La question n'a pas pu être supprimée.");
-        $this->redirect($this->createUrl('update', array('id' => $model->_id)));
+    public function actionDeleteQuestion($id, $idQuestion) {
+
+        $blocQuestionId = QuestionBloc::model()->findByPk(new MongoId($id));
+        if (isset($blocQuestionId->questions) && in_array($idQuestion, $blocQuestionId->questions)) {
+            unset($blocQuestionId->questions[array_search($idQuestion, $blocQuestionId->questions)]);
+            $blocQuestionId->save();
+        }
+        $criteriaQuestion = new EMongoCriteria;
+        $criteriaQuestion->_id = new MongoId($idQuestion);
+        $question = Question::model()->find($criteriaQuestion);
+        $question->delete();
+
+        $this->redirect('index.php?r=questionBloc/update&id=' . $id);
     }
 
     /**
@@ -209,11 +200,26 @@ class QuestionBlocController extends Controller
         $cquestion->setAttributesByQuestionForm($questionForm);
         $bloc->questions = $questionForm->id;
         if ($bloc->save())
-            Yii::app()->user->setFlash('success', "Bloc enregistré avec sucès");
+            Yii::app()->user->setFlash('success', "Bloc enregistré avec succès");
         else {
             Yii::app()->user->setFlash('error', "Bloc non enregistré. Un problème est apparu.");
         }
         return $bloc;
+    }
+
+    public function saveQuestionnaireNewGroup($questionnaire, $questionGroup) {
+        $questionnaire->last_modified = new MongoDate();
+        if ($questionGroup != null) {
+
+            //sinon positionnement relatif
+            if ($questionnaire->questions_group != null) {
+                $questionnaire->questions_group[] = $questionGroup;
+            } else {
+                $questionnaire->questions_group = array();
+                $questionnaire->questions_group[] = $questionGroup;
+            }
+        }
+        return $questionnaire;
     }
 
 }

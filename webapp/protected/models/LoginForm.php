@@ -10,6 +10,7 @@ class LoginForm extends CFormModel
 	public $username;
 	public $password;
 	public $rememberMe;
+        public $profil;
 
 	private $_identity;
 
@@ -22,7 +23,7 @@ class LoginForm extends CFormModel
 	{
 		return array(
 			// username and password are required
-			array('username, password', 'required'),
+			array('username, password, profil', 'required'),
 			// rememberMe needs to be a boolean
 			array('rememberMe', 'boolean'),
 			// password needs to be authenticated
@@ -39,6 +40,7 @@ class LoginForm extends CFormModel
                         'username' => 'Nom d\'utilisateur',
                         'password' => 'Mot de passe',
 			'rememberMe'=> 'Se souvenir de moi',
+                        'profil' => 'Profil'
 		);
 	}
 

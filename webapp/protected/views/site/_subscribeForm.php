@@ -50,7 +50,12 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'profil'); ?>
-        <?php echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()', 'labelOptions'=>array('style'=>'display:inline'))); ?>
+        <?php
+        echo $form->textField($model, 'profil[]', array(
+            'value' => $profil,
+            'readonly' => true
+        ));
+        ?>
         <?php echo $form->error($model, 'profil'); ?>
     </div>
 
@@ -67,7 +72,7 @@
     </div>
 
     <div class="row">
-        <div id="address" style="display:none;">
+        <div id="address" <?php if ($profil != "clinicien") echo "style=\"display:none;\"" ?>>
             <?php echo CHtml::activeLabel($model, 'address', array('required' => true)); ?>
             <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
             <?php echo $form->error($model, 'address'); ?>
@@ -75,22 +80,11 @@
     </div>
 
     <div class="row">
-        <div id="centre" style="display:none;">
+        <div id="centre" <?php if ($profil != "neuropathologiste") echo "style=\"display:none;\"" ?>>
             <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
             <?php echo $form->dropDownList($model, 'centre', User::model()->getArrayCentre(), array('prompt' => '----')); ?>
             <?php echo $form->error($model, 'centre'); ?>
         </div>
-    </div>
-
-    <div class="row">
-        <p class="note">Cliquez sur l'image pour rafraichir</p>
-        <?php
-        $this->widget('CCaptcha', array('clickableImage' => true, 'showRefreshButton' => false));
-        echo '<br>';
-        echo $form->labelEx($model, 'verifyCode');
-        echo $form->textField($model, 'verifyCode');
-        echo $form->error($model, 'verifyCode');
-        ?>
     </div>
 
     <div class="row">
@@ -102,29 +96,3 @@
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        var userProfil = document.getElementById("User_profil");
-        var profil = userProfil.options[userProfil.selectedIndex].text;
-        switch (profil) {
-            case "clinicien":           $('#address').show(); break;
-            case "neuropathologiste":   $('#centre').show(); break;    
-        }                                      
-    });
-    function validate_dropdown() {
-        var userProfil = document.getElementById("User_profil");
-        var profil = userProfil.options[userProfil.selectedIndex].text;
-        switch (profil) {
-            case "clinicien":           $('#address').show();
-                                        $('#centre').hide();
-                                        break;
-            case "neuropathologiste":   $('#address').hide();
-                                        $('#centre').show();
-                                        break;
-            default:
-                                        $('#address').hide();
-                                        $('#centre').hide();
-        }
-    }
-</script>

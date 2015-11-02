@@ -27,7 +27,10 @@ class Answer extends EMongoDocument {
      * @var type 
      */
     public $id;
-    
+
+    /*
+     * form type: clinique, neuropathologique, genetique
+     */
     public $type;
 
     /**
@@ -45,6 +48,7 @@ class Answer extends EMongoDocument {
      * unique id of the questionnaire
      */
     public $questionnaireMongoId;
+
     /**
      * nom du formulaire
      * @var type 
@@ -97,7 +101,7 @@ class Answer extends EMongoDocument {
 
         return array(
             'id' => 'Id',
-            'name'=>'Nom',
+            'name' => 'Nom',
             'last_updated' => 'Dernière sauvegarde',
             'last_modified' => 'Date du questionnaire',
         );
@@ -118,10 +122,10 @@ class Answer extends EMongoDocument {
     /**
      * render in html the questionnaire
      */
-    public function renderHTML() {
+    public function renderHTML($lang) {
         $result = "";
         foreach ($this->answers_group as $answer_group) {
-            $result.=$this->renderAnswerGroupHTML($answer_group);
+            $result.=AnswerHTMLRenderer::renderAnswerGroupHTML($this, $answer_group, $lang);
             $result.= "<br><div style=\”clear:both;\"></div>";
         }
         return $result;
@@ -192,7 +196,7 @@ class Answer extends EMongoDocument {
             $result = $user->nom;
         return $result;
     }
-    
+
     /**
      * retourne l'id de user qui a renseigné la fiche
      * @return type

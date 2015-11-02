@@ -11,7 +11,6 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
         $this->widget('bootstrap.widgets.TbGridView', array(
             'type' => 'striped bordered condensed',
             'dataProvider' => new CArrayDataProvider(array(get_object_vars($patient))),
-//    'dataProvider' => new CArrayDataProvider(array($model->getAttributes())),
             'template' => "{items}",
             'columns' => array(
                 array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->isAdmin()),
@@ -29,7 +28,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 <hr />
 
 <h4> Fiches patient renseignées : </h4>
-
+<?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "clinique")) { ?>
 <h5> Fiches cliniques </h5>
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
@@ -46,183 +45,77 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 (
                 'update' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'clinicien\')?true:false;'
+                    'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                 ),
                 'delete' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'clinicien\')?true:false;'
+                    'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                 )
             ),
             'htmlOptions' => array('style' => 'width: 70px'),
         ),
     ),
 ));
-?>
-<?php if (Yii::app()->user->getState('activeProfil') != "clinicien") { ?>
-<h5> Fiches neuropathologiques </h5>
-<?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
-    'dataProvider' => $dataProviderNeuropathologiques,
-    'template' => "{items}",
-    'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-    'columns' => array(
-        array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-        array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-        array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'buttons' => array
-                (
-                'update' => array
+} ?>
+<?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "neuropathologique")) { ?>
+    <h5> Fiches neuropathologiques </h5>
+    <?php
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProviderNeuropathologiques,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'buttons' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'neuropathologiste\')?true:false;'
+                    'update' => array
+                        (
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
+                    ),
+                    'delete' => array
+                        (
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
+                    )
                 ),
-                'delete' => array
-                    (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'neuropathologiste\')?true:false;'
-                )
+                'htmlOptions' => array('style' => 'width: 70px'),
             ),
-            'htmlOptions' => array('style' => 'width: 70px'),
         ),
-    ),
-));
+    ));
 }
 ?>
-<?php if (Yii::app()->user->getState('activeProfil') != "clinicien") { ?>
-<h5> Fiches génétiques </h5>
-<?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
-    'dataProvider' => $dataProviderGenetiques,
-    'template' => "{items}",
-    'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-    'columns' => array(
-        array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-        array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-        array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'buttons' => array
-                (
-                'update' => array
+<?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "genetique")) { ?>
+    <h5> Fiches génétiques </h5>
+    <?php
+    $this->widget('bootstrap.widgets.TbGridView', array(
+        'type' => 'striped bordered condensed',
+        'dataProvider' => $dataProviderGenetiques,
+        'template' => "{items}",
+        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'columns' => array(
+            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
+            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array(
+                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'buttons' => array
                     (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'geneticien\')?true:false;'
+                    'update' => array
+                        (
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
+                    ),
+                    'delete' => array
+                        (
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "genetique")'
+                    )
                 ),
-                'delete' => array
-                    (
-                    'visible' => '(Yii::app()->user->id == $data->getUserId() && Yii::app()->user->getState(\'activeProfil\')==\'geneticien\')?true:false;'
-                )
+                'htmlOptions' => array('style' => 'width: 70px'),
             ),
-            'htmlOptions' => array('style' => 'width: 70px'),
         ),
-    ),
-));
+    ));
 }
-?>
-
-
-
-
-<?php
-//if (Yii::app()->user->getActiveProfil() == "clinicien") {
-//    $this->widget('bootstrap.widgets.TbGridView', array(
-//        'type' => 'striped bordered condensed',
-//        'dataProvider' => $dataProvider,
-//        'template' => "{items}",
-//        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-//        'columns' => array(
-//            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-//            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-//            array(
-//                'class' => 'bootstrap.widgets.TbButtonColumn',
-//                'htmlOptions' => array('style' => 'width: 70px'),
-//            ),
-//        ),
-//    ));
-//}
-//
-?>
-
-<?php
-//if (Yii::app()->user->getActiveProfil() == "geneticien") {
-//    $this->widget('bootstrap.widgets.TbGridView', array(
-//        'type' => 'striped bordered condensed',
-//        'dataProvider' => $dataProvider,
-//        'template' => "{items}",
-//        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-//        'columns' => array(
-//            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-//            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-//            array(
-//                'class' => 'bootstrap.widgets.TbButtonColumn',
-//                'buttons' => array
-//                    (
-//                    'update' => array
-//                        (
-//                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
-//                    ),
-//                    'delete' => array
-//                        (
-//                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
-//                    )
-//                ),
-//                'htmlOptions' => array('style' => 'width: 70px'),
-//            ),
-//        ),
-//    ));
-//}
-//
-?>
-
-<?php
-//if (Yii::app()->user->getActiveProfil() == "neuropathologiste") {
-//    $this->widget('bootstrap.widgets.TbGridView', array(
-//        'type' => 'striped bordered condensed',
-//        'dataProvider' => $dataProvider,
-//        'template' => "{items}",
-//        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-//        'columns' => array(
-//            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-//            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-//            array(
-//                'class' => 'bootstrap.widgets.TbButtonColumn',
-//                'buttons' => array
-//                    (
-//                    'update' => array
-//                        (
-//                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
-//                    ),
-//                    'delete' => array
-//                        (
-//                        'visible' => '(Yii::app()->user->id == $data->getUserId())?true:false;'
-//                    )
-//                ),
-//                'htmlOptions' => array('style' => 'width: 70px'),
-//            ),
-//        ),
-//    ));
-//}
-//
-?>
-
-<?php
-//if (Yii::app()->user->getActiveProfil() == "chercheur") {
-//    $this->widget('bootstrap.widgets.TbGridView', array(
-//        'type' => 'striped bordered condensed',
-//        'dataProvider' => $dataProvider,
-//        'template' => "{items}",
-//        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
-//        'columns' => array(
-//            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-//            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
-//            array(
-//                'class' => 'bootstrap.widgets.TbButtonColumn',
-//                'template' => '{view}',
-//                'htmlOptions' => array('style' => 'width: 70px'),
-//            ),
-//        ),
-//    ));
-//}
-//
 ?>
 
 <?php
@@ -238,24 +131,11 @@ if (Yii::app()->user->getState('activeProfil') != "chercheur" && Yii::app()->use
             <p>Saisir une nouvelle fiche : </p>
         </div>
         <div class="span3" style="margin:-5px;">
-            <select name="form">
-                <option selected="selected" disabled="disabled">--- Sélectionner une fiche ---</option>
-                <?php
-                foreach ($questionnaire as $fiche => $value) {
-                    foreach ($value as $k => $v) {
-                        if ($k == 'id') {
-                            if (Yii::app()->user->getActiveProfil() == "clinicien" && $value['type'] == 'clinique')
-                                echo "<option value=\"" . $value['id'] . "\">" . $value['name'] . "</option>";
-                            else if (Yii::app()->user->getActiveProfil() == "geneticien" && $value['type'] == 'genetique')
-                                echo "<option value=\"" . $value['id'] . "\">" . $value['name'] . "</option>";
-                            else if (Yii::app()->user->getActiveProfil() == "neuropathologiste" && $value['type'] == 'neuropathologique')
-                                echo "<option value=\"" . $value['id'] . "\">" . $value['name'] . "</option>";
-                        }
-                    }
-                }
-                ?>
-            </select>
+            <?php 
+            echo CHtml::dropDownList('form', 'Demence', Questionnaire::model()->getFiche(Yii::app()->user->getActiveProfil()), array('prompt' => '--- Choisir une fiche ---'));
+        ?>
         </div>
+        
         <div class="span3" style="margin:-5px;">
             <?php echo CHtml::submitButton('Saisir'); ?>
         </div>

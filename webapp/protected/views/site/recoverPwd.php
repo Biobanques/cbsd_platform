@@ -12,7 +12,7 @@
         'enableAjaxValidation' => false,
     ));
     ?>
-    
+
     <table cellpadding="10" style="margin-left:20px">
         <tr>
             <td>
@@ -40,7 +40,7 @@
             </td>
         </tr>
     </table>
-    
+
     <?php
     $this->endWidget();
     ?>
