@@ -21,11 +21,6 @@
         <?php echo $form->dropDownList($questionBloc, 'title', QuestionBloc::model()->getBlocTitle(), array('prompt' => '----')); ?>
         <?php echo $form->error($questionBloc, 'title'); ?>
     </div>
-    <div class="row">
-        <?php echo $form->labelEx($questionBloc, 'parent_group'); ?>
-        <?php echo $form->dropDownList($questionBloc, 'parent_group', $questionGroup->getOnglets(), array('prompt' => '---')); ?>
-        <?php echo $form->error($questionBloc, 'parent_group'); ?>
-    </div>
     <div class="row buttons">
         <?php echo CHtml::submitButton('Enregistrer'); ?>
     </div>

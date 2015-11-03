@@ -21,6 +21,8 @@ class Answer extends EMongoDocument {
     public function getCollectionName() {
         return 'answer';
     }
+    
+    public $creator;
 
     /**
      * equal id of the questionnaire
@@ -180,7 +182,7 @@ class Answer extends EMongoDocument {
      */
     public function getLastUpdated() {
         if ($this->last_updated != null)
-            return date("d/m/Y H:i", $this->last_updated->sec);
+            return date("d/m/Y H:m", $this->last_updated->sec);
         else
             return null;
     }

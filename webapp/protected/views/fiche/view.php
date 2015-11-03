@@ -1,5 +1,11 @@
-<h3 align="center">Formulaire <?php echo $model->name; ?></h3>
+<h3 align="center">Fiche <?php echo $model->name; ?></h3>
 <p>Description: <?php echo $model->description; ?></p>
+<?php
+if ($model->last_modified != null && $model->last_modified != "") {
+    echo "<p>Dernière mise à jour le: " . $model->getLastUpdated() . "</p>";
+}
+?>
+<p>Crée par: <?php echo $model->creator; ?></p>
 <hr />
 <?php
 echo CHtml::link('Vue format HTML', array('fiche/viewOnePage', 'id' => $model->_id));
