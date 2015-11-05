@@ -7,8 +7,5 @@
 
 
 <?php
-if (isset(Yii::app()->user->id))
-    echo $this->renderPartial('_updateSubscribeForm', array('model' => $model, 'profil' => $profil));
-else
-    echo $this->renderPartial('_subscribeForm', array('model' => $model, 'profil' => $profil));
+    echo $this->renderPartial('_subscribeForm', array('model' => $model));
 ?>

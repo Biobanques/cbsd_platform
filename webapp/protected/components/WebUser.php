@@ -74,6 +74,10 @@ class WebUser extends CWebUser {
         return (in_array("chercheur", $this->getState('profil')));
     }
 
+    public function getUserProfil() {
+        $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
+        return $user->profil;
+    }
     /**
      * profils dans l'ordre par défaut : neuropathologiste, geneticien, clinicien, chercheur
      * @return active profil

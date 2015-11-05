@@ -28,6 +28,7 @@ class UserIdentity extends CUserIdentity {
             $this->_id = $record->_id;
             //on stocke le profil pour checker plus tard si admin
             $this->setState('profil', $record->profil);
+            $this->setState('defaultProfil', $record->getDefaultProfil());
             $this->setState('activeProfil', $record->getDefaultProfil());
         }
         return $this->errorCode;

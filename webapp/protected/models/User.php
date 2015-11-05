@@ -68,7 +68,7 @@ class User extends EMongoDocument {
             'email' => Yii::t('common', 'email'),
             'telephone' => Yii::t('common', 'phone'),
             'gsm' => Yii::t('common', 'gsm'),
-            'profil' => Yii::t('common', 'profil'),
+            'profil' => 'Profil',
             'address' => 'Adresse',
             'centre' => 'Centre de référence',
             'statut' => 'Statut',
