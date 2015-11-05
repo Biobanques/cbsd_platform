@@ -113,10 +113,28 @@ class SiteController extends Controller {
 
     public function actionLoginProfil() {
         // display the login form
-        if (isset($_POST['administrateur'])) {
-            
+        $profil = "";
+        if (isset($_POST['clinicien'])) {
+            $profil = "clinicien";
+            Yii::app()->user->setActifProfil($profil);
+            $this->render('index');
         }
-        $this->render('loginProfil');
+        if (isset($_POST['geneticien'])) {
+            $profil = "geneticien";
+            Yii::app()->user->setActifProfil($profil);
+            $this->render('index');
+        }
+        if (isset($_POST['neuropathologiste'])) {
+            $profil = "neuropathologiste";
+            Yii::app()->user->setActifProfil($profil);
+            $this->render('index');
+        }
+        if (isset($_POST['chercheur'])) {
+            $profil = "chercheur";
+            Yii::app()->user->setActifProfil($profil);
+            $this->render('index');
+        }
+        $this->render('loginProfil', array('profil' => $profil));
     }
 
     /**

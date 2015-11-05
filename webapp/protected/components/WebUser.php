@@ -85,6 +85,10 @@ class WebUser extends CWebUser {
     public function getActiveProfil() {
         return $this->getState('activeProfil');
     }
+    
+    public function setActifProfil($activeProfil) {
+        $this->setState('activeProfil', $activeProfil);
+    }
 
     public function setActiveProfil($activeProfil) {
         if ($activeProfil == "") {
