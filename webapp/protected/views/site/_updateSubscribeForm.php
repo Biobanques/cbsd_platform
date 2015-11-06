@@ -1,5 +1,5 @@
 <?php
-/* @var $this UserController */
+/* @var $this SiteController */
 /* @var $model User */
 /* @var $form CActiveForm */
 ?>
@@ -50,7 +50,6 @@
 
     <?php echo $form->labelEx($model, 'profil'); ?>
     <?php
-    $preSelectedCategories = array(1 => true, 2 => true);
     echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('labelOptions' => array('style' => 'display:inline'), 'checked' => 'checked'));
     ?>
     <?php echo $form->error($model, 'profil'); ?>

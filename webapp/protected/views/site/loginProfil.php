@@ -1,6 +1,5 @@
 <?php
 /* @var $this SiteController */
-/* @var $model LoginForm */
 /* @var $form CActiveForm  */
 ?>
 
@@ -22,23 +21,23 @@
             <?php echo "Bienvenue <b>" . ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom()) . "</b>, <br>sous quel profil voulez-vous vous connecter?"; ?>
             <br><br>
             <div>
-                <?php echo CHtml::radioButtonList("administrateur", false, array("value" => "administrateur"), array('disabled' => (in_array("administrateur", Yii::app()->user->getUserProfil())) ? "" : "disabled", 'labelOptions' => array('style' => 'display:inline'))); ?>
+                <?php echo CHtml::radioButtonList("profil", '', array("administrateur" => "administrateur"), array('disabled' => (in_array("administrateur", Yii::app()->user->getUserProfil())) ? "" : "disabled", 'labelOptions' => array('style' => 'display:inline'))); ?>
             </div>
 
             <div>
-                <?php echo CHtml::radioButtonList("clinicien", false, array("value" => "clinicien"), array('disabled' => (in_array("clinicien", Yii::app()->user->getUserProfil())) ? "" : "disabled", 'labelOptions' => array('style' => 'display:inline'))); ?>
+                <?php echo CHtml::radioButtonList("profil", '', array("clinicien" => "clinicien"), array('disabled' => (in_array("clinicien", Yii::app()->user->getUserProfil())) ? "" : "disabled", 'labelOptions' => array('style' => 'display:inline'))); ?>
             </div>
 
             <div>
-                <?php echo CHtml::radioButtonList("neuropathologiste", false, array("value" => "neuropathologiste"), array('disabled' => (in_array("neuropathologiste", Yii::app()->user->getUserProfil())) ? "" : "disabled", 'labelOptions' => array('style' => 'display:inline'))); ?>
+                <?php echo CHtml::radioButtonList("profil", '', array("neuropathologiste" => "neuropathologiste"), array('disabled' => (in_array("neuropathologiste", Yii::app()->user->getUserProfil())) ? "" : "disabled", 'labelOptions' => array('style' => 'display:inline'))); ?>
             </div>
 
             <div>
-                <?php echo CHtml::radioButtonList("geneticien", false, array("value" => "geneticien"), array('disabled' => (in_array("geneticien", Yii::app()->user->getUserProfil())) ? "" : "disabled", 'labelOptions' => array('style' => 'display:inline'))); ?>
+                <?php echo CHtml::radioButtonList("profil", '', array("geneticien" => "geneticien"), array('disabled' => (in_array("geneticien", Yii::app()->user->getUserProfil())) ? "" : "disabled", 'labelOptions' => array('style' => 'display:inline'))); ?>
             </div>
 
             <div>
-                <?php echo CHtml::radioButtonList("chercheur", false, array("value" => "chercheur"), array('disabled' => (in_array("chercheur", Yii::app()->user->getUserProfil())) ? "" : "disabled", 'labelOptions' => array('style' => 'display:inline'))); ?>
+                <?php echo CHtml::radioButtonList("profil", '', array("chercheur" => "chercheur"), array('disabled' => (in_array("chercheur", Yii::app()->user->getUserProfil())) ? "" : "disabled", 'labelOptions' => array('style' => 'display:inline'))); ?>
             </div>
             <br>
             <div>

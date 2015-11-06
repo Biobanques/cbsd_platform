@@ -1,7 +1,7 @@
 <?php
 /* @var $this Controller */
-define('Base', Yii::app()->request->baseUrl);
-define('BaseTheme', Yii::app()->theme->baseUrl);
+if (!defined('Base')) define('Base', Yii::app()->request->baseUrl);
+if (!defined('BaseTheme')) define('BaseTheme', Yii::app()->theme->baseUrl);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -30,8 +30,8 @@ define('BaseTheme', Yii::app()->theme->baseUrl);
         array('label' => 'Administration', 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin()),
         array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
         array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-        array('label' => 'Accédez en tant que : ', 'url' => '', 'visible' => !Yii::app()->user->isGuest));
-    if (!Yii::app()->user->isGuest)
+        array('label' => 'Accédez en tant que : ', 'url' => '', 'visible' => !Yii::app()->user->isGuest && Yii::app()->controller->id == "answer" && Yii::app()->controller->action->id == "affichepatient"));
+    if (!Yii::app()->user->isGuest && Yii::app()->controller->id == "answer" && Yii::app()->controller->action->id == "affichepatient")
         $menuItems[] = array(
             'template' => GetProfil::getHTML(),
         );

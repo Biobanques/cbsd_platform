@@ -113,28 +113,30 @@ class SiteController extends Controller {
 
     public function actionLoginProfil() {
         // display the login form
-        $profil = "";
-        if (isset($_POST['clinicien'])) {
-            $profil = "clinicien";
-            Yii::app()->user->setActifProfil($profil);
-            $this->render('index');
-        }
-        if (isset($_POST['geneticien'])) {
-            $profil = "geneticien";
-            Yii::app()->user->setActifProfil($profil);
-            $this->render('index');
-        }
-        if (isset($_POST['neuropathologiste'])) {
-            $profil = "neuropathologiste";
-            Yii::app()->user->setActifProfil($profil);
-            $this->render('index');
-        }
-        if (isset($_POST['chercheur'])) {
-            $profil = "chercheur";
-            Yii::app()->user->setActifProfil($profil);
-            $this->render('index');
-        }
-        $this->render('loginProfil', array('profil' => $profil));
+        if (isset($_POST['profil'])) {
+            $selected_radio = $_POST['profil'];
+            if ($selected_radio == "administrateur") {
+                Yii::app()->user->setActifProfil($selected_radio);
+                $this->render('index');
+            }
+            if ($selected_radio == "clinicien") {
+                Yii::app()->user->setActifProfil($selected_radio);
+                $this->render('index');
+            }
+            if ($selected_radio == "neuropathologiste") {
+                Yii::app()->user->setActifProfil($selected_radio);
+                $this->render('index');
+            }
+            if ($selected_radio == "geneticien") {
+                Yii::app()->user->setActifProfil($selected_radio);
+                $this->render('index');
+            }
+            if ($selected_radio == "chercheur") {
+                Yii::app()->user->setActifProfil($selected_radio);
+                $this->render('index');
+            }
+        } else
+        $this->render('loginProfil');
     }
 
     /**
@@ -195,6 +197,27 @@ class SiteController extends Controller {
         }
     }
 
+    public function actionSubscribeProfil() {
+        $model = new User ();
+        if (isset($_POST['clinicien'])) {
+            $_SESSION['profil'] = $profil = "clinicien";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } else
+        if (isset($_POST['neuropathologiste'])) {
+            $_SESSION['profil'] = $profil = "neuropathologiste";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } else
+        if (isset($_POST['geneticien'])) {
+            $_SESSION['profil'] = $profil = "geneticien";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } else
+        if (isset($_POST['chercheur'])) {
+            $_SESSION['profil'] = $profil = "chercheur";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } else
+            $this->render('subscribeProfil', array('model' => $model));
+    }
+
     /**
      * action to subscribe a new user account.
      */
@@ -202,7 +225,10 @@ class SiteController extends Controller {
         $model = new User ();
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            $model->statut = "inactif";
+            if ($model->profil == array("clinicien")) {
+                $model->statut = "actif";
+            } else
+                $model->statut = "inactif";
             if ($model->save()) {
                 if ($model->profil == array("clinicien")) {
                     $model->statut = "actif";

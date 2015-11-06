@@ -7,5 +7,5 @@
 
 
 <?php
-    echo $this->renderPartial('_subscribeForm', array('model' => $model));
+echo $this->renderPartial('_subscribeForm', array('model' => $model, 'profil' => $_SESSION['profil']));
 ?>

@@ -57,7 +57,7 @@
                 <?php echo Yii::t('common', 'noAccount') ?><br><br>
                 <?php
                 echo CHtml::button(Yii::t('common', 'subscribe'), array(
-                    'submit' => array_merge(array("site/subscribe"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())
+                    'submit' => array_merge(array("site/subscribeProfil"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())
                 ));
                 ?>
             </div>
