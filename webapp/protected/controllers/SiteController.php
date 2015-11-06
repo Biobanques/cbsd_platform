@@ -179,19 +179,29 @@ class SiteController extends Controller {
         if (isset(Yii::app()->user->id)) {
             $model = User::model()->findByPk(new MongoID(Yii::app()->user->id));
         }
-        if (isset($_POST['clinicien']))
+        if (isset($_POST['clinicien'])) {
+            $_SESSION['updateProfil'] = $_POST['clinicien'];
             $this->render('_updateSubscribeForm', array('model' => $model));
-        if (isset($_POST['neuropathologiste']))
+        }
+        if (isset($_POST['neuropathologiste'])) {
+            $_SESSION['updateProfil'] = $_POST['neuropathologiste'];
             $this->render('_updateSubscribeForm', array('model' => $model));
-        if (isset($_POST['geneticien']))
+        }
+        if (isset($_POST['geneticien'])) {
+            $_SESSION['updateProfil'] = $_POST['geneticien'];
             $this->render('_updateSubscribeForm', array('model' => $model));
-        if (isset($_POST['chercheur']))
+        }
+        if (isset($_POST['chercheur'])) {
+            $_SESSION['updateProfil'] = $_POST['chercheur'];
             $this->render('_updateSubscribeForm', array('model' => $model));
+        }
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            if ($model->update()) {
-                Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté.');
-                Yii::app()->user->logout();
+            if ($model->save()) {
+                if ($_SESSION['updateProfil'] == "clinicien")
+                Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Veuillez vous reconnecter pour accéder à CBSDPlatform avec le nouveau profil ajouté.');
+                else
+                   Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Vous recevrez un mail de confirmation.'); 
                 $this->redirect(array('site/index'));
             }
         }
@@ -232,7 +242,7 @@ class SiteController extends Controller {
             if ($model->save()) {
                 if ($model->profil == array("clinicien")) {
                     $model->statut = "actif";
-                    Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDForms !');
+                    Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDPlatform !');
                     $this->redirect(array('site/index'));
                 }
                 Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
