@@ -111,32 +111,32 @@ class SiteController extends Controller {
         $this->render('login', array('model' => $model));
     }
 
+    /**
+     * Displays the loginProfil page
+     */
     public function actionLoginProfil() {
         // display the login form
         if (isset($_POST['profil'])) {
             $selected_radio = $_POST['profil'];
             if ($selected_radio == "administrateur") {
                 Yii::app()->user->setActifProfil($selected_radio);
-                $this->render('index');
-            }
+            } else
             if ($selected_radio == "clinicien") {
                 Yii::app()->user->setActifProfil($selected_radio);
-                $this->render('index');
-            }
+            } else
             if ($selected_radio == "neuropathologiste") {
                 Yii::app()->user->setActifProfil($selected_radio);
-                $this->render('index');
-            }
+            } else
             if ($selected_radio == "geneticien") {
                 Yii::app()->user->setActifProfil($selected_radio);
-                $this->render('index');
-            }
+            } else
             if ($selected_radio == "chercheur") {
                 Yii::app()->user->setActifProfil($selected_radio);
-                $this->render('index');
             }
+            Yii::app()->user->setFlash('success', 'Vous êtes connecté sous le profil ' . Yii::app()->user->getActiveProfil() . '.');
+            $this->redirect(Yii::app()->user->returnUrl);
         } else
-        $this->render('loginProfil');
+            $this->render('loginProfil');
     }
 
     /**
@@ -198,12 +198,18 @@ class SiteController extends Controller {
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
             if ($model->save()) {
-                if ($_SESSION['updateProfil'] == "clinicien")
-                Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Veuillez vous reconnecter pour accéder à CBSDPlatform avec le nouveau profil ajouté.');
-                else
-                   Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Vous recevrez un mail de confirmation.'); 
-                $this->redirect(array('site/index'));
-            }
+                if (isset($_SESSION['updateProfil'])) {
+                    if ($_SESSION['updateProfil'] == "clinicien") {
+                        Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Veuillez vous reconnecter pour accéder à CBSDPlatform avec le nouveau profil ajouté.');
+                        $this->redirect(array('site/index'));
+                    } else {
+                        Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Vous recevrez un mail de confirmation.');
+                        $this->redirect(array('site/index'));
+                    }
+                }
+            } else
+                Yii::app()->user->setFlash('error', 'Le profil n\'a pas été ajouté.');
+            $this->render('_updateSubscribeForm', array('model' => $model));
         }
     }
 
@@ -239,16 +245,25 @@ class SiteController extends Controller {
                 $model->statut = "actif";
             } else
                 $model->statut = "inactif";
-            if ($model->save()) {
-                if ($model->profil == array("clinicien")) {
-                    $model->statut = "actif";
-                    Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDPlatform !');
-                    $this->redirect(array('site/index'));
-                }
-                Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                $this->redirect(array('site/index'));
+
+            $criteria = new EMongoCriteria();
+            $criteria->login = $model->login;
+            $userLogin = User::model()->findAll($criteria);
+            if (count($userLogin) > 0) {
+                Yii::app()->user->setFlash('error', 'Le login a déjà été utilisé. Veuillez choisir un login différent.');
+                $this->render('subscribe', array('model' => $model));
             } else {
-                Yii::app()->user->setFlash('error', 'L\'utilisateur n\'a pas été enregistré.');
+                if ($model->save()) {
+                    if ($model->profil == array("clinicien")) {
+                        $model->statut = "actif";
+                        Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDPlatform !');
+                        $this->redirect(array('site/index'));
+                    }
+                    Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                    $this->redirect(array('site/index'));
+                } else {
+                    Yii::app()->user->setFlash('error', 'L\'utilisateur n\'a pas été enregistré.');
+                }
             }
         }
         $this->render('subscribe', array('model' => $model));

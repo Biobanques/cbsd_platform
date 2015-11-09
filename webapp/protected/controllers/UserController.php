@@ -53,6 +53,13 @@ class UserController extends Controller {
         $model = new User;
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
+            $criteria = new EMongoCriteria();
+            $criteria->login = $model->login;
+            $userLogin = User::model()->findAll($criteria);
+            if (count($userLogin) > 0) {
+                Yii::app()->user->setFlash('error', 'Le login a déjà été utilisé. Veuillez choisir un login différent.');
+                $this->render('create', array('model' => $model));
+            } else
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
                 $this->redirect(array('view', 'id' => $model->_id));
@@ -72,10 +79,10 @@ class UserController extends Controller {
         $model = $this->loadModel($id);
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
-                if ($model->update()) {
-                    Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
-                    $this->redirect(array('view', 'id' => $model->_id));
-                }
+            if ($model->update()) {
+                Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
+                $this->redirect(array('view', 'id' => $model->_id));
+            }
         }
         $this->render('update', array(
             'model' => $model,

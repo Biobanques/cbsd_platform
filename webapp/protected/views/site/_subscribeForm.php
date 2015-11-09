@@ -58,7 +58,7 @@
 
                 <div class="col-lg-3">
                     <?php echo $form->labelEx($model, 'telephone'); ?>
-                    <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250)); ?>
+                    <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'Format 0C CC CC CC CC')); ?>
                     <?php echo $form->error($model, 'telephone'); ?>
                 </div>
             </div>

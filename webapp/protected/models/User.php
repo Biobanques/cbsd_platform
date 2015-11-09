@@ -48,6 +48,7 @@ class User extends EMongoDocument {
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('address', 'addressValidator'),
             array('centre', 'centreValidator'),
+            array('statut', 'statutValidator'),
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
             array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre, statut', 'safe', 'on' => 'search, update'),
@@ -222,16 +223,33 @@ class User extends EMongoDocument {
     }
 
     public function addressValidator() {
-        if (($this->profil == array("clinicien")) && ($this->address == "")) {
-            $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
-            $this->addError('address', 'Adresse ne peut pas être vide.');
+        if (isset($this->profil)) {
+            if (gettype($this->profil) == "string") {
+                
+            } else
+            if (in_array("clinicien", $this->profil) && ($this->address == "")) {
+                $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
+                $this->addError('address', 'Adresse ne peut pas être vide.');
+            }
         }
     }
 
     public function centreValidator() {
-        if (($this->profil == array("neuropathologiste")) && ($this->centre == "")) {
-            $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
-            $this->addError('centre', 'Centre ne peut pas être vide.');
+        if (isset($this->profil)) {
+            if (gettype($this->profil) == "string") {
+                
+            } else
+            if (in_array("neuropathologiste", $this->profil) && ($this->centre == "")) {
+                $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
+                $this->addError('centre', 'Centre ne peut pas être vide.');
+            }
+        }
+    }
+
+    public function statutValidator() {
+        if (Yii::app()->controller->id == "user" && $this->statut == "") {
+            $this->validatorList->add(CValidator::createValidator('required', $this, 'statut', array()));
+            $this->addError('statut', 'Statut ne peut pas être vide.');
         }
     }
 
