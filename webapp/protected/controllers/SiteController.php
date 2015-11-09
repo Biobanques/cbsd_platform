@@ -219,6 +219,9 @@ class SiteController extends Controller {
         }
     }
 
+    /**
+     * Displays the subscribeProfil page. User can choose which profil he wants to subscribe.
+     */
     public function actionSubscribeProfil() {
         $model = new User ();
         if (isset($_POST['clinicien'])) {

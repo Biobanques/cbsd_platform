@@ -1,5 +1,5 @@
 <?php
-/* @var $this UserController */
+/* @var $this SiteController */
 /* @var $model User */
 ?>
 
