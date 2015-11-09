@@ -115,6 +115,7 @@ class SiteController extends Controller {
      * Displays the loginProfil page
      */
     public function actionLoginProfil() {
+        $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
         // display the login form
         if (isset($_POST['profil'])) {
             $selected_radio = $_POST['profil'];
@@ -133,8 +134,13 @@ class SiteController extends Controller {
             if ($selected_radio == "chercheur") {
                 Yii::app()->user->setActifProfil($selected_radio);
             }
-            Yii::app()->user->setFlash('success', 'Vous êtes connecté sous le profil ' . Yii::app()->user->getActiveProfil() . '.');
-            $this->redirect(Yii::app()->user->returnUrl);
+            if (in_array($selected_radio, $user->statut)) {
+                Yii::app()->user->setFlash('success', 'Vous êtes connecté sous le profil ' . Yii::app()->user->getActiveProfil() . '.');
+                $this->redirect(Yii::app()->user->returnUrl);
+            } else {
+                Yii::app()->user->setFlash('error', 'Votre profil n\'a pas encore été activé. Veuillez contacter l\'administrateur.');
+                $this->render('loginProfil');
+            }
         } else
             $this->render('loginProfil');
     }
@@ -203,8 +209,8 @@ class SiteController extends Controller {
                         Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Veuillez vous reconnecter pour accéder à CBSDPlatform avec le nouveau profil ajouté.');
                         $this->redirect(array('site/index'));
                     } else {
-                        Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Vous recevrez un mail de confirmation.');
-                        $this->redirect(array('site/index'));
+                        Yii::app()->user->setFlash('success', 'Votre demande d\'ajout de profil a bien été envoyé. Vous recevrez un mail de confirmation.');
+                        $this->redirect(array('site/loginProfil'));
                     }
                 }
             } else
@@ -242,9 +248,9 @@ class SiteController extends Controller {
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
             if ($model->profil == array("clinicien")) {
-                $model->statut = "actif";
+                $model->statut = array("clinicien");
             } else
-                $model->statut = "inactif";
+                $model->statut = array();
 
             $criteria = new EMongoCriteria();
             $criteria->login = $model->login;
@@ -255,7 +261,6 @@ class SiteController extends Controller {
             } else {
                 if ($model->save()) {
                     if ($model->profil == array("clinicien")) {
-                        $model->statut = "actif";
                         Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDPlatform !');
                         $this->redirect(array('site/index'));
                     }

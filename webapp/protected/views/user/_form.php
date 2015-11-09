@@ -85,7 +85,7 @@
     <div class="row">
         <div id="statut">
             <?php echo CHtml::activeLabel($model, 'statut', array('required' => true)); ?>
-            <?php echo $form->dropDownList($model, 'statut', User::model()->getArrayStatut()); ?>
+            <?php echo $form->checkBoxList($model, 'statut', User::model()->getArrayProfilSorted(), array('labelOptions' => array('style' => 'display:inline'))); ?>
             <?php echo $form->error($model, 'statut'); ?>
         </div>
     </div>
