@@ -4,6 +4,14 @@
 /* @var $form CActiveForm */
 ?>
 
+<?php
+if (isset($_SESSION['profil'])) {
+    echo "<h1>" . Yii::t('common', 'subscribe') . " en tant que " . $_SESSION['updateProfil'] . "</h1>";
+} else {
+    echo "<h1>" . Yii::t('common', 'subscribe') . "</h1>";
+}
+?>
+
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(

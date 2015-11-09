@@ -70,7 +70,7 @@ class FormulaireController extends Controller {
             $model->creator = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
             $model->addQuestionGroup("firstgroup", "Questionnaire principal");
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'Le questionnaire a été enregistré avec succès.');
+                Yii::app()->user->setFlash('success', 'Le formulaire a été enregistré avec succès.');
                 $this->redirect($this->createUrl('update', array('id' => $model->_id)));
             }
         }
@@ -168,9 +168,9 @@ class FormulaireController extends Controller {
         $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
         if ($model->deleteQuestion($idQuestion)) {
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+                Yii::app()->user->setFlash('success', "La question a bien été supprimé");
             } else {
-                Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+                Yii::app()->user->setFlash('error', "La question n'a pas été supprimé. Un problème est apparu.");
                 Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
             }
         }
@@ -188,9 +188,9 @@ class FormulaireController extends Controller {
         $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
         if ($model->deleteQuestionGroup($idQuestionGroup)) {
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+                Yii::app()->user->setFlash('success', "L'onglet a bien été supprimé");
             } else {
-                Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+                Yii::app()->user->setFlash('error', "L'onglet n'a pas été supprimé. Un problème est apparu.");
                 Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
             }
         }
@@ -239,9 +239,9 @@ class FormulaireController extends Controller {
             }
         }
         if ($questionnaire->save())
-            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+            Yii::app()->user->setFlash('success', "La question a bien été supprimé");
         else {
-            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', "La question n'a pas été supprimé. Un problème est apparu.");
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $questionnaire;
@@ -284,9 +284,9 @@ class FormulaireController extends Controller {
             }
         }
         if ($questionnaire->save())
-            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+            Yii::app()->user->setFlash('success', "L'onglet a bien été supprimé");
         else {
-            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', "L'onglet n'a pas été supprimé. Un problème est apparu.");
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $questionnaire;
