@@ -114,7 +114,7 @@ class WebUser extends CWebUser {
     }
 
     /**
-     * affiche l'item "view" qui dépend du profil de l'utilisateur et de ses droits  
+     * affiche l'item "view" qui dépend du profil de l'utilisateur et de ses droits sur une fiche
      * @return boolean
      */
     public function isAuthorizedView($profil, $fiche) {
@@ -133,7 +133,7 @@ class WebUser extends CWebUser {
     }
     
     /**
-     * affiche l'item "update" qui dépend du profil de l'utilisateur et de ses droits  
+     * affiche l'item "update" qui dépend du profil de l'utilisateur et de ses droits sur une fiche
      * @return boolean
      */
     public function isAuthorizedUpdate($profil, $fiche) {
@@ -152,7 +152,7 @@ class WebUser extends CWebUser {
     }
     
     /**
-     * affiche l'item "delete" qui dépend du profil de l'utilisateur et de ses droits  
+     * affiche l'item "delete" qui dépend du profil de l'utilisateur et de ses droits sur une fiche 
      * @return boolean
      */
     public function isAuthorizedDelete($profil, $fiche) {
@@ -170,5 +170,23 @@ class WebUser extends CWebUser {
         }
     }
 
+    /**
+     * Droit "créer une fiche" qui dépend du profil de l'utilisateur et de ses droits sur une fiche 
+     * @return boolean
+     */
+    public function isAuthorizedCreate($profil, $fiche) {
+        $criteria = new EMongoCriteria();
+        $criteria->profil = $profil;
+        $criteria->type = $fiche;
+        $droit = Droits::model()->find($criteria);
+        foreach ($droit as $key => $value) {
+            if ($key == "role") {
+                if ($value == "")
+                    return false;
+                if (in_array("create", $value))
+                    return true;
+            }
+        }
+    }
 }
 ?>
