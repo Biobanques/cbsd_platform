@@ -130,7 +130,7 @@ class FormulaireController extends Controller {
                     $questionForm->id = $currentQuestion->id;
                     $questionForm->idQuestionGroup = $computedGroup->id;
 
-                    $model->saveQuestionnaireNewQuestion($questionForm);
+                    $model->saveQuestionnaireNewQuestionBloc($questionForm);
                 }
             }
         }

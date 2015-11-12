@@ -111,9 +111,11 @@ class Answer extends EMongoDocument {
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria ();
-        if (isset($this->id) && !empty($this->id)) {
+        /*if (isset($this->id) && !empty($this->id)) {
             $criteria->id = "" . $this->id . "";
-        }
+        }*/
+        if (isset($this->name) && !empty($this->name))
+        $criteria->name = "Alzheimer";
 
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
@@ -164,7 +166,15 @@ class Answer extends EMongoDocument {
     public function renderContributors() {
         return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
-
+    
+    public function getFicheName() {
+        $result = "";
+        $fiche = Answer::model()->findByPk(new MongoID($this->_id));
+        if ($fiche != null)
+            $result = $fiche->name;
+        return $result;
+    }
+    
     /**
      * get the last modified value into a french date format JJ/MM/AAAA
      * @return type

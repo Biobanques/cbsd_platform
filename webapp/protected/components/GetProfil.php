@@ -19,6 +19,7 @@ class GetProfil {
         foreach (Yii::app()->user->getState('profil') as $profil) {
             $profilsList[$profil] = $profil;
         }
+        $profilsList['newProfil']= "Demander un nouveau profil";
         $controler = Yii::app()->getController()->getId();
         $action = Yii::app()->getController()->getAction()->getId();
         $html = CHtml::form(Yii::app()->createUrl("$controler/$action"), "POST", array('class' => "navbar-form pull-left"));

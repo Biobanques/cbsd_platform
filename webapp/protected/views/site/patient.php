@@ -41,7 +41,7 @@
 
     <div class="row" style="float:left; margin-left:35px">
         <?php echo $form->labelEx($model, 'date_naissance'); ?>
-        <?php echo $form->textField($model, 'date_naissance'); ?>
+        <?php echo $form->textField($model, 'date_naissance', array('placeholder' => 'Format jj/mm/aaaa')); ?>
         <?php echo $form->error($model, 'date_naissance'); ?>
     </div>
 

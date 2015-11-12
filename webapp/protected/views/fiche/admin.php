@@ -20,9 +20,10 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'fiche-grid',
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
+    'filter' => $model,
     'columns' => array(
-        'name',
-        array('header' => 'user', 'value' => '$data->getUserRecorderName()'),
+        array('header' => 'Nom de la fiche', 'value' => '$data->getFicheName()', 'filter' => CHtml::activeTextField($model, 'name')),
+        array('header' => 'Utilisateur', 'value' => '$data->getUserRecorderName()'),
         array('header' => 'Dernière mise à jour', 'value' => '$data->getLastUpdated()'),
         array(
             'class' => 'CButtonColumn',
