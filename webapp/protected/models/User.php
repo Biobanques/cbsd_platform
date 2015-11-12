@@ -41,8 +41,8 @@ class User extends EMongoDocument {
         $result = array(
             array('gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
-            array('login', 'telPresent'),
-            array('gsm, telephone', 'length', 'min' => 8),
+            array('telephone', 'telValidator'),
+            array('gsm', 'gsmValidator'),
             array('prenom, nom, login, password, email, profil, telephone', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
@@ -72,7 +72,7 @@ class User extends EMongoDocument {
             'profil' => 'Profil',
             'address' => 'Adresse',
             'centre' => 'Centre de référence',
-            'statut' => 'Statut',
+            'statut' => 'Profil(s) actif(s)',
         );
     }
 
@@ -199,9 +199,20 @@ class User extends EMongoDocument {
             $this->addError('password', Yii::t('common', 'notEnoughDigits'));
     }
 
-    public function telPresent() {
+    public function telValidator() {
         if (in_array($this->telephone, array("", null)) && in_array($this->gsm, array("", null)))
-            $this->addError('gsm', 'Au moins un numéro de téléphone');
+            $this->addError('telephone', 'Veuillez renseigner au moins un numéro de téléphone.');
+        if (!in_array($this->telephone, array("", null))) {
+            if (!preg_match("/^0[1-9][0-9]{8}$/i", $this->telephone))
+                $this->addError('telephone', 'Le numéro de téléphone que vous avez renseigné n\'est pas valide (format 01 02 03 04 05).');
+        }
+    }
+
+    public function gsmValidator() {
+        if (!in_array($this->gsm, array("", null))) {
+            if (!preg_match("/^0[1-9][0-9]{8}$/i", $this->gsm))
+                $this->addError('gsm', 'Le numéro de téléphone portable que vous avez renseigné n\'est pas valide (format 01 02 03 04 05).');
+        }
     }
 
     /**
@@ -229,7 +240,7 @@ class User extends EMongoDocument {
             } else
             if (in_array("clinicien", $this->profil) && ($this->address == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
-                $this->addError('address', 'Adresse ne peut pas être vide.');
+                $this->addError('address', 'Adresse ne peut être vide.');
             }
         }
     }
@@ -241,7 +252,7 @@ class User extends EMongoDocument {
             } else
             if (in_array("neuropathologiste", $this->profil) && ($this->centre == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
-                $this->addError('centre', 'Centre ne peut pas être vide.');
+                $this->addError('centre', 'Centre ne peut être vide.');
             }
         }
     }
@@ -249,7 +260,7 @@ class User extends EMongoDocument {
     public function statutValidator() {
         if (Yii::app()->controller->id == "user" && $this->statut == "") {
             $this->validatorList->add(CValidator::createValidator('required', $this, 'statut', array()));
-            $this->addError('statut', 'Statut ne peut pas être vide.');
+            $this->addError('statut', 'Veuillez sélectionner au moins un profil actif.');
         }
     }
 

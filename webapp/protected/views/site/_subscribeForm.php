@@ -58,7 +58,7 @@
 
                 <div class="col-lg-3">
                     <?php echo $form->labelEx($model, 'telephone'); ?>
-                    <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'Format 0C CC CC CC CC')); ?>
+                    <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'Format 01 02 03 04 05')); ?>
                     <?php echo $form->error($model, 'telephone'); ?>
                 </div>
             </div>
@@ -75,6 +75,7 @@
                     ?>
                     <?php echo $form->error($model, 'profil'); ?>
                 </div>
+
                 <div class="col-lg-3">
                     <?php echo $form->labelEx($model, 'gsm'); ?>
                     <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250)); ?>
@@ -99,7 +100,6 @@
             </div>
 
             <div class="col-lg-12">
-
                 <div class="row buttons" style="float:left;">
                     <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save')); ?>
                 </div>
