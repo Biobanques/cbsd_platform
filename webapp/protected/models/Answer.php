@@ -92,7 +92,7 @@ class Answer extends EMongoDocument {
                 'required'
             ),
             array(
-                'id,answers_group',
+                'id,name,answers_group',
                 'safe',
                 'on' => 'search'
             )
@@ -110,12 +110,13 @@ class Answer extends EMongoDocument {
     }
 
     public function search($caseSensitive = false) {
-        $criteria = new EMongoCriteria ();
-        /*if (isset($this->id) && !empty($this->id)) {
-            $criteria->id = "" . $this->id . "";
-        }*/
+        $criteria = new EMongoCriteria;
+
         if (isset($this->name) && !empty($this->name))
-        $criteria->name = "Alzheimer";
+        $criteria->name = new MongoRegex("/$this->name/i");
+        
+        if (isset($this->nom) && !empty($this->nom))
+        $criteria->nom = new MongoRegex("/$this->nom/i");
 
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(

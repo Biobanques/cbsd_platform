@@ -48,9 +48,15 @@ class FicheController extends Controller {
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Answer']))
             $model->attributes = $_GET['Answer'];
+        
+        $modelUser = new User('search');
+        $modelUser->unsetAttributes(); 
+        if (isset($_GET['User']))
+            $model->attributes = $_GET['User'];
 
         $this->render('admin', array(
             'model' => $model,
+            'modelUser' => $modelUser
         ));
     }
 
