@@ -83,7 +83,7 @@ if (!defined('BaseTheme')) define('BaseTheme', Yii::app()->theme->baseUrl);
                             <?php echo CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class' => 'logo')); ?>
                             <?php echo CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class' => 'logo')); ?>
                         </div>
-                        Copyright &copy; <?php echo date('Y'); ?> by Biobanques. Version 0.3 inscription - connexion.<br/>
+                        Copyright &copy; <?php echo date('Y'); ?> by Biobanques. Version 0.4 administration.<br/>
                         All Rights Reserved.
                     </div>
                 </div><!-- footer -->
