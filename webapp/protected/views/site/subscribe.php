@@ -14,6 +14,8 @@ if (isset($_SESSION['profil'])) {
 
 
 <?php
-
+if ($model->isNewRecord)
 echo $this->renderPartial('_subscribeForm', array('model' => $model, 'profil' => $_SESSION['profil']));
+else
+    echo $this->renderPartial('_updateSubscribeForm', array('model' => $model));
 ?>

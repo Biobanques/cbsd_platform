@@ -102,9 +102,13 @@ class SiteController extends Controller {
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login())
-                $this->redirect(array('site/patient'));
-            else
+            if ($model->validate() && $model->login()) {
+                $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
+                if (in_array(Yii::app()->user->getActiveProfil(), $user->statut))
+                    $this->redirect(array('site/patient'));
+                else
+                    Yii::app()->user->setFlash('error', 'Le profil n\'est pas encore activé. Veuillez contacter l\'administrateur.');
+            } else
                 Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
         }
         // display the login form
@@ -184,39 +188,22 @@ class SiteController extends Controller {
         $model = new User;
         if (isset(Yii::app()->user->id)) {
             $model = User::model()->findByPk(new MongoID(Yii::app()->user->id));
-        }
-        if (isset($_POST['clinicien'])) {
-            $_SESSION['updateProfil'] = $_POST['clinicien'];
-            $this->render('_updateSubscribeForm', array('model' => $model));
-        }
-        if (isset($_POST['neuropathologiste'])) {
-            $_SESSION['updateProfil'] = $_POST['neuropathologiste'];
-            $this->render('_updateSubscribeForm', array('model' => $model));
-        }
-        if (isset($_POST['geneticien'])) {
-            $_SESSION['updateProfil'] = $_POST['geneticien'];
-            $this->render('_updateSubscribeForm', array('model' => $model));
-        }
-        if (isset($_POST['chercheur'])) {
-            $_SESSION['updateProfil'] = $_POST['chercheur'];
-            $this->render('_updateSubscribeForm', array('model' => $model));
+            $profil = $model->profil;
         }
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
             if ($model->save()) {
-                if (isset($_SESSION['updateProfil'])) {
-                    if ($_SESSION['updateProfil'] == "clinicien") {
-                        Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Veuillez vous reconnecter pour accéder à CBSDPlatform avec le nouveau profil ajouté.');
-                        $this->redirect(array('site/index'));
-                    } else {
-                        Yii::app()->user->setFlash('success', 'Votre demande d\'ajout de profil a bien été envoyé. Vous recevrez un mail de confirmation.');
-                        $this->redirect(array('site/loginProfil'));
-                    }
+                if (in_array("clinicien", array_diff($model->profil, $profil))) {
+                    Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Veuillez vous reconnecter pour accéder à CBSDPlatform avec le nouveau profil ajouté.');
+                    $this->redirect(array('site/index'));
+                } else {
+                    Yii::app()->user->setFlash('success', 'Votre demande d\'ajout de profil a bien été envoyé. Vous recevrez un mail de confirmation.');
+                    $this->redirect(array('site/index'));
                 }
             } else
                 Yii::app()->user->setFlash('error', 'Le profil n\'a pas été ajouté.');
-            $this->render('_updateSubscribeForm', array('model' => $model));
         }
+        $this->render('_updateSubscribeForm', array('model' => $model));
     }
 
     /**

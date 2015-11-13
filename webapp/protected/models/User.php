@@ -151,6 +151,14 @@ class User extends EMongoDocument {
         }
         return $resArrayFiltered;
     }
+    
+    /**
+     * get an array of available profils.
+     */
+    public function getArrayAvailableProfil($user) {
+        $user = User::model()->findByPk(new MongoID($user));
+        return array_diff($this->getArrayProfilFiltered(), $user->profil);
+    }
 
     /**
      * get an array of statut

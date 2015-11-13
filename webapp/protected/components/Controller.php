@@ -46,8 +46,7 @@ class Controller extends CController {
         }
         if (isset($_POST['activeProfil'])) {
             if ($_POST['activeProfil'] === "newProfil") {
-                Yii::app()->user->setFlash('info', 'Vous avez demandé un nouveau profil');
-                $this->redirect('index.php?r=site/index');
+                $this->redirect('index.php?r=site/updatesubscribe');
             } else {
                 $app->user->setState('activeProfil', $_POST['activeProfil']);
                 if (Yii::app()->controller->id == "user" || Yii::app()->controller->id == "formulaire" || Yii::app()->controller->id == "fiche" || Yii::app()->controller->id == "questionBloc" || Yii::app()->controller->id == "administration" || Yii::app()->controller->id == "auditTrail" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "admin/admin") {
