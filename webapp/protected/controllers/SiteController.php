@@ -107,7 +107,7 @@ class SiteController extends Controller {
                 if (in_array(Yii::app()->user->getActiveProfil(), $user->statut))
                     $this->redirect(array('site/patient'));
                 else
-                    Yii::app()->user->setFlash('error', 'Le profil n\'est pas encore activé. Veuillez contacter l\'administrateur.');
+                    $this->redirect(array('site/logoutInactifProfil'));
             } else
                 Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
         }
@@ -157,6 +157,39 @@ class SiteController extends Controller {
         $this->redirect(Yii::app()->homeUrl);
     }
 
+    /**
+     * Logs out the current user after subscribe new profil if the profil is clinicien and redirect to homepage.
+     */
+    public function actionLogoutSubscribeActifProfil() {
+        Yii::app()->user->logout();
+        // the current session, we need to create a dummy session
+        Yii::app()->session->open();
+        Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Veuillez vous reconnecter pour accéder à CBSDPlatform avec le nouveau profil ajouté.');
+        $this->redirect(Yii::app()->homeUrl);
+    }
+
+    /**
+     * Logs out the current user after subscribe new profil if the profil is not clinicien and redirect to homepage.
+     */
+    public function actionLogoutSubscribeInactifProfil() {
+        Yii::app()->user->logout();
+        // the current session, we need to create a dummy session
+        Yii::app()->session->open();
+        Yii::app()->user->setFlash('success', 'Votre demande d\'ajout de profil a bien été envoyé. Vous recevrez un mail de confirmation.');
+        $this->redirect(Yii::app()->homeUrl);
+    }
+
+    /**
+     * Logs out the current user if active profil is "inactif" and redirect to homepage.
+     */
+    public function actionLogoutInactifProfil() {
+        Yii::app()->user->logout();
+        // the current session, we need to create a dummy session
+        Yii::app()->session->open();
+        Yii::app()->user->setFlash('error', 'Le profil n\'est pas encore activé. Veuillez contacter l\'administrateur.');
+        $this->redirect(Yii::app()->homeUrl);
+    }
+
 // username and password are required
     // rememberMe needs to be a boolean
     /**
@@ -188,20 +221,29 @@ class SiteController extends Controller {
         $model = new User;
         if (isset(Yii::app()->user->id)) {
             $model = User::model()->findByPk(new MongoID(Yii::app()->user->id));
+            // get current user profils
             $profil = $model->profil;
         }
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            if ($model->save()) {
-                if (in_array("clinicien", array_diff($model->profil, $profil))) {
-                    Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Veuillez vous reconnecter pour accéder à CBSDPlatform avec le nouveau profil ajouté.');
-                    $this->redirect(array('site/index'));
-                } else {
-                    Yii::app()->user->setFlash('success', 'Votre demande d\'ajout de profil a bien été envoyé. Vous recevrez un mail de confirmation.');
-                    $this->redirect(array('site/index'));
-                }
+            $profilSelected = $model->profil;
+            $model->profil = array_filter(array_merge($profil, $profilSelected), function($var) {
+                return (!($var == '' || is_null($var)));
+            });
+            // get new user profils
+            if (in_array("clinicien", array_diff($model->profil, $profil))) {
+                array_push($model->statut, "clinicien");
+            }
+            if ($model->save() && count(array_diff($model->profil, $profil)) > 0) {
+                if (in_array("clinicien", array_diff($model->profil, $profil)))
+                    $this->redirect(array('site/logoutSubscribeActifProfil'));
+                else
+                    $this->redirect(array('site/logoutSubscribeInactifProfil'));
             } else
-                Yii::app()->user->setFlash('error', 'Le profil n\'a pas été ajouté.');
+                if (count(array_diff($model->profil, $profil)) < 1)
+                    Yii::app()->user->setFlash('error', 'Veuillez sélectionner un profil.');
+                else
+                    Yii::app()->user->setFlash('error', 'Le profil n\'a pas été ajouté.');
         }
         $this->render('_updateSubscribeForm', array('model' => $model));
     }

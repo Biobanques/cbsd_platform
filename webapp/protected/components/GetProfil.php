@@ -17,10 +17,11 @@ class GetProfil {
         $profilsList = array();
 
         foreach (Yii::app()->user->getState('profil') as $profil) {
-            $profilsList[$profil] = $profil;
+            if (in_array($profil, User::model()->getArrayStatut()))
+                $profilsList[$profil] = $profil;
         }
-        if (!Yii::app()->user->isAdmin() && count($profilsList) < 4)
-            $profilsList['newProfil']= "Demander un nouveau profil";
+        if (!Yii::app()->user->isAdmin() && count(Yii::app()->user->getUserProfil()) < 4)
+            $profilsList['newProfil'] = "Demander un nouveau profil";
         $controler = Yii::app()->getController()->getId();
         $action = Yii::app()->getController()->getAction()->getId();
         $html = CHtml::form(Yii::app()->createUrl("$controler/$action"), "POST", array('class' => "navbar-form pull-left"));

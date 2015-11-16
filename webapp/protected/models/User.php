@@ -164,10 +164,8 @@ class User extends EMongoDocument {
      * get an array of statut
      */
     public function getArrayStatut() {
-        $res = array();
-        $res ['actif'] = "actif";
-        $res ['inactif'] = "inactif";
-        return $res;
+        $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
+        return $user->statut;
     }
 
     /**

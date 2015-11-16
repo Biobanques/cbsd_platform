@@ -65,7 +65,7 @@
         <div class="col-lg-3">
             <?php echo $form->labelEx($model, 'profil'); ?>
             <?php
-            echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'getProfil()', 'labelOptions' => array('style' => 'display:inline')));
+            echo $form->radioButtonList($model, 'profil[]', User::model()->getArrayAvailableProfil(Yii::app()->user->id), array('onchange' => 'getProfil()', 'labelOptions' => array('style' => 'display:inline')));
             ?>
             <?php echo $form->error($model, 'profil'); ?>
         </div>
@@ -95,7 +95,7 @@
 
     <div class="col-lg-12">
         <div class="row buttons" style="float:left;">
-            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save')); ?>
+            <?php echo CHtml::submitButton(Yii::t('common', 'save')); ?>
         </div>
     </div>
     <?php $this->endWidget(); ?>
@@ -106,7 +106,7 @@
     $(document).ready(function () {
         var clinicien = false;
         var neuropathologiste = false;
-        var checkedVals = $(':checkbox:checked').map(function () {
+        var checkedVals = $('input[type=radio]:checked').map(function () {
             $(this).bind("click", false);
             return this.value;
         }).get();
@@ -119,28 +119,20 @@
         if (clinicien) {
             $('#address').show();
         }
-        if (!clinicien) {
+        else {
             $('#address').hide();
         }
         if (neuropathologiste) {
             $('#centre').show();
         }
-        if (!neuropathologiste) {
-            $('#centre').hide();
-        }
-        if (clinicien && neuropathologiste) {
-            $('#address').show();
-            $('#centre').show();
-        }
-        if (!clinicien && !neuropathologiste) {
-            $('#address').hide();
+        else {
             $('#centre').hide();
         }
     });
     function getProfil() {
         var clinicien = false;
         var neuropathologiste = false;
-        var checkedVals = $(':checkbox:checked').map(function () {
+        var checkedVals = $('input[type=radio]:checked').map(function () {
             return this.value;
         }).get();
         for (var i = 0; i < checkedVals.length; i++) {
@@ -152,21 +144,13 @@
         if (clinicien) {
             $('#address').show();
         }
-        if (!clinicien) {
+        else {
             $('#address').hide();
         }
         if (neuropathologiste) {
             $('#centre').show();
         }
-        if (!neuropathologiste) {
-            $('#centre').hide();
-        }
-        if (clinicien && neuropathologiste) {
-            $('#address').show();
-            $('#centre').show();
-        }
-        if (!clinicien && !neuropathologiste) {
-            $('#address').hide();
+        else {
             $('#centre').hide();
         }
     }

@@ -114,13 +114,15 @@
         if (clinicien) {
             $('#address').show();
         }
-        if (!clinicien) {
+        else {
+            $('#User_address').val('');
             $('#address').hide();
         }
         if (neuropathologiste) {
             $('#centre').show();
         }
-        if (!neuropathologiste) {
+        else {
+            $('#User_centre').val('');
             $('#centre').hide();
         }
         if (clinicien && neuropathologiste) {
@@ -128,6 +130,8 @@
             $('#centre').show();
         }
         if (!clinicien && !neuropathologiste) {
+            $('#User_address').val('');
+            $('#User_centre').val('');
             $('#address').hide();
             $('#centre').hide();
         }
@@ -148,13 +152,15 @@
         if (clinicien) {
             $('#address').show();
         }
-        if (!clinicien) {
+        else {
+            $('#User_address').val('');
             $('#address').hide();
         }
         if (neuropathologiste) {
             $('#centre').show();
         }
-        if (!neuropathologiste) {
+        else {
+            $('#User_centre').val('');
             $('#centre').hide();
         }
         if (clinicien && neuropathologiste) {
@@ -162,6 +168,8 @@
             $('#centre').show();
         }
         if (!clinicien && !neuropathologiste) {
+            $('#User_address').val('');
+            $('#User_centre').val('');
             $('#address').hide();
             $('#centre').hide();
         }
