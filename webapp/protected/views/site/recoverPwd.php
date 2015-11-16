@@ -17,18 +17,18 @@
         <tr>
             <td>
                 <div class="row">
-                    <?php echo $form->labelEx($model, 'nom'); ?>
-                    <?php echo $form->textField($model, 'nom'); ?>
-                    <?php echo $form->error($model, 'nom'); ?>
+                    <?php echo $form->labelEx($model, 'login'); ?>
+                    <?php echo $form->textField($model, 'login'); ?>
+                    <?php echo $form->error($model, 'login'); ?>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
                 <div class="row">
-                    <?php echo $form->labelEx($model, 'prenom'); ?>
-                    <?php echo $form->textField($model, 'prenom'); ?>
-                    <?php echo $form->error($model, 'prenom'); ?>
+                    <?php echo $form->labelEx($model, 'email'); ?>
+                    <?php echo $form->textField($model, 'email'); ?>
+                    <?php echo $form->error($model, 'email'); ?>
                 </div>
             </td>
         </tr>

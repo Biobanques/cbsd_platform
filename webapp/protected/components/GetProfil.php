@@ -17,8 +17,7 @@ class GetProfil {
         $profilsList = array();
 
         foreach (Yii::app()->user->getState('profil') as $profil) {
-            if (in_array($profil, Yii::app()->user->getUserProfil()))
-                $profilsList[$profil] = $profil;
+            $profilsList[$profil] = $profil;
         }
         if (!Yii::app()->user->isAdmin() && count(Yii::app()->user->getUserProfil()) < 4)
             $profilsList['newProfil'] = "Demander un nouveau profil";

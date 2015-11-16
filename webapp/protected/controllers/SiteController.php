@@ -103,11 +103,7 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
-                $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
-                if (in_array(Yii::app()->user->getActiveProfil(), $user->profil))
-                    $this->redirect(array('site/patient'));
-                else
-                    $this->redirect(array('site/logoutInactifProfil'));
+                $this->redirect(array('site/patient'));
             } else
                 Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
         }
@@ -116,55 +112,10 @@ class SiteController extends Controller {
     }
 
     /**
-     * Displays the loginProfil page
-     */
-    public function actionLoginProfil() {
-        $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
-        // display the login form
-        if (isset($_POST['profil'])) {
-            $selected_radio = $_POST['profil'];
-            if ($selected_radio == "administrateur") {
-                Yii::app()->user->setActifProfil($selected_radio);
-            } else
-            if ($selected_radio == "clinicien") {
-                Yii::app()->user->setActifProfil($selected_radio);
-            } else
-            if ($selected_radio == "neuropathologiste") {
-                Yii::app()->user->setActifProfil($selected_radio);
-            } else
-            if ($selected_radio == "geneticien") {
-                Yii::app()->user->setActifProfil($selected_radio);
-            } else
-            if ($selected_radio == "chercheur") {
-                Yii::app()->user->setActifProfil($selected_radio);
-            }
-            if (in_array($selected_radio, $user->statut)) {
-                Yii::app()->user->setFlash('success', 'Vous êtes connecté sous le profil ' . Yii::app()->user->getActiveProfil() . '.');
-                $this->redirect(Yii::app()->user->returnUrl);
-            } else {
-                Yii::app()->user->setFlash('error', 'Votre profil n\'a pas encore été activé. Veuillez contacter l\'administrateur.');
-                $this->render('loginProfil');
-            }
-        } else
-            $this->render('loginProfil');
-    }
-
-    /**
      * Logs out the current user and redirect to homepage.
      */
     public function actionLogout() {
         Yii::app()->user->logout();
-        $this->redirect(Yii::app()->homeUrl);
-    }
-
-    /**
-     * Logs out the current user if active profil is "inactif" and redirect to homepage.
-     */
-    public function actionLogoutInactifProfil() {
-        Yii::app()->user->logout();
-        // the current session, we need to create a dummy session
-        Yii::app()->session->open();
-        Yii::app()->user->setFlash('error', 'Le profil n\'est pas encore activé. Veuillez contacter l\'administrateur.');
         $this->redirect(Yii::app()->homeUrl);
     }
 
@@ -182,7 +133,7 @@ class SiteController extends Controller {
                 $mixedResult = $model->validateFields();
                 if ($mixedResult['result'] == true) {
                     $result = 'success';
-                    CommonMailer::sendMailRecoverPassword($mixedResult['user']);
+                    CommonMailer::sendMailRecoverPassword($mixedResult['user'], null);
                 } else {
                     $result = 'error';
                 }
@@ -212,21 +163,22 @@ class SiteController extends Controller {
                 }
             }
             foreach ($_POST['User'] as $key => $value) {
+                $profilSelected = implode((array) $value);
                 if ($key == "profil") {
                     if (in_array("clinicien", $value)) {
                         array_push($model->$key, implode("", $value));
                         if ($model->save()) {
+                            Yii::app()->user->setState('profil', $model->profil);
                             //CommonMailer::sendSubscribeUserMail($model);
                             Yii::app()->user->setFlash('success', 'Le profil Clinicien a bien été crée.');
                             $this->render('index', array('model' => $model));
                         }
                     } else {
-                        if ($model->save()) {
-                            //CommonMailer::sendSubscribeAdminMail($model);
-                            //CommonMailer::sendSubscribeUserMail($model);
-                            Yii::app()->user->setFlash('success', 'La demande pour le profil ' . implode("", $value) . ' a bien été prise en compte. Vouz recevrez un mail de confirmation');
-                            $this->render('index', array('model' => $model));
-                        }
+                        //CommonMailer::sendSubscribeAdminMail($model);
+                        CommonMailer::sendSubscribeUserMail($model, $profilSelected);
+                        //CommonMailer::sendMail($model->email, "subject", "body", $profilSelected);
+                        Yii::app()->user->setFlash('success', 'La demande pour le profil ' . implode("", $value) . ' a bien été prise en compte. Vouz recevrez un mail de confirmation');
+                        $this->render('index', array('model' => $model));
                     }
                 } else {
                     $model->$key = $value;
@@ -267,6 +219,7 @@ class SiteController extends Controller {
         $model = new User ();
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
+            $profil = implode("", $model->profil);
             if ($model->profil != array("clinicien"))
                 $model->profil = array(" ");
 
