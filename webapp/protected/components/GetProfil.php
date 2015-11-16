@@ -17,7 +17,7 @@ class GetProfil {
         $profilsList = array();
 
         foreach (Yii::app()->user->getState('profil') as $profil) {
-            if (in_array($profil, User::model()->getArrayStatut()))
+            if (in_array($profil, Yii::app()->user->getUserProfil()))
                 $profilsList[$profil] = $profil;
         }
         if (!Yii::app()->user->isAdmin() && count(Yii::app()->user->getUserProfil()) < 4)

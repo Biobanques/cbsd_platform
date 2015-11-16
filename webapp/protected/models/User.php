@@ -25,7 +25,6 @@ class User extends EMongoDocument {
     public $gsm;
     public $address;
     public $centre;
-    public $statut;
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
@@ -48,10 +47,9 @@ class User extends EMongoDocument {
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('address', 'addressValidator'),
             array('centre', 'centreValidator'),
-            array('statut', 'statutValidator'),
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
-            array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre, statut', 'safe', 'on' => 'search, update'),
+            array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre', 'safe', 'on' => 'search, update'),
         );
         return $result;
     }
@@ -104,20 +102,6 @@ class User extends EMongoDocument {
     }
 
     /**
-     * @return type
-     */
-    public function getStatut() {
-        $result = $this->statut;
-        $arr = $this->getArrayStatut();
-        if ($result != "" && $arr [$result] != null) {
-            $result = $arr [$result];
-        } else {
-            $result = "Not defined";
-        }
-        return $result;
-    }
-
-    /**
      * get an array of profil used by dropDownLIst.
      */
     public function getArrayProfil() {
@@ -158,14 +142,6 @@ class User extends EMongoDocument {
     public function getArrayAvailableProfil($user) {
         $user = User::model()->findByPk(new MongoID($user));
         return array_diff($this->getArrayProfilFiltered(), $user->profil);
-    }
-
-    /**
-     * get an array of statut
-     */
-    public function getArrayStatut() {
-        $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
-        return $user->statut;
     }
 
     /**
@@ -260,13 +236,6 @@ class User extends EMongoDocument {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
                 $this->addError('centre', 'Centre ne peut être vide.');
             }
-        }
-    }
-
-    public function statutValidator() {
-        if (Yii::app()->controller->id == "user" && $this->statut == "") {
-            $this->validatorList->add(CValidator::createValidator('required', $this, 'statut', array()));
-            $this->addError('statut', 'Veuillez sélectionner au moins un profil actif.');
         }
     }
 

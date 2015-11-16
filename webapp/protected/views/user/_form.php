@@ -82,14 +82,6 @@
         </div>
     </div>    
 
-    <div class="row">
-        <div id="statut">
-            <?php echo CHtml::activeLabel($model, 'statut', array('required' => true)); ?>
-            <?php echo $form->checkBoxList($model, 'statut', User::model()->getArrayProfilSorted(), array('labelOptions' => array('style' => 'display:inline'))); ?>
-            <?php echo $form->error($model, 'statut'); ?>
-        </div>
-    </div>
-
     <div class="row buttons" style="float:left;">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Créer' : 'Enregistrer'); ?>
     </div>

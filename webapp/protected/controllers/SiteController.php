@@ -104,7 +104,7 @@ class SiteController extends Controller {
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
                 $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
-                if (in_array(Yii::app()->user->getActiveProfil(), $user->statut))
+                if (in_array(Yii::app()->user->getActiveProfil(), $user->profil))
                     $this->redirect(array('site/patient'));
                 else
                     $this->redirect(array('site/logoutInactifProfil'));
@@ -158,28 +158,6 @@ class SiteController extends Controller {
     }
 
     /**
-     * Logs out the current user after subscribe new profil if the profil is clinicien and redirect to homepage.
-     */
-    public function actionLogoutSubscribeActifProfil() {
-        Yii::app()->user->logout();
-        // the current session, we need to create a dummy session
-        Yii::app()->session->open();
-        Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté. Veuillez vous reconnecter pour accéder à CBSDPlatform avec le nouveau profil ajouté.');
-        $this->redirect(Yii::app()->homeUrl);
-    }
-
-    /**
-     * Logs out the current user after subscribe new profil if the profil is not clinicien and redirect to homepage.
-     */
-    public function actionLogoutSubscribeInactifProfil() {
-        Yii::app()->user->logout();
-        // the current session, we need to create a dummy session
-        Yii::app()->session->open();
-        Yii::app()->user->setFlash('success', 'Votre demande d\'ajout de profil a bien été envoyé. Vous recevrez un mail de confirmation.');
-        $this->redirect(Yii::app()->homeUrl);
-    }
-
-    /**
      * Logs out the current user if active profil is "inactif" and redirect to homepage.
      */
     public function actionLogoutInactifProfil() {
@@ -225,25 +203,35 @@ class SiteController extends Controller {
             $profil = $model->profil;
         }
         if (isset($_POST ['User'])) {
-            $model->attributes = $_POST ['User'];
-            $profilSelected = $model->profil;
-            $model->profil = array_filter(array_merge($profil, $profilSelected), function($var) {
-                return (!($var == '' || is_null($var)));
-            });
-            // get new user profils
-            if (in_array("clinicien", array_diff($model->profil, $profil))) {
-                array_push($model->statut, "clinicien");
+            foreach ($_POST['User'] as $key => $value) {
+                if ($key == "address" && $value != "") {
+                    $model->$key = $value;
+                }
+                if ($key == "centre" && $value != "") {
+                    $model->$key = $value;
+                }
             }
-            if ($model->save() && count(array_diff($model->profil, $profil)) > 0) {
-                if (in_array("clinicien", array_diff($model->profil, $profil)))
-                    $this->redirect(array('site/logoutSubscribeActifProfil'));
-                else
-                    $this->redirect(array('site/logoutSubscribeInactifProfil'));
-            } else
-                if (count(array_diff($model->profil, $profil)) < 1)
-                    Yii::app()->user->setFlash('error', 'Veuillez sélectionner un profil.');
-                else
-                    Yii::app()->user->setFlash('error', 'Le profil n\'a pas été ajouté.');
+            foreach ($_POST['User'] as $key => $value) {
+                if ($key == "profil") {
+                    if (in_array("clinicien", $value)) {
+                        array_push($model->$key, implode("", $value));
+                        if ($model->save()) {
+                            //CommonMailer::sendSubscribeUserMail($model);
+                            Yii::app()->user->setFlash('success', 'Le profil Clinicien a bien été crée.');
+                            $this->render('index', array('model' => $model));
+                        }
+                    } else {
+                        if ($model->save()) {
+                            //CommonMailer::sendSubscribeAdminMail($model);
+                            //CommonMailer::sendSubscribeUserMail($model);
+                            Yii::app()->user->setFlash('success', 'La demande pour le profil ' . implode("", $value) . ' a bien été prise en compte. Vouz recevrez un mail de confirmation');
+                            $this->render('index', array('model' => $model));
+                        }
+                    }
+                } else {
+                    $model->$key = $value;
+                }
+            }
         }
         $this->render('_updateSubscribeForm', array('model' => $model));
     }
@@ -279,10 +267,8 @@ class SiteController extends Controller {
         $model = new User ();
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            if ($model->profil == array("clinicien")) {
-                $model->statut = array("clinicien");
-            } else
-                $model->statut = array();
+            if ($model->profil != array("clinicien"))
+                $model->profil = array(" ");
 
             $criteria = new EMongoCriteria();
             $criteria->login = $model->login;
@@ -296,6 +282,8 @@ class SiteController extends Controller {
                         Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDPlatform !');
                         $this->redirect(array('site/index'));
                     }
+                    //CommonMailer::sendSubscribeAdminMail($model);
+                    //CommonMailer::sendSubscribeUserMail($model);
                     Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
                     $this->redirect(array('site/index'));
                 } else {

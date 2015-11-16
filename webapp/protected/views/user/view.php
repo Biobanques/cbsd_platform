@@ -18,11 +18,6 @@ $this->widget('zii.widgets.CDetailView', array(
         'gsm',
         'address',
         'centre',
-        array(
-            'name' => 'Profil(s) actif(s)',
-            'type' => 'text',
-            'value' => implode(", ", $model->statut)
-        ),
         '_id',
     ),
 ));
