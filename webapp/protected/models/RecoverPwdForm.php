@@ -47,7 +47,7 @@ class RecoverPwdForm extends CFormModel {
                     $message = Yii::t('common', 'recoverMessageSent', array('{userEmail}' => $user->email));
                 } else {
                     $result = false;
-                    $message = Yii::t('common', 'noUserWithLastnameAndFirstname', array('{badLastname}' => $this->login, '{badFirstname}' => $this->email));
+                    $message = Yii::t('common', 'noUserWithLoginAndEmail', array('{badLogin}' => $this->login, '{badEmail}' => $this->email));
                 }
             } elseif (!empty($this->login)) {
                 $criteria = new EMongoCriteria();
@@ -58,7 +58,7 @@ class RecoverPwdForm extends CFormModel {
                     $message = Yii::t('common', 'recoverMessageSent', array('{userEmail}' => $user->email));
                 } else {
                     $result = false;
-                    $message = Yii::t('common', 'noUserWithLastname', array('{badLastname}' => $this->login));
+                    $message = Yii::t('common', 'noUserWithLogin', array('{badLogin}' => $this->login));
                 }
             } elseif (!empty($this->email)) {
                 $criteria = new EMongoCriteria();
@@ -69,7 +69,7 @@ class RecoverPwdForm extends CFormModel {
                     $message = Yii::t('common', 'recoverMessageSent', array('{userEmail}' => $user->email));
                 } else {
                     $result = false;
-                    $message = Yii::t('common', 'noUserWithFirstname', array('{badFirstname}' => $this->email));
+                    $message = Yii::t('common', 'noUserWithEmail', array('{badEmail}' => $this->email));
                 }
             }
         } else {

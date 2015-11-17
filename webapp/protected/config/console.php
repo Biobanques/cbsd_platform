@@ -1,3 +1,4 @@
+
 <?php
 
 // This is the configuration for yiic console application.
@@ -10,11 +11,11 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
-        'ext.MongoDbSuite.*',
-        'ext.MongoDbSuite.extra.*',
+        'ext.YiiMongoDbSuite.*',
+        'ext.YiiMongoDbSuite.extra.*',
         'application.modules.auditTrail.models.AuditTrail',
         'application.modules.auditTrail.behaviors.LoggableBehavior',
-    ), 
+    ),
     // application components
     'components' => array(
         'mongodb' => array(
