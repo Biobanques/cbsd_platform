@@ -153,67 +153,37 @@ class SiteController extends Controller
         $model = new User;
         if (isset(Yii::app()->user->id)) {
             $model = User::model()->findByPk(new MongoID(Yii::app()->user->id));
-            // get current user profils
         }
-//        if (isset($_POST ['User'])) {
-//            foreach ($_POST['User'] as $key => $value) {
-//                if ($key == "address" && $value != "") {
-//                    $model->$key = $value;
-//                }
-//                if ($key == "centre" && $value != "") {
-//                    $model->$key = $value;
-//                }
-//            }
-//            foreach ($_POST['User'] as $key => $value) {
-//                $profilSelected = implode((array) $value);
-//                if ($key == "profil") {
-//                    if (in_array("clinicien", $value)) {
-//                        array_push($model->$key, implode("", $value));
-//                        if ($model->save()) {
-//                            CommonMailer::sendConfirmationAdminProfilUser($model, NULL);
-//                            CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password, NULL);
-//                            Yii::app()->user->setState('profil', $model->profil);
-//                            Yii::app()->user->setFlash('success', 'Le profil Clinicien a bien été crée.');
-//                            $this->render('index', array('model' => $model));
-//                        }
-//                    } else {
-//                        $complement = NULL;
-//                        if ($profilSelected == "neuropathologiste") {
-//                            $complement = $model->centre;
-//                        }
-//                        CommonMailer::sendMailConfirmationProfilEmail($model, $profilSelected, $complement);
-//                        Yii::app()->user->setFlash('success', 'La demande pour le profil ' . implode("", $value) . ' a bien été prise en compte. Vouz recevrez un mail de confirmation');
-//                        $this->render('index', array('model' => $model));
-//                    }
-//                } else {
-//                    $model->$key = $value;
-//                }
-//            }
-//        }
+
         if (isset($_POST ['User'])) {
             $profilSelected = array_filter($_POST ['User']['profil']);
-            if (in_array('clinicien', $profilSelected)) {
-                array_push($model->profil, 'clinicien');
-                $model->address = $_POST ['User']['address'];
-                if ($model->save()) {
-                    CommonMailer::sendConfirmationAdminProfilUser($model);
-                    CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password);
-                    Yii::app()->user->setState('profil', $model->profil);
-                    Yii::app()->user->setFlash('success', 'Le profil Clinicien a bien été crée.');
-                    $this->render('index', array('model' => $model));
-                }
-            } else {
-                if (in_array('neuropathologiste', $profilSelected)) {
-                    if ($_POST['User']['centre'] == null || $_POST['User']['centre'] == "") {
-                        $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
-                        $this->render('_updateSubscribeForm', array('model' => $model));
-                    } else
-                        $model->centre = $_POST['User']['centre'];
-                }
-                CommonMailer::sendMailConfirmationProfilEmail($model, implode('', $profilSelected), $model->centre);
+            $test = empty($profilSelected);
+            if (!empty($profilSelected)) {
+                if (in_array('clinicien', $profilSelected)) {
+                    array_push($model->profil, 'clinicien');
+                    $model->address = $_POST ['User']['address'];
+                    if ($model->save()) {
+                        CommonMailer::sendConfirmationAdminProfilUser($model);
+                        CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password);
+                        Yii::app()->user->setState('profil', $model->profil);
+                        Yii::app()->user->setFlash('success', 'Le profil Clinicien a bien été crée.');
+                        $this->redirect(array('site/index'));
+                    }
+                } else {
+                    if (in_array('neuropathologiste', $profilSelected)) {
+                        if ($_POST['User']['centre'] == null || $_POST['User']['centre'] == "") {
+                            $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
+                            $this->render('_updateSubscribeForm', array('model' => $model));
+                        } else
+                            $model->centre = $_POST['User']['centre'];
+                    }
+                    CommonMailer::sendMailConfirmationProfilEmail($model, implode('', $profilSelected), $model->centre);
 
-                Yii::app()->user->setFlash('success', 'La demande pour le profil ' . implode("", $profilSelected) . ' a bien été prise en compte. Vous recevrez un mail de confirmation');
-                $this->render('index', array('model' => $model));
+                    Yii::app()->user->setFlash('success', 'La demande pour le profil ' . implode("", $profilSelected) . ' a bien été prise en compte. Vous recevrez un mail de confirmation');
+                    $this->redirect(array('site/index'));
+                }
+            }else {
+                $model->addError('profil', 'Veuillez selectionner au moins un profil à ajouter');
             }
         }
         $this->render('_updateSubscribeForm', array('model' => $model));
