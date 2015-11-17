@@ -26,6 +26,9 @@ class SiteController extends Controller {
                     'error',
                     'recoverPwd',
                     'subscribe',
+                    'subscribeProfil',
+                    'confirmUser',
+                    'refuseUser'
                 ),
                 'users' => array(
                     '*'
@@ -168,19 +171,18 @@ class SiteController extends Controller {
                     if (in_array("clinicien", $value)) {
                         array_push($model->$key, implode("", $value));
                         if ($model->save()) {
+                            CommonMailer::sendConfirmationAdminProfilUser($model, NULL);
+                            CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password, NULL);
                             Yii::app()->user->setState('profil', $model->profil);
                             Yii::app()->user->setFlash('success', 'Le profil Clinicien a bien été crée.');
                             $this->render('index', array('model' => $model));
                         }
                     } else {
                         $complement = NULL;
-                        if ($profilSelected == "clinicien") {
-                            $complement = $model->address;
-                        }
                         if ($profilSelected == "neuropathologiste") {
                             $complement = $model->centre;
                         }
-                        CommonMailer::sendMailConfirmationProfilEmail($model->email, $model->prenom, $model->nom, $model->_id, $profilSelected, $complement);
+                        CommonMailer::sendMailConfirmationProfilEmail($model, $profilSelected, $complement);
                         Yii::app()->user->setFlash('success', 'La demande pour le profil ' . implode("", $value) . ' a bien été prise en compte. Vouz recevrez un mail de confirmation');
                         $this->render('index', array('model' => $model));
                     }
@@ -245,7 +247,8 @@ class SiteController extends Controller {
                     if ($model->profil == array("neuropathologiste")) {
                         $complement = $model->centre;
                     }
-                    CommonMailer::sendMailConfirmationProfilEmail($model->email, $model->prenom, $model->nom, $model->_id, $profil, $complement);
+                    CommonMailer::sendSubscribeUserMail($model, $profil);
+                    CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $complement);
                     Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
                     $this->redirect(array('site/index'));
                 } else {
@@ -259,7 +262,7 @@ class SiteController extends Controller {
     /**
      * action to confirm new profil on mail validation.
      */
-    public function actionConfirmProfil() {
+    public function actionConfirmUser() {
         $model = User::model()->findByPk(new MongoId($_GET['arg1']));
         if (!in_array($_GET['arg2'], $model->profil)) {
             if (!in_array(" ", $model->profil))
@@ -267,15 +270,12 @@ class SiteController extends Controller {
             else
                 $model->profil = (array)$_GET['arg2'];
             if (isset($_GET['arg2']) && isset($_GET['arg3'])) {
-                if ($_GET['arg2'] == "clinicien") {
-                    $model->address = $_GET['arg3'];
-                }
                 if ($_GET['arg2'] == "neuropathologiste") {
                     $model->centre = $_GET['arg3'];
                 }
             }
             if ($model->save()) {
-                CommonMailer::sendSubscribeAdminMail($model, NULL);
+                CommonMailer::sendUserRegisterConfirmationMail($model, NULL);
                 Yii::app()->user->setState('profil', $model->profil);
                 Yii::app()->user->setFlash('success', 'Le profil ' . $_GET['arg2'] . ' a bien été ajouté.');
                 $this->redirect(array('site/index'));
@@ -284,6 +284,16 @@ class SiteController extends Controller {
             Yii::app()->user->setFlash('error', 'Le profil ' . $_GET['arg2'] . ' a déjà été ajouté.');
             $this->redirect(array('site/index'));
         }
+    }
+    
+    /**
+     * action to refuse user on mail validation.
+     */
+    public function actionRefuseUser() {
+        $model = User::model()->findByPk(new MongoId($_GET['arg1']));
+        CommonMailer::sendUserRegisterRefusedMail($model, $_GET['arg2']);
+        Yii::app()->user->setFlash('success', "L'utilisateur " . $model->login . " avec le profil " . $_GET['arg2'] . " a bien été refusé. Un mail a été envoyé à l'utilisateur.");
+        $this->redirect(array('site/index'));
     }
 
 }

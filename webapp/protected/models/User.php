@@ -69,8 +69,7 @@ class User extends EMongoDocument {
             'gsm' => Yii::t('common', 'gsm'),
             'profil' => 'Profil',
             'address' => 'Adresse',
-            'centre' => 'Centre de référence',
-            'statut' => 'Profil(s) actif(s)',
+            'centre' => 'Centre de référence'
         );
     }
 
