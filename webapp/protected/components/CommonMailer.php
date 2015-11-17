@@ -62,7 +62,7 @@ class CommonMailer {
         ";
         return CommonMailer::sendMail($to, $subject, $body, $profil);
     }
-    
+
     /**
      * envoi de mail inscription avec infos de connexion.
      */
@@ -116,11 +116,14 @@ class CommonMailer {
      */
     public static function sendMailConfirmationProfilEmail($user, $profil, $complement) {
         $to = Yii::app()->params['adminEmail'];
-        if ($complement == NULL)
-            $urlConfirm = Yii::app()->getBaseUrl(true) . "/index.php?r=site/confirmUser&arg1=" . $user->_id . "&arg2=" . $profil;
-        else
-            $urlConfirm = Yii::app()->getBaseUrl(true) . "/index.php?r=site/confirmUser&arg1=" . $user->_id . "&arg2=" . $profil . "&arg3=" . $complement;
-        $urlRefuse = Yii::app()->getBaseUrl(true) . "/index.php?r=site/refuseUser&arg1=" . $user->_id . "&arg2=" . $profil;
+        $params = array('arg1' => $user->_id, 'arg2' => $profil);
+        if ($complement != NULL) {
+            $params['arg3'] = $complement;
+            $urlConfirm = Yii::app()->createAbsoluteUrl('site/confirmUser', $params);
+        } else {
+            $urlConfirm = Yii::app()->createAbsoluteUrl('site/confirmUser', $params);
+        }
+        $urlRefuse = Yii::app()->createAbsoluteUrl('site/refuseUser', $params);
         $subject = "Inscription d'un nouveau profil pour un utilisateur sur cbsdplatform.";
         $userDetails = '';
         foreach ($user->getAttributes() as $label => $value) {

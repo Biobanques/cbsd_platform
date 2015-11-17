@@ -7,15 +7,7 @@
  */
 class User extends EMongoDocument {
 
-    /**
-     *
-     */
     public $login;
-
-    /**
-     * embedded document with array of QuestionAnswer
-     * @var type
-     */
     public $password;
     public $profil;
     public $nom;
@@ -216,9 +208,6 @@ class User extends EMongoDocument {
 
     public function addressValidator() {
         if (isset($this->profil)) {
-            if (gettype($this->profil) == "string") {
-                
-            } else
             if (in_array("clinicien", $this->profil) && ($this->address == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
                 $this->addError('address', 'Adresse ne peut être vide.');
@@ -228,9 +217,6 @@ class User extends EMongoDocument {
 
     public function centreValidator() {
         if (isset($this->profil)) {
-            if (gettype($this->profil) == "string") {
-                
-            } else
             if (in_array("neuropathologiste", $this->profil) && ($this->centre == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
                 $this->addError('centre', 'Centre ne peut être vide.');
