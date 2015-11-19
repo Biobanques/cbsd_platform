@@ -24,7 +24,6 @@ class SendMailCommand extends CConsoleCommand
                 $mail->IsSMTP();
                 $mail->Host = CommonProperties::$SMTP_SENDER_HOST;
                 $mail->SMTPAuth = true;
-                // $mail->SMTPSecure = 'ssl';
                 $mail->Port = CommonProperties::$SMTP_SENDER_PORT;
                 $mail->Username = CommonProperties::$SMTP_SENDER_USERNAME;
                 $mail->Password = CommonProperties::$SMTP_SENDER_PASSWORD;

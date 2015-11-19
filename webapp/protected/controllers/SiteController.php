@@ -1,7 +1,7 @@
 <?php
 
-class SiteController extends Controller
-{
+class SiteController extends Controller {
+
     /**
      * NB : boostrap theme need this column2 layout
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -166,23 +166,25 @@ class SiteController extends Controller
                         CommonMailer::sendConfirmationAdminProfilUser($model);
                         CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password);
                         Yii::app()->user->setState('profil', $model->profil);
-                        Yii::app()->user->setFlash('success', 'Le profil Clinicien a bien été crée.');
+                        Yii::app()->user->setFlash('success', 'Le profil Clinicien a bien été créé.');
                         $this->redirect(array('site/index'));
                     }
                 } else {
                     if (in_array('neuropathologiste', $profilSelected)) {
                         if ($_POST['User']['centre'] == null || $_POST['User']['centre'] == "") {
                             $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
-                            $this->render('_updateSubscribeForm', array('model' => $model));
+                            Yii::app()->user->setFlash('error', 'Le centre est obligatoire pour le profil neuropathologiste.');
                         } else
                             $model->centre = $_POST['User']['centre'];
                     }
-                    CommonMailer::sendMailConfirmationProfilEmail($model, implode('', $profilSelected), $model->centre);
+                    if (!$model->hasErrors()) {
+                        CommonMailer::sendMailConfirmationProfilEmail($model, implode('', $profilSelected), $model->centre);
 
-                    Yii::app()->user->setFlash('success', 'La demande pour le profil ' . implode("", $profilSelected) . ' a bien été prise en compte. Vous recevrez un mail de confirmation');
-                    $this->redirect(array('site/index'));
+                        Yii::app()->user->setFlash('success', 'La demande pour le profil ' . implode("", $profilSelected) . ' a bien été prise en compte. Vous recevrez un mail de confirmation');
+                        $this->redirect(array('site/index'));
+                    }
                 }
-            }else {
+            } else {
                 $model->addError('profil', 'Veuillez selectionner au moins un profil à ajouter');
             }
         }
@@ -227,6 +229,12 @@ class SiteController extends Controller
             $criteria = new EMongoCriteria();
             $criteria->login = $model->login;
             $userLogin = User::model()->findAll($criteria);
+            if ($profil == "neuropathologiste") {
+                if ($_POST['User']['centre'] == null || $_POST['User']['centre'] == "") {
+                    $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
+                    Yii::app()->user->setFlash('error', 'Le centre est obligatoire pour le profil neuropathologiste.');
+                }
+            }
             if (count($userLogin) > 0) {
                 Yii::app()->user->setFlash('error', 'Le login a déjà été utilisé. Veuillez choisir un login différent.');
                 $this->render('subscribe', array('model' => $model));
@@ -248,6 +256,12 @@ class SiteController extends Controller
                     $this->redirect(array('site/index'));
                 } else {
                     Yii::app()->user->setFlash('error', 'L\'utilisateur n\'a pas été enregistré.');
+                    if ($profil == "neuropathologiste") {
+                        if ($_POST['User']['centre'] == null || $_POST['User']['centre'] == "") {
+                            $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
+                            Yii::app()->user->setFlash('error', 'Le centre est obligatoire pour le profil neuropathologiste.');
+                        }
+                    }
                 }
             }
         }

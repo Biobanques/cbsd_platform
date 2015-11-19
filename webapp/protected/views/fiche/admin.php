@@ -23,7 +23,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'filter' => $model,
     'columns' => array(
         array('header' => 'Nom de la fiche', 'value' => '$data->getFicheName()', 'filter' => CHtml::activeTextField($model, 'name')),
-        array('header' => 'Utilisateur', 'value' => '$data->getUserRecorderName()', 'filter' => CHtml::activeTextField($modelUser, 'nom')),
+        array('header' => 'Utilisateur', 'value' => '$data->getUserRecorderName()'),
         array('header' => 'Dernière mise à jour', 'value' => '$data->getLastUpdated()'),
         array(
             'class' => 'CButtonColumn',

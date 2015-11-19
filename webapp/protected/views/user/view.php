@@ -5,7 +5,6 @@ $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(
         'login',
-        'password',
         array(
             'name' => 'profil',
             'type' => 'text',

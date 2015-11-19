@@ -9,6 +9,7 @@ class User extends EMongoDocument {
 
     public $login;
     public $password;
+    public $repeatPassword;
     public $profil;
     public $nom;
     public $prenom;
@@ -34,14 +35,14 @@ class User extends EMongoDocument {
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('telephone', 'telValidator'),
             array('gsm', 'gsmValidator'),
-            array('prenom, nom, login, password, email, profil, telephone', 'required'),
+            array('prenom, nom, login, password, repeatPassword, email, profil, telephone', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('address', 'addressValidator'),
             array('centre', 'centreValidator'),
-            array('password', 'pwdStrength'),
+            array('password', 'passwordValidator'),
             array('password', 'length', 'min' => 6),
-            array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre', 'safe', 'on' => 'search, update'),
+            array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre', 'safe', 'on' => 'search, update')
         );
         return $result;
     }
@@ -56,6 +57,7 @@ class User extends EMongoDocument {
             'nom' => Yii::t('common', 'lastname'),
             'login' => Yii::t('common', 'Login'),
             'password' => Yii::t('common', 'password'),
+            'repeatPassword' => 'Confirmer le mot de passe',
             'email' => Yii::t('common', 'email'),
             'telephone' => Yii::t('common', 'phone'),
             'gsm' => Yii::t('common', 'gsm'),
@@ -126,7 +128,7 @@ class User extends EMongoDocument {
         }
         return $resArrayFiltered;
     }
-    
+
     /**
      * get an array of available profils.
      */
@@ -161,7 +163,7 @@ class User extends EMongoDocument {
     /**
      * Custom validation rules
      */
-    public function pwdStrength() {
+    public function passwordValidator() {
         $nbDigit = 0;
         $length = strlen($this->password);
         for ($i = 0; $i < $length; $i++) {
@@ -170,6 +172,9 @@ class User extends EMongoDocument {
         }
         if ($nbDigit < 2 && $this->password != "")
             $this->addError('password', Yii::t('common', 'notEnoughDigits'));
+        if ($this->password != "" && $this->repeatPassword != "" && strcmp($this->password, $this->repeatPassword) !== 0) {
+            $this->addError('repeatPassword', 'Le mot de passe doit correspondre dans les deux champs.');
+        }
     }
 
     public function telValidator() {
@@ -208,6 +213,9 @@ class User extends EMongoDocument {
 
     public function addressValidator() {
         if (isset($this->profil)) {
+            if (gettype($this->profil) == "string") {
+                
+            } else
             if (in_array("clinicien", $this->profil) && ($this->address == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
                 $this->addError('address', 'Adresse ne peut être vide.');
@@ -217,6 +225,9 @@ class User extends EMongoDocument {
 
     public function centreValidator() {
         if (isset($this->profil)) {
+            if (gettype($this->profil) == "string") {
+                
+            } else
             if (in_array("neuropathologiste", $this->profil) && ($this->centre == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
                 $this->addError('centre', 'Centre ne peut être vide.');
