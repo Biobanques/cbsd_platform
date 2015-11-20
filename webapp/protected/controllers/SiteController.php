@@ -229,41 +229,41 @@ class SiteController extends Controller {
             $criteria = new EMongoCriteria();
             $criteria->login = $model->login;
             $userLogin = User::model()->findAll($criteria);
-            if ($profil == "neuropathologiste") {
-                if ($_POST['User']['centre'] == null || $_POST['User']['centre'] == "") {
-                    $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
-                    Yii::app()->user->setFlash('error', 'Le centre est obligatoire pour le profil neuropathologiste.');
-                }
-            }
             if (count($userLogin) > 0) {
                 Yii::app()->user->setFlash('error', 'Le login a déjà été utilisé. Veuillez choisir un login différent.');
                 $this->render('subscribe', array('model' => $model));
-            } else {
+            }
+            if ($model->profil == array("clinicien")) {
                 if ($model->save()) {
-                    if ($model->profil == array("clinicien")) {
-                        CommonMailer::sendSubscribeAdminMail($model, NULL);
-                        CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password, NULL);
-                        Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDPlatform !');
-                        $this->redirect(array('site/index'));
-                    }
-                    $complement = NULL;
-                    if ($model->profil == array("neuropathologiste")) {
-                        $complement = $model->centre;
-                    }
-                    CommonMailer::sendSubscribeUserMail($model, $profil);
-                    CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $complement);
-                    Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                    CommonMailer::sendSubscribeAdminMail($model, NULL);
+                    CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password, NULL);
+                    Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDPlatform !');
                     $this->redirect(array('site/index'));
-                } else {
-                    Yii::app()->user->setFlash('error', 'L\'utilisateur n\'a pas été enregistré.');
-                    if ($profil == "neuropathologiste") {
-                        if ($_POST['User']['centre'] == null || $_POST['User']['centre'] == "") {
-                            $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
-                            Yii::app()->user->setFlash('error', 'Le centre est obligatoire pour le profil neuropathologiste.');
+                }
+            }
+            if ($profil == "neuropathologiste") {
+                if ($model->validate()) {
+                    if (empty($_POST['User']['centre'])) {
+                        $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
+                    } else {
+                        if ($model->save()) {
+                            CommonMailer::sendSubscribeUserMail($model, $profil);
+                            CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['centre']);
+                            Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                            $this->redirect(array('site/index'));
                         }
                     }
                 }
             }
+            if ($profil == "geneticien" || $profil == "chercheur") {
+                if ($model->save()) {
+                    CommonMailer::sendSubscribeUserMail($model, $profil);
+                    CommonMailer::sendMailConfirmationProfilEmail($model, $profil, NULL);
+                    Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                    $this->redirect(array('site/index'));
+                }
+            }
+            Yii::app()->user->setFlash('error', 'L\'utilisateur n\'a pas été enregistré.');
         }
         $this->render('subscribe', array('model' => $model));
     }

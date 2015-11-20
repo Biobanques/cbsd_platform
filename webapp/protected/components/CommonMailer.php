@@ -167,7 +167,7 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
                                 </tr>
                                 <tr><td>&nbsp;</td></tr>
                                 <td align=\"left\">
-                                Vous pouvez refuser cet utilisateur en cliquant sur ce lien : <a href=\"" . Yii::app()->getBaseUrl(true) . "/index.php?r=site/refuseUser&arg1=" . $user->_id . "&arg2=" . $profil . "\">Refuser l\'utilisateur</a>
+                                Vous pouvez refuser cet utilisateur en cliquant sur ce lien : <a href=\"" . Yii::app()->getBaseUrl(true) . "/index.php?r=site/refuseUser&arg1=" . $user->_id . "&arg2=" . $profil . "\">Refuser l'utilisateur</a>
                                     <td>
                                 <tr>
                                 <td align=\"left\">
