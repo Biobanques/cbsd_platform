@@ -35,7 +35,7 @@ class User extends EMongoDocument {
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('telephone', 'telValidator'),
             array('gsm', 'gsmValidator'),
-            array('prenom, nom, login, password, repeatPassword, email, profil, telephone', 'required'),
+            array('prenom, nom, login, password, email, profil, telephone', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('address', 'addressValidator'),
@@ -57,7 +57,6 @@ class User extends EMongoDocument {
             'nom' => Yii::t('common', 'lastname'),
             'login' => Yii::t('common', 'Login'),
             'password' => Yii::t('common', 'password'),
-            'repeatPassword' => 'Confirmer le mot de passe',
             'email' => Yii::t('common', 'email'),
             'telephone' => Yii::t('common', 'phone'),
             'gsm' => Yii::t('common', 'gsm'),
@@ -172,9 +171,6 @@ class User extends EMongoDocument {
         }
         if ($nbDigit < 2 && $this->password != "")
             $this->addError('password', Yii::t('common', 'notEnoughDigits'));
-        if ($this->password != "" && $this->repeatPassword != "" && strcmp($this->password, $this->repeatPassword) !== 0) {
-            $this->addError('repeatPassword', 'Le mot de passe doit correspondre dans les deux champs.');
-        }
     }
 
     public function telValidator() {

@@ -41,24 +41,25 @@
                     <?php echo $form->textField($model, 'login', array('size' => 20, 'maxlength' => 250)); ?>
                     <?php echo $form->error($model, 'login'); ?>
                 </div>
-                
-                <div class="col-lg-3">
-                    <?php echo $form->labelEx($model, 'email'); ?>
-                    <?php echo $form->textField($model, 'email', array('size' => 20, 'maxlength' => 250)); ?>
-                    <?php echo $form->error($model, 'email'); ?>
-                </div>
-            </div>
 
-            <div class="row">
                 <div class="col-lg-3">
                     <?php echo $form->labelEx($model, 'password'); ?>
                     <?php echo $form->passwordField($model, 'password', array('size' => 20, 'maxlength' => 250)); ?>
                     <?php echo $form->error($model, 'password'); ?>
                 </div>
+            </div>
+
+            <div class="row">
                 <div class="col-lg-3">
-                    <?php echo $form->labelEx($model, 'repeatPassword'); ?>
-                    <?php echo $form->passwordField($model, 'repeatPassword', array('size' => 20, 'maxlength' => 250)); ?>
-                    <?php echo $form->error($model, 'repeatPassword'); ?>
+                    <?php echo $form->labelEx($model, 'email'); ?>
+                    <?php echo $form->textField($model, 'email', array('size' => 20, 'maxlength' => 250)); ?>
+                    <?php echo $form->error($model, 'email'); ?>
+                </div>
+
+                <div class="col-lg-3">
+                    <?php echo $form->labelEx($model, 'telephone'); ?>
+                    <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'Format 01 02 03 04 05')); ?>
+                    <?php echo $form->error($model, 'telephone'); ?>
                 </div>
             </div>
 
@@ -74,15 +75,7 @@
                     ?>
                     <?php echo $form->error($model, 'profil'); ?>
                 </div>
-                
-                <div class="col-lg-3">
-                    <?php echo $form->labelEx($model, 'telephone'); ?>
-                    <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'Format 01 02 03 04 05')); ?>
-                    <?php echo $form->error($model, 'telephone'); ?>
-                </div>
-            </div>
-            
-            <div class="row">
+
                 <div class="col-lg-3">
                     <?php echo $form->labelEx($model, 'gsm'); ?>
                     <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250)); ?>
