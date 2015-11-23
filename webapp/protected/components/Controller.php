@@ -62,6 +62,9 @@ class Controller extends CController {
                             if (!Yii::app()->user->isAuthorizedView($_POST['activeProfil'], "clinique")) {
                                 Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à consulter une fiche clinique');
                                 $this->redirect('index.php?r=answer/affichepatient');
+                            } else if (Yii::app()->user->id != $_SESSION['AnswerLogin']) {
+                                Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à consulter une fiche clinique qui ne vous appartient pas');
+                                $this->redirect('index.php?r=answer/affichepatient');
                             } else
                                 $this->redirect('index.php?r=answer/view&id=' . $_SESSION['id']->_id);
                         }
