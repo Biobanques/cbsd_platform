@@ -132,7 +132,7 @@ class Controller extends CController {
                     if ($_SESSION['id']->type == "clinique") {
                         if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/view") {
                             if (!Yii::app()->user->isAuthorizedView($_SESSION['activeProfil'], "clinique")) {
-                                Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à consulter une fiche génétique');
+                                Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à consulter une fiche clinique');
                                 $this->redirect(array('answer/affichepatient'));
                             } else if ($_SESSION['activeProfil'] == "clinicien" && Yii::app()->user->id != $_SESSION['id']->login) {
                                 Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à consulter une fiche clinique qui ne vous appartient pas');
