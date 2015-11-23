@@ -43,7 +43,6 @@ class AnswerController extends Controller {
         $model = $this->loadModel($id);
         if (isset($_SESSION['datapatient'])) {
             $patient = $_SESSION['datapatient'];
-            $_SESSION['AnswerLogin'] = $model->login;
             $this->render('view', array(
                 'model' => $model,
                 'patient' => $patient,
