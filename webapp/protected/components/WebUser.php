@@ -173,7 +173,7 @@ class WebUser extends CWebUser {
     /**
      * Droit "créer une fiche" qui dépend du profil de l'utilisateur et de ses droits sur une fiche 
      * @return boolean
-     */
+    */
     public function isAuthorizedCreate($profil, $fiche) {
         $criteria = new EMongoCriteria();
         $criteria->profil = $profil;
@@ -187,6 +187,17 @@ class WebUser extends CWebUser {
                     return true;
             }
         }
+    }
+    
+    /**
+     * Droit d'accès fonctionnalité de recherche des fiches 
+     * @return boolean
+    */
+    public function isAuthorized($profil, $link) {
+        if ($profil == "clinicien" && $link == "rechercheFiche") {
+            return false;
+        } else
+            return true;
     }
 }
 ?>

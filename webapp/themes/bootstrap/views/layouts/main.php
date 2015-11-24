@@ -27,6 +27,7 @@ if (!defined('BaseTheme')) define('BaseTheme', Yii::app()->theme->baseUrl);
     $menuItems = array(
         array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil"),
         array('label' => 'Saisir une fiche patient', 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil"),
+        array('label' => 'Recherche', 'url' => array('/rechercheFiche/admin'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "clinicien"),
         array('label' => 'Administration', 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin() && Yii::app()->user->getActiveProfil() == "administrateur" && Yii::app()->controller->action->id != "loginProfil"),
         array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
         array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),

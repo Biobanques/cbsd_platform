@@ -121,6 +121,10 @@ class Controller extends CController {
             } else {
                 $app->user->setState('activeProfil', $_POST['activeProfil']);
                 $_SESSION['activeProfil'] = $_POST['activeProfil'];
+                if (Yii::app()->controller->id == "rechercheFiche" && Yii::app()->user->getActiveProfil() == "clinicien") {
+                    Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à accéder à la liste des fiches disponibles');
+                    $this->redirect('index.php?r=site/index');
+                }
                 if (Yii::app()->controller->id == "user" || Yii::app()->controller->id == "formulaire" || Yii::app()->controller->id == "fiche" || Yii::app()->controller->id == "questionBloc" || Yii::app()->controller->id == "administration" || Yii::app()->controller->id == "auditTrail" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "admin/admin") {
                     if (Yii::app()->user->getActiveProfil() != "administrateur") {
                         Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à accéder à la page d\'administration');
