@@ -8,7 +8,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
 <p>Crée par: <?php echo $model->creator; ?></p>
 <hr />
 <?php
-echo CHtml::link('Vue format HTML', array('fiche/viewOnePage', 'id' => $model->_id));
+echo CHtml::link('Vue format HTML', array('rechercheFiche/viewOnePage', 'id' => $model->_id));
 ?>
 <div style="margin-top: -15px; text-align:right;">
     <?php
