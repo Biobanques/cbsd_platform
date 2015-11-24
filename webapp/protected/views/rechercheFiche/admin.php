@@ -35,10 +35,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'columns' => array(
         array('header' => 'N° anonymat', 'name' => 'id_patient'),
         array('header' => 'N° fiche', 'name' => 'id'),
-        array('header' => 'Nom du formulaire', 'value' => '$data->getFicheName()'),
+        array('header' => 'Nom du formulaire', 'value' => '$data->name'),
         array('header' => 'Utilisateur', 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
         array('header' => 'Date de la saisie', 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
-        array('header' => 'Date de l\'examen', 'name' => 'last_modified', 'value' => '$data->getLastModified()'),
+        // array('header' => 'Date de l\'examen', 'name' => 'examDate', 'value' => '$data->getExamDate()'),
+        array('header' => 'Date de l\'examen', 'name' => 'examDate', 'value' => '$data->getAnswerByQuestionId("examdate")'),
         array(
             'class' => 'CButtonColumn',
             'template' => '{view}',

@@ -11,7 +11,8 @@
  * render to display elements of questionnaire
  * @author nicolas
  */
-class QuestionnaireHTMLRenderer {
+class QuestionnaireHTMLRenderer
+{
 
     /**
      * render contributors
@@ -231,6 +232,133 @@ class QuestionnaireHTMLRenderer {
         return $result;
     }
 
+    /*
+     * render html the current question.
+     */
+
+    public function renderQuestionForSearchHTML($question, $lang, $isAnswered) {
+        $result = "";
+        $style = "style=\"\"";
+        if ($question->style != "" && $question->style != "") {
+
+            $style = "style=\"" . $question->style . "\"";
+        }
+
+        $result.="<div class=\"col-lg-6\" " . $style . ">";
+        if ($question->precomment != null) {
+            $precomment = $question->precomment;
+            if ($lang == "fr") {
+                $precomment = $question->precomment_fr;
+            }
+            if ($lang == "both") {
+                $precomment = "<i>" . $question->precomment . "</i><br>" . $question->precomment_fr;
+            }
+            $result.="<div class=\"question-precomment\">" . $precomment . "</div>";
+        }
+        //par defaut lang = enif ($lang == "en")
+        $label = $question->label;
+        if ($lang == "fr") {
+            $label = $question->label_fr;
+        }
+        if ($lang == "both") {
+            $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
+        }
+
+
+        $result.="<label for=\"Answer_dynamics_" . $question->id . "\">" . $label;
+        if (isset($question->help)) {
+            $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
+        }
+        $result.="</label>";
+
+        $result.="<div class=\"question-input\">";
+
+
+        $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
+        $valueInput = "";
+        if (Yii::app()->controller->id != "formulaire") {
+            if ($question->id == "examdate")
+                $valueInput = date("d/m/Y");
+            if ($question->id == "doctorname")
+                $valueInput = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
+        }
+        if ($isAnswered) {
+            $valueInput = $question->answer;
+        }
+        if ($question->type == "input") {
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+        }
+        if ($question->type == "date") {
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+        }
+        if ($question->type == "radio") {
+
+            if ($lang == "fr" && $question->values_fr != "") {
+                $values = $question->values_fr;
+            } else {
+                $values = $question->values;
+            }
+            $arvalue = split(",", $values);
+
+            foreach ($arvalue as $value) {
+                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $valueInput ? 'checked' : '') . ">&nbsp;" . $value . "</input>&nbsp;";
+            }
+        }
+        if ($question->type == "checkbox") {
+            $values = $question->values;
+            if ($lang == "fr" && isset($question->values_fr)) {
+                $values = $question->values_fr;
+            }
+            $arvalue = split(",", $values);
+            foreach ($arvalue as $value) {
+                $checked = false;
+                //in case of check box $ValuesInput is stored into an array.
+                if ($valueInput != null) {
+                    foreach ($valueInput as $vInput) {
+                        if ($vInput == $value) {
+                            $checked = true;
+                        }
+                    }
+                }
+                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . ">&nbsp;" . $value . "</input><br>";
+            }
+        }
+        if ($question->type == "text") {
+            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" >" . $valueInput . "</textarea>";
+        }
+        if ($question->type == "image") {
+            if ($isAnswered) {
+                $result.="<input " . $idInput . " type=\"file\" />";
+
+                if ($question->answer != null) {
+                    $result.="<div>here the image</div>";
+                }
+            } else {
+                $result.="<div style=\"width:128px;height:128px;background-repeat:no-repeat;background-image:url('http://localhost/qualityforms/images/gnome_mime_image.png');\"> </div>";
+            }
+        }
+        if ($question->type == "list") {
+            $values = $question->values;
+            $arvalue = split(",", $values);
+            $result.="<select " . $idInput . ">";
+            $result.="<option  value=\"\"></option>";
+            foreach ($arvalue as $value) {
+                $result.="<option  value=\"" . $value . "\" " . ($valueInput == $value ? 'selected' : '') . ">" . $value . "</option>";
+            }
+
+            $result.="</select>";
+        }
+        $result.="</div>";
+
+        //display cross delete picture
+        $imgHtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:25px;width:25px;'));
+
+        $result.=$imgHtml;
+        //close row input
+        $result.="</div>";
+        return $result;
+    }
+
     /**
      * render tab associated to each group for a questionnaire in edit mode
      * if isAnswered is filled, we are in case of answer.
@@ -270,7 +398,7 @@ class QuestionnaireHTMLRenderer {
     }
 
     /**
-     * 
+     *
      * @param type $questionnaire
      * @param type $group
      * @param type $lang
@@ -404,8 +532,8 @@ class QuestionnaireHTMLRenderer {
         }
         //add link delete
         if (Yii::app()->controller->id == "questionBloc") {
-           $imghtml = CHtml::image('images/cross.png');
-            $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('questionBloc/deleteQuestion', array('id' => $_GET['id'], 'idQuestion' => $question->_id))) . "</div>"; 
+            $imghtml = CHtml::image('images/cross.png');
+            $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('questionBloc/deleteQuestion', array('id' => $_GET['id'], 'idQuestion' => $question->_id))) . "</div>";
         } else {
             $imghtml = CHtml::image('images/cross.png');
             $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion', array('idFormulaire' => $idMongoQuestionnaire, 'idQuestion' => $question->id))) . "</div>";

@@ -1,7 +1,7 @@
 <?php
 
-class AnswerController extends Controller {
-
+class AnswerController extends Controller
+{
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -201,8 +201,8 @@ class AnswerController extends Controller {
      */
     public function actionExportPDF($id) {
         AnswerPDFRenderer::renderAnswer($this->loadModel($id));
-    }    
-    
+    }
+
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
@@ -225,6 +225,14 @@ class AnswerController extends Controller {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'questionnaire-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
+        }
+    }
+
+    public function actionAddSearchFilter() {
+        if (isset($_POST['question']) && !empty($_POST['question'])) {
+            $id = $_POST['question'];
+            $question = Answer::model()->findDetailledQuestionById($id);
+            echo QuestionnaireHTMLRenderer::renderQuestionForSearchHTML($question, 'fr', false);
         }
     }
 
