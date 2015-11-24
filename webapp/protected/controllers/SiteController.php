@@ -26,6 +26,9 @@ class SiteController extends Controller {
                     'error',
                     'recoverPwd',
                     'subscribe',
+                    'subscribeProfil',
+                    'confirmUser',
+                    'refuseUser'
                 ),
                 'users' => array(
                     '*'
@@ -102,23 +105,13 @@ class SiteController extends Controller {
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
-            if ($model->login() && in_array($model->profil, Yii::app()->user->getState('profil'))) {
-                Yii::app()->user->setState('activeProfil', $model->profil);
-                $this->redirect(Yii::app()->user->returnUrl);
-            } else if ($model->login() && (!in_array($model->profil, Yii::app()->user->getState('profil')))) {
-                Yii::app()->user->setFlash('error', 'Il n\'y a pas de profil associé à cet utilisateur.');
+            if ($model->validate() && $model->login()) {
+                $this->redirect(array('site/patient'));
             } else
                 Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
         }
-
-        $action = "";
-        if (isset(Yii::app()->user->id))
-            $action = Yii::app()->createUrl('site/updateSubscribe');
-        else
-            $action = Yii::app()->createUrl('site/subscribe');
-
         // display the login form
-        $this->render('login', array('model' => $model, 'action' => $action));
+        $this->render('login', array('model' => $model));
     }
 
     /**
@@ -143,7 +136,7 @@ class SiteController extends Controller {
                 $mixedResult = $model->validateFields();
                 if ($mixedResult['result'] == true) {
                     $result = 'success';
-                    CommonMailer::sendMailRecoverPassword($mixedResult['user']);
+                    CommonMailer::sendMailRecoverPassword($mixedResult['user'], null);
                 } else {
                     $result = 'error';
                 }
@@ -157,61 +150,159 @@ class SiteController extends Controller {
      * action to add a new profil to an user.
      */
     public function actionUpdateSubscribe() {
-        $model = new User ();
+        $model = new User;
         if (isset(Yii::app()->user->id)) {
             $model = User::model()->findByPk(new MongoID(Yii::app()->user->id));
-            if (isset($_POST ['User'])) {
-                $model->attributes = $_POST ['User'];
-                if ($model->update()) {
-                    Yii::app()->user->setFlash('success', 'Le profil a bien été ajouté.');
-                    $this->redirect(array('site/index'));
-                }
-            }
-            if (isset($_POST['clinicien']))
-                $_SESSION['profil'] = $profil = "clinicien";
-            if (isset($_POST['neuropathologiste']))
-                $_SESSION['profil'] = $profil = "neuropathologiste";
-            if (isset($_POST['geneticien']))
-                $_SESSION['profil'] = $profil = "geneticien";
-            if (isset($_POST['chercheur']))
-                $_SESSION['profil'] = $profil = "chercheur";
-            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
         }
+
+        if (isset($_POST ['User'])) {
+            $profilSelected = array_filter($_POST ['User']['profil']);
+            $test = empty($profilSelected);
+            if (!empty($profilSelected)) {
+                if (in_array('clinicien', $profilSelected)) {
+                    array_push($model->profil, 'clinicien');
+                    $model->address = $_POST ['User']['address'];
+                    if ($model->save()) {
+                        CommonMailer::sendConfirmationAdminProfilUser($model);
+                        CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password);
+                        Yii::app()->user->setState('profil', $model->profil);
+                        Yii::app()->user->setFlash('success', 'Le profil Clinicien a bien été créé.');
+                        $this->redirect(array('site/index'));
+                    }
+                } else {
+                    if (in_array('neuropathologiste', $profilSelected)) {
+                        if ($_POST['User']['centre'] == null || $_POST['User']['centre'] == "") {
+                            $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
+                            Yii::app()->user->setFlash('error', 'Le centre est obligatoire pour le profil neuropathologiste.');
+                        } else
+                            $model->centre = $_POST['User']['centre'];
+                    }
+                    if (!$model->hasErrors()) {
+                        CommonMailer::sendMailConfirmationProfilEmail($model, implode('', $profilSelected), $model->centre);
+
+                        Yii::app()->user->setFlash('success', 'La demande pour le profil ' . implode("", $profilSelected) . ' a bien été prise en compte. Vous recevrez un mail de confirmation');
+                        $this->redirect(array('site/index'));
+                    }
+                }
+            } else {
+                $model->addError('profil', 'Veuillez selectionner au moins un profil à ajouter');
+            }
+        }
+        $this->render('_updateSubscribeForm', array('model' => $model));
+    }
+
+    /**
+     * Displays the subscribeProfil page. User can choose which profil he wants to subscribe.
+     */
+    public function actionSubscribeProfil() {
+        $model = new User ();
+        if (isset($_POST['clinicien'])) {
+            $_SESSION['profil'] = $profil = "clinicien";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } else
+        if (isset($_POST['neuropathologiste'])) {
+            $_SESSION['profil'] = $profil = "neuropathologiste";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } else
+        if (isset($_POST['geneticien'])) {
+            $_SESSION['profil'] = $profil = "geneticien";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } else
+        if (isset($_POST['chercheur'])) {
+            $_SESSION['profil'] = $profil = "chercheur";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } else
+            $this->render('subscribeProfil', array('model' => $model));
     }
 
     /**
      * action to subscribe a new user account.
      */
     public function actionSubscribe() {
-        if (isset($_POST['clinicien']))
-            $_SESSION['profil'] = $profil = "clinicien";
-        if (isset($_POST['neuropathologiste']))
-            $_SESSION['profil'] = $profil = "neuropathologiste";
-        if (isset($_POST['geneticien']))
-            $_SESSION['profil'] = $profil = "geneticien";
-        if (isset($_POST['chercheur']))
-            $_SESSION['profil'] = $profil = "chercheur";
         $model = new User ();
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            $model->statut = "inactif";
-            if ($model->save()) {
-                if ($model->profil == array("clinicien")) {
-                    $model->statut = "actif";
-                    $model->update();
-                    if ($model->update()) {
-                        Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDForms !');
-                        $this->redirect(array('site/index'));
+            $profil = implode("", $model->profil);
+            if ($model->profil != array("clinicien"))
+                $model->profil = array(" ");
+
+            $criteria = new EMongoCriteria();
+            $criteria->login = $model->login;
+            $userLogin = User::model()->findAll($criteria);
+            if (count($userLogin) > 0) {
+                Yii::app()->user->setFlash('error', 'Le login a déjà été utilisé. Veuillez choisir un login différent.');
+                $this->render('subscribe', array('model' => $model));
+            }
+            if ($model->profil == array("clinicien")) {
+                if ($model->save()) {
+                    CommonMailer::sendSubscribeAdminMail($model, NULL);
+                    CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password, NULL);
+                    Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDPlatform !');
+                    $this->redirect(array('site/index'));
+                }
+            }
+            if ($profil == "neuropathologiste") {
+                if ($model->validate()) {
+                    if (empty($_POST['User']['centre'])) {
+                        $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
+                    } else {
+                        if ($model->save()) {
+                            CommonMailer::sendSubscribeUserMail($model, $profil);
+                            CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['centre']);
+                            Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                            $this->redirect(array('site/index'));
+                        }
                     }
                 }
-                Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                $this->redirect(array('site/index'));
-            } else {
-                Yii::app()->user->setFlash('error', 'L\'utilisateur n\'a pas été enregistré.');
-                $profil = $_SESSION['profil'];
             }
+            if ($profil == "geneticien" || $profil == "chercheur") {
+                if ($model->save()) {
+                    CommonMailer::sendSubscribeUserMail($model, $profil);
+                    CommonMailer::sendMailConfirmationProfilEmail($model, $profil, NULL);
+                    Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                    $this->redirect(array('site/index'));
+                }
+            }
+            Yii::app()->user->setFlash('error', 'L\'utilisateur n\'a pas été enregistré.');
         }
-        $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        $this->render('subscribe', array('model' => $model));
+    }
+
+    /**
+     * action to confirm new profil on mail validation.
+     */
+    public function actionConfirmUser() {
+        $model = User::model()->findByPk(new MongoId($_GET['arg1']));
+        if (!in_array($_GET['arg2'], $model->profil)) {
+            if (!in_array(" ", $model->profil))
+                array_push($model->profil, $_GET['arg2']);
+            else
+                $model->profil = (array) $_GET['arg2'];
+            if (isset($_GET['arg2']) && isset($_GET['arg3'])) {
+                if ($_GET['arg2'] == "neuropathologiste") {
+                    $model->centre = $_GET['arg3'];
+                }
+            }
+            if ($model->save()) {
+                CommonMailer::sendUserRegisterConfirmationMail($model, NULL);
+                Yii::app()->user->setState('profil', $model->profil);
+                Yii::app()->user->setFlash('success', 'Le profil ' . $_GET['arg2'] . ' a bien été ajouté.');
+                $this->redirect(array('site/index'));
+            }
+        } else {
+            Yii::app()->user->setFlash('error', 'Le profil ' . $_GET['arg2'] . ' a déjà été ajouté.');
+            $this->redirect(array('site/index'));
+        }
+    }
+
+    /**
+     * action to refuse user on mail validation.
+     */
+    public function actionRefuseUser() {
+        $model = User::model()->findByPk(new MongoId($_GET['arg1']));
+        CommonMailer::sendUserRegisterRefusedMail($model, $_GET['arg2']);
+        Yii::app()->user->setFlash('success', "L'utilisateur " . $model->login . " avec le profil " . $_GET['arg2'] . " a bien été refusé. Un mail a été envoyé à l'utilisateur.");
+        $this->redirect(array('site/index'));
     }
 
 }

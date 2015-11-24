@@ -126,7 +126,7 @@ class QuestionnaireController extends Controller {
             }
         }if ($flagNoInputToSave == false) {
             if ($answer->save())
-                Yii::app()->user->setFlash('success', "Le questionnaire a été sauvegardé avec succès.");
+                Yii::app()->user->setFlash('success', "La fiche a été sauvegardé avec succès.");
             else {
                 Yii::app()->user->setFlash('error', "Le questionnaire n'a pas été sauvegardé.");
                 Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);

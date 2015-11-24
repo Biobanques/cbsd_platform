@@ -137,7 +137,7 @@ class AnswerHTMLRenderer {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\"/>";
         }
         if ($answer->type == "date") {
-            $result.="<input type=\"date\" " . $idInput . " value=\"" . $answer->answer . "\" placeholder=\"Format jj/mm/yyyy\"/>";
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . $answer->answer . "\" placeholder=\"Format jj/mm/aaaa\"/>";
         }
         if ($answer->type == "radio") {
 
@@ -326,7 +326,7 @@ class AnswerHTMLRenderer {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
         }
         if ($question->type == "date") {
-            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/yyyy\"/>";
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
         }
         if ($question->type == "radio") {
 

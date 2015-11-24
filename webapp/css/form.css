@@ -38,6 +38,11 @@ div.form
 {
 }
 
+div.form input
+{
+    height: 25px
+}
+
 div.form input,
 div.form textarea,
 div.form select

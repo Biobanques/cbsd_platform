@@ -1,3 +1,4 @@
+
 <?php
 
 // This is the configuration for yiic console application.
@@ -7,12 +8,20 @@ return array(
     'name' => 'My Console Application',
     // preloading 'log' component
     'preload' => array('log'),
+    'import' => array(
+        'application.models.*',
+        'application.components.*',
+        'ext.YiiMongoDbSuite.*',
+        'ext.YiiMongoDbSuite.extra.*',
+        'application.modules.auditTrail.models.AuditTrail',
+        'application.modules.auditTrail.behaviors.LoggableBehavior',
+    ),
     // application components
     'components' => array(
         'mongodb' => array(
             'class' => 'EMongoDB',
-            'connectionString' => 'mongodb://ebiobanques:insermEbb@localhost:32020/interop',
-            'dbName' => 'interop',
+            'connectionString' => CommonProperties::$CONNECTION_STRING,
+            'dbName' => 'cbsdplatformdb',
             'fsyncFlag' => true,
             'safeFlag' => true,
             'useCursor' => false,
@@ -26,5 +35,11 @@ return array(
                 ),
             ),
         ),
+    ),
+    'params' => array(
+        'adminEmail' => CommonProperties::$ADMIN_EMAIL,
+        //variable pour activer systeme de mail
+        'mailSystemActif' => CommonProperties::$MAIL_SYSTEM_ACTIVE,
+        'mailRelanceExport' => false,
     ),
 );

@@ -12,17 +12,17 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'old_value'); ?>
-		<?php echo $form->textArea($model,'old_value',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textField($model,'old_value',array('rows'=>6, 'cols'=>50)); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'new_value'); ?>
-		<?php echo $form->textArea($model,'new_value',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textField($model,'new_value',array('rows'=>6, 'cols'=>50)); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'action'); ?>
-		<?php echo $form->textField($model,'action',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->dropDownList($model,'action', array('CREATE' => 'CREATE', 'SET' => 'SET', 'CHANGE' => 'CHANGE', 'DELETE' => 'DELETE')); ?>
 	</div>
 
 	<div class="row">
@@ -51,7 +51,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Search'); ?>
+		<?php echo CHtml::submitButton('Rechercher'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

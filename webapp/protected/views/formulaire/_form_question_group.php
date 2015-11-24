@@ -22,16 +22,6 @@
         <?php echo $form->textField($model, 'title', array('size' => 5, 'maxlength' => 45)); ?>
         <?php echo $form->error($model, 'title'); ?>
     </div>
-    <div class="row">
-        <?php echo $form->labelEx($model, 'parent_group'); ?>
-        <?php
-        echo $form->dropDownList($model, 'parent_group', $model->getOnglets()
-                , array('prompt' => '---')
-//                , array('ajax' => array('type' => 'POST', 'url' => CController::createUrl('formulaire/dynamicquestions&id=' . $model->questionnaire->_id), 'update' => '#' . CHtml::activeId($model, 'idQuestionBefore')))
-        );
-        ?>
-        <?php echo $form->error($model, 'parent_group'); ?>
-    </div>
     <div class="row buttons">
         <?php echo CHtml::submitButton('Enregistrer'); ?>
     </div>

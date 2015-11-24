@@ -74,12 +74,20 @@ class WebUser extends CWebUser {
         return (in_array("chercheur", $this->getState('profil')));
     }
 
+    public function getUserProfil() {
+        $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
+        return $user->profil;
+    }
     /**
      * profils dans l'ordre par défaut : neuropathologiste, geneticien, clinicien, chercheur
      * @return active profil
      */
     public function getActiveProfil() {
         return $this->getState('activeProfil');
+    }
+    
+    public function setActifProfil($activeProfil) {
+        $this->setState('activeProfil', $activeProfil);
     }
 
     public function setActiveProfil($activeProfil) {
@@ -106,7 +114,7 @@ class WebUser extends CWebUser {
     }
 
     /**
-     * affiche l'item "view" qui dépend du profil de l'utilisateur et de ses droits  
+     * affiche l'item "view" qui dépend du profil de l'utilisateur et de ses droits sur une fiche
      * @return boolean
      */
     public function isAuthorizedView($profil, $fiche) {
@@ -125,7 +133,7 @@ class WebUser extends CWebUser {
     }
     
     /**
-     * affiche l'item "update" qui dépend du profil de l'utilisateur et de ses droits  
+     * affiche l'item "update" qui dépend du profil de l'utilisateur et de ses droits sur une fiche
      * @return boolean
      */
     public function isAuthorizedUpdate($profil, $fiche) {
@@ -144,7 +152,7 @@ class WebUser extends CWebUser {
     }
     
     /**
-     * affiche l'item "delete" qui dépend du profil de l'utilisateur et de ses droits  
+     * affiche l'item "delete" qui dépend du profil de l'utilisateur et de ses droits sur une fiche 
      * @return boolean
      */
     public function isAuthorizedDelete($profil, $fiche) {
@@ -162,5 +170,23 @@ class WebUser extends CWebUser {
         }
     }
 
+    /**
+     * Droit "créer une fiche" qui dépend du profil de l'utilisateur et de ses droits sur une fiche 
+     * @return boolean
+     */
+    public function isAuthorizedCreate($profil, $fiche) {
+        $criteria = new EMongoCriteria();
+        $criteria->profil = $profil;
+        $criteria->type = $fiche;
+        $droit = Droits::model()->find($criteria);
+        foreach ($droit as $key => $value) {
+            if ($key == "role") {
+                if ($value == "")
+                    return false;
+                if (in_array("create", $value))
+                    return true;
+            }
+        }
+    }
 }
 ?>

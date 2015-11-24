@@ -42,19 +42,21 @@
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'profil'); ?>
-        <?php
-        if (Yii::app()->user->isGuest)
-            echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'js:validate_dropdown()', 'labelOptions' => array('style' => 'display:inline')));
-        else
-            echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilSorted(), array('onchange' => 'js:validate_dropdown()', 'labelOptions' => array('style' => 'display:inline')));
-        ?>
-        <?php echo $form->error($model, 'profil'); ?>
+        <div id="profil">
+            <?php echo $form->labelEx($model, 'profil'); ?>
+            <?php
+            if (Yii::app()->user->isGuest)
+                echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'getProfil()', 'labelOptions' => array('style' => 'display:inline')));
+            else
+                echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilSorted(), array('onchange' => 'getProfil()', 'labelOptions' => array('style' => 'display:inline')));
+            ?>
+            <?php echo $form->error($model, 'profil'); ?>
+        </div>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'telephone'); ?>
-        <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250)); ?>
+        <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'Format 01 02 03 04 05')); ?>
         <?php echo $form->error($model, 'telephone'); ?>
     </div>
 
@@ -65,12 +67,20 @@
     </div>
 
     <div class="row">
-        <div id="statut" <?php if (Yii::app()->user->isGuest) echo "style=\"display:none;\""; ?>>
-            <?php echo CHtml::activeLabel($model, 'statut', array('required' => true)); ?>
-            <?php echo $form->dropDownList($model, 'statut', User::model()->getArrayStatut(), array('prompt' => '----')); ?>
-            <?php echo $form->error($model, 'statut'); ?>
+        <div id="address" style="display:none;">
+            <?php echo CHtml::activeLabel($model, 'address', array('required' => true)); ?>
+            <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'address'); ?>
         </div>
-    </div>
+    </div>    
+
+    <div class="row">
+        <div id="centre" style="display:none;">
+            <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
+            <?php echo $form->dropDownList($model, 'centre', User::model()->getArrayCentre(), array('prompt' => '----')); ?>
+            <?php echo $form->error($model, 'centre'); ?>
+        </div>
+    </div>    
 
     <div class="row buttons" style="float:left;">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Créer' : 'Enregistrer'); ?>
@@ -79,3 +89,82 @@
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var clinicien = false;
+        var neuropathologiste = false;
+        var checkedVals = $(':checkbox:checked').map(function () {
+            return this.value;
+        }).get();
+        for (var i = 0; i < checkedVals.length; i++) {
+            if (checkedVals[i] == "clinicien")
+                clinicien = true;
+            if (checkedVals[i] == "neuropathologiste")
+                neuropathologiste = true;
+        }
+        if (clinicien) {
+            $('#address').show();
+        }
+        else {
+            $('#User_address').val('');
+            $('#address').hide();
+        }
+        if (neuropathologiste) {
+            $('#centre').show();
+        }
+        else {
+            $('#User_centre').val('');
+            $('#centre').hide();
+        }
+        if (clinicien && neuropathologiste) {
+            $('#address').show();
+            $('#centre').show();
+        }
+        if (!clinicien && !neuropathologiste) {
+            $('#User_address').val('');
+            $('#User_centre').val('');
+            $('#address').hide();
+            $('#centre').hide();
+        }
+        //$('select option[value="inactif"]').attr("selected",true);
+    });
+    function getProfil() {
+        var clinicien = false;
+        var neuropathologiste = false;
+        var checkedVals = $(':checkbox:checked').map(function () {
+            return this.value;
+        }).get();
+        for (var i = 0; i < checkedVals.length; i++) {
+            if (checkedVals[i] == "clinicien")
+                clinicien = true;
+            if (checkedVals[i] == "neuropathologiste")
+                neuropathologiste = true;
+        }
+        if (clinicien) {
+            $('#address').show();
+        }
+        else {
+            $('#User_address').val('');
+            $('#address').hide();
+        }
+        if (neuropathologiste) {
+            $('#centre').show();
+        }
+        else {
+            $('#User_centre').val('');
+            $('#centre').hide();
+        }
+        if (clinicien && neuropathologiste) {
+            $('#address').show();
+            $('#centre').show();
+        }
+        if (!clinicien && !neuropathologiste) {
+            $('#User_address').val('');
+            $('#User_centre').val('');
+            $('#address').hide();
+            $('#centre').hide();
+        }
+    }
+
+</script>

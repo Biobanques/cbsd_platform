@@ -7,16 +7,9 @@
  */
 class User extends EMongoDocument {
 
-    /**
-     *
-     */
     public $login;
-
-    /**
-     * embedded document with array of QuestionAnswer
-     * @var type
-     */
     public $password;
+    public $repeatPassword;
     public $profil;
     public $nom;
     public $prenom;
@@ -25,7 +18,6 @@ class User extends EMongoDocument {
     public $gsm;
     public $address;
     public $centre;
-    public $statut;
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
@@ -41,16 +33,16 @@ class User extends EMongoDocument {
         $result = array(
             array('gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
-            array('login', 'telPresent'),
-            array('gsm, telephone', 'length', 'min' => 8),
+            array('telephone', 'telValidator'),
+            array('gsm', 'gsmValidator'),
             array('prenom, nom, login, password, email, profil, telephone', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('address', 'addressValidator'),
             array('centre', 'centreValidator'),
-            array('password', 'pwdStrength'),
+            array('password', 'passwordValidator'),
             array('password', 'length', 'min' => 6),
-            array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre, statut', 'safe', 'on' => 'search, update'),
+            array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre', 'safe', 'on' => 'search, update')
         );
         return $result;
     }
@@ -68,10 +60,9 @@ class User extends EMongoDocument {
             'email' => Yii::t('common', 'email'),
             'telephone' => Yii::t('common', 'phone'),
             'gsm' => Yii::t('common', 'gsm'),
-            'profil' => Yii::t('common', 'profil'),
+            'profil' => 'Profil',
             'address' => 'Adresse',
-            'centre' => 'Centre de référence',
-            'statut' => 'Statut',
+            'centre' => 'Centre de référence'
         );
     }
 
@@ -94,20 +85,6 @@ class User extends EMongoDocument {
     public function getProfil() {
         $result = $this->profil;
         $arr = $this->getArrayProfil();
-        if ($result != "" && $arr [$result] != null) {
-            $result = $arr [$result];
-        } else {
-            $result = "Not defined";
-        }
-        return $result;
-    }
-
-    /**
-     * @return type
-     */
-    public function getStatut() {
-        $result = $this->statut;
-        $arr = $this->getArrayStatut();
         if ($result != "" && $arr [$result] != null) {
             $result = $arr [$result];
         } else {
@@ -152,13 +129,11 @@ class User extends EMongoDocument {
     }
 
     /**
-     * get an array of statut
+     * get an array of available profils.
      */
-    public function getArrayStatut() {
-        $res = array();
-        $res ['actif'] = "actif";
-        $res ['inactif'] = "inactif";
-        return $res;
+    public function getArrayAvailableProfil($user) {
+        $user = User::model()->findByPk(new MongoID($user));
+        return array_diff($this->getArrayProfilFiltered(), $user->profil);
     }
 
     /**
@@ -187,7 +162,7 @@ class User extends EMongoDocument {
     /**
      * Custom validation rules
      */
-    public function pwdStrength() {
+    public function passwordValidator() {
         $nbDigit = 0;
         $length = strlen($this->password);
         for ($i = 0; $i < $length; $i++) {
@@ -198,9 +173,20 @@ class User extends EMongoDocument {
             $this->addError('password', Yii::t('common', 'notEnoughDigits'));
     }
 
-    public function telPresent() {
+    public function telValidator() {
         if (in_array($this->telephone, array("", null)) && in_array($this->gsm, array("", null)))
-            $this->addError('gsm', 'Au moins un numéro de téléphone');
+            $this->addError('telephone', 'Veuillez renseigner au moins un numéro de téléphone.');
+        if (!in_array($this->telephone, array("", null))) {
+            if (!preg_match("/^0[1-9][0-9]{8}$/i", $this->telephone))
+                $this->addError('telephone', 'Le numéro de téléphone que vous avez renseigné n\'est pas valide (format 01 02 03 04 05).');
+        }
+    }
+
+    public function gsmValidator() {
+        if (!in_array($this->gsm, array("", null))) {
+            if (!preg_match("/^0[1-9][0-9]{8}$/i", $this->gsm))
+                $this->addError('gsm', 'Le numéro de téléphone portable que vous avez renseigné n\'est pas valide (format 01 02 03 04 05).');
+        }
     }
 
     /**
@@ -222,16 +208,26 @@ class User extends EMongoDocument {
     }
 
     public function addressValidator() {
-        if (($this->profil == array("clinicien")) && ($this->address == "")) {
-            $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
-            $this->addError('address', 'Adresse ne peut pas être vide.');
+        if (isset($this->profil)) {
+            if (gettype($this->profil) == "string") {
+                
+            } else
+            if (in_array("clinicien", $this->profil) && ($this->address == "")) {
+                $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
+                $this->addError('address', 'Adresse ne peut être vide.');
+            }
         }
     }
 
     public function centreValidator() {
-        if (($this->profil == array("neuropathologiste")) && ($this->centre == "")) {
-            $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
-            $this->addError('centre', 'Centre ne peut pas être vide.');
+        if (isset($this->profil)) {
+            if (gettype($this->profil) == "string") {
+                
+            } else
+            if (in_array("neuropathologiste", $this->profil) && ($this->centre == "")) {
+                $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
+                $this->addError('centre', 'Centre ne peut être vide.');
+            }
         }
     }
 

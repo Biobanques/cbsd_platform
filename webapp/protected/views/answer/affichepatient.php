@@ -3,9 +3,9 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 ?>
 
 <p><?php echo Yii::app()->user->name ?>, voici les fiches dont vous disposez pour ce patient.</p>
-<hr />
 <div>
     <?php if (Yii::app()->user->getState('activeProfil') != "chercheur") { ?>
+        <hr />
         <h4>Patient</h4>
         <?php
         $this->widget('bootstrap.widgets.TbGridView', array(

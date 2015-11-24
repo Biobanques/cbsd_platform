@@ -21,6 +21,8 @@ class Answer extends EMongoDocument {
     public function getCollectionName() {
         return 'answer';
     }
+    
+    public $creator;
 
     /**
      * equal id of the questionnaire
@@ -90,7 +92,7 @@ class Answer extends EMongoDocument {
                 'required'
             ),
             array(
-                'id,answers_group',
+                'id,name,answers_group',
                 'safe',
                 'on' => 'search'
             )
@@ -108,10 +110,13 @@ class Answer extends EMongoDocument {
     }
 
     public function search($caseSensitive = false) {
-        $criteria = new EMongoCriteria ();
-        if (isset($this->id) && !empty($this->id)) {
-            $criteria->id = "" . $this->id . "";
-        }
+        $criteria = new EMongoCriteria;
+
+        if (isset($this->name) && !empty($this->name))
+        $criteria->name = new MongoRegex("/$this->name/i");
+        
+        if (isset($this->nom) && !empty($this->nom))
+        $criteria->nom = new MongoRegex("/$this->nom/i");
 
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
@@ -162,7 +167,15 @@ class Answer extends EMongoDocument {
     public function renderContributors() {
         return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
-
+    
+    public function getFicheName() {
+        $result = "";
+        $fiche = Answer::model()->findByPk(new MongoID($this->_id));
+        if ($fiche != null)
+            $result = $fiche->name;
+        return $result;
+    }
+    
     /**
      * get the last modified value into a french date format JJ/MM/AAAA
      * @return type
@@ -180,7 +193,7 @@ class Answer extends EMongoDocument {
      */
     public function getLastUpdated() {
         if ($this->last_updated != null)
-            return date("d/m/Y H:i", $this->last_updated->sec);
+            return date("d/m/Y H:m", $this->last_updated->sec);
         else
             return null;
     }
