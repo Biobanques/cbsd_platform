@@ -230,7 +230,7 @@ class AnswerController extends Controller
     public function actionAddSearchFilter() {
         if (isset($_POST['question']) && !empty($_POST['question'])) {
             $id = $_POST['question'];
-            $question = Answer::model()->findDetailledQuestionById($id);
+            $question = Answer::model()->findAllDetailledQuestionById($id);
             echo QuestionnaireHTMLRenderer::renderQuestionForSearchHTML($question, 'fr', false);
         }
     }
