@@ -130,7 +130,6 @@ class AnswerController extends Controller {
         $model = $this->loadModel($id);
         if (isset($_POST['Questionnaire'])) {
             $model->last_updated = new MongoDate();
-            $model->creator = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
             $flagNoInputToSave = true;
             foreach ($model->answers_group as $answer_group) {
                 foreach ($answer_group->answers as $answerQuestion) {
