@@ -92,6 +92,7 @@ class QuestionnaireController extends Controller {
             $patients = $_SESSION['datapatient'];
         }
         $answer = new Answer;
+        $answer->creator = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
         $answer->last_updated = new MongoDate();
         $answer->copy($model);
         $answer->type = $model->type;

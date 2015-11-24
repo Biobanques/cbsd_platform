@@ -134,10 +134,10 @@ class AnswerHTMLRenderer {
         //affichage de l input selon son type
         $idInput = "id=\"" . $idanswergroup . "_" . $answer->id . "\" name=\"Questionnaire[" . $idanswergroup . "_" . $answer->id . "]" . ($answer->type == "checkbox" ? "[]" : "") . "\"";
         if ($answer->type == "input") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\"/>";
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
         }
         if ($answer->type == "date") {
-            $result.="<input type=\"date\" " . $idInput . " value=\"" . $answer->answer . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . $answer->answer . "\" placeholder=\"Format jj/mm/aaaa\" style=\"height:25px;\"/>";
         }
         if ($answer->type == "radio") {
 

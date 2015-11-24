@@ -30,7 +30,7 @@ class RechercheFicheController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'view', 'exportCsv', 'exportXls'),
+                'actions' => array('admin', 'view', 'exportCsv', 'exportXls', 'viewOnePage'),
                 'expression' => '$user->isAuthorized(Yii::app()->user->getActiveProfil(), Yii::app()->controller->id)'
             ),
             array('deny', // deny all users
@@ -60,6 +60,17 @@ class RechercheFicheController extends Controller {
     public function actionView($id) {
         $model = Answer::model()->findByPk(new MongoID($id));
         $this->render('view', array(
+            'model' => $model,
+        ));
+    }
+    
+    /**
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
+    public function actionViewOnePage($id) {
+        $model = Answer::model()->findByPk(new MongoID($id));
+        $this->render('view_onepage', array(
             'model' => $model,
         ));
     }
