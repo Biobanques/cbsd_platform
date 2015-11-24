@@ -104,19 +104,53 @@ class Answer extends EMongoDocument {
         return array(
             'id' => 'Id',
             'name' => 'Nom',
-            'last_updated' => 'Dernière sauvegarde',
-            'last_modified' => 'Date du questionnaire',
+            'last_updated' => 'Date de saisie',
+            'last_modified' => 'Date de l\'examen',
+        );
+    }
+    
+    public function attributeExportedLabels() {
+        return array(
+            'id_patient' => 'N° anonymat',
+            'id' => 'N° fiche',
+            'name' => 'Nom de la fiche',
+            'type' => 'Type de fiche',
+            'last_updated' => 'Date de saisie',
+            'last_modified' => 'Date de l\'examen',
         );
     }
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
+       
+        if (isset($this->login) && !empty($this->login)) {
+            $criteriaUser = new EMongoCriteria;
+            $criteriaUser->_id = $this->login;
+            $user = User::model()->findAll($criteriaUser);
+            foreach ($user as $k=>$v) {
+                if ($k == "nom") {
+                    $this->login = $v;
+                    $criteria->addCond('login', '==', new MongoRegex('/' . $v . '/i'));
+                }
+            }
+            //$criteria->addCond('nom', '==', new MongoRegex('/' . $nom . '/i'));
+        }
+
+        if (isset($this->id_patient) && !empty($this->id_patient))
+            $criteria->addCond('id_patient', '==', new MongoRegex('/' . $this->id_patient . '/i'));
 
         if (isset($this->name) && !empty($this->name))
-        $criteria->name = new MongoRegex("/$this->name/i");
-        
-        if (isset($this->nom) && !empty($this->nom))
-        $criteria->nom = new MongoRegex("/$this->nom/i");
+            $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '/i'));
+
+        if (isset($this->type) && !empty($this->type))
+            $criteria->addCond('type', '==', new MongoRegex('/' . $this->type . '/i'));
+       
+        //if (isset($this->last_modified) && !empty($this->last_modified))
+            //$criteria->addCond('last_modified', '==', new MongoRegex('/' . date("d/m/Y H:m", strtotime($this->last_modified->sec)) . '/i'));
+            //$criteria->addCond('last_modified', '==', date("d/m/Y H:m", strtotime($this->last_modified->sec)));
+       
+        //if (isset($this->last_updated) && !empty($this->last_updated))
+            //$criteria->addCond('last_updated', '==', new MongoRegex('/' . $this->getLastUpdated() . '/i'));
 
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
@@ -216,6 +250,37 @@ class Answer extends EMongoDocument {
      */
     public function getUserId() {
         return $this->login;
+    }
+    
+    /**
+     * retourne la liste de toutes les questions de toutes les fiches
+     * @return type
+     */
+    public function getAllQuestions() {
+        $result = array();
+        $fiche = Answer::model()->findAll();
+        foreach ($fiche as $key => $value) {
+            foreach ($value as $k => $v) {
+                if ($k == "answers_group") {
+                    foreach ($v as $i => $j) {
+                        foreach ($j as $k => $l) {
+                            if ($k == "answers") {
+                                foreach ($l as $label => $test) {
+                                    foreach ($test as $a => $b) {
+                                        if ($a == "label_fr") {
+                                            if (!in_array($b,$result)) {
+                                                $result[] = $b;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
     }
 
 }
