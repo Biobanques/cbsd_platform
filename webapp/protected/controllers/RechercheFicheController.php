@@ -52,7 +52,7 @@ class RechercheFicheController extends Controller {
             'model' => $model
         ));
     }
-    
+
     /**
      * Affiche une fiche ,en  lecture uniquement
      * @param $id the ID of the model to be displayed
@@ -72,54 +72,17 @@ class RechercheFicheController extends Controller {
         $model->unsetAttributes();
         if (isset($_GET['Answer']))
             $model->attributes = $_GET['Answer'];
-
         if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
             $criteria = $_SESSION['criteria'];
         } else {
             $criteria = new EMongoCriteria;
         }
         $models = Answer::model()->findAll($criteria);
-        /*$dataProvider = array();
-        $listAttributes = array();
-        foreach ($models as $model) {
-//récuperation de la liste totale des attributs
-            foreach ($model->attributes as $attributeName => $attributeValue) {
-                $listAttributes[$attributeName] = $attributeName;
-            }
-        }
-
-        foreach ($models as $model) {
-            $datas = array();
-            foreach ($listAttributes as $attribute) {
-                if (isset($model->$attribute)) {
-                    if (!is_object($model->$attribute)) {
-                        $datas[$attribute] = $model->$attribute;
-                    } else
-                        $datas[$attribute] = $model->$attribute;
-                } else {
-                    $datas[$attribute] = "";
-                }
-            }
-            $dataProvider[] = $datas;
-        }
-        */
-        $filename = date('Ymd_H').'h'.date('i').'_liste_fiches_CBSD_Platform.csv';
-        $arAnswers=Answer::model()->resultToArray($models);
-        $csv = new ECSVExport($arAnswers,true,false,null,null);
-        //$toExclude = array();
-        /*$toExport = $model->attributeExportedLabels();
-        foreach ($listAttributes as $attribute) {
-
-            if (!isset($toExport[$attribute]))
-                $toExclude[] = $attribute;
-        }*/
-        //$csv->setExclude($toExclude);
-        //convert tree result to an array
-        
+        $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
+        $arAnswers = Answer::model()->resultToArray($models);
+        $csv = new ECSVExport($arAnswers, true, false, null, null);
         Yii::app()->getRequest()->sendFile($filename, $csv->toCSV(), "text/csv", false);
     }
-    
-    
 
     /**
      * export xls listes des fiches disponibles
@@ -135,23 +98,24 @@ class RechercheFicheController extends Controller {
             $criteria = new EMongoCriteria;
         }
 
-        $fiches = Answer::model()->findAll($criteria);
-        $data = array(1 => array_keys(Answer::model()->attributeExportedLabels()));
+        $models = Answer::model()->findAll($criteria);
+        $lines = Answer::model()->resultToArray($models);
+        $data = array();
         setlocale(LC_ALL, 'fr_FR.UTF-8');
-        foreach ($fiches as $fiche) {
+        foreach ($lines as $fiche) {
             $line = array();
-            foreach (array_keys($fiche->attributeExportedLabels()) as $attribute) {
-
-                if (isset($fiche->$attribute) && $fiche->$attribute != null && !empty($fiche->$attribute)) {
-                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $fiche->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
-                } else {
-                    $line[] = "-";
-                }
+            foreach ($fiche as $value) {
+                if ($value == 'null')
+                    $line[] = null;
+                else
+                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $value); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
             }
             $data[] = $line;
         }
         Yii::import('application.extensions.phpexcel.JPhpExcel');
         $xls = new JPhpExcel('UTF-8', true, 'Liste des fiches disponibles');
+        // $filename = date('Ymd_H').'h'.date('i').'_liste_fiches_CBSD_Platform.csv';
+
         $xls->addArray($data);
         $xls->generateXML('Liste des fiches disponibles');
     }
