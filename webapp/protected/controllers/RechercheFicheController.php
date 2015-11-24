@@ -79,7 +79,7 @@ class RechercheFicheController extends Controller {
             $criteria = new EMongoCriteria;
         }
         $models = Answer::model()->findAll($criteria);
-        $dataProvider = array();
+        /*$dataProvider = array();
         $listAttributes = array();
         foreach ($models as $model) {
 //récuperation de la liste totale des attributs
@@ -102,18 +102,24 @@ class RechercheFicheController extends Controller {
             }
             $dataProvider[] = $datas;
         }
-        $filename = 'answers_list.csv';
-        $csv = new ECSVExport($dataProvider);
-        $toExclude = array();
-        $toExport = $model->attributeExportedLabels();
+        */
+        $filename = date('Ymd_H').'h'.date('i').'_liste_fiches_CBSD_Platform.csv';
+        $arAnswers=Answer::model()->resultToArray($models);
+        $csv = new ECSVExport($arAnswers,true,false,null,null);
+        //$toExclude = array();
+        /*$toExport = $model->attributeExportedLabels();
         foreach ($listAttributes as $attribute) {
 
             if (!isset($toExport[$attribute]))
                 $toExclude[] = $attribute;
-        }
-        $csv->setExclude($toExclude);
+        }*/
+        //$csv->setExclude($toExclude);
+        //convert tree result to an array
+        
         Yii::app()->getRequest()->sendFile($filename, $csv->toCSV(), "text/csv", false);
     }
+    
+    
 
     /**
      * export xls listes des fiches disponibles

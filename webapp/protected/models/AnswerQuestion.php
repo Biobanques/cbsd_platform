@@ -10,6 +10,11 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
     public $id;
     public $label;
     public $label_fr;
+    /**
+     * type of the question. Values authorized :
+     * input, date , radio, checkbox, text, image
+     * @var type 
+     */
     public $type;
     /*
      * css style applied to the label.
@@ -27,7 +32,7 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
     public $values_fr;
 
     /**
-     * valeu of the answer
+     * value of the answer
      * @var type 
      */
     public $answer;
@@ -101,6 +106,20 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
      */
     public function setAnswer($val) {
         $this->answer = $val;
+    }
+    
+    /**
+     * get literal value to display into a flat grid (csv, xls)
+     *  input => values
+     *  date => values
+     *  radio => checkbox, text, image
+     * 
+     */
+    public function getLiteralAnswer(){
+        $result=$this->answer;
+       // if($this->type=='radio')
+        //    $result
+        return $result;
     }
 
 }

@@ -19,8 +19,9 @@ class Question extends LoggableActiveRecord
      */
     public $label_fr;
     /**
-     *
-     * @var type
+     * type of the question. Values authorized :
+     * input, date , radio, checkbox, text, image
+     * @var type 
      */
     public $type;
     /*

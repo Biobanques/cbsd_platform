@@ -21,7 +21,7 @@ class Answer extends EMongoDocument {
     public function getCollectionName() {
         return 'answer';
     }
-    
+
     public $creator;
 
     /**
@@ -108,7 +108,7 @@ class Answer extends EMongoDocument {
             'last_modified' => 'Date de l\'examen',
         );
     }
-    
+
     public function attributeExportedLabels() {
         return array(
             'id_patient' => 'N° anonymat',
@@ -122,12 +122,12 @@ class Answer extends EMongoDocument {
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
-       
+
         if (isset($this->login) && !empty($this->login)) {
             $criteriaUser = new EMongoCriteria;
             $criteriaUser->_id = $this->login;
             $user = User::model()->findAll($criteriaUser);
-            foreach ($user as $k=>$v) {
+            foreach ($user as $k => $v) {
                 if ($k == "nom") {
                     $this->login = $v;
                     $criteria->addCond('login', '==', new MongoRegex('/' . $v . '/i'));
@@ -144,13 +144,12 @@ class Answer extends EMongoDocument {
 
         if (isset($this->type) && !empty($this->type))
             $criteria->addCond('type', '==', new MongoRegex('/' . $this->type . '/i'));
-       
+
         //if (isset($this->last_modified) && !empty($this->last_modified))
-            //$criteria->addCond('last_modified', '==', new MongoRegex('/' . date("d/m/Y H:m", strtotime($this->last_modified->sec)) . '/i'));
-            //$criteria->addCond('last_modified', '==', date("d/m/Y H:m", strtotime($this->last_modified->sec)));
-       
+        //$criteria->addCond('last_modified', '==', new MongoRegex('/' . date("d/m/Y H:m", strtotime($this->last_modified->sec)) . '/i'));
+        //$criteria->addCond('last_modified', '==', date("d/m/Y H:m", strtotime($this->last_modified->sec)));
         //if (isset($this->last_updated) && !empty($this->last_updated))
-            //$criteria->addCond('last_updated', '==', new MongoRegex('/' . $this->getLastUpdated() . '/i'));
+        //$criteria->addCond('last_updated', '==', new MongoRegex('/' . $this->getLastUpdated() . '/i'));
 
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
@@ -201,7 +200,7 @@ class Answer extends EMongoDocument {
     public function renderContributors() {
         return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
-    
+
     public function getFicheName() {
         $result = "";
         $fiche = Answer::model()->findByPk(new MongoID($this->_id));
@@ -209,7 +208,7 @@ class Answer extends EMongoDocument {
             $result = $fiche->name;
         return $result;
     }
-    
+
     /**
      * get the last modified value into a french date format JJ/MM/AAAA
      * @return type
@@ -251,7 +250,7 @@ class Answer extends EMongoDocument {
     public function getUserId() {
         return $this->login;
     }
-    
+
     /**
      * retourne la liste de toutes les questions de toutes les fiches
      * @return type
@@ -268,7 +267,7 @@ class Answer extends EMongoDocument {
                                 foreach ($l as $label => $test) {
                                     foreach ($test as $a => $b) {
                                         if ($a == "label_fr") {
-                                            if (!in_array($b,$result)) {
+                                            if (!in_array($b, $result)) {
                                                 $result[] = $b;
                                             }
                                         }
@@ -279,6 +278,106 @@ class Answer extends EMongoDocument {
                     }
                 }
             }
+        }
+        return $result;
+    }
+
+    /**
+     * method to convert a result set provided by a search to an array.
+     * Each tree leaf will be converted to an array representation
+     * Example :
+     * a - 1 - x
+     *       - y
+     *       - z
+     *   - 2
+     *   - 3
+     * 
+     * Will produce :
+     * [a.1.x] [a.1.y] [a.1.z] [a.2] [a.3] 
+     * 
+     * //champs communs par defaut pour chaque ligne
+     * 'id_patient' => 'N° anonymat',
+     *       'id' => 'N° fiche',
+     *       'name' => 'Nom de la fiche',
+     *       'type' => 'Type de fiche',
+     *       'last_updated' => 'Date de saisie',
+     *       'last_modified' => 'Date de l\'examen',
+     * 
+     * @param $models : list of answers
+     * @result array : each line = each model answer
+     */
+    public function resultToArray($models) {
+        $result = array();
+        $headerLineFixe =$this->attributeExportedLabels();
+        $answersList = array();
+        foreach ($models as $answer) {
+            //chaque ligne est un tableau de colonne
+            $currentAnswer = array();
+            $currentAnswer['id_patient'] = $answer->id_patient;
+            $currentAnswer['id'] = $answer->id;
+            $currentAnswer['name'] = $answer->name;
+            $currentAnswer['type'] = $answer->type;
+            $currentAnswer['last_updated'] = $answer->getLastUpdated();
+            $currentAnswer['last_modified'] = $answer->getLastModified();
+            //parcours de chaque sous  groupe poru recuperer les feuilles de l arbre
+            //et ainsi reconstruire uen ligne par 
+            //tableau associatif de label/question
+            //pretraitement pour reconstruire par la suite les entetes de colonnes
+            $answersQuestions = array();
+            foreach ($answer->answers_group as $group) {
+                foreach ($group->answers as $answerQuestion) {
+                    //construction du label de colonne 
+                    $label = "[".$answer->name . "][" . $group->title_fr . "][" . $answerQuestion->label."]";
+                    $value = $answerQuestion->getLiteralAnswer();
+                    $ansQuestion[] = array();
+                    $ansQuestion['label'] = $label;
+                    $ansQuestion['answer'] = $value;
+                    $answersQuestions[]=$ansQuestion;
+                }
+            }
+            $currentAnswer['questions'] = $answersQuestions;
+            //reconstruction de la 
+            $answersList[] = $currentAnswer;
+        }
+        //formattage des reponses en ligne
+        //preparation de la ligne d entete pour touts
+        //pour chaque nouveau label de question, on ajoute une colonne
+        $headerLineDynamic = array();
+        foreach ($answersList as $cAnswer) {
+            foreach ($cAnswer['questions'] as $qAnswer) {
+                if (!in_array($qAnswer['label'], $headerLineDynamic)) {
+                    $headerLineDynamic[] = $qAnswer['label'];
+                }
+            }
+        }
+        //formatage de chaque ligne
+        $headerLine=array_merge($headerLineFixe,$headerLineDynamic);
+        $result[]=$headerLine;
+        foreach ($answersList as $cAnswer) {
+            $resultLine = array();
+            $resultLine[] = $cAnswer['id_patient'];
+            $resultLine[] = $cAnswer['id'];
+            $resultLine[] = $cAnswer['name'];
+            $resultLine[] = $cAnswer['type'];
+            $resultLine[] = $cAnswer['last_updated'];
+            $resultLine[] = $cAnswer['last_modified'];
+            $cQuestions = $cAnswer['questions'];
+            //ajout des valeurs à la ligne, si aucune valeur existante pour cette column, ajoute null
+           
+            foreach ($headerLineDynamic as $columnHeader) {
+                $valueExists=false;
+                foreach($cQuestions as $cQuestion){
+                    if($cQuestion['label']==$columnHeader){
+                        $resultLine[] = $cQuestion['answer'];
+                        $valueExists=true;
+                        break;
+                    }
+                }
+                if (!$valueExists) {
+                    $resultLine[] = 'null';
+                }
+            }
+            $result[] = $resultLine;
         }
         return $result;
     }
