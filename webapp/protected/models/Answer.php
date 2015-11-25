@@ -110,6 +110,7 @@ class Answer extends EMongoDocument
             'id' => 'Id',
             'id_patient' => 'N° anonymat',
             'name' => 'Nom du formulaire',
+            'type' => 'Type de formulaire',
             'last_updated' => 'Date de saisie',
             'last_modified' => 'Date de mise à jour du questionnaire',
             'user' => 'Nom de l\'utilisateur',

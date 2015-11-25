@@ -35,7 +35,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'columns' => array(
         //   'id_patient',
         array('header' => $model->attributeLabels()["id_patient"], 'name' => 'id_patient'),
-        array('header' => $model->attributeLabels()["id"], 'name' => 'id'),
+        array('header' => $model->attributeLabels()["type"], 'name' => 'type'),
         array('header' => $model->attributeLabels()["name"], 'value' => '$data->name'),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
         array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),

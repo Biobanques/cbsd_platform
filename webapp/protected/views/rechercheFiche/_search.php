@@ -37,10 +37,10 @@ return false;
     ?>
     <div class="row">
         <div class="col-lg-6">
-            <?php echo $form->label($model, 'type'); ?>
-            <?php // echo $form->textField($model, 'type'); ?>
-            <?php echo CHtml::dropDownList('Answer[type]', 'Answer[type]', Answer::model()->getAllTypes(), array('prompt' => '----')); ?>
+            <?php echo $form->label($model, 'id_patient'); ?>
+            <?php echo $form->textField($model, 'id_patient'); ?>
         </div>
+
 
         <div class="col-lg-6">
             <?php echo $form->label($model, 'user'); ?>
@@ -50,8 +50,9 @@ return false;
 
     <div class="row">
         <div class="col-lg-6">
-            <?php echo $form->label($model, 'id_patient'); ?>
-            <?php echo $form->textField($model, 'id_patient'); ?>
+            <?php echo $form->label($model, 'type'); ?>
+            <?php // echo $form->textField($model, 'type'); ?>
+            <?php echo CHtml::dropDownList('Answer[type]', 'Answer[type]', Answer::model()->getAllTypes(), array('prompt' => '----')); ?>
         </div>
 
         <div class="col-lg-6">
@@ -69,7 +70,8 @@ return false;
             <?php
             $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'name' => 'Answer[dynamics][examdate]',
-                // additional javascript options for the date picker plugin
+                //
+                //  additional javascript options for the date picker plugin
                 'options' => array(
                     'showAnim' => 'fold',
                 ),
@@ -113,7 +115,7 @@ return false;
 //                    'success' => 'js:function(){var e = document.getElementById("question");
 //var strUser = e.options[e.selectedIndex].value; alert(strUser);}',
 //                    'error'=>'js:function(data){alert("comment NOT Submitted");}',
-//                )
+            //                )
 //            );
             ?>
 
