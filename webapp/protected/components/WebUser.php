@@ -122,14 +122,17 @@ class WebUser extends CWebUser {
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        foreach ($droit as $key => $value) {
-            if ($key == "role") {
-                if ($value == "")
-                    return false;
-                if (in_array("view", $value))
-                    return true;
+        if ($droit != null) {
+            foreach ($droit as $key => $value) {
+                if ($key == "role") {
+                    if ($value == "")
+                        return false;
+                    if (in_array("view", $value))
+                        return true;
+                }
             }
         }
+        return false;
     }
     
     /**
@@ -141,14 +144,17 @@ class WebUser extends CWebUser {
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        foreach ($droit as $key => $value) {
-            if ($key == "role") {
-                if ($value == "")
-                    return false;
-                if (in_array("update", $value))
-                    return true;
+        if ($droit != null) {
+            foreach ($droit as $key => $value) {
+                if ($key == "role") {
+                    if ($value == "")
+                        return false;
+                    if (in_array("update", $value))
+                        return true;
+                }
             }
         }
+        return false;
     }
     
     /**
@@ -160,14 +166,17 @@ class WebUser extends CWebUser {
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        foreach ($droit as $key => $value) {
-            if ($key == "role") {
-                if ($value == "")
-                    return false;
-                if (in_array("delete", $value))
-                    return true;
+        if ($droit != null) {
+            foreach ($droit as $key => $value) {
+                if ($key == "role") {
+                    if ($value == "")
+                        return false;
+                    if (in_array("delete", $value))
+                        return true;
+                }
             }
         }
+        return false;
     }
 
     /**
@@ -179,14 +188,17 @@ class WebUser extends CWebUser {
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        foreach ($droit as $key => $value) {
-            if ($key == "role") {
-                if ($value == "")
-                    return false;
-                if (in_array("create", $value))
-                    return true;
+        if ($droit != null) {
+            foreach ($droit as $key => $value) {
+                if ($key == "role") {
+                    if ($value == "")
+                        return false;
+                    if (in_array("create", $value))
+                        return true;
+                }
             }
         }
+        return false;
     }
     
     /**
