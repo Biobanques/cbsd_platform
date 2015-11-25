@@ -16,3 +16,4 @@
 /tests/fonctionnels/localhost_mongo_parameters.txt
 /tests/fonctionnels/selenium_mbb.log
 /tests/fonctionnels/selenium_vsc.log
+/webapp/protected/components/CommonPropertiesProd.php
