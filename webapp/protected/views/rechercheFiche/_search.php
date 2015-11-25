@@ -38,7 +38,8 @@ return false;
     <div class="row">
         <div class="col-lg-6">
             <?php echo $form->label($model, 'type'); ?>
-            <?php echo $form->textField($model, 'type'); ?>
+            <?php // echo $form->textField($model, 'type'); ?>
+            <?php echo CHtml::dropDownList('Answer[type]', 'Answer[type]', Answer::model()->getAllTypes(), array('prompt' => '----')); ?>
         </div>
 
         <div class="col-lg-6">
@@ -120,9 +121,9 @@ return false;
     </div>
 
     <div class="row buttons">
-    <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher')); ?>
+        <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher')); ?>
     </div>
 
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->

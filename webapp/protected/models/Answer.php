@@ -337,6 +337,15 @@ class Answer extends EMongoDocument
         return $result;
     }
 
+    public function getAllTypes() {
+        $result = array();
+        $types = Answer::model()->getCollection()->distinct("type");
+        foreach ($types as $type) {
+            $result[$type] = $type;
+        }
+        return $result;
+    }
+
     /**
      * method to convert a result set provided by a search to an array.
      * Each tree leaf will be converted to an array representation
