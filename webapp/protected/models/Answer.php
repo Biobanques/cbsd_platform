@@ -341,10 +341,10 @@ class Answer extends EMongoDocument
      *       - z
      *   - 2
      *   - 3
-     * 
+     *
      * Will produce :
-     * [a.1.x] [a.1.y] [a.1.z] [a.2] [a.3] 
-     * 
+     * [a.1.x] [a.1.y] [a.1.z] [a.2] [a.3]
+     *
      * //champs communs par defaut pour chaque ligne
      * 'id_patient' => 'N° anonymat',
      *       'id' => 'N° fiche',
@@ -352,13 +352,13 @@ class Answer extends EMongoDocument
      *       'type' => 'Type de fiche',
      *       'last_updated' => 'Date de saisie',
      *       'last_modified' => 'Date de l\'examen',
-     * 
+     *
      * @param $models : list of answers
      * @result array : each line = each model answer
      */
     public function resultToArray($models) {
         $result = array();
-        $headerLineFixe =$this->attributeExportedLabels();
+        $headerLineFixe = $this->attributeExportedLabels();
         $answersList = array();
         foreach ($models as $answer) {
             //chaque ligne est un tableau de colonne
@@ -370,23 +370,23 @@ class Answer extends EMongoDocument
             $currentAnswer['last_updated'] = $answer->getLastUpdated();
             $currentAnswer['last_modified'] = $answer->getLastModified();
             //parcours de chaque sous  groupe poru recuperer les feuilles de l arbre
-            //et ainsi reconstruire uen ligne par 
+            //et ainsi reconstruire uen ligne par
             //tableau associatif de label/question
             //pretraitement pour reconstruire par la suite les entetes de colonnes
             $answersQuestions = array();
             foreach ($answer->answers_group as $group) {
                 foreach ($group->answers as $answerQuestion) {
-                    //construction du label de colonne 
-                    $label = "[".$answer->name . "][" . $group->title_fr . "][" . $answerQuestion->label."]";
+                    //construction du label de colonne
+                    $label = "[" . $answer->name . "][" . $group->title_fr . "][" . $answerQuestion->label . "]";
                     $value = $answerQuestion->getLiteralAnswer();
                     $ansQuestion[] = array();
                     $ansQuestion['label'] = $label;
                     $ansQuestion['answer'] = $value;
-                    $answersQuestions[]=$ansQuestion;
+                    $answersQuestions[] = $ansQuestion;
                 }
             }
             $currentAnswer['questions'] = $answersQuestions;
-            //reconstruction de la 
+            //reconstruction de la
             $answersList[] = $currentAnswer;
         }
         //formattage des reponses en ligne
@@ -401,8 +401,8 @@ class Answer extends EMongoDocument
             }
         }
         //formatage de chaque ligne
-        $headerLine=array_merge($headerLineFixe,$headerLineDynamic);
-        $result[]=$headerLine;
+        $headerLine = array_merge($headerLineFixe, $headerLineDynamic);
+        $result[] = $headerLine;
         foreach ($answersList as $cAnswer) {
             $resultLine = array();
             $resultLine[] = $cAnswer['id_patient'];
@@ -413,13 +413,14 @@ class Answer extends EMongoDocument
             $resultLine[] = $cAnswer['last_modified'];
             $cQuestions = $cAnswer['questions'];
             //ajout des valeurs à la ligne, si aucune valeur existante pour cette column, ajoute null
-           
+
             foreach ($headerLineDynamic as $columnHeader) {
-                $valueExists=false;
-                foreach($cQuestions as $cQuestion){
-                    if($cQuestion['label']==$columnHeader){
-                        $resultLine[] = $cQuestion['answer'];
-                        $valueExists=true;
+                $valueExists = false;
+                foreach ($cQuestions as $cQuestion) {
+                    if ($cQuestion['label'] == $columnHeader) {
+
+                        $resultLine[] = is_array($cQuestion['answer']) ? implode(', ', $cQuestion['answer']) : $cQuestion['answer'];
+                        $valueExists = true;
                         break;
                     }
                 }
