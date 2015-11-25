@@ -43,8 +43,8 @@ return false;
         </div>
 
         <div class="col-lg-6">
-            <?php echo $form->label($model, 'login'); ?>
-            <?php echo $form->textField($model, 'login'); ?>
+            <?php echo $form->label($model, 'user'); ?>
+            <?php echo $form->textField($model, 'user'); ?>
         </div>
     </div>
 

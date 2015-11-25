@@ -71,10 +71,15 @@ class Answer extends EMongoDocument
      */
     public $contributors;
     /**
-     *
+     * Working variable to add dynamic search filters
      * @var array
      */
     public $dynamics;
+    /**
+     * use for search by user name
+     * @var string
+     */
+    public $user;
 
     public function behaviors() {
         return array('embeddedArrays' => array(
@@ -92,7 +97,7 @@ class Answer extends EMongoDocument
                 'required'
             ),
             array(
-                'id,name,answers_group,login,type,id_patient,dynamics,last_updated',
+                'id,name,answers_group,login,type,id_patient,dynamics,last_updated,user',
                 'safe',
                 'on' => 'search'
             )
@@ -103,9 +108,12 @@ class Answer extends EMongoDocument
 
         return array(
             'id' => 'Id',
-            'name' => 'Nom',
+            'id_patient' => 'N° anonymat',
+            'name' => 'Nom du formulaire',
             'last_updated' => 'Date de saisie',
             'last_modified' => 'Date de mise à jour du questionnaire',
+            'user' => 'Nom de l\'utilisateur',
+            'examDate' => 'Date d\'examen',
         );
     }
 
@@ -124,12 +132,17 @@ class Answer extends EMongoDocument
         $criteria = new EMongoCriteria;
         if (isset($this->type) && !empty($this->type))
             $criteria->addCond('type', '==', new MongoRegex('/' . $this->type . '/i'));
-        if (isset($this->login) && !empty($this->login)) {
+        if (isset($this->user) && !empty($this->user)) {
             $criteriaUser = new EMongoCriteria;
-            $criteriaUser->login = $this->login;
+            $criteriaUser->nom = new MongoRegex('/' . $this->user . '/i');
             $criteriaUser->select(array('_id'));
-            $user = User::model()->find($criteriaUser);
-            $criteria->login = $user != null ? $user->_id : null;
+            $users = User::model()->findAll($criteriaUser);
+            $listUsers = array();
+            if ($users != null)
+                foreach ($users as $user)
+                    $listUsers[] = $user->_id;
+
+            $criteria->addCond('login', 'in', $listUsers);
         }
 
         if (isset($this->id_patient) && !empty($this->id_patient))
@@ -248,7 +261,7 @@ class Answer extends EMongoDocument
         $result = "-";
         $user = User::model()->findByPk(new MongoID($this->login));
         if ($user != null)
-            $result = $user->nom;
+            $result = "$user->prenom $user->nom";
         return $result;
     }
 
