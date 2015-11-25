@@ -97,9 +97,24 @@ class RechercheFicheController extends Controller {
 
     /**
      * export xls listes des fiches disponibles
+     * FIXME : pour l'instant meme algo que export csv car lib export xls moche ( non compat pages, libreoffice)
      */
     public function actionExportXls() {
         $model = new Answer('search');
+        $model->unsetAttributes();
+        if (isset($_GET['Answer']))
+            $model->attributes = $_GET['Answer'];
+        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+            $criteria = $_SESSION['criteria'];
+        } else {
+            $criteria = new EMongoCriteria;
+        }
+        $models = Answer::model()->findAll($criteria);
+        $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.xls';
+        $arAnswers = Answer::model()->resultToArray($models);
+        $csv = new ECSVExport($arAnswers, true, false, null, null);
+        Yii::app()->getRequest()->sendFile($filename, $csv->toCSV(), "text/xls", false);
+        /*$model = new Answer('search');
         $model->unsetAttributes();
         if (isset($_GET['Answer']))
             $model->attributes = $_GET['Answer'];
@@ -128,7 +143,7 @@ class RechercheFicheController extends Controller {
         // $filename = date('Ymd_H').'h'.date('i').'_liste_fiches_CBSD_Platform.csv';
 
         $xls->addArray($data);
-        $xls->generateXML('Liste des fiches disponibles');
+        $xls->generateXML('Liste des fiches disponibles');*/
     }
 
 }
