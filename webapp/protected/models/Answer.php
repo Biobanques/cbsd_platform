@@ -290,7 +290,7 @@ class Answer extends EMongoDocument
 //        }
         $answers = $this->getAllDetailledQuestions();
         foreach ($answers as $answer) {
-            $result[$answer->id] = $answer->label_fr;
+            $result[$answer->answer->id] = "[" . $answer->fiche . "][" . $answer->group . "] " . $answer->answer->label_fr;
         }
 
 
@@ -304,7 +304,12 @@ class Answer extends EMongoDocument
         foreach ($fiches as $fiche) {
             foreach ($fiche->answers_group as $group) {
                 foreach ($group->answers as $answer) {
-                    $result[] = $answer;
+
+                    $toAdd = new stdClass();
+                    $toAdd->answer = $answer;
+                    $toAdd->fiche = $fiche->name;
+                    $toAdd->group = $group->title_fr;
+                    $result[] = $toAdd;
                 }
             }
         }
@@ -314,8 +319,8 @@ class Answer extends EMongoDocument
     public function findAllDetailledQuestionById($id) {
         $result = null;
         foreach ($this->getAllDetailledQuestions() as $question) {
-            if ($question->id == $id)
-                $result = $question;
+            if ($question->answer->id == $id)
+                $result = $question->answer;
         }
         return $result;
     }
