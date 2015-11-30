@@ -194,11 +194,10 @@ class QuestionnaireController extends Controller
             $criteria = new EMongoCriteria();
             $criteria->id = $_POST["form"];
             $id = Questionnaire::model()->find($criteria);
-            if ($id == null) {
-               Yii::app()->user->setFlash('warning', 'Veuillez sélectionner une fiche à remplir.');
-                $this->redirect('index.php?r=answer/affichepatient'); 
-            }
             $this->redirect('index.php?r=questionnaire/update&id=' . $id->_id);
+        } else {
+            Yii::app()->user->setFlash("error", 'Veuillez sélectionner une fiche à remplir.');
+            $this->redirect('index.php?r=answer/affichepatient');
         }
         $dataProvider = new EMongoDocumentDataProvider('Questionnaire');
         $this->render('index', array(
