@@ -141,8 +141,10 @@ class AnswerController extends Controller {
                     }
                 }
             }if ($flagNoInputToSave == false) {
-                if ($model->save())
+                if ($model->save()) {
                     Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardé.");
+                    $this->redirect(array('answer/affichepatient'));
+                }
                 else {
                     Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé.");
                     Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
