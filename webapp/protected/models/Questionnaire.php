@@ -61,7 +61,7 @@ class Questionnaire extends EMongoDocument
                 'id,questions_group',
                 'safe',
                 'on' => 'search'
-            )
+            ),
         );
     }
 
@@ -96,7 +96,7 @@ class Questionnaire extends EMongoDocument
             'criteria' => $criteria
         ));
     }
-    
+
     /**
      * get an array of form type used by dropDownLIst.
      */
@@ -107,7 +107,7 @@ class Questionnaire extends EMongoDocument
         $res ['neuropathologique'] = "neuropathologique";
         return $res;
     }
-    
+
     /**
      * get an array sorted by value.
      */
@@ -133,7 +133,7 @@ class Questionnaire extends EMongoDocument
         }
         return $res;
     }
-    
+
     /**
      * render in html the questionnaire
      */
@@ -373,8 +373,8 @@ class Questionnaire extends EMongoDocument
         }
         return $this;
     }
-    
-public function saveQuestionnaireNewQuestionBloc($questionForm) {
+
+    public function saveQuestionnaireNewQuestionBloc($questionForm) {
         $this->last_modified = new MongoDate();
         $cquestion = new Question;
         $cquestion->setAttributesByQuestionForm($questionForm);

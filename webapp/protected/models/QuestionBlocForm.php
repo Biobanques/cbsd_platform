@@ -18,11 +18,11 @@ class QuestionBlocForm extends CFormModel
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('title', 'required'),
+            array('title,id', 'required'),
             array('title', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('title,id,parent_group', 'safe',),
+            array('title,id,parent_group', 'safe'),
         );
     }
 
@@ -35,6 +35,15 @@ class QuestionBlocForm extends CFormModel
             'questions' => 'Questions',
             'parent_group' => 'Groupe parent'
         );
+    }
+
+    public function validatewithId($form, $attributes = null, $clearErrors = true) {
+        parent::validate($attributes, $clearErrors);
+        foreach ($form->questions_group as $group) {
+            if ($group->id == $this->id)
+                $this->addError('id', 'Cet identifiant est déjà utilisé dans ce formulaire, merci d\'en choisir un différent');
+        }
+        return !$this->hasErrors();
     }
 
 }

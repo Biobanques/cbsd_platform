@@ -4,8 +4,8 @@
  * controller de formulaire. Permet d aiguiller les actions sur l objet formulaire côté admin.
  * @author nmalservet
  */
-class FormulaireController extends Controller {
-
+class FormulaireController extends Controller
+{
     /**
      * NB : boostrap theme need this column2 layout
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -107,30 +107,32 @@ class FormulaireController extends Controller {
 
         if (isset($_POST['QuestionBlocForm'])) {
             $questionBlocForm->attributes = $_POST['QuestionBlocForm'];
-            $questionBloc = QuestionBloc::model()->findByPk(new MongoId($questionBlocForm->title));
-            $questionBlocForm->title_fr = $questionBlocForm->title;
-            $computedGroup = new QuestionGroup;
-            $computedGroup->id = $questionBlocForm->id;
-            $computedGroup->title = $questionBloc->title;
-            $computedGroup->title_fr = $questionBloc->title;
-            $computedGroup->parent_group = $questionBlocForm->parent_group;
-            $computedGroup->questions = array();
+            if ($questionBlocForm->validatewithId($model)) {
+                $questionBloc = QuestionBloc::model()->findByPk(new MongoId($questionBlocForm->title));
+                $questionBlocForm->title_fr = $questionBlocForm->title;
+                $computedGroup = new QuestionGroup;
+                $computedGroup->id = $questionBlocForm->id;
+                $computedGroup->title = $questionBloc->title;
+                $computedGroup->title_fr = $questionBloc->title;
+                $computedGroup->parent_group = $questionBlocForm->parent_group;
+                $computedGroup->questions = array();
 
-            if ($computedGroup->validate())
-                $model = $model->saveQuestionnaireNewGroup($computedGroup);
+                if ($computedGroup->validate())
+                    $model = $model->saveQuestionnaireNewGroup($computedGroup);
 
-            if (isset($questionBloc->questions) && ($questionBloc->questions != null) && (count($questionBloc->questions) > 0)) {
-                foreach ($questionBloc->questions as $question => $value) {
-                    $currentQuestion = Question::model()->findByPk(new MongoId($value));
+                if (isset($questionBloc->questions) && ($questionBloc->questions != null) && (count($questionBloc->questions) > 0)) {
+                    foreach ($questionBloc->questions as $question => $value) {
+                        $currentQuestion = Question::model()->findByPk(new MongoId($value));
 
-                    $questionForm->label = $currentQuestion->label;
-                    $questionForm->type = $currentQuestion->type;
-                    $questionForm->style = $currentQuestion->style;
-                    $questionForm->values = $currentQuestion->values;
-                    $questionForm->id = $currentQuestion->id;
-                    $questionForm->idQuestionGroup = $computedGroup->id;
+                        $questionForm->label = $currentQuestion->label;
+                        $questionForm->type = $currentQuestion->type;
+                        $questionForm->style = $currentQuestion->style;
+                        $questionForm->values = $currentQuestion->values;
+                        $questionForm->id = $currentQuestion->id;
+                        $questionForm->idQuestionGroup = $computedGroup->id;
 
-                    $model->saveQuestionnaireNewQuestionBloc($questionForm);
+                        $model->saveQuestionnaireNewQuestionBloc($questionForm);
+                    }
                 }
             }
         }
