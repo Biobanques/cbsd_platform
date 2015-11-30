@@ -8,6 +8,7 @@ class AnswerPDFRenderer {
         require_once(Yii::getPathOfAlias('application.vendor') . '/tcpdf/tcpdf.php');
 // create new PDF document
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf->setPDFVersion('1.7');
 // set document information
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor('Biobanques');
@@ -30,6 +31,9 @@ class AnswerPDFRenderer {
 
 // set image scale factor
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+
+
 
 // set some language-dependent strings (optional)
         /* if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
@@ -142,14 +146,11 @@ class AnswerPDFRenderer {
         if ($answer->style != "float:right") {
             $pdf->Ln(11);
         }
-        if (strlen($label) > 25) {
-            $pdf->writeHTMLCell(50, 10, '', '', $label, 0, 0, 0, true, '', true);
-        } else
-            $pdf->Cell(50, 5, $label);
+        $pdf->MultiCell(55, 10, $label, 1, 'L', 1, 0, '', '', true,0,false,true,0,'T',true);
         //affichage de l input selon son type
         $id = $idanswergroup . "_" . $answer->id;
         if ($answer->type == "input" || $answer->type == "date") {
-            $pdf->TextField($id, 40, 7, array('readonly' => true), array('v' => $answer->answer));
+            $pdf->MultiCell(120, 10, $answer->answer, 1, 'L', 0, 0, '', '', true,0,false,true,0,'T',true);   
         }
         if ($answer->type == "radio") {
             if ($lang == "fr" && $answer->values_fr != "") {
@@ -170,13 +171,16 @@ class AnswerPDFRenderer {
                 $values = $answer->values_fr;
             }
             $arvalue = split(",", $values);
-            if (isset($answer->answer)) {
-                foreach ($arvalue as $value) {
-                    $pdf->Cell(20, 5, "");
-                    $pdf->CheckBox($id . "_" . $value, 5, in_array($value, $answer->answer) ? true : false, array('readonly' => 'true'), array(), $value);
-                    $pdf->Cell(35, 5, $value);
-                    $pdf->Ln(10);
+
+            foreach ($arvalue as $value) {
+                $pdf->Cell(20, 5, "");
+                $cVal = false;
+                if (isset($answer->answer) && in_array($value, $answer->answer)) {
+                    $cVal = true;
                 }
+                $pdf->CheckBox($id . "_" . $value, 5, $cVal, array('readonly' => 'true'), array(), $value);
+                $pdf->Cell(35, 5, $value);
+                $pdf->Ln(10);
             }
         }
         if ($answer->type == "text") {
@@ -192,15 +196,19 @@ class AnswerPDFRenderer {
             $values = $answer->values;
             //make an array of associations keys-values ( here key=value)
             $arvalue = split(",", $values);
-            $arrValuesPDF = array();
-            $arrValuesPDF[] = array("-",'-');
+            //write content of the answer into a rectangle
+            $pdf->MultiCell(120, 10, $answer->answer, 1, 'R', 0, 1, '', '', true);
+            $pdf->Ln(5);
+            $pdf->SetFont('helvetica', 'I', 10);
+            $pdf->MultiCell(55, 5, ">>Valeurs possibles:", 1, 'R', 1, 0, '', '', true);
+           $pdf->MultiCell(120, 5, "", 0, 'R', 0, 1, '', '', true);
             foreach ($arvalue as $value) {
-                $arrValuesPDF[] = array($value,$value);
+                $pdf->MultiCell(55, 5, "", 0, 'L', 0, 0, '', '', true);
+                $pdf->MultiCell(120, 5, $value, 'LB', 'R', 0, 1, '', '', true,1);
             }
-            $pdf->ComboBox($id, 30, 5, $arrValuesPDF,array(), array('V'=>$answer->answer));
-            if (strlen($label) > 25) {
-                $pdf->Ln(20);
-            }
+            $pdf->SetFont('helvetica', '', 12);
+            //the combo box doesn t work on chrome, foxit, but works on acrobat reader, aperçu ( mac)
+            //$pdf->ComboBox($id, 30, 5, $arrValuesPDF, array(), array('V' => $answer->answer));
         }
 
         if ($answer->type == "array") {
