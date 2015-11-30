@@ -18,6 +18,12 @@ class CommonProperties
      * connection string used in ./protected/config/main_dev.php
      */
     public static $CONNECTION_STRING = 'mongodb://qfuseradmin:bbanques2015@localhost/qualityformsdb';
+    
+    /**
+     * string that contains the name of the mongo database
+     * @var type 
+     */
+    public static $DBNAME = 'cbsdplatformdb';
     /**
      * Mail system active: true if you want to send email.
      */
