@@ -190,13 +190,14 @@ class AnswerPDFRenderer {
         }
         if ($answer->type == "list") {
             $values = $answer->values;
+            //make an array of associations keys-values ( here key=value)
             $arvalue = split(",", $values);
             $arrValuesPDF = array();
-            $arrValuesPDF[''] = '-';
+            $arrValuesPDF[] = array("0",'-');
             foreach ($arvalue as $value) {
-                $arrValuesPDF[$value] = $value;
+                $arrValuesPDF[] = array($value,$value);
             }
-            $pdf->ComboBox($id, 30, 5, $arrValuesPDF);
+            $pdf->ComboBox($id, 30, 5, $arrValuesPDF,array(), array('V'=>$answer->answer));
             if (strlen($label) > 25) {
                 $pdf->Ln(20);
             }
