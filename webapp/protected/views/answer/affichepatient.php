@@ -132,7 +132,7 @@ if (Yii::app()->user->getState('activeProfil') != "chercheur" && Yii::app()->use
         </div>
         <div class="span3" style="margin:-5px;">
             <?php 
-            echo CHtml::dropDownList('form', 'Demence', Questionnaire::model()->getFiche(Yii::app()->user->getActiveProfil()), array('prompt' => '--- Choisir une fiche ---'));
+            echo CHtml::dropDownList('form', '', Questionnaire::model()->getFiche(Yii::app()->user->getActiveProfil()), array('prompt' => '--- Choisir une fiche ---'));
         ?>
         </div>
         
