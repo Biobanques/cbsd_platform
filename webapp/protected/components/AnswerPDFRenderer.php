@@ -193,7 +193,7 @@ class AnswerPDFRenderer {
             //make an array of associations keys-values ( here key=value)
             $arvalue = split(",", $values);
             $arrValuesPDF = array();
-            $arrValuesPDF[] = array("0",'-');
+            $arrValuesPDF[] = array("-",'-');
             foreach ($arvalue as $value) {
                 $arrValuesPDF[] = array($value,$value);
             }
