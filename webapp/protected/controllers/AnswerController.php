@@ -1,7 +1,7 @@
 <?php
 
-class AnswerController extends Controller
-{
+class AnswerController extends Controller {
+
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -65,6 +65,14 @@ class AnswerController extends Controller
 
             $model = new PatientForm;
             $model->attributes = $_POST['PatientForm'];
+            if ($_POST['PatientForm']['prenom'] == "" || $_POST['PatientForm']['nom_naissance'] == "" || $_POST['PatientForm']['date_naissance'] == "") {
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Tous les champs ne sont pas remplis.");
+                $this->redirect(array('site/patient'));
+            }
+            if ($model->dateFormat($model->date_naissance) == false) {
+                Yii::app()->user->setFlash('error', "Entrez une date valide au format jj/mm/aaaa");
+                $this->redirect(array('site/patient'));
+            }
             $patient = (object) null;
             $patient->id = null;
             $patient->source = '1'; //à identifier en fonction de l'app
@@ -79,10 +87,6 @@ class AnswerController extends Controller
                 Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ses informations n’existe dans le système, veuillez contacter l’administrateur des identités de patient pour en créer un.");
                 $this->redirect(array('site/patient'));
             }
-            $mixedResult = $model->dateformat($patient->birthDate);
-            if ($mixedResult['result'] == false)
-                $this->redirect(array('site/patient'));
-
 
             $model->id = $patient->id;
         }
@@ -116,9 +120,6 @@ class AnswerController extends Controller
                 $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'questionnaire' => $questionnaire, 'patient' => $patient));
             else
                 $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'patient' => $patient));
-        } else {
-            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Tous les champs ne sont pas remplis.");
-            $this->redirect(array('site/patient'));
         }
     }
 
@@ -140,8 +141,10 @@ class AnswerController extends Controller
                     }
                 }
             }if ($flagNoInputToSave == false) {
-                if ($model->save())
+                if ($model->save()) {
                     Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardé.");
+                    $this->redirect(array('answer/affichepatient'));
+                }
                 else {
                     Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé.");
                     Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);

@@ -90,7 +90,7 @@ if (!defined('BaseTheme'))
                             <?php echo CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class' => 'logo')); ?>
                             <?php echo CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class' => 'logo')); ?>
                         </div>
-                        Copyright &copy; <?php echo date('Y'); ?> by Biobanques. Version 0.4 outil de recherche.<br/>
+                        Copyright &copy; <?php echo date('Y'); ?> by Biobanques. Version 0.5.<br/>
                         All Rights Reserved.
                     </div>
                 </div><!-- footer -->
