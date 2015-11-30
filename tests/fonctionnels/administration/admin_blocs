@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>admin_blocs</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">admin_blocs</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/cbsd_platform/index.php?r=fiche/view&amp;id=56375acf6803fa510c8b457b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Gestion des blocs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Gestion des blocs</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Créer un nouveau bloc</td>
+	<td>Créer un nouveau bloc</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=img[alt=&quot;Mettre à jour&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=img[alt=&quot;Supprimer&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Créer un nouveau bloc</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionBloc_title</td>
+	<td>aa_test_bloc</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<!--TODO : lien vers modifier-->
+<tr>
+	<td>verifyText</td>
+	<td>css=h3</td>
+	<td>Bloc aa_test_bloc</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h4</td>
+	<td>Ajouter une question</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<!--TODO : validaer les chps oblig des questions + completer le test-->
+
+</tbody></table>
+</body>
+</html>

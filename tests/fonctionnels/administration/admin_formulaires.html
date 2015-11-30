@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>admin_formulaires</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">admin_formulaires</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/cbsd_platform/index.php?r=user/admin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Formulaires</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Gestion des formulaires</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Créer un nouveau formulaire</td>
+	<td>Créer un nouveau formulaire</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Créer un nouveau formulaire</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.alert.alert-error &gt; ul &gt; li</td>
+	<td>Type de formulaire ne peut être vide.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='questionnaire-form']/div/ul/li[2]</td>
+	<td>id ne peut être vide.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='questionnaire-form']/div/ul/li[3]</td>
+	<td>Nom ne peut être vide.</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=Questionnaire_type</td>
+	<td>label=clinique</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Questionnaire_id</td>
+	<td>aaa_form_test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Questionnaire_name</td>
+	<td>aaa_form_name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Questionnaire_description</td>
+	<td>test_description</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Questionnaire_message_start</td>
+	<td>message de debut</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Questionnaire_message_end</td>
+	<td>message de fin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Questionnaire_contributors</td>
+	<td>les autres et un peu moi</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='yw2']/div</td>
+	<td>Le formulaire a été enregistré avec succès.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h3</td>
+	<td>Formulaire aaa_form_name</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.question_group</td>
+	<td>Questionnaire principal Supprimer l'onglet de questions</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h4</td>
+	<td>Ajouter un bloc de questions</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='content']/div[3]/div/h4</td>
+	<td>Ajouter un onglet ou un groupe</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='content']/div[4]/div/h4</td>
+	<td>Ajouter une question</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionBlocForm_id</td>
+	<td>test_b1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<!--ERREUR MONGO-->
+<tr>
+	<td>type</td>
+	<td>id=QuestionBlocForm_id</td>
+	<td>test_id</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=QuestionBlocForm_title</td>
+	<td>label=IADL</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='yw2']/div</td>
+	<td>Formulaire enregistré avec sucès</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=IADL</td>
+	<td>IADL</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=IADL</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=#test_id &gt; div.question_group</td>
+	<td>IADL Supprimer l'onglet de questions</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=#test_id &gt; div.question_group &gt; div &gt; a</td>
+	<td>Supprimer l'onglet de questions</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#test_id &gt; div.question_group &gt; div &gt; a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>link=IADL</td>
+	<td>IADL</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionGroup_id</td>
+	<td>test_id_onglet</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionGroup_title</td>
+	<td>test_onglet</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=test_onglet</td>
+	<td>test_onglet</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=test_onglet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionForm_id</td>
+	<td>id_quest</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionForm_label</td>
+	<td>id_question</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=QuestionForm_type</td>
+	<td>label=texte simple</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='yw2']/div</td>
+	<td>Formulaire enregistré avec sucès</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.question-label</td>
+	<td>id_question<br />id_quest</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=i</td>
+	<td>id_quest</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div.question-input &gt; div &gt; a &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=div.question-input &gt; div &gt; a &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=test_onglet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#test_id_onglet &gt; div.question_group &gt; div &gt; a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Formulaires</td>
+	<td></td>
+</tr>
+<!--TODO : lien vers new form-->
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//img[@alt='Voir'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Formulaires</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//img[@alt='Mettre à jour'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h4</td>
+	<td>Ajouter un bloc de questions</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='content']/div[3]/div/h4</td>
+	<td>Ajouter un onglet ou un groupe</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='content']/div[4]/div/h4</td>
+	<td>Ajouter une question</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='yw2']/div</td>
+	<td>L'onglet a bien été supprimé</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Formulaires</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//img[@alt='Supprimer'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Voulez-vous vraiment supprimer cet élément ?</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

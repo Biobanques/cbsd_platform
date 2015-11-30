@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>admin_users</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">admin_users</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/cbsd_platform/index.php?r=user/admin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Gestion des utilisateurs</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Créer un utilisateur</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=user-grid_c0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Créer un utilisateur</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.errorSummary &gt; ul &gt; li</td>
+	<td>Veuillez renseigner au moins un numéro de téléphone.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[2]</td>
+	<td>Téléphone ne peut être vide.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[3]</td>
+	<td>Prénom ne peut être vide.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[4]</td>
+	<td>Nom ne peut être vide.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[5]</td>
+	<td>Login ne peut être vide.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[6]</td>
+	<td>Mot de passe ne peut être vide.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[7]</td>
+	<td>Email ne peut être vide.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[8]</td>
+	<td>Email n'est pas une adresse email valide.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[9]</td>
+	<td>Profil ne peut être vide.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_prenom</td>
+	<td>aaa</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_nom</td>
+	<td>AAA</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_login</td>
+	<td>aaa_user</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_password</td>
+	<td>aaa_pwd</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_email</td>
+	<td>aa@test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=User_profil_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_telephone</td>
+	<td>testNum</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_gsm</td>
+	<td>teestNum2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_address</td>
+	<td>1 rue principale 01000 LAVILLE</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.errorSummary &gt; ul &gt; li</td>
+	<td>Télephone portable doit être un nombre.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[2]</td>
+	<td>Le numéro de téléphone portable que vous avez renseigné n'est pas valide (format 01 02 03 04 05).</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[3]</td>
+	<td>Téléphone doit être un nombre.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[4]</td>
+	<td>Le numéro de téléphone que vous avez renseigné n'est pas valide (format 01 02 03 04 05).</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[5]</td>
+	<td>Email n'est pas une adresse email valide.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form[@id='user-form']/div/ul/li[6]</td>
+	<td>Le mot de passe doit contenir au minimum 2 chiffres.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_email</td>
+	<td>aa@test.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_password</td>
+	<td>aaa_pwd00</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_telephone</td>
+	<td>0102030405</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_gsm</td>
+	<td>0605040302</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='yw3']/div</td>
+	<td>L'utilisateur a été enregistré avec succès.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Utilisateur aaa_user</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Utilisateurs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=img[alt=&quot;Supprimer&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=img[alt=&quot;Mettre à jour&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=img[alt=&quot;Voir&quot;]</td>
+	<td></td>
+</tr>
+<!--TODO : lien vers view du user créé-->
+<tr>
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Utilisateur aaa_user</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Utilisateurs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//img[@alt='Mettre à jour'])[3]</td>
+	<td></td>
+</tr>
+<!--TODO : lien vers edit du user créé-->
+<tr>
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Mise à jour de l'utilisateur aaa_user</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_prenom</td>
+	<td>Aaaa</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_nom</td>
+	<td>AAAA</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_login</td>
+	<td>Aaaa_user</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_password</td>
+	<td>Aaaa_pwd00</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_email</td>
+	<td>Aaa@test.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=User_profil_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=User_profil_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=User_profil_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.errorSummary &gt; ul &gt; li</td>
+	<td>Profil ne peut être vide.</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=User_profil_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=User_profil_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_address</td>
+	<td>1 rue principale 01000 LAVILLE</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='yw3']/div</td>
+	<td>L'utilisateur a été enregistré avec succès.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Utilisateurs</td>
+	<td></td>
+</tr>
+<!--TODO : lien veers delete user créé-->
+<tr>
+	<td>assertConfirmation</td>
+	<td>Voulez-vous vraiment supprimer cet élément ?</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
