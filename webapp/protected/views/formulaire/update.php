@@ -8,7 +8,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
 <p>Crée par: <?php echo $model->creator; ?></p>
 <hr />
 
-    <?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -25,16 +25,17 @@ if ($model->last_modified != null && $model->last_modified != "") {
     <?php
     $this->endWidget();
     ?>
-
 </div>
+
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4>Ajouter un bloc de questions</h4></div>
+    <div class="panel-heading"><h4>Ajouter un bloc de questions déjà existant</h4></div>
     <div class="panel-body">
         <?php
         echo $this->renderPartial('_form_question_bloc', array('questionBloc' => $questionBloc, 'model' => $model, 'questionGroup' => $questionGroup));
         ?>
     </div>
 </div>
+
 <div class="panel panel-primary">
     <div class="panel-heading"><h4>Ajouter un onglet ou un groupe</h4></div>
     <div class="panel-body">
@@ -43,16 +44,9 @@ if ($model->last_modified != null && $model->last_modified != "") {
         ?>
     </div>
 </div>
-<!--<div class="panel panel-primary">
-    <div class="panel-heading"><h4>Ajouter un groupe de questions</h4></div>
-    <div class="panel-body">
-<?php
-//        echo $this->renderPartial('_form_question_bloc', array('model' => $questionGroup));
-?>
-    </div>
-</div>-->
+
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4>Ajouter une question</h4></div>
+    <div class="panel-heading"><h4>Ajouter une rubrique</h4></div>
     <div class="panel-body">
         <?php
         echo $this->renderPartial('_form_question', array('model' => $questionForm));

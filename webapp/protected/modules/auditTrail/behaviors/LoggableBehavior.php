@@ -8,7 +8,7 @@ class LoggableBehavior extends CActiveRecordBehavior
         Yii::log("go on loggable behaviors", CLogger::LEVEL_ERROR);
         try {
             $username = Yii::app()->user->nom;
-            $userid = Yii::app()->user->id;
+            $userid = Yii::app()->user->name;
         } catch (Exception $e) { //If we have no user object, this must be a command line program
             $username = 'NO_USER';
             $userid = null;
@@ -97,7 +97,7 @@ class LoggableBehavior extends CActiveRecordBehavior
 
         try {
             $username = Yii::app()->user->Name;
-            $userid = Yii::app()->user->id;
+            $userid = Yii::app()->user->name;
         } catch (Exception $e) {
             $username = 'NO_USER';
             $userid = null;

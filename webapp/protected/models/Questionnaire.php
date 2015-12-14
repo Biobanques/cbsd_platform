@@ -70,7 +70,7 @@ class Questionnaire extends EMongoDocument
         return array(
             'type' => 'Type de formulaire',
             'id' => 'id',
-            'name' => 'Nom',
+            'name' => 'Nom du formulaire',
             'message_start' => 'Message de début',
             'message_end' => 'Message de fin',
             'contributors' => 'Contributeurs'

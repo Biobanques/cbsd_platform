@@ -23,7 +23,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
-        'title',
+        array('header' => $model->attributeLabels()["title"], 'name' => 'title', 'value' => '$data->title'),
         array(
             'class' => 'CButtonColumn',
             'template' => '{update}{delete}',

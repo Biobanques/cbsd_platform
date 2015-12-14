@@ -214,7 +214,7 @@ class User extends EMongoDocument {
             } else
             if (in_array("clinicien", $this->profil) && ($this->address == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
-                $this->addError('address', 'Adresse ne peut être vide.');
+                $this->addError('address', 'L\'adresse doit être renseignée par le clinicien.');
             }
         }
     }
@@ -226,7 +226,7 @@ class User extends EMongoDocument {
             } else
             if (in_array("neuropathologiste", $this->profil) && ($this->centre == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
-                $this->addError('centre', 'Centre ne peut être vide.');
+                $this->addError('centre', 'Le centre de référence doit être renseigné pour le neuropathologiste.');
             }
         }
     }

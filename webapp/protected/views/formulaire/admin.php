@@ -21,7 +21,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'columns' => array(
-        'name',
+        array('header' => $model->attributeLabels()["name"], 'name' => 'name', 'value' => '$data->name'),
         array(
             'class' => 'CButtonColumn',
             'htmlOptions' => array('style' => 'width: 70px')

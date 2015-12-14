@@ -84,7 +84,7 @@ class QuestionForm extends CFormModel
         $res ['date'] = "date";
         $res ['radio'] = "radio bouton";
         $res ['list'] = "liste déroulante";
-        $res ['checkbox'] = "case à cocher";
+        $res ['checkbox'] = "case(s) à cocher";
         $res ['text'] = "aire de texte";
         $res ['image'] = "image";
         return $res;
