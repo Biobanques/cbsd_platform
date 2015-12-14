@@ -110,7 +110,7 @@ class FicheController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        $model = Questionnaire::model()->findByPk(new MongoID($id));
+        $model = Answer::model()->findByPk(new MongoID($id));
         $model->delete();
 // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))

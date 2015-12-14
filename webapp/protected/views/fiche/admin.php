@@ -36,7 +36,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
         array(
             'class' => 'CButtonColumn',
-            'template' => '{view}'
+            'template' => '{view}{delete}'
         ),
     ),
 ));
