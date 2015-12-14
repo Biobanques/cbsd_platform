@@ -14,6 +14,15 @@ $('.search-form form').submit(function(){
 ?>
 
 <h1>Gestion des fiches</h1>
+<?php echo CHtml::link('Recherche avancée', '#', array('class' => 'search-button')); ?>
+<div class="search-form" style="display:none">
+    <?php
+    $this->renderPartial('_search', array(
+        'model' => $model,
+    ));
+    ?>
+</div><!-- search-form -->
+<br>
 
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
@@ -22,9 +31,9 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
-        array('header' => 'Nom de la fiche', 'value' => '$data->name', 'filter' => CHtml::activeTextField($model, 'name')),
-        array('header' => 'Utilisateur', 'value' => '$data->getUserRecorderName()'),
-        array('header' => 'Dernière mise à jour', 'value' => '$data->getLastUpdated()'),
+        array('header' => $model->attributeLabels()["name"], 'name' => 'name', 'value' => '$data->name'),
+        array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
+        array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
         array(
             'class' => 'CButtonColumn',
             'template' => '{view}'
