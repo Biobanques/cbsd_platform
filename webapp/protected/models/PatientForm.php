@@ -32,7 +32,7 @@ class PatientForm extends CFormModel {
             array('nom_naissance, prenom', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('nom_naissance, prenom, date_naissance', 'safe', 'on' => 'search'),
+            array('nom_naissance, prenom, date_naissance, nom, sexe', 'safe', 'on' => 'search'),
         );
     }
 
@@ -45,7 +45,7 @@ class PatientForm extends CFormModel {
             'prenom' => 'Prénom',
             'date_naissance' => 'Date de naissance',
             'nom_naissance' => 'Nom de naissance',
-            'sexe' => 'Sexe',
+            'sexe' => 'Genre',
         );
     }
 

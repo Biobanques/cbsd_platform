@@ -50,6 +50,22 @@ class AnswerController extends Controller {
         }
     }
 
+    public function actionCreatePatient() {
+        $model = new PatientForm;
+        if (isset($_POST['PatientForm'])) {
+            $model->attributes = $_POST['PatientForm'];
+        }
+        $this->render('patient_bis', array('model' => $model));
+    }
+
+    public function actionUpdatePatient() {
+        $model = new PatientForm;
+        if (isset($_POST['PatientForm'])) {
+            $model->attributes = $_POST['PatientForm'];
+        }
+        $this->render('patient_bis', array('model' => $model));
+    }
+
     public function actionAffichepatient() {
         $model = new PatientForm;
         if (isset($_SESSION['datapatient'])) {
@@ -82,44 +98,53 @@ class AnswerController extends Controller {
             $patient->firstName = $model->prenom;
             $patient->birthDate = $model->date_naissance;
             $patient->sex = $model->sexe;
+
             $patient = CommonTools::wsGetPatient($patient);
-            if ($patient === -1) {
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ses informations n’existe dans le système, veuillez contacter l’administrateur des identités de patient pour en créer un.");
-                $this->redirect(array('site/patient'));
+            switch ($patient) {
+                case "-1":
+                    Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ses informations n’existe dans le système, veuillez compléter le formulaire afin de créer le nouveau patient.");
+                    $this->actionCreatePatient();
+                    break;
+                case "-2":
+                    Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Plusieurs patients ont été trouvé dans le système, veuillez renseigner les champs supplémentaires.");
+                    $this->actionUpdatePatient();
+                    break;
+                default:
+                    $model->id = $patient->id;
             }
-
-            $model->id = $patient->id;
         }
-        if ($model->validate()) {
-            $criteria = new EMongoCriteria();
-            $criteria->id_patient = (string) $patient->id;
-            $criteriaCliniques = new EMongoCriteria($criteria);
-            if (Yii::app()->user->getState('activeProfil') == "clinicien")
-                $criteriaCliniques->login = Yii::app()->user->id;
-            $criteriaCliniques->type = "clinique";
-            $criteriaNeuropathologiques = new EMongoCriteria($criteria);
-            $criteriaNeuropathologiques->type = "neuropathologique";
-            $criteriaGenetiques = new EMongoCriteria($criteria);
-            $criteriaGenetiques->type = "genetique";
+        if ($patient != "-1") {
+            if ($model->validate()) {
+                $criteria = new EMongoCriteria();
+                $criteria->id_patient = (string) $patient->id;
+                $criteriaCliniques = new EMongoCriteria($criteria);
+                if (Yii::app()->user->getState('activeProfil') == "clinicien")
+                    $criteriaCliniques->login = Yii::app()->user->id;
+                $criteriaCliniques->type = "clinique";
+                $criteriaNeuropathologiques = new EMongoCriteria($criteria);
+                $criteriaNeuropathologiques->type = "neuropathologique";
+                $criteriaGenetiques = new EMongoCriteria($criteria);
+                $criteriaGenetiques->type = "genetique";
 
 
-            $dataProviderCliniques = new EMongoDocumentDataProvider('Answer');
-            $dataProviderCliniques->setId('dpCli');
-            $dataProviderNeuropathologiques = new EMongoDocumentDataProvider('Answer');
-            $dataProviderCliniques->setId('dpNeuPa');
-            $dataProviderGenetiques = new EMongoDocumentDataProvider('Answer');
-            $dataProviderCliniques->setId('dpGen');
-            $dataProviderCliniques->setCriteria($criteriaCliniques);
-            $dataProviderNeuropathologiques->setCriteria($criteriaNeuropathologiques);
-            $dataProviderGenetiques->setCriteria($criteriaGenetiques);
+                $dataProviderCliniques = new EMongoDocumentDataProvider('Answer');
+                $dataProviderCliniques->setId('dpCli');
+                $dataProviderNeuropathologiques = new EMongoDocumentDataProvider('Answer');
+                $dataProviderCliniques->setId('dpNeuPa');
+                $dataProviderGenetiques = new EMongoDocumentDataProvider('Answer');
+                $dataProviderCliniques->setId('dpGen');
+                $dataProviderCliniques->setCriteria($criteriaCliniques);
+                $dataProviderNeuropathologiques->setCriteria($criteriaNeuropathologiques);
+                $dataProviderGenetiques->setCriteria($criteriaGenetiques);
 
 
-            $questionnaire = Questionnaire::model()->findAll();
-            $_SESSION['datapatient'] = $patient;
-            if (isset($_SESSION['datapatient']))
-                $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'questionnaire' => $questionnaire, 'patient' => $patient));
-            else
-                $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'patient' => $patient));
+                $questionnaire = Questionnaire::model()->findAll();
+                $_SESSION['datapatient'] = $patient;
+                if (isset($_SESSION['datapatient']))
+                    $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'questionnaire' => $questionnaire, 'patient' => $patient));
+                else
+                    $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'patient' => $patient));
+            }
         }
     }
 
@@ -144,8 +169,7 @@ class AnswerController extends Controller {
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardé.");
                     $this->redirect(array('answer/affichepatient'));
-                }
-                else {
+                } else {
                     Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé.");
                     Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
                 }
