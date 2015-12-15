@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<h1> Recherche de patient </h1>
+<h1> Création de patient </h1>
 
 <div class="form">
 
@@ -15,13 +15,10 @@
         // controller action is handling ajax validation correctly.
         // See class documentation of CActiveForm for details on this,
         // you need to use the performAjaxValidation()-method described there.
-        'action' => Yii::app()->createUrl('answer/affichepatient'),
+        'action' => Yii::app()->createUrl('site/patientBis'), // à modifier
         'enableAjaxValidation' => false,
     ));
     ?>
-
-    <p>Bienvenue <?php echo Yii::app()->user->name ?></p>
-    <p>Cet outil vous permet de retrouver les fiches patient à partir de son identité.</p>
     <hr />
     <p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
 
@@ -57,6 +54,20 @@
             ));
             ?>
             <?php echo $form->error($model, 'date_naissance'); ?>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-3">
+            <?php echo $form->labelEx($model, 'nom'); ?>
+            <?php echo $form->textField($model, 'nom'); ?>
+            <?php echo $form->error($model, 'nom'); ?>
+        </div>
+        
+        <div class="col-lg-3">
+            <?php echo $form->labelEx($model, 'sexe'); ?>
+            <?php echo $form->dropDownList($model, 'sexe', array("M"=>"Homme", "F"=>"Femme", "U"=>"Inconnu"), array('prompt'=>'----')); ?>
+            <?php echo $form->error($model, 'sexe'); ?>
         </div>
     </div>
 
