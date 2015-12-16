@@ -1,7 +1,7 @@
 <?php
 
-class SiteController extends Controller {
-
+class SiteController extends Controller
+{
     /**
      * NB : boostrap theme need this column2 layout
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -86,7 +86,7 @@ class SiteController extends Controller {
         if (isset($_POST['PatientForm'])) {
             $model->attributes = $_POST['PatientForm'];
         }
-        $this->render('patient', array('model' => $model));
+        $this->render('patient', array('model' => $model, 'actionForm' => 'search'));
     }
 
     /**
