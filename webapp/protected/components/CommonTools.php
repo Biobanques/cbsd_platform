@@ -16,8 +16,6 @@ class CommonTools
             try {
                 return $soapClient->getFullPatientWs($token, $patient);
             } catch (Exception $ex) {
-                Yii::log($ex->getMessage(), CLogger::LEVEL_ERROR);
-                Yii::log($ex->getTraceAsString(), CLogger::LEVEL_ERROR);
 
                 return $ex->faultcode;
             }
@@ -33,13 +31,11 @@ class CommonTools
             try {
                 return $soapClient->addPatientWs($token, $patient);
             } catch (Exception $ex) {
-                Yii::log($ex->getMessage(), CLogger::LEVEL_ERROR);
-                Yii::log($ex->getTraceAsString(), CLogger::LEVEL_ERROR);
-
-                return "$ex->getCode():$ex->getMessage()";
+                return $ex->faultcode;
+//                return $ex;
             }
         } catch (Exception $ex) {
-            return "$ex->getCode():$ex->getMessage()";
+            return $ex->faultcode;
         }
     }
 

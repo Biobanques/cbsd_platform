@@ -3,14 +3,15 @@
 /**
  * This is the MongoDB Document model class based on table "patient".
  */
-class PatientForm extends CFormModel {
-
+class PatientForm extends CFormModel
+{
     public $id;
     public $nom;
     public $prenom;
     public $date_naissance;
     public $nom_naissance;
     public $sexe;
+    public $action;
 
     /**
      * Returns the static model of the specified AR class.
@@ -32,7 +33,7 @@ class PatientForm extends CFormModel {
             array('nom_naissance, prenom', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('nom_naissance, prenom, date_naissance, nom, sexe', 'safe', 'on' => 'search'),
+            array('nom_naissance, prenom, date_naissance, nom, sexe,action', 'safe'),
         );
     }
 

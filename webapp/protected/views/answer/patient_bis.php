@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<h1> Création de patient </h1>
+<h1> <?php echo $actionForm == 'create' ? 'Création' : 'Recherche avancée'; ?> de patient </h1>
 
 <div class="form">
 
@@ -15,7 +15,7 @@
         // controller action is handling ajax validation correctly.
         // See class documentation of CActiveForm for details on this,
         // you need to use the performAjaxValidation()-method described there.
-        'action' => Yii::app()->createUrl('site/patientBis'), // à modifier
+        //'action' => Yii::app()->createUrl('answer/createPatient'), // à modifier
         'enableAjaxValidation' => false,
     ));
     ?>
@@ -23,7 +23,7 @@
     <p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
 
     <?php echo $form->errorSummary($model); ?>
-
+    <?php echo $form->hiddenField($model, 'action', array('value' => $actionForm)); ?>
     <div class="row">
         <div class="col-lg-3">
             <?php echo $form->labelEx($model, 'prenom'); ?>
@@ -56,17 +56,17 @@
             <?php echo $form->error($model, 'date_naissance'); ?>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-lg-3">
             <?php echo $form->labelEx($model, 'nom'); ?>
             <?php echo $form->textField($model, 'nom'); ?>
             <?php echo $form->error($model, 'nom'); ?>
         </div>
-        
+
         <div class="col-lg-3">
             <?php echo $form->labelEx($model, 'sexe'); ?>
-            <?php echo $form->dropDownList($model, 'sexe', array("M"=>"Homme", "F"=>"Femme", "U"=>"Inconnu"), array('prompt'=>'----')); ?>
+            <?php echo $form->dropDownList($model, 'sexe', array("M" => "Homme", "F" => "Femme", "U" => "Inconnu"), array('prompt' => '----')); ?>
             <?php echo $form->error($model, 'sexe'); ?>
         </div>
     </div>

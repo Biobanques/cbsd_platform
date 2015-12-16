@@ -26,6 +26,7 @@
     <p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
 
     <?php echo $form->errorSummary($model); ?>
+    <?php echo $form->hiddenField($model, 'action', array('value' => $actionForm)); ?>
 
     <div class="row">
         <div class="col-lg-3">

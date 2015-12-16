@@ -1,7 +1,7 @@
 <?php
 
-class AnswerController extends Controller {
-
+class AnswerController extends Controller
+{
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -52,6 +52,9 @@ class AnswerController extends Controller {
 
     public function actionCreatePatient() {
         $model = new PatientForm;
+        if (null !== Yii::app()->user->getState('patientModel')) {
+            $model = Yii::app()->user->getState('patientModel');
+        }
         if (isset($_POST['PatientForm'])) {
             $model->attributes = $_POST['PatientForm'];
         }
@@ -60,14 +63,19 @@ class AnswerController extends Controller {
 
     public function actionUpdatePatient() {
         $model = new PatientForm;
+        if (null !== Yii::app()->user->getState('patientModel')) {
+            $model = Yii::app()->user->getState('patientModel');
+        }
         if (isset($_POST['PatientForm'])) {
             $model->attributes = $_POST['PatientForm'];
         }
+
         $this->render('patient_bis', array('model' => $model));
     }
 
     public function actionAffichepatient() {
         $model = new PatientForm;
+        $patient = (object) null;
         if (isset($_SESSION['datapatient'])) {
             $patient = $_SESSION['datapatient'];
             $model->id = $patient->id;
@@ -78,7 +86,7 @@ class AnswerController extends Controller {
         }
 
         if (isset($_POST['PatientForm'])) {
-
+            $actionForm = $_POST['PatientForm']['action'];
             $model = new PatientForm;
             $model->attributes = $_POST['PatientForm'];
             if ($_POST['PatientForm']['prenom'] == "" || $_POST['PatientForm']['nom_naissance'] == "" || $_POST['PatientForm']['date_naissance'] == "") {
@@ -89,63 +97,92 @@ class AnswerController extends Controller {
                 Yii::app()->user->setFlash('error', "Entrez une date valide au format jj/mm/aaaa");
                 $this->redirect(array('site/patient'));
             }
-            $patient = (object) null;
+
             $patient->id = null;
-            $patient->source = '1'; //à identifier en fonction de l'app
+            $patient->source = null; //à identifier en fonction de l'app
             $patient->sourceId = null;
             $patient->birthName = $model->nom_naissance;
-            $patient->useName = $model->nom;
+            if ($model->nom != "")
+                $patient->useName = $model->nom;
+            else
+                $patient->useName = null;
             $patient->firstName = $model->prenom;
             $patient->birthDate = $model->date_naissance;
-            $patient->sex = $model->sexe;
+            if ($model->sexe != "")
+                $patient->sex = $model->sexe;
+            else
+                $patient->sex = null;
+            if ($actionForm == 'create') {
+                $patient->source = "1";
 
-            $patient = CommonTools::wsGetPatient($patient);
-            switch ($patient) {
-                case "-1":
-                    Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ses informations n’existe dans le système, veuillez compléter le formulaire afin de créer le nouveau patient.");
-                    $this->actionCreatePatient();
-                    break;
-                case "-2":
-                    Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Plusieurs patients ont été trouvé dans le système, veuillez renseigner les champs supplémentaires.");
-                    $this->actionUpdatePatient();
-                    break;
-                default:
-                    $model->id = $patient->id;
+                $patientest = CommonTools::wsGetPatient($patient);
+                if ($patientest == 'NoPatient') {
+                    $patient = CommonTools::wsAddPatient($patient);
+                } else {
+                    $patient = $patientTest;
+                }
+            } else {
+                $patient = CommonTools::wsGetPatient($patient);
             }
         }
-        if ($patient != "-1") {
-            if ($model->validate()) {
-                $criteria = new EMongoCriteria();
-                $criteria->id_patient = (string) $patient->id;
-                $criteriaCliniques = new EMongoCriteria($criteria);
-                if (Yii::app()->user->getState('activeProfil') == "clinicien")
-                    $criteriaCliniques->login = Yii::app()->user->id;
-                $criteriaCliniques->type = "clinique";
-                $criteriaNeuropathologiques = new EMongoCriteria($criteria);
-                $criteriaNeuropathologiques->type = "neuropathologique";
-                $criteriaGenetiques = new EMongoCriteria($criteria);
-                $criteriaGenetiques->type = "genetique";
 
-
-                $dataProviderCliniques = new EMongoDocumentDataProvider('Answer');
-                $dataProviderCliniques->setId('dpCli');
-                $dataProviderNeuropathologiques = new EMongoDocumentDataProvider('Answer');
-                $dataProviderCliniques->setId('dpNeuPa');
-                $dataProviderGenetiques = new EMongoDocumentDataProvider('Answer');
-                $dataProviderCliniques->setId('dpGen');
-                $dataProviderCliniques->setCriteria($criteriaCliniques);
-                $dataProviderNeuropathologiques->setCriteria($criteriaNeuropathologiques);
-                $dataProviderGenetiques->setCriteria($criteriaGenetiques);
-
-
-                $questionnaire = Questionnaire::model()->findAll();
-                $_SESSION['datapatient'] = $patient;
-                if (isset($_SESSION['datapatient']))
-                    $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'questionnaire' => $questionnaire, 'patient' => $patient));
-                else
-                    $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'patient' => $patient));
-            }
+        switch ($patient) {
+            case "NoPatient":
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ces informations n’existe dans le système, veuillez compléter le formulaire afin de créer le nouveau patient.");
+                Yii::app()->user->setState('patientModel', $model);
+                $this->render('patient_bis', array('model' => $model, 'actionForm' => 'create'));
+                exit();
+                break;
+            case "PatientNotSaved":
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Le patient n'a pas pu être enregistré, merci de completer l'ensemble des champs");
+                Yii::app()->user->setState('patientModel', $model);
+                $this->render('patient_bis', array('model' => $model, 'actionForm' => 'create'));
+                exit();
+                break;
+            case "ManyPatient":
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Plusieurs patients ont été trouvé dans le système, veuillez renseigner les champs supplémentaires.");
+                Yii::app()->user->setState('patientModel', $model);
+                $this->render('patient_bis', array('model' => $model, 'actionForm' => 'search'));
+                exit();
+                break;
+            default:
         }
+        if ($model->validate() && isset($patient->id)) {
+            $model->id = $patient->id;
+            $criteria = new EMongoCriteria();
+            $criteria->id_patient = $model->id;
+            $criteriaCliniques = new EMongoCriteria($criteria);
+            if (Yii::app()->user->getState('activeProfil') == "clinicien")
+                $criteriaCliniques->login = Yii::app()->user->id;
+            $criteriaCliniques->type = "clinique";
+            $criteriaNeuropathologiques = new EMongoCriteria($criteria);
+            $criteriaNeuropathologiques->type = "neuropathologique";
+            $criteriaGenetiques = new EMongoCriteria($criteria);
+            $criteriaGenetiques->type = "genetique";
+
+
+            $dataProviderCliniques = new EMongoDocumentDataProvider('Answer');
+            $dataProviderCliniques->setId('dpCli');
+            $dataProviderNeuropathologiques = new EMongoDocumentDataProvider('Answer');
+            $dataProviderCliniques->setId('dpNeuPa');
+            $dataProviderGenetiques = new EMongoDocumentDataProvider('Answer');
+            $dataProviderCliniques->setId('dpGen');
+            $dataProviderCliniques->setCriteria($criteriaCliniques);
+            $dataProviderNeuropathologiques->setCriteria($criteriaNeuropathologiques);
+            $dataProviderGenetiques->setCriteria($criteriaGenetiques);
+
+
+            $questionnaire = Questionnaire::model()->findAll();
+            $_SESSION['datapatient'] = $patient;
+            if (isset($_SESSION['datapatient']))
+                $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'questionnaire' => $questionnaire, 'patient' => $patient));
+            elseif (isset($_POST['PatientForm'])) {
+                $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'patient' => $patient));
+            } else {
+                $this->redirect(array('site/patient'));
+            }
+        } else
+            $this->redirect(array('site/patient'));
     }
 
     /**
