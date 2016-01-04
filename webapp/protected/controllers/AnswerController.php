@@ -50,29 +50,6 @@ class AnswerController extends Controller
         }
     }
 
-    public function actionCreatePatient() {
-        $model = new PatientForm;
-        if (null !== Yii::app()->user->getState('patientModel')) {
-            $model = Yii::app()->user->getState('patientModel');
-        }
-        if (isset($_POST['PatientForm'])) {
-            $model->attributes = $_POST['PatientForm'];
-        }
-        $this->render('patient_bis', array('model' => $model));
-    }
-
-    public function actionUpdatePatient() {
-        $model = new PatientForm;
-        if (null !== Yii::app()->user->getState('patientModel')) {
-            $model = Yii::app()->user->getState('patientModel');
-        }
-        if (isset($_POST['PatientForm'])) {
-            $model->attributes = $_POST['PatientForm'];
-        }
-
-        $this->render('patient_bis', array('model' => $model));
-    }
-
     public function actionAffichepatient() {
         $model = new PatientForm;
         $patient = (object) null;
@@ -150,7 +127,7 @@ class AnswerController extends Controller
         if ($model->validate() && isset($patient->id)) {
             $model->id = $patient->id;
             $criteria = new EMongoCriteria();
-            $criteria->id_patient = $model->id;
+            $criteria->id_patient = (string) $model->id;
             $criteriaCliniques = new EMongoCriteria($criteria);
             if (Yii::app()->user->getState('activeProfil') == "clinicien")
                 $criteriaCliniques->login = Yii::app()->user->id;
