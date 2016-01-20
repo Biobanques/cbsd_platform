@@ -47,7 +47,7 @@ class CommonProperties
     public static $SMTP_SENDER_FROM_EMAIL = '';
     
     /*
-     * SMTP Sender. Allow the script sendmailcommand to send mails via smtp with autentication
+     * PATH data FileMaker XML
      */
     public static $DATA_PATH = '';
 
