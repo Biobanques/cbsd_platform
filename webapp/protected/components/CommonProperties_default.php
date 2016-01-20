@@ -45,6 +45,11 @@ class CommonProperties
     public static $SMTP_SENDER_USERNAME = '';
     public static $SMTP_SENDER_PASSWORD = '';
     public static $SMTP_SENDER_FROM_EMAIL = '';
+    
+    /*
+     * SMTP Sender. Allow the script sendmailcommand to send mails via smtp with autentication
+     */
+    public static $DATA_PATH = '';
 
 
     /*
