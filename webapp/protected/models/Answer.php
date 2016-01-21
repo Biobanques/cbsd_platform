@@ -176,7 +176,10 @@ class Answer extends EMongoDocument
 
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 'name ASC',
+            )
         ));
     }
 

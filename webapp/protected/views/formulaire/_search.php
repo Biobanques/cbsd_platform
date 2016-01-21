@@ -9,8 +9,8 @@
 
     <div class="row">
         <div class="col-lg-6">
-            <?php echo $form->label($model, 'title'); ?>
-            <?php echo $form->textField($model, 'title'); ?>
+            <?php echo $form->label($model, 'name'); ?>
+            <?php echo $form->textField($model, 'name'); ?>
         </div>
     </div>
 

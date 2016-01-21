@@ -22,14 +22,12 @@ $('.search-form form').submit(function(){
     ));
     ?>
 </div><!-- search-form -->
-<br>
 
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'fiche-grid',
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
-    'filter' => $model,
     'columns' => array(
         array('header' => $model->attributeLabels()["name"], 'name' => 'name', 'value' => '$data->name'),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),

@@ -68,13 +68,21 @@ class User extends EMongoDocument {
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria ();
-        if (isset($this->login) && !empty($this->login)) {
-            $criteria->login = "" . $this->login . "";
-        }
+        if (isset($this->login) && !empty($this->login))
+            $criteria->addCond('login', '==', new MongoRegex('/' . $this->login . '/i'));
+        if (isset($this->profil) && !empty($this->profil))
+            $criteria->addCond('profil', '==', new MongoRegex('/' . $this->profil . '/i'));
+        if (isset($this->nom) && !empty($this->nom))
+            $criteria->addCond('nom', '==', new MongoRegex('/' . $this->nom . '/i'));
+        if (isset($this->prenom) && !empty($this->prenom))
+            $criteria->addCond('prenom', '==', new MongoRegex('/' . $this->prenom . '/i'));
 
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 'login ASC',
+            )
         ));
     }
 

@@ -58,7 +58,7 @@ class Questionnaire extends EMongoDocument
                 'required'
             ),
             array(
-                'id,questions_group',
+                'id,name,questions_group',
                 'safe',
                 'on' => 'search'
             ),
@@ -92,13 +92,15 @@ class Questionnaire extends EMongoDocument
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria ();
-        if (isset($this->id) && !empty($this->id)) {
-            $criteria->id = "" . $this->id . "";
-        }
+        if (isset($this->name) && !empty($this->name))
+            $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '/i'));
 
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 'name ASC',
+            )
         ));
     }
 

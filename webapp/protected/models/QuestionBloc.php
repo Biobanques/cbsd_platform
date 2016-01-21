@@ -3,12 +3,11 @@
 /**
  * This is the MongoDB Document model class based on table "QuestionBloc".
  */
-class QuestionBloc extends LoggableActiveRecord
-{
+class QuestionBloc extends LoggableActiveRecord {
+
     public $title;
     public $questions;
-      public $parent_group;
-    //   public $id;
+    public $parent_group;
     public $title_fr;
 
     /**
@@ -50,6 +49,20 @@ class QuestionBloc extends LoggableActiveRecord
             'questions' => 'Questions',
             'parent_group' => 'Groupe parent'
         );
+    }
+
+    public function search($caseSensitive = false) {
+        $criteria = new EMongoCriteria ();
+        if (isset($this->title) && !empty($this->title))
+            $criteria->addCond('title', '==', new MongoRegex('/' . $this->title . '/i'));
+
+        Yii::app()->session['criteria'] = $criteria;
+        return new EMongoDocumentDataProvider($this, array(
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 'title ASC',
+            )
+        ));
     }
 
     public function getBlocTitle() {
