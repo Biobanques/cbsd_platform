@@ -50,12 +50,12 @@
     </div>
     <div>
         <div class="col-lg-6">
-            <?php echo $form->labelEx($model, 'style'); ?>
+             <label><?php echo $model->getAttributeLabel('style'); ?> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/tooltip.jpg" alt="tooltip" title="Pour aligner votre question à droite de la précédente, saisissez dans le champ: float:right"/></label>
             <?php echo $form->textField($model, 'style', array('size' => 5, 'maxlength' => 45)); ?>
             <?php echo $form->error($model, 'style'); ?>
         </div>
         <div class="col-lg-6">
-            <?php echo $form->labelEx($model, 'values'); ?>
+            <label><?php echo $model->getAttributeLabel('values'); ?> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/tooltip.jpg" alt="alternative text" title="Le séparateur de valeurs est la virgule. (Exemple: Oui,Non,Ne sais pas)"/></label>
             <?php echo $form->textField($model, 'values', array('size' => 5)); ?>
             <?php echo $form->error($model, 'values'); ?>
         </div>

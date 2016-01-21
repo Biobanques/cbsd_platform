@@ -62,6 +62,11 @@ class Questionnaire extends EMongoDocument
                 'safe',
                 'on' => 'search'
             ),
+            array(
+                'description',
+                'safe',
+                'on' => 'insert'
+            ),
         );
     }
 
