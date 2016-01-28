@@ -22,7 +22,7 @@
         </div>
         <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'label'); ?>
-            <?php echo $form->textField($model, 'label', array('size' => 5, 'maxlength' => 45)); ?>
+            <?php echo $form->textField($model, 'label', array('size' => 5)); ?>
             <?php echo $form->error($model, 'label'); ?>
 
         </div>
@@ -42,7 +42,7 @@
         </div>
         <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'values'); ?>
-            <?php echo $form->textField($model, 'values', array('size' => 5, 'maxlength' => 45)); ?>
+            <?php echo $form->textField($model, 'values', array('size' => 5)); ?>
             <?php echo $form->error($model, 'values'); ?>
         </div>
     </div>

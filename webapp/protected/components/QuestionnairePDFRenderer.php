@@ -12,9 +12,8 @@
  * @author nicolas
  */
 class QuestionnairePDFRenderer {
-    
-    
-    public static $LINE_HEIGHT=7;
+
+    public static $LINE_HEIGHT = 7;
 
     public static function render($questionnaire) {
         require_once(Yii::getPathOfAlias('application.vendor') . '/tcpdf/tcpdf.php');
@@ -57,23 +56,23 @@ class QuestionnairePDFRenderer {
         $pdf->AddPage();
         //form default properties
         $pdf->setFormDefaultProp(array('lineWidth' => 1, 'borderStyle' => 'solid', 'fillColor' => "lightGray", 'strokeColor' => "gray"));
-        
+
         $pdf->SetFont('helvetica', 'B', 18);
         $pdf->Cell(0, 5, 'Biobanques CBSDForms ', 0, 1, 'C');
         $pdf->Ln(10);
         $pdf->Cell(0, 5, $questionnaire->name, 0, 1, 'C');
         $pdf->Ln(10);
-        $pdf->Cell(0, 5,"-", 0, 1, 'C');
+        $pdf->Cell(0, 5, "-", 0, 1, 'C');
         $pdf->Ln(10);
         $pdf->Cell(0, 5, $questionnaire->name_fr, 0, 1, 'C');
         $pdf->Ln(30);
-         $pdf->SetFont('helvetica', 'N', 12);
-         $dd = $questionnaire->last_modified;//mongo date
-        $html = '<span>'. "<b>Description :</b> ".$questionnaire->description.'<br /><b>Last Modified :</b>'.date("d/m/Y",$dd->sec).'</span>';
-                $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
+        $pdf->SetFont('helvetica', 'N', 12);
+        $dd = $questionnaire->last_modified; //mongo date
+        $html = '<span>' . "<b>Description :</b> " . $questionnaire->description . '<br /><b>Last Modified :</b>' . date("d/m/Y", $dd->sec) . '</span>';
+        $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
         $pdf->Ln(10);
-        $html = '<span>'.$questionnaire->message_start.'</span>';
-                $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
+        $html = '<span>' . $questionnaire->message_start . '</span>';
+        $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
         $pdf->Ln(10);
 
         $pdf = QuestionnairePDFRenderer::renderPDF($pdf, $questionnaire, "fr");
@@ -95,7 +94,7 @@ class QuestionnairePDFRenderer {
      */
     public function renderContributors($pdf, $contributors) {
         $pdf->AddPage();
-                $pdf->Bookmark('Contributeurs', 0, 0, '', 'B', array(0,64,128));
+        $pdf->Bookmark('Contributeurs', 0, 0, '', 'B', array(0, 64, 128));
         $pdf->Cell(0, 5, 'Contributors / Contributeurs', 0, 1, 'C');
 // Print text using writeHTMLCell()
         $pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
@@ -111,7 +110,7 @@ class QuestionnairePDFRenderer {
             if ($question_group->parent_group == "") {
                 // set a bookmark for the current position
                 $pdf->AddPage();
-                $pdf->Bookmark($question_group->title_fr, 0, 0, '', 'B', array(0,64,128));
+                $pdf->Bookmark($question_group->title_fr, 0, 0, '', 'B', array(0, 64, 128));
                 $pdf = QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf, $questionnaire, $question_group, $lang, false);
             }
         }
@@ -138,8 +137,8 @@ class QuestionnairePDFRenderer {
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
         $pdf->SetFont('helvetica', 'B', 12);
-        $pdf->SetFillColor(211, 211, 211);	
-        $pdf->Cell(0, 5, $title, 0 , 2, 'L',true);
+        $pdf->SetFillColor(211, 211, 211);
+        $pdf->Cell(0, 5, $title, 0, 2, 'L', true);
         $pdf->Ln(5);
         $pdf->SetFont('helvetica', '', 12);
         if (isset($group->questions)) {
@@ -171,7 +170,7 @@ class QuestionnairePDFRenderer {
             $label = $question->label_fr;
         }
         if ($lang == "both") {
-        $label = $question->label;
+            $label = $question->label;
             //$label = "<i>" . $question->label . "</i><br/>" . $question->label_fr;
         }
         if ($question->style != "float:right") {
@@ -181,11 +180,11 @@ class QuestionnairePDFRenderer {
             //on coupe la chaine en mots
             //$pdf->Cell(50, 5, substr($label, 0, 25).".");
             $pdf->writeHTMLCell(50, 10, '', '', $label, 0, 0, 0, true, '', true);
-            }else
+        } else
             $pdf->Cell(50, 5, $label);
         //affichage de l input selon son type
         $id = $idquestiongroup . "_" . $question->id;
-        if ($question->type == "input") {
+        if ($question->type == "input" || $question->type == "expression" || $question->type == "date") {
             $pdf->TextField($id, 40, 7);
         }
         if ($question->type == "radio") {
@@ -209,7 +208,7 @@ class QuestionnairePDFRenderer {
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
                 $pdf->Cell(20, 5, "");
-                $pdf->CheckBox($id."_".$value, 5, false, array(), array(), $value);
+                $pdf->CheckBox($id . "_" . $value, 5, false, array(), array(), $value);
                 $pdf->Cell(35, 5, $value);
                 $pdf->Ln(10);
             }
@@ -242,10 +241,10 @@ class QuestionnairePDFRenderer {
             $arcols = split(",", $cols);
             //$result.="<table><tr><td></td>";
             foreach ($arcols as $col) {
-              //  $result.="<td>" . $col . "</td>";
-           $pdf->Cell(35, 5, $col);
-                }
-                $pdf->Ln(6);
+                //  $result.="<td>" . $col . "</td>";
+                $pdf->Cell(35, 5, $col);
+            }
+            $pdf->Ln(6);
             //$result.="</tr>";
             foreach ($arrows as $row) {
                 //$result.="<tr><td>" . $row . "</td>";
@@ -254,10 +253,10 @@ class QuestionnairePDFRenderer {
                     $idunique = $idquestiongroup . "_" . $question->id . "_" . $row . "_" . $col;
                     $pdf->TextField($idunique, 50, 5);
                 }
-               // $result.="</tr>";
+                // $result.="</tr>";
                 $pdf->Ln(6);
             }
-           // $result.="</table>";
+            // $result.="</table>";
         }
         return $pdf;
     }

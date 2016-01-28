@@ -1,5 +1,15 @@
 <?php
 
+// Le système de calcul de score IADL et ADL applicable uniquement lors de la création et de la mise à jour d'une fiche
+if (Yii::app()->controller->id == "questionnaire" || Yii::app()->controller->id == "answer") {
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/iadl.js', CClientScript::POS_END);
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/adl.js', CClientScript::POS_END);
+}
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/stade_de_braak.js', CClientScript::POS_END);
+?>
+
+<?php
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,8 +21,7 @@
  * render to display elements of questionnaire
  * @author nicolas
  */
-class QuestionnaireHTMLRenderer
-{
+class QuestionnaireHTMLRenderer {
 
     /**
      * render contributors
@@ -166,6 +175,9 @@ class QuestionnaireHTMLRenderer
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
+        if ($question->type == "expression") {
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+        }
         if ($question->type == "date") {
             $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
         }
@@ -286,6 +298,9 @@ class QuestionnaireHTMLRenderer
             $valueInput = $question->answer;
         }
         if ($question->type == "input") {
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+        }
+        if ($question->type == "exoression") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
         if ($question->type == "date") {
@@ -484,6 +499,9 @@ class QuestionnaireHTMLRenderer
         $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
         $valueInput = "";
         if ($question->type == "input") {
+            $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
+        }
+        if ($question->type == "expression") {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
         }
         if ($question->type == "date") {

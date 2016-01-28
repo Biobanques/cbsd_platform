@@ -52,7 +52,7 @@ class QuestionForm extends CFormModel
         return array(
             // name, email, subject and body are required
             array('id,label, type', 'required'),
-            array('label', 'length', 'max' => 50),
+            array('label', 'length', 'max' => 500),
             array('id,idQuestionBefore,idQuestionGroup', 'length', 'max' => 50),
             array('type', 'length', 'max' => 10),
             array('style', 'length', 'max' => 100),
@@ -86,6 +86,7 @@ class QuestionForm extends CFormModel
         $res ['list'] = "liste déroulante";
         $res ['checkbox'] = "case(s) à cocher";
         $res ['text'] = "aire de texte";
+        $res ['expression'] = "expression";
         //$res ['image'] = "image";
         return $res;
     }

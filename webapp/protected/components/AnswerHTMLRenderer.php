@@ -136,6 +136,9 @@ class AnswerHTMLRenderer {
         if ($answer->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
         }
+        if ($answer->type == "expression") {
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
+        }
         if ($answer->type == "date") {
             $result.="<input type=\"date\" " . $idInput . " value=\"" . $answer->answer . "\" placeholder=\"Format jj/mm/aaaa\" style=\"height:25px;\"/>";
         }
@@ -323,6 +326,9 @@ class AnswerHTMLRenderer {
         $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
         $valueInput = "";
         if ($question->type == "input") {
+            $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
+        }
+        if ($question->type == "expression") {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
         }
         if ($question->type == "date") {
