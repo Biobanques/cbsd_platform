@@ -4,8 +4,8 @@
  * controller de formulaire. Permet d aiguiller les actions sur l objet formulaire côté admin.
  * @author nmalservet
  */
-class FormulaireController extends Controller
-{
+class FormulaireController extends Controller {
+
     /**
      * NB : boostrap theme need this column2 layout
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -154,8 +154,21 @@ class FormulaireController extends Controller
      */
     public function actionDelete($id) {
         $model = Questionnaire::model()->findByPk(new MongoID($id));
-        $model->delete();
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        try {
+            $model->delete();
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('success', 'Le formulaire a bien été supprimé.');
+            } else {
+                echo "<div class='alert in alert-block fade alert-success'>Le formulaire a bien été supprimé.</div>"; //for ajax
+            }
+        } catch (CDbException $e) {
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('error', "Le formulaire n'a pas été supprimé. Un problème est apparu.");
+            } else {
+                echo "<div class='alert in fade alert-error'>Le formulaire n'a pas été supprimé. Un problème est apparu.</div>";
+            } //for ajax
+        }
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
@@ -170,7 +183,7 @@ class FormulaireController extends Controller
         $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
         if ($model->deleteQuestion($idQuestion)) {
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', "La question a bien été supprimé");
+                Yii::app()->user->setFlash('success', "La question a bien été supprimé.");
             } else {
                 Yii::app()->user->setFlash('error', "La question n'a pas été supprimé. Un problème est apparu.");
                 Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
@@ -190,15 +203,13 @@ class FormulaireController extends Controller
         $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
         if ($model->deleteQuestionGroup($idQuestionGroup)) {
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', "L'onglet a bien été supprimé");
+                Yii::app()->user->setFlash('success', "L'onglet a bien été supprimé.");
             } else {
                 Yii::app()->user->setFlash('error', "L'onglet n'a pas été supprimé. Un problème est apparu.");
                 Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
             }
         }
         //go back on update mode
-
-
         $this->redirect($this->createUrl('update', array('id' => $model->_id)));
     }
 
@@ -241,7 +252,7 @@ class FormulaireController extends Controller
             }
         }
         if ($questionnaire->save())
-            Yii::app()->user->setFlash('success', "La question a bien été supprimé");
+            Yii::app()->user->setFlash('success', "La question a bien été supprimé.");
         else {
             Yii::app()->user->setFlash('error', "La question n'a pas été supprimé. Un problème est apparu.");
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);

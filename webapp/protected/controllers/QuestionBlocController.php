@@ -54,10 +54,10 @@ class QuestionBlocController extends Controller {
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
             $model->title_fr = $model->title;
-            if ($model->save())
-            //$this->redirect($this->createUrl('update', array('id' => $model->_id)));
-                $this->redirect($this->createUrl('admin'));
-            else
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', 'Le bloc de questions a bien été enregistré.');
+                $this->redirect($this->createUrl('update', array('id' => $model->_id)));
+            } else
                 Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
         }
 
@@ -126,7 +126,12 @@ class QuestionBlocController extends Controller {
         $criteriaQuestion->_id = new MongoId($idQuestion);
         $question = Question::model()->find($criteriaQuestion);
         $question->delete();
-
+        if ($question->save()) {
+            Yii::app()->user->setFlash('success', "La question a bien été supprimé.");
+        } else {
+            Yii::app()->user->setFlash('error', "La question n'a pas été supprimé. Un problème est apparu.");
+            Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
+        }
         $this->redirect('index.php?r=questionBloc/update&id=' . $id);
     }
 
@@ -136,15 +141,24 @@ class QuestionBlocController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        if (Yii::app()->request->isPostRequest) {
-            // we only allow deletion via POST request
+        try {
             $this->loadModel($id)->delete();
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('success', 'Le bloc de questions a bien été supprimé.');
+            } else {
+                echo "<div class='alert in alert-block fade alert-success'>Le bloc de questions a bien été supprimé.</div>"; //for ajax
+            }
+        } catch (CDbException $e) {
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('error', "Le bloc de questions n'a pas été supprimé. Un problème est apparu.");
+            } else {
+                echo "<div class='alert in fade alert-error'>Le bloc de questions n'a pas été supprimé. Un problème est apparu.</div>";
+            } //for ajax
+        }
 
-            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-            if (!isset($_GET['ajax']))
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-        } else
-            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
     /**
@@ -200,9 +214,9 @@ class QuestionBlocController extends Controller {
         $cquestion->setAttributesByQuestionForm($questionForm);
         $bloc->questions = $questionForm->id;
         if ($bloc->save())
-            Yii::app()->user->setFlash('success', "Bloc enregistré avec succès");
+            Yii::app()->user->setFlash('success', "Le bloc a bien été enregistré.");
         else {
-            Yii::app()->user->setFlash('error', "Bloc non enregistré. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', "Le bloc n'a pas été enregistré. Un problème est apparu.");
         }
         return $bloc;
     }

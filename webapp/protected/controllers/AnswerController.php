@@ -184,7 +184,7 @@ class AnswerController extends Controller
                     Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardé.");
                     $this->redirect(array('answer/affichepatient'));
                 } else {
-                    Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé.");
+                    Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
                     Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
                 }
             } else {
@@ -213,16 +213,24 @@ class AnswerController extends Controller
     }
 
     /**
-     * delete an answer
+     * delete fiche
      */
     public function actionDelete($id) {
         $model = $this->loadModel($id);
-        $model->delete();
-        Yii::app()->user->setFlash('success', 'La fiche a bien été supprimé.');
-        $dataProvider = new EMongoDocumentDataProvider('Answer');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));
+        try {
+            $model->delete();
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('success', 'La fiche a bien été supprimé.');
+            } else {
+                echo "<div class='alert in alert-block fade alert-success'>La fiche a bien été supprimé.</div>"; //for ajax
+            }
+        } catch (CDbException $e) {
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('error', "La fiche n'a pas été supprimé. Un problème est apparu.");
+            } else {
+                echo "<div class='alert in fade alert-error'>La fiche n'a pas été supprimé. Un problème est apparu.</div>";
+            } //for ajax
+        }
     }
 
     /**

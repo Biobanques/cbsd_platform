@@ -80,7 +80,7 @@ class UserController extends Controller {
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
+                Yii::app()->user->setFlash('success', 'L\'utilisateur ' . $model->login . ' a été mise à jour.');
                 $this->redirect(array('view', 'id' => $model->_id));
             }
         }
@@ -95,8 +95,22 @@ class UserController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        $this->loadModel($id)->delete();
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        try {
+            $this->loadModel($id)->delete();
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('success', "L'utilisateur a bien été supprimé.");
+            } else {
+                echo "<div class='alert in alert-block fade alert-success'>L'utilisateur a bien été supprimé.</div>"; //for ajax
+            }
+        } catch (CDbException $e) {
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('error', "L'utilisateur n'a pas été supprimé. Un problème est apparu.");
+            } else {
+                echo "<div class='alert in fade alert-error'>L'utilisateur n'a pas été supprimé. Un problème est apparu.</div>";
+            } //for ajax
+        }
+
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }

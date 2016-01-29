@@ -111,8 +111,21 @@ class FicheController extends Controller {
      */
     public function actionDelete($id) {
         $model = Answer::model()->findByPk(new MongoID($id));
-        $model->delete();
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        try {
+            $model->delete();
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('success', 'La fiche a bien été supprimé.');
+            } else {
+                echo "<div class='alert in alert-block fade alert-success'>La fiche a bien été supprimé.</div>"; //for ajax
+            }
+        } catch (CDbException $e) {
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('error', "La fiche n'a pas été supprimé. Un problème est apparu.");
+            } else {
+                echo "<div class='alert in fade alert-error'>La fiche n'a pas été supprimé. Un problème est apparu.</div>";
+            } //for ajax
+        }
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }

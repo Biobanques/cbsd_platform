@@ -1,7 +1,7 @@
 <?php
 
-class QuestionnaireController extends Controller
-{
+class QuestionnaireController extends Controller {
+
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -127,13 +127,13 @@ class QuestionnaireController extends Controller
             }
         }if ($flagNoInputToSave == false) {
             if ($answer->save())
-                Yii::app()->user->setFlash('success', "La fiche a été sauvegardé avec succès.");
+                Yii::app()->user->setFlash('success', "La fiche bien a été sauvegardé.");
             else {
-                Yii::app()->user->setFlash('error', "Le questionnaire n'a pas été sauvegardé.");
+                Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
                 Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
             }
         } else {
-            Yii::app()->user->setFlash('error', "Le questionnaire n'a pas été sauvegardé.");
+            Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
 //null result
             $answer = null;
         }

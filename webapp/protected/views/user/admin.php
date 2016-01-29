@@ -1,3 +1,17 @@
+<div id="statusMsg">
+    <?php if (Yii::app()->user->hasFlash('success')): ?>
+        <div class="flash-success">
+            <?php echo Yii::app()->user->getFlash('success'); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (Yii::app()->user->hasFlash('error')): ?>
+        <div class="flash-error">
+            <?php echo Yii::app()->user->getFlash('error'); ?>
+        </div>
+    <?php endif; ?>
+</div>
+
 <?php
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -37,6 +51,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         'email',
         array(
             'class' => 'CButtonColumn',
+            'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }',
             'htmlOptions' => array('style' => 'width: 70px')
         ),
     ),

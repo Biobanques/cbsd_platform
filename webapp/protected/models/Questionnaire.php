@@ -6,8 +6,8 @@
  * @author nmalservet
  *
  */
-class Questionnaire extends EMongoDocument
-{
+class Questionnaire extends EMongoDocument {
+
     /**
      * champs classiques d echantillons
      */
@@ -24,6 +24,7 @@ class Questionnaire extends EMongoDocument
      * date last modified.
      */
     public $last_modified;
+
     /**
      * contributors are people working on thi squetsionnaire
      */
@@ -331,9 +332,9 @@ class Questionnaire extends EMongoDocument
             }
         }
         if ($this->save())
-            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+            Yii::app()->user->setFlash('success', "L'onglet a bien été ajouté dans le formulaire.");
         else {
-            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', "L'onglet n'a pas été enregistré. Un problème est apparu.");
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;
@@ -373,9 +374,9 @@ class Questionnaire extends EMongoDocument
             }
         }
         if ($this->save())
-            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+            Yii::app()->user->setFlash('success', "La question a bien été ajouté dans le formulaire.");
         else {
-            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', "La question n'a pas été enregistré. Un problème est apparu.");
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;
@@ -415,9 +416,9 @@ class Questionnaire extends EMongoDocument
             }
         }
         if ($this->save())
-            Yii::app()->user->setFlash('success', "Formulaire enregistré avec sucès");
+            Yii::app()->user->setFlash('success', "Le bloc de questions a bien été ajouté dans le formulaire.");
         else {
-            Yii::app()->user->setFlash('error', "Formulaire non enregistré. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', "Le bloc de questions n'a pas été enregistré. Un problème est apparu.");
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;
