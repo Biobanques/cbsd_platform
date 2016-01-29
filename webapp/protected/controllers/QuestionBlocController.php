@@ -57,8 +57,9 @@ class QuestionBlocController extends Controller {
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Le bloc de questions a bien été enregistré.');
                 $this->redirect($this->createUrl('update', array('id' => $model->_id)));
-            } else
+            } else {
                 Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
+            }
         }
 
         $this->render('create', array(

@@ -72,6 +72,8 @@ class FormulaireController extends Controller {
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Le formulaire a été enregistré avec succès.');
                 $this->redirect($this->createUrl('update', array('id' => $model->_id)));
+            } else {
+                Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
             }
         }
         $this->render('create', array(

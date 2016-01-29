@@ -63,6 +63,8 @@ class UserController extends Controller {
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
                 $this->redirect(array('view', 'id' => $model->_id));
+            } else {
+                Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
             }
         }
         $this->render('create', array(
