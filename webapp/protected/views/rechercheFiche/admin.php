@@ -36,7 +36,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         //   'id_patient',
         array('header' => $model->attributeLabels()["id_patient"], 'name' => 'id_patient'),
         array('header' => $model->attributeLabels()["type"], 'name' => 'type'),
-        array('header' => $model->attributeLabels()["name"], 'value' => '$data->name'),
+        array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
         array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
         // array('header' => 'Date de l\'examen', 'name' => 'examDate', 'value' => '$data->getExamDate()'),
@@ -48,14 +48,13 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 //        // array('header' => 'Date de l\'examen', 'name' => 'examDate', 'value' => '$data->getExamDate()'),
 //        array('header' => 'Date de l\'examen', 'name' => 'examDate', 'value' => '$data->getAnswerByQuestionId("examdate")'),
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{view}',
             'buttons' => array(
                 'view' => array(
                     'click' => 'function(){window.open(this.href,"_blank","left=100,top=100,width=1200,height=650,toolbar=yes, scrollbars=yes, resizable=yes, location=no");return false;}'
                 ),
             ),
-            'htmlOptions' => array('style' => 'width: 70px')
         ),
     ),
 ));

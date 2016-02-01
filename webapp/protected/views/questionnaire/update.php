@@ -17,7 +17,7 @@
 <hr />
 
 <h3 align="center">Formulaire <?php echo $model->name; ?></h3>
-<p>Description: <?php echo $model->description; ?></p>
+<p><b>Description: </b><?php echo $model->description; ?></p>
 
 <hr />
 

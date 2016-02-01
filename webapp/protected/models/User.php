@@ -9,7 +9,6 @@ class User extends EMongoDocument {
 
     public $login;
     public $password;
-    public $repeatPassword;
     public $profil;
     public $nom;
     public $prenom;

@@ -3,8 +3,8 @@
 /**
  * This is the model class for table "tbl_audit_trail".
  */
-class AuditTrail extends EMongoDocument
-{
+class AuditTrail extends EMongoDocument {
+
     /**
      * The followings are the available columns in table 'tbl_audit_trail':
      * @var integer $id
@@ -71,14 +71,14 @@ class AuditTrail extends EMongoDocument
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'old_value' => 'Old Value',
-            'new_value' => 'New Value',
+            'old_value' => 'Ancienne valeur',
+            'new_value' => 'Nouvelle valeur',
             'action' => 'Action',
-            'model' => 'Model',
-            'field' => 'Field',
-            'stamp' => 'Stamp',
-            'user_id' => 'User',
-            'model_id' => 'Model',
+            'model' => 'Modèle',
+            'field' => 'Champs',
+            'stamp' => 'Horodatage',
+            'user_id' => 'Utilisateur',
+            'model_id' => 'Modèle ID',
         );
     }
 
@@ -88,6 +88,19 @@ class AuditTrail extends EMongoDocument
      */
     public function search($options = array()) {
         $criteria = new EMongoCriteria;
+        if (isset($this->old_value) && !empty($this->old_value))
+            $criteria->addCond('old_value', '==', new MongoRegex('/' . $this->old_value . '/i'));
+        if (isset($this->new_value) && !empty($this->new_value))
+            $criteria->addCond('new_value', '==', new MongoRegex('/' . $this->new_value . '/i'));
+        if (isset($this->action) && !empty($this->action))
+            $criteria->addCond('action', '==', new MongoRegex('/' . $this->action . '/i'));
+        if (isset($this->model) && !empty($this->model))
+            $criteria->addCond('model', '==', new MongoRegex('/' . $this->model . '/i'));
+        if (isset($this->field) && !empty($this->field))
+            $criteria->addCond('field', '==', new MongoRegex('/' . $this->field . '/i'));
+        if (isset($this->stamp) && !empty($this->stamp)) {
+            $criteria->stamp = array('$gte' => $this->stamp, '$lte' => $this->stamp);
+        }
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));
@@ -99,6 +112,44 @@ class AuditTrail extends EMongoDocument
                 'order' => ' t.stamp DESC ',
             ),
         );
+    }
+
+    /**
+     * get actions.
+     */
+    public function getActions() {
+        $res = array();
+        $res ['CREATE'] = "CREATE";
+        $res ['SET'] = "SET";
+        $res ['CHANGE'] = "CHANGE";
+        $res ['DELETE'] = "DELETE";
+        return $res;
+    }
+    
+    /**
+     * get the timestamp into a french date format JJ/MM/AAAA
+     * @return type
+     */
+    public function getTimestamp() {
+        if ($this->stamp != null)
+            return date("d/m/Y H:m", strtotime($this->stamp));
+        else
+            return null;
+    }
+
+    /**
+     * retourne tous les utilisateurs
+     * @return type
+     */
+    public function getAllUsers() {
+        $result = array();
+        $users = User::model()->findAll();
+        if ($users != null) {
+            foreach ($users as $user) {
+                array_push($result, $user->login);
+            }
+        }
+        return $result;
     }
 
 }

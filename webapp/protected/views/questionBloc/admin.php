@@ -29,9 +29,14 @@ $('.search-form form').submit(function(){
 
 <h1>Gestion des blocs</h1>
 
-<?php echo CHtml::link('Créer un nouveau bloc', Yii::app()->createUrl('questionBloc/create')); ?>
+<?php
+$imagecreatebloc = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', 'Créer un nouveau bloc');
+echo CHtml::link($imagecreatebloc . 'Créer un nouveau bloc', Yii::app()->createUrl('questionBloc/create')); ?>
 <br />
-<?php echo CHtml::link('Recherche avancée', '#', array('class' => 'search-button')); ?>
+<?php
+$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
+?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
@@ -46,12 +51,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'columns' => array(
-        array('header' => $model->attributeLabels()["title"], 'name' => 'title', 'value' => '$data->title'),
+        array('header' => $model->attributeLabels()["title"], 'name' => 'title'),
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{update}{delete}',
             'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }',
-            'htmlOptions' => array('style' => 'width: 70px')
         ),
     ),
 ));

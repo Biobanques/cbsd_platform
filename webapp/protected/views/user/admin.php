@@ -28,9 +28,15 @@ $('.search-form form').submit(function(){
 ?>
 
 <h1>Gestion des utilisateurs</h1>
-<?php echo CHtml::link('Créer un utilisateur', array('user/create')); ?>
+<?php
+$imagecreateuser = CHtml::image(Yii::app()->baseUrl . '/images/user_add.png', 'Créer un utilisateur');
+echo CHtml::link($imagecreateuser . 'Créer un utilisateur', array('user/create'));
+?>
 <br />
-<?php echo CHtml::link('Recherche avancée', '#', array('class' => 'search-button')); ?>
+<?php
+$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
+?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
@@ -45,12 +51,12 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'columns' => array(
-        'login',
-        'nom',
-        'prenom',
-        'email',
+        array('header' => $model->attributeLabels()["login"], 'name' => 'login'),
+        array('header' => $model->attributeLabels()["nom"], 'name' => 'nom'),
+        array('header' => $model->attributeLabels()["prenom"], 'name' => 'prenom'),
+        array('header' => $model->attributeLabels()["email"], 'name' => 'email'),
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
             'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }',
             'htmlOptions' => array('style' => 'width: 70px')
         ),

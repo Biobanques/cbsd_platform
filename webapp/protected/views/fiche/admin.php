@@ -28,7 +28,10 @@ $('.search-form form').submit(function(){
 ?>
 
 <h1>Gestion des fiches</h1>
-<?php echo CHtml::link('Recherche avancée', '#', array('class' => 'search-button')); ?>
+<?php
+$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
+?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
@@ -43,11 +46,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'columns' => array(
-        array('header' => $model->attributeLabels()["name"], 'name' => 'name', 'value' => '$data->name'),
+        array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
         array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{view}{delete}',
             'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }'
         ),

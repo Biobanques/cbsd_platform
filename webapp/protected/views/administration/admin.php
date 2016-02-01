@@ -8,13 +8,14 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'columns' => array(
         'profil',
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{update}',
-            'htmlOptions' => array('style' => 'width: 70px')
         ),
     ),
 ));
 ?>
+
+<hr />
 
 <h3>Fiche Neuropathologique</h3>
 <?php
@@ -24,13 +25,14 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'columns' => array(
         'profil',
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{update}',
-            'htmlOptions' => array('style' => 'width: 70px')
         ),
     ),
 ));
 ?>
+
+<hr />
 
 <h3>Fiche Génétique</h3>
 <?php
@@ -40,9 +42,8 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'columns' => array(
         'profil',
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{update}',
-            'htmlOptions' => array('style' => 'width: 70px')
         ),
     ),
 ));

@@ -15,21 +15,27 @@ $('.search-form form').submit(function(){
 
 <h1>Suivi des actions sur la base</h1>
 
-<?php echo CHtml::link('Recherche avancée','#',array('class'=>'search-button')); ?>
+<?php
+$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
+?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'audit-trail-grid',
-	'dataProvider'=>$model->search(),
-	'columns'=>array(
-		'action',
-		'model',
-		'field',
-		'stamp',
-		'user_id',
-	),
-)); ?>
+<?php
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'id' => 'audit-trail-grid',
+    'type' => 'striped bordered condensed',
+    'dataProvider' => $model->search(),
+    'columns' => array(
+        array('header' => $model->attributeLabels()["action"], 'name' => 'action'),
+        array('header' => $model->attributeLabels()["model"], 'name' => 'model'),
+        array('header' => $model->attributeLabels()["field"], 'name' => 'field'),
+        array('header' => $model->attributeLabels()["stamp"], 'name' => 'stamp', 'value' => '$data->getTimestamp()'),
+        array('header' => $model->attributeLabels()["user_id"], 'name' => 'user_id'),
+    ),
+));
+?>

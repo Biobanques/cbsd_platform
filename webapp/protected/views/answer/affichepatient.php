@@ -74,6 +74,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 }
 ?>
 <?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "neuropathologique")) { ?>
+    <hr />
     <h5> Fiches neuropathologiques </h5>
     <?php
     $this->widget('bootstrap.widgets.TbGridView', array(
@@ -105,6 +106,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 }
 ?>
 <?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "genetique")) { ?>
+    <hr />
     <h5> Fiches génétiques </h5>
     <?php
     $this->widget('bootstrap.widgets.TbGridView', array(
