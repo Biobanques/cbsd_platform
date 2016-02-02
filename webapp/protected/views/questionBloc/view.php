@@ -3,6 +3,6 @@
 
 <div>
     <?php
-    echo $model->renderTabbedGroup(Yii::app()->language);
+    echo $questionnaire->renderTabbedGroup(Yii::app()->language);
     ?>
 </div>

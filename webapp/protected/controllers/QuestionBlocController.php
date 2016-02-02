@@ -39,8 +39,25 @@ class QuestionBlocController extends Controller {
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView($id) {
+        $model = $this->loadModel($id);
+        $questionnaire = new Questionnaire;
+        $questionGroup = new QuestionGroup;
+
+        $questionGroup->id = $model->title;
+        $questionGroup->title = $model->title;
+        $questionGroup->title_fr = $questionGroup->title;
+        $questionGroup->questions = array();
+        if (isset($model->questions) && ($model->questions != null) && (count($model->questions) > 0)) {
+            foreach ($model->questions as $question => $value) {
+                $currentQuestion = Question::model()->findByPk(new MongoId($value));
+                $currentQuestion->label_fr = $currentQuestion->label;
+                $questionGroup->questions[] = $currentQuestion;
+            }
+        }
+        $this->saveQuestionnaireNewGroup($questionnaire, $questionGroup);
         $this->render('view', array(
-            'model' => $this->loadModel($id),
+            'model' => $model,
+            'questionnaire' => $questionnaire
         ));
     }
 
