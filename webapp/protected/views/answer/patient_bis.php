@@ -25,19 +25,19 @@
     <?php echo $form->errorSummary($model); ?>
     <?php echo $form->hiddenField($model, 'action', array('value' => $actionForm)); ?>
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'prenom'); ?>
             <?php echo $form->textField($model, 'prenom'); ?>
             <?php echo $form->error($model, 'prenom'); ?>
         </div>
 
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'nom_naissance'); ?>
             <?php echo $form->textField($model, 'nom_naissance'); ?>
             <?php echo $form->error($model, 'nom_naissance'); ?>
         </div>
 
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'date_naissance'); ?>
             <?php
             $this->widget('zii.widgets.jui.CJuiDatePicker', array(
@@ -58,16 +58,22 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'nom'); ?>
             <?php echo $form->textField($model, 'nom'); ?>
             <?php echo $form->error($model, 'nom'); ?>
         </div>
 
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'sexe'); ?>
-            <?php echo $form->dropDownList($model, 'sexe', array("M" => "Homme", "F" => "Femme", "U" => "Inconnu"), array('prompt' => '----')); ?>
+            <?php echo $form->dropDownList($model, 'sexe', $model->getGenre(), array('prompt' => '----')); ?>
             <?php echo $form->error($model, 'sexe'); ?>
+        </div>
+
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'source'); ?>
+            <?php echo $form->dropDownList($model, 'source', $model->getSource(), array('prompt' => '----')); ?>
+            <?php echo $form->error($model, 'source'); ?>
         </div>
     </div>
 

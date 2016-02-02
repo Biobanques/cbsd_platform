@@ -7,8 +7,7 @@
  * @author nmalservet
  *
  */
-class Answer extends EMongoDocument
-{
+class Answer extends EMongoDocument {
 
     /**
      *
@@ -24,6 +23,7 @@ class Answer extends EMongoDocument
     }
 
     public $creator;
+
     /**
      * equal id of the questionnaire
      * @var type
@@ -34,11 +34,13 @@ class Answer extends EMongoDocument
      * form type: clinique, neuropathologique, genetique
      */
     public $type;
+
     /**
      * user id mongo unique login filling this answer.
      * TODO refactor this attribute id au lieu de login
      */
     public $login;
+
     /**
      * user unique patient id filling this answer.
      */
@@ -48,11 +50,13 @@ class Answer extends EMongoDocument
      * unique id of the questionnaire
      */
     public $questionnaireMongoId;
+
     /**
      * nom du formulaire
      * @var type
      */
     public $name;
+
     /**
      * field last modified from the questionnaire source.
      * @var MongoDate
@@ -62,19 +66,23 @@ class Answer extends EMongoDocument
     public $message_start;
     public $message_end;
     public $answers_group;
+
     /**
      * last date of save action
      */
     public $last_updated;
+
     /**
      * contributors are people working on thi squetsionnaire
      */
     public $contributors;
+
     /**
      * Working variable to add dynamic search filters
      * @var array
      */
     public $dynamics;
+
     /**
      * use for search by user name
      * @var string
@@ -131,8 +139,10 @@ class Answer extends EMongoDocument
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
+
         if (isset($this->type) && !empty($this->type))
             $criteria->addCond('type', '==', new MongoRegex('/' . $this->type . '/i'));
+
         if (isset($this->user) && !empty($this->user)) {
             $criteriaUser = new EMongoCriteria;
             $criteriaUser->nom = new MongoRegex('/' . $this->user . '/i');
@@ -142,7 +152,6 @@ class Answer extends EMongoDocument
             if ($users != null)
                 foreach ($users as $user)
                     $listUsers[] = $user->_id;
-
             $criteria->addCond('login', 'in', $listUsers);
         }
 
@@ -153,11 +162,8 @@ class Answer extends EMongoDocument
             $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '/i'));
         if (isset($this->last_updated) && !empty($this->last_updated)) {
             $date = str_replace('/', '-', $this->last_updated);
-            // $date = date('Y-m-d', strtotime($date));
-//            $criteria->last_updated = array('$gte' => 'ISODate("' . $date . ' 00:00:00.000Z")');
             $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date)), '$lte' => new MongoDate(strtotime($date . " 23:59:59.999Z")));
         }
-
 
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             foreach ($this->dynamics as $questionId => $answerValue) {
@@ -165,14 +171,6 @@ class Answer extends EMongoDocument
                     $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => $answerValue));
             }
         }
-//        if(isset() &&!empty()) {
-//
-//        }
-//if (isset($this->last_modified) && !empty($this->last_modified))
-//$criteria->addCond('last_modified', '==', new MongoRegex('/' . date("d/m/Y H:m", strtotime($this->last_modified->sec)) . '/i'));
-//$criteria->addCond('last_modified', '==', date("d/m/Y H:m", strtotime($this->last_modified->sec)));
-//if (isset($this->last_updated) && !empty($this->last_updated))
-//$criteria->addCond('last_updated', '==', new MongoRegex('/' . $this->getLastUpdated() . '/i'));
 
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
@@ -227,14 +225,6 @@ class Answer extends EMongoDocument
         return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
 
-//    public function getFicheName() {
-//        $result = "";
-//        $fiche = Answer::model()->findByPk(new MongoID($this->_id));
-//        if ($fiche != null)
-//            $result = $fiche->name;
-//        return $result;
-//    }
-
     /**
      * get the last modified value into a french date format JJ/MM/AAAA
      * @return type
@@ -283,34 +273,10 @@ class Answer extends EMongoDocument
      */
     public function getAllQuestions() {
         $result = array();
-//        $fiche = Answer::model()->findAll();
-//        foreach ($fiche as $key => $value) {
-//            foreach ($value as $k => $v) {
-//                if ($k == "answers_group") {
-//                    foreach ($v as $i => $j) {
-//                        foreach ($j as $k => $l) {
-//                            if ($k == "answers") {
-//                                foreach ($l as $label => $test) {
-//                                    foreach ($test as $a => $b) {
-//                                        if ($a == "label_fr") {
-//                                            if (!in_array($b, $result)) {
-//                                                $result[] = $b;
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
         $answers = $this->getAllDetailledQuestions();
         foreach ($answers as $answer) {
             $result[$answer->answer->id] = "[" . $answer->fiche . "][" . $answer->group . "] " . $answer->answer->label_fr;
         }
-
-
         natcasesort($result);
         return $result;
     }
@@ -465,4 +431,5 @@ class Answer extends EMongoDocument
     }
 
 }
+
 ?>

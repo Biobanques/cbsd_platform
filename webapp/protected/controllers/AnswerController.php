@@ -90,7 +90,10 @@ class AnswerController extends Controller
             else
                 $patient->sex = null;
             if ($actionForm == 'create') {
-                $patient->source = "1";
+                if ($model->source == "1")
+                    $patient->source = "1";
+                else
+                    $patient->source = "2";
 
                 $patientest = CommonTools::wsGetPatient($patient);
                 if ($patientest == 'NoPatient') {

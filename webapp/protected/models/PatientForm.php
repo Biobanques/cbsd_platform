@@ -3,14 +3,15 @@
 /**
  * This is the MongoDB Document model class based on table "patient".
  */
-class PatientForm extends CFormModel
-{
+class PatientForm extends CFormModel {
+
     public $id;
     public $nom;
     public $prenom;
     public $date_naissance;
     public $nom_naissance;
     public $sexe;
+    public $source;
     public $action;
 
     /**
@@ -33,7 +34,7 @@ class PatientForm extends CFormModel
             array('nom_naissance, prenom', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('nom_naissance, prenom, date_naissance, nom, sexe,action', 'safe'),
+            array('nom_naissance, prenom, date_naissance, nom, sexe, source, action', 'safe'),
         );
     }
 
@@ -47,6 +48,7 @@ class PatientForm extends CFormModel
             'date_naissance' => 'Date de naissance',
             'nom_naissance' => 'Nom de naissance',
             'sexe' => 'Genre',
+            'source' => 'Source'
         );
     }
 
@@ -59,6 +61,21 @@ class PatientForm extends CFormModel
             return false;
         }
         return true;
+    }
+
+    public function getGenre() {
+        $res = array();
+        $res ['M'] = "Homme";
+        $res ['F'] = "Femme";
+        $res ['U'] = "Inconnu";
+        return $res;
+    }
+
+    public function getSource() {
+        $res = array();
+        $res ['1'] = "bb_cerveau";
+        $res ['2'] = "bb_adn";
+        return $res;
     }
 
 }
