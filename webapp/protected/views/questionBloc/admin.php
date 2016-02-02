@@ -55,9 +55,8 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array('header' => $model->attributeLabels()["title"], 'name' => 'title'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{view}{update}{delete}',
             'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }',
-            'htmlOptions' => array('style' => 'width: 60px')
+            'htmlOptions' => array('style' => 'width: 70px')
         ),
     ),
 ));
