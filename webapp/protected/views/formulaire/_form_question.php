@@ -28,19 +28,24 @@
         </div>
     </div>
     <div>
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'type'); ?>
             <?php echo $form->dropDownList($model, 'type', $model->getArrayTypes(), array('prompt' => '----')); ?>
             <?php echo $form->error($model, 'type'); ?>
         </div>
-    </div>
-    <div>
         <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'idQuestionGroup'); ?>
             <?php
             echo $form->dropDownList($model, 'idQuestionGroup', $model->getArrayGroups(), array('ajax' => array('type' => 'POST', 'url' => CController::createUrl('formulaire/dynamicquestions&id=' . $model->questionnaire->_id), 'update' => '#' . CHtml::activeId($model, 'idQuestionBefore'))));
             ?>
             <?php echo $form->error($model, 'idQuestionGroup'); ?>
+        </div>
+    </div>
+    <div>
+        <div class="col-lg-6">
+            <?php echo $form->labelEx($model, 'precomment'); ?>
+            <?php echo $form->textField($model, 'precomment'); ?>
+            <?php echo $form->error($model, 'precomment'); ?>
         </div>
         <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'idQuestionBefore'); ?>
@@ -50,7 +55,7 @@
     </div>
     <div>
         <div class="col-lg-6">
-             <label><?php echo $model->getAttributeLabel('style'); ?> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/tooltip.jpg" alt="tooltip" title="Pour aligner votre question à droite de la précédente, saisissez dans le champ: float:right"/></label>
+            <label><?php echo $model->getAttributeLabel('style'); ?> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/tooltip.jpg" alt="tooltip" title="Pour aligner votre question à droite de la précédente, saisissez dans le champ: float:right"/></label>
             <?php echo $form->textField($model, 'style', array('size' => 5, 'maxlength' => 45)); ?>
             <?php echo $form->error($model, 'style'); ?>
         </div>
@@ -60,8 +65,13 @@
             <?php echo $form->error($model, 'values'); ?>
         </div>
     </div>
-    <div class="buttons">
-        <?php echo CHtml::submitButton('Enregistrer'); ?>
+
+    <div>
+        <div class="buttons">
+            <div class="col-lg-6">
+                <?php echo CHtml::submitButton('Enregistrer'); ?>
+            </div>
+        </div>
     </div>
 
     <?php $this->endWidget(); ?>

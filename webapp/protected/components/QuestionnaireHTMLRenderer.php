@@ -133,6 +133,9 @@ class QuestionnaireHTMLRenderer {
         if ($question->style != "") {
             $style = "style=\"" . $question->style . "\"";
         }
+        if ($question->precomment != "" && $question->style == "") {
+            $style = "style=\"clear:both\"";
+        }
         $result.="<div " . $style . ">";
         if ($question->precomment != null) {
             $precomment = $question->precomment;
@@ -466,6 +469,9 @@ class QuestionnaireHTMLRenderer {
         $style = "style=\"\"";
         if ($question->style != "") {
             $style = "style=\"" . $question->style . "\"";
+        }
+        if ($question->precomment != "" && $question->style == "") {
+            $style = "style=\"clear:both\"";
         }
         $result.="<div " . $style . ">";
         if ($question->precomment != null) {

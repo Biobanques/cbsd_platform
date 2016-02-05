@@ -44,6 +44,18 @@ class QuestionForm extends CFormModel
      * value sare separated by ;
      */
     public $values;
+    
+    /**
+     * comment on the top of the question
+     * @var type
+     */  
+    public $precomment;
+    
+    /**
+     * comment on the top of the question
+     * @var type
+     */  
+    public $precomment_fr;
 
     /**
      * Declares the validation rules.
@@ -57,6 +69,8 @@ class QuestionForm extends CFormModel
             array('type', 'length', 'max' => 10),
             array('style', 'length', 'max' => 100),
             array('values', 'length', 'max' => 500),
+            array('precomment', 'length', 'max' => 500),
+            array('precomment_fr', 'length', 'max' => 500)
         );
     }
 
@@ -71,7 +85,9 @@ class QuestionForm extends CFormModel
             'idQuestionBefore' => 'Position de la question précédente',
             'idQuestionGroup' => 'Onglet de questions',
             'style' => 'Alignement de la question',
-            'values' => 'Valeurs'
+            'values' => 'Valeurs',
+            'precomment' => 'Commentaire',
+            'precomment_fr' => 'Commentaire'
         );
     }
 

@@ -5,19 +5,22 @@
  * @author matthieu
  *
  */
-class Question extends LoggableActiveRecord
-{
+class Question extends LoggableActiveRecord {
+
     public $id;
+
     /**
      *
      * @var type
      */
     public $label;
+
     /**
      *
      * @var type
      */
     public $label_fr;
+
     /**
      * type of the question. Values authorized :
      * input, date , radio, checkbox, text, image
@@ -28,24 +31,29 @@ class Question extends LoggableActiveRecord
      * css style applied to the label.
      */
     public $style;
+
     /**
      * values if question type is radio
      */
     public $values;
+
     /**
      * values if question type is radio and french setted
      */
     public $values_fr;
+
     /**
      * help text to add meta information around the question, displayed as an help button
      * @var type
      */
     public $help;
+
     /**
      * comment on the top of the question
      * @var type
      */
     public $precomment;
+
     /**
      * comment on the top of the question
      * @var type
@@ -78,6 +86,8 @@ class Question extends LoggableActiveRecord
         $this->style = $questionForm->style;
         $this->values = $questionForm->values;
         $this->type = $questionForm->type;
+        $this->precomment = $questionForm->precomment;
+        $this->precomment_fr = $questionForm->precomment;
     }
 
     /**
@@ -91,7 +101,7 @@ class Question extends LoggableActiveRecord
                 'required'
             ),
             array(
-                'label,label_fr,type,values,style', 'safe'
+                'label,label_fr,type,values,style,precomment,precomment_fr', 'safe'
         ));
     }
 

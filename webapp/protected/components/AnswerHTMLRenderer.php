@@ -104,6 +104,9 @@ class AnswerHTMLRenderer {
         if ($answer->style != "") {
             $style = "style=\"" . $answer->style . "\"";
         }
+        if ($answer->precomment != "" && $answer->style == "") {
+            $style = "style=\"clear:both\"";
+        }
         $result.="<div " . $style . ">";
         if ($answer->precomment != null) {
             $precomment = $answer->precomment;
@@ -293,6 +296,9 @@ class AnswerHTMLRenderer {
         $style = "style=\"\"";
         if ($question->style != "") {
             $style = "style=\"" . $question->style . "\"";
+        }
+        if ($question->precomment != "" && $question->style == "") {
+            $style = "style=\"clear:both\"";
         }
         $result.="<div " . $style . ">";
         if ($question->precomment != null) {

@@ -130,6 +130,8 @@ class FormulaireController extends Controller {
                         $questionForm->type = $currentQuestion->type;
                         $questionForm->style = $currentQuestion->style;
                         $questionForm->values = $currentQuestion->values;
+                        $questionForm->precomment = $currentQuestion->precomment;
+                        $questionForm->precomment_fr = $currentQuestion->precomment_fr;
                         $questionForm->id = $currentQuestion->id;
                         $questionForm->idQuestionGroup = $computedGroup->id;
 
