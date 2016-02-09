@@ -82,7 +82,7 @@ class QuestionForm extends CFormModel
     public function attributeLabels() {
         return array(
             'label' => 'Etiquette',
-            'idQuestionBefore' => 'Position de la question précédente',
+            'idQuestionBefore' => 'La question devrait apparaître en dessous de',
             'idQuestionGroup' => 'Onglet de questions',
             'style' => 'Alignement de la question',
             'values' => 'Valeurs',
