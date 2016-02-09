@@ -93,17 +93,21 @@ class FormulaireController extends Controller {
         // collect user input data
         if (isset($_POST['QuestionForm'])) {
             $questionForm->attributes = $_POST['QuestionForm'];
-            //traitement ajout de question
-            if ($questionForm->validate()) {
-                $model = $model->saveQuestionnaireNewQuestion($questionForm);
+            if ($questionForm->validatewithId($model)) {
+                //traitement ajout de question
+                if ($questionForm->validate()) {
+                    $model = $model->saveQuestionnaireNewQuestion($questionForm);
+                }
             }
         }
         if (isset($_POST['QuestionGroup'])) {
             $questionGroup->attributes = $_POST['QuestionGroup'];
+            if ($questionGroup->validatewithId($model)) {
             //copie du titre sur l option fr
-            $questionGroup->title_fr = $questionGroup->title;
-            if ($questionGroup->validate()) {
-                $model = $model->saveQuestionnaireNewGroup($questionGroup);
+                $questionGroup->title_fr = $questionGroup->title;
+                if ($questionGroup->validate()) {
+                    $model = $model->saveQuestionnaireNewGroup($questionGroup);
+                }
             }
         }
 

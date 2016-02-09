@@ -93,5 +93,14 @@ class QuestionGroup extends EMongoEmbeddedDocument
     public function getOnglets() {
         return $this->questionnaire->getOnglets();
     }
+    
+    public function validatewithId($form, $attributes = null, $clearErrors = true) {
+        parent::validate($attributes, $clearErrors);
+        foreach ($form->questions_group as $group) {
+            if ($group->id == $this->id)
+                $this->addError('id', 'Cet identifiant est déjà utilisé dans ce formulaire, merci d\'en choisir un différent');
+        }
+        return !$this->hasErrors();
+    }
 
 }
