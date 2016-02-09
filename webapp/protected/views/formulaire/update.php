@@ -28,7 +28,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
 </div>
 
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4>Ajouter un bloc de questions déjà existant</h4></div>
+    <div class="panel-heading"><h4>Pour ajouter un bloc de questions déjà existant</h4></div>
     <div class="panel-body">
         <?php
         echo $this->renderPartial('_form_question_bloc', array('questionBloc' => $questionBloc, 'model' => $model, 'questionGroup' => $questionGroup));
@@ -37,7 +37,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
 </div>
 
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4>Ajouter un onglet</h4></div>
+    <div class="panel-heading"><h4>Pour ajouter un onglet</h4></div>
     <div class="panel-body">
         <?php
         echo $this->renderPartial('_form_question_group', array('model' => $questionGroup));
@@ -46,7 +46,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
 </div>
 
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4>Ajouter une rubrique</h4></div>
+    <div class="panel-heading"><h4>Pour ajouter une rubrique</h4></div>
     <div class="panel-body">
         <?php
         echo $this->renderPartial('_form_question', array('model' => $questionForm));

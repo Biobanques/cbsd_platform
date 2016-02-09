@@ -1,200 +1,109 @@
 var adl_score = [0, 0, 0, 0, 0, 0]; // [soins, habillage, toilettes, déplacements, continence, alimentation]
 
-/**
- * Cas où on met à jour la fiche, pour éviter que le score ADL se réinitialise à 0
- * lorsque l'on modifie une valeur dans une liste déroulante.
- */
-$('#adl_adl1').ready(function () {
-    var soins = document.getElementById("adl_adl1");
-    var valeurSoins = soins.options[soins.selectedIndex].value;
-
-    switch (valeurSoins) {
-        case "Ne reçoit aucune aide (rentre et sort seul de la baignoire si celle-ci est le moyen habituel de toilette)":
-        case "Reçoit de l'aide pour laver certaines parties du corps (comme le dos ou une jambe)":
-            adl_score[0] = 1;
-            break;
-        default:
-            adl_score[0] = 0;
-    }
-
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-});
-
-$('#adl_adl2').ready(function () {
-    var habillage = document.getElementById("adl_adl2");
-    var valeurHabillage = habillage.options[habillage.selectedIndex].value;
-    switch (valeurHabillage) {
-        case "Prend les vêtements et s'habille complètement sans aide":
-        case "Prend les habits et s'habille sans aide sauf pour les chaussures":
-            adl_score[1] = 1;
-            break;
-        default:
-            adl_score[1] = 0;
-    }
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-    ;
-});
-
-$('#adl_adl3').ready(function () {
-    var toilettes = document.getElementById("adl_adl3");
-    var valeurToilettes = toilettes.options[toilettes.selectedIndex].value;
-    switch (valeurToilettes) {
-        case "Va aux toilettes; se nettoie et arrange ses vêtements sans aide (peut s'aider d'un support comme une canne; un déambulateur; une chaise roulante et peut utiliser un bassin ou une chaise percée)":
-            adl_score[2] = 1;
-            break;
-        default:
-            adl_score[2] = 0;
-    }
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-    ;
-});
-
-$('#adl_adl4').ready(function () {
-    var deplacements = document.getElementById("adl_adl4");
-    var valeurDeplacements = deplacements.options[deplacements.selectedIndex].value;
-    switch (valeurDeplacements) {
-        case "Se couche et se lève du lit aussi bien qu'il s'assoit ou se lève d'une chaise sans aide (peut s'aider d'un support comme un déambulateur ou une canne)":
-            adl_score[3] = 1;
-            break;
-        default:
-            adl_score[3] = 0;
-    }
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-});
-
-$('#adl_adl5').ready(function () {
-    var continence = document.getElementById("adl_adl5");
-    var valeurContinence = continence.options[continence.selectedIndex].value;
-    switch (valeurContinence) {
-        case "Contrôle parfaitement seul son élimination":
-            adl_score[4] = 1;
-            break;
-        default:
-            adl_score[4] = 0;
-    }
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-});
-
-$('#adl_adl6').ready(function () {
-    var alimentation = document.getElementById("adl_adl6");
-    var valeurAlimentation = alimentation.options[alimentation.selectedIndex].value;
-    switch (valeurAlimentation) {
-        case "Mange sans aide":
-            adl_score[5] = 1;
-            break;
-        default:
-            adl_score[5] = 0;
-    }
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-});
+var tabs = {
+    soins: 'adl_adl1',
+    habillage: 'adl_adl2',
+    toilettes: 'adl_adl3',
+    deplacements: 'adl_adl4',
+    continence: 'adl_adl5',
+    alimentation: 'adl_adl6',
+    score: 'adl_score'
+};
 
 /**
- * Le score ADL est mis à jour automatiquement en fonction des choix sélectionnés dans les listes déroulantes.
+ * Le score est mis à jour automatiquement en fonction des choix sélectionnés dans les listes déroulantes.
  */
-$('#adl_adl1').change(function () {
-    var soins = document.getElementById("adl_adl1");
-    var valeurSoins = soins.options[soins.selectedIndex].value;
+$(document).change(function () {
+    getValue();
+    adlScore(adl_score);
+});
 
-    switch (valeurSoins) {
-        case "Ne reçoit aucune aide (rentre et sort seul de la baignoire si celle-ci est le moyen habituel de toilette)":
-        case "Reçoit de l'aide pour laver certaines parties du corps (comme le dos ou une jambe)":
+function getValue() {
+    var soins = document.getElementById(tabs.soins);
+    var habillage = document.getElementById(tabs.habillage);
+    var toilettes = document.getElementById(tabs.toilettes);
+    var deplacements = document.getElementById(tabs.deplacements);
+    var continence = document.getElementById(tabs.continence);
+    var alimentation = document.getElementById(tabs.alimentation);
+
+    adl_score = getAnswer(soins.options[soins.selectedIndex].value, tabs.soins);
+    adl_score = getAnswer(habillage.options[habillage.selectedIndex].value, tabs.habillage);
+    adl_score = getAnswer(toilettes.options[toilettes.selectedIndex].value, tabs.toilettes);
+    adl_score = getAnswer(deplacements.options[deplacements.selectedIndex].value, tabs.deplacements);
+    adl_score = getAnswer(continence.options[continence.selectedIndex].value, tabs.continence);
+    adl_score = getAnswer(alimentation.options[alimentation.selectedIndex].value, tabs.alimentation);
+
+    return adl_score;
+}
+
+function getAnswer(value, id) {
+    var answer;
+    var answers = {
+        "Ne reçoit aucune aide (rentre et sort seul de la baignoire si celle-ci est le moyen habituel de toilette)": function () {
             adl_score[0] = 1;
-            break;
-        default:
-            adl_score[0] = 0;
-    }
-
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-});
-
-$('#adl_adl2').change(function () {
-    var habillage = document.getElementById("adl_adl2");
-    var valeurHabillage = habillage.options[habillage.selectedIndex].value;
-    switch (valeurHabillage) {
-        case "Prend les vêtements et s'habille complètement sans aide":
-        case "Prend les habits et s'habille sans aide sauf pour les chaussures":
+            answer = adl_score
+        },
+        "Reçoit de l'aide pour laver certaines parties du corps (comme le dos ou une jambe)": function () {
+            adl_score[0] = 1;
+            answer = adl_score
+        },
+        "Prend les vêtements et s'habille complètement sans aide": function () {
             adl_score[1] = 1;
-            break;
-        default:
-            adl_score[1] = 0;
-    }
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-    ;
-});
-
-$('#adl_adl3').change(function () {
-    var toilettes = document.getElementById("adl_adl3");
-    var valeurToilettes = toilettes.options[toilettes.selectedIndex].value;
-    switch (valeurToilettes) {
-        case "Va aux toilettes; se nettoie et arrange ses vêtements sans aide (peut s'aider d'un support comme une canne; un déambulateur; une chaise roulante et peut utiliser un bassin ou une chaise percée)":
+            answer = adl_score
+        },
+        "Prend les habits et s'habille sans aide sauf pour les chaussures": function () {
+            adl_score[1] = 1;
+            answer = adl_score
+        },
+        "Va aux toilettes; se nettoie et arrange ses vêtements sans aide (peut s'aider d'un support comme une canne; un déambulateur; une chaise roulante et peut utiliser un bassin ou une chaise percée)": function () {
             adl_score[2] = 1;
-            break;
-        default:
-            adl_score[2] = 0;
-    }
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-    ;
-});
-
-$('#adl_adl4').change(function () {
-    var deplacements = document.getElementById("adl_adl4");
-    var valeurDeplacements = deplacements.options[deplacements.selectedIndex].value;
-    switch (valeurDeplacements) {
-        case "Se couche et se lève du lit aussi bien qu'il s'assoit ou se lève d'une chaise sans aide (peut s'aider d'un support comme un déambulateur ou une canne)":
+            answer = adl_score
+        },
+        "Se couche et se lève du lit aussi bien qu'il s'assoit ou se lève d'une chaise sans aide (peut s'aider d'un support comme un déambulateur ou une canne)": function () {
             adl_score[3] = 1;
-            break;
-        default:
-            adl_score[3] = 0;
-    }
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-});
-
-$('#adl_adl5').change(function () {
-    var continence = document.getElementById("adl_adl5");
-    var valeurContinence = continence.options[continence.selectedIndex].value;
-    switch (valeurContinence) {
-        case "Contrôle parfaitement seul son élimination":
+            answer = adl_score
+        },
+        "Contrôle parfaitement seul son élimination": function () {
             adl_score[4] = 1;
-            break;
-        default:
-            adl_score[4] = 0;
-    }
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
-        return valeurPrecedente + valeurCourante;
-    });
-});
-
-$('#adl_adl6').change(function () {
-    var alimentation = document.getElementById("adl_adl6");
-    var valeurAlimentation = alimentation.options[alimentation.selectedIndex].value;
-    switch (valeurAlimentation) {
-        case "Mange sans aide":
+            answer = adl_score
+        },
+        "Mange sans aide": function () {
             adl_score[5] = 1;
-            break;
-        default:
-            adl_score[5] = 0;
-    }
-    document.getElementById("adl_score").value = adl_score.reduce(function (valeurPrecedente, valeurCourante) {
+            answer = adl_score
+        },
+        "default": function () {
+            switch (id) {
+                case tabs.soins:
+                    adl_score[0] = 0;
+                    break;
+                case tabs.habillage:
+                    adl_score[1] = 0;
+                    break;
+                case tabs.toilettes:
+                    adl_score[2] = 0;
+                    break;
+                case tabs.deplacements:
+                    adl_score[3] = 0;
+                    break;
+                case tabs.continence:
+                    adl_score[3] = 0;
+                    break;
+                case tabs.alimentation:
+                    adl_score[3] = 0;
+                    break;
+            }
+            answer = adl_score
+        }
+    };
+    (answers[value] || answers["default"])();
+    return answer;
+}
+
+/**
+ * Calcule le score ADL en fonction des choix sélectionnés dans les listes déroulantes.
+ */
+function adlScore(score) {
+    document.getElementById(tabs.score).value = score.reduce(function (valeurPrecedente, valeurCourante) {
         return valeurPrecedente + valeurCourante;
     });
-});
+}

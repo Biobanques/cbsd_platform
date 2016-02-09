@@ -9,15 +9,6 @@ var tabs = {
 };
 
 /**
- * Cas où on met à jour la fiche, pour éviter que le score IADL se réinitialise à 0
- * lorsque l'on modifie une valeur dans une liste déroulante.
- */
-$(document).ready(function () {
-    getValue();
-    iadlScore(iadl_score);
-});
-
-/**
  * Le score est mis à jour automatiquement en fonction des choix sélectionnés dans les listes déroulantes.
  */
 $(document).change(function () {
@@ -25,9 +16,20 @@ $(document).change(function () {
     iadlScore(iadl_score);
 });
 
-/**
- * Le score est mis à jour automatiquement en fonction des choix sélectionnés dans les listes déroulantes.
- */
+function getValue() {
+    var telephone = document.getElementById(tabs.telephone);
+    var transport = document.getElementById(tabs.transport);
+    var medicaments = document.getElementById(tabs.medicaments);
+    var argent = document.getElementById(tabs.argent);
+
+    iadl_score = getAnswer(telephone.options[telephone.selectedIndex].value, tabs.telephone);
+    iadl_score = getAnswer(transport.options[transport.selectedIndex].value, tabs.transport);
+    iadl_score = getAnswer(medicaments.options[medicaments.selectedIndex].value, tabs.medicaments);
+    iadl_score = getAnswer(argent.options[argent.selectedIndex].value, tabs.argent);
+
+    return iadl_score;
+}
+
 function getAnswer(value, id) {
     var answer;
     var answers = {
@@ -79,20 +81,6 @@ function getAnswer(value, id) {
     };
     (answers[value] || answers["default"])();
     return answer;
-}
-
-function getValue() {
-    var telephone = document.getElementById(tabs.telephone);
-    var transport = document.getElementById(tabs.transport);
-    var medicaments = document.getElementById(tabs.medicaments);
-    var argent = document.getElementById(tabs.argent);
-
-    iadl_score = getAnswer(telephone.options[telephone.selectedIndex].value, tabs.telephone);
-    iadl_score = getAnswer(transport.options[transport.selectedIndex].value, tabs.transport);
-    iadl_score = getAnswer(medicaments.options[medicaments.selectedIndex].value, tabs.medicaments);
-    iadl_score = getAnswer(argent.options[argent.selectedIndex].value, tabs.argent);
-
-    return iadl_score;
 }
 
 /**
