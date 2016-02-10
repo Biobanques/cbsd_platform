@@ -56,6 +56,12 @@ class QuestionForm extends CFormModel
      * @var type
      */  
     public $precomment_fr;
+    
+    /**
+     * info-bulle
+     * @var type
+     */  
+    public $help;
 
     /**
      * Declares the validation rules.
@@ -70,7 +76,8 @@ class QuestionForm extends CFormModel
             array('style', 'length', 'max' => 100),
             array('values', 'length', 'max' => 500),
             array('precomment', 'length', 'max' => 500),
-            array('precomment_fr', 'length', 'max' => 500)
+            array('precomment_fr', 'length', 'max' => 500),
+            array('help', 'length', 'max' => 500)
         );
     }
 
@@ -87,7 +94,8 @@ class QuestionForm extends CFormModel
             'style' => 'Alignement de la question',
             'values' => 'Valeurs',
             'precomment' => 'Commentaire',
-            'precomment_fr' => 'Commentaire'
+            'precomment_fr' => 'Commentaire',
+            'help' => 'Info-bulle'
         );
     }
 

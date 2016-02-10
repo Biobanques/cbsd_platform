@@ -88,6 +88,7 @@ class Question extends LoggableActiveRecord {
         $this->type = $questionForm->type;
         $this->precomment = $questionForm->precomment;
         $this->precomment_fr = $questionForm->precomment;
+        $this->help = $questionForm->help;
     }
 
     /**
@@ -114,6 +115,7 @@ class Question extends LoggableActiveRecord {
             'id' => 'Id',
             'label' => 'question',
             'label_fr' => 'question',
+            'help' => 'Info-bulle'
         );
     }
 

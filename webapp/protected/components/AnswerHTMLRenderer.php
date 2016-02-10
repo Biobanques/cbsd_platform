@@ -116,7 +116,7 @@ class AnswerHTMLRenderer {
             if ($lang == "both") {
                 $precomment = "<i>" . $answer->precomment . "</i><br>" . $answer->precomment_fr;
             }
-            $result.="<div class=\"question-precomment\">" . $precomment . "</div>";
+            $result.="<div class=\"question-precomment\"><u>" . $precomment . "</u></div>";
         }
         //par defaut lang = enif ($lang == "en")
         $label = $answer->label;
@@ -309,7 +309,7 @@ class AnswerHTMLRenderer {
             if ($lang == "both") {
                 $precomment = "<i>" . $question->precomment . "</i><br>" . $question->precomment_fr;
             }
-            $result.="<div class=\"question-precomment\">" . $precomment . "</div>";
+            $result.="<div class=\"question-precomment\"><u>" . $precomment . "</u></div>";
         }
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;

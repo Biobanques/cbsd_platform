@@ -145,7 +145,7 @@ class QuestionnaireHTMLRenderer {
             if ($lang == "both") {
                 $precomment = "<i>" . $question->precomment . "</i><br>" . $question->precomment_fr;
             }
-            $result.="<div class=\"question-precomment\">" . $precomment . "</div>";
+            $result.="<div class=\"question-precomment\"><u>" . $precomment . "</u></div>";
         }
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
@@ -482,7 +482,7 @@ class QuestionnaireHTMLRenderer {
             if ($lang == "both") {
                 $precomment = "<i>" . $question->precomment . "</i><br>" . $question->precomment_fr;
             }
-            $result.="<div class=\"question-precomment\">" . $precomment . "</div>";
+            $result.="<div class=\"question-precomment\"><u>" . $precomment . "</u></div>";
         }
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;

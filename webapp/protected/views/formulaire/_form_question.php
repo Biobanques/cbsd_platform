@@ -22,7 +22,7 @@
         </div>
         <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'label'); ?>
-            <?php echo $form->textField($model, 'label', array('size' => 5, 'maxlength' => 45)); ?>
+            <?php echo $form->textField($model, 'label', array('size' => 5, 'maxlength' => 500)); ?>
             <?php echo $form->error($model, 'label'); ?>
 
         </div>
@@ -63,6 +63,14 @@
             <label><?php echo $model->getAttributeLabel('values'); ?> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/tooltip.jpg" alt="alternative text" title="Le séparateur de valeurs est la virgule. (Exemple: Oui,Non,Ne sais pas)"/></label>
             <?php echo $form->textField($model, 'values', array('size' => 5)); ?>
             <?php echo $form->error($model, 'values'); ?>
+        </div>
+    </div>
+    
+    <div>
+        <div class="col-lg-6">
+            <?php echo $form->labelEx($model, 'help'); ?>
+            <?php echo $form->textField($model, 'help'); ?>
+            <?php echo $form->error($model, 'help'); ?>
         </div>
     </div>
 
