@@ -114,6 +114,16 @@ class QuestionForm extends CFormModel
         //$res ['image'] = "image";
         return $res;
     }
+    
+    /**
+     * get an array of types of questions possibles
+     */
+    public function getArrayStyles() {
+        $res = array();
+        $res ['float:left'] = "Alignement à gauche";
+        $res ['float:right'] = "Alignement à droite";
+        return $res;
+    }
 
     public function getArrayGroups() {
         return $this->questionnaire->getArrayGroups();

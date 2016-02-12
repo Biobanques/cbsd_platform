@@ -12,7 +12,6 @@
     <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
     <p>*L'id doit être unique parmi les questions. Il permet de gérer des mécanismes liées à l'ordonnancement des questions et aux traitements de validation.</p>
     <p>*Les valeurs sont utilisées pour les listes (radio bouton et listes déroulantes). Le séparateur de valeurs est la virgule.</p>
-    <p>*Le style permet d'affecter un style css à la question. Par exemple, si vous souhaitez aligner votre question à droite de la précédente , saisissez dans le champ le texte en gras: <b>float:right</b></p>
 
     <div >
         <div class="col-lg-6">
@@ -37,7 +36,7 @@
     <div>
         <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'style'); ?>
-            <?php echo $form->textField($model, 'style', array('size' => 5, 'maxlength' => 45)); ?>
+            <?php echo $form->dropDownList($model, 'style', $model->getArrayStyles(), array('prompt' => '----')); ?>
             <?php echo $form->error($model, 'style'); ?>
         </div>
         <div class="col-lg-6">
