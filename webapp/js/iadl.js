@@ -1,6 +1,6 @@
 var iadl_score = [0, 0, 0, 0]; // [telephone, transport, médicaments, argent]
 
-var tabs = {
+var tabs_iadl = {
     telephone: 'iadl_iadl1',
     transport: 'iadl_iadl2',
     medicaments: 'iadl_iadl3',
@@ -12,25 +12,25 @@ var tabs = {
  * Le score est mis à jour automatiquement en fonction des choix sélectionnés dans les listes déroulantes.
  */
 $(document).change(function () {
-    getValue();
+    getValueIadl();
     iadlScore(iadl_score);
 });
 
-function getValue() {
-    var telephone = document.getElementById(tabs.telephone);
-    var transport = document.getElementById(tabs.transport);
-    var medicaments = document.getElementById(tabs.medicaments);
-    var argent = document.getElementById(tabs.argent);
+function getValueIadl() {
+    var telephone = document.getElementById(tabs_iadl.telephone);
+    var transport = document.getElementById(tabs_iadl.transport);
+    var medicaments = document.getElementById(tabs_iadl.medicaments);
+    var argent = document.getElementById(tabs_iadl.argent);
 
-    iadl_score = getAnswer(telephone.options[telephone.selectedIndex].value, tabs.telephone);
-    iadl_score = getAnswer(transport.options[transport.selectedIndex].value, tabs.transport);
-    iadl_score = getAnswer(medicaments.options[medicaments.selectedIndex].value, tabs.medicaments);
-    iadl_score = getAnswer(argent.options[argent.selectedIndex].value, tabs.argent);
+    iadl_score = getAnswerIadl(telephone.options[telephone.selectedIndex].value, tabs_iadl.telephone);
+    iadl_score = getAnswerIadl(transport.options[transport.selectedIndex].value, tabs_iadl.transport);
+    iadl_score = getAnswerIadl(medicaments.options[medicaments.selectedIndex].value, tabs_iadl.medicaments);
+    iadl_score = getAnswerIadl(argent.options[argent.selectedIndex].value, tabs_iadl.argent);
 
     return iadl_score;
 }
 
-function getAnswer(value, id) {
+function getAnswerIadl(value, id) {
     var answer;
     var answers = {
         "Se sert normalement du téléphone": function () {
@@ -63,16 +63,16 @@ function getAnswer(value, id) {
         },
         "default": function () {
             switch (id) {
-                case tabs.telephone:
+                case tabs_iadl.telephone:
                     iadl_score[0] = 0;
                     break;
-                case tabs.transport:
+                case tabs_iadl.transport:
                     iadl_score[1] = 0;
                     break;
-                case tabs.medicaments:
+                case tabs_iadl.medicaments:
                     iadl_score[2] = 0;
                     break;
-                case tabs.argent:
+                case tabs_iadl.argent:
                     iadl_score[3] = 0;
                     break;
             }
@@ -87,7 +87,7 @@ function getAnswer(value, id) {
  * Calcule le score IADL en fonction des choix sélectionnés dans les listes déroulantes.
  */
 function iadlScore(score) {
-    document.getElementById(tabs.score).value = score.reduce(function (valeurPrecedente, valeurCourante) {
+    document.getElementById(tabs_iadl.score).value = score.reduce(function (valeurPrecedente, valeurCourante) {
         return valeurPrecedente + valeurCourante;
     });
 }

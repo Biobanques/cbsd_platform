@@ -1,5 +1,7 @@
 <?php
 
+// Script de test/demo onglet "Gène" dans le formulaire génétique
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/gene.js', CClientScript::POS_END);
 // Le système de calcul de score IADL et ADL applicable uniquement lors de la création et de la mise à jour d'une fiche
 if (Yii::app()->controller->id == "questionnaire" || Yii::app()->controller->id == "answer") {
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/iadl.js', CClientScript::POS_END);

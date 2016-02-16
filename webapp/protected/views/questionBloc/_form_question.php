@@ -36,13 +36,25 @@
     <div>
         <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'style'); ?>
-            <?php echo $form->dropDownList($model, 'style', $model->getArrayStyles(), array('prompt' => '----')); ?>
+            <?php echo $form->dropDownList($model, 'style', $model->getArrayStyles()); ?>
             <?php echo $form->error($model, 'style'); ?>
         </div>
         <div class="col-lg-6">
             <?php echo $form->labelEx($model, 'values'); ?>
             <?php echo $form->textField($model, 'values', array('size' => 5)); ?>
             <?php echo $form->error($model, 'values'); ?>
+        </div>
+    </div>
+    <div>
+        <div class="col-lg-6">
+            <?php echo $form->labelEx($model, 'precomment'); ?>
+            <?php echo $form->textField($model, 'precomment'); ?>
+            <?php echo $form->error($model, 'precomment'); ?>
+        </div>
+        <div class="col-lg-6">
+            <?php echo $form->labelEx($model, 'help'); ?>
+            <?php echo $form->textField($model, 'help'); ?>
+            <?php echo $form->error($model, 'help'); ?>
         </div>
     </div>
     <div class="buttons">

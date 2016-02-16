@@ -102,6 +102,7 @@ class QuestionBlocController extends Controller {
 
         if (isset($_POST['QuestionForm'])) {
             $questionModel->attributes = $_POST['QuestionForm'];
+            var_dump($questionModel->attributes);
             if ($questionModel->save()) {
                 $idQuestion = (string) $questionModel->_id;
                 $model->questions[] = $idQuestion;
@@ -121,6 +122,7 @@ class QuestionBlocController extends Controller {
             foreach ($model->questions as $question => $value) {
                 $currentQuestion = Question::model()->findByPk(new MongoId($value));
                 $currentQuestion->label_fr = $currentQuestion->label;
+                $currentQuestion->precomment_fr = $currentQuestion->precomment;
                 $questionGroup->questions[] = $currentQuestion;
             }
         }
@@ -228,6 +230,7 @@ class QuestionBlocController extends Controller {
     }
 
     public function saveBlocNewQuestion($bloc, $questionForm) {
+        var_dump($bloc);
         $cquestion = new Question;
         $cquestion->setAttributesByQuestionForm($questionForm);
         $bloc->questions = $questionForm->id;

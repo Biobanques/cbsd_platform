@@ -1,6 +1,6 @@
 var adl_score = [0, 0, 0, 0, 0, 0]; // [soins, habillage, toilettes, déplacements, continence, alimentation]
 
-var tabs = {
+var tabs_adl = {
     soins: 'adl_adl1',
     habillage: 'adl_adl2',
     toilettes: 'adl_adl3',
@@ -14,24 +14,24 @@ var tabs = {
  * Le score est mis à jour automatiquement en fonction des choix sélectionnés dans les listes déroulantes.
  */
 $(document).change(function () {
-    getValue();
+    getValueAdl();
     adlScore(adl_score);
 });
 
-function getValue() {
-    var soins = document.getElementById(tabs.soins);
-    var habillage = document.getElementById(tabs.habillage);
-    var toilettes = document.getElementById(tabs.toilettes);
-    var deplacements = document.getElementById(tabs.deplacements);
-    var continence = document.getElementById(tabs.continence);
-    var alimentation = document.getElementById(tabs.alimentation);
+function getValueAdl() {
+    var soins = document.getElementById(tabs_adl.soins);
+    var habillage = document.getElementById(tabs_adl.habillage);
+    var toilettes = document.getElementById(tabs_adl.toilettes);
+    var deplacements = document.getElementById(tabs_adl.deplacements);
+    var continence = document.getElementById(tabs_adl.continence);
+    var alimentation = document.getElementById(tabs_adl.alimentation);
 
-    adl_score = getAnswer(soins.options[soins.selectedIndex].value, tabs.soins);
-    adl_score = getAnswer(habillage.options[habillage.selectedIndex].value, tabs.habillage);
-    adl_score = getAnswer(toilettes.options[toilettes.selectedIndex].value, tabs.toilettes);
-    adl_score = getAnswer(deplacements.options[deplacements.selectedIndex].value, tabs.deplacements);
-    adl_score = getAnswer(continence.options[continence.selectedIndex].value, tabs.continence);
-    adl_score = getAnswer(alimentation.options[alimentation.selectedIndex].value, tabs.alimentation);
+    adl_score = getAnswer(soins.options[soins.selectedIndex].value, tabs_adl.soins);
+    adl_score = getAnswer(habillage.options[habillage.selectedIndex].value, tabs_adl.habillage);
+    adl_score = getAnswer(toilettes.options[toilettes.selectedIndex].value, tabs_adl.toilettes);
+    adl_score = getAnswer(deplacements.options[deplacements.selectedIndex].value, tabs_adl.deplacements);
+    adl_score = getAnswer(continence.options[continence.selectedIndex].value, tabs_adl.continence);
+    adl_score = getAnswer(alimentation.options[alimentation.selectedIndex].value, tabs_adl.alimentation);
 
     return adl_score;
 }
@@ -73,22 +73,22 @@ function getAnswer(value, id) {
         },
         "default": function () {
             switch (id) {
-                case tabs.soins:
+                case tabs_adl.soins:
                     adl_score[0] = 0;
                     break;
-                case tabs.habillage:
+                case tabs_adl.habillage:
                     adl_score[1] = 0;
                     break;
-                case tabs.toilettes:
+                case tabs_adl.toilettes:
                     adl_score[2] = 0;
                     break;
-                case tabs.deplacements:
+                case tabs_adl.deplacements:
                     adl_score[3] = 0;
                     break;
-                case tabs.continence:
+                case tabs_adl.continence:
                     adl_score[3] = 0;
                     break;
-                case tabs.alimentation:
+                case tabs_adl.alimentation:
                     adl_score[3] = 0;
                     break;
             }
@@ -103,7 +103,7 @@ function getAnswer(value, id) {
  * Calcule le score ADL en fonction des choix sélectionnés dans les listes déroulantes.
  */
 function adlScore(score) {
-    document.getElementById(tabs.score).value = score.reduce(function (valeurPrecedente, valeurCourante) {
+    document.getElementById(tabs_adl.score).value = score.reduce(function (valeurPrecedente, valeurCourante) {
         return valeurPrecedente + valeurCourante;
     });
 }
