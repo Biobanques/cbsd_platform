@@ -93,8 +93,8 @@ class QuestionForm extends CFormModel
             'idQuestionGroup' => 'Onglet de questions',
             'style' => 'Alignement de la question',
             'values' => 'Valeurs',
-            'precomment' => 'Commentaire',
-            'precomment_fr' => 'Commentaire',
+            'precomment' => 'Pour ajouter un titre au dessus de la question',
+            'precomment_fr' => 'Pour ajouter un titre au dessus de la question',
             'help' => 'Info-bulle'
         );
     }

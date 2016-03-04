@@ -171,20 +171,25 @@ class AnswerController extends Controller
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        $count = 0;
         if (isset($_POST['Questionnaire'])) {
             $model->last_updated = new MongoDate();
             $flagNoInputToSave = true;
             foreach ($model->answers_group as $answer_group) {
                 foreach ($answer_group->answers as $answerQuestion) {
                     $input = $answer_group->id . "_" . $answerQuestion->id;
+                    if ($answer_group->id == "gene")
+                        $count++;
                     if (isset($_POST['Questionnaire'][$input])) {
                         $flagNoInputToSave = false;
                         $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
                     }
                 }
-            }if ($flagNoInputToSave == false) {
+            }
+            if ($flagNoInputToSave == false) {
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardé.");
+                    echo "<br><br><br><h1>" . $count/4 . "</h1>";
                     $this->redirect(array('answer/affichepatient'));
                 } else {
                     Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
@@ -193,6 +198,9 @@ class AnswerController extends Controller
             } else {
                 Yii::app()->user->setFlash('error', "Document not saved. No Input to save.");
             }
+        }
+        if (isset($_POST['id'])) {
+            // TODO
         }
         if (isset($_SESSION['datapatient'])) {
             $patient = $_SESSION['datapatient'];

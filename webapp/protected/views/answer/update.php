@@ -12,7 +12,7 @@
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
             ?>
         </tr>
-    </table>  
+    </table>
 </div>
 
 <hr />
@@ -22,7 +22,7 @@
 
 <hr />
 
-    <?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -40,11 +40,20 @@
     <div style="display:inline; margin-left: 35%; width: 100px; ">
         <?php
         echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-primary', 'style' => 'margin-top:8px;padding-bottom:23px;'));
-        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: 3px; margin-left:20px;'));
+        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: 2px; margin-left:20px;'));
+        echo CHtml::ajaxSubmitButton('Ajouter un gène', $this->createUrl('update', array('id' => $model->_id)), array(
+            'type' => 'POST',
+            'data' => array('id' => $model->_id),
+            'success' => 'js:function(data){}',
+            'error' => 'js:function(xhr, status, error){
+                            alert(xhr.responseText);}',
+                ), array('class' => 'btn btn-primary', 'style' => 'margin-top: 8px; margin-left:20px;padding-bottom:25px;')
+        );
         ?>
     </div>
-    <?php
-    $this->endWidget();
-    ?>
+        <?php
+        $this->endWidget();
+        ?>
 
 </div>
+
