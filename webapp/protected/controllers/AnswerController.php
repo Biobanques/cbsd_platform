@@ -1,7 +1,7 @@
 <?php
 
-class AnswerController extends Controller
-{
+class AnswerController extends Controller {
+
     /**
      *  NB : boostrap theme need this column2 layout
      *
@@ -171,36 +171,26 @@ class AnswerController extends Controller
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        $count = 0;
+
         if (isset($_POST['Questionnaire'])) {
             $model->last_updated = new MongoDate();
             $flagNoInputToSave = true;
             foreach ($model->answers_group as $answer_group) {
                 foreach ($answer_group->answers as $answerQuestion) {
                     $input = $answer_group->id . "_" . $answerQuestion->id;
-                    if ($answer_group->id == "gene")
-                        $count++;
                     if (isset($_POST['Questionnaire'][$input])) {
                         $flagNoInputToSave = false;
                         $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
                     }
                 }
             }
-            if ($flagNoInputToSave == false) {
-                if ($model->save()) {
-                    Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardé.");
-                    echo "<br><br><br><h1>" . $count / 4 . "</h1>";
-                    $this->redirect(array('answer/affichepatient'));
-                } else {
-                    Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
-                    Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
-                }
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardé.");
+                $this->redirect(array('answer/affichepatient'));
             } else {
-                Yii::app()->user->setFlash('error', "Document not saved. No Input to save.");
+                Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
+                Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
             }
-        }
-        if (isset($_POST['id'])) {
-            // TODO
         }
         if (isset($_SESSION['datapatient'])) {
             $patient = $_SESSION['datapatient'];
@@ -213,44 +203,85 @@ class AnswerController extends Controller
 
     public function actionUpdateAndAdd($id) {
         $model = $this->loadModel($id);
-        $count = 0;
+        $nb = 0;
+        $nbMax = 0;
         if (isset($_POST['Questionnaire'])) {
             $model->last_updated = new MongoDate();
-            $flagNoInputToSave = true;
             foreach ($model->answers_group as $answer_group) {
                 foreach ($answer_group->answers as $answerQuestion) {
+                    $nb = preg_replace("/[^0-9]/", "", $answerQuestion->id);
+                    if ($nbMax < $nb) {
+                        $nbMax = $nb;
+                    }
                     $input = $answer_group->id . "_" . $answerQuestion->id;
-                    if ($answer_group->id == "gene")
-                        $count++;
                     if (isset($_POST['Questionnaire'][$input])) {
-                        $flagNoInputToSave = false;
                         $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
                     }
                 }
             }
-            if ($flagNoInputToSave == false) {
-                if ($model->save()) {
-                    Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardé.");
-                    echo "<br><br><br><h1>" . $count / 4 . "</h1>";
-                    $this->redirect(array('answer/affichepatient'));
-                } else {
-                    Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
-                    Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+            $nbMax++;
+            $gene = new AnswerQuestion;
+            $gene->id = "gene" . $nbMax;
+            $gene->label = "Nom du gène";
+            $gene->label_fr = "Nom du gène";
+            $gene->type = "input";
+            $gene->style = "";
+            $gene->values = "";
+            $gene->values_fr = "";
+            $gene->answer = "";
+            $gene->precomment = "";
+            $gene->precomment_fr = "";
+
+            $analyse = new AnswerQuestion;
+            $analyse->id = "analyse" . $nbMax;
+            $analyse->label = "Analysé";
+            $analyse->label_fr = "Analysé";
+            $analyse->type = "radio";
+            $analyse->style = "float:right";
+            $analyse->values = "Oui,Non";
+            $analyse->values_fr = "";
+            $analyse->answer = "";
+            $analyse->precomment = "";
+            $analyse->precomment_fr = "";
+
+            $mutation = new AnswerQuestion;
+            $mutation->id = "mutation" . $nbMax;
+            $mutation->label = "Mutation(s)";
+            $mutation->label_fr = "Mutation(s)";
+            $mutation->type = "input";
+            $mutation->style = "";
+            $mutation->values = "";
+            $mutation->values_fr = "";
+            $mutation->answer = "";
+            $mutation->precomment = "";
+            $mutation->precomment_fr = "";
+
+            $comment = new AnswerQuestion;
+            $comment->id = "comment" . $nbMax;
+            $comment->label = "Commentaire";
+            $comment->label_fr = "Commentaire";
+            $comment->type = "input";
+            $comment->style = "float:right";
+            $comment->values = "";
+            $comment->values_fr = "";
+            $comment->answer = "";
+            $comment->precomment = "";
+            $comment->precomment_fr = "";
+            
+            foreach ($model->answers_group as $answer_group) {
+                if ($answer_group->id == "gene") {
+                    $answer_group->answers[] = $gene;
+                    $answer_group->answers[] = $analyse;
+                    $answer_group->answers[] = $mutation;
+                    $answer_group->answers[] = $comment;
                 }
-            } else {
-                Yii::app()->user->setFlash('error', "Document not saved. No Input to save.");
             }
-            /**
-             * Ici on ajoute les nouveaux attributs
-             */
-            /*
-             * Ici tu dois juste ajouter gene, mutation, etc à $model (dans le bon sous objet / bonne array
-             *
-             *
-             */
-        }
-        if (isset($_POST['id'])) {
-            // TODO
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', "Le gène a bien été ajouté à la fiche.");
+            } else {
+                Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
+                Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+            }
         }
         if (isset($_SESSION['datapatient'])) {
             $patient = $_SESSION['datapatient'];

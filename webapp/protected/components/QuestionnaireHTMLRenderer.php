@@ -1,6 +1,6 @@
 <?php
 
-// Script de test/demo onglet "Gène" dans le formulaire génétique
+// Ajout de gène dans le formulaire génétique
 if (Yii::app()->controller->id == "questionnaire") {
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/questionnaire_gene.js', CClientScript::POS_END);
 }

@@ -4,7 +4,6 @@
 */
 
 $(document).ready(function () {
-    // Create
     $("input:radio").each(function () {
         var name = $(this).attr("name");
         var donnees = name.match(/\[(.*?)\]/ig);
@@ -14,7 +13,7 @@ $(document).ready(function () {
         $('#'+mutation+'').val("Pas de mutation");
         document.getElementById(''+mutation+'').disabled = true;
         $('#questionnaire-form').change(function(){
-            if ($('input[type=radio][name="Questionnaire['+d+']"]:nth(1):checked', '#questionnaire-form').val() == "Non") {
+            if ($('input[type=radio][name="Questionnaire['+d+']"]:nth(1):checked').val() == "Non") {
             $('#'+mutation+'').val("Pas de mutation");
             document.getElementById(''+mutation+'').disabled = true;
         } else {

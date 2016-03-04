@@ -41,19 +41,21 @@
         <?php
         echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-primary', 'style' => 'margin-top:8px;padding-bottom:23px;'));
         echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: 2px; margin-left:20px;'));
-        echo CHtml::ajaxSubmitButton('Ajouter un gène', $this->createUrl('update', array('id' => $model->_id)), array(
+        echo CHtml::ajaxSubmitButton('Ajouter un gène', $this->createUrl('updateandadd', array('id' => $model->_id)), array(
             'type' => 'POST',
-            'data' => array('id' => $model->_id),
-            'success' => 'js:function(data){}',
+            'success' => 'js:function(data){'
+            . 'div_content = $(data).find("#questionnaire-form");'
+            . '$("#questionnaire-form").html(div_content)'
+            . '}',
             'error' => 'js:function(xhr, status, error){
                             alert(xhr.responseText);}',
                 ), array('class' => 'btn btn-primary', 'style' => 'margin-top: 8px; margin-left:20px;padding-bottom:25px;')
         );
         ?>
     </div>
-        <?php
-        $this->endWidget();
-        ?>
+    <?php
+    $this->endWidget();
+    ?>
 
 </div>
 
