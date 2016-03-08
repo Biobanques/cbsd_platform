@@ -16,7 +16,7 @@ class WebUser extends CWebUser {
         $model = User::model()->findByPk(new MongoId(Yii::app()->user->id));
         return $model->nom;
     }
-    
+
     /**
      * return user first name
      * @return first name
@@ -25,7 +25,7 @@ class WebUser extends CWebUser {
         $model = User::model()->findByPk(new MongoId(Yii::app()->user->id));
         return $model->prenom;
     }
-    
+
     /**
      * set the admin value
      * @param boolean $val
@@ -78,6 +78,7 @@ class WebUser extends CWebUser {
         $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
         return $user->profil;
     }
+
     /**
      * profils dans l'ordre par défaut : neuropathologiste, geneticien, clinicien, chercheur
      * @return active profil
@@ -85,7 +86,7 @@ class WebUser extends CWebUser {
     public function getActiveProfil() {
         return $this->getState('activeProfil');
     }
-    
+
     public function setActifProfil($activeProfil) {
         $this->setState('activeProfil', $activeProfil);
     }
@@ -99,7 +100,7 @@ class WebUser extends CWebUser {
         }
         $this->setState('activeProfil', $this->getState("defaultProfil"));
     }
-    
+
     /**
      * ajouter un nouveau profil lors de l'inscription de l'utilisateur connecté 
      * @return array
@@ -134,7 +135,7 @@ class WebUser extends CWebUser {
         }
         return false;
     }
-    
+
     /**
      * affiche l'item "update" qui dépend du profil de l'utilisateur et de ses droits sur une fiche
      * @return boolean
@@ -156,7 +157,7 @@ class WebUser extends CWebUser {
         }
         return false;
     }
-    
+
     /**
      * affiche l'item "delete" qui dépend du profil de l'utilisateur et de ses droits sur une fiche 
      * @return boolean
@@ -182,7 +183,7 @@ class WebUser extends CWebUser {
     /**
      * Droit "créer une fiche" qui dépend du profil de l'utilisateur et de ses droits sur une fiche 
      * @return boolean
-    */
+     */
     public function isAuthorizedCreate($profil, $fiche) {
         $criteria = new EMongoCriteria();
         $criteria->profil = $profil;
@@ -200,16 +201,18 @@ class WebUser extends CWebUser {
         }
         return false;
     }
-    
+
     /**
      * Droit d'accès fonctionnalité de recherche des fiches 
      * @return boolean
-    */
+     */
     public function isAuthorized($profil, $link) {
         if ($profil == "clinicien" && $link == "rechercheFiche") {
             return false;
         } else
             return true;
     }
+
 }
+
 ?>

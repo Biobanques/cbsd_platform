@@ -146,11 +146,11 @@ class AnswerPDFRenderer {
         if ($answer->style != "float:right") {
             $pdf->Ln(11);
         }
-        $pdf->MultiCell(55, 10, $label, 1, 'L', 1, 0, '', '', true,0,false,true,0,'T',true);
+        $pdf->MultiCell(55, 10, $label, 1, 'L', 1, 0, '', '', true, 0, false, true, 0, 'T', true);
         //affichage de l input selon son type
         $id = $idanswergroup . "_" . $answer->id;
         if ($answer->type == "input" || $answer->type == "expression" || $answer->type == "date") {
-            $pdf->MultiCell(120, 10, $answer->answer, 1, 'L', 0, 0, '', '', true,0,false,true,0,'T',true);   
+            $pdf->MultiCell(120, 10, $answer->answer, 1, 'L', 0, 0, '', '', true, 0, false, true, 0, 'T', true);
         }
         if ($answer->type == "radio") {
             if ($lang == "fr" && $answer->values_fr != "") {
@@ -201,10 +201,10 @@ class AnswerPDFRenderer {
             $pdf->Ln(5);
             $pdf->SetFont('helvetica', 'I', 10);
             $pdf->MultiCell(55, 5, ">>Valeurs possibles:", 1, 'R', 1, 0, '', '', true);
-           $pdf->MultiCell(120, 5, "", 0, 'R', 0, 1, '', '', true);
+            $pdf->MultiCell(120, 5, "", 0, 'R', 0, 1, '', '', true);
             foreach ($arvalue as $value) {
                 $pdf->MultiCell(55, 5, "", 0, 'L', 0, 0, '', '', true);
-                $pdf->MultiCell(120, 5, $value, 'LB', 'R', 0, 1, '', '', true,1);
+                $pdf->MultiCell(120, 5, $value, 'LB', 'R', 0, 1, '', '', true, 1);
             }
             $pdf->SetFont('helvetica', '', 12);
             //the combo box doesn t work on chrome, foxit, but works on acrobat reader, aperçu ( mac)

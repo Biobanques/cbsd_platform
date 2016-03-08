@@ -5,18 +5,20 @@
  * @author matthieu
  *
  */
-class QuestionGroup extends EMongoEmbeddedDocument
-{
+class QuestionGroup extends EMongoEmbeddedDocument {
+
     public $questionnaire;
     public $id;
     public $title;
     public $title_fr;
     public $questions;
+
     /**
      * parent group if setted.
      * @var type
      */
     public $parent_group;
+
     /**
      * display rule
      * condition to display the question group
@@ -68,7 +70,19 @@ class QuestionGroup extends EMongoEmbeddedDocument
      * make the javascript display rule.
      */
     public function makeDisplayRule() {
+        
+    }
 
+    /**
+     * copy attributes of questionBlocForm and questionBloc to QuestionGroup.
+     * @param type
+     */
+    public function copy($questionBlocForm, $questionBloc) {
+        $this->id = $questionBlocForm->id;
+        $this->title = $questionBloc->title;
+        $this->title_fr = $questionBloc->title;
+        $this->parent_group = $questionBlocForm->parent_group;
+        $this->questions = array();
     }
 
     /**
@@ -93,7 +107,7 @@ class QuestionGroup extends EMongoEmbeddedDocument
     public function getOnglets() {
         return $this->questionnaire->getOnglets();
     }
-    
+
     public function validatewithId($form, $attributes = null, $clearErrors = true) {
         parent::validate($attributes, $clearErrors);
         foreach ($form->questions_group as $group) {

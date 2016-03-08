@@ -27,6 +27,7 @@
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'questionnaire-form',
+        'action'=>$this->createUrl('update', array('id' => $model->_id)),
         'enableAjaxValidation' => false,
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
     ));
@@ -56,6 +57,5 @@
     <?php
     $this->endWidget();
     ?>
-
 </div>
 

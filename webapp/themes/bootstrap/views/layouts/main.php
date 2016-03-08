@@ -4,6 +4,24 @@ if (!defined('Base'))
     define('Base', Yii::app()->request->baseUrl);
 if (!defined('BaseTheme'))
     define('BaseTheme', Yii::app()->theme->baseUrl);
+
+if (Yii::app()->controller->id == "questionnaire" || Yii::app()->controller->id == "answer") {
+    // Système de calcul de score IADL et ADL
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/iadl.js', CClientScript::POS_END);
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/adl.js', CClientScript::POS_END);
+    // Système de calcul de score pour le Stade de Braak
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/stade_de_braak.js', CClientScript::POS_END);
+    // Ajout de gène dans le formulaire génétique
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/gene.js', CClientScript::POS_END);
+}
+if (Yii::app()->controller->id == "user") {
+    // Afficher/cacher le champ "Adresse" ou "Centre de référence" lors de la création et la mise à jour de l'utilisateur
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/updateUserAdmin.js', CClientScript::POS_END);
+}
+if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id == "updatesubscribe") {
+    // Afficher/cacher le champ "Adresse" ou "Centre de référence" lors de l'ajout d'un nouveau profil
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/createUserSubscribe.js', CClientScript::POS_END);
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +41,7 @@ if (!defined('BaseTheme'))
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
             <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-    <?php Yii::app()->bootstrap->register(); ?>
+            <?php Yii::app()->bootstrap->register(); ?>
     </head>
 
     <?php
@@ -54,7 +72,7 @@ if (!defined('BaseTheme'))
         ));
     }
     ?>
-    
+
     <body>
         <div class="container" id="page">
 
@@ -74,7 +92,7 @@ if (!defined('BaseTheme'))
                 ),
             ));
             ?>
-<?php echo $content; ?>
+            <?php echo $content; ?>
 
             <div class="clear"></div>
             <div style="height:100px;"/>

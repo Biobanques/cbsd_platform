@@ -115,11 +115,7 @@ class FormulaireController extends Controller {
                 $questionBloc = QuestionBloc::model()->findByPk(new MongoId($questionBlocForm->title));
                 $questionBlocForm->title_fr = $questionBlocForm->title;
                 $computedGroup = new QuestionGroup;
-                $computedGroup->id = $questionBlocForm->id;
-                $computedGroup->title = $questionBloc->title;
-                $computedGroup->title_fr = $questionBloc->title;
-                $computedGroup->parent_group = $questionBlocForm->parent_group;
-                $computedGroup->questions = array();
+                $computedGroup->copy($questionBlocForm, $questionBloc);
 
                 if ($computedGroup->validate())
                     $model = $model->saveQuestionnaireNewGroup($computedGroup);
@@ -128,15 +124,7 @@ class FormulaireController extends Controller {
                     foreach ($questionBloc->questions as $question => $value) {
                         $currentQuestion = Question::model()->findByPk(new MongoId($value));
 
-                        $questionForm->label = $currentQuestion->label;
-                        $questionForm->type = $currentQuestion->type;
-                        $questionForm->style = $currentQuestion->style;
-                        $questionForm->values = $currentQuestion->values;
-                        $questionForm->precomment = $currentQuestion->precomment;
-                        $questionForm->precomment_fr = $currentQuestion->precomment_fr;
-                        $questionForm->help = $currentQuestion->help;
-                        $questionForm->id = $currentQuestion->id;
-                        $questionForm->idQuestionGroup = $computedGroup->id;
+                        $questionForm->copy($currentQuestion, $computedGroup);
 
                         $model->saveQuestionnaireNewQuestionBloc($questionForm);
                     }

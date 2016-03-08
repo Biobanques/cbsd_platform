@@ -184,12 +184,14 @@ class AnswerController extends Controller {
                     }
                 }
             }
-            if ($model->save()) {
-                Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardé.");
-                $this->redirect(array('answer/affichepatient'));
-            } else {
-                Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
-                Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+            if ($flagNoInputToSave == false) {
+                if ($model->save()) {
+                    Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardée.");
+                    $this->redirect(array('answer/affichepatient'));
+                } else {
+                    Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardée. Un problème est apparu.");
+                    Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+                }
             }
         }
         if (isset($_SESSION['datapatient'])) {
@@ -203,79 +205,35 @@ class AnswerController extends Controller {
 
     public function actionUpdateAndAdd($id) {
         $model = $this->loadModel($id);
-        $nb = 0;
         $nbMax = 0;
         if (isset($_POST['Questionnaire'])) {
             $model->last_updated = new MongoDate();
             foreach ($model->answers_group as $answer_group) {
                 foreach ($answer_group->answers as $answerQuestion) {
-                    $nb = preg_replace("/[^0-9]/", "", $answerQuestion->id);
-                    if ($nbMax < $nb) {
-                        $nbMax = $nb;
-                    }
+                    $nbMax = $model->getMaxIdGene($nbMax, $answerQuestion->id);
                     $input = $answer_group->id . "_" . $answerQuestion->id;
                     if (isset($_POST['Questionnaire'][$input])) {
                         $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
                     }
                 }
             }
+
             $nbMax++;
+
             $gene = new AnswerQuestion;
-            $gene->id = "gene" . $nbMax;
-            $gene->label = "Nom du gène";
-            $gene->label_fr = "Nom du gène";
-            $gene->type = "input";
-            $gene->style = "";
-            $gene->values = "";
-            $gene->values_fr = "";
-            $gene->answer = "";
-            $gene->precomment = "";
-            $gene->precomment_fr = "";
+            $model->addGene($nbMax, $gene);
 
             $analyse = new AnswerQuestion;
-            $analyse->id = "analyse" . $nbMax;
-            $analyse->label = "Analysé";
-            $analyse->label_fr = "Analysé";
-            $analyse->type = "radio";
-            $analyse->style = "float:right";
-            $analyse->values = "Oui,Non";
-            $analyse->values_fr = "";
-            $analyse->answer = "";
-            $analyse->precomment = "";
-            $analyse->precomment_fr = "";
+            $model->addAnalyse($nbMax, $analyse);
 
             $mutation = new AnswerQuestion;
-            $mutation->id = "mutation" . $nbMax;
-            $mutation->label = "Mutation(s)";
-            $mutation->label_fr = "Mutation(s)";
-            $mutation->type = "input";
-            $mutation->style = "";
-            $mutation->values = "";
-            $mutation->values_fr = "";
-            $mutation->answer = "";
-            $mutation->precomment = "";
-            $mutation->precomment_fr = "";
+            $model->addMutation($nbMax, $mutation);
 
             $comment = new AnswerQuestion;
-            $comment->id = "comment" . $nbMax;
-            $comment->label = "Commentaire";
-            $comment->label_fr = "Commentaire";
-            $comment->type = "input";
-            $comment->style = "float:right";
-            $comment->values = "";
-            $comment->values_fr = "";
-            $comment->answer = "";
-            $comment->precomment = "";
-            $comment->precomment_fr = "";
-            
-            foreach ($model->answers_group as $answer_group) {
-                if ($answer_group->id == "gene") {
-                    $answer_group->answers[] = $gene;
-                    $answer_group->answers[] = $analyse;
-                    $answer_group->answers[] = $mutation;
-                    $answer_group->answers[] = $comment;
-                }
-            }
+            $model->addComment($nbMax, $comment);
+
+            $model->addGeneToAnswers($model->answers_group, $gene, $analyse, $mutation, $comment);
+
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', "Le gène a bien été ajouté à la fiche.");
             } else {

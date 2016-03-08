@@ -6,8 +6,7 @@
  * and open the template in the editor.
  */
 
-class CommonTools
-{
+class CommonTools {
 
     public function wsGetPatient($patient) {
         try {
@@ -44,4 +43,5 @@ class CommonTools
     }
 
 }
+
 ?>

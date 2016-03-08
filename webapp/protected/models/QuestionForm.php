@@ -3,33 +3,38 @@
 /**
  * Formulaire pour enregistrer les valeurs saisies poru générer une question dans un formulaire
  */
-class QuestionForm extends CFormModel
-{
+class QuestionForm extends CFormModel {
+
     /**
      * working questionnaire.
      * set a the beginning
      * @var type
      */
     public $questionnaire;
+
     /**
      * identifiant unique de la question
      * @var type
      */
     public $id;
+
     /**
      * label de la question
      * @var type
      */
     public $label;
+
     /**
      * type de la question : input, textarea, selectlist
      * @var type
      */
     public $type;
+
     /**
      * group of the question
      */
     public $idQuestionGroup;
+
     /**
      * position of the question id of the question before
      */
@@ -39,28 +44,29 @@ class QuestionForm extends CFormModel
      * style can be a css line
      */
     public $style;
+
     /**
      * values if question type is radio or selec list
      * value sare separated by ;
      */
     public $values;
-    
+
     /**
      * comment on the top of the question
      * @var type
-     */  
+     */
     public $precomment;
-    
+
     /**
      * comment on the top of the question
      * @var type
-     */  
+     */
     public $precomment_fr;
-    
+
     /**
      * info-bulle
      * @var type
-     */  
+     */
     public $help;
 
     /**
@@ -114,7 +120,7 @@ class QuestionForm extends CFormModel
         //$res ['image'] = "image";
         return $res;
     }
-    
+
     /**
      * get an array of types of questions possibles
      */
@@ -127,6 +133,22 @@ class QuestionForm extends CFormModel
 
     public function getArrayGroups() {
         return $this->questionnaire->getArrayGroups();
+    }
+
+    /**
+     * copy attributes of questions to QuestionForm.
+     * @param type
+     */
+    public function copy($currentQuestion, $computedGroup) {
+        $this->label = $currentQuestion->label;
+        $this->type = $currentQuestion->type;
+        $this->style = $currentQuestion->style;
+        $this->values = $currentQuestion->values;
+        $this->precomment = $currentQuestion->precomment;
+        $this->precomment_fr = $currentQuestion->precomment_fr;
+        $this->help = $currentQuestion->help;
+        $this->id = $currentQuestion->id;
+        $this->idQuestionGroup = $computedGroup->id;
     }
 
 }

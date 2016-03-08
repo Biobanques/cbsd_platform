@@ -268,6 +268,88 @@ class Answer extends EMongoDocument {
     }
 
     /**
+     * retourne l'id max lors de l'ajout des gènes
+     * @return type
+     */
+    public function getMaxIdGene($nbMax, $answerQuestionId) {
+        $nb = preg_replace("/[^0-9]/", "", $answerQuestionId);
+        return ($nbMax < $nb) ? $nbMax = $nb : $nb;
+    }
+
+    /**
+     * add gene to AnswerQuestion model
+     * @return type
+     */
+    public function addGene($nbMax, $gene) {
+        $gene->id = "gene" . $nbMax;
+        $gene->label = "Nom du gène";
+        $gene->label_fr = "Nom du gène";
+        $gene->type = "input";
+        $gene->style = "";
+        $gene->values = "";
+        $gene->values_fr = "";
+        $gene->answer = "";
+        $gene->precomment = "";
+        $gene->precomment_fr = "";
+    }
+    
+    /**
+     * add analyse to AnswerQuestion model
+     * @return type
+     */
+    public function addAnalyse($nbMax, $analyse) {
+            $analyse->id = "analyse" . $nbMax;
+            $analyse->label = "Analysé";
+            $analyse->label_fr = "Analysé";
+            $analyse->type = "radio";
+            $analyse->style = "float:right;";
+            $analyse->values = "Oui,Non";
+            $analyse->values_fr = "";
+            $analyse->answer = "Non";
+            $analyse->precomment = "";
+            $analyse->precomment_fr = "";
+    }
+    
+    /**
+     * add mutation to AnswerQuestion model
+     * @return type
+     */
+    public function addMutation($nbMax, $mutation) {
+            $mutation->id = "mutation" . $nbMax;
+            $mutation->label = "Mutation(s)";
+            $mutation->label_fr = "Mutation(s)";
+            $mutation->type = "input";
+            $mutation->style = "";
+    }
+    
+    /**
+     * add comment to AnswerQuestion model
+     * @return type
+     */
+    public function addComment($nbMax, $comment) {
+            $comment->id = "comment" . $nbMax;
+            $comment->label = "Commentaire";
+            $comment->label_fr = "Commentaire";
+            $comment->type = "input";
+            $comment->style = "float:right;";
+    }
+
+    /**
+     * Ajoute les 4 champs "gene", "analyse", "mutation", "commentaire" dans les réponses
+     * @return type
+     */
+    public function addGeneToAnswers($answerGroup, $gene, $analyse, $mutation, $comment) {
+        foreach ($answerGroup as $answer_group) {
+            if ($answer_group->id == "gene") {
+                $answer_group->answers[] = $gene;
+                $answer_group->answers[] = $analyse;
+                $answer_group->answers[] = $mutation;
+                $answer_group->answers[] = $comment;
+            }
+        }
+    }
+
+    /**
      * retourne la liste de toutes les questions de toutes les fiches
      * @return type
      */

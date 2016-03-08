@@ -5,8 +5,7 @@
  * @author nmalservet
  *
  */
-class CommonMailer
-{
+class CommonMailer {
 
     /**
      * "send" an email. To do it, store an email into db and a crontask will pull emails to send them.
@@ -322,4 +321,5 @@ A bientôt sur cbsdplatform.
     }
 
 }
+
 ?>
