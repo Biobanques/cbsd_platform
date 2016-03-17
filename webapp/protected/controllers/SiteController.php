@@ -10,6 +10,16 @@ class SiteController extends Controller
     public $layout = '//layouts/column2';
 
     /**
+     * @return array action filters
+     */
+    public function filters() {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+            'postOnly + delete', // we only allow deletion via POST request
+        );
+    }
+    
+    /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
      *
@@ -38,7 +48,6 @@ class SiteController extends Controller
                 'allow',
                 'actions' => array(
                     'patient',
-                    'affichepatient',
                     'setActiveProfil',
                     'updateSubscribe'
                 ),
@@ -70,7 +79,7 @@ class SiteController extends Controller
      * This is the action to handle external exceptions.
      */
     public function actionError() {
-        if ($error = Yii::app()->errorHandler->error) {
+        if ($error == Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
             else
