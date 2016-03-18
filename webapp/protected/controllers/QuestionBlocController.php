@@ -145,8 +145,7 @@ class QuestionBlocController extends Controller {
         $criteriaQuestion = new EMongoCriteria;
         $criteriaQuestion->_id = new MongoId($idQuestion);
         $question = Question::model()->find($criteriaQuestion);
-        $question->delete();
-        if ($question->save()) {
+        if ($question->delete()) {
             Yii::app()->user->setFlash('success', "La question a bien été supprimé.");
         } else {
             Yii::app()->user->setFlash('error', "La question n'a pas été supprimé. Un problème est apparu.");
