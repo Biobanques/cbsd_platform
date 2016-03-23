@@ -49,7 +49,7 @@ class CommonProperties
     /*
      * PATH data FileMaker XML
      */
-    public static $DATA_PATH = '';
+    public static $MASS_IMPORT_FOLDER = 'files/';
 
 
     /*
