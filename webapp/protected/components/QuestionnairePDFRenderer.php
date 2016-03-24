@@ -11,11 +11,13 @@
  * render to display elements of questionnaire
  * @author nicolas
  */
-class QuestionnairePDFRenderer {
+class QuestionnairePDFRenderer
+{
 
     public static $LINE_HEIGHT = 7;
 
-    public static function render($questionnaire) {
+    public static function render($questionnaire)
+    {
         require_once(Yii::getPathOfAlias('application.vendor') . '/tcpdf/tcpdf.php');
 // create new PDF document
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -28,8 +30,8 @@ class QuestionnairePDFRenderer {
 // set default header data
         $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 // set header and footer fonts
-        $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+        $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 // set default monospaced font
         $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 // set margins
@@ -37,7 +39,7 @@ class QuestionnairePDFRenderer {
         $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
         $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 // set auto page breaks
-        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
 
 // set image scale factor
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -92,7 +94,8 @@ class QuestionnairePDFRenderer {
      * used in plain page and tab page
      * @return string
      */
-    public function renderContributors($pdf, $contributors) {
+    public function renderContributors($pdf, $contributors)
+    {
         $pdf->AddPage();
         $pdf->Bookmark('Contributeurs', 0, 0, '', 'B', array(0, 64, 128));
         $pdf->Cell(0, 5, 'Contributors / Contributeurs', 0, 1, 'C');
@@ -104,7 +107,8 @@ class QuestionnairePDFRenderer {
     /**
      * render in xhtml the questionnaire to the pdf output
      */
-    public static function renderPDF($pdf, $questionnaire, $lang) {
+    public static function renderPDF($pdf, $questionnaire, $lang)
+    {
         foreach ($questionnaire->questions_group as $question_group) {
             //$pdf->AddPage();
             if ($question_group->parent_group == "") {
@@ -126,7 +130,8 @@ class QuestionnairePDFRenderer {
      * @param type $isAnswered
      * @return string
      */
-    public function renderQuestionGroupPDF($pdf, $questionnaire, $group, $lang, $isAnswered) {
+    public function renderQuestionGroupPDF($pdf, $questionnaire, $group, $lang, $isAnswered)
+    {
         $pdf->Ln(10);
         //en par defaut
         $title = $group->title;
@@ -147,10 +152,11 @@ class QuestionnairePDFRenderer {
             }
         }
         //add question groups that have parents for this group
-        if ($isAnswered)
+        if ($isAnswered) {
             $groups = $questionnaire->answers_group;
-        else
+        } else {
             $groups = $questionnaire->questions_group;
+        }
         foreach ($groups as $qg) {
             if ($qg->parent_group == $group->id) {
                 $pdf = QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf, $questionnaire, $qg, $lang, $isAnswered);
@@ -163,7 +169,8 @@ class QuestionnairePDFRenderer {
      * render html the current question.
      */
 
-    public function renderQuestionPDF($pdf, $idquestiongroup, $question, $lang, $isAnswered) {
+    public function renderQuestionPDF($pdf, $idquestiongroup, $question, $lang, $isAnswered)
+    {
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
         if ($lang == "fr") {
@@ -180,8 +187,9 @@ class QuestionnairePDFRenderer {
             //on coupe la chaine en mots
             //$pdf->Cell(50, 5, substr($label, 0, 25).".");
             $pdf->writeHTMLCell(50, 10, '', '', $label, 0, 0, 0, true, '', true);
-        } else
+        } else {
             $pdf->Cell(50, 5, $label);
+        }
         //affichage de l input selon son type
         $id = $idquestiongroup . "_" . $question->id;
         if ($question->type == "input" || $question->type == "expression" || $question->type == "date") {
@@ -260,5 +268,4 @@ class QuestionnairePDFRenderer {
         }
         return $pdf;
     }
-
 }

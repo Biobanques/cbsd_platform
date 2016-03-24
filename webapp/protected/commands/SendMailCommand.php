@@ -7,14 +7,16 @@
  * exemple POUR AUTOMATISER CET ENVOI :
  * >crontab -e
  * >* * * * * /Volumes/antares/NetBeansProjects/cbsd_platform/webapp/protected/yiic sendmail
- * //ancienne methoide longue avec php car block le thread courant si serveur smtp ne repond pas : mail($model->emailto, $model->subject, $model->body,$model->headers);
+ * //ancienne methode longue avec php car block le thread courant si serveur smtp ne repond pas : 
+ * mail($model->emailto, $model->subject, $model->body,$model->headers);
  * @author nicolas
  *
  */
 class SendMailCommand extends CConsoleCommand
 {
 
-    public function run($args) {
+    public function run($args)
+    {
         Yii::import('application.extensions.phpmailer.JPhpMailer');
 
         if (Yii::app()->params['mailSystemActif'] == true) {
@@ -33,15 +35,14 @@ class SendMailCommand extends CConsoleCommand
                 $mail->MsgHTML($model->body);
                 $mail->AddAddress($model->emailto, $model->emailto);
                 $mail->CharSet = 'UTF-8';
-                if ($mail->Send())
+                if ($mail->Send()) {
                     $model->delete();
-                else
+                } else {
                     print_r($mail->ErrorInfo);
+                }
             }
-        }else {
+        } else {
             echo 'Le système d\'envoi de mail n\'est pas activé';
         }
     }
-
 }
-?>

@@ -8,7 +8,6 @@
  */
 class HelpDivComponent
 {
-        
         public static function getHtml($uniqueId,$textLabel)
 	{
 		$html= "<script>function toggleHelp(eltId)

@@ -8,9 +8,11 @@
  * >crontab -e
  * >* * * * * /var/www/html/cbsd_platform/webapp/protected/yiic importpatient
  */
-class ImportPatientCommand extends CConsoleCommand {
+class ImportPatientCommand extends CConsoleCommand
+{
 
-    public function run($args) {
+    public function run($args)
+    {
         $folderSource = CommonProperties::$MASS_IMPORT_FOLDER;
         if (substr($folderSource, -1) != '/') {
             $folderSource.='/';
@@ -65,8 +67,9 @@ class ImportPatientCommand extends CConsoleCommand {
                         }
                         if ($this->emptyFieldExist($patient) != true) {
                             $patientest = CommonTools::wsGetPatient($patient);
-                            if ($patientest == 'NoPatient')
+                            if ($patientest === 'NoPatient') {
                                 $patient = CommonTools::wsAddPatient($patient);
+                            }
                         } else {
                             $this->writePatientsNotImported($patient, $file_pos);
                         }
@@ -82,7 +85,8 @@ class ImportPatientCommand extends CConsoleCommand {
      * Vérifie si un des champs "birthName", "useName", "firstName", "birthDate", "gender" est vide
      */
 
-    public function emptyFieldExist($patient) {
+    public function emptyFieldExist($patient)
+    {
         foreach ($patient as $field => $value) {
             if ($field != "id" && $field != "sourceId" && empty($value)) {
                 return true;
@@ -94,11 +98,9 @@ class ImportPatientCommand extends CConsoleCommand {
      * Ecrit dans un fichier les patients qui n'ont pas pu être importé ("A SIP item is missing in the file")
      */
 
-    public function writePatientsNotImported($patient, $importedFile) {
+    public function writePatientsNotImported($patient, $importedFile)
+    {
         $file = "not_imported/$importedFile.txt";
         file_put_contents($file, print_r($patient, true), FILE_APPEND);
     }
-
 }
-
-?>

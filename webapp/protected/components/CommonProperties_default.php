@@ -21,7 +21,7 @@ class CommonProperties
     
     /**
      * string that contains the name of the mongo database
-     * @var type 
+     * @var type
      */
     public static $DBNAME = 'cbsdplatformdb';
     /**
@@ -58,4 +58,5 @@ class CommonProperties
     public static $SIP_WSDL = 'http://sip.biobankhub.fr/index.php?r=webService/getWs';
     public static $SIP_LOGIN = 'cbsd_platform';
     public static $SIP_PASSWORD = 'cbsd_platform';
+    
 }

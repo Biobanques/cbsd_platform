@@ -14,15 +14,17 @@
 class GetProfil
 {
 
-    public static function getHTML() {
+    public static function getHTML()
+    {
         $profilsList = array();
 
         foreach (Yii::app()->user->getState('profil') as $profil) {
             $profilsList[$profil] = $profil;
         }
         //  if (!Yii::app()->user->isAdmin() && count(Yii::app()->user->getUserProfil()) < 4)
-        if (!Yii::app()->user->isAdmin() && array_merge($profilsList, array("administrateur" => "administrateur")) != User::model()->getArrayProfil())
+        if (!Yii::app()->user->isAdmin() && array_merge($profilsList, array("administrateur" => "administrateur")) != User::model()->getArrayProfil()) {
             $profilsList['newProfil'] = "Demander un nouveau profil";
+        }
         $controler = Yii::app()->getController()->getId();
         $action = Yii::app()->getController()->getAction()->getId();
         $html = CHtml::form(Yii::app()->createUrl("$controler/$action"), "POST", array('class' => "navbar-form pull-left"));
@@ -31,5 +33,4 @@ class GetProfil
         $html.= CHtml::endForm();
         return $html;
     }
-
 }

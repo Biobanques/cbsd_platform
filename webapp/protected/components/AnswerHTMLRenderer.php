@@ -11,13 +11,14 @@
  * render to display elements of questionnaire
  * @author nicolas
  */
-class AnswerHTMLRenderer {
-
+class AnswerHTMLRenderer
+{
     /**
      * render tab associated to each group for a questionnaire
      * if isAnswered is filled, we are in case of answer.
      */
-    public function renderTabbedGroup($questionnaire, $lang, $isAnswered) {
+    public function renderTabbedGroup($questionnaire, $lang, $isAnswered)
+    {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
         $firstTab = false;
@@ -32,8 +33,9 @@ class AnswerHTMLRenderer {
                     //par defaut lang = en
                     $title = $group->title;
                     if ($lang == "fr") {
-                        if (!empty($group->title_fr))
+                        if (!empty($group->title_fr)) {
                             $title = $group->title_fr;
+                        }
                     }
                     if ($lang == "both") {
                         $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
@@ -63,7 +65,8 @@ class AnswerHTMLRenderer {
      * @param type $isAnswered
      * @return string
      */
-    public function renderAnswerGroupHTML($answer, $group, $lang) {
+    public function renderAnswerGroupHTML($answer, $group, $lang)
+    {
         $result = "";
         //en par defaut
         $title = $group->title;
@@ -98,7 +101,8 @@ class AnswerHTMLRenderer {
      * render html the current question.
      */
 
-    public function renderAnswerHTML($idanswergroup, $answer, $lang) {
+    public function renderAnswerHTML($idanswergroup, $answer, $lang)
+    {
         $result = "";
         $style = "style=\"\"";
         if ($answer->style != "") {
@@ -208,7 +212,8 @@ class AnswerHTMLRenderer {
      * render tab associated to each group for a questionnaire in edit mode
      * if isAnswered is filled, we are in case of answer.
      */
-    public function renderTabbedGroupEditMode($questionnaire, $lang) {
+    public function renderTabbedGroupEditMode($questionnaire, $lang)
+    {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
         $firstTab = false;
@@ -219,8 +224,9 @@ class AnswerHTMLRenderer {
                     //par defaut lang = en
                     $title = $group->title;
                     if ($lang == "fr") {
-                        if (!empty($group->title_fr))
+                        if (!empty($group->title_fr)) {
                             $title = $group->title_fr;
+                        }
                     }
                     if ($lang == "both") {
                         $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
@@ -243,14 +249,14 @@ class AnswerHTMLRenderer {
     }
 
     /**
-     * 
      * @param type $questionnaire
      * @param type $group
      * @param type $lang
      * @param type $isAnswered
      * @return string
      */
-    public function renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang) {
+    public function renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang)
+    {
         $result = "";
         //en par defaut
         $title = $group->title;
@@ -291,7 +297,8 @@ class AnswerHTMLRenderer {
      * render html the current question.
      */
 
-    public function renderQuestionHTMLEditMode($idMongoQuestionnaire, $idquestiongroup, $question, $lang) {
+    public function renderQuestionHTMLEditMode($idMongoQuestionnaire, $idquestiongroup, $question, $lang)
+    {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "") {
@@ -391,5 +398,4 @@ class AnswerHTMLRenderer {
         $result.="</div>";
         return $result;
     }
-
 }

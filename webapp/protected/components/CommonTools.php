@@ -6,9 +6,11 @@
  * and open the template in the editor.
  */
 
-class CommonTools {
+class CommonTools
+{
 
-    public function wsGetPatient($patient) {
+    public function wsGetPatient($patient)
+    {
         try {
             $soapClient = new SoapClient(CommonProperties::$SIP_WSDL);
             $token = $soapClient->login(CommonProperties::$SIP_LOGIN, CommonProperties::$SIP_PASSWORD);
@@ -23,7 +25,8 @@ class CommonTools {
         }
     }
 
-    public function wsAddPatient($patient) {
+    public function wsAddPatient($patient)
+    {
         try {
             $soapClient = new SoapClient(CommonProperties::$SIP_WSDL);
             $token = $soapClient->login(CommonProperties::$SIP_LOGIN, CommonProperties::$SIP_PASSWORD);
@@ -38,10 +41,8 @@ class CommonTools {
         }
     }
 
-    public static function isInDevMode() {
+    public static function isInDevMode()
+    {
         return CommonProperties::$DEV_MODE;
     }
-
 }
-
-?>

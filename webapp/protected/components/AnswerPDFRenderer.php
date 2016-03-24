@@ -1,10 +1,11 @@
 <?php
 
-class AnswerPDFRenderer {
-
+class AnswerPDFRenderer
+{
     public static $LINE_HEIGHT = 7;
 
-    public static function renderAnswer($answer) {
+    public static function renderAnswer($answer)
+    {
         require_once(Yii::getPathOfAlias('application.vendor') . '/tcpdf/tcpdf.php');
 // create new PDF document
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -18,8 +19,8 @@ class AnswerPDFRenderer {
 // set default header data
         $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 // set header and footer fonts
-        $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+        $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 // set default monospaced font
         $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 // set margins
@@ -27,7 +28,7 @@ class AnswerPDFRenderer {
         $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
         $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 // set auto page breaks
-        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
 
 // set image scale factor
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -100,7 +101,8 @@ class AnswerPDFRenderer {
      * @param type $lang
      * @return string
      */
-    public function renderAnswerGroupPDF($pdf, $answer, $group, $lang) {
+    public function renderAnswerGroupPDF($pdf, $answer, $group, $lang)
+    {
         $pdf->Ln(10);
         //en par defaut
         $title = $group->title;
@@ -134,7 +136,8 @@ class AnswerPDFRenderer {
      * render html the current answer.
      */
 
-    public function renderAnswerPDF($pdf, $idanswergroup, $answer, $lang) {
+    public function renderAnswerPDF($pdf, $idanswergroup, $answer, $lang)
+    {
         //par defaut lang = enif ($lang == "en")
         $label = $answer->label;
         if ($lang == "fr") {
@@ -233,5 +236,4 @@ class AnswerPDFRenderer {
         $pdf->Ln(11);
         return $pdf;
     }
-
 }

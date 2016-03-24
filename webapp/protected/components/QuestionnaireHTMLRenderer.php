@@ -11,14 +11,16 @@
  * render to display elements of questionnaire
  * @author nicolas
  */
-class QuestionnaireHTMLRenderer {
+class QuestionnaireHTMLRenderer
+{
 
     /**
      * render contributors
      * used in plain page and tab page
      * @return string
      */
-    public function renderContributors($contributors) {
+    public function renderContributors($contributors)
+    {
         $result = "<div><div class=\"question_group\"><i>Contributors</i> / Contributeurs</div>";
         $result.="<div class=\"span5\">" . $contributors . "</div>";
         $result.="</div>";
@@ -29,7 +31,8 @@ class QuestionnaireHTMLRenderer {
      * render tab associated to each group for a questionnaire
      * if isAnswered is filled, we are in case of answer.
      */
-    public function renderTabbedGroup($questionnaire, $lang, $isAnswered) {
+    public function renderTabbedGroup($questionnaire, $lang, $isAnswered)
+    {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
         $firstTab = false;
@@ -44,8 +47,9 @@ class QuestionnaireHTMLRenderer {
                     //par defaut lang = en
                     $title = $group->title;
                     if ($lang == "fr") {
-                        if (!empty($group->title_fr))
+                        if (!empty($group->title_fr)) {
                             $title = $group->title_fr;
+                        }
                     }
                     if ($lang == "both") {
                         $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
@@ -75,7 +79,8 @@ class QuestionnaireHTMLRenderer {
      * @param type $isAnswered
      * @return string
      */
-    public function renderQuestionGroupHTML($questionnaire, $group, $lang, $isAnswered) {
+    public function renderQuestionGroupHTML($questionnaire, $group, $lang, $isAnswered)
+    {
         $result = "";
         //en par defaut
         $title = $group->title;
@@ -117,7 +122,8 @@ class QuestionnaireHTMLRenderer {
      * render html the current question.
      */
 
-    public function renderQuestionHTML($idquestiongroup, $question, $lang, $isAnswered) {
+    public function renderQuestionHTML($idquestiongroup, $question, $lang, $isAnswered)
+    {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "") {
@@ -157,10 +163,12 @@ class QuestionnaireHTMLRenderer {
         $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
         $valueInput = "";
         if (Yii::app()->controller->id != "formulaire") {
-            if ($question->id == "examdate")
+            if ($question->id == "examdate") {
                 $valueInput = date("d/m/Y");
-            if ($question->id == "doctorname")
+            }
+            if ($question->id == "doctorname") {
                 $valueInput = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
+            }
         }
         if ($isAnswered) {
             $valueInput = $question->answer;
@@ -241,7 +249,8 @@ class QuestionnaireHTMLRenderer {
      * render html the current question.
      */
 
-    public function renderQuestionForSearchHTML($question, $lang, $isAnswered) {
+    public function renderQuestionForSearchHTML($question, $lang, $isAnswered)
+    {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "" && $question->style != "") {
@@ -278,14 +287,15 @@ class QuestionnaireHTMLRenderer {
 
         $result.="<div class=\"question-input\">";
 
-
         $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
         $valueInput = "";
         if (Yii::app()->controller->id != "formulaire") {
-            if ($question->id == "examdate")
+            if ($question->id == "examdate") {
                 $valueInput = date("d/m/Y");
-            if ($question->id == "doctorname")
+            }
+            if ($question->id == "doctorname") {
                 $valueInput = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
+            }
         }
         if ($isAnswered) {
             $valueInput = $question->answer;
@@ -371,7 +381,8 @@ class QuestionnaireHTMLRenderer {
      * render tab associated to each group for a questionnaire in edit mode
      * if isAnswered is filled, we are in case of answer.
      */
-    public function renderTabbedGroupEditMode($questionnaire, $lang) {
+    public function renderTabbedGroupEditMode($questionnaire, $lang)
+    {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
         $firstTab = false;
@@ -382,8 +393,9 @@ class QuestionnaireHTMLRenderer {
                     //par defaut lang = en
                     $title = $group->title;
                     if ($lang == "fr") {
-                        if (!empty($group->title_fr))
+                        if (!empty($group->title_fr)) {
                             $title = $group->title_fr;
+                        }
                     }
                     if ($lang == "both") {
                         $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
@@ -413,7 +425,8 @@ class QuestionnaireHTMLRenderer {
      * @param type $isAnswered
      * @return string
      */
-    public function renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang) {
+    public function renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang)
+    {
         $result = "";
         //en par defaut
         $title = $group->title;
@@ -454,7 +467,8 @@ class QuestionnaireHTMLRenderer {
      * render html the current question.
      */
 
-    public function renderQuestionHTMLEditMode($idMongoQuestionnaire, $idquestiongroup, $question, $lang) {
+    public function renderQuestionHTMLEditMode($idMongoQuestionnaire, $idquestiongroup, $question, $lang)
+    {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "") {

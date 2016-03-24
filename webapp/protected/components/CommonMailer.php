@@ -5,7 +5,8 @@
  * @author nmalservet
  *
  */
-class CommonMailer {
+class CommonMailer
+{
 
     /**
      * "send" an email. To do it, store an email into db and a crontask will pull emails to send them.
@@ -14,10 +15,10 @@ class CommonMailer {
      * @param unknown $subject
      * @param unknown $body
      */
-    public static function sendMail($to, $subject, $body) {
-        $mailq = new mailqueue ();
+    public static function sendMail($to, $subject, $body)
+    {
+        $mailq = new mailqueue();
         try {
-
             $headers = 'MIME-Version: 1.0' . "\r\n";
             $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
             $headers .= 'From: ' . CommonProperties::$SMTP_SENDER_FROM_EMAIL . "\r\n" . 'Reply-To: ' . CommonProperties::$SMTP_SENDER_FROM_EMAIL . "\r\n" . 'X-Mailer: PHP/' . phpversion();
@@ -26,9 +27,9 @@ class CommonMailer {
             $mailq->subject = $subject;
             $mailq->body = $body;
             $mailq->headers = $headers;
-            if (!$mailq->validate())
+            if (!$mailq->validate()) {
                 Yii::log("pb sur validation mail", "error");
-
+            }
             return $mailq->save();
         } catch (Exception $e) {
             Yii::log("exception sur save mail" . print_r($mailq->errors), "error");
@@ -38,15 +39,17 @@ class CommonMailer {
     /**
      * envoi de mail inscription avec infos de connexion.
      */
-    public static function sendConfirmationAdminProfilUser($user) {
+    public static function sendConfirmationAdminProfilUser($user)
+    {
         $to = Yii::app()->params['adminEmail'];
         $subject = "Mise à jour d'un profil utilisateur sur cbsdplatform";
         $userDetails = '';
         foreach ($user->getAttributes() as $label => $value) {
             if ($label == "profil") {
                 $userDetails.="<li>" . $label . " : " . implode(", ", $value) . "</li>";
-            } else
+            } else {
                 $userDetails.="<li>$label : $value</li>";
+            }
         }
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
                 <?xml version=\"1.0\" encoding=\"utf-8\"?>
@@ -75,7 +78,8 @@ class CommonMailer {
      * @param type $nom
      * @param type $pass
      */
-    function sendMailInscriptionUser($to, $identifiant, $prenom, $nom, $pass) {
+    public static function sendMailInscriptionUser($to, $identifiant, $prenom, $nom, $pass)
+    {
         $subject = "Bienvenue sur cbsdplatform !";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\"><html><head>
                 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Message de cbsdplatform.fr</title>
@@ -123,10 +127,11 @@ class CommonMailer {
     /**
      * envoi de mail inscription avec le nouveau profil .
      */
-    public static function sendMailConfirmationProfilEmail($user, $profil, $complement) {
+    public static function sendMailConfirmationProfilEmail($user, $profil, $complement)
+    {
         $to = Yii::app()->params['adminEmail'];
         $params = array('arg1' => $user->_id, 'arg2' => $profil);
-        if ($complement != NULL) {
+        if ($complement != null) {
             $params['arg3'] = $complement;
             $urlConfirm = Yii::app()->createAbsoluteUrl('site/confirmUser', $params);
         } else {
@@ -138,8 +143,9 @@ class CommonMailer {
         foreach ($user->getAttributes() as $label => $value) {
             if ($label == "profil") {
                 $userDetails.="<li>" . $label . " : " . $profil . "</li>";
-            } else
+            } else {
                 $userDetails.="<li>$label : $value</li>";
+            }
         }
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
                 <?xml version=\"1.0\" encoding=\"utf-8\"?>
@@ -193,15 +199,17 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
      * @param type $user
      * @return type
      */
-    public static function sendSubscribeAdminMail($user) {
+    public static function sendSubscribeAdminMail($user)
+    {
         $to = Yii::app()->params['adminEmail'];
         $subject = "Inscription d'un nouvel utilisateur sur cbsdplatform";
         $userDetails = '';
         foreach ($user->getAttributes() as $label => $value) {
             if ($label == "profil") {
                 $userDetails.="<li>" . $label . " : " . implode(", ", $value) . "</li>";
-            } else
+            } else {
                 $userDetails.="<li>$label : $value</li>";
+            }
         }
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
                 <?xml version=\"1.0\" encoding=\"utf-8\"?>
@@ -223,7 +231,8 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
      * @param type $user
      * @return type
      */
-    public static function sendSubscribeUserMail($user) {
+    public static function sendSubscribeUserMail($user)
+    {
         $to = $user->email;
         $subject = "Bienvenue sur cbsdplatform " . ucfirst($user->prenom) . " " . strtoupper($user->nom);
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
@@ -247,7 +256,8 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
      * @param type $user
      * @return type
      */
-    public static function sendUserRegisterConfirmationMail($user) {
+    public static function sendUserRegisterConfirmationMail($user)
+    {
         $to = $user->email;
         $subject = "Confirmation de votre inscription sur cbsdplatform";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
@@ -267,7 +277,8 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
         return CommonMailer::sendMail($to, $subject, $body);
     }
 
-    public static function sendUserRegisterRefusedMail($user) {
+    public static function sendUserRegisterRefusedMail($user)
+    {
         $to = $user->email;
         $subject = "Refus de votre inscription sur cbsdplatform";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
@@ -291,10 +302,12 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
      * @param type $user
      * @return true if it s sent ( stored in db then pull by the cron task)
      */
-    public static function sendMailRecoverPassword($user) {
+    public static function sendMailRecoverPassword($user)
+    {
         try {
-            if ($user != null)
+            if ($user != null) {
                 $to = $user->email;
+            }
             $fname = ucfirst($user->prenom);
             $lname = strtoupper($user->nom);
             $login = $user->login;
@@ -319,7 +332,4 @@ A bientôt sur cbsdplatform.
             return false;
         }
     }
-
 }
-
-?>
