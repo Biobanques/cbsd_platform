@@ -232,8 +232,6 @@ class SiteController extends Controller
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
             $profil = implode("", $model->profil);
-            if ($model->profil != array("clinicien"))
-                $model->profil = array(" ");
 
             $criteria = new EMongoCriteria();
             $criteria->login = $model->login;
@@ -313,5 +311,4 @@ class SiteController extends Controller
         Yii::app()->user->setFlash('success', "L'utilisateur " . $model->login . " avec le profil " . $_GET['arg2'] . " a bien été refusé. Un mail a été envoyé à l'utilisateur.");
         $this->redirect(array('site/index'));
     }
-
 }

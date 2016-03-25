@@ -26,7 +26,7 @@ class QuestionBlocController extends Controller {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create', 'index', 'view', 'update', 'admin', 'delete', 'deleteQuestion', 'preview'),
-                'expression' => '$user->isAdmin()'
+                'expression' => '$user->getActiveProfil() == "administrateur"'
             ),
             array('deny', // deny all users
                 'users' => array('*'),

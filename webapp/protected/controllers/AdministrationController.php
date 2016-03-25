@@ -28,7 +28,7 @@ class AdministrationController extends Controller {
                     'admin',
                     'update'
                 ),
-                'expression' => '$user->isAdmin()'
+                'expression' => '$user->getActiveProfil() == "administrateur"'
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -89,9 +89,9 @@ class AdministrationController extends Controller {
 
     public function loadModel($id) {
         $model = Droits::model()->findByPk(new MongoId($id));
-        if ($model === null)
+        if ($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
+        }
         return $model;
     }
-
 }

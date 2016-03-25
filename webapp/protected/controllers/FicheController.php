@@ -30,7 +30,7 @@ class FicheController extends Controller {
                 'actions' => array(
                     'index', 'dynamicquestions', 'admin', 'view', 'update', 'delete', 'viewOnePage'
                 ),
-                'expression' => '$user->isAdmin()'
+                'expression' => '$user->getActiveProfil() == "administrateur"'
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -146,5 +146,4 @@ class FicheController extends Controller {
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
     }
-    
 }

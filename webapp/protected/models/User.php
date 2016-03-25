@@ -84,6 +84,17 @@ class User extends EMongoDocument {
             )
         ));
     }
+    
+    /**
+     * get all users by login.
+     */
+    public function getAllUsersByLogin($model) {
+        $userLogin = array();
+        $criteria = new EMongoCriteria();
+        $criteria->login = $model->login;
+        $userLogin = User::model()->findAll($criteria);
+        return $userLogin;
+    }
 
     /**
      * profils : 0: clinicien, 1 : administrateur, 2: neuropathologiste, 3: généticien

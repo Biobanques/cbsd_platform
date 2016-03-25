@@ -138,19 +138,7 @@ class WebUser extends CWebUser
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        if ($droit != null) {
-            foreach ($droit as $key => $value) {
-                if ($key == "role") {
-                    if ($value == "") {
-                        return false;
-                    }
-                    if (in_array("view", $value)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+        return $droit != null ? in_array("view", $droit->role) : false;
     }
 
     /**
@@ -163,19 +151,7 @@ class WebUser extends CWebUser
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        if ($droit != null) {
-            foreach ($droit as $key => $value) {
-                if ($key == "role") {
-                    if ($value == "") {
-                        return false;
-                    }
-                    if (in_array("update", $value)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+        return $droit != null ? in_array("update", $droit->role) : false;
     }
 
     /**
@@ -187,17 +163,7 @@ class WebUser extends CWebUser
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        if ($droit != null) {
-            foreach ($droit as $key => $value) {
-                if ($key == "role") {
-                    if ($value == "")
-                        return false;
-                    if (in_array("delete", $value))
-                        return true;
-                }
-            }
-        }
-        return false;
+        return $droit != null ? in_array("delete", $droit->role) : false;
     }
 
     /**
@@ -209,28 +175,7 @@ class WebUser extends CWebUser
         $criteria->profil = $profil;
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
-        if ($droit != null) {
-            foreach ($droit as $key => $value) {
-                if ($key == "role") {
-                    if ($value == "")
-                        return false;
-                    if (in_array("create", $value))
-                        return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Droit d'accès fonctionnalité de recherche des fiches 
-     * @return boolean
-     */
-    public function isAuthorized($profil, $link) {
-        if ($profil == "clinicien" && $link == "rechercheFiche") {
-            return false;
-        } else
-            return true;
+        return $droit != null ? in_array("create", $droit->role) : false;
     }
 
 }
