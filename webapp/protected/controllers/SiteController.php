@@ -12,7 +12,8 @@ class SiteController extends Controller
     /**
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
@@ -25,7 +26,8 @@ class SiteController extends Controller
      *
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array(
                 'allow',
@@ -68,7 +70,8 @@ class SiteController extends Controller
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         // renders the view file 'protected/views/site/index.php'
         // using the default layout 'protected/views/layouts/main.php'
 
@@ -78,7 +81,8 @@ class SiteController extends Controller
     /**
      * This is the action to handle external exceptions.
      */
-    public function actionError() {
+    public function actionError()
+    {
         if ($error == Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
@@ -101,7 +105,8 @@ class SiteController extends Controller
     /**
      * Displays the login page
      */
-    public function actionLogin() {
+    public function actionLogin()
+    {
         $model = new LoginForm;
 
         // if it is ajax validation request
@@ -126,7 +131,8 @@ class SiteController extends Controller
     /**
      * Logs out the current user and redirect to homepage.
      */
-    public function actionLogout() {
+    public function actionLogout()
+    {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
     }
@@ -136,7 +142,8 @@ class SiteController extends Controller
     /**
      * display the recover password page
      */
-    public function actionRecoverPwd() {
+    public function actionRecoverPwd()
+    {
         $model = new RecoverPwdForm();
         $result = '';
         if (isset($_POST['RecoverPwdForm'])) {
@@ -158,19 +165,20 @@ class SiteController extends Controller
     /**
      * action to add a new profil to an user.
      */
-    public function actionUpdateSubscribe() {
+    public function actionUpdateSubscribe()
+    {
         $model = new User;
         if (isset(Yii::app()->user->id)) {
             $model = User::model()->findByPk(new MongoID(Yii::app()->user->id));
         }
 
-        if (isset($_POST ['User'])) {
-            $profilSelected = array_filter($_POST ['User']['profil']);
+        if (isset($_POST['User'])) {
+            $profilSelected = array_filter($_POST['User']['profil']);
             $test = empty($profilSelected);
             if (!empty($profilSelected)) {
                 if (in_array('clinicien', $profilSelected)) {
                     array_push($model->profil, 'clinicien');
-                    $model->address = $_POST ['User']['address'];
+                    $model->address = $_POST['User']['address'];
                     if ($model->save()) {
                         CommonMailer::sendConfirmationAdminProfilUser($model);
                         CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password);
@@ -203,7 +211,8 @@ class SiteController extends Controller
     /**
      * Displays the subscribeProfil page. User can choose which profil he wants to subscribe.
      */
-    public function actionSubscribeProfil() {
+    public function actionSubscribeProfil()
+    {
         $model = new User ();
         if (isset($_POST['clinicien'])) {
             $_SESSION['profil'] = $profil = "clinicien";
@@ -227,15 +236,13 @@ class SiteController extends Controller
     /**
      * action to subscribe a new user account.
      */
-    public function actionSubscribe() {
-        $model = new User ();
-        if (isset($_POST ['User'])) {
-            $model->attributes = $_POST ['User'];
+    public function actionSubscribe()
+    {
+        $model = new User();
+        if (isset($_POST['User'])) {
+            $model->attributes = $_POST['User'];
             $profil = implode("", $model->profil);
-
-            $criteria = new EMongoCriteria();
-            $criteria->login = $model->login;
-            $userLogin = User::model()->findAll($criteria);
+            $userLogin = $model->getAllUsersByLogin($model);
             if (count($userLogin) > 0) {
                 Yii::app()->user->setFlash('error', 'Le login a déjà été utilisé. Veuillez choisir un login différent.');
                 $this->render('subscribe', array('model' => $model));
@@ -278,13 +285,15 @@ class SiteController extends Controller
     /**
      * action to confirm new profil on mail validation.
      */
-    public function actionConfirmUser() {
+    public function actionConfirmUser()
+    {
         $model = User::model()->findByPk(new MongoId($_GET['arg1']));
         if (!in_array($_GET['arg2'], $model->profil)) {
-            if (!in_array(" ", $model->profil))
+            if (!in_array(" ", $model->profil)) {
                 array_push($model->profil, $_GET['arg2']);
-            else
+            } else {
                 $model->profil = (array) $_GET['arg2'];
+            }
             if (isset($_GET['arg2']) && isset($_GET['arg3'])) {
                 if ($_GET['arg2'] == "neuropathologiste") {
                     $model->centre = $_GET['arg3'];
@@ -305,7 +314,8 @@ class SiteController extends Controller
     /**
      * action to refuse user on mail validation.
      */
-    public function actionRefuseUser() {
+    public function actionRefuseUser()
+    {
         $model = User::model()->findByPk(new MongoId($_GET['arg1']));
         CommonMailer::sendUserRegisterRefusedMail($model, $_GET['arg2']);
         Yii::app()->user->setFlash('success', "L'utilisateur " . $model->login . " avec le profil " . $_GET['arg2'] . " a bien été refusé. Un mail a été envoyé à l'utilisateur.");
