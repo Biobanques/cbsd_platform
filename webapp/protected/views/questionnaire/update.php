@@ -8,8 +8,9 @@
         <tr>
             <td><b>Prénom : </b><?php echo $patient->firstName; ?></td>
             <?php
-            if (Yii::app()->user->profil == "administrateur")
+            if (Yii::app()->user->profil == "administrateur") {
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
+            }
             ?>
         </tr>
     </table>  

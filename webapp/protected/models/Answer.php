@@ -7,18 +7,21 @@
  * @author nmalservet
  *
  */
-class Answer extends EMongoDocument {
+class Answer extends EMongoDocument
+{
 
     /**
      *
      */
 // This has to be defined in every model, this is same as with standard Yii ActiveRecord
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
 // This method is required!
-    public function getCollectionName() {
+    public function getCollectionName()
+    {
         return 'answer';
     }
 
@@ -89,7 +92,8 @@ class Answer extends EMongoDocument {
      */
     public $user;
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return array('embeddedArrays' => array(
                 'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',
                 'arrayPropertyName' => 'answers_group', // name of property, that will be used as an array
@@ -98,7 +102,8 @@ class Answer extends EMongoDocument {
         );
     }
 
-    public function rules() {
+    public function rules()
+    {
         return array(
             array(
                 'id,login,questionnaireMongoId',
@@ -112,8 +117,8 @@ class Answer extends EMongoDocument {
         );
     }
 
-    public function attributeLabels() {
-
+    public function attributeLabels()
+    {
         return array(
             'id' => 'Id',
             'id_patient' => 'N° anonymat',
@@ -126,7 +131,8 @@ class Answer extends EMongoDocument {
         );
     }
 
-    public function attributeExportedLabels() {
+    public function attributeExportedLabels()
+    {
         return array(
             'id_patient' => 'N° anonymat',
             'id' => 'N° fiche',
@@ -137,11 +143,13 @@ class Answer extends EMongoDocument {
         );
     }
 
-    public function search($caseSensitive = false) {
+    public function search($caseSensitive = false)
+    {
         $criteria = new EMongoCriteria;
 
-        if (isset($this->type) && !empty($this->type))
+        if (isset($this->type) && !empty($this->type)) {
             $criteria->addCond('type', '==', new MongoRegex('/' . $this->type . '/i'));
+        }
 
         if (isset($this->user) && !empty($this->user)) {
             $criteriaUser = new EMongoCriteria;
@@ -149,17 +157,21 @@ class Answer extends EMongoDocument {
             $criteriaUser->select(array('_id'));
             $users = User::model()->findAll($criteriaUser);
             $listUsers = array();
-            if ($users != null)
-                foreach ($users as $user)
+            if ($users != null) {
+                foreach ($users as $user) {
                     $listUsers[] = $user->_id;
+                }
+            }
             $criteria->addCond('login', 'in', $listUsers);
         }
 
-        if (isset($this->id_patient) && !empty($this->id_patient))
+        if (isset($this->id_patient) && !empty($this->id_patient)) {
             $criteria->id_patient = $this->id_patient;
+        }
 
-        if (isset($this->name) && !empty($this->name))
+        if (isset($this->name) && !empty($this->name)) {
             $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '/i'));
+        }
         if (isset($this->last_updated) && !empty($this->last_updated)) {
             $date = str_replace('/', '-', $this->last_updated);
             $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date)), '$lte' => new MongoDate(strtotime($date . " 23:59:59.999Z")));
@@ -167,8 +179,9 @@ class Answer extends EMongoDocument {
 
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             foreach ($this->dynamics as $questionId => $answerValue) {
-                if ($answerValue != null && !empty($answerValue))
+                if ($answerValue != null && !empty($answerValue)) {
                     $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => $answerValue));
+                }
             }
         }
 
@@ -184,7 +197,8 @@ class Answer extends EMongoDocument {
     /**
      * render in html the questionnaire
      */
-    public function renderHTML($lang) {
+    public function renderHTML($lang)
+    {
         $result = "";
         foreach ($this->answers_group as $answer_group) {
             $result.=AnswerHTMLRenderer::renderAnswerGroupHTML($this, $answer_group, $lang);
@@ -193,7 +207,8 @@ class Answer extends EMongoDocument {
         return $result;
     }
 
-    public function renderTabbedGroup($lang) {
+    public function renderTabbedGroup($lang)
+    {
         return QuestionnaireHTMLRenderer::renderTabbedGroup($this, $lang, true);
     }
 
@@ -201,7 +216,8 @@ class Answer extends EMongoDocument {
      * copy attributes of questionnaire recursively to the final state answer-question.
      * @param type $questionnaire
      */
-    public function copy($questionnaire) {
+    public function copy($questionnaire)
+    {
         $this->id = $questionnaire->id;
         $this->questionnaireMongoId = $questionnaire->_id;
         $this->name = $questionnaire->name;
@@ -221,7 +237,8 @@ class Answer extends EMongoDocument {
      * used in plain page and tab page
      * @return string
      */
-    public function renderContributors() {
+    public function renderContributors()
+    {
         return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
 
@@ -229,33 +246,39 @@ class Answer extends EMongoDocument {
      * get the last modified value into a french date format JJ/MM/AAAA
      * @return type
      */
-    public function getLastModified() {
-        if ($this->last_modified != null)
+    public function getLastModified()
+    {
+        if ($this->last_modified != null) {
             return date("d/m/Y H:m", $this->last_modified->sec);
-        else
+        } else {
             return null;
+        }
     }
 
     /**
      * get the last updatedvalue into a french date format JJ/MM/AAAA
      * @return type
      */
-    public function getLastUpdated() {
-        if ($this->last_updated != null)
+    public function getLastUpdated()
+    {
+        if ($this->last_updated != null) {
             return date("d/m/Y H:m", $this->last_updated->sec);
-        else
+        } else {
             return null;
+        }
     }
 
     /**
      * retourne le user qui a renseigné le formulaire
      * @return type
      */
-    public function getUserRecorderName() {
+    public function getUserRecorderName()
+    {
         $result = "-";
         $user = User::model()->findByPk(new MongoID($this->login));
-        if ($user != null)
+        if ($user != null) {
             $result = "$user->prenom $user->nom";
+        }
         return $result;
     }
 
@@ -263,7 +286,8 @@ class Answer extends EMongoDocument {
      * retourne l'id de user qui a renseigné la fiche
      * @return type
      */
-    public function getUserId() {
+    public function getUserId()
+    {
         return $this->login;
     }
 
@@ -271,7 +295,8 @@ class Answer extends EMongoDocument {
      * retourne l'id max lors de l'ajout des gènes
      * @return type
      */
-    public function getMaxIdGene($nbMax, $answerQuestionId) {
+    public function getMaxIdGene($nbMax, $answerQuestionId)
+    {
         $nb = preg_replace("/[^0-9]/", "", $answerQuestionId);
         return ($nbMax < $nb) ? $nbMax = $nb : $nb;
     }
@@ -280,7 +305,8 @@ class Answer extends EMongoDocument {
      * add gene to AnswerQuestion model
      * @return type
      */
-    public function addGene($nbMax, $gene) {
+    public function addGene($nbMax, $gene)
+    {
         $gene->id = "gene" . $nbMax;
         $gene->label = "Nom du gène";
         $gene->label_fr = "Nom du gène";
@@ -297,7 +323,8 @@ class Answer extends EMongoDocument {
      * add analyse to AnswerQuestion model
      * @return type
      */
-    public function addAnalyse($nbMax, $analyse) {
+    public function addAnalyse($nbMax, $analyse)
+    {
             $analyse->id = "analyse" . $nbMax;
             $analyse->label = "Analysé";
             $analyse->label_fr = "Analysé";
@@ -314,7 +341,8 @@ class Answer extends EMongoDocument {
      * add mutation to AnswerQuestion model
      * @return type
      */
-    public function addMutation($nbMax, $mutation) {
+    public function addMutation($nbMax, $mutation)
+    {
             $mutation->id = "mutation" . $nbMax;
             $mutation->label = "Mutation(s)";
             $mutation->label_fr = "Mutation(s)";
@@ -326,7 +354,8 @@ class Answer extends EMongoDocument {
      * add comment to AnswerQuestion model
      * @return type
      */
-    public function addComment($nbMax, $comment) {
+    public function addComment($nbMax, $comment)
+    {
             $comment->id = "comment" . $nbMax;
             $comment->label = "Commentaire";
             $comment->label_fr = "Commentaire";
@@ -338,7 +367,8 @@ class Answer extends EMongoDocument {
      * Ajoute les 4 champs "gene", "analyse", "mutation", "commentaire" dans les réponses
      * @return type
      */
-    public function addGeneToAnswers($answerGroup, $gene, $analyse, $mutation, $comment) {
+    public function addGeneToAnswers($answerGroup, $gene, $analyse, $mutation, $comment)
+    {
         foreach ($answerGroup as $answer_group) {
             if ($answer_group->id == "gene") {
                 $answer_group->answers[] = $gene;
@@ -353,7 +383,8 @@ class Answer extends EMongoDocument {
      * retourne la liste de toutes les questions de toutes les fiches
      * @return type
      */
-    public function getAllQuestions() {
+    public function getAllQuestions()
+    {
         $result = array();
         $answers = $this->getAllDetailledQuestions();
         foreach ($answers as $answer) {
@@ -363,13 +394,13 @@ class Answer extends EMongoDocument {
         return $result;
     }
 
-    public function getAllDetailledQuestions() {
+    public function getAllDetailledQuestions()
+    {
         $result = array();
         $fiches = Answer::model()->findAll();
         foreach ($fiches as $fiche) {
             foreach ($fiche->answers_group as $group) {
                 foreach ($group->answers as $answer) {
-
                     $toAdd = new stdClass();
                     $toAdd->answer = $answer;
                     $toAdd->fiche = $fiche->name;
@@ -381,7 +412,8 @@ class Answer extends EMongoDocument {
         return $result;
     }
 
-    public function findAllDetailledQuestionById($id) {
+    public function findAllDetailledQuestionById($id)
+    {
         $result = null;
         foreach ($this->getAllDetailledQuestions() as $question) {
             if ($question->answer->id == $id)
@@ -390,7 +422,8 @@ class Answer extends EMongoDocument {
         return $result;
     }
 
-    public function getAnswerByQuestionId($id) {
+    public function getAnswerByQuestionId($id)
+    {
         $result = null;
         foreach ($this->answers_group as $group) {
             foreach ($group->answers as $answer) {
@@ -402,7 +435,8 @@ class Answer extends EMongoDocument {
         return $result;
     }
 
-    public function getAllTypes() {
+    public function getAllTypes()
+    {
         $result = array();
         $types = Answer::model()->getCollection()->distinct("type");
         foreach ($types as $type) {
@@ -435,7 +469,8 @@ class Answer extends EMongoDocument {
      * @param $models : list of answers
      * @result array : each line = each model answer
      */
-    public function resultToArray($models) {
+    public function resultToArray($models)
+    {
         $result = array();
         $headerLineFixe = $this->attributeExportedLabels();
         $answersList = array();
@@ -511,7 +546,4 @@ class Answer extends EMongoDocument {
         }
         return $result;
     }
-
 }
-
-?>

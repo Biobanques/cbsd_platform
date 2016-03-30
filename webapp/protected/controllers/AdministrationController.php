@@ -77,7 +77,10 @@ class AdministrationController extends Controller {
         $model = $this->loadModel($id);
         if (isset($_POST['Droits'])) {
             $model->attributes = $_POST['Droits'];
-            if ($model->update()) {
+            if ($model->role == null) {
+                $model->role = [];
+            }
+            if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Le profil a bien été mis à jour.');
                 $this->redirect(array('admin'));
             }

@@ -62,7 +62,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
 
 
         $this->widget('bootstrap.widgets.TbNavbar', array(
-            'brandUrl' => (!Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil") ? array('/site/index') : "",
+            'brandUrl' => (!Yii::app()->user->isGuest) ? array('/site/index') : "",
             'items' => array(
                 array(
                     'class' => 'bootstrap.widgets.TbMenu',

@@ -1,15 +1,15 @@
 <div id="statusMsg">
-    <?php if (Yii::app()->user->hasFlash('success')): ?>
+    <?php if (Yii::app()->user->hasFlash('success')) { ?>
         <div class="flash-success">
             <?php echo Yii::app()->user->getFlash('success'); ?>
         </div>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if (Yii::app()->user->hasFlash('error')): ?>
+    <?php if (Yii::app()->user->hasFlash('error')) { ?>
         <div class="flash-error">
             <?php echo Yii::app()->user->getFlash('error'); ?>
         </div>
-    <?php endif; ?>
+    <?php } ?>
 </div>
 
 <?php
@@ -31,7 +31,8 @@ $('.search-form form').submit(function(){
 
 <?php
 $imagecreateform = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', 'Créer un nouveau formulaire');
-echo CHtml::link($imagecreateform . 'Créer un nouveau formulaire', Yii::app()->createUrl('formulaire/create')); ?>
+echo CHtml::link($imagecreateform . 'Créer un nouveau formulaire', Yii::app()->createUrl('formulaire/create'));
+?>
 <br />
 <?php
 $imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));

@@ -7,8 +7,10 @@
         </tr>
         <tr>
             <td><b>Prénom : </b><?php echo $patient->firstName; ?></td>
-            <?php if (Yii::app()->user->profil == 1)
+            <?php
+            if (Yii::app()->user->profil == 1) {
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
+            }
             ?>
         </tr>
     </table>  
@@ -21,10 +23,7 @@
 
 <hr />
 
-<?php
-echo CHtml::link('Vue une page HTML', array('questionnaire/viewOnePage', 'id' => $model->_id));
-;
-?>
+<?php echo CHtml::link('Vue une page HTML', array('questionnaire/viewOnePage', 'id' => $model->_id)); ?>
 <?php
 $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
 echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), array());
@@ -38,7 +37,6 @@ echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), ar
 <br /><br />
 <?php
 echo CHtml::link('Vue une page HTML', array('questionnaire/viewOnePage', 'id' => $model->_id));
-;
 ?>
 <?php
 $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
@@ -51,10 +49,8 @@ echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), ar
     echo $model->renderTabbedGroup(Yii::app()->language);
     ?>
 </div>
-    <div style="display:inline; margin:40%; width: 100px; ">
-        <?php
-        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:20px;'));
-        ?>
-    </div>
-<?php ?>
-    
+<div style="display:inline; margin:40%; width: 100px; ">
+    <?php
+    echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:20px;'));
+    ?>
+</div>

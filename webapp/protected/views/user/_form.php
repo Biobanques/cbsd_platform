@@ -45,10 +45,11 @@
         <div id="profil">
             <?php echo $form->labelEx($model, 'profil'); ?>
             <?php
-            if (Yii::app()->user->isGuest)
+            if (Yii::app()->user->isGuest) {
                 echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'getProfil()', 'labelOptions' => array('style' => 'display:inline')));
-            else
+            } else {
                 echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilSorted(), array('onchange' => 'getProfil()', 'labelOptions' => array('style' => 'display:inline')));
+            }
             ?>
             <?php echo $form->error($model, 'profil'); ?>
         </div>

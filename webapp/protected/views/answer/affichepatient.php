@@ -1,15 +1,15 @@
 <div id="statusMsg">
-    <?php if (!Yii::app()->user->hasFlash('success')): ?>
+    <?php if (!Yii::app()->user->hasFlash('success')) { ?>
         <div class="flash-success">
             <?php echo Yii::app()->user->getFlash('success'); ?>
         </div>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if (!Yii::app()->user->hasFlash('error')): ?>
+    <?php if (!Yii::app()->user->hasFlash('error')) { ?>
         <div class="flash-error">
             <?php echo Yii::app()->user->getFlash('error'); ?>
         </div>
-    <?php endif; ?>
+    <?php } ?>
 </div>
 
 <?php
@@ -157,9 +157,9 @@ if (Yii::app()->user->getState('activeProfil') != "chercheur" && Yii::app()->use
         </div>
 
         <div class="span3" style="margin:-5px;">
-        <?php echo CHtml::submitButton('Saisir'); ?>
+            <?php echo CHtml::submitButton('Saisir'); ?>
         </div>
-    <?php $this->endWidget(); ?>
+        <?php $this->endWidget(); ?>
     </div>
     <?php
 }?>
