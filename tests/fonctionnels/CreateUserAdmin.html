@@ -3,58 +3,63 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="http://cbsdplatform.local/" />
-<title>SubscribeTestCase</title>
+<link rel="selenium.base" href="http://localhost/biobankapps/index.php?r=logiciel/create" />
+<title>CreateUserClinicien</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">SubscribeTestCase</td></tr>
+<tr><td rowspan="1" colspan="3">CreateUserClinicien</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/index.php?r=site/subscribe</td>
+	<td>/cbsd_platform/webapp/index.php?r=site/login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=yt1</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=User_prenom</td>
-	<td>nicolas</td>
+	<td>Clinicien</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=User_nom</td>
-	<td>mals</td>
+	<td>Clinicien</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=User_login</td>
-	<td>nmals</td>
+	<td>Clinicien</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=User_password</td>
-	<td>mmmmmmm</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=User_password</td>
-	<td>nm2015</td>
+	<td>Clinicien2015</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=User_email</td>
-	<td>nicolas@malservet.eu</td>
+	<td>Clinicien@Clinicien.fr</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>id=User_profil</td>
-	<td>label=administrateur</td>
+	<td>label=clinicien</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=User_gsm</td>
-	<td>0647920111</td>
+	<td>id=User_telephone</td>
+	<td>0123456789</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_address</td>
+	<td>95 rue Clinicien</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -66,7 +71,6 @@
 	<td>name=yt0</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

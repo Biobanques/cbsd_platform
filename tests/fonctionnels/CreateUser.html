@@ -4,42 +4,47 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/biobankapps/index.php?r=logiciel/create" />
-<title>CreateUser</title>
+<title>CreateUserClinicien</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CreateUser</td></tr>
+<tr><td rowspan="1" colspan="3">CreateUserClinicien</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/cbsd_platform/webapp/index.php?r=site/patient</td>
+	<td>/cbsd_platform/webapp/index.php?r=site/login</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Administration</td>
+	<td>id=yt1</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Utilisateurs</td>
-	<td></td>
+	<td>type</td>
+	<td>id=User_prenom</td>
+	<td>Clinicien</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Créer un utilisateur</td>
-	<td></td>
+	<td>type</td>
+	<td>id=User_nom</td>
+	<td>Clinicien</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=User_login</td>
-	<td>test</td>
+	<td>Clinicien</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=User_password</td>
-	<td>testtest94</td>
+	<td>Clinicien2015</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_email</td>
+	<td>Clinicien@Clinicien.fr</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -48,40 +53,24 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=User_nom</td>
-	<td>test</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=User_prenom</td>
-	<td>test</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=User_email</td>
-	<td>test@test.fr</td>
-</tr>
-<tr>
-	<td>type</td>
 	<td>id=User_telephone</td>
 	<td>0123456789</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>id=User_inactif</td>
-	<td>label=actif</td>
+	<td>type</td>
+	<td>id=User_address</td>
+	<td>95 rue Clinicien</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_verifyCode</td>
+	<td>bernard</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Utilisateurs</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

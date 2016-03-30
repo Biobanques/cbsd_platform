@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="http://localhost/biobankapps/index.php?r=logiciel/create" />
+<link rel="selenium.base" href="http://localhost/" />
 <title>RecherchePatient</title>
 </head>
 <body>
@@ -13,34 +13,40 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/cbsd_platform/webapp/index.php?r=site/index</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Saisir une fiche patient</td>
+	<td>/cbsd_platform/webapp/index.php?r=site/patient</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=PatientForm_prenom</td>
-	<td>Kareem</td>
+	<td>Germaine</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=PatientForm_nom_naissance</td>
-	<td>Dale2</td>
+	<td>FAUVERNIER</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=PatientForm_date_naissance</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=PatientForm_date_naissance</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=PatientForm_date_naissance</td>
-	<td>01/01/1970</td>
+	<td>05/02/1925</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

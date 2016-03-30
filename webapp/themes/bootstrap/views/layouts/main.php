@@ -4,15 +4,27 @@ if (!defined('Base'))
     define('Base', Yii::app()->request->baseUrl);
 if (!defined('BaseTheme'))
     define('BaseTheme', Yii::app()->theme->baseUrl);
-
-if (Yii::app()->controller->id == "questionnaire" || Yii::app()->controller->id == "answer") {
-    // Système de calcul de score IADL et ADL
-    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/iadl.js', CClientScript::POS_END);
-    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/adl.js', CClientScript::POS_END);
-    // Système de calcul de score pour le Stade de Braak
-    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/stade_de_braak.js', CClientScript::POS_END);
-    // Ajout de gène dans le formulaire génétique
-    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/gene.js', CClientScript::POS_END);
+if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "questionnaire/update" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/update") {
+    $criteria = new EMongoCriteria;
+    $criteria->_id = new MongoId($_GET['id']);
+    if (Yii::app()->controller->id == "questionnaire") {
+        $model = Questionnaire::model()->find($criteria);
+    } elseif (Yii::app()->controller->id == "answer") {
+        $model = Answer::model()->find($criteria);
+    }
+    if ($model->type === "clinique") {
+        // Système de calcul de score IADL et ADL
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/iadl.js', CClientScript::POS_END);
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/adl.js', CClientScript::POS_END);
+    }
+    if ($model->type === "neuropathologique") {
+        // Système de calcul de score pour le Stade de Braak
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/stade_de_braak.js', CClientScript::POS_END);
+    }
+    if ($model->type === "genetique") {
+        // Ajout de gène dans le formulaire génétique
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/gene.js', CClientScript::POS_END);
+    }
 }
 if (Yii::app()->controller->id == "user") {
     // Afficher/cacher le champ "Adresse" ou "Centre de référence" lors de la création et la mise à jour de l'utilisateur

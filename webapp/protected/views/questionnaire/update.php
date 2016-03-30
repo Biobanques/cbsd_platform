@@ -34,7 +34,7 @@
     <br>
     <div>
         <?php
-        echo $model->renderTabbedGroup(Yii::app()->language);
+        echo $model->renderTabbedGroup(Yii::app()->language, $model);
         ?>
     </div>
     <div style="display:inline; margin: 35%; width: 100px; ">
