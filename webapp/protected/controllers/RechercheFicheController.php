@@ -31,7 +31,7 @@ class RechercheFicheController extends Controller {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin', 'view', 'exportCsv', 'exportXls', 'viewOnePage'),
-                'expression' => '$user->getActiveProfil() != "clinicien"'
+                'expression' => '!Yii::app()->user->isGuest && $user->getActiveProfil() != "clinicien"'
             ),
             array('deny', // deny all users
                 'users' => array('*'),
