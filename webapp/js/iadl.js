@@ -5,7 +5,7 @@ var tabs_iadl = {
     transport: 'iadl_iadl2',
     medicaments: 'iadl_iadl3',
     argent: 'iadl_iadl4',
-    score: 'iadl_score'
+    score: 'iadl_iadl_score'
 };
 
 /**

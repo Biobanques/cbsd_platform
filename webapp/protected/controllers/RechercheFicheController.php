@@ -88,6 +88,9 @@ class RechercheFicheController extends Controller {
         } else {
             $criteria = new EMongoCriteria;
         }
+        // trier par id_patient et type de fiche dans l'ordre croissant
+        $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
+        $criteria->sort('type', EMongoCriteria::SORT_ASC);
         $models = Answer::model()->findAll($criteria);
         $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
         $arAnswers = Answer::model()->resultToArray($models);

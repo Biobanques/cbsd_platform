@@ -388,7 +388,8 @@ class Answer extends EMongoDocument
         $result = array();
         $answers = $this->getAllDetailledQuestions();
         foreach ($answers as $answer) {
-            $result[$answer->answer->id] = "[" . $answer->fiche . "][" . $answer->group . "] " . $answer->answer->label_fr;
+            //$result[$answer->answer->id] = "[" . $answer->fiche . "][" . $answer->group . "] " . $answer->answer->label_fr;
+            $result[$answer->answer->id] = "[" . $answer->group . "] " . $answer->answer->label_fr;
         }
         natcasesort($result);
         return $result;
@@ -491,7 +492,8 @@ class Answer extends EMongoDocument
             foreach ($answer->answers_group as $group) {
                 foreach ($group->answers as $answerQuestion) {
                     //construction du label de colonne
-                    $label = "[" . $answer->name . "][" . $group->title_fr . "][" . $answerQuestion->label . "]";
+                    // $label = "[" . $answer->name . "][" . $group->title_fr . "][" . $answerQuestion->label . "]";
+                    $label = "[" . $group->title_fr . "][" . $answerQuestion->label . "]";
                     $value = $answerQuestion->getLiteralAnswer();
                     $ansQuestion[] = array();
                     $ansQuestion['label'] = $label;

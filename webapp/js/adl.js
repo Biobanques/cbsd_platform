@@ -7,7 +7,7 @@ var tabs_adl = {
     deplacements: 'adl_adl4',
     continence: 'adl_adl5',
     alimentation: 'adl_adl6',
-    score: 'adl_score'
+    score: 'adl_adl_score'
 };
 
 /**
