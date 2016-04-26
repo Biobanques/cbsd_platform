@@ -49,7 +49,8 @@ class CommonProperties
     /*
      * PATH data FileMaker XML
      */
-    public static $MASS_IMPORT_FOLDER = 'files/';
+    public static $IMPORT_FOLDER_NOMINATIF = 'files/nominatif/';
+    public static $TEST_IMPORT_ANONYME = 'files/anonyme/';
 
 
     /*
