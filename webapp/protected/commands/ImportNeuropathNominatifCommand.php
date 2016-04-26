@@ -8,12 +8,12 @@
  * >crontab -e
  * >* * * * * /var/www/html/cbsd_platform/webapp/protected/yiic importpatient
  */
-class ImportPatientCommand extends CConsoleCommand
+class ImportNeuropathNominatifCommand extends CConsoleCommand
 {
 
     public function run($args)
     {
-        $folderSource = CommonProperties::$MASS_IMPORT_FOLDER;
+        $folderSource = CommonProperties::$IMPORT_FOLDER_NOMINATIF;
         if (substr($folderSource, -1) != '/') {
             $folderSource.='/';
         }
