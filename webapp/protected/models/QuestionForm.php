@@ -126,7 +126,7 @@ class QuestionForm extends CFormModel {
      */
     public function getArrayStyles() {
         $res = array();
-        $res ['float:left'] = "Alignement à gauche";
+        $res [''] = "Alignement à gauche";
         $res ['float:right'] = "Alignement à droite";
         return $res;
     }

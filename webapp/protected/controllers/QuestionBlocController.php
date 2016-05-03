@@ -102,7 +102,6 @@ class QuestionBlocController extends Controller {
 
         if (isset($_POST['QuestionForm'])) {
             $questionModel->attributes = $_POST['QuestionForm'];
-            var_dump($questionModel->attributes);
             if ($questionModel->save()) {
                 $idQuestion = (string) $questionModel->_id;
                 $model->questions[] = $idQuestion;
