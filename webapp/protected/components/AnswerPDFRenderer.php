@@ -65,9 +65,6 @@ class AnswerPDFRenderer
         $html = '<span>' . "<b>Description :</b> " . $answer->description . '<br /><b>Dernière modification :</b>' . date("d/m/Y", $dd->sec) . '</span>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
         $pdf->Ln(10);
-        $html = '<span>' . $answer->message_start . '</span>';
-        $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
-        $pdf->Ln(10);
 
         $pdf = AnswerPDFRenderer::renderAnsweredPDF($pdf, $answer, "fr");
 

@@ -15,19 +15,6 @@ class QuestionnaireHTMLRenderer
 {
 
     /**
-     * render contributors
-     * used in plain page and tab page
-     * @return string
-     */
-    public function renderContributors($contributors)
-    {
-        $result = "<div><div class=\"question_group\"><i>Contributors</i> / Contributeurs</div>";
-        $result.="<div class=\"span5\">" . $contributors . "</div>";
-        $result.="</div>";
-        return $result;
-    }
-
-    /**
      * render tab associated to each group for a questionnaire
      * if isAnswered is filled, we are in case of answer.
      */
@@ -581,5 +568,4 @@ class QuestionnaireHTMLRenderer
         $result.="</div>";
         return $result;
     }
-
 }

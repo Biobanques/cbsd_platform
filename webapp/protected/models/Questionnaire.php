@@ -6,7 +6,8 @@
  * @author nmalservet
  *
  */
-class Questionnaire extends EMongoDocument {
+class Questionnaire extends EMongoDocument
+{
 
     /**
      * champs classiques d echantillons
@@ -17,28 +18,26 @@ class Questionnaire extends EMongoDocument {
     public $name;
     public $name_fr;
     public $description;
-    public $message_start;
-    public $message_end;
     public $questions_group;
     /*
      * date last modified.
      */
     public $last_modified;
 
-    /**
-     * fields to manage add question
-     */
 // This has to be defined in every model, this is same as with standard Yii ActiveRecord
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
 // This method is required!
-    public function getCollectionName() {
+    public function getCollectionName()
+    {
         return 'questionnaire';
     }
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return array('embeddedArrays' => array(
                 'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',
                 'arrayPropertyName' => 'questions_group', // name of property, that will be used as an array
@@ -47,7 +46,8 @@ class Questionnaire extends EMongoDocument {
         );
     }
 
-    public function rules() {
+    public function rules()
+    {
         return array(
             array(
                 'type,id,name',
@@ -66,31 +66,29 @@ class Questionnaire extends EMongoDocument {
         );
     }
 
-    public function attributeLabels() {
-
+    public function attributeLabels()
+    {
         return array(
             'type' => 'Type de formulaire',
             'id' => 'id',
-            'name' => 'Nom du formulaire',
-            'message_start' => 'Message de début',
-            'message_end' => 'Message de fin',
-            'contributors' => 'Contributeurs'
+            'name' => 'Nom du formulaire'
         );
     }
 
-    public function attributeExportedLabels() {
-
+    public function attributeExportedLabels()
+    {
         return array(
             'id' => 'id',
             'questions_group' => 'Questions Group',
         );
     }
 
-    public function search($caseSensitive = false) {
+    public function search($caseSensitive = false)
+    {
         $criteria = new EMongoCriteria ();
-        if (isset($this->name) && !empty($this->name))
+        if (isset($this->name) && !empty($this->name)) {
             $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '/i'));
-
+        }
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria,
@@ -103,7 +101,8 @@ class Questionnaire extends EMongoDocument {
     /**
      * get an array of form type used by dropDownLIst.
      */
-    public function getArrayType() {
+    public function getArrayType()
+    {
         $res = array();
         $res ['clinique'] = "clinique";
         $res ['genetique'] = "genetique";
@@ -114,19 +113,24 @@ class Questionnaire extends EMongoDocument {
     /**
      * get an array sorted by value.
      */
-    public function getArrayTypeSorted() {
+    public function getArrayTypeSorted()
+    {
         $resArraySorted = new ArrayObject($this->getArrayType());
         $resArraySorted->asort();
         return $resArraySorted;
     }
 
-    public function getFiche($activeProfil) {
-        if ($activeProfil == "clinicien")
+    public function getFiche($activeProfil)
+    {
+        if ($activeProfil == "clinicien") {
             $typeFiche = "clinique";
-        if ($activeProfil == "neuropathologiste")
+        }
+        if ($activeProfil == "neuropathologiste") {
             $typeFiche = "neuropathologique";
-        if ($activeProfil == "geneticien")
+        }
+        if ($activeProfil == "geneticien") {
             $typeFiche = "genetique";
+        }
         $criteria = new EMongoCriteria();
         $criteria->type = $typeFiche;
         $questionnaire = Questionnaire::model()->findAll($criteria);
@@ -140,7 +144,8 @@ class Questionnaire extends EMongoDocument {
     /**
      * render in html the questionnaire
      */
-    public function renderHTML($lang) {
+    public function renderHTML($lang)
+    {
         $result = "";
         foreach ($this->questions_group as $question_group) {
             if ($question_group->parent_group == "") {
@@ -152,7 +157,8 @@ class Questionnaire extends EMongoDocument {
         return $result;
     }
 
-    public function renderTabbedGroup($lang) {
+    public function renderTabbedGroup($lang)
+    {
         return QuestionnaireHTMLRenderer::renderTabbedGroup($this, $lang, false);
     }
 
@@ -161,7 +167,8 @@ class Questionnaire extends EMongoDocument {
      * @param type $lang
      * @return type
      */
-    public function renderTabbedGroupEditMode($lang) {
+    public function renderTabbedGroupEditMode($lang)
+    {
         return QuestionnaireHTMLRenderer::renderTabbedGroupEditMode($this, $lang);
     }
 
@@ -169,7 +176,8 @@ class Questionnaire extends EMongoDocument {
      * update questionnaire with fields filled.
      * Add question group if necessary
      */
-    public function updateForm($questionnaireGroupForm) {
+    public function updateForm($questionnaireGroupForm)
+    {
         $result = false;
         //check if fields required are filled
         if ($questionnaireGroupForm->validate()) {
@@ -185,19 +193,11 @@ class Questionnaire extends EMongoDocument {
     }
 
     /**
-     * render contributors
-     * used in plain page and tab page
-     * @return string
-     */
-    public function renderContributors() {
-        return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
-    }
-
-    /**
      * get the last modified value into a french date format JJ/MM/AAAA
      * @return type
      */
-    public function getLastModified() {
+    public function getLastModified()
+    {
         return date("d/m/Y", $this->last_modified->sec);
     }
 
@@ -205,7 +205,8 @@ class Questionnaire extends EMongoDocument {
      * methode pour ajouter un groupe de question en fin de groupes
      * @param type $title
      */
-    public function addQuestionGroup($id, $title) {
+    public function addQuestionGroup($id, $title)
+    {
         $qg = new QuestionGroup;
         $qg->id = $id;
         $qg->title = $title;
@@ -217,7 +218,8 @@ class Questionnaire extends EMongoDocument {
      * get array questions for a questionnaire
      * filtered by idQuestionGroup
      */
-    public function getArrayQuestions($idQuestionGroup) {
+    public function getArrayQuestions($idQuestionGroup)
+    {
         $res = array();
         if ($this->questions_group != null) {
             foreach ($this->questions_group as $group) {
@@ -235,7 +237,8 @@ class Questionnaire extends EMongoDocument {
     /**
      * get array groups for a questionnaire
      */
-    public function getArrayGroups() {
+    public function getArrayGroups()
+    {
         $res = array();
         if ($this->questions_group != null) {
             foreach ($this->questions_group as $group) {
@@ -245,7 +248,8 @@ class Questionnaire extends EMongoDocument {
         return $res;
     }
 
-    public function getOnglets() {
+    public function getOnglets()
+    {
         $res = array();
         if ($this->questions_group != null) {
             foreach ($this->questions_group as $group) {
@@ -256,7 +260,8 @@ class Questionnaire extends EMongoDocument {
         return $res;
     }
 
-    public function getGroups() {
+    public function getGroups()
+    {
         $res = array();
         if ($this->questions_group != null) {
             foreach ($this->questions_group as $group) {
@@ -267,7 +272,8 @@ class Questionnaire extends EMongoDocument {
         return $res;
     }
 
-    public function getGroupsInOnglet($parent) {
+    public function getGroupsInOnglet($parent)
+    {
         $res = array();
         if ($this->questions_group != null) {
             foreach ($this->questions_group as $group) {
@@ -282,7 +288,8 @@ class Questionnaire extends EMongoDocument {
      * delete a question into the questionnaire by his id
      * true if the question is deleted
      */
-    public function deleteQuestion($idQuestion) {
+    public function deleteQuestion($idQuestion)
+    {
         if ($this->questions_group != null && count($this->questions_group) > 0) {
             foreach ($this->questions_group as $group) {
                 if ($group->deleteQuestion($idQuestion)) {
@@ -297,7 +304,8 @@ class Questionnaire extends EMongoDocument {
      * delete a question group  by his idQuestionGroup
      * return true if the question group is deleted
      */
-    public function deleteQuestionGroup($idQuestionGroup) {
+    public function deleteQuestionGroup($idQuestionGroup)
+    {
         if ($this->questions_group != null && count($this->questions_group) > 0) {
             foreach ($this->questions_group as $key => $group) {
                 if ($group->id == $idQuestionGroup) {
@@ -314,7 +322,8 @@ class Questionnaire extends EMongoDocument {
      * si pas de positionnement on ajoute la questionen fin du premier groupe
      * @param questionnaire
      */
-    public function saveQuestionnaireNewGroup($questionGroup) {
+    public function saveQuestionnaireNewGroup($questionGroup)
+    {
         $this->last_modified = new MongoDate();
         if ($questionGroup != null) {
 
@@ -326,16 +335,17 @@ class Questionnaire extends EMongoDocument {
                 $this->questions_group[] = $questionGroup;
             }
         }
-        if ($this->save())
+        if ($this->save()) {
             Yii::app()->user->setFlash('success', "L'onglet a bien été ajouté dans le formulaire.");
-        else {
+        } else {
             Yii::app()->user->setFlash('error', "L'onglet n'a pas été enregistré. Un problème est apparu.");
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;
     }
 
-    public function saveQuestionnaireNewQuestion($questionForm) {
+    public function saveQuestionnaireNewQuestion($questionForm)
+    {
         $this->last_modified = new MongoDate();
         $cquestion = new Question;
         $cquestion->setAttributesByQuestionForm($questionForm);
@@ -368,16 +378,17 @@ class Questionnaire extends EMongoDocument {
                 }
             }
         }
-        if ($this->save())
+        if ($this->save()) {
             Yii::app()->user->setFlash('success', "La question a bien été ajouté dans le formulaire.");
-        else {
+        } else {
             Yii::app()->user->setFlash('error', "La question n'a pas été enregistré. Un problème est apparu.");
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;
     }
 
-    public function saveQuestionnaireNewQuestionBloc($questionForm) {
+    public function saveQuestionnaireNewQuestionBloc($questionForm)
+    {
         $this->last_modified = new MongoDate();
         $cquestion = new Question;
         $cquestion->setAttributesByQuestionForm($questionForm);
@@ -410,13 +421,12 @@ class Questionnaire extends EMongoDocument {
                 }
             }
         }
-        if ($this->save())
+        if ($this->save()) {
             Yii::app()->user->setFlash('success', "Le bloc de questions a bien été ajouté dans le formulaire.");
-        else {
+        } else {
             Yii::app()->user->setFlash('error', "Le bloc de questions n'a pas été enregistré. Un problème est apparu.");
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;
     }
-
 }

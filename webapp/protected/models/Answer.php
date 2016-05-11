@@ -66,19 +66,12 @@ class Answer extends EMongoDocument
      */
     public $last_modified;
     public $description;
-    public $message_start;
-    public $message_end;
     public $answers_group;
 
     /**
      * last date of save action
      */
     public $last_updated;
-
-    /**
-     * contributors are people working on thi squetsionnaire
-     */
-    public $contributors;
 
     /**
      * Working variable to add dynamic search filters
@@ -222,24 +215,12 @@ class Answer extends EMongoDocument
         $this->questionnaireMongoId = $questionnaire->_id;
         $this->name = $questionnaire->name;
         $this->description = $questionnaire->description;
-        $this->message_start = $questionnaire->message_start;
-        $this->message_end = $questionnaire->message_end;
         $this->last_modified = $questionnaire->last_modified;
         foreach ($questionnaire->questions_group as $question_group) {
             $answerGroup = new AnswerGroup;
             $answerGroup->copy($question_group);
             $this->answers_group[] = $answerGroup;
         }
-    }
-
-    /**
-     * render contributors
-     * used in plain page and tab page
-     * @return string
-     */
-    public function renderContributors()
-    {
-        return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
 
     /**

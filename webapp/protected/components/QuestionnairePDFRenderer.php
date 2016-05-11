@@ -73,9 +73,6 @@ class QuestionnairePDFRenderer
         $html = '<span>' . "<b>Description :</b> " . $questionnaire->description . '<br /><b>Last Modified :</b>' . date("d/m/Y", $dd->sec) . '</span>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
         $pdf->Ln(10);
-        $html = '<span>' . $questionnaire->message_start . '</span>';
-        $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
-        $pdf->Ln(10);
 
         $pdf = QuestionnairePDFRenderer::renderPDF($pdf, $questionnaire, "fr");
 
@@ -87,21 +84,6 @@ class QuestionnairePDFRenderer
 // ---------------------------------------------------------
 //Close and output PDF document
         $pdf->Output('biobanques_qualityform_' . $questionnaire->id . '.pdf', 'D');
-    }
-
-    /**
-     * render contributors
-     * used in plain page and tab page
-     * @return string
-     */
-    public function renderContributors($pdf, $contributors)
-    {
-        $pdf->AddPage();
-        $pdf->Bookmark('Contributeurs', 0, 0, '', 'B', array(0, 64, 128));
-        $pdf->Cell(0, 5, 'Contributors / Contributeurs', 0, 1, 'C');
-// Print text using writeHTMLCell()
-        $pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
-        return $pdf;
     }
 
     /**
@@ -118,7 +100,6 @@ class QuestionnairePDFRenderer
                 $pdf = QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf, $questionnaire, $question_group, $lang, false);
             }
         }
-        $pdf = QuestionnairePDFRenderer::renderContributors($pdf, $questionnaire->contributors);
         return $pdf;
     }
 
