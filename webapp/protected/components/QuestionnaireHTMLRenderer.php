@@ -176,6 +176,9 @@ class QuestionnaireHTMLRenderer
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
+        if ($question->type == "number") {
+            $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+        }
         if ($question->type == "expression") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
@@ -303,7 +306,10 @@ class QuestionnaireHTMLRenderer
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
-        if ($question->type == "exoression") {
+        if ($question->type == "number") {
+            $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+        }
+        if ($question->type == "expression") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
         if ($question->type == "date") {
@@ -510,6 +516,9 @@ class QuestionnaireHTMLRenderer
         $valueInput = "";
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
+        }
+        if ($question->type == "number") {
+            $result.="<input type=\"number\" " . $idInput . " value=\"\"/>";
         }
         if ($question->type == "expression") {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";

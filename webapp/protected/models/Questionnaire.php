@@ -26,11 +26,6 @@ class Questionnaire extends EMongoDocument {
     public $last_modified;
 
     /**
-     * contributors are people working on thi squetsionnaire
-     */
-    public $contributors;
-
-    /**
      * fields to manage add question
      */
 // This has to be defined in every model, this is same as with standard Yii ActiveRecord

@@ -192,7 +192,7 @@ class QuestionnairePDFRenderer
         }
         //affichage de l input selon son type
         $id = $idquestiongroup . "_" . $question->id;
-        if ($question->type == "input" || $question->type == "expression" || $question->type == "date") {
+        if ($question->type == "input" || $question->type == "number" || $question->type == "expression" || $question->type == "date") {
             $pdf->TextField($id, 40, 7);
         }
         if ($question->type == "radio") {

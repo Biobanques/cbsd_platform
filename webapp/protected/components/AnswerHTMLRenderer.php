@@ -143,6 +143,9 @@ class AnswerHTMLRenderer
         if ($answer->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
         }
+        if ($answer->type == "number") {
+            $result.="<input type=\"number\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
+        }
         if ($answer->type == "expression") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
         }
@@ -340,6 +343,9 @@ class AnswerHTMLRenderer
         $valueInput = "";
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
+        }
+        if ($question->type == "number") {
+            $result.="<input type=\"number\" " . $idInput . " value=\"\"/>";
         }
         if ($question->type == "expression") {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
