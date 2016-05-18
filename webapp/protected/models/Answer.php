@@ -177,6 +177,11 @@ class Answer extends EMongoDocument
                         case "egale":
                             $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int)$answerValue));
                             break;
+                        case "notEq":
+                            $criteria->answers_group->answers->id = $questionId;
+                            $criteria->answers_group->answers->answer('!=', (int)$answerValue);
+                            //$criteria->addCond('answers_group.answers', 'noteq', array('id' => $questionId, 'answer' => (int)$answerValue));
+                            break;
                         case "less":
                             $criteria->answers_group->answers->id = $questionId;
                             $criteria->answers_group->answers->answer('<', (int)$answerValue);
@@ -218,6 +223,7 @@ class Answer extends EMongoDocument
     {
         $res = array();
         $res ['egale'] = "égale à";
+        $res ['notEq'] = "différent de";
         $res ['less'] = "inférieure à";
         $res ['greater'] = "supérieure à";
         $res ['lessEq'] = "inférieure ou égale à";
