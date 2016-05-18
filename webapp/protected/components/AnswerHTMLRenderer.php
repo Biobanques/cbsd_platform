@@ -143,11 +143,8 @@ class AnswerHTMLRenderer
         if ($answer->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
         }
-        if ($answer->type == "number") {
+        if ($answer->type == "number" || $answer->type == "expression") {
             $result.="<input type=\"number\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
-        }
-        if ($answer->type == "expression") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
         }
         if ($answer->type == "date") {
             $result.="<input type=\"date\" " . $idInput . " value=\"" . $answer->answer . "\" placeholder=\"Format jj/mm/aaaa\" style=\"height:25px;\"/>";
@@ -344,11 +341,8 @@ class AnswerHTMLRenderer
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
         }
-        if ($question->type == "number") {
+        if ($question->type == "number" || $question->type == "expression") {
             $result.="<input type=\"number\" " . $idInput . " value=\"\"/>";
-        }
-        if ($question->type == "expression") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
         }
         if ($question->type == "date") {
             $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";

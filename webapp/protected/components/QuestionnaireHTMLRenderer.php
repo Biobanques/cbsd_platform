@@ -159,11 +159,8 @@ class QuestionnaireHTMLRenderer {
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
-        if ($question->type == "number") {
+        if ($question->type == "number" || $question->type == "expression") {
             $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\"/>";
-        }
-        if ($question->type == "expression") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
         if ($question->type == "date") {
             $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
@@ -284,11 +281,8 @@ class QuestionnaireHTMLRenderer {
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
-        if ($question->type == "number") {
+        if ($question->type == "number" || $question->type == "expression") {
             $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\"/>";
-        }
-        if ($question->type == "expression") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
         if ($question->type == "date") {
             $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
@@ -492,11 +486,8 @@ class QuestionnaireHTMLRenderer {
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
         }
-        if ($question->type == "number") {
+        if ($question->type == "number" || $question->type == "expression") {
             $result.="<input type=\"number\" " . $idInput . " value=\"\"/>";
-        }
-        if ($question->type == "expression") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
         }
         if ($question->type == "date") {
             $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
