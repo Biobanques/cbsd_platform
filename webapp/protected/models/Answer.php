@@ -78,6 +78,7 @@ class Answer extends EMongoDocument
      * @var array
      */
     public $dynamics;
+    public $compare;
 
     /**
      * use for search by user name
@@ -103,7 +104,7 @@ class Answer extends EMongoDocument
                 'required'
             ),
             array(
-                'id,name,answers_group,login,type,id_patient,dynamics,last_updated,user',
+                'id,name,answers_group,login,type,id_patient,dynamics,compare,last_updated,user',
                 'safe',
                 'on' => 'search'
             )
@@ -169,11 +170,37 @@ class Answer extends EMongoDocument
             $date = str_replace('/', '-', $this->last_updated);
             $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date)), '$lte' => new MongoDate(strtotime($date . " 23:59:59.999Z")));
         }
-
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             foreach ($this->dynamics as $questionId => $answerValue) {
                 if ($answerValue != null && !empty($answerValue)) {
-                    $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => $answerValue));
+                    switch ($this->compare[$questionId]) {
+                        case "egale":
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int)$answerValue));
+                            break;
+                        case "less":
+                            $criteria->answers_group->answers->id = $questionId;
+                            $criteria->answers_group->answers->answer('<', (int)$answerValue);
+                            break;
+                        case "greater":
+                            $criteria->answers_group->answers->id = $questionId;
+                            $criteria->answers_group->answers->answer('>', (int)$answerValue);
+                            break;
+                        case "lessEq":
+                            $criteria->answers_group->answers->id = $questionId;
+                            $criteria->answers_group->answers->answer('<=', (int)$answerValue);
+                            break;
+                        case "greaterEq":
+                            $criteria->answers_group->answers->id = $questionId;
+                            $criteria->answers_group->answers->answer('>=', (int)$answerValue);
+                            break;
+                        case "contient_uniquement":
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => $answerValue));
+                            break;
+                        case "partiellement":
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex('/' . $answerValue . '/i')));
+                            break;
+                    }
+                    
                 }
             }
         }
@@ -185,6 +212,25 @@ class Answer extends EMongoDocument
                 'defaultOrder' => 'name ASC',
             )
         ));
+    }
+    
+    public function getComparaisonNumerique()
+    {
+        $res = array();
+        $res ['egale'] = "égale à";
+        $res ['less'] = "inférieure à";
+        $res ['greater'] = "supérieure à";
+        $res ['lessEq'] = "inférieure ou égale à";
+        $res ['greaterEq'] = "supérieure ou égale à";
+        return $res;
+    }
+    
+    public function getComparaisonString()
+    {
+        $res = array();
+        $res ['contient_uniquement'] = "contient uniquement";
+        $res ['partiellement'] = "contient partiellement";
+        return $res;
     }
 
     /**

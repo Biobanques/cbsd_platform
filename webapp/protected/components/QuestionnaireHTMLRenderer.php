@@ -11,15 +11,13 @@
  * render to display elements of questionnaire
  * @author nicolas
  */
-class QuestionnaireHTMLRenderer
-{
+class QuestionnaireHTMLRenderer {
 
     /**
      * render tab associated to each group for a questionnaire
      * if isAnswered is filled, we are in case of answer.
      */
-    public function renderTabbedGroup($questionnaire, $lang, $isAnswered)
-    {
+    public function renderTabbedGroup($questionnaire, $lang, $isAnswered) {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
         $firstTab = false;
@@ -66,8 +64,7 @@ class QuestionnaireHTMLRenderer
      * @param type $isAnswered
      * @return string
      */
-    public function renderQuestionGroupHTML($questionnaire, $group, $lang, $isAnswered)
-    {
+    public function renderQuestionGroupHTML($questionnaire, $group, $lang, $isAnswered) {
         $result = "";
         //en par defaut
         $title = $group->title;
@@ -109,8 +106,7 @@ class QuestionnaireHTMLRenderer
      * render html the current question.
      */
 
-    public function renderQuestionHTML($idquestiongroup, $question, $lang, $isAnswered)
-    {
+    public function renderQuestionHTML($idquestiongroup, $question, $lang, $isAnswered) {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "") {
@@ -239,8 +235,7 @@ class QuestionnaireHTMLRenderer
      * render html the current question.
      */
 
-    public function renderQuestionForSearchHTML($question, $lang, $isAnswered)
-    {
+    public function renderQuestionForSearchHTML($question, $lang, $isAnswered) {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "" && $question->style != "") {
@@ -249,16 +244,7 @@ class QuestionnaireHTMLRenderer
         }
 
         $result.="<div class=\"col-lg-6\" " . $style . ">";
-        if ($question->precomment != null) {
-            $precomment = $question->precomment;
-            if ($lang == "fr") {
-                $precomment = $question->precomment_fr;
-            }
-            if ($lang == "both") {
-                $precomment = "<i>" . $question->precomment . "</i><br>" . $question->precomment_fr;
-            }
-            $result.="<div class=\"question-precomment\">" . $precomment . "</div>";
-        }
+
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
         if ($lang == "fr") {
@@ -274,10 +260,15 @@ class QuestionnaireHTMLRenderer
             $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
         }
         $result.="</label>";
-
+        // Liste déroulante des opérateurs de comparaison
+        if ($question->type == "input" || $question->type == "checkbox" || $question->type == "text") {
+            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonString());
+        } elseif ($question->type == "number" || $question->type == "expression") {
+            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonNumerique());
+        }
         $result.="<div class=\"question-input\">";
 
-        $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
+        $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\" style=\"margin-left:110px;\"";
         $valueInput = "";
         if (Yii::app()->controller->id != "formulaire") {
             if ($question->id == "examdate") {
@@ -374,8 +365,7 @@ class QuestionnaireHTMLRenderer
      * render tab associated to each group for a questionnaire in edit mode
      * if isAnswered is filled, we are in case of answer.
      */
-    public function renderTabbedGroupEditMode($questionnaire, $lang)
-    {
+    public function renderTabbedGroupEditMode($questionnaire, $lang) {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
         $firstTab = false;
@@ -418,8 +408,7 @@ class QuestionnaireHTMLRenderer
      * @param type $isAnswered
      * @return string
      */
-    public function renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang)
-    {
+    public function renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang) {
         $result = "";
         //en par defaut
         $title = $group->title;
@@ -460,8 +449,7 @@ class QuestionnaireHTMLRenderer
      * render html the current question.
      */
 
-    public function renderQuestionHTMLEditMode($idMongoQuestionnaire, $idquestiongroup, $question, $lang)
-    {
+    public function renderQuestionHTMLEditMode($idMongoQuestionnaire, $idquestiongroup, $question, $lang) {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "") {
@@ -568,4 +556,5 @@ class QuestionnaireHTMLRenderer
         $result.="</div>";
         return $result;
     }
+
 }

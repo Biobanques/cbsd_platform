@@ -51,7 +51,6 @@ return false;
     <div class="row">
         <div class="col-lg-6">
             <?php echo $form->label($model, 'type'); ?>
-            <?php // echo $form->textField($model, 'type'); ?>
             <?php echo CHtml::dropDownList('Answer[type]', 'Answer[type]', Answer::model()->getAllTypes(), array('prompt' => '----')); ?>
         </div>
 
@@ -64,7 +63,6 @@ return false;
     <div class="row">
         <div class="col-lg-6">
             <?php
-//            echo $form->label($model, 'last_modified');
             echo CHtml::label('Date d\'examen', 'Answer[dynamics][examdate]');
             ?>
             <?php
@@ -107,16 +105,6 @@ return false;
             <?php echo CHtml::dropDownList('question', 'addQuestion', Answer::model()->getAllQuestions(), array('prompt' => '----')); ?>
             <?php
             echo CHtml::button('ajouter', array('id' => 'addFilterButton'));
-//            echo CHtml::ajaxSubmitButton(
-//                'Ajouter', Yii::app()->createUrl('site/index'),
-//                array(
-//                    'type' => 'POST',
-//                    //'success' => 'js:function(data){alert(data);}',
-//                    'success' => 'js:function(){var e = document.getElementById("question");
-//var strUser = e.options[e.selectedIndex].value; alert(strUser);}',
-//                    'error'=>'js:function(data){alert("comment NOT Submitted");}',
-            //                )
-//            );
             ?>
 
         </div>

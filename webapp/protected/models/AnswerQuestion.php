@@ -107,6 +107,9 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
     public function setAnswer($val) {
         $this->answer = $val;
     }
+    public function setAnswerNumerique($val) {
+        $this->answer = new MongoInt32($val);
+    }
     
     /**
      * get literal value to display into a flat grid (csv, xls)
