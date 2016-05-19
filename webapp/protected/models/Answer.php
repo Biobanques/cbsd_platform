@@ -160,11 +160,29 @@ class Answer extends EMongoDocument
         }
 
         if (isset($this->id_patient) && !empty($this->id_patient)) {
-            $criteria->id_patient = $this->id_patient;
+            $idPatient = split(',', $this->id_patient);
+            $regex = '/';
+            foreach($idPatient as $patient){
+                $regex.= $patient;
+                if ($patient != end($idPatient)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
+            $criteria->addCond('id_patient', '==', new MongoRegex($regex));
         }
 
         if (isset($this->name) && !empty($this->name)) {
-            $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '/i'));
+            $names = split(',', $this->name);
+            $regex = '/';
+            foreach($names as $n){
+                $regex.= $n;
+                if ($n != end($names)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
+            $criteria->addCond('name', '==', new MongoRegex($regex));
         }
         if (isset($this->last_updated) && !empty($this->last_updated)) {
             $date = str_replace('/', '-', $this->last_updated);
