@@ -191,57 +191,60 @@ class Answer extends EMongoDocument
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             foreach ($this->dynamics as $questionId => $answerValue) {
                 if ($answerValue != null && !empty($answerValue)) {
-                    switch ($this->compare[$questionId]) {
-                        case "egale":
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int)$answerValue));
-                            break;
-                        case "notEq":
-                            $criteria->answers_group->answers->id = $questionId;
-                            $criteria->answers_group->answers->answer('!=', (int)$answerValue);
-                            //$criteria->addCond('answers_group.answers', 'noteq', array('id' => $questionId, 'answer' => (int)$answerValue));
-                            break;
-                        case "less":
-                            $criteria->answers_group->answers->id = $questionId;
-                            $criteria->answers_group->answers->answer('<', (int)$answerValue);
-                            break;
-                        case "greater":
-                            $criteria->answers_group->answers->id = $questionId;
-                            $criteria->answers_group->answers->answer('>', (int)$answerValue);
-                            break;
-                        case "lessEq":
-                            $criteria->answers_group->answers->id = $questionId;
-                            $criteria->answers_group->answers->answer('<=', (int)$answerValue);
-                            break;
-                        case "greaterEq":
-                            $criteria->answers_group->answers->id = $questionId;
-                            $criteria->answers_group->answers->answer('>=', (int)$answerValue);
-                            break;
-                        case "contient_uniquement":
-                            $values = split(',', $answerValue);
-                            $regex = '/';
-                            foreach($values as $value){
-                                $regex.= '^' . $value . '$';
-                                if ($value != end($values)) {
-                                    $regex.= '|';
+                    if ($questionId == "examdate") {
+                        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => $answerValue));
+                    } else {
+                        switch ($this->compare[$questionId]) {
+                            case "egale":
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int)$answerValue));
+                                break;
+                            case "notEq":
+                                $criteria->answers_group->answers->id = $questionId;
+                                $criteria->answers_group->answers->answer('!=', (int)$answerValue);
+                                //$criteria->addCond('answers_group.answers', 'noteq', array('id' => $questionId, 'answer' => (int)$answerValue));
+                                break;
+                            case "less":
+                                $criteria->answers_group->answers->id = $questionId;
+                                $criteria->answers_group->answers->answer('<', (int)$answerValue);
+                                break;
+                            case "greater":
+                                $criteria->answers_group->answers->id = $questionId;
+                                $criteria->answers_group->answers->answer('>', (int)$answerValue);
+                                break;
+                            case "lessEq":
+                                $criteria->answers_group->answers->id = $questionId;
+                                $criteria->answers_group->answers->answer('<=', (int)$answerValue);
+                                break;
+                            case "greaterEq":
+                                $criteria->answers_group->answers->id = $questionId;
+                                $criteria->answers_group->answers->answer('>=', (int)$answerValue);
+                                break;
+                            case "contient_uniquement":
+                                $values = split(',', $answerValue);
+                                $regex = '/';
+                                foreach($values as $value){
+                                    $regex.= '^' . $value . '$';
+                                    if ($value != end($values)) {
+                                        $regex.= '|';
+                                    }
                                 }
-                            }
-                            $regex .= '/i';
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
-                            break;
-                        case "partiellement":
-                            $values = split(',', $answerValue);
-                            $regex = '/';
-                            foreach($values as $value){
-                                $regex.= $value;
-                                if ($value != end($values)) {
-                                    $regex.= '|';
+                                $regex .= '/i';
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
+                                break;
+                            case "partiellement":
+                                $values = split(',', $answerValue);
+                                $regex = '/';
+                                foreach($values as $value){
+                                    $regex.= $value;
+                                    if ($value != end($values)) {
+                                        $regex.= '|';
+                                    }
                                 }
-                            }
-                            $regex .= '/i';
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
-                            break;
-                    }
-                    
+                                $regex .= '/i';
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
+                                break;
+                        }
+                   } 
                 }
             }
         }
