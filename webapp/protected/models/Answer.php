@@ -217,10 +217,28 @@ class Answer extends EMongoDocument
                             $criteria->answers_group->answers->answer('>=', (int)$answerValue);
                             break;
                         case "contient_uniquement":
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => $answerValue));
+                            $values = split(',', $answerValue);
+                            $regex = '/';
+                            foreach($values as $value){
+                                $regex.= '^' . $value . '$';
+                                if ($value != end($values)) {
+                                    $regex.= '|';
+                                }
+                            }
+                            $regex .= '/i';
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
                             break;
                         case "partiellement":
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex('/' . $answerValue . '/i')));
+                            $values = split(',', $answerValue);
+                            $regex = '/';
+                            foreach($values as $value){
+                                $regex.= $value;
+                                if ($value != end($values)) {
+                                    $regex.= '|';
+                                }
+                            }
+                            $regex .= '/i';
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
                             break;
                     }
                     
