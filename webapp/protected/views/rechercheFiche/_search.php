@@ -51,7 +51,7 @@ return false;
     <div class="row">
         <div class="col-lg-6">
             <?php echo $form->label($model, 'type'); ?>
-            <?php echo CHtml::dropDownList('Answer[type]', 'Answer[type]', Answer::model()->getAllTypes(), array('prompt' => '----')); ?>
+            <?php echo $form->textField($model, 'type'); ?>
         </div>
 
         <div class="col-lg-6">

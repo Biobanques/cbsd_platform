@@ -142,7 +142,16 @@ class Answer extends EMongoDocument
         $criteria = new EMongoCriteria;
 
         if (isset($this->type) && !empty($this->type)) {
-            $criteria->addCond('type', '==', new MongoRegex('/' . $this->type . '/i'));
+            $types = split(',', $this->type);
+            $regex = '/';
+            foreach($types as $typ){
+                $regex.= $typ;
+                if ($typ != end($types)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
+            $criteria->addCond('type', '==', new MongoRegex($regex));
         }
 
         if (isset($this->user) && !empty($this->user)) {
