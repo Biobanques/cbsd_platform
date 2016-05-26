@@ -137,8 +137,10 @@ class AnswerController extends Controller {
             $criteriaCliniques->type = "clinique";
             $criteriaNeuropathologiques = new EMongoCriteria($criteria);
             $criteriaNeuropathologiques->type = "neuropathologique";
+            $neuropath = Answer::model()->findAll($criteriaNeuropathologiques);
             $criteriaGenetiques = new EMongoCriteria($criteria);
             $criteriaGenetiques->type = "genetique";
+            $genetique = Answer::model()->findAll($criteriaGenetiques);
 
 
             $dataProviderCliniques = new EMongoDocumentDataProvider('Answer');
@@ -155,7 +157,7 @@ class AnswerController extends Controller {
             $questionnaire = Questionnaire::model()->findAll();
             $_SESSION['datapatient'] = $patient;
             if (isset($_SESSION['datapatient']))
-                $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'questionnaire' => $questionnaire, 'patient' => $patient));
+                $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'questionnaire' => $questionnaire, 'patient' => $patient, 'neuropath' => $neuropath, 'genetique' => $genetique));
             elseif (isset($_POST['PatientForm'])) {
                 $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'patient' => $patient));
             } else {

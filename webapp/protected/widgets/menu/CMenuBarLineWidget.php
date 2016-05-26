@@ -9,38 +9,38 @@
  *
  * affichage d une ligne de menu pour effectuer diverses actions
  */
-class CMenuBarLineWidget extends CWidget
-{
+class CMenuBarLineWidget extends CWidget {
+
     /**
      * tableau de liens contenant des tableaux de chaque lien, avec label, action et image si possible
      * @var unknown_type
      */
     public $links = array();
+
     /**
      * nom du model utilisé, exemple, studio etc. pour exports
      * @var unknown_type
      */
     public $controllerName;
+
     /**
      * surcharge du nom de l action si besoin, en cas de doublon de nom d exports sur un controller.
      * @var unknown
      */
     public $actionPrint;
-    /**
-     * surcharge du nom de l action si besoin, en cas de doublon de nom d exports sur un controller.
-     * @var unknown
-     */
-    public $actionExportXls;
+
     /**
      * surcharge du nom de l action si besoin, en cas de doublon de nom d exports sur un controller.
      * @var unknown
      */
     public $actionExportCsv;
+
     /**
      * surcharge du nom de l action si besoin, en cas de doublon de nom d exports sur un controller.
      * @var unknown
      */
     public $actionExportPdf;
+
     /**
      * boolean to activate search button.
      * @var unknown
@@ -73,18 +73,13 @@ class CMenuBarLineWidget extends CWidget
                 echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
             }
             echo "<div style=\"display:inline;float:right;\">";
-            $imageexport = CHtml::image(Yii::app()->baseUrl . '/images/page_white_csv.png', 'Liste format csv');
+            // Export CSV
+            $imageexport = CHtml::image(Yii::app()->baseUrl . '/images/page_white_csv.png', 'Liste format csv', array("title" => "Exporter en CSV"));
             $actionNameCsv = 'exportCsv';
             if (isset($this->actionExportCsv)) {
                 $actionNameCsv = $this->actionExportCsv;
             }
             echo "<span style=\"padding-left: 10px;\">" . CHtml::link($imageexport, array($this->controllerName . '/' . $actionNameCsv)) . "</span>";
-            $imageexportxls = CHtml::image(Yii::app()->baseUrl . '/images/page_white_excel.png', 'Liste format excel');
-            $actionNameXls = 'exportXls';
-            if (isset($this->actionExportXls)) {
-                $actionNameXls = $this->actionExportXls;
-            }
-            echo "<span style=\"padding-left: 10px;\">" . CHtml::link($imageexportxls, array($this->controllerName . '/' . $actionNameXls)) . "</span>";
             echo "</div>";
         }
         echo "</div>";

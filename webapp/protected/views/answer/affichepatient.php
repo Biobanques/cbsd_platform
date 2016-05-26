@@ -1,3 +1,13 @@
+<?php
+Yii::app()->clientScript->registerScript('liste_fiche', "
+$(function(){
+    if (document.getElementById(\"form\").length -1 == 0) {
+        $(\"#liste_fiche\").hide();
+    }
+});
+");
+?>
+
 <div id="statusMsg">
     <?php if (!Yii::app()->user->hasFlash('success')) { ?>
         <div class="flash-success">
@@ -146,13 +156,13 @@ if (Yii::app()->user->getState('activeProfil') != "chercheur" && Yii::app()->use
     ));
     ?>
 
-    <div class="row">
+    <div class="row" id="liste_fiche">
         <div class="span3">
             <p>Saisir une nouvelle fiche : </p>
         </div>
         <div class="span3" style="margin:-5px;">
             <?php
-            echo CHtml::dropDownList('form', '', Questionnaire::model()->getFiche(Yii::app()->user->getActiveProfil()), array('prompt' => '--- Choisir une fiche ---'));
+            echo CHtml::dropDownList('form', '', Questionnaire::model()->getFiche(Yii::app()->user->getActiveProfil(), $neuropath, $genetique), array('prompt' => '--- Choisir une fiche ---'));
             ?>
         </div>
 

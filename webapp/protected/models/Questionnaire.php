@@ -120,8 +120,11 @@ class Questionnaire extends EMongoDocument
         return $resArraySorted;
     }
 
-    public function getFiche($activeProfil)
+    public function getFiche($activeProfil, $modelNeuropath, $modelGenetique)
     {
+        $arFicheNeuropath = array();
+        $arFicheGenetique = array();
+        $arFiche = array();
         if ($activeProfil == "clinicien") {
             $typeFiche = "clinique";
         }
@@ -135,8 +138,17 @@ class Questionnaire extends EMongoDocument
         $criteria->type = $typeFiche;
         $questionnaire = Questionnaire::model()->findAll($criteria);
         $res = array();
+        foreach ($modelNeuropath as $ficheNeuropath) {
+            array_push($arFicheNeuropath, $ficheNeuropath->name);
+        }
+        foreach ($modelGenetique as $ficheGenetique) {
+            array_push($arFicheGenetique, $ficheGenetique->name);
+        }
+        $arFiche = array_merge($arFicheNeuropath, $arFicheGenetique);
         foreach ($questionnaire as $fiche => $value) {
-            $res[$value['id']] = $value['name'];
+            if (!in_array($value['name'], $arFiche)) {
+                $res[$value['id']] = $value['name'];
+            }
         }
         return $res;
     }
