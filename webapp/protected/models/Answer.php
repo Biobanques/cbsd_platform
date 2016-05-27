@@ -7,21 +7,18 @@
  * @author nmalservet
  *
  */
-class Answer extends EMongoDocument
-{
+class Answer extends EMongoDocument {
 
     /**
      *
      */
 // This has to be defined in every model, this is same as with standard Yii ActiveRecord
-    public static function model($className = __CLASS__)
-    {
+    public static function model($className = __CLASS__) {
         return parent::model($className);
     }
 
 // This method is required!
-    public function getCollectionName()
-    {
+    public function getCollectionName() {
         return 'answer';
     }
 
@@ -86,8 +83,7 @@ class Answer extends EMongoDocument
      */
     public $user;
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return array('embeddedArrays' => array(
                 'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',
                 'arrayPropertyName' => 'answers_group', // name of property, that will be used as an array
@@ -96,8 +92,7 @@ class Answer extends EMongoDocument
         );
     }
 
-    public function rules()
-    {
+    public function rules() {
         return array(
             array(
                 'id,login,questionnaireMongoId',
@@ -111,8 +106,7 @@ class Answer extends EMongoDocument
         );
     }
 
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array(
             'id' => 'Id',
             'id_patient' => 'N° anonymat',
@@ -125,8 +119,7 @@ class Answer extends EMongoDocument
         );
     }
 
-    public function attributeExportedLabels()
-    {
+    public function attributeExportedLabels() {
         return array(
             'id_patient' => 'N° anonymat',
             'id' => 'N° fiche',
@@ -137,14 +130,26 @@ class Answer extends EMongoDocument
         );
     }
 
-    public function search($caseSensitive = false)
-    {
+    public function attributeExportedSqlLabels() {
+        return array(
+            'creator' => 'Créateur de la fiche',
+            'id' => 'Identifiant de la fiche',
+            'type' => 'Type de fiche',
+            'login' => 'Nom d\'utilisateur',
+            'id_patient' => 'N° anonymat',
+            'name' => 'Nom de la fiche',
+            'last_modified' => 'Date de mise à jour du questionnaire',
+            'last_updated' => 'Date de saisie',
+        );
+    }
+
+    public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
 
         if (isset($this->type) && !empty($this->type)) {
             $types = split(',', $this->type);
             $regex = '/';
-            foreach($types as $typ){
+            foreach ($types as $typ) {
                 $regex.= $typ;
                 if ($typ != end($types)) {
                     $regex.= '|';
@@ -171,7 +176,7 @@ class Answer extends EMongoDocument
         if (isset($this->id_patient) && !empty($this->id_patient)) {
             $idPatient = split(',', $this->id_patient);
             $regex = '/';
-            foreach($idPatient as $patient){
+            foreach ($idPatient as $patient) {
                 $regex.= $patient;
                 if ($patient != end($idPatient)) {
                     $regex.= '|';
@@ -184,7 +189,7 @@ class Answer extends EMongoDocument
         if (isset($this->name) && !empty($this->name)) {
             $names = split(',', $this->name);
             $regex = '/';
-            foreach($names as $n){
+            foreach ($names as $n) {
                 $regex.= $n;
                 if ($n != end($names)) {
                     $regex.= '|';
@@ -205,33 +210,33 @@ class Answer extends EMongoDocument
                     } else {
                         switch ($this->compare[$questionId]) {
                             case "egale":
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int)$answerValue));
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int) $answerValue));
                                 break;
                             case "notEq":
                                 $criteria->answers_group->answers->id = $questionId;
-                                $criteria->answers_group->answers->answer('!=', (int)$answerValue);
+                                $criteria->answers_group->answers->answer('!=', (int) $answerValue);
                                 //$criteria->addCond('answers_group.answers', 'noteq', array('id' => $questionId, 'answer' => (int)$answerValue));
                                 break;
                             case "less":
                                 $criteria->answers_group->answers->id = $questionId;
-                                $criteria->answers_group->answers->answer('<', (int)$answerValue);
+                                $criteria->answers_group->answers->answer('<', (int) $answerValue);
                                 break;
                             case "greater":
                                 $criteria->answers_group->answers->id = $questionId;
-                                $criteria->answers_group->answers->answer('>', (int)$answerValue);
+                                $criteria->answers_group->answers->answer('>', (int) $answerValue);
                                 break;
                             case "lessEq":
                                 $criteria->answers_group->answers->id = $questionId;
-                                $criteria->answers_group->answers->answer('<=', (int)$answerValue);
+                                $criteria->answers_group->answers->answer('<=', (int) $answerValue);
                                 break;
                             case "greaterEq":
                                 $criteria->answers_group->answers->id = $questionId;
-                                $criteria->answers_group->answers->answer('>=', (int)$answerValue);
+                                $criteria->answers_group->answers->answer('>=', (int) $answerValue);
                                 break;
                             case "contient_uniquement":
                                 $values = split(',', $answerValue);
                                 $regex = '/';
-                                foreach($values as $value){
+                                foreach ($values as $value) {
                                     $regex.= '^' . $value . '$';
                                     if ($value != end($values)) {
                                         $regex.= '|';
@@ -243,7 +248,7 @@ class Answer extends EMongoDocument
                             case "partiellement":
                                 $values = split(',', $answerValue);
                                 $regex = '/';
-                                foreach($values as $value){
+                                foreach ($values as $value) {
                                     $regex.= $value;
                                     if ($value != end($values)) {
                                         $regex.= '|';
@@ -253,7 +258,7 @@ class Answer extends EMongoDocument
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
                                 break;
                         }
-                   } 
+                    }
                 }
             }
         }
@@ -266,9 +271,8 @@ class Answer extends EMongoDocument
             )
         ));
     }
-    
-    public function getComparaisonNumerique()
-    {
+
+    public function getComparaisonNumerique() {
         $res = array();
         $res ['egale'] = "égale à";
         $res ['notEq'] = "différent de";
@@ -278,9 +282,8 @@ class Answer extends EMongoDocument
         $res ['greaterEq'] = "supérieure ou égale à";
         return $res;
     }
-    
-    public function getComparaisonString()
-    {
+
+    public function getComparaisonString() {
         $res = array();
         $res ['contient_uniquement'] = "contient uniquement";
         $res ['partiellement'] = "contient partiellement";
@@ -290,8 +293,7 @@ class Answer extends EMongoDocument
     /**
      * render in html the questionnaire
      */
-    public function renderHTML($lang)
-    {
+    public function renderHTML($lang) {
         $result = "";
         foreach ($this->answers_group as $answer_group) {
             $result.=AnswerHTMLRenderer::renderAnswerGroupHTML($this, $answer_group, $lang);
@@ -300,8 +302,7 @@ class Answer extends EMongoDocument
         return $result;
     }
 
-    public function renderTabbedGroup($lang)
-    {
+    public function renderTabbedGroup($lang) {
         return QuestionnaireHTMLRenderer::renderTabbedGroup($this, $lang, true);
     }
 
@@ -309,8 +310,7 @@ class Answer extends EMongoDocument
      * copy attributes of questionnaire recursively to the final state answer-question.
      * @param type $questionnaire
      */
-    public function copy($questionnaire)
-    {
+    public function copy($questionnaire) {
         $this->id = $questionnaire->id;
         $this->questionnaireMongoId = $questionnaire->_id;
         $this->name = $questionnaire->name;
@@ -327,10 +327,17 @@ class Answer extends EMongoDocument
      * get the last modified value into a french date format JJ/MM/AAAA
      * @return type
      */
-    public function getLastModified()
-    {
+    public function getLastModified() {
         if ($this->last_modified != null) {
             return date("d/m/Y H:m", $this->last_modified->sec);
+        } else {
+            return null;
+        }
+    }
+
+    public function getLastSqlModified() {
+        if ($this->last_modified != null) {
+            return date("Y-m-d H:m", $this->last_modified->sec);
         } else {
             return null;
         }
@@ -340,10 +347,17 @@ class Answer extends EMongoDocument
      * get the last updatedvalue into a french date format JJ/MM/AAAA
      * @return type
      */
-    public function getLastUpdated()
-    {
+    public function getLastUpdated() {
         if ($this->last_updated != null) {
             return date("d/m/Y H:m", $this->last_updated->sec);
+        } else {
+            return null;
+        }
+    }
+
+    public function getLastSqlUpdated() {
+        if ($this->last_updated != null) {
+            return date("Y-m-d H:m", $this->last_updated->sec);
         } else {
             return null;
         }
@@ -353,8 +367,7 @@ class Answer extends EMongoDocument
      * retourne le user qui a renseigné le formulaire
      * @return type
      */
-    public function getUserRecorderName()
-    {
+    public function getUserRecorderName() {
         $result = "-";
         $user = User::model()->findByPk(new MongoID($this->login));
         if ($user != null) {
@@ -367,8 +380,7 @@ class Answer extends EMongoDocument
      * retourne l'id de user qui a renseigné la fiche
      * @return type
      */
-    public function getUserId()
-    {
+    public function getUserId() {
         return $this->login;
     }
 
@@ -376,8 +388,7 @@ class Answer extends EMongoDocument
      * retourne l'id max lors de l'ajout des gènes
      * @return type
      */
-    public function getMaxIdGene($nbMax, $answerQuestionId)
-    {
+    public function getMaxIdGene($nbMax, $answerQuestionId) {
         $nb = preg_replace("/[^0-9]/", "", $answerQuestionId);
         return ($nbMax < $nb) ? $nbMax = $nb : $nb;
     }
@@ -386,8 +397,7 @@ class Answer extends EMongoDocument
      * add gene to AnswerQuestion model
      * @return type
      */
-    public function addGene($nbMax, $gene)
-    {
+    public function addGene($nbMax, $gene) {
         $gene->id = "gene" . $nbMax;
         $gene->label = "Nom du gène";
         $gene->label_fr = "Nom du gène";
@@ -399,57 +409,53 @@ class Answer extends EMongoDocument
         $gene->precomment = "";
         $gene->precomment_fr = "";
     }
-    
+
     /**
      * add analyse to AnswerQuestion model
      * @return type
      */
-    public function addAnalyse($nbMax, $analyse)
-    {
-            $analyse->id = "analyse" . $nbMax;
-            $analyse->label = "Analysé";
-            $analyse->label_fr = "Analysé";
-            $analyse->type = "radio";
-            $analyse->style = "float:right;";
-            $analyse->values = "Oui,Non";
-            $analyse->values_fr = "";
-            $analyse->answer = "Non";
-            $analyse->precomment = "";
-            $analyse->precomment_fr = "";
+    public function addAnalyse($nbMax, $analyse) {
+        $analyse->id = "analyse" . $nbMax;
+        $analyse->label = "Analysé";
+        $analyse->label_fr = "Analysé";
+        $analyse->type = "radio";
+        $analyse->style = "float:right;";
+        $analyse->values = "Oui,Non";
+        $analyse->values_fr = "";
+        $analyse->answer = "Non";
+        $analyse->precomment = "";
+        $analyse->precomment_fr = "";
     }
-    
+
     /**
      * add mutation to AnswerQuestion model
      * @return type
      */
-    public function addMutation($nbMax, $mutation)
-    {
-            $mutation->id = "mutation" . $nbMax;
-            $mutation->label = "Mutation(s)";
-            $mutation->label_fr = "Mutation(s)";
-            $mutation->type = "input";
-            $mutation->style = "";
+    public function addMutation($nbMax, $mutation) {
+        $mutation->id = "mutation" . $nbMax;
+        $mutation->label = "Mutation(s)";
+        $mutation->label_fr = "Mutation(s)";
+        $mutation->type = "input";
+        $mutation->style = "";
     }
-    
+
     /**
      * add comment to AnswerQuestion model
      * @return type
      */
-    public function addComment($nbMax, $comment)
-    {
-            $comment->id = "comment" . $nbMax;
-            $comment->label = "Commentaire";
-            $comment->label_fr = "Commentaire";
-            $comment->type = "input";
-            $comment->style = "float:right;";
+    public function addComment($nbMax, $comment) {
+        $comment->id = "comment" . $nbMax;
+        $comment->label = "Commentaire";
+        $comment->label_fr = "Commentaire";
+        $comment->type = "input";
+        $comment->style = "float:right;";
     }
 
     /**
      * Ajoute les 4 champs "gene", "analyse", "mutation", "commentaire" dans les réponses
      * @return type
      */
-    public function addGeneToAnswers($answerGroup, $gene, $analyse, $mutation, $comment)
-    {
+    public function addGeneToAnswers($answerGroup, $gene, $analyse, $mutation, $comment) {
         foreach ($answerGroup as $answer_group) {
             if ($answer_group->id == "gene") {
                 $answer_group->answers[] = $gene;
@@ -464,8 +470,7 @@ class Answer extends EMongoDocument
      * retourne la liste de toutes les questions de toutes les fiches
      * @return type
      */
-    public function getAllQuestions()
-    {
+    public function getAllQuestions() {
         $result = array();
         $answers = $this->getAllDetailledQuestions();
         foreach ($answers as $answer) {
@@ -476,8 +481,7 @@ class Answer extends EMongoDocument
         return $result;
     }
 
-    public function getAllDetailledQuestions()
-    {
+    public function getAllDetailledQuestions() {
         $result = array();
         $fiches = Answer::model()->findAll();
         foreach ($fiches as $fiche) {
@@ -494,8 +498,7 @@ class Answer extends EMongoDocument
         return $result;
     }
 
-    public function findAllDetailledQuestionById($id)
-    {
+    public function findAllDetailledQuestionById($id) {
         $result = null;
         foreach ($this->getAllDetailledQuestions() as $question) {
             if ($question->answer->id == $id)
@@ -504,8 +507,7 @@ class Answer extends EMongoDocument
         return $result;
     }
 
-    public function getAnswerByQuestionId($id)
-    {
+    public function getAnswerByQuestionId($id) {
         $result = null;
         foreach ($this->answers_group as $group) {
             foreach ($group->answers as $answer) {
@@ -517,8 +519,7 @@ class Answer extends EMongoDocument
         return $result;
     }
 
-    public function getAllTypes()
-    {
+    public function getAllTypes() {
         $result = array();
         $types = Answer::model()->getCollection()->distinct("type");
         foreach ($types as $type) {
@@ -551,8 +552,7 @@ class Answer extends EMongoDocument
      * @param $models : list of answers
      * @result array : each line = each model answer
      */
-    public function resultToArray($models)
-    {
+    public function resultToArray($models) {
         $result = array();
         $headerLineFixe = $this->attributeExportedLabels();
         $answersList = array();
@@ -574,7 +574,7 @@ class Answer extends EMongoDocument
                 foreach ($group->answers as $answerQuestion) {
                     //construction du label de colonne
                     // $label = "[" . $answer->name . "][" . $group->title_fr . "][" . $answerQuestion->label . "]";
-                    $label = "[" . $group->title_fr . "][" . $answerQuestion->label . "]";
+                    $label = "[" . $answerQuestion->id . "][" . $answerQuestion->label . "]";
                     $value = $answerQuestion->getLiteralAnswer();
                     $ansQuestion[] = array();
                     $ansQuestion['label'] = $label;
@@ -629,4 +629,35 @@ class Answer extends EMongoDocument
         }
         return $result;
     }
+
+    public function resultToSql($models) {
+        $table_question = "question";
+        $sql = "";
+        $sql.= "SET foreign_key_checks = 0;\n";
+        $sql.= "DROP TABLE IF EXISTS `" . $table_question . "`;\n";
+        $sql.= 'CREATE TABLE `' . $table_question . '` (`question_id` int(11) NOT NULL AUTO_INCREMENT,';
+        foreach ($models as $key => $value) {
+            if ($key == 0) {
+                foreach ($value as $k => $v) {
+                    $sql.= "`" . $v . "` varchar(255) NOT NULL,";
+                }
+            }
+        }
+        $sql.= " PRIMARY KEY (`question_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;\n";
+        foreach ($models as $key => $value) {
+            if ($key != 0) {
+                $sql.= 'INSERT INTO `' . $table_question . "` VALUES ('',";
+                foreach ($value as $k => $v) {
+                    $v = str_replace("'", "''", $v);
+                    $sql.= "'" . $v . "',";
+                }
+                $sql = substr($sql, 0, -1);
+                    $sql.= ");\n";
+            }
+        }
+        return $sql;
+    }
+
 }
+
+
