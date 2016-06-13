@@ -147,11 +147,10 @@ class Answer extends EMongoDocument {
         $criteria = new EMongoCriteria;
 
         if (isset($this->type) && !empty($this->type)) {
-            $types = split(',', $this->type);
             $regex = '/';
-            foreach ($types as $typ) {
-                $regex.= $typ;
-                if ($typ != end($types)) {
+            foreach ($this->type as $value) {
+                $regex .= $value;
+                if ($value != end($this->type)) {
                     $regex.= '|';
                 }
             }
@@ -659,5 +658,6 @@ class Answer extends EMongoDocument {
     }
 
 }
+
 
 

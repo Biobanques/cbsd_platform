@@ -49,9 +49,11 @@ return false;
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-2">
             <?php echo $form->label($model, 'type'); ?>
-            <?php echo $form->textField($model, 'type'); ?>
+        </div>
+        <div class="col-lg-4">
+            <?php echo $form->checkBoxList($model, 'type', Questionnaire::model()->getArrayType(), array("style" => "margin-left: 20px;")); ?>
         </div>
 
         <div class="col-lg-6">
