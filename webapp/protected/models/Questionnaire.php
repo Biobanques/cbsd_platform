@@ -152,6 +152,21 @@ class Questionnaire extends EMongoDocument
         }
         return $res;
     }
+    
+        /**
+     * retourne toutes les noms des fiches
+     * @return type
+     */
+    public function getNomsFiches() {
+        $res = array();
+        $fiches = Questionnaire::model()->findAll();
+        foreach ($fiches as $fiche) {
+            if (!in_array($fiche->name, $res)) {
+                array_push($res, $fiche->name);
+            }
+        }
+        return $res;
+    }
 
     /**
      * render in html the questionnaire

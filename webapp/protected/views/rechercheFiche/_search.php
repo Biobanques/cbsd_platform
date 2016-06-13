@@ -53,12 +53,14 @@ return false;
             <?php echo $form->label($model, 'type'); ?>
         </div>
         <div class="col-lg-4">
-            <?php echo $form->checkBoxList($model, 'type', Questionnaire::model()->getArrayType(), array("style" => "margin-left: 20px;")); ?>
+            <?php echo $form->checkBoxList($model, 'type', Questionnaire::model()->getArrayType(), array('labelOptions' => array("style"=>"margin-right:60px;"))); ?>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-2">
             <?php echo $form->label($model, 'name'); ?>
-            <?php echo $form->textField($model, 'name'); ?>
+        </div>
+        <div class="col-lg-4">
+            <?php echo $form->checkBoxList($model, 'name', Questionnaire::model()->getNomsFiches(), array('labelOptions' => array("style"=>"margin-right:60px;height: 25px;"))); ?>
         </div>
     </div>
 
