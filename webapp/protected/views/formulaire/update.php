@@ -1,3 +1,13 @@
+<?php
+Yii::app()->clientScript->registerScript('form_question', "
+$(document).ready(function() {
+    $('.row input[type=\"text\"],select').each(function() {
+         $(this).val('');
+    });
+ });
+");
+?>
+
 <h3 align="center">Formulaire <?php echo $model->name; ?></h3>
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
