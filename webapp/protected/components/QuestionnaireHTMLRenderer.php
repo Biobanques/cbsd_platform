@@ -265,7 +265,7 @@ class QuestionnaireHTMLRenderer {
         }
         $result.="<div class=\"question-input\">";
 
-        $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
+        $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\" style=\"margin-left:110px;\"";
         $valueInput = "";
         if (Yii::app()->controller->id != "formulaire") {
             if ($question->id == "examdate") {

@@ -479,6 +479,27 @@ class Answer extends EMongoDocument {
         natcasesort($result);
         return $result;
     }
+    
+    /**
+     * retourne la liste de toutes les questions de toutes les fiches
+     * @return type
+     */
+    public function getTypeQuestionByLabel($label) {
+        $type = "";
+        $criteria = new EMongoCriteria;
+        $criteria->answers_group->answers->label = $label;
+        $fiches = Answer::model()->findAll($criteria);
+        foreach($fiches as $fiche){
+            foreach ($fiche->answers_group as $group) {
+                foreach($group->answers as $answer){
+                    if ($answer->label == $label) {
+                        $type = $answer->type;
+                    }
+                }
+            }
+        }
+        return $type;
+    }
 
     public function getAllDetailledQuestions() {
         $result = array();
@@ -573,7 +594,7 @@ class Answer extends EMongoDocument {
                 foreach ($group->answers as $answerQuestion) {
                     //construction du label de colonne
                     // $label = "[" . $answer->name . "][" . $group->title_fr . "][" . $answerQuestion->label . "]";
-                    $label = "[" . $answerQuestion->id . "][" . $answerQuestion->label . "]";
+                    $label = "[" . $answerQuestion->id . "]" . $answerQuestion->label;
                     $value = $answerQuestion->getLiteralAnswer();
                     $ansQuestion[] = array();
                     $ansQuestion['label'] = $label;
@@ -630,6 +651,8 @@ class Answer extends EMongoDocument {
     }
 
     public function resultToSql($models) {
+        $label = "";
+        $type = "";
         $table_question = "question";
         $sql = "";
         $sql.= "SET foreign_key_checks = 0;\n";
@@ -638,7 +661,13 @@ class Answer extends EMongoDocument {
         foreach ($models as $key => $value) {
             if ($key == 0) {
                 foreach ($value as $k => $v) {
-                    $sql.= "`" . $v . "` varchar(255) NOT NULL,";
+                    $label = substr(strstr($v, ']'), 1);
+                    $type = $this->getTypeQuestionByLabel($label);
+                    if ($type == "number" || $type == "expression") {
+                        $sql.= "`" . $v . "` int NOT NULL,";
+                    } else {
+                        $sql.= "`" . $v . "` varchar(255) NOT NULL,";
+                    }
                 }
             }
         }
