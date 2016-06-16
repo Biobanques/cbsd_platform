@@ -110,12 +110,14 @@ class AnswerController extends Controller {
             case "NoPatient":
                 Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ces informations n’existe dans le système, veuillez compléter le formulaire afin de créer le nouveau patient.");
                 Yii::app()->user->setState('patientModel', $model);
+                $model->scenario = 'create';
                 $this->render('patient_bis', array('model' => $model, 'actionForm' => 'create'));
                 exit();
                 break;
             case "PatientNotSaved":
                 Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Le patient n'a pas pu être enregistré, merci de completer l'ensemble des champs");
                 Yii::app()->user->setState('patientModel', $model);
+                $model->scenario = 'create';
                 $this->render('patient_bis', array('model' => $model, 'actionForm' => 'create'));
                 exit();
                 break;

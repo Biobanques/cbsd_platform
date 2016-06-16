@@ -30,6 +30,7 @@ class PatientForm extends CFormModel {
         // will receive user inputs.
         return array(
             array('nom_naissance, prenom, date_naissance', 'required'),
+            array('nom_naissance, prenom, date_naissance, nom, sexe, source', 'required', 'on'=>'create'),
             array('date_naissance', 'dateFormat'),
             array('nom_naissance, prenom', 'length', 'max' => 255),
             // The following rule is used by search().
