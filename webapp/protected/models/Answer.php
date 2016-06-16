@@ -186,11 +186,10 @@ class Answer extends EMongoDocument {
         }
 
         if (isset($this->name) && !empty($this->name)) {
-            $names = split(',', $this->name);
             $regex = '/';
-            foreach ($names as $n) {
+            foreach ($this->name as $n) {
                 $regex.= $n;
-                if ($n != end($names)) {
+                if ($n != end($this->name)) {
                     $regex.= '|';
                 }
             }
