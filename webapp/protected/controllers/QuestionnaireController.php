@@ -27,7 +27,7 @@ class QuestionnaireController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', 'actions' => array('index', 'view', 'viewOnePage', 'exportPDF'), 'users' => array('*'),
+            array('allow', 'actions' => array('index'), 'users' => array('*'),
             ),
             array('allow', 'actions' => array('update'), 'users' => array('@'),
             ),
@@ -35,27 +35,6 @@ class QuestionnaireController extends Controller {
                 'users' => array('*'),
             ),
         );
-    }
-
-    /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionView($id) {
-        $model = $this->loadModel($id);
-        $answer = null;
-        if (isset($_POST['Questionnaire'])) {
-            $answer = $this->saveQuestionnaireAnswers($model);
-        }
-        if ($answer != null)
-            $model = $answer;
-        if (isset($_SESSION['datapatient'])) {
-            $patient = $_SESSION['datapatient'];
-        }
-        $this->render('view', array(
-            'model' => $model,
-            'patient' => $patient,
-        ));
     }
 
     /**
@@ -144,51 +123,7 @@ class QuestionnaireController extends Controller {
 
         return $answer;
     }
-
-    /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionViewOnePage($id) {
-        $this->render('view_onepage', array(
-            'model' => $this->loadModel($id),
-        ));
-    }
-
-    /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionExportPDF($id) {
-        QuestionnairePDFRenderer::render($this->loadModel($id));
-    }
-
-    /**
-     * edit questionnaire : add/delete questions..
-     * Not uyet implemented
-     * @param integer $id the ID of the model to be updated
-     */
-    public function actionEdit($id) {
-        Yii::app()->user->setFlash('warning', '<strong>Warning!</strong> Feature not available at this thime!.');
-        $this->render('edit', array(
-            'model' => $model,
-            'form' => $form,
-        ));
-    }
-
-    /**
-     * Deletes a particular model.
-     * If deletion is successful, the browser will be redirected to the 'admin' page.
-     * @param integer $id the ID of the model to be deleted
-     */
-    public function actionDelete($id) {
-        $this->loadModel($id)->delete();
-
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-    }
-
+    
     /**
      * Lists all models.
      */
@@ -198,28 +133,14 @@ class QuestionnaireController extends Controller {
             $criteria = new EMongoCriteria();
             $criteria->id = $_POST["form"];
             $id = Questionnaire::model()->find($criteria);
-            $this->redirect('index.php?r=questionnaire/update&id=' . $id->_id);
+            $this->redirect(array('questionnaire/update','id'=>$id->_id));
         } else {
             Yii::app()->user->setFlash("error", 'Veuillez sélectionner une fiche à remplir.');
-            $this->redirect('index.php?r=answer/affichepatient');
+            $this->redirect(array('answer/affichepatient'));
         }
         $dataProvider = new EMongoDocumentDataProvider('Questionnaire');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
-        ));
-    }
-
-    /**
-     * Manages all models.
-     */
-    public function actionAdmin() {
-        $model = new Sample('search');
-        $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Questionnaire']))
-            $model->attributes = $_GET['Questionnaire'];
-
-        $this->render('admin', array(
-            'model' => $model,
         ));
     }
 

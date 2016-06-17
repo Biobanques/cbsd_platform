@@ -63,6 +63,14 @@ class PatientForm extends CFormModel {
         }
         return true;
     }
+    
+    public function copyPatient($patient) {
+        $this->id = $patient->id;
+        $this->nom = $patient->useName;
+        $this->prenom = $patient->firstName;
+        $this->nom_naissance = $patient->birthName;
+        $this->date_naissance = $patient->birthDate;
+    }
 
     public function getGenre() {
         $res = array();

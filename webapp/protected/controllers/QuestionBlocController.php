@@ -25,7 +25,7 @@ class QuestionBlocController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'index', 'view', 'update', 'admin', 'delete', 'deleteQuestion', 'preview'),
+                'actions' => array('create', 'index', 'view', 'update', 'admin', 'delete', 'deleteQuestion'),
                 'expression' => '$user->getActiveProfil() == "administrateur"'
             ),
             array('deny', // deny all users

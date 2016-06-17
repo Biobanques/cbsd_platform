@@ -55,13 +55,8 @@ class AnswerController extends Controller {
         $patient = (object) null;
         if (isset($_SESSION['datapatient'])) {
             $patient = $_SESSION['datapatient'];
-            $model->id = $patient->id;
-            $model->nom = $patient->useName;
-            $model->prenom = $patient->firstName;
-            $model->nom_naissance = $patient->birthName;
-            $model->date_naissance = $patient->birthDate;
+            $model->copyPatient($patient);
         }
-
         if (isset($_POST['PatientForm'])) {
             $actionForm = $_POST['PatientForm']['action'];
             $model = new PatientForm;
@@ -85,16 +80,13 @@ class AnswerController extends Controller {
                 $patient->useName = null;
             $patient->firstName = $model->prenom;
             $patient->birthDate = $model->date_naissance;
-            if ($model->sexe != "")
+            if ($model->sexe != "") {
                 $patient->sex = $model->sexe;
-            else
+            } else {
                 $patient->sex = null;
+            }
             if ($actionForm == 'create') {
-                if ($model->source == "1")
-                    $patient->source = "1";
-                else
-                    $patient->source = "2";
-
+                $patient->source = (($model->source == "1") ? "1" : "2");
                 $patientest = CommonTools::wsGetPatient($patient);
                 if ($patientest == 'NoPatient') {
                     $patient = CommonTools::wsAddPatient($patient);
@@ -158,15 +150,16 @@ class AnswerController extends Controller {
 
             $questionnaire = Questionnaire::model()->findAll();
             $_SESSION['datapatient'] = $patient;
-            if (isset($_SESSION['datapatient']))
+            if (isset($_SESSION['datapatient'])) {
                 $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'questionnaire' => $questionnaire, 'patient' => $patient, 'neuropath' => $neuropath, 'genetique' => $genetique));
-            elseif (isset($_POST['PatientForm'])) {
+            } elseif (isset($_POST['PatientForm'])) {
                 $this->render('affichepatient', array('model' => $model, 'dataProviderCliniques' => $dataProviderCliniques, 'dataProviderNeuropathologiques' => $dataProviderNeuropathologiques, 'dataProviderGenetiques' => $dataProviderGenetiques, 'patient' => $patient));
             } else {
                 $this->redirect(array('site/patient'));
             }
-        } else
+        } else {
             $this->redirect(array('site/patient'));
+        }
     }
 
     /**
@@ -318,8 +311,9 @@ class AnswerController extends Controller {
      */
     public function loadModel($id) {
         $model = Answer::model()->findByPk(new MongoID($id));
-        if ($model === null)
+        if ($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
+        }
         return $model;
     }
 
