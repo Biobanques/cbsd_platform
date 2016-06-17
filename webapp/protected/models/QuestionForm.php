@@ -75,7 +75,7 @@ class QuestionForm extends CFormModel {
     public function rules() {
         return array(
             // name, email, subject and body are required
-            array('id,label, type', 'required'),
+            array('id,label, type, idQuestionGroup', 'required'),
             array('label', 'length', 'max' => 500),
             array('id,idQuestionBefore,idQuestionGroup', 'length', 'max' => 50),
             array('type', 'length', 'max' => 10),

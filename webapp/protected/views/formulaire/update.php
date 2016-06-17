@@ -6,6 +6,11 @@ $(document).ready(function() {
     });
  });
 ");
+Yii::app()->clientScript->registercss('input', "
+input[type=\"text\"] {
+height: 25px;
+}
+");
 ?>
 
 <h3 align="center">Formulaire <?php echo $model->name; ?></h3>
