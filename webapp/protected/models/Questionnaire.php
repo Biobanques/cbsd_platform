@@ -107,6 +107,7 @@ class Questionnaire extends EMongoDocument
         $res ['clinique'] = "clinique";
         $res ['genetique'] = "genetique";
         $res ['neuropathologique'] = "neuropathologique";
+        asort($res, SORT_NATURAL | SORT_FLAG_CASE);
         return $res;
     }
 
@@ -153,7 +154,7 @@ class Questionnaire extends EMongoDocument
         return $res;
     }
     
-        /**
+    /**
      * retourne toutes les noms des fiches
      * @return type
      */
@@ -165,6 +166,7 @@ class Questionnaire extends EMongoDocument
                 $res[$fiche->name] = $fiche->name;
             }
         }
+        asort($res, SORT_NATURAL | SORT_FLAG_CASE);
         return $res;
     }
 

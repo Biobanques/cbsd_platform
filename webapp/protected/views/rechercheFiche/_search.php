@@ -38,29 +38,25 @@ return false;
     <div class="row">
         <div class="col-lg-6">
             <?php echo $form->label($model, 'id_patient'); ?>
-            <?php echo $form->textField($model, 'id_patient'); ?>
+            <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array('prompt' => '----', "multiple" => "multiple")); ?>
         </div>
 
 
         <div class="col-lg-6">
             <?php echo $form->label($model, 'user'); ?>
-            <?php echo $form->textField($model, 'user'); ?>
+            <?php echo $form->dropDownList($model, 'user', Answer::model()->getNamesUsers(), array('prompt' => '----', "multiple" => "multiple")); ?>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-6">
             <?php echo $form->label($model, 'type'); ?>
-        </div>
-        <div class="col-lg-4">
-            <?php echo $form->checkBoxList($model, 'type', Questionnaire::model()->getArrayType(), array('labelOptions' => array("style"=>"margin-right:60px;"))); ?>
+            <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array('prompt' => '----', "multiple" => "multiple")); ?>
         </div>
 
-        <div class="col-lg-2">
+        <div class="col-lg-6">
             <?php echo $form->label($model, 'name'); ?>
-        </div>
-        <div class="col-lg-4">
-            <?php echo $form->checkBoxList($model, 'name', Questionnaire::model()->getNomsFiches(), array('labelOptions' => array("style"=>"margin-right:60px;height: 25px;"))); ?>
+            <?php echo $form->dropDownList($model, 'name', Questionnaire::model()->getNomsFiches(), array('prompt' => '----', "multiple" => "multiple")); ?>
         </div>
     </div>
 

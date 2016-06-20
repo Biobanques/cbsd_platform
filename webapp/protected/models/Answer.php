@@ -159,8 +159,16 @@ class Answer extends EMongoDocument {
         }
 
         if (isset($this->user) && !empty($this->user)) {
+            $regex = '/';
+            foreach ($this->user as $value) {
+                $regex .= $value;
+                if ($value != end($this->user)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
             $criteriaUser = new EMongoCriteria;
-            $criteriaUser->nom = new MongoRegex('/' . $this->user . '/i');
+            $criteriaUser->nom = new MongoRegex($regex);
             $criteriaUser->select(array('_id'));
             $users = User::model()->findAll($criteriaUser);
             $listUsers = array();
@@ -173,11 +181,10 @@ class Answer extends EMongoDocument {
         }
 
         if (isset($this->id_patient) && !empty($this->id_patient)) {
-            $idPatient = split(',', $this->id_patient);
             $regex = '/';
-            foreach ($idPatient as $patient) {
+            foreach ($this->id_patient as $patient) {
                 $regex.= $patient;
-                if ($patient != end($idPatient)) {
+                if ($patient != end($this->id_patient)) {
                     $regex.= '|';
                 }
             }
@@ -536,6 +543,41 @@ class Answer extends EMongoDocument {
             }
         }
         return $result;
+    }
+    
+    /**
+     * retourne toutes les id patient des fiches
+     * @return type
+     */
+    public function getIdPatientFiches() {
+        $res = array();
+        $fiches = Answer::model()->findAll();
+        foreach ($fiches as $fiche) {
+            if (!in_array($fiche->id_patient, $res)) {
+                $res[$fiche->id_patient] = $fiche->id_patient;
+            }
+        }
+        asort($res, SORT_NUMERIC);
+        return $res;
+    }
+    
+    /**
+     * retourne toutes les noms des utilisateurs qui ont renseigné les fiches
+     * @return type
+     */
+    public function getNamesUsers() {
+        $res = array();
+        $fiches = Answer::model()->findAll();
+        foreach ($fiches as $fiche) {
+            $criteria = new EMongoCriteria;
+            $criteria->_id = new MongoId($fiche->login);
+            $user = User::model()->find($criteria);
+            if (!in_array($user->nom, $res)) {
+                $res[$user->nom] = $user->prenom . " " . $user->nom;
+            }
+        }
+        asort($res, SORT_NATURAL | SORT_FLAG_CASE);
+        return $res;
     }
 
     public function getAllTypes() {
