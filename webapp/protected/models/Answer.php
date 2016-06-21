@@ -635,7 +635,7 @@ class Answer extends EMongoDocument {
                 foreach ($group->answers as $answerQuestion) {
                     //construction du label de colonne
                     // $label = "[" . $answer->name . "][" . $group->title_fr . "][" . $answerQuestion->label . "]";
-                    $label = "[" . $answerQuestion->id . "]" . $answerQuestion->label;
+                    $label = "(" . $answerQuestion->id . ")" . $answerQuestion->label;
                     $value = $answerQuestion->getLiteralAnswer();
                     $ansQuestion[] = array();
                     $ansQuestion['label'] = $label;
