@@ -614,6 +614,7 @@ class Answer extends EMongoDocument {
      * @result array : each line = each model answer
      */
     public function resultToArray($models) {
+        $typeQuestion = array();
         $result = array();
         $headerLineFixe = $this->attributeExportedLabels();
         $answersList = array();
@@ -636,6 +637,7 @@ class Answer extends EMongoDocument {
                     //construction du label de colonne
                     // $label = "[" . $answer->name . "][" . $group->title_fr . "][" . $answerQuestion->label . "]";
                     $label = "(" . $answerQuestion->id . ")" . $answerQuestion->label;
+                    $typeQuestion[$label] = $answerQuestion->type;
                     $value = $answerQuestion->getLiteralAnswer();
                     $ansQuestion[] = array();
                     $ansQuestion['label'] = $label;
@@ -683,7 +685,11 @@ class Answer extends EMongoDocument {
                     }
                 }
                 if (!$valueExists) {
-                    $resultLine[] = 'null';
+                    $type = $typeQuestion[$columnHeader];
+                    if ($type != "number" && $type != "expression")
+                        $resultLine[] = 'null';
+                    else
+                        $resultLine[] = 0;
                 }
             }
             $result[] = $resultLine;
