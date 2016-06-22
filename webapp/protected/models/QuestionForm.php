@@ -136,10 +136,10 @@ class QuestionForm extends CFormModel {
     public function valuesValidator()
     {
         if ((isset($this->type) && $this->type == "radio")) {
-                $this->validatorList->add(CValidator::createValidator('required', $this, 'values', array()));
-                if ($this->values == "") {
-                    $this->addError('values', 'Veuillez renseigner les valeurs.');
-                }
+            $this->validatorList->add(CValidator::createValidator('required', $this, 'values', array()));
+            if ($this->values == "") {
+                $this->addError('values', 'Veuillez renseigner les valeurs.');
+            }
         }
     }
 
