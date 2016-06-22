@@ -691,7 +691,7 @@ class Answer extends EMongoDocument {
                     if ($type != "number" && $type != "expression")
                         $resultLine[] = 'null';
                     else
-                        $resultLine[] = 0;
+                        $resultLine[] = "";
                 }
             }
             $result[] = $resultLine;

@@ -28,7 +28,8 @@ return false;
 
 
 <div class="wide form">
-
+<p>*Pour les champs à choix multiples, vous pouvez sélectionner plusieurs valeurs avec la touche CTRL du clavier.</p>
+    <p>*Lorsque vous ajoutez une question, vous pouvez ajouter plusieurs valeurs dans les champs de type "input" en les séparant par une virgule (opérateur "OU").</p>
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'action' => Yii::app()->createUrl($this->route),
@@ -112,6 +113,7 @@ return false;
 
     <div class="row buttons">
         <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+        <?php echo CHtml::resetButton('Réinitialiser', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
         <?php echo CHtml::link('Exporter en CSV', array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
         <?php echo CHtml::link('Exporter en SQL', array('rechercheFiche/exportSql'), array('class' => 'btn btn-default')); ?>
     </div>

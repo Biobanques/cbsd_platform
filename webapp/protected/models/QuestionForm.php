@@ -76,6 +76,7 @@ class QuestionForm extends CFormModel {
         return array(
             // name, email, subject and body are required
             array('id,label, type, idQuestionGroup', 'required'),
+            array('values', 'valuesValidator'),
             array('label', 'length', 'max' => 500),
             array('id,idQuestionBefore,idQuestionGroup', 'length', 'max' => 50),
             array('type', 'length', 'max' => 10),
@@ -130,6 +131,16 @@ class QuestionForm extends CFormModel {
         $res [''] = "Alignement à gauche";
         $res ['float:right'] = "Alignement à droite";
         return $res;
+    }
+    
+    public function valuesValidator()
+    {
+        if ((isset($this->type) && $this->type == "radio")) {
+                $this->validatorList->add(CValidator::createValidator('required', $this, 'values', array()));
+                if ($this->values == "") {
+                    $this->addError('values', 'Veuillez renseigner les valeurs.');
+                }
+        }
     }
 
     public function getArrayGroups() {
