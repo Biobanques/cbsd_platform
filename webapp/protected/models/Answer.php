@@ -262,6 +262,8 @@ class Answer extends EMongoDocument {
                                 $regex .= '/i';
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
                                 break;
+                            default:
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => $answerValue));
                         }
                     }
                 }

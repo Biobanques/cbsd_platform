@@ -104,14 +104,16 @@ return false;
             <?php echo CHtml::label('Ajouter une question', 'question'); ?>
             <?php echo CHtml::dropDownList('question', 'addQuestion', Answer::model()->getAllQuestions(), array('prompt' => '----')); ?>
             <?php
-            echo CHtml::button('ajouter', array('id' => 'addFilterButton'));
+            echo CHtml::button('ajouter', array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;'));
             ?>
 
         </div>
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher')); ?>
+        <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+        <?php echo CHtml::link('Exporter en CSV', array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
+        <?php echo CHtml::link('Exporter en SQL', array('rechercheFiche/exportSql'), array('class' => 'btn btn-default')); ?>
     </div>
 
     <?php $this->endWidget(); ?>
