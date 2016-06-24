@@ -65,15 +65,27 @@ class FormulaireController extends Controller {
      */
     public function actionCreate() {
         $model = new Questionnaire;
+        $validate = false;
         if (isset($_POST['Questionnaire'])) {
             $model->attributes = $_POST['Questionnaire'];
             $model->creator = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
             $model->addQuestionGroup("firstgroup", "Questionnaire principal");
-            if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'Le formulaire a été enregistré avec succès.');
-                $this->redirect($this->createUrl('update', array('id' => $model->_id)));
+            $countIdForm = $model->getFormsById($model->id);
+            $countNameForm = $model->getFormsByName($model->name);
+            if (count($countIdForm) > 0) {
+                Yii::app()->user->setFlash('error', 'L\'id a déjà été utilisé. Veuillez choisir un id différent.');
+            } elseif (count($countNameForm) > 0) {
+                Yii::app()->user->setFlash('error', 'Le nom du formulaire a déjà été utilisé. Veuillez choisir un nom différent.');
             } else {
-                Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
+                $validate = true;
+            }
+            if ($validate) {
+                if ($model->save()) {
+                    Yii::app()->user->setFlash('success', 'Le formulaire a été enregistré avec succès.');
+                    $this->redirect($this->createUrl('update', array('id' => $model->_id)));
+                } else {
+                    Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
+                }
             }
         }
         $this->render('create', array(

@@ -154,6 +154,20 @@ class Questionnaire extends EMongoDocument
         return $res;
     }
     
+    public function getFormsById($idForm) {
+        $criteria = new EMongoCriteria;
+        $criteria->id = $idForm;
+        $form = Questionnaire::model()->findAll($criteria);
+        return $form;
+    }
+    
+    public function getFormsByName($nameForm) {
+        $criteria = new EMongoCriteria;
+        $criteria->name = $nameForm;
+        $form = Questionnaire::model()->findAll($criteria);
+        return $form;
+    }
+    
     /**
      * retourne toutes les noms des fiches
      * @return type
