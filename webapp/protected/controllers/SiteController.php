@@ -245,7 +245,6 @@ class SiteController extends Controller
             $userLogin = $model->getAllUsersByLogin($model);
             if (count($userLogin) > 0) {
                 Yii::app()->user->setFlash('error', 'Le login a déjà été utilisé. Veuillez choisir un login différent.');
-                $this->render('subscribe', array('model' => $model));
             }
             if ($model->profil == array("clinicien")) {
                 if ($model->save()) {

@@ -64,8 +64,15 @@ class QuestionBloc extends LoggableActiveRecord {
             )
         ));
     }
+    
+    public function getBlocsByTitle($titleBloc) {
+        $criteria = new EMongoCriteria;
+        $criteria->title = $titleBloc;
+        $bloc = QuestionBloc::model()->findAll($criteria);
+        return $bloc;
+    }
 
-    public function getBlocTitle() {
+    public function getAllBlocsTitles() {
         $blocTitle = array();
         $bloc = QuestionBloc::model()->findAll();
         foreach ($bloc as $key => $values)

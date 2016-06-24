@@ -71,7 +71,10 @@ class QuestionBlocController extends Controller {
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
             $model->title_fr = $model->title;
-            if ($model->save()) {
+            $countBloc = $model->getBlocsByTitle($model->title_fr);
+            if (count($countBloc) > 0) {
+                Yii::app()->user->setFlash('error', 'Le titre a déjà été utilisé. Veuillez choisir un titre différent.');
+            } elseif ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Le bloc de questions a bien été enregistré.');
                 $this->redirect($this->createUrl('update', array('id' => $model->_id)));
             } else {
