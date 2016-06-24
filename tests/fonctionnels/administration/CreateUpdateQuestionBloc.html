@@ -24,7 +24,7 @@
 <tr>
 	<td>type</td>
 	<td>id=QuestionBloc_title</td>
-	<td>tester</td>
+	<td>Test</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -32,19 +32,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>xpath=(//img[@alt='Mettre à jour'])[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>id=QuestionForm_id</td>
-	<td>q1</td>
+	<td>nom</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_label</td>
-	<td>Question 1</td>
+	<td>Nom</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -52,6 +47,11 @@
 	<td>label=texte simple</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>id=QuestionForm_precomment</td>
+	<td>Renseignements individuels</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
 	<td></td>
@@ -59,12 +59,37 @@
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_id</td>
-	<td>q2</td>
+	<td>prenom</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_label</td>
-	<td>Question 2</td>
+	<td>Prénom</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=QuestionForm_type</td>
+	<td>label=texte simple</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=QuestionForm_style</td>
+	<td>label=Alignement à droite</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionForm_id</td>
+	<td>birthDate</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionForm_label</td>
+	<td>Date de naissance</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -73,8 +98,8 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=QuestionForm_style</td>
-	<td>float:right</td>
+	<td>id=QuestionForm_help</td>
+	<td>Entez une date au format jj/mm/yyyy</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -84,12 +109,37 @@
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_id</td>
-	<td>q3</td>
+	<td>age</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_label</td>
-	<td>Question 3</td>
+	<td>Age</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=QuestionForm_type</td>
+	<td>label=numérique</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=QuestionForm_style</td>
+	<td>label=Alignement à droite</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionForm_id</td>
+	<td>gender</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionForm_label</td>
+	<td>Vous êtes?</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -99,7 +149,7 @@
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_values</td>
-	<td>Oui,Non</td>
+	<td>Homme,Femme</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -109,12 +159,12 @@
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_id</td>
-	<td>q4</td>
+	<td>country</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_label</td>
-	<td>Question 4</td>
+	<td>Pays</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -124,12 +174,12 @@
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_values</td>
-	<td>a,b,c,d</td>
+	<td>France,Allemagne,Italie,Espagne,Suède,Brésil,Argentine,Irlande,Angleterre,Pologne,Mexique,Chilie,Portugal</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>select</td>
 	<td>id=QuestionForm_style</td>
-	<td>float:right</td>
+	<td>label=Alignement à droite</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -139,54 +189,43 @@
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_id</td>
-	<td>q5</td>
+	<td>retraite</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_label</td>
-	<td>Question 5</td>
+	<td>Retraité?</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionForm_id</td>
+	<td>job</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionForm_label</td>
+	<td>Métier(s)</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>id=QuestionForm_type</td>
-	<td>label=case à cocher</td>
+	<td>label=case(s) à cocher</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=QuestionForm_values</td>
-	<td>a,b,c,d</td>
+	<td>Employé,Sans emploi,Autre</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=QuestionForm_help</td>
+	<td>Si &quot;Autre&quot;, précisez</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
 	<td></td>
 </tr>
-<tr>
-	<td>type</td>
-	<td>id=QuestionForm_id</td>
-	<td>q6</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=QuestionForm_label</td>
-	<td>Question 6</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=QuestionForm_type</td>
-	<td>label=aire de texte</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=QuestionForm_style</td>
-	<td>float:right</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>name=yt0</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>
