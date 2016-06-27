@@ -35,7 +35,7 @@
         <tr>
             <td>
                 <div class="row buttons">
-                    <?php echo CHtml::submitButton(Yii::t('common', 'submit')); ?>
+                    <?php echo CHtml::submitButton(Yii::t('common', 'submit'), array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
                 </div>
             </td>
         </tr>
