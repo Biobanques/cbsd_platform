@@ -52,16 +52,19 @@ class AdministrationController extends Controller {
         $criteria = new EMongoCriteria();
         $criteriaClinique = new EMongoCriteria($criteria);
         $criteriaClinique->type = "clinique";
+        $criteriaClinique->profil('!=', "administrateur");
         $dataProviderClinique = new EMongoDocumentDataProvider('Droits');
         $dataProviderClinique->setCriteria($criteriaClinique);
 
         $criteriaNeuropath = new EMongoCriteria($criteria);
         $criteriaNeuropath->type = "neuropathologique";
+        $criteriaNeuropath->profil('!=', "administrateur");
         $dataProviderNeuropath = new EMongoDocumentDataProvider('Droits');
         $dataProviderNeuropath->setCriteria($criteriaNeuropath);
 
         $criteriaGene = new EMongoCriteria($criteria);
         $criteriaGene->type = "genetique";
+        $criteriaGene->profil('!=', "administrateur");
         $dataProviderGene = new EMongoDocumentDataProvider('Droits');
         $dataProviderGene->setCriteria($criteriaGene);
 
