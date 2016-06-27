@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="buttons">
-        <?php echo CHtml::submitButton('Enregistrer'); ?>
+        <?php echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px;')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

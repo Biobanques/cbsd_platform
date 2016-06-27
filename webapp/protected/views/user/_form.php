@@ -84,7 +84,7 @@
     </div>    
 
     <div class="row buttons" style="float:left;">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Créer' : 'Enregistrer'); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Créer' : 'Enregistrer', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

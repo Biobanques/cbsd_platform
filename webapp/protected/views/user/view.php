@@ -1,7 +1,7 @@
 <h1>Utilisateur <?php echo $model->login; ?></h1>
 
 <?php
-$this->widget('zii.widgets.CDetailView', array(
+$this->widget('bootstrap.widgets.TbDetailView', array(
     'data' => $model,
     'attributes' => array(
         'login',

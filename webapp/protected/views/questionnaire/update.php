@@ -39,8 +39,8 @@
     </div>
     <div style="display:inline; margin: 35%; width: 100px; ">
         <?php
-        echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-primary', 'style' => 'margin-top:8px;padding-bottom:23px;'));
-        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-left:20px;'));
+        echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-default', 'style' => 'margin-top:8px;padding-bottom:23px;'));
+        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-left:20px;'));
         ?>
     </div>
     <?php

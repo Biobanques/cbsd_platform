@@ -34,7 +34,7 @@
         <?php echo $form->error($model, 'description'); ?>
     </div>
     <div class="row buttons">
-        <?php echo CHtml::submitButton('Enregistrer'); ?>
+        <?php echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>     
     </div>
 
     <?php $this->endWidget(); ?>

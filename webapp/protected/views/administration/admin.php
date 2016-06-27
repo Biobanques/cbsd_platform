@@ -6,7 +6,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $dataProviderClinique,
     'columns' => array(
-        'profil',
+        array('header' => $model->attributeLabels()["profil"], 'name' => 'profil'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{update}',
@@ -23,7 +23,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $dataProviderNeuropath,
     'columns' => array(
-        'profil',
+        array('header' => $model->attributeLabels()["profil"], 'name' => 'profil'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{update}',
@@ -40,7 +40,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $dataProviderGene,
     'columns' => array(
-        'profil',
+        array('header' => $model->attributeLabels()["profil"], 'name' => 'profil'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{update}',

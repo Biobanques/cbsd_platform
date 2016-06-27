@@ -75,7 +75,7 @@
     <div>
         <div class="buttons">
             <div class="col-lg-6">
-                <?php echo CHtml::submitButton('Enregistrer'); ?>
+                <?php echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px;')); ?>
             </div>
         </div>
     </div>
