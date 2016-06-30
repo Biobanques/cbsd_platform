@@ -53,9 +53,17 @@ class QuestionBloc extends LoggableActiveRecord {
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria ();
-        if (isset($this->title) && !empty($this->title))
-            $criteria->addCond('title', '==', new MongoRegex('/' . $this->title . '/i'));
-
+        if (isset($this->title) && !empty($this->title)) {
+            $regex = '/';
+            foreach ($this->title as $value) {
+                $regex .= $value;
+                if ($value != end($this->title)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
+            $criteria->addCond('title', '==', new MongoRegex($regex));
+        }
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria,
@@ -78,6 +86,17 @@ class QuestionBloc extends LoggableActiveRecord {
         foreach ($bloc as $key => $values)
             $blocTitle[(string) $values->_id] = $values->title;
         $blocTitle[(string) $values->_id] = $values->title;
+        return $blocTitle;
+    }
+    
+    public function getAllTitlesBlocs() {
+        $blocTitle = array();
+        $bloc = QuestionBloc::model()->findAll();
+        if ($bloc != null) {
+            foreach ($bloc as $values) {
+                $blocTitle[$values->title] = $values->title;
+            }
+        }
         return $blocTitle;
     }
 
