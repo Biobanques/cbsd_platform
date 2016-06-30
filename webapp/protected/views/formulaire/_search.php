@@ -10,13 +10,14 @@
     <div class="row">
         <div class="col-lg-6">
             <?php echo $form->label($model, 'name'); ?>
-            <?php echo $form->textField($model, 'name'); ?>
+            <?php echo $form->dropDownList($model, 'name', Questionnaire::model()->getNomsFiches(), array('prompt' => '----', "multiple" => "multiple")); ?>
         </div>
     </div>
 
     <div class="row buttons">
         <div class="col-lg-6">
-            <?php echo CHtml::submitButton('Rechercher'); ?>
+            <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+            <?php echo CHtml::resetButton('Réinitialiser', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
         </div>
     </div>
 

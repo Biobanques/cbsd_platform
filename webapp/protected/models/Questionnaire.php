@@ -87,7 +87,15 @@ class Questionnaire extends EMongoDocument
     {
         $criteria = new EMongoCriteria ();
         if (isset($this->name) && !empty($this->name)) {
-            $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '/i'));
+            $regex = '/';
+            foreach ($this->name as $value) {
+                $regex .= $value;
+                if ($value != end($this->name)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
+            $criteria->addCond('name', '==', new MongoRegex($regex));
         }
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(

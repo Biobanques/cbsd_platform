@@ -148,6 +148,7 @@ class User extends EMongoDocument
                 $usersLastNames[$user->nom] = $user->nom;
             }
         }
+        asort($usersLastNames, SORT_NATURAL | SORT_FLAG_CASE);
         return $usersLastNames;
     }
     
@@ -163,6 +164,7 @@ class User extends EMongoDocument
                 $usersFirstNames[$user->prenom] = $user->prenom;
             }
         }
+        asort($usersFirstNames, SORT_NATURAL | SORT_FLAG_CASE);
         return $usersFirstNames;
     }
     
@@ -178,6 +180,7 @@ class User extends EMongoDocument
                 $usersLogin[$user->login] = $user->login;
             }
         }
+        asort($usersLogin, SORT_NATURAL | SORT_FLAG_CASE);
         return $usersLogin;
     }
     
@@ -193,6 +196,7 @@ class User extends EMongoDocument
                 $usersEmail[$user->email] = $user->email;
             }
         }
+        asort($usersEmail, SORT_NATURAL | SORT_FLAG_CASE);
         return $usersEmail;
     }
     
