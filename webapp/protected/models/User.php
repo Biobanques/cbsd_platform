@@ -71,18 +71,61 @@ class User extends EMongoDocument
 
     public function search($caseSensitive = false)
     {
-        $criteria = new EMongoCriteria ();
+        $criteria = new EMongoCriteria;
         if (isset($this->login) && !empty($this->login)) {
-            $criteria->addCond('login', '==', new MongoRegex('/' . $this->login . '/i'));
+            $regex = '/';
+            foreach ($this->login as $value) {
+                $regex .= $value;
+                if ($value != end($this->login)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
+            $criteria->addCond('login', '==', new MongoRegex($regex));
         }
         if (isset($this->profil) && !empty($this->profil)) {
-            $criteria->addCond('profil', '==', new MongoRegex('/' . $this->profil . '/i'));
+            $regex = '/';
+            foreach ($this->profil as $value) {
+                $regex .= $value;
+                if ($value != end($this->profil)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
+            $criteria->addCond('profil', '==', new MongoRegex($regex));
         }
         if (isset($this->nom) && !empty($this->nom)) {
-            $criteria->addCond('nom', '==', new MongoRegex('/' . $this->nom . '/i'));
+            $regex = '/';
+            foreach ($this->nom as $value) {
+                $regex .= $value;
+                if ($value != end($this->nom)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
+            $criteria->addCond('nom', '==', new MongoRegex($regex));
         }
         if (isset($this->prenom) && !empty($this->prenom)) {
-            $criteria->addCond('prenom', '==', new MongoRegex('/' . $this->prenom . '/i'));
+            $regex = '/';
+            foreach ($this->prenom as $value) {
+                $regex .= $value;
+                if ($value != end($this->prenom)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
+            $criteria->addCond('prenom', '==', new MongoRegex($regex));
+        }
+        if (isset($this->email) && !empty($this->email)) {
+            $regex = '/';
+            foreach ($this->email as $value) {
+                $regex .= $value;
+                if ($value != end($this->email)) {
+                    $regex.= '|';
+                }
+            }
+            $regex .= '/i';
+            $criteria->addCond('email', '==', new MongoRegex($regex));
         }
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
@@ -91,6 +134,66 @@ class User extends EMongoDocument
                 'defaultOrder' => 'login ASC',
             )
         ));
+    }
+    
+    /**
+     * get all the users lastnames.
+     */
+    public function getAllUsersLastnames()
+    {
+        $usersLastNames = array();
+        $users = User::model()->findAll();
+        if ($users != null) {
+            foreach ($users as $user) {
+                $usersLastNames[$user->nom] = $user->nom;
+            }
+        }
+        return $usersLastNames;
+    }
+    
+    /**
+     * get all the users lastnames.
+     */
+    public function getAllUsersFirstnames()
+    {
+        $usersFirstNames = array();
+        $users = User::model()->findAll();
+        if ($users != null) {
+            foreach ($users as $user) {
+                $usersFirstNames[$user->prenom] = $user->prenom;
+            }
+        }
+        return $usersFirstNames;
+    }
+    
+    /**
+     * get all the users login.
+     */
+    public function getAllUsersLogin()
+    {
+        $usersLogin = array();
+        $users = User::model()->findAll();
+        if ($users != null) {
+            foreach ($users as $user) {
+                $usersLogin[$user->login] = $user->login;
+            }
+        }
+        return $usersLogin;
+    }
+    
+    /**
+     * get all the users email.
+     */
+    public function getAllUsersEmail()
+    {
+        $usersEmail = array();
+        $users = User::model()->findAll();
+        if ($users != null) {
+            foreach ($users as $user) {
+                $usersEmail[$user->email] = $user->email;
+            }
+        }
+        return $usersEmail;
     }
     
     /**

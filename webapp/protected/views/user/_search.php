@@ -10,37 +10,38 @@
     <div class="row">
         <div class="col-lg-6">
             <?php echo $form->label($model, 'login'); ?>
-            <?php echo $form->textField($model, 'login'); ?>
+            <?php echo $form->dropDownList($model, 'login', User::model()->getAllUsersLogin(), array('prompt' => '----', "multiple" => "multiple")); ?>
         </div>
 
         <div class="col-lg-6">
             <?php echo $form->label($model, 'profil'); ?>
-            <?php echo $form->dropDownList($model, 'profil', $model->getArrayProfil(), array('prompt' => '---')); ?>
+            <?php echo $form->dropDownList($model, 'profil', $model->getArrayProfil(), array('prompt' => '---', "multiple" => "multiple")); ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-6">
             <?php echo $form->label($model, 'nom'); ?>
-            <?php echo $form->textField($model, 'nom'); ?>
+            <?php echo $form->dropDownList($model, 'nom', User::model()->getAllUsersLastnames(), array('prompt' => '----', "multiple" => "multiple")); ?>
         </div>
 
         <div class="col-lg-6">
             <?php echo $form->label($model, 'prenom'); ?>
-            <?php echo $form->textField($model, 'prenom'); ?>
+            <?php echo $form->dropDownList($model, 'prenom', User::model()->getAllUsersFirstnames(), array('prompt' => '----', "multiple" => "multiple")); ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-6">
             <?php echo $form->label($model, 'email'); ?>
-            <?php echo $form->textField($model, 'email'); ?>
+            <?php echo $form->dropDownList($model, 'email', User::model()->getAllUsersEmail(), array('prompt' => '----', "multiple" => "multiple")); ?>
         </div>
     </div>
 
     <div class="row buttons">
         <div class="col-lg-6">
-            <?php echo CHtml::submitButton('Rechercher'); ?>
+            <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+            <?php echo CHtml::resetButton('Réinitialiser', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
         </div>
     </div>
 
