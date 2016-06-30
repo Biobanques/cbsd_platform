@@ -55,7 +55,7 @@ class User extends EMongoDocument
     public function attributeLabels()
     {
         return array(
-            '_id' => 'ID',
+            '_id' => Yii::t('common', 'idUser'),
             'prenom' => Yii::t('common', 'firstname'),
             'nom' => Yii::t('common', 'lastname'),
             'login' => Yii::t('common', 'Login'),
@@ -63,9 +63,9 @@ class User extends EMongoDocument
             'email' => Yii::t('common', 'email'),
             'telephone' => Yii::t('common', 'phone'),
             'gsm' => Yii::t('common', 'gsm'),
-            'profil' => 'Profil',
-            'address' => 'Adresse',
-            'centre' => 'Centre de référence'
+            'profil' => Yii::t('common', 'profile'),
+            'address' => Yii::t('common', 'address'),
+            'centre' => Yii::t('common', 'referenceCentre')
         );
     }
 
