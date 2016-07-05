@@ -5,7 +5,7 @@
         "sebastian/diff": "1.4.*",
         "sebastian/comparator": "1.2.*",
         "phpunit/php-file-iterator": "1.4.1",
-        "phpunit/phpunit": "4.8.*",
+        "phpunit/phpunit": "5.*",
         "phpunit/php-invoker": "^1.1",
         "phpunit/dbunit": "^2.0",
         "phpunit/phpunit-selenium": "1.2.*"
