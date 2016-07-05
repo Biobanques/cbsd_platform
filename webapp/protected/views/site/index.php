@@ -1,6 +1,8 @@
 <?php
 /* @var $this SiteController */
-
+$criteria = new EMongoCriteria;
+$criteria->id = "testform";
+var_dump(Answer::model()->findAll($criteria));
 $this->pageTitle = Yii::app()->name;
 ?>
 
