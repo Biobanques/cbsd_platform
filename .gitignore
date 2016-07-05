@@ -17,3 +17,4 @@
 /tests/fonctionnels/selenium_mbb.log
 /tests/fonctionnels/selenium_vsc.log
 /webapp/protected/components/CommonPropertiesProd.php
+/vendor/
