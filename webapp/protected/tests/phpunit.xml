@@ -12,7 +12,8 @@
     
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">/var/www/html/cbsd_platform/webapp/protected/components/</directory>
+            <directory suffix=".php">../components/</directory>
+            <directory suffix=".php">../models/</directory>
         </whitelist>
     </filter>
     

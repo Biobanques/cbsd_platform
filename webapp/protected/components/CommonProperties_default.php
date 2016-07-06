@@ -7,7 +7,7 @@
  * @since version 1.0
  */
 
-class CommonProperties
+class CommonProperties_default
 {
     /*
      * DEV MODE : true or false.
