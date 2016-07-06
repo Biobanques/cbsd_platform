@@ -12,8 +12,8 @@ return CMap::mergeArray(
                 ),
                 'mongodb' => array(
                     'class' => 'EMongoDB',
-                    'connectionString' => 'mongodb://ebiobanques:insermEbb@localhost:32020/interop',
-                    'dbName' => 'interop',
+                    'connectionString' => CommonProperties::$CONNECTION_STRING,
+                    'dbName' => CommonProperties::$DBNAME,
                     'fsyncFlag' => true,
                     'safeFlag' => true,
                     'useCursor' => false,
