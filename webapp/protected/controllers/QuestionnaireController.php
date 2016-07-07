@@ -44,12 +44,18 @@ class QuestionnaireController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
         $answer = null;
+
+        if (!Yii::app()->user->isAuthorizedCreate($_SESSION['activeProfil'], $model->type)) {
+            Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à modifier une fiche ' . $model->type);
+            $this->redirect(array('answer/affichepatient'));
+        }
         if (isset($_POST['Questionnaire'])) {
             $answer = $this->saveQuestionnaireAnswers($model);
-            $this->redirect('index.php?r=answer/affichepatient');
+            $this->redirect(array('answer/affichepatient'));
         }
-        if ($answer != null)
+        if ($answer != null) {
             $model = $answer;
+        }
         if (isset($_SESSION['datapatient'])) {
             $patient = $_SESSION['datapatient'];
         }
@@ -123,7 +129,7 @@ class QuestionnaireController extends Controller {
 
         return $answer;
     }
-    
+
     /**
      * Lists all models.
      */
@@ -133,7 +139,7 @@ class QuestionnaireController extends Controller {
             $criteria = new EMongoCriteria();
             $criteria->id = $_POST["form"];
             $id = Questionnaire::model()->find($criteria);
-            $this->redirect(array('questionnaire/update','id'=>$id->_id));
+            $this->redirect(array('questionnaire/update', 'id' => $id->_id));
         } else {
             Yii::app()->user->setFlash("error", 'Veuillez sélectionner une fiche à remplir.');
             $this->redirect(array('answer/affichepatient'));

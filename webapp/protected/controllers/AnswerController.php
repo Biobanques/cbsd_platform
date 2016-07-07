@@ -41,6 +41,14 @@ class AnswerController extends Controller {
      */
     public function actionView($id) {
         $model = $this->loadModel($id);
+        if (!Yii::app()->user->isAuthorizedView($_SESSION['activeProfil'], $model->type)) {
+            if ($model->type == "clinique" && Yii::app()->user->id != $model->login) {
+                Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à consulter une fiche clinique qui ne vous appartient pas');
+            } else {
+                Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à consulter une fiche ' . $model->type);
+            }
+            $this->redirect(array('answer/affichepatient'));
+        }
         if (isset($_SESSION['datapatient'])) {
             $patient = $_SESSION['datapatient'];
             $this->render('view', array(
@@ -168,7 +176,10 @@ class AnswerController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
+        if (!Yii::app()->user->isAuthorizedUpdate($_SESSION['activeProfil'], $model->type)) {
+            Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à modifier une fiche ' . $model->type);
+            $this->redirect(array('answer/affichepatient'));
+        }
         if (isset($_POST['Questionnaire'])) {
             $model->last_updated = new MongoDate();
             $flagNoInputToSave = true;
