@@ -66,14 +66,6 @@ class QuestionGroup extends EMongoEmbeddedDocument {
     }
 
     /**
-     * TODO : display rule dinammcally ( with JS)
-     * make the javascript display rule.
-     */
-    public function makeDisplayRule() {
-        
-    }
-
-    /**
      * copy attributes of questionBlocForm and questionBloc to QuestionGroup.
      * @param type
      */

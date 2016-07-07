@@ -88,7 +88,7 @@ class Question extends LoggableActiveRecord {
         $this->type = $questionForm->type;
         $this->precomment = $questionForm->precomment;
         $this->precomment_fr = $questionForm->precomment;
-        if ($questionForm->help != null) {
+        if ($questionForm->help !== null) {
             $this->help = $questionForm->help;
         } else {
             $this->help = null;

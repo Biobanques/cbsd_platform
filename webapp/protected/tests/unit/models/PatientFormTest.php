@@ -19,6 +19,7 @@ class PatientFormTest extends PHPUnit_Framework_TestCase {
         $dateFalse = "06-07-2016";
         $this->assertTrue($model->dateFormat($dateTrue));
         $this->assertFalse($model->dateFormat($dateFalse));
+        $this->assertFalse($model->dateFormat("32/20/16547"));
         $this->assertInternalType('array', $model->getGenre());
         $this->assertInternalType('array', $model->getSource());
     }

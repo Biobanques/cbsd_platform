@@ -22,4 +22,5 @@ class RecoverPwdFormTest extends PHPUnit_Framework_TestCase {
         $this->assertInternalType('array', $model->attributeLabels());
         $this->assertInternalType('array', $model->validateFields());
     }
+
 }

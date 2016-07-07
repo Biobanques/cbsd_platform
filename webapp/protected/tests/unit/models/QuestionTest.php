@@ -18,8 +18,19 @@ class QuestionTest extends PHPUnit_Framework_TestCase {
      */
     public function testTypeFunction() {
         $model = new Question;
+        $questionForm = new QuestionForm;
+        $questionForm->id = "q1";
+        $questionForm->label = "Question 1";
+        $questionForm->type = "input";
+        $questionForm->style = "";
+        $questionForm->values = "";
+        $questionForm->precomment = "";
+        $questionForm->precomment_fr = $questionForm->precomment;
+        $questionForm->help = "";
+        $model->setAttributesByQuestionForm($questionForm);
         $this->assertInternalType('object', $model->model());
         $this->assertInternalType('array', $model->rules());
         $this->assertInternalType('array', $model->attributeLabels());
+        $this->assertInternalType('object', $model);
     }
 }
