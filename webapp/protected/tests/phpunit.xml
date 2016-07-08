@@ -9,11 +9,17 @@
         <browser name="Internet Explorer" browser="*iexplore" />
         <browser name="Firefox" browser="*firefox" />
     </selenium>
-    
+    <testsuites>
+    <testsuite name="Project Test Suite">
+        <directory>unit/</directory>
+    </testsuite>
+</testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../commands/</directory>
             <directory suffix=".php">../components/</directory>
             <directory suffix=".php">../models/</directory>
+            <directory suffix=".php">../controllers/</directory>
         </whitelist>
     </filter>
     

@@ -176,6 +176,7 @@ class AnswerController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        // Cas où l'utilisateur veut mettre à jour une fiche et tente de changer de profil puis clique sur précédent pour tenter d'accéder à la page où il n'a pas les droits
         if (!Yii::app()->user->isAuthorizedUpdate($_SESSION['activeProfil'], $model->type)) {
             Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à modifier une fiche ' . $model->type);
             $this->redirect(array('answer/affichepatient'));
