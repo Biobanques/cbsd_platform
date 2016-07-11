@@ -492,6 +492,37 @@ class Answer extends EMongoDocument {
      * retourne la liste de toutes les questions de toutes les fiches
      * @return type
      */
+    public function getAllQuestionsByFilter($model) {
+        $result = array();
+        $answers = $this->getAllDetailledQuestionsByFilter($model);
+        foreach ($answers as $answer) {
+            //$result[$answer->answer->id] = "[" . $answer->fiche . "][" . $answer->group . "] " . $answer->answer->label_fr;
+            $result["(" . $answer->answer->id . ")" . $answer->answer->label_fr] = "(" . $answer->fiche . ")" . "(" . $answer->answer->id . ") " . $answer->answer->label_fr;
+        }
+        natcasesort($result);
+        return $result;
+    }
+    
+    public function getAllDetailledQuestionsByFilter($fiches) {
+        $result = array();
+        foreach ($fiches as $fiche) {
+            foreach ($fiche->answers_group as $group) {
+                foreach ($group->answers as $answer) {
+                    $toAdd = new stdClass();
+                    $toAdd->answer = $answer;
+                    $toAdd->fiche = $fiche->name;
+                    $toAdd->group = $group->title_fr;
+                    $result[] = $toAdd;
+                }
+            }
+        }
+        return $result;
+    }
+    
+    /**
+     * retourne la liste de toutes les questions de toutes les fiches
+     * @return type
+     */
     public function getTypeQuestionByLabel($label) {
         $type = "";
         $criteria = new EMongoCriteria;
@@ -615,7 +646,7 @@ class Answer extends EMongoDocument {
      * @param $models : list of answers
      * @result array : each line = each model answer
      */
-    public function resultToArray($models) {
+    public function resultToArray($models, $filter) {
         $typeQuestion = array();
         $result = array();
         $headerLineFixe = $this->attributeExportedLabels();
@@ -662,8 +693,11 @@ class Answer extends EMongoDocument {
                 }
             }
         }
+        
         //formatage de chaque ligne
-        $headerLine = array_merge($headerLineFixe, $headerLineDynamic);
+        $intersect = array();
+        $intersect = array_intersect($headerLineDynamic, $filter);
+        $headerLine = array_merge($headerLineFixe, $intersect);
         $result[] = $headerLine;
         foreach ($answersList as $cAnswer) {
             $resultLine = array();
@@ -676,7 +710,7 @@ class Answer extends EMongoDocument {
             $cQuestions = $cAnswer['questions'];
             //ajout des valeurs à la ligne, si aucune valeur existante pour cette column, ajoute null
 
-            foreach ($headerLineDynamic as $columnHeader) {
+            foreach ($intersect as $columnHeader) {
                 $valueExists = false;
                 foreach ($cQuestions as $cQuestion) {
                     if ($cQuestion['label'] == $columnHeader) {

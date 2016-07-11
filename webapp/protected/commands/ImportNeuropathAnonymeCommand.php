@@ -51,7 +51,6 @@ class ImportNeuropathAnonymeCommand extends CConsoleCommand {
                     }
                     if (isset($neuropath->birthName) && isset($neuropath->firstName) && isset($neuropath->birthDate) && isset($neuropath->sex)) {
                         if ($this->isEmpty($neuropath) == false) {
-                            $neuropath->save();
                             $patient = (object) null;
                             $patient->id = null;
                             $patient->source = 1; // Banque de cerveaux
@@ -65,6 +64,7 @@ class ImportNeuropathAnonymeCommand extends CConsoleCommand {
                             if ($patientest === 'NoPatient') {
                                 $patient = CommonTools::wsAddPatient($patient);
                             }
+                            $neuropath->save();
                         } else {
                             $this->writePatientsNotImported($patient, $file_pos);
                         }

@@ -79,6 +79,17 @@ class RechercheFicheController extends Controller {
      * export csv liste des fiches disponibles
      */
     public function actionExportCsv() {
+        //echo "<br><br><br>";
+        if (isset($_POST['exporter'])) {
+            $filter = array();
+            if (isset($_POST['filter'])) {
+                $filter = $_POST['filter'];
+            }
+            $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
+            $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
+            $csv = new ECSVExport($arAnswers, true, false, null, null);
+            Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
+        }
         $model = new Answer('search');
         $model->unsetAttributes();
         if (isset($_GET['Answer']))
@@ -92,10 +103,10 @@ class RechercheFicheController extends Controller {
         $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
         $criteria->sort('type', EMongoCriteria::SORT_ASC);
         $models = Answer::model()->findAll($criteria);
-        $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
-        $arAnswers = Answer::model()->resultToArray($models);
-        $csv = new ECSVExport($arAnswers, true, false, null, null);
-        Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
+        $_SESSION['models'] = $models;
+        $this->render('exportFilter', array(
+            'models' => $models,
+        ));
     }
     
     /**

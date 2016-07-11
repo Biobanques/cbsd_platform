@@ -13,7 +13,7 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
     /**
      * type of the question. Values authorized :
      * input, date , radio, checkbox, text, image
-     * @var type 
+     * @var type
      */
     public $type;
     /*
@@ -33,33 +33,36 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
 
     /**
      * value of the answer
-     * @var type 
+     * @var type
      */
     public $answer;
 
     /**
      * columns if type is array
-     * @var type 
+     * @var type
      */
     //public $columns;
 
     /**
      * rows if type is array
-     * @var type 
+     * @var type
      */
     //public $rows;
 
     /**
      * comment on the top of the question
-     * @var type 
+     * @var type
      */
     public $precomment;
 
     /**
      * comment on the top of the question
-     * @var type 
+     * @var type
      */
     public $precomment_fr;
+    
+    public $fiche_id;
+
 
     /**
      *
@@ -81,6 +84,19 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
         return array(
             'label' => 'question',
             'answer' => 'answer',
+        );
+    }
+    
+    public function attributeExportedSqlLabels()
+    {
+        return array(
+            'id' => 'id',
+            'label_fr' => 'label_fr',
+            'type' => 'type',
+            'values' => 'values',
+            'answer' => 'answer',
+            'precomment_fr' => 'precomment_fr',
+            'fiche_id' => 'fiche_id'
         );
     }
 
@@ -116,7 +132,7 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
      *  input => values
      *  date => values
      *  radio => checkbox, text, image
-     * 
+     *
      */
     public function getLiteralAnswer(){
         $result=$this->answer;
@@ -126,3 +142,4 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
     }
 
 }
+
