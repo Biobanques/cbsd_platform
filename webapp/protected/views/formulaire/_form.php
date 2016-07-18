@@ -7,7 +7,7 @@
     ));
     ?>
 
-    <p class="note"><?php echo Yii::t('common', 'ChampsObligatoires'); ?></p>
+    <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
 
     <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
     <div class="row">

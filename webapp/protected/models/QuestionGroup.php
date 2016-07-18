@@ -59,8 +59,8 @@ class QuestionGroup extends EMongoEmbeddedDocument {
     public function attributeLabels() {
         return array(
             'id' => 'id',
-            'title' => 'titre',
-            'title_fr' => 'titre',
+            'title' => 'Titre',
+            'title_fr' => 'Titre',
             'parent_group' => 'Groupe parent'
         );
     }

@@ -20,7 +20,7 @@
                 ));
                 ?>
 
-                <p class="note"><?php echo Yii::t('common', 'ChampsObligatoires'); ?></p>
+                <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
 
                 <div class="row">
                     <?php echo $form->labelEx($model, 'username'); ?>
