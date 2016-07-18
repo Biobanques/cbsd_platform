@@ -115,7 +115,6 @@ return false;
         <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
         <?php echo CHtml::resetButton('Réinitialiser', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
         <?php echo CHtml::link('Exporter en CSV', array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
-        <?php echo CHtml::link('Exporter en SQL', array('rechercheFiche/exportSql'), array('class' => 'btn btn-default')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

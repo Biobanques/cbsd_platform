@@ -32,7 +32,6 @@ class CMenuBarLineWidget extends CWidget
      */
     public $actionExportXls;
     
-    public $actionExportSql;
     /**
      * surcharge du nom de l action si besoin, en cas de doublon de nom d exports sur un controller.
      * @var unknown
@@ -82,13 +81,6 @@ class CMenuBarLineWidget extends CWidget
                 $actionNameCsv = $this->actionExportCsv;
             }
             echo "<span style=\"padding-left: 10px;\">" . CHtml::link($imageexport, array($this->controllerName . '/' . $actionNameCsv)) . "</span>";
-            // Export SQL
-            $imageexportsql = CHtml::image(Yii::app()->baseUrl . '/images/database_save.png', 'Liste format sql', array("title"=>"Exporter en SQL"));
-            $actionNameSql = 'exportSql';
-            if (isset($this->actionExportSql)) {
-                $actionNameSql = $this->actionExportSql;
-            }
-            echo "<span style=\"padding-left: 10px;\">" . CHtml::link($imageexportsql, array($this->controllerName . '/' . $actionNameSql)) . "</span>";
             
             echo "</div>";
         }

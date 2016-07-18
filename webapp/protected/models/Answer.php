@@ -406,6 +406,17 @@ class Answer extends EMongoDocument {
         asort($res, SORT_NATURAL | SORT_FLAG_CASE);
         return $res;
     }
+    
+    public function getNomsFichesByFilter($models) {
+        $res = array();
+        foreach ($models as $fiche) {
+            if (!in_array($fiche->name, $res)) {
+                $res[$fiche->name] = $fiche->name;
+            }
+        }
+        asort($res, SORT_NATURAL | SORT_FLAG_CASE);
+        return $res;
+    }
 
     /**
      * retourne l'id max lors de l'ajout des gènes
@@ -501,6 +512,20 @@ class Answer extends EMongoDocument {
             $result[$answer->answer->id] = "[" . $answer->group . "] " . $answer->answer->label_fr;
         }
         natcasesort($result);
+        return $result;
+    }
+    
+    public function getAllQuestionsByFilterName($model, $name) {
+        $result = array();
+        $models = $this->getAllQuestionsByFilter($model);
+        foreach ($models as $answer=>$value) {
+            $pattern = '`\((.+?)\)`';
+            $subject = $value;
+            preg_match($pattern, $subject, $matches);
+            if ($name == $matches[1]) {
+                $result[$answer] = $value;
+            }
+        }
         return $result;
     }
     
