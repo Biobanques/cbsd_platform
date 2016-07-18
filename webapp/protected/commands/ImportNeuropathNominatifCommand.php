@@ -76,7 +76,7 @@ class ImportNeuropathNominatifCommand extends CConsoleCommand
                     }
                 }
             }
-            copy($importedFile, "treated/$importedFile");
+            copy($importedFile, "saved/$importedFile");
             unlink($importedFile);
         }
     }

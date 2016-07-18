@@ -104,8 +104,8 @@ class ImportNeuropathAnonymeCommand extends CConsoleCommand {
                     $i = 0;
                 }
             }
-            //copy($importedFile, "treated/$importedFile");
-            //unlink($importedFile);
+            copy($importedFile, "treated/$importedFile");
+            unlink($importedFile);
         }
     }
 

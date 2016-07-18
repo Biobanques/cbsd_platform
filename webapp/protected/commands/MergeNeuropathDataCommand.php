@@ -17,15 +17,10 @@ class MergeNeuropathDataCommand extends CConsoleCommand
         if (substr($folderSource, -1) != '/') {
             $folderSource.='/';
         }
-        chdir(Yii::app()->basePath . "/" . $folderSource);
+        chdir(Yii::app()->basePath . "/" . $folderSource . "saved/");
         $files = array_filter(glob('*'), 'is_file');
         echo count($files) . " files detected \n";
         foreach ($files as $importedFile) {
-            $pos = strpos($importedFile, '.');
-            $file_pos = substr($importedFile, 0, $pos);
-            if (file_exists("not_imported/$file_pos.txt")) {
-                unlink("not_imported/$file_pos.txt");
-            }
             $dataPatient = simplexml_load_file($importedFile);
             foreach ($dataPatient->children() as $samples) {
                 foreach ($samples->children() as $sample) {
@@ -175,7 +170,7 @@ class MergeNeuropathDataCommand extends CConsoleCommand
                     }
                 }
             }
-            copy($importedFile, "treated/$importedFile");
+            copy($importedFile, "../treated/$importedFile");
             unlink($importedFile);
         }
     }
