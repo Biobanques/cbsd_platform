@@ -390,6 +390,22 @@ class Answer extends EMongoDocument {
     public function getUserId() {
         return $this->login;
     }
+    
+    /**
+     * retourne toutes les noms des fiches
+     * @return type
+     */
+    public function getNomsFiches() {
+        $res = array();
+        $fiches = Answer::model()->findAll();
+        foreach ($fiches as $fiche) {
+            if (!in_array($fiche->name, $res)) {
+                $res[$fiche->name] = $fiche->name;
+            }
+        }
+        asort($res, SORT_NATURAL | SORT_FLAG_CASE);
+        return $res;
+    }
 
     /**
      * retourne l'id max lors de l'ajout des gènes
