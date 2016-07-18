@@ -104,3 +104,4 @@ class ImportNeuropathNominatifCommand extends CConsoleCommand
         file_put_contents($file, print_r($patient, true), FILE_APPEND);
     }
 }
+
