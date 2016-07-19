@@ -97,6 +97,7 @@ class ImportNeuropathAnonymeCommand extends CConsoleCommand {
                                     $neuropath->initSoftAttribute("date_death");
                                     $neuropath->initSoftAttribute("neuropathologist");
                                     $neuropath->initSoftAttribute("thal_amyloid");
+                                    $neuropath->initSoftAttribute("dft_harmonized");
                                 }
                             }
                         }

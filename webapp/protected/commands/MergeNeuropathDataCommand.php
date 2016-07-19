@@ -59,6 +59,12 @@ class MergeNeuropathDataCommand extends CConsoleCommand
                                     $patient->birthName = $patient->useName;
                                 }
                             }
+                            /*if ($note->key == "angiopathy_stage") {
+                                $angiopathy_stage = (string) $note->value;
+                            }
+                            if ($note->key == "angiopathy_type") {
+                                $angiopathy_stage = (string) $note->value;
+                            }*/
                             if ($note->key == "signature_date") {
                                 $signature_date = (string) $note->value;
                             }
@@ -125,6 +131,24 @@ class MergeNeuropathDataCommand extends CConsoleCommand
                             if ($note->key == "thal_amyloid") {
                                 $thal_amyloid = (string) $note->value;
                             }
+                            if ($note->key == "dft_harmonized") {
+                                $dft_harmonized = (string) $note->value;
+                            }
+                            /*if ($note->key == "dm_basal_ganglia") {
+                                $dm_basal_ganglia = (string) $note->value;
+                            }
+                            if ($note->key == "dm_frontal") {
+                                $dm_frontal = (string) $note->value;
+                            }
+                            if ($note->key == "dm_hippocampal") {
+                                $dm_hippocampal = (string) $note->value;
+                            }
+                            if ($note->key == "dm_temporal") {
+                                $dm_temporal = (string) $note->value;
+                            }
+                            if ($note->key == "dm_total") {
+                                $dm_total = (string) $note->value;
+                            }*/
                         } 
                     }
                     if ($this->emptyFieldExist($patient) != true) {
@@ -137,6 +161,8 @@ class MergeNeuropathDataCommand extends CConsoleCommand
                                     $criteria->id = $v;
                                     $neuropath = Neuropath::model()->find($criteria);
                                     if ($neuropath != null) {
+                                        /*$neuropath->Angiopathie_Amyloide_stade = $angiopathy_stage;
+                                        $neuropath->Angiopathie_Amyloide_type = $angiopathy_type;*/
                                         $neuropath->signature_date = $signature_date;
                                         $neuropath->family_tree = $family_tree;
                                         $neuropath->detail_treatment = $detail_treatment;
@@ -159,6 +185,12 @@ class MergeNeuropathDataCommand extends CConsoleCommand
                                         $neuropath->date_death = $date_death;
                                         $neuropath->neuropathologist = $neuropathologist;
                                         $neuropath->thal_amyloid = $thal_amyloid;
+                                        $neuropath->dft_harmonized = $dft_harmonized;
+                                        /*$neuropath->Demence_vasculaire_Deramecourt_Basal_Ganglia = $dm_basal_ganglia;
+                                        $neuropath->Demence_vasculaire_Deramecourt_Frontal = $dm_frontal;
+                                        $neuropath->Demence_vasculaire_Deramecourt_Hippocampe = $dm_hippocampal;
+                                        $neuropath->Demence_vasculaire_Deramecourt_Temporale = $dm_temporal;
+                                        $neuropath->Demence_vasculaire_Deramecourt_total_Score = $dm_total;*/
                                        
                                         $neuropath->save();
                                        
