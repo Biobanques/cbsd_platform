@@ -143,10 +143,12 @@ class AuditTrail extends EMongoDocument {
      */
     public function getAllUsers() {
         $result = array();
-        $users = User::model()->findAll();
+        $users = AuditTrail::model()->findAll();
         if ($users != null) {
             foreach ($users as $user) {
-                array_push($result, $user->login);
+                if (!in_array($user->user_id, $result)) {
+                    array_push($result, $user->user_id);
+                }
             }
         }
         return $result;

@@ -54,9 +54,11 @@ class ImportNeuropathAnonymeCommand extends CConsoleCommand {
                                         }
                                     } else {
                                         $patient->$var4 = (string) $note;
-                                    }
+                                    } if (isset($patient->sex) && $patient->sex == "M") {
+                                        $patient->useName = $patient->birthName;
+                                    } else {
                                         $patient->useName = null;
-
+                                    }
                                 }
                             }
                             $i++;
@@ -69,7 +71,7 @@ class ImportNeuropathAnonymeCommand extends CConsoleCommand {
                         }
                         if (is_object($patientest)) {
                             $patientArray = get_object_vars($patientest);
-                            foreach ($patientArray as $k=>$v){
+                            foreach ($patientArray as $k => $v) {
                                 if ($k == "id") {
                                     $neuropath->initSoftAttribute("id");
                                     $neuropath->id = $v;
@@ -95,7 +97,6 @@ class ImportNeuropathAnonymeCommand extends CConsoleCommand {
                                     $neuropath->initSoftAttribute("date_death");
                                     $neuropath->initSoftAttribute("neuropathologist");
                                     $neuropath->initSoftAttribute("thal_amyloid");
-                                   
                                 }
                             }
                         }
@@ -116,4 +117,5 @@ class ImportNeuropathAnonymeCommand extends CConsoleCommand {
             return false;
         }
     }
+
 }
