@@ -45,7 +45,7 @@ class QuestionnaireController extends Controller {
         $model = $this->loadModel($id);
         $answer = null;
         // Cas où l'utilisateur veut mettre à jour une fiche et tente de changer de profil puis clique sur précédent pour tenter d'accéder à la page où il n'a pas les droits
-        if (!Yii::app()->user->isAuthorizedCreate($_SESSION['activeProfil'], $model->type)) {
+        if (isset($_SESSION['activeProfil']) && !Yii::app()->user->isAuthorizedCreate($_SESSION['activeProfil'], $model->type)) {
             Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à créer une fiche ' . $model->type);
             $this->redirect(array('answer/affichepatient'));
         }

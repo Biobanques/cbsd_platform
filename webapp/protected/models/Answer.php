@@ -523,7 +523,7 @@ class Answer extends EMongoDocument {
             $subject = $value;
             preg_match($pattern, $subject, $matches);
             if ($name == $matches[1]) {
-                $result[$answer] = $value;
+                $result[$answer] = str_replace($matches[0], '', $value);
             }
         }
         return $result;

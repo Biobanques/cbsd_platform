@@ -34,29 +34,59 @@ class Controller extends CController {
             $app->language = $app->session['_lang'];
         }
         if (isset($_GET['id']) && Yii::app()->controller->id == "questionnaire") {
-            $criteria = new EMongoCriteria;
             $ficheQuestion = Questionnaire::model()->findByPk(new MongoId($_GET['id']));
             $_SESSION['idQuestion'] = $ficheQuestion;
         }
         if (isset($_GET['id']) && Yii::app()->controller->id == "answer") {
-            $criteria = new EMongoCriteria;
             $fiche = Answer::model()->findByPk(new MongoId($_GET['id']));
             $_SESSION['id'] = $fiche;
         }
         if (isset($_POST['activeProfil'])) {
             if ($_POST['activeProfil'] === "newProfil") {
-                $this->redirect('index.php?r=site/updatesubscribe');
+                $this->redirect(array('site/updatesubscribe'));
             } else {
                 $app->user->setState('activeProfil', $_POST['activeProfil']);
                 $_SESSION['activeProfil'] = $_POST['activeProfil'];
                 if (Yii::app()->controller->id == "rechercheFiche" && Yii::app()->user->getActiveProfil() == "clinicien") {
                     Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à accéder à la liste des fiches disponibles');
-                    $this->redirect('index.php?r=site/index');
+                    $this->redirect(array('site/index'));
                 }
                 if (Yii::app()->controller->id == "user" || Yii::app()->controller->id == "formulaire" || Yii::app()->controller->id == "fiche" || Yii::app()->controller->id == "questionBloc" || Yii::app()->controller->id == "administration" || Yii::app()->controller->id == "auditTrail" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "admin/admin") {
                     if (Yii::app()->user->getActiveProfil() != "administrateur") {
                         Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à accéder à la page d\'administration');
-                        $this->redirect('index.php?r=site/index');
+                        $this->redirect(array('site/index'));
+                    }
+                }
+                if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "questionnaire/update") {
+                    if ($_SESSION['idQuestion']->type == "clinique") {
+                        if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "questionnaire/update") {
+                            if (!Yii::app()->user->isAuthorizedCreate($_SESSION['activeProfil'], "clinique")) {
+                                Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à créer une fiche clinique');
+                                $this->redirect(array('answer/affichepatient'));
+                            } else {
+                                $this->redirect('index.php?r=questionnaire/update&id=' . $_SESSION['idQuestion']->_id);
+                            }
+                        }
+                    }
+                    if ($_SESSION['idQuestion']->type == "neuropathologique") {
+                        if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "questionnaire/update") {
+                            if (!Yii::app()->user->isAuthorizedCreate($_SESSION['activeProfil'], "neuropathologique")) {
+                                Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à créer une fiche neuropathologique');
+                                $this->redirect(array('answer/affichepatient'));
+                            } else {
+                                $this->redirect('index.php?r=questionnaire/update&id=' . $_SESSION['idQuestion']->_id);
+                            }
+                        }
+                    }
+                    if ($_SESSION['idQuestion']->type == "genetique") {
+                        if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "questionnaire/update") {
+                            if (!Yii::app()->user->isAuthorizedCreate($_SESSION['activeProfil'], "genetique")) {
+                                Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à créer une fiche génétique');
+                                $this->redirect(array('answer/affichepatient'));
+                            } else {
+                                $this->redirect('index.php?r=questionnaire/update&id=' . $_SESSION['idQuestion']->_id);
+                            }
+                        }
                     }
                 }
                 if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/view") {
@@ -67,7 +97,6 @@ class Controller extends CController {
                         $this->redirect('index.php?r=answer/view&id=' . $_SESSION['id']->_id);
                     }
                 }
-
                 if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/update") {
                     if (!Yii::app()->user->isAuthorizedUpdate($_SESSION['activeProfil'], $_SESSION['id']->type)) {
                         Yii::app()->user->setFlash('error', 'Vous n\'êtes pas autorisé à modifier une fiche ' . $_SESSION['id']->type);
@@ -79,5 +108,5 @@ class Controller extends CController {
             }
         }
     }
-}
 
+}

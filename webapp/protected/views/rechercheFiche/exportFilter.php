@@ -38,7 +38,8 @@ $form = $this->beginWidget('CActiveForm', array(
 ));
 ?>
 <label><input type="checkbox" name="select-all" id="select-all" />Sélectionner tout</label>
-<div class="checkboxgroup"> <?php
+<div class="checkboxgroup"> 
+    <?php
     $fiches = Answer::model()->getNomsFichesByFilter($models);
     foreach ($fiches as $key => $value) {
         echo "<h3>Fiche " . $value . "</h3>"; 
