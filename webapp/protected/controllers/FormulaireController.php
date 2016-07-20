@@ -108,6 +108,8 @@ class FormulaireController extends Controller {
             //traitement ajout de question
             if ($questionForm->validate()) {
                 $model = $model->saveQuestionnaireNewQuestion($questionForm);
+            } else {
+                Yii::app()->user->setFlash('error', 'La question n\'a pas été ajouté.');
             }
         }
         if (isset($_POST['QuestionGroup'])) {
