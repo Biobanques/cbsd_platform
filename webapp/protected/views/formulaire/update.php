@@ -5,6 +5,14 @@ $(document).ready(function() {
          $(this).val('');
     });
  });
+ $('#QuestionBlocForm_title').change(function(){
+    var e = document.getElementById('QuestionBlocForm_title').value;
+    if (e !== '') {
+        $('#titleBloc').show();
+    } else {
+        $('#titleBloc').hide();
+    }
+});
 ");
 Yii::app()->clientScript->registercss('input', "
 input[type=\"text\"] {

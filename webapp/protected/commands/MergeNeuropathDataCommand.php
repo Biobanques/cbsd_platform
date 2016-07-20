@@ -194,7 +194,59 @@ class MergeNeuropathDataCommand extends CConsoleCommand
                                        
                                         $neuropath->save();
                                        
-                                    }
+                                    }/* else {
+                                        $neuropath = new Neuropath;
+                                        $neuropath->initSoftAttribute("id");
+                                        $neuropath->id = $v;
+                                        $neuropath->initSoftAttribute("signature_date");
+                                    $neuropath->initSoftAttribute("family_tree");
+                                    $neuropath->initSoftAttribute("detail_treatment");
+                                    $neuropath->initSoftAttribute("associated_clinical_data");
+                                    $neuropath->initSoftAttribute("associated_molecular_data");
+                                    $neuropath->initSoftAttribute("associated_imagin_data");
+                                    $neuropath->initSoftAttribute("quantity_available");
+                                    $neuropath->initSoftAttribute("biobank_collection_name");
+                                    $neuropath->initSoftAttribute("trouble_start_date");
+                                    $neuropath->initSoftAttribute("first_trouble");
+                                    $neuropath->initSoftAttribute("mms");
+                                    $neuropath->initSoftAttribute("id_sample");
+                                    $neuropath->initSoftAttribute("collect_date");
+                                    $neuropath->initSoftAttribute("diagnosis_2");
+                                    $neuropath->initSoftAttribute("diagnosis_3");
+                                    $neuropath->initSoftAttribute("diagnosis_4");
+                                    $neuropath->initSoftAttribute("origin_sample_tissue");
+                                    $neuropath->initSoftAttribute("nature_sample_tissue");
+                                    $neuropath->initSoftAttribute("name_samples_tissue");
+                                    $neuropath->initSoftAttribute("date_death");
+                                    $neuropath->initSoftAttribute("neuropathologist");
+                                    $neuropath->initSoftAttribute("thal_amyloid");
+                                    $neuropath->initSoftAttribute("dft_harmonized");
+                                        $neuropath->signature_date = $signature_date;
+                                        $neuropath->family_tree = $family_tree;
+                                        $neuropath->detail_treatment = $detail_treatment;
+                                        $neuropath->associated_clinical_data = $associated_clinical_data;
+                                        $neuropath->associated_molecular_data = $associated_molecular_data;
+                                        $neuropath->associated_imagin_data = $associated_imagin_data;
+                                        $neuropath->quantity_available = $quantity_available;
+                                        $neuropath->biobank_collection_name = $biobank_collection_name;
+                                        $neuropath->trouble_start_date = $trouble_start_date;
+                                        $neuropath->first_trouble = $first_trouble;
+                                        $neuropath->mms = $mms;
+                                        $neuropath->id_sample = $id_sample;
+                                        $neuropath->collect_date = $collect_date;
+                                        $neuropath->diagnosis_2 = $diagnosis_2;
+                                        $neuropath->diagnosis_3 = $diagnosis_3;
+                                        $neuropath->diagnosis_4 = $diagnosis_4;
+                                        $neuropath->origin_sample_tissue = $origin_sample_tissue;
+                                        $neuropath->nature_sample_tissue = $nature_sample_tissue;
+                                        $neuropath->name_samples_tissue = $name_samples_tissue;
+                                        $neuropath->date_death = $date_death;
+                                        $neuropath->neuropathologist = $neuropathologist;
+                                        $neuropath->thal_amyloid = $thal_amyloid;
+                                        $neuropath->dft_harmonized = $dft_harmonized;
+                                        
+                                        $neuropath->save();
+                                    }*/
                                 }
                             }
                         }

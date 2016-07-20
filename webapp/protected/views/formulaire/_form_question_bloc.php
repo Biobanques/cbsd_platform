@@ -1,16 +1,3 @@
-<?php
-Yii::app()->clientScript->registerScript('idTitle', "
-$('#QuestionBlocForm_title').change(function(){
-    var e = document.getElementById('QuestionBlocForm_title').value;
-    if (e !== '') {
-        $('#titleBloc').show();
-    } else {
-        $('#titleBloc').hide();
-    }
-});
-");
-?>
-
 <div class="wide form">
 
     <?php

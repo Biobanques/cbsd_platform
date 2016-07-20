@@ -118,6 +118,8 @@ class FormulaireController extends Controller {
                 if ($questionGroup->validate()) {
                     $model = $model->saveQuestionnaireNewGroup($questionGroup);
                 }
+            } else {
+                Yii::app()->user->setFlash('error', 'L\'onglet de question n\'a pas été ajouté.');
             }
         }
 
@@ -141,6 +143,8 @@ class FormulaireController extends Controller {
                         $model->saveQuestionnaireNewQuestionBloc($questionForm);
                     }
                 }
+            } else {
+                Yii::app()->user->setFlash('error', 'Le bloc de question n\'a pas été ajouté.');
             }
         }
         //  set du model sur la questionForm pour generer l arborescende de position de question

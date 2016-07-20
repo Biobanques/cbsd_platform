@@ -1,16 +1,3 @@
-<?php
-Yii::app()->clientScript->registerScript('idTitle', "
-$('#QuestionGroup_title').change(function(){
-    var e = document.getElementById('QuestionGroup_title').value;
-    if (e !== '') {
-        $('#titleGroup').show();
-    } else {
-        $('#titleGroup').hide();
-    }
-});
-");
-?>
-
 <div class="wide form">
 
     <?php
@@ -29,7 +16,7 @@ $('#QuestionGroup_title').change(function(){
         <?php echo $form->textField($model, 'title'); ?>
         <?php echo $form->error($model, 'title'); ?>
     </div>
-    <div class="row" id ="titleGroup" style="display:none;">
+    <div class="row">
         <p>L'id permet de repérer rapidement l'onglet dans l arborescence de questions.</p>
         <?php echo $form->labelEx($model, 'id'); ?>
         <?php echo $form->textField($model, 'id'); ?>
