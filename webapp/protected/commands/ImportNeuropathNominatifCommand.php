@@ -35,34 +35,36 @@ class ImportNeuropathNominatifCommand extends CConsoleCommand
                     $patient->sourceId = null;
                     foreach ($sample->children() as $notes) {
                         foreach ($notes->children() as $note) {
-                            if ($note->key == "id_donor") {
-                                $patient->id_donor = (string) $note->value;
-                            }
-                            if ($note->key == "birthName") {
-                                $patient->birthName = (string) $note->value;
-                            }
-                            if ($note->key == "useName") {
-                                $patient->useName = (string) $note->value;
-                            }
-                            if ($note->key == "firstName") {
-                                $pos = strpos((string) $note->value, ",");
-                                if ($pos) {
-                                    $patient->firstName = substr((string) $note->value, 0, $pos);
-                                } else {
-                                    $patient->firstName = (string) $note->value;
-                                }
-                            }
-                            if ($note->key == "birthDate") {
-                                $patient->birthDate = (string) $note->value;
-                            }
-                            if ($note->key == "gender") {
-                                $patient->sex = (string) $note->value;
-                                if ($patient->sex == null) {
-                                    $patient->sex = "U";
-                                }
-                                if ($patient->sex == "M" && $patient->birthName == null && $patient->useName != null) {
-                                    $patient->birthName = $patient->useName;
-                                }
+                            switch($note->key) {
+                                case "id_donor":
+                                    $patient->id_donor = (string) $note->value;
+                                    break;
+                                case "birthName":
+                                    $patient->birthName = (string) $note->value;
+                                    break;
+                                case "useName":
+                                    $patient->useName = (string) $note->value;
+                                    break;
+                                case "firstName":
+                                    $pos = strpos((string) $note->value, ",");
+                                    if ($pos) {
+                                        $patient->firstName = substr((string) $note->value, 0, $pos);
+                                    } else {
+                                        $patient->firstName = (string) $note->value;
+                                    }
+                                    break;
+                                case "birthDate":
+                                    $patient->birthDate = (string) $note->value;
+                                    break;
+                                case "gender":
+                                    $patient->sex = (string) $note->value;
+                                    if ($patient->sex == null) {
+                                        $patient->sex = "U";
+                                    }
+                                    if ($patient->sex == "M" && $patient->birthName == null && $patient->useName != null) {
+                                        $patient->birthName = $patient->useName;
+                                    }
+                                    break;
                             }
                         }
                         if ($this->emptyFieldExist($patient) != true) {
