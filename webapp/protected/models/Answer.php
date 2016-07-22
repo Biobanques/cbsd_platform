@@ -130,19 +130,6 @@ class Answer extends EMongoDocument {
         );
     }
 
-    public function attributeExportedSqlLabels() {
-        return array(
-            'creator' => 'Créateur de la fiche',
-            'id' => 'Identifiant de la fiche',
-            'type' => 'Type de fiche',
-            'login' => 'Nom d\'utilisateur',
-            'id_patient' => 'N° anonymat',
-            'name' => 'Nom de la fiche',
-            'last_modified' => 'Date de mise à jour du questionnaire',
-            'last_updated' => 'Date de saisie',
-        );
-    }
-
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
 
