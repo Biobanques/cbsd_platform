@@ -108,27 +108,4 @@ class RechercheFicheController extends Controller {
             'models' => $models,
         ));
     }
-    
-    /**
-     * export sql liste des fiches disponibles
-     */
-    public function actionExportSql() {
-        $model = new Answer('search');
-        $model->unsetAttributes();
-        if (isset($_GET['Answer']))
-            $model->attributes = $_GET['Answer'];
-        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
-            $criteria = $_SESSION['criteria'];
-        } else {
-            $criteria = new EMongoCriteria;
-        }
-        // trier par id_patient et type de fiche dans l'ordre croissant
-        $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
-        $criteria->sort('type', EMongoCriteria::SORT_ASC);
-        $models = Answer::model()->findAll($criteria);
-        $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.sql';
-        $arAnswers = Answer::model()->resultToArray($models);
-        $sql = Answer::model()->resultToSql($arAnswers);
-        Yii::app()->getRequest()->sendFile($filename, $sql, "", false);
-    }
 }

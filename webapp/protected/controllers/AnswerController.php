@@ -234,7 +234,7 @@ class AnswerController extends Controller {
             $nbMax++;
 
             $gene = new AnswerQuestion;
-            $model->addGene($nbMax, $gene);
+            $gene = $model->addGene($nbMax, $gene);
 
             $analyse = new AnswerQuestion;
             $model->addAnalyse($nbMax, $analyse);

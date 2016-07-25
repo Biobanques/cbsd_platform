@@ -429,6 +429,8 @@ class Answer extends EMongoDocument {
         $gene->answer = "";
         $gene->precomment = "";
         $gene->precomment_fr = "";
+        
+        return $gene;
     }
 
     /**
@@ -446,6 +448,8 @@ class Answer extends EMongoDocument {
         $analyse->answer = "Non";
         $analyse->precomment = "";
         $analyse->precomment_fr = "";
+        
+        return $analyse;
     }
 
     /**
@@ -458,6 +462,8 @@ class Answer extends EMongoDocument {
         $mutation->label_fr = "Mutation(s)";
         $mutation->type = "input";
         $mutation->style = "";
+        
+        return $mutation;
     }
 
     /**
@@ -470,6 +476,8 @@ class Answer extends EMongoDocument {
         $comment->label_fr = "Commentaire";
         $comment->type = "input";
         $comment->style = "float:right;";
+        
+        return $comment;
     }
 
     /**
@@ -759,42 +767,6 @@ class Answer extends EMongoDocument {
             $result[] = $resultLine;
         }
         return $result;
-    }
-
-    public function resultToSql($models) {
-        $label = "";
-        $type = "";
-        $table_question = "question";
-        $sql = "";
-        $sql.= "SET foreign_key_checks = 0;\n";
-        $sql.= "DROP TABLE IF EXISTS `" . $table_question . "`;\n";
-        $sql.= 'CREATE TABLE `' . $table_question . '` (`question_id` int(11) NOT NULL AUTO_INCREMENT,';
-        foreach ($models as $key => $value) {
-            if ($key == 0) {
-                foreach ($value as $k => $v) {
-                    $label = substr(strstr($v, ']'), 1);
-                    $type = $this->getTypeQuestionByLabel($label);
-                    if ($type == "number" || $type == "expression") {
-                        $sql.= "`" . $v . "` int NOT NULL,";
-                    } else {
-                        $sql.= "`" . $v . "` varchar(255) NOT NULL,";
-                    }
-                }
-            }
-        }
-        $sql.= " PRIMARY KEY (`question_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;\n";
-        foreach ($models as $key => $value) {
-            if ($key != 0) {
-                $sql.= 'INSERT INTO `' . $table_question . "` VALUES ('',";
-                foreach ($value as $k => $v) {
-                    $v = str_replace("'", "''", $v);
-                    $sql.= "'" . $v . "',";
-                }
-                $sql = substr($sql, 0, -1);
-                    $sql.= ");\n";
-            }
-        }
-        return $sql;
     }
 
 }
