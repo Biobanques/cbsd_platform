@@ -108,7 +108,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
                         'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
                     )
                 ),
-                'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }',
+                'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); setTimeout(function(){ location.reload(); }, 2000); }',
                 'htmlOptions' => array('style' => 'width: 70px'),
             ),
         ),
