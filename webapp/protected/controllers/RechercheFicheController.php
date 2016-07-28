@@ -87,7 +87,8 @@ class RechercheFicheController extends Controller {
             }
             $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
             $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
-            $csv = new ECSVExport($arAnswers, true, false, null, null);
+            $answers = Answer::model()->resultArrayMerged($arAnswers);
+            $csv = new ECSVExport($answers, true, false, null, null);
             Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
         }
         $model = new Answer('search');
