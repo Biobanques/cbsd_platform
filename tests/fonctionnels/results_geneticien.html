@@ -1,0 +1,343 @@
+<html>
+<head><style type='text/css'>
+body, table {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 12;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+
+a {
+    text-decoration: none;
+}
+
+.title {
+    font-style: italic;
+}
+
+.selected {
+    background-color: #ffffcc;
+}
+
+.status_done {
+    background-color: #eeffee;
+}
+
+.status_passed {
+    background-color: #ccffcc;
+}
+
+.status_failed {
+    background-color: #ffcccc;
+}
+
+.breakpoint {
+    background-color: #cccccc;
+    border: 1px solid black;
+}
+</style><title>Test suite results</title></head>
+<body>
+<h1>Test suite results </h1>
+
+<table>
+<tr>
+<td>result:</td>
+<td>passed</td>
+</tr>
+<tr>
+<td>totalTime:</td>
+<td>42</td>
+</tr>
+<tr>
+<td>numTestTotal:</td>
+<td>4</td>
+</tr>
+<tr>
+<td>numTestPasses:</td>
+<td>4</td>
+</tr>
+<tr>
+<td>numTestFailures:</td>
+<td>0</td>
+</tr>
+<tr>
+<td>numCommandPasses:</td>
+<td>0</td>
+</tr>
+<tr>
+<td>numCommandFailures:</td>
+<td>0</td>
+</tr>
+<tr>
+<td>numCommandErrors:</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Selenium Version:</td>
+<td>2.44</td>
+</tr>
+<tr>
+<td>Selenium Revision:</td>
+<td>.0</td>
+</tr>
+<tr>
+<td>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr class="title status_passed"><td><b>Test Suite</b></td></tr>
+<tr class=" status_passed"><td><a href="#testresult0">LoginGeneticien</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult1">RecherchePatient</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult2">CreateGenetiqueForm</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult3">LogoutGeneticien</a></td></tr>
+</tbody></table>
+
+
+</td>
+<td>&nbsp;</td>
+</tr>
+</table><table><tr>
+<td><a name="testresult0">LoginGeneticien.html</a><br/><div>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">LoginGeneticien</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/cbsd_platform/webapp/index.php</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=LoginForm_username</td>
+	<td>PierreDurand</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=LoginForm_password</td>
+	<td>Durand2015</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+</tbody></table>
+
+
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult1">RecherchePatient.html</a><br/><div>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">RecherchePatient</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=PatientForm_prenom</td>
+	<td>Kareem</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=PatientForm_nom_naissance</td>
+	<td>Dale2</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>id=PatientForm_date_naissance</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>id=PatientForm_date_naissance</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=PatientForm_date_naissance</td>
+	<td>01/01/1970</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/cbsd_platform/webapp/index.php?r=site/patient</td>
+	<td></td>
+</tr>
+</tbody></table>
+
+
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult2">CreateGenetiqueForm.html</a><br/><div>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">CreateGenetiqueForm</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/cbsd_platform/webapp/index.php?r=answer/affichepatient</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>select</td>
+	<td>id=form</td>
+	<td>label=Genetique</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=situation_patientaddress</td>
+	<td>5 rue Glacière</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>link=Gène</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>id=gene_analyse1</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=gene_gene1</td>
+	<td>LRRK2</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=gene_mutation1</td>
+	<td>P203S</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=gene_comment1</td>
+	<td>OK</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=gene_comment2</td>
+	<td>KO</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=gene_comment3</td>
+	<td>KO</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=gene_comment4</td>
+	<td>OK</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=gene_gene4</td>
+	<td>TEST</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>id=gene_analyse4</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=gene_mutation4</td>
+	<td>test</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+</tbody></table>
+
+
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult3">LogoutGeneticien.html</a><br/><div>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">LogoutGeneticien</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/cbsd_platform/webapp/index.php?r=site/patient</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Déconnexion (PierreDurand)</td>
+	<td></td>
+</tr>
+</tbody></table>
+
+
+</div></td>
+<td>&nbsp;</td>
+</tr></table><pre>
+info: Starting test /selenium-server/tests/LoginGeneticien.html
+info: Executing: |open | /cbsd_platform/webapp/index.php |  |
+info: Executing: |type | id=LoginForm_username | PierreDurand |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |type | id=LoginForm_password | Durand2015 |
+info: Executing: |click | name=yt0 |  |
+info: Executing: |clickAndWait | name=yt0 |  |
+info: Starting test /selenium-server/tests/RecherchePatient.html
+info: Executing: |selectWindow | null |  |
+info: Executing: |type | id=PatientForm_prenom | Kareem |
+info: Executing: |type | id=PatientForm_nom_naissance | Dale2 |
+info: Executing: |click | id=PatientForm_date_naissance |  |
+info: Executing: |click | id=PatientForm_date_naissance |  |
+info: Executing: |type | id=PatientForm_date_naissance | 01/01/1970 |
+info: Executing: |clickAndWait | name=yt0 |  |
+info: Executing: |open | /cbsd_platform/webapp/index.php?r=site/patient |  |
+info: Starting test /selenium-server/tests/CreateGenetiqueForm.html
+info: Executing: |open | /cbsd_platform/webapp/index.php?r=answer/affichepatient |  |
+info: Executing: |select | id=form | label=Genetique |
+info: Executing: |clickAndWait | name=yt0 |  |
+info: Executing: |type | id=situation_patientaddress | 5 rue Glacière |
+info: Executing: |click | link=Gène |  |
+info: Executing: |click | id=gene_analyse1 |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |type | id=gene_gene1 | LRRK2 |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |type | id=gene_mutation1 | P203S |
+info: Executing: |type | id=gene_comment1 | OK |
+info: Executing: |type | id=gene_comment2 | KO |
+info: Executing: |type | id=gene_comment3 | KO |
+info: Executing: |type | id=gene_comment4 | OK |
+info: Executing: |type | id=gene_gene4 | TEST |
+info: Executing: |click | id=gene_analyse4 |  |
+info: Executing: |type | id=gene_mutation4 | test |
+info: Executing: |clickAndWait | name=yt0 |  |
+info: Starting test /selenium-server/tests/LogoutGeneticien.html
+info: Executing: |open | /cbsd_platform/webapp/index.php?r=site/patient |  |
+info: Executing: |clickAndWait | link=Déconnexion (PierreDurand) |  |
+</pre></body></html>
