@@ -18,3 +18,4 @@
 /tests/fonctionnels/selenium_vsc.log
 /webapp/protected/components/CommonPropertiesProd.php
 /vendor/
+/webapp/protected/files/
