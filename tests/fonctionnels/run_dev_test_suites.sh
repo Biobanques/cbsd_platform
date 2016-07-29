@@ -9,3 +9,7 @@
 CURRENTPATH=$(pwd)
 
 java -jar selenium-server-standalone-2.44.0.jar -log selenium_vsc.log -htmlSuite "*googlechrome" "http://localhost" $CURRENTPATH"/dev/testsSuites/ClinicienTestSuite.html" $CURRENTPATH"/results_clinicien.html"
+
+java -jar selenium-server-standalone-2.44.0.jar -log selenium_vsc.log -htmlSuite "*googlechrome" "http://localhost" $CURRENTPATH"/dev/testsSuites/NeuropathologisteTestSuite.html" $CURRENTPATH"/results_neuropathologiste.html"
+
+java -jar selenium-server-standalone-2.44.0.jar -log selenium_vsc.log -htmlSuite "*googlechrome" "http://localhost" $CURRENTPATH"/dev/testsSuites/GeneticienTestSuite.html" $CURRENTPATH"/results_geneticien.html"
