@@ -2,7 +2,9 @@
 Yii::app()->clientScript->registerScript('form_question', "
 $(document).ready(function() {
     $('.row input[type=\"text\"],select').each(function() {
-         $(this).val('');
+        if ($(this).val() != 'administrateur') {
+            $(this).val('');
+        }
     });
  });
  $('#QuestionBlocForm_title').change(function(){
