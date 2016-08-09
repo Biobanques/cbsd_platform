@@ -657,31 +657,6 @@ class Answer extends EMongoDocument {
         }
         return $result;
     }
-    
-    public function resultArrayMerged($arAnswers) {
-        $count = 0;
-        $index = count($arAnswers);
-        $arAnswersHeaderLength = count($arAnswers[0]);
-        $neuropath = Neuropath::model()->findAll();
-        foreach ($neuropath as $neuro) {
-            $count = 0;
-            while ($count < $arAnswersHeaderLength) {
-                $arAnswers[$index][] = "";
-                $count++;
-            }
-            foreach ($neuro as $key => $value) {
-                if ($key != "_id" && !in_array($key, $arAnswers[0])) {
-                   $arAnswers[0][] = $key;
-                }
-                if ($key != "_id") {
-                    $arAnswers[$index][] = $value;
-                }
-            }
-            $index++;
-        }
-        //print_r($arAnswers);
-        return $arAnswers;
-    }
 
     /**
      * method to convert a result set provided by a search to an array.
