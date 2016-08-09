@@ -105,9 +105,13 @@ class FormulaireController extends Controller {
         // collect user input data
         if (isset($_POST['QuestionForm'])) {
             $questionForm->attributes = $_POST['QuestionForm'];
+            if ($questionForm->validatewithId($model)) {
             //traitement ajout de question
-            if ($questionForm->validate()) {
-                $model = $model->saveQuestionnaireNewQuestion($questionForm);
+                if ($questionForm->validate()) {
+                    $model = $model->saveQuestionnaireNewQuestion($questionForm);
+                } else {
+                    Yii::app()->user->setFlash('error', 'La question n\'a pas été ajouté.');
+                }
             } else {
                 Yii::app()->user->setFlash('error', 'La question n\'a pas été ajouté.');
             }

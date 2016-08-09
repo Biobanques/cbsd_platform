@@ -46,7 +46,7 @@ $form = $this->beginWidget('CActiveForm', array(
         echo CHtml::checkBoxList('filter', 'addFilter', Answer::model()->getAllQuestionsByFilterName($models, $value), array(
             'labelOptions' => array('style' => 'display:inline'),
             'separator' => '',
-            'template' => '<div>{input}&nbsp;{label}</div><br><br>'
+            'template' => '<div>{input}&nbsp;{label}</div><br>'
         ));
     }
     ?>
