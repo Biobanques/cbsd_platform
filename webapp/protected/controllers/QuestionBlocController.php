@@ -163,6 +163,10 @@ class QuestionBlocController extends Controller {
      */
     public function actionDelete($id) {
         try {
+            $model = $this->loadModel($id);
+            foreach ($model->questions as $value) {
+                Question::model()->findByPk(new MongoId($value))->delete();
+            }
             $this->loadModel($id)->delete();
             if (!isset($_GET['ajax'])) {
                 Yii::app()->user->setFlash('success', 'Le bloc de questions a bien été supprimé.');
