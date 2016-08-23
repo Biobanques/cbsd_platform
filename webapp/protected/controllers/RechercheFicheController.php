@@ -79,7 +79,6 @@ class RechercheFicheController extends Controller {
      * export csv liste des fiches disponibles
      */
     public function actionExportCsv() {
-        //echo "<br><br><br>";
         if (isset($_POST['exporter'])) {
             $filter = array();
             if (isset($_POST['filter'])) {
