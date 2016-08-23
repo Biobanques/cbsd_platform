@@ -97,4 +97,19 @@ if ($model->last_modified != null && $model->last_modified != "") {
             </div>
         </div>
     </div>
+    
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                Pour modifier un onglet
+            </h3>
+        </div>
+        <div id="collapse4" class="panel-collapse collapse">
+            <div class="panel-body">
+                <?php
+                echo $this->renderPartial('_form_question_group_update', array('questionGroup' => $questionGroup));
+                ?>
+            </div>
+        </div>
+    </div>
 </div>

@@ -106,7 +106,7 @@ class FormulaireController extends Controller {
         if (isset($_POST['QuestionForm'])) {
             $questionForm->attributes = $_POST['QuestionForm'];
             if ($questionForm->validatewithId($model)) {
-            //traitement ajout de question
+                //traitement ajout de question
                 if ($questionForm->validate()) {
                     $model = $model->saveQuestionnaireNewQuestion($questionForm);
                 } else {
@@ -151,6 +151,20 @@ class FormulaireController extends Controller {
                 }
             } else {
                 Yii::app()->user->setFlash('error', 'Le bloc de question n\'a pas été ajouté.');
+            }
+        }
+        if (isset($_POST['old_onglet'])) {
+            foreach ($model->questions_group as $onglet) {
+                if ($onglet->id == $_POST['old_onglet']) {
+                    $onglet->title = $_POST['new_onglet'];
+                    $onglet->title_fr = $_POST['new_onglet'];
+                    $onglet->id = $_POST['new_id'];
+                    if ($model->save()) {
+                        Yii::app()->user->setFlash('success', 'L\'onglet a bien été modifié.');
+                    } else {
+                        Yii::app()->user->setFlash('error', 'L\'onglet n\'a pas été modifié.');
+                    }
+                }
             }
         }
         //  set du model sur la questionForm pour generer l arborescende de position de question
