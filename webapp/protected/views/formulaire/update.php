@@ -52,29 +52,49 @@ if ($model->last_modified != null && $model->last_modified != "") {
     ?>
 </div>
 
-<div class="panel panel-primary">
-    <div class="panel-heading"><h4>Pour ajouter une rubrique</h4></div>
-    <div class="panel-body">
-        <?php
-        echo $this->renderPartial('_form_question', array('model' => $questionForm));
-        ?>
+<div class="panel-group" id="accordion">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                Pour ajouter une rubrique
+            </h3>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <?php
+                echo $this->renderPartial('_form_question', array('model' => $questionForm));
+                ?>
+            </div>
+        </div>
     </div>
-</div>
 
-<div class="panel panel-primary">
-    <div class="panel-heading"><h4>Pour ajouter un bloc de questions déjà existant</h4></div>
-    <div class="panel-body">
-        <?php
-        echo $this->renderPartial('_form_question_bloc', array('questionBloc' => $questionBloc, 'model' => $model, 'questionGroup' => $questionGroup));
-        ?>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                Pour ajouter un bloc de questions déjà existant
+            </h3>
+        </div>
+        <div id="collapse2" class="panel-collapse collapse">
+            <div class="panel-body">
+                <?php
+                echo $this->renderPartial('_form_question_bloc', array('questionBloc' => $questionBloc, 'model' => $model, 'questionGroup' => $questionGroup));
+                ?>
+            </div>
+        </div>
     </div>
-</div>
 
-<div class="panel panel-primary">
-    <div class="panel-heading"><h4>Pour ajouter un onglet</h4></div>
-    <div class="panel-body">
-        <?php
-        echo $this->renderPartial('_form_question_group', array('model' => $questionGroup));
-        ?>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                Pour ajouter un onglet
+            </h3>
+        </div>
+        <div id="collapse3" class="panel-collapse collapse">
+            <div class="panel-body">
+                <?php
+                echo $this->renderPartial('_form_question_group', array('model' => $questionGroup));
+                ?>
+            </div>
+        </div>
     </div>
 </div>

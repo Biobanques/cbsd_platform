@@ -20,7 +20,11 @@
 </div>
 
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4>Pour ajouter une rubrique</h4></div>
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Pour ajouter une rubrique
+        </h3>
+    </div>
     <div class="panel-body">
         <?php
         echo $this->renderPartial('_form_question', array('model' => $questionForm));
