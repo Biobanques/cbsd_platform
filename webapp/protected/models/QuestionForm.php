@@ -132,7 +132,7 @@ class QuestionForm extends CFormModel {
         $res ['float:right'] = "Alignement à droite";
         return $res;
     }
-    
+   
     public function valuesValidator()
     {
         if ((isset($this->type) && $this->type == "radio")) {
@@ -162,15 +162,18 @@ class QuestionForm extends CFormModel {
         $this->id = $currentQuestion->id;
         $this->idQuestionGroup = $computedGroup->id;
     }
-    
+   
     public function validatewithId($form, $attributes = null, $clearErrors = true) {
         parent::validate($attributes, $clearErrors);
         foreach ($form->questions_group as $group) {
-            foreach ($group->questions as $question)
-            if ($question->id == $this->id)
-                $this->addError('id', 'Cet identifiant est déjà utilisé dans ce formulaire, merci d\'en choisir un différent');
+            if ($group->questions != "") {
+                foreach ($group->questions as $question) {
+                    if ($question->id == $this->id) {
+                        $this->addError('id', 'Cet identifiant est déjà utilisé dans ce formulaire, merci d\'en choisir un différent');
+                    }
+                }
+            }
         }
         return !$this->hasErrors();
     }
-
 }
