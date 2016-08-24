@@ -3,7 +3,7 @@
 /**
  * Object answer to store a questionnaire definition + answers
  * Copy of object questionnaire to prevent problems of update with questionnaire and forwar compatibility
- * @property integer $id
+ * @property integer $idA
  * @author nmalservet
  *
  */
@@ -377,7 +377,7 @@ class Answer extends EMongoDocument {
     public function getUserId() {
         return $this->login;
     }
-    
+
     /**
      * retourne toutes les noms des fiches
      * @return type
@@ -393,7 +393,7 @@ class Answer extends EMongoDocument {
         asort($res, SORT_NATURAL | SORT_FLAG_CASE);
         return $res;
     }
-    
+
     public function getNomsFichesByFilter($models) {
         $res = array();
         foreach ($models as $fiche) {
@@ -429,7 +429,7 @@ class Answer extends EMongoDocument {
         $gene->answer = "";
         $gene->precomment = "";
         $gene->precomment_fr = "";
-        
+
         return $gene;
     }
 
@@ -448,7 +448,7 @@ class Answer extends EMongoDocument {
         $analyse->answer = "Non";
         $analyse->precomment = "";
         $analyse->precomment_fr = "";
-        
+
         return $analyse;
     }
 
@@ -462,7 +462,7 @@ class Answer extends EMongoDocument {
         $mutation->label_fr = "Mutation(s)";
         $mutation->type = "input";
         $mutation->style = "";
-        
+
         return $mutation;
     }
 
@@ -476,7 +476,7 @@ class Answer extends EMongoDocument {
         $comment->label_fr = "Commentaire";
         $comment->type = "input";
         $comment->style = "float:right;";
-        
+
         return $comment;
     }
 
@@ -509,11 +509,11 @@ class Answer extends EMongoDocument {
         natcasesort($result);
         return $result;
     }
-    
+
     public function getAllQuestionsByFilterName($model, $name) {
         $result = array();
         $models = $this->getAllQuestionsByFilter($model);
-        foreach ($models as $answer=>$value) {
+        foreach ($models as $answer => $value) {
             $pattern = '`\((.+?)\)`';
             $subject = $value;
             preg_match($pattern, $subject, $matches);
@@ -523,7 +523,7 @@ class Answer extends EMongoDocument {
         }
         return $result;
     }
-    
+
     /**
      * retourne la liste de toutes les questions de toutes les fiches
      * @return type
@@ -538,7 +538,7 @@ class Answer extends EMongoDocument {
         natcasesort($result);
         return $result;
     }
-    
+
     public function getAllDetailledQuestionsByFilter($fiches) {
         $result = array();
         foreach ($fiches as $fiche) {
@@ -554,7 +554,7 @@ class Answer extends EMongoDocument {
         }
         return $result;
     }
-    
+
     /**
      * retourne la liste de toutes les questions de toutes les fiches
      * @return type
@@ -564,9 +564,9 @@ class Answer extends EMongoDocument {
         $criteria = new EMongoCriteria;
         $criteria->answers_group->answers->label = $label;
         $fiches = Answer::model()->findAll($criteria);
-        foreach($fiches as $fiche){
+        foreach ($fiches as $fiche) {
             foreach ($fiche->answers_group as $group) {
-                foreach($group->answers as $answer){
+                foreach ($group->answers as $answer) {
                     if ($answer->label == $label) {
                         $type = $answer->type;
                     }
@@ -613,7 +613,7 @@ class Answer extends EMongoDocument {
         }
         return $result;
     }
-    
+
     /**
      * retourne toutes les id patient des fiches
      * @return type
@@ -629,7 +629,7 @@ class Answer extends EMongoDocument {
         asort($res, SORT_NUMERIC);
         return $res;
     }
-    
+
     /**
      * retourne toutes les noms des utilisateurs qui ont renseigné les fiches
      * @return type
@@ -656,6 +656,34 @@ class Answer extends EMongoDocument {
             $result[$type] = $type;
         }
         return $result;
+    }
+
+    public function resultArrayMerged($arAnswers) {
+        $count = 0;
+        $index = count($arAnswers);
+        $arAnswersHeaderLength = count($arAnswers[0]);
+        $neuropath = Neuropath::model()->findAll();
+        foreach ($neuropath as $neuro) {
+            $count = 0;
+            while ($count < $arAnswersHeaderLength) {
+                $arAnswers[$index][] = "";
+                $count++;
+            }
+            foreach ($neuro as $key => $value) {
+                if ($key != "_id") {
+                    if ($key != "id" && !in_array($key, $arAnswers[0])) {
+                        $arAnswers[0][] = $key;
+                    }
+                    if ($key == "id") {
+                        $arAnswers[$index][0] = $value;
+                    } else {
+                        $arAnswers[$index][] = $value;
+                    }
+                }
+            }
+            $index++;
+        }
+        return $arAnswers;
     }
 
     /**
@@ -729,7 +757,7 @@ class Answer extends EMongoDocument {
                 }
             }
         }
-        
+
         //formatage de chaque ligne
         $intersect = array();
         $intersect = array_intersect($headerLineDynamic, $filter);
@@ -758,10 +786,7 @@ class Answer extends EMongoDocument {
                 }
                 if (!$valueExists) {
                     $type = $typeQuestion[$columnHeader];
-                    if ($type != "number" && $type != "expression")
-                        $resultLine[] = 'null';
-                    else
-                        $resultLine[] = "";
+                    $resultLine[] = "";
                 }
             }
             $result[] = $resultLine;
@@ -770,6 +795,3 @@ class Answer extends EMongoDocument {
     }
 
 }
-
-
-
