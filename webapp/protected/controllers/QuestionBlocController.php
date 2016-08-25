@@ -164,8 +164,10 @@ class QuestionBlocController extends Controller {
     public function actionDelete($id) {
         try {
             $model = $this->loadModel($id);
-            foreach ($model->questions as $value) {
-                Question::model()->findByPk(new MongoId($value))->delete();
+            if (isset($model->questions)) {
+                foreach ($model->questions as $value) {
+                    Question::model()->findByPk(new MongoId($value))->delete();
+                }
             }
             $this->loadModel($id)->delete();
             if (!isset($_GET['ajax'])) {
