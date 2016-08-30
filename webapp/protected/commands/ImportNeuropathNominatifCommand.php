@@ -14,6 +14,7 @@ class ImportNeuropathNominatifCommand extends CConsoleCommand
     public function run($args)
     {
         $folderSource = CommonProperties::$IMPORT_FOLDER_NOMINATIF;
+        $countNotImported = 0;
         if (substr($folderSource, -1) != '/') {
             $folderSource.='/';
         }
@@ -73,10 +74,14 @@ class ImportNeuropathNominatifCommand extends CConsoleCommand
                                 $patient = CommonTools::wsAddPatient($patient);
                             }
                         } else {
+                            $countNotImported++;
                             $this->writePatientsNotImported($patient, $file_pos);
                         }
                     }
                 }
+            }
+            if ($countNotImported > 0) {
+                $this->log($countNotImported);
             }
             copy($importedFile, "saved/$importedFile");
             unlink($importedFile);
@@ -86,7 +91,6 @@ class ImportNeuropathNominatifCommand extends CConsoleCommand
     /*
      * Vérifie si un des champs "birthName", "useName", "firstName", "birthDate", "gender" est vide
      */
-
     public function emptyFieldExist($patient)
     {
         foreach ($patient as $field => $value) {
@@ -99,11 +103,19 @@ class ImportNeuropathNominatifCommand extends CConsoleCommand
     /*
      * Ecrit dans un fichier les patients qui n'ont pas pu être importé ("A SIP item is missing in the file")
      */
-
     public function writePatientsNotImported($patient, $importedFile)
     {
         $file = "not_imported/$importedFile.txt";
         file_put_contents($file, print_r($patient, true), FILE_APPEND);
+    }
+    
+    /*
+     * Ecrit dans un fichier de log le nombre de patient qui n'ont pas été importé
+     */    
+    public function log($countNotImported)
+    {
+        $log = "not_imported/neuropath_nominatif.log";
+        file_put_contents($log, "[" . date('d/m/Y H:i:s') . "] Nombre de patient qui n'ont pas été importé: " . $countNotImported . ".\n", FILE_APPEND);
     }
 }
 
