@@ -3,16 +3,18 @@
 /**
  * classe pour injecter les données de la base FileMaker vers le SIP.
  * La commande a executer et a mettre dans les cron task est :
- * ${PATH_TO_PROJECT}/protected/yiic importpatient
+ * ${PATH_TO_PROJECT}/protected/yiic importneuropathanonyme
  * Exemple pour automatiser:
  * >crontab -e
- * >* * * * * /var/www/html/cbsd_platform/webapp/protected/yiic importpatient
+ * >* * * * * /var/www/html/cbsd_platform/webapp/protected/yiic importneuropathanonyme
  */
 class ImportNeuropathAnonymeCommand extends CConsoleCommand {
 
     public function run($args) {
         $attribut = array();
+        $res = 0;
         $i = 0;
+        $countNeuropath = count(Neuropath::model()->findAll());
         $folderSource = CommonProperties::$TEST_IMPORT_ANONYME;
         if (substr($folderSource, -1) != '/') {
             $folderSource.='/';
@@ -22,8 +24,17 @@ class ImportNeuropathAnonymeCommand extends CConsoleCommand {
         echo count($files) . " files detected \n";
         foreach ($files as $importedFile) {
             $dataPatient = simplexml_load_file($importedFile);
-            foreach ($dataPatient->METADATA->FIELD as $test) {
-                $attribut[$i++] = $test['NAME'];
+            foreach ($dataPatient->RESULTSET as $result) {
+                // récupère le nombre de données (RESULTSET)
+                $res = $result['FOUND'];
+                if ($res < $countNeuropath) {
+                    $this->fileNotImported();
+                    echo "Le fichier n'a pas été importé. Voir le log dans le dossier 'not_imported' pour plus de détails.\n";
+                    Yii::app()->end();
+                }
+            }
+            foreach ($dataPatient->METADATA->FIELD as $field) {
+                $attribut[$i++] = $field['NAME'];
             }
             foreach ($dataPatient->children() as $samples) {
                 foreach ($samples->children() as $sample) {
@@ -117,6 +128,16 @@ class ImportNeuropathAnonymeCommand extends CConsoleCommand {
         } else {
             return false;
         }
+    }
+    
+    /*
+     * Fichier de log
+     */
+
+    public function fileNotImported()
+    {
+        $file = "not_imported/neuropath_anonyme.log";
+        file_put_contents($file, "[" . date('d/m/Y H:i:s') . "] Le fichier n'a pas été importé car la taille des données dans le fichier est inférieure à la taille des données dans la base mongodb.\n", FILE_APPEND);
     }
 
 }

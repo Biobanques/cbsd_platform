@@ -3,10 +3,10 @@
 /**
  * classe pour injecter les données de la base FileMaker vers le SIP.
  * La commande a executer et a mettre dans les cron task est :
- * ${PATH_TO_PROJECT}/protected/yiic importpatient
+ * ${PATH_TO_PROJECT}/protected/yiic mergeneuropathdata
  * Exemple pour automatiser:
  * >crontab -e
- * >* * * * * /var/www/html/cbsd_platform/webapp/protected/yiic importpatient
+ * >* * * * * /var/www/html/cbsd_platform/webapp/protected/yiic mergeneuropathdata
  */
 class MergeNeuropathDataCommand extends CConsoleCommand
 {
@@ -59,12 +59,6 @@ class MergeNeuropathDataCommand extends CConsoleCommand
                                     $patient->birthName = $patient->useName;
                                 }
                             }
-                            /*if ($note->key == "angiopathy_stage") {
-                                $angiopathy_stage = (string) $note->value;
-                            }
-                            if ($note->key == "angiopathy_type") {
-                                $angiopathy_stage = (string) $note->value;
-                            }*/
                             if ($note->key == "signature_date") {
                                 $signature_date = (string) $note->value;
                             }
@@ -134,21 +128,6 @@ class MergeNeuropathDataCommand extends CConsoleCommand
                             if ($note->key == "dft_harmonized") {
                                 $dft_harmonized = (string) $note->value;
                             }
-                            /*if ($note->key == "dm_basal_ganglia") {
-                                $dm_basal_ganglia = (string) $note->value;
-                            }
-                            if ($note->key == "dm_frontal") {
-                                $dm_frontal = (string) $note->value;
-                            }
-                            if ($note->key == "dm_hippocampal") {
-                                $dm_hippocampal = (string) $note->value;
-                            }
-                            if ($note->key == "dm_temporal") {
-                                $dm_temporal = (string) $note->value;
-                            }
-                            if ($note->key == "dm_total") {
-                                $dm_total = (string) $note->value;
-                            }*/
                         } 
                     }
                     if ($this->emptyFieldExist($patient) != true) {
@@ -161,8 +140,6 @@ class MergeNeuropathDataCommand extends CConsoleCommand
                                     $criteria->id = $v;
                                     $neuropath = Neuropath::model()->find($criteria);
                                     if ($neuropath != null) {
-                                        /*$neuropath->Angiopathie_Amyloide_stade = $angiopathy_stage;
-                                        $neuropath->Angiopathie_Amyloide_type = $angiopathy_type;*/
                                         $neuropath->signature_date = $signature_date;
                                         $neuropath->family_tree = $family_tree;
                                         $neuropath->detail_treatment = $detail_treatment;
@@ -186,67 +163,10 @@ class MergeNeuropathDataCommand extends CConsoleCommand
                                         $neuropath->neuropathologist = $neuropathologist;
                                         $neuropath->thal_amyloid = $thal_amyloid;
                                         $neuropath->dft_harmonized = $dft_harmonized;
-                                        /*$neuropath->Demence_vasculaire_Deramecourt_Basal_Ganglia = $dm_basal_ganglia;
-                                        $neuropath->Demence_vasculaire_Deramecourt_Frontal = $dm_frontal;
-                                        $neuropath->Demence_vasculaire_Deramecourt_Hippocampe = $dm_hippocampal;
-                                        $neuropath->Demence_vasculaire_Deramecourt_Temporale = $dm_temporal;
-                                        $neuropath->Demence_vasculaire_Deramecourt_total_Score = $dm_total;*/
                                        
                                         $neuropath->save();
                                        
-                                    }/* else {
-                                        $neuropath = new Neuropath;
-                                        $neuropath->initSoftAttribute("id");
-                                        $neuropath->id = $v;
-                                        $neuropath->initSoftAttribute("signature_date");
-                                    $neuropath->initSoftAttribute("family_tree");
-                                    $neuropath->initSoftAttribute("detail_treatment");
-                                    $neuropath->initSoftAttribute("associated_clinical_data");
-                                    $neuropath->initSoftAttribute("associated_molecular_data");
-                                    $neuropath->initSoftAttribute("associated_imagin_data");
-                                    $neuropath->initSoftAttribute("quantity_available");
-                                    $neuropath->initSoftAttribute("biobank_collection_name");
-                                    $neuropath->initSoftAttribute("trouble_start_date");
-                                    $neuropath->initSoftAttribute("first_trouble");
-                                    $neuropath->initSoftAttribute("mms");
-                                    $neuropath->initSoftAttribute("id_sample");
-                                    $neuropath->initSoftAttribute("collect_date");
-                                    $neuropath->initSoftAttribute("diagnosis_2");
-                                    $neuropath->initSoftAttribute("diagnosis_3");
-                                    $neuropath->initSoftAttribute("diagnosis_4");
-                                    $neuropath->initSoftAttribute("origin_sample_tissue");
-                                    $neuropath->initSoftAttribute("nature_sample_tissue");
-                                    $neuropath->initSoftAttribute("name_samples_tissue");
-                                    $neuropath->initSoftAttribute("date_death");
-                                    $neuropath->initSoftAttribute("neuropathologist");
-                                    $neuropath->initSoftAttribute("thal_amyloid");
-                                    $neuropath->initSoftAttribute("dft_harmonized");
-                                        $neuropath->signature_date = $signature_date;
-                                        $neuropath->family_tree = $family_tree;
-                                        $neuropath->detail_treatment = $detail_treatment;
-                                        $neuropath->associated_clinical_data = $associated_clinical_data;
-                                        $neuropath->associated_molecular_data = $associated_molecular_data;
-                                        $neuropath->associated_imagin_data = $associated_imagin_data;
-                                        $neuropath->quantity_available = $quantity_available;
-                                        $neuropath->biobank_collection_name = $biobank_collection_name;
-                                        $neuropath->trouble_start_date = $trouble_start_date;
-                                        $neuropath->first_trouble = $first_trouble;
-                                        $neuropath->mms = $mms;
-                                        $neuropath->id_sample = $id_sample;
-                                        $neuropath->collect_date = $collect_date;
-                                        $neuropath->diagnosis_2 = $diagnosis_2;
-                                        $neuropath->diagnosis_3 = $diagnosis_3;
-                                        $neuropath->diagnosis_4 = $diagnosis_4;
-                                        $neuropath->origin_sample_tissue = $origin_sample_tissue;
-                                        $neuropath->nature_sample_tissue = $nature_sample_tissue;
-                                        $neuropath->name_samples_tissue = $name_samples_tissue;
-                                        $neuropath->date_death = $date_death;
-                                        $neuropath->neuropathologist = $neuropathologist;
-                                        $neuropath->thal_amyloid = $thal_amyloid;
-                                        $neuropath->dft_harmonized = $dft_harmonized;
-                                        
-                                        $neuropath->save();
-                                    }*/
+                                    }
                                 }
                             }
                         }

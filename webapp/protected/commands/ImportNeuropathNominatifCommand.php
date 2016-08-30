@@ -3,10 +3,10 @@
 /**
  * classe pour injecter les données de la base FileMaker vers le SIP.
  * La commande a executer et a mettre dans les cron task est :
- * ${PATH_TO_PROJECT}/protected/yiic importpatient
+ * ${PATH_TO_PROJECT}/protected/yiic importneuropathnominatif
  * Exemple pour automatiser:
  * >crontab -e
- * >* * * * * /var/www/html/cbsd_platform/webapp/protected/yiic importpatient
+ * >* * * * * /var/www/html/cbsd_platform/webapp/protected/yiic importneuropathnominatif
  */
 class ImportNeuropathNominatifCommand extends CConsoleCommand
 {
