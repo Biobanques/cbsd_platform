@@ -226,15 +226,19 @@ class Answer extends EMongoDocument {
                                 $criteria->answers_group->answers->answer('>=', (int) $answerValue);
                                 break;
                             case "contient_uniquement":
-                                $values = split(',', $answerValue);
-                                $regex = '/';
-                                foreach ($values as $value) {
-                                    $regex.= '^' . $value . '$';
-                                    if ($value != end($values)) {
-                                        $regex.= '|';
-                                    }
+                                if (!is_array($answerValue)) {
+                                    $values = split(',', $answerValue);
+                                } else {
+                                    $values = $answerValue;
                                 }
-                                $regex .= '/i';
+                                    $regex = '/';
+                                    foreach ($values as $value) {
+                                        $regex.= '^' . $value . '$';
+                                        if ($value != end($values)) {
+                                            $regex.= '|';
+                                        }
+                                    }
+                                    $regex .= '/i';
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
                                 break;
                             case "partiellement":
@@ -671,10 +675,10 @@ class Answer extends EMongoDocument {
             }
             foreach ($neuro as $key => $value) {
                 if ($key != "_id") {
-                    if ($key != "id" && !in_array($key, $arAnswers[0])) {
+                    if ($key != "id_anonymat" && !in_array($key, $arAnswers[0])) {
                         $arAnswers[0][] = $key;
                     }
-                    if ($key == "id") {
+                    if ($key == "id_anonymat") {
                         $arAnswers[$index][0] = $value;
                     } else {
                         $arAnswers[$index][] = $value;
