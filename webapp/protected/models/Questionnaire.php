@@ -267,6 +267,24 @@ class Questionnaire extends EMongoDocument
 
     /**
      * get array questions for a questionnaire
+     */
+    public function getQuestions()
+    {
+        $res = array();
+        if ($this->questions_group != null) {
+            foreach ($this->questions_group as $group) {
+                if ($group->questions != null) {
+                    foreach ($group->questions as $question) {
+                        $res [$question->id] = $question->label;
+                    }
+                }
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * get array questions for a questionnaire
      * filtered by idQuestionGroup
      */
     public function getArrayQuestions($idQuestionGroup)

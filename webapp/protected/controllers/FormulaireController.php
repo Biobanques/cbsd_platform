@@ -167,6 +167,22 @@ class FormulaireController extends Controller {
                 }
             }
         }
+        if (isset($_POST['old_question'])) {
+            foreach ($model->questions_group as $onglet) {
+                foreach ($onglet->questions as $question) {
+                    if ($question->id == $_POST['old_question']) {
+                        $question->label = $_POST['new_question'];
+                        $question->label_fr = $_POST['new_question'];
+                        $question->id = $_POST['new_idQuestion'];
+                        if ($model->save()) {
+                            Yii::app()->user->setFlash('success', 'La question a bien été modifié.');
+                        } else {
+                            Yii::app()->user->setFlash('error', 'La question n\'a pas été modifié.');
+                        }
+                    }
+                }
+            }
+        }
         //  set du model sur la questionForm pour generer l arborescende de position de question
         $questionForm->questionnaire = $model;
         $questionGroup->questionnaire = $model;

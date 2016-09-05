@@ -146,6 +146,10 @@ class QuestionForm extends CFormModel {
     public function getArrayGroups() {
         return $this->questionnaire->getArrayGroups();
     }
+    
+    public function getArrayQuestions() {
+        return $this->questionnaire->getQuestions();
+    }
 
     /**
      * copy attributes of questions to QuestionForm.
