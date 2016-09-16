@@ -265,7 +265,7 @@ class Answer extends EMongoDocument {
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => array(
-                'defaultOrder' => 'name ASC',
+                'defaultOrder' => 'id_patient ASC',
             )
         ));
     }

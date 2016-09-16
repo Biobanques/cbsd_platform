@@ -5,7 +5,7 @@
  * @author nmalservet
  *
  */
-class User extends LoggableActiveRecord
+class User extends EMongoDocument
 {
     public $login;
     public $password;

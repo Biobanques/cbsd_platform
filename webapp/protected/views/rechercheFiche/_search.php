@@ -57,7 +57,7 @@ return false;
 
         <div class="col-lg-6">
             <?php echo $form->label($model, 'name'); ?>
-            <?php echo $form->dropDownList($model, 'name', Questionnaire::model()->getNomsFiches(), array('prompt' => '----', "multiple" => "multiple")); ?>
+            <?php echo $form->dropDownList($model, 'name', Answer::model()->getNomsFiches(), array('prompt' => '----', "multiple" => "multiple")); ?>
         </div>
     </div>
 
