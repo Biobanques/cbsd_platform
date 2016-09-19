@@ -17,6 +17,7 @@ class ImportNeuropathCommand extends CConsoleCommand {
         $this->deleteNeuropathForms();
         $this->importNeuropathAnonyme($folderAnonyme);
         $this->importNeuropathNominatif($folderNominatif);
+        $this->deleteUnvalidNeuropath();
         $this->createFicheNeuropath();
     }
 
@@ -30,6 +31,72 @@ class ImportNeuropathCommand extends CConsoleCommand {
         return Answer::model()->deleteAll($criteria);
     }
 
+    public function importNeuropathAnonyme($folderAnonyme) {
+        $attribut = array();
+        $attributes = array();
+        $res = 0;
+        $i = 0;
+        $countNeuropath = count(Neuropath::model()->findAll());
+        $folderAnonyme = CommonProperties::$IMPORT_FOLDER_ANONYME;
+        if (substr($folderAnonyme, -1) != '/') {
+            $folderAnonyme.='/';
+        }
+        chdir(Yii::app()->basePath . "/" . $folderAnonyme);
+        $files = array_filter(glob('*'), 'is_file');
+        echo count($files) . " files detected \n";
+        foreach ($files as $importedFile) {
+            $dataPatient = simplexml_load_file($importedFile);
+            foreach ($dataPatient->RESULTSET as $result) {
+                // récupère le nombre de données (RESULTSET)
+                $res = $result['FOUND'];
+                if ($res < $countNeuropath) {
+                    $this->fileNotImported();
+                    echo "Le fichier n'a pas été importé. Voir le log dans le dossier 'not_imported' pour plus de détails.\n";
+                    Yii::app()->end();
+                }
+            }
+            foreach ($dataPatient->METADATA->FIELD as $field) {
+                $attribut[$i++] = $field['NAME'];
+            }
+            foreach ($dataPatient->children() as $samples) {
+                foreach ($samples->children() as $sample) {
+                    $neuropath = new Neuropath;
+                    $patient = (object) null;
+                    $patient->id = null;
+                    $patient->source = 1; // Banque de cerveaux
+                    $patient->sourceId = null;
+                    foreach ($sample->children() as $notes) {
+                        foreach ($notes->children() as $note) {
+                            $idDonor = "";
+                            $var = str_replace(' ', '_', $attribut[$i]);
+                            $var1 = str_replace('Angiopathie_Amyloide_stade', 'angiopathy_stage', $var);
+                            $var2 = str_replace('Angiopathie_Amyloide_type', 'angiopathy_type', $var1);
+                            $var3 = str_replace('Corps de Lewy Braak', 'braak_lewy', $var2);
+                            $var4 = str_replace('Corps_de_lesion_KOSAKA', 'lewy_type_kosaka', $var3);
+                            $var5 = str_replace("Demence_vasculaire_Deramecourt_Basal_Ganglia", 'dm_basal_ganglia', $var4);
+                            $var6 = str_replace('Demence_vasculaire_Deramecourt_Frontal', 'dm_frontal', $var5);
+                            $var7 = str_replace('Demence_vasculaire_Deramecourt_Hippocampe', 'dm_hippocampal', $var6);
+                            $var8 = str_replace('Demence_vasculaire_Deramecourt_Temporale', 'dm_temporal', $var7);
+                            $var9 = str_replace('Demence_vasculaire_Deramecourt_total_Score', 'dm_total', $var8);
+                            if ($var9 == "id_donor") {
+                                $idDonor = (string) $note;
+                            }
+                            $neuropath->initSoftAttribute($var9);
+                            $neuropath->$var9 = (string) $note;
+                            $i++;
+                        }
+                        if ($idDonor != "") {
+                            $neuropath->save();
+                        }
+                    }
+                    $i = 0;
+                }
+            }
+            copy($importedFile, "treated/$importedFile");
+            unlink($importedFile);
+        }
+    }
+    
     public function importNeuropathNominatif($folderNominatif) {
         $countNotImported = 0;
         $attributes = array();
@@ -109,7 +176,7 @@ class ImportNeuropathCommand extends CConsoleCommand {
                                                 $neuropath->$key = $value;
                                             }
                                             $neuropath->save();
-                                        }   
+                                        }
                                     }
                                 }
                             }
@@ -122,71 +189,6 @@ class ImportNeuropathCommand extends CConsoleCommand {
             }
             if ($countNotImported > 0) {
                 $this->log($countNotImported);
-            }
-            copy($importedFile, "treated/$importedFile");
-            unlink($importedFile);
-        }
-    }
-
-    public function importNeuropathAnonyme($folderAnonyme) {
-        $attribut = array();
-        $attributes = array();
-        $res = 0;
-        $i = 0;
-        $countNeuropath = count(Neuropath::model()->findAll());
-        $folderAnonyme = CommonProperties::$IMPORT_FOLDER_ANONYME;
-        if (substr($folderAnonyme, -1) != '/') {
-            $folderAnonyme.='/';
-        }
-        chdir(Yii::app()->basePath . "/" . $folderAnonyme);
-        $files = array_filter(glob('*'), 'is_file');
-        echo count($files) . " files detected \n";
-        foreach ($files as $importedFile) {
-            $dataPatient = simplexml_load_file($importedFile);
-            foreach ($dataPatient->RESULTSET as $result) {
-                // récupère le nombre de données (RESULTSET)
-                $res = $result['FOUND'];
-                if ($res < $countNeuropath) {
-                    $this->fileNotImported();
-                    echo "Le fichier n'a pas été importé. Voir le log dans le dossier 'not_imported' pour plus de détails.\n";
-                    Yii::app()->end();
-                }
-            }
-            foreach ($dataPatient->METADATA->FIELD as $field) {
-                $attribut[$i++] = $field['NAME'];
-            }
-            foreach ($dataPatient->children() as $samples) {
-                foreach ($samples->children() as $sample) {
-                    $neuropath = new Neuropath;
-                    $patient = (object) null;
-                    $patient->id = null;
-                    $patient->source = 1; // Banque de cerveaux
-                    $patient->sourceId = null;
-                    foreach ($sample->children() as $notes) {
-                        foreach ($notes->children() as $note) {
-                            $var = str_replace(' ', '_', $attribut[$i]);
-                            $var1 = str_replace('Angiopathie_Amyloide_stade', 'angiopathy_stage', $var);
-                            $var2 = str_replace('Angiopathie_Amyloide_type', 'angiopathy_type', $var1);
-                            $var3 = str_replace('Corps de Lewy Braak', 'braak_lewy', $var2);
-                            $var4 = str_replace('Corps_de_lesion_KOSAKA', 'lewy_type_kosaka', $var3);
-                            $var5 = str_replace("Demence_vasculaire_Deramecourt_Basal_Ganglia", 'dm_basal_ganglia', $var4);
-                            $var6 = str_replace('Demence_vasculaire_Deramecourt_Frontal', 'dm_frontal', $var5);
-                            $var7 = str_replace('Demence_vasculaire_Deramecourt_Hippocampe', 'dm_hippocampal', $var6);
-                            $var8 = str_replace('Demence_vasculaire_Deramecourt_Temporale', 'dm_temporal', $var7);
-                            $var9 = str_replace('Demence_vasculaire_Deramecourt_total_Score', 'dm_total', $var8);
-                            if ($var9 == "id_donor") {
-                                $idDonor = (string) $note;
-                            }
-                            $neuropath->initSoftAttribute($var9);
-                            $neuropath->$var9 = (string) $note;
-                            $i++;
-                        }
-                        if ($idDonor != "") {
-                            $neuropath->save();
-                        }
-                    }
-                    $i = 0;
-                }
             }
             copy($importedFile, "treated/$importedFile");
             unlink($importedFile);
@@ -240,6 +242,15 @@ class ImportNeuropathCommand extends CConsoleCommand {
         file_put_contents($log, "[" . date('d/m/Y H:i:s') . "] Nombre de patient qui n'ont pas été importé: " . $countNotImported . ".\n", FILE_APPEND);
     }
 
+    public function deleteUnvalidNeuropath() {
+        $neuropath = Neuropath::model()->findAll();
+        foreach ($neuropath as $neuro) {
+            if (!isset($neuro->id_cbsd)) {
+                $neuro->delete();
+            }
+        }
+    }
+
     public function createFicheNeuropath() {
         $index = 0;
         $criteria = new EMongoCriteria;
@@ -285,4 +296,3 @@ class ImportNeuropathCommand extends CConsoleCommand {
     }
 
 }
-
