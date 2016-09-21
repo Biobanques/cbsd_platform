@@ -18,7 +18,7 @@
 
             <hr />
 
-            <p class="note"><?php echo Yii::t('common', 'ChampsObligatoires'); ?></p>
+            <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
 
             <?php echo $form->errorSummary($model); ?>
 
