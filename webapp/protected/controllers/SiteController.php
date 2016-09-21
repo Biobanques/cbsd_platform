@@ -254,38 +254,39 @@ class SiteController extends Controller
             $userLogin = $model->getAllUsersByLogin($model);
             if (count($userLogin) > 0) {
                 Yii::app()->user->setFlash('error', 'Le login a déjà été utilisé. Veuillez choisir un login différent.');
-            }
-            if ($model->profil == array("clinicien")) {
-                if ($model->save()) {
-                    CommonMailer::sendSubscribeAdminMail($model, NULL);
-                    CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password, NULL);
-                    Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDPlatform !');
-                    $this->redirect(array('site/index'));
+            } else {
+                if ($model->profil == array("clinicien")) {
+                    if ($model->save()) {
+                        CommonMailer::sendSubscribeAdminMail($model, NULL);
+                        CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password, NULL);
+                        Yii::app()->user->setFlash('success', 'Bienvenue sur CBSDPlatform !');
+                        $this->redirect(array('site/index'));
+                    }
                 }
-            }
-            if ($profil == "neuropathologiste") {
-                if ($model->validate()) {
-                    if (empty($_POST['User']['centre'])) {
-                        $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
-                    } else {
-                        if ($model->save()) {
-                            CommonMailer::sendSubscribeUserMail($model, $profil);
-                            CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['centre']);
-                            Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                            $this->redirect(array('site/index'));
+                if ($profil == "neuropathologiste") {
+                    if ($model->validate()) {
+                        if (empty($_POST['User']['centre'])) {
+                            $model->addError('centre', 'Le centre est obligatoire pour le profil neuropathologiste');
+                        } else {
+                            if ($model->save()) {
+                                CommonMailer::sendSubscribeUserMail($model, $profil);
+                                CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['centre']);
+                                Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                                $this->redirect(array('site/index'));
+                            }
                         }
                     }
                 }
-            }
-            if ($profil == "geneticien" || $profil == "chercheur") {
-                if ($model->save()) {
-                    CommonMailer::sendSubscribeUserMail($model, $profil);
-                    CommonMailer::sendMailConfirmationProfilEmail($model, $profil, NULL);
-                    Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                    $this->redirect(array('site/index'));
+                if ($profil == "geneticien" || $profil == "chercheur") {
+                    if ($model->save()) {
+                        CommonMailer::sendSubscribeUserMail($model, $profil);
+                        CommonMailer::sendMailConfirmationProfilEmail($model, $profil, NULL);
+                        Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                        $this->redirect(array('site/index'));
+                    }
                 }
+                Yii::app()->user->setFlash('error', 'L\'utilisateur n\'a pas été enregistré.');
             }
-            Yii::app()->user->setFlash('error', 'L\'utilisateur n\'a pas été enregistré.');
         }
         $this->render('subscribe', array('model' => $model));
     }
