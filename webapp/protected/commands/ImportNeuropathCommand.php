@@ -78,11 +78,12 @@ class ImportNeuropathCommand extends CConsoleCommand {
                             $var7 = str_replace('Demence_vasculaire_Deramecourt_Hippocampe', 'dm_hippocampal', $var6);
                             $var8 = str_replace('Demence_vasculaire_Deramecourt_Temporale', 'dm_temporal', $var7);
                             $var9 = str_replace('Demence_vasculaire_Deramecourt_total_Score', 'dm_total', $var8);
-                            if ($var9 == "id_donor") {
+                            $var10 = str_replace('Braak_Tau', 'braak_tau', $var9);
+                            if ($var10 == "id_donor") {
                                 $idDonor = (string) $note;
                             }
-                            $neuropath->initSoftAttribute($var9);
-                            $neuropath->$var9 = (string) $note;
+                            $neuropath->initSoftAttribute($var10);
+                            $neuropath->$var10 = (string) $note;
                             $i++;
                         }
                         if ($idDonor != "") {
@@ -92,8 +93,8 @@ class ImportNeuropathCommand extends CConsoleCommand {
                     $i = 0;
                 }
             }
-            copy($importedFile, "treated/$importedFile");
-            unlink($importedFile);
+            //copy($importedFile, "treated/$importedFile");
+            //unlink($importedFile);
         }
     }
     
@@ -190,8 +191,8 @@ class ImportNeuropathCommand extends CConsoleCommand {
             if ($countNotImported > 0) {
                 $this->log($countNotImported);
             }
-            copy($importedFile, "treated/$importedFile");
-            unlink($importedFile);
+            //copy($importedFile, "treated/$importedFile");
+            //unlink($importedFile);
         }
     }
 

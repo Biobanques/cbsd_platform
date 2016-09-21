@@ -118,11 +118,20 @@ class SiteController extends Controller
         // collect user input data
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
+            $criteria = new EMongoCriteria;
+            $criteria->login = $model->username;
+            $criteria->password = $model->password;
+            $user = User::model()->find($criteria);
             // validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login()) {
-                $this->redirect(array('site/patient'));
-            } else
-                Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
+            if ($model->validate()) {
+                if (count($user->profil) == 0) {
+                    Yii::app()->user->setFlash('error', 'Votre profil n\'est pas encore activé.');
+                } elseif ($model->login()) {
+                    $this->redirect(array('site/patient'));
+                }
+            } else {
+                    Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
+            }
         }
         // display the login form
         $this->render('login', array('model' => $model));
