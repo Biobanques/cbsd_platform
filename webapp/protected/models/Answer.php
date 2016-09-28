@@ -134,26 +134,26 @@ class Answer extends EMongoDocument {
         $criteria = new EMongoCriteria;
 
         if (isset($this->type) && !empty($this->type)) {
-            $regex = '/';
+            $regex = '/^';
             foreach ($this->type as $value) {
                 $regex .= $value;
                 if ($value != end($this->type)) {
-                    $regex.= '|';
+                    $regex.= '$|^';
                 }
             }
-            $regex .= '/i';
+            $regex .= '$/i';
             $criteria->addCond('type', '==', new MongoRegex($regex));
         }
 
         if (isset($this->user) && !empty($this->user)) {
-            $regex = '/';
+            $regex = '/^';
             foreach ($this->user as $value) {
                 $regex .= $value;
                 if ($value != end($this->user)) {
-                    $regex.= '|';
+                    $regex.= '$|^';
                 }
             }
-            $regex .= '/i';
+            $regex .= '$/i';
             $criteriaUser = new EMongoCriteria;
             $criteriaUser->nom = new MongoRegex($regex);
             $criteriaUser->select(array('_id'));
@@ -168,26 +168,26 @@ class Answer extends EMongoDocument {
         }
 
         if (isset($this->id_patient) && !empty($this->id_patient)) {
-            $regex = '/';
+            $regex = '/^';
             foreach ($this->id_patient as $patient) {
                 $regex.= $patient;
                 if ($patient != end($this->id_patient)) {
-                    $regex.= '|';
+                    $regex.= '$|^';
                 }
             }
-            $regex .= '/i';
+            $regex .= '$/i';
             $criteria->addCond('id_patient', '==', new MongoRegex($regex));
         }
 
         if (isset($this->name) && !empty($this->name)) {
-            $regex = '/';
+            $regex = '/^';
             foreach ($this->name as $n) {
                 $regex.= $n;
                 if ($n != end($this->name)) {
-                    $regex.= '|';
+                    $regex.= '$|^';
                 }
             }
-            $regex .= '/i';
+            $regex .= '$/i';
             $criteria->addCond('name', '==', new MongoRegex($regex));
         }
         if (isset($this->last_updated) && !empty($this->last_updated)) {
@@ -260,13 +260,12 @@ class Answer extends EMongoDocument {
                 }
             }
         }
-
+        $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
+        $criteria->sort('type', EMongoCriteria::SORT_ASC);
+        $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria,
-            'sort' => array(
-                'defaultOrder' => 'id_patient ASC',
-            )
+            'criteria' => $criteria
         ));
     }
 

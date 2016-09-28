@@ -30,7 +30,7 @@ class RechercheFicheController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'view', 'exportCsv', 'viewOnePage'),
+                'actions' => array('admin', 'view', 'exportCsv', 'resultSearch', 'viewOnePage'),
                 'expression' => '!Yii::app()->user->isGuest && $user->getActiveProfil() != "clinicien"'
             ),
             array('deny', // deny all users
@@ -91,8 +91,9 @@ class RechercheFicheController extends Controller {
         }
         $model = new Answer('search');
         $model->unsetAttributes();
-        if (isset($_GET['Answer']))
+        if (isset($_GET['Answer'])) {
             $model->attributes = $_GET['Answer'];
+        }
         if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
             $criteria = $_SESSION['criteria'];
         } else {
@@ -103,8 +104,57 @@ class RechercheFicheController extends Controller {
         $criteria->sort('type', EMongoCriteria::SORT_ASC);
         $models = Answer::model()->findAll($criteria);
         $_SESSION['models'] = $models;
+        if (count($models) < 1) {
+            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucune fiche à exporter.");
+            $this->redirect(array("rechercheFiche/admin"));
+        }
         $this->render('exportFilter', array(
             'models' => $models,
+        ));
+    }
+    
+    public function actionResultSearch() {
+        $idPatient = array();
+        $model = new Answer('search');
+        $model->unsetAttributes();
+        if (isset($_GET['Answer']))
+            $model->attributes = $_GET['Answer'];
+        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+            $criteria = $_SESSION['criteria'];
+        } else {
+            $criteria = new EMongoCriteria;
+        }
+        $models = Answer::model()->findAll($criteria);
+        if (count($models) < 1) {
+            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucune fiche à exporter.");
+            $this->redirect(array("rechercheFiche/admin"));
+        }
+        $regex = '/^';
+        $nbFiche = count($models);
+        foreach ($models as $model) {
+            if (!in_array($model->id_patient, $idPatient)) {
+                array_push($idPatient, $model->id_patient);
+            }
+        }
+        foreach ($idPatient as $id) {
+            $regex.= $id;
+            if ($nbFiche > 1) {
+                $regex.= '$|^';
+                $nbFiche--;
+            }
+        }
+        $regex .= '$/i';
+        $criteria1 = new EMongoCriteria;
+        $criteria1->addCond('id_patient', '==', new MongoRegex($regex));
+        $criteria1->sort('id_patient', EMongoCriteria::SORT_ASC);
+        $criteria1->sort('type', EMongoCriteria::SORT_ASC);
+        $criteria1->sort('last_updated', EMongoCriteria::SORT_DESC);
+        $dataProvider = new EMongoDocumentDataProvider('Answer');
+        $dataProvider->setCriteria($criteria1);
+        $_SESSION['criteria'] = $criteria1;
+        $this->render('result_search', array(
+            'models' => $models,
+            'dataProvider' => $dataProvider
         ));
     }
 }
