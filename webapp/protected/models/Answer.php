@@ -69,6 +69,7 @@ class Answer extends EMongoDocument {
      * last date of save action
      */
     public $last_updated;
+    public $last_updated_from;
 
     /**
      * Working variable to add dynamic search filters
@@ -99,7 +100,7 @@ class Answer extends EMongoDocument {
                 'required'
             ),
             array(
-                'id,name,answers_group,login,type,id_patient,dynamics,compare,last_updated,user',
+                'id,name,answers_group,login,type,id_patient,dynamics,compare,last_updated,last_updated_from,user',
                 'safe',
                 'on' => 'search'
             )
@@ -190,9 +191,16 @@ class Answer extends EMongoDocument {
             $regex .= '$/i';
             $criteria->addCond('name', '==', new MongoRegex($regex));
         }
-        if (isset($this->last_updated) && !empty($this->last_updated)) {
-            $date = str_replace('/', '-', $this->last_updated);
-            $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date)), '$lte' => new MongoDate(strtotime($date . " 23:59:59.999Z")));
+        if (!empty($this->last_updated_from) && empty($this->last_updated)) {
+            $date_from = str_replace('/', '-', $this->last_updated_from);
+            $criteria->last_updated = array('$gte' => new MongoDate(strtotime("01/01/1900")), '$lte' => new MongoDate(strtotime($date_from)));           
+        } elseif (!empty($this->last_updated) && empty($this->last_updated_from)) {
+            $date_to = str_replace('/', '-', $this->last_updated);
+            $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date_to)), '$lte' => new MongoDate(strtotime("31-12-9999")));
+        } elseif (!empty($this->last_updated) && !empty($this->last_updated_from)) {
+            $date_from = str_replace('/', '-', $this->last_updated_from);
+            $date_to = str_replace('/', '-', $this->last_updated);
+            $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date_from)), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")));
         }
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             foreach ($this->dynamics as $questionId => $answerValue) {
@@ -207,7 +215,6 @@ class Answer extends EMongoDocument {
                             case "notEq":
                                 $criteria->answers_group->answers->id = $questionId;
                                 $criteria->answers_group->answers->answer('!=', (int) $answerValue);
-                                //$criteria->addCond('answers_group.answers', 'noteq', array('id' => $questionId, 'answer' => (int)$answerValue));
                                 break;
                             case "less":
                                 $criteria->answers_group->answers->id = $questionId;
@@ -231,14 +238,14 @@ class Answer extends EMongoDocument {
                                 } else {
                                     $values = $answerValue;
                                 }
-                                    $regex = '/';
-                                    foreach ($values as $value) {
-                                        $regex.= '^' . $value . '$';
-                                        if ($value != end($values)) {
-                                            $regex.= '|';
-                                        }
+                                $regex = '/';
+                                foreach ($values as $value) {
+                                    $regex.= '^' . $value . '$';
+                                    if ($value != end($values)) {
+                                        $regex.= '|';
                                     }
-                                    $regex .= '/i';
+                                }
+                                $regex .= '/i';
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
                                 break;
                             case "partiellement":

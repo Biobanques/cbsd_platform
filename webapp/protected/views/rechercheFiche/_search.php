@@ -28,7 +28,7 @@ return false;
 
 
 <div class="wide form">
-<p>*Pour les champs à choix multiples, vous pouvez sélectionner plusieurs valeurs avec la touche CTRL du clavier.</p>
+    <p>*Pour les champs à choix multiples, vous pouvez sélectionner plusieurs valeurs avec la touche CTRL du clavier.</p>
     <p>*Lorsque vous ajoutez une question, vous pouvez ajouter plusieurs valeurs dans les champs de type "input" en les séparant par une virgule (opérateur "OU").</p>
     <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -81,9 +81,26 @@ return false;
             ));
             ?>
         </div>
-
+    </div>
+    <div class ="row">
+        <h5 aligen="center">Date de saisie</h5>
         <div class="col-lg-6">
-            <?php echo $form->label($model, 'last_updated'); ?>
+            <?php
+            echo CHtml::label('Du', 'last_updated_from');
+            $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                'name' => 'Answer[last_updated_from]',
+                'options' => array(
+                    'showAnim' => 'fold',
+                ),
+                'htmlOptions' => array(
+                    'style' => 'height:25px;'
+                ),
+                'language' => 'fr',
+            ));
+            ?>
+        </div>
+        <div class="col-lg-6">
+            <?php echo CHtml::label('Au', 'last_updated'); ?>
             <?php
             $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'name' => 'Answer[last_updated]',
