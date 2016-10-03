@@ -15,7 +15,7 @@
         </tr>
     </table>  
 </div>
-
+<?php $_SESSION["patientBirthDate"] = $patient->birthDate; ?>
 <hr />
 
 <h3 align="center">Formulaire <?php echo $model->name; ?></h3>

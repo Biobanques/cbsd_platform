@@ -153,7 +153,7 @@ class RechercheFicheController extends Controller {
         $dataProvider->setCriteria($criteria1);
         $_SESSION['criteria'] = $criteria1;
         $this->render('result_search', array(
-            'models' => $models,
+            'model' => $model,
             'dataProvider' => $dataProvider
         ));
     }

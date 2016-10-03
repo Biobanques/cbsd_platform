@@ -1,28 +1,5 @@
 <?php
 Yii::app()->clientScript->registerScript('form_question', "
-$(document).ready(function() {
-    $('.row input[type=\"text\"],select').each(function() {
-        if ($(this).val() != 'administrateur') {
-            $(this).val('');
-        }
-    });
-    var inputs = document.getElementsByTagName('input');
-    var textareas = document.getElementsByTagName('textarea');
-    var selectlist = document.getElementsByTagName('select');
-    var len_inputs = inputs.length;
-    var len_textareas = textareas.length;
-    var len_selectlist = selectlist.length;
-
-    for (var i = 0; i < len_inputs; i++) {
-        inputs[i].disabled = true;
-    }
-    for (var i = 0; i < len_textareas; i++) {
-        textareas[i].disabled = true;
-    }
-    for (var i = 0; i < len_selectlist; i++) {
-        selectlist[i].disabled = true;
-    }
-});
 $('#QuestionBlocForm_title').change(function(){
     var e = document.getElementById('QuestionBlocForm_title').value;
     if (e !== '') {

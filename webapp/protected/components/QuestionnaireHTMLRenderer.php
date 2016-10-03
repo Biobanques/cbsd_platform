@@ -152,6 +152,15 @@ class QuestionnaireHTMLRenderer {
             if ($question->id == "doctorname") {
                 $valueInput = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
             }
+            if ($question->id == "patientage" && isset($_SESSION["patientBirthDate"])) {
+                $birthdateFormat = explode('/', $_SESSION["patientBirthDate"]);
+                $dateNow = explode('/', date('d/m/Y'));
+                if(($birthdateFormat[1] < $dateNow[1]) || (($birthdateFormat[1] == $dateNow[1]) && ($birthdateFormat[0] <= $dateNow[0]))) {
+                    $valueInput = $dateNow[2] - $birthdateFormat[2];
+                } else {
+                    $valueInput = $dateNow[2] - $birthdateFormat[2] - 1;
+                }
+            }
         }
         if ($isAnswered) {
             $valueInput = $question->answer;
