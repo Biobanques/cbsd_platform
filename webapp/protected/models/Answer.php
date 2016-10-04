@@ -134,14 +134,17 @@ class Answer extends EMongoDocument {
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
         if (isset($this->type) && !empty($this->type)) {
-            $criteria->createOrGroup('type');
+            $regex = '/^';
             foreach ($this->type as $value) {
-                $criteria->addCondToOrGroup('type', array('type' => new MongoRegex('/' . $value . '/i')));
+                $regex .= $value;
+                if ($value != end($this->type)) {
+                    $regex.= '$|^';
+                }
             }
-            $criteria->addOrGroup('type');
+            $regex .= '$/i';
+            $criteria->addCond('type', '==', new MongoRegex($regex));
         }
 
-        // TODO with addCondToOrGroup
         if (isset($this->user) && !empty($this->user)) {
             $regex = '/^';
             foreach ($this->user as $value) {
@@ -165,41 +168,56 @@ class Answer extends EMongoDocument {
         }
 
         if (isset($this->id_patient) && !empty($this->id_patient)) {
-            $criteria->createOrGroup('id_patient');
+            $regex = '/^';
             foreach ($this->id_patient as $patient) {
-                $criteria->addCondToOrGroup('id_patient', array('id_patient' => new MongoRegex('/' . $patient . '/i')));
+                $regex.= $patient;
+                if ($patient != end($this->id_patient)) {
+                    $regex.= '$|^';
+                }
             }
-            $criteria->addOrGroup('id_patient');
+            $regex .= '$/i';
+            $criteria->addCond('id_patient', '==', new MongoRegex($regex));
         }
 
         if (isset($this->name) && !empty($this->name)) {
-            $criteria->createOrGroup('name');
+            $regex = '/^';
             foreach ($this->name as $n) {
-                $criteria->addCondToOrGroup('name', array('name' => new MongoRegex('/' . $n . '/i')));
+                $regex.= $n;
+                if ($n != end($this->name)) {
+                    $regex.= '$|^';
+                }
             }
-            $criteria->addOrGroup('name');
+            $regex .= '$/i';
+            $criteria->addCond('name', '==', new MongoRegex($regex));
         }
-        
+
         // TODO with addCondToOrGroup
         if (isset($this->last_updated_from) || isset($this->last_updated)) {
             if (!empty($this->last_updated_from) && empty($this->last_updated)) {
+                $criteria->createOrGroup('last_updated');
                 $date_from = str_replace('/', '-', $this->last_updated_from);
-                $criteria->last_updated = array('$gte' => new MongoDate(strtotime("01/01/1900")), '$lte' => new MongoDate(strtotime($date_from)));
+                $criteria->addCondToOrGroup('last_updated', 'last_updated', array('$gte' => new MongoDate(strtotime("01/01/1900")), '$lte' => new MongoDate(strtotime($date_from))));
+                $criteria->addOrGroup('last_updated');
             } elseif (!empty($this->last_updated) && empty($this->last_updated_from)) {
+                $criteria->createOrGroup('last_updated');
                 $date_to = str_replace('/', '-', $this->last_updated);
-                $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date_to)), '$lte' => new MongoDate(strtotime("31-12-9999")));
+                $criteria->addCondToOrGroup('last_updated', 'last_updated', array('$gte' => new MongoDate(strtotime($date_to)), '$lte' => new MongoDate(strtotime("31-12-9999"))));
+                $criteria->addOrGroup('last_updated');
             } elseif (!empty($this->last_updated) && !empty($this->last_updated_from)) {
+                $criteria->createOrGroup('last_updated');
                 $date_from = str_replace('/', '-', $this->last_updated_from);
                 $date_to = str_replace('/', '-', $this->last_updated);
-                $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date_from)), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")));
+                $criteria->addCondToOrGroup('last_updated', array('last_updated' => array('$gte' => new MongoDate(strtotime($date_from)), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
+                $criteria->addOrGroup('last_updated');
             }
         }
-        
-        // TODO with addCondToOrGroup for operator comparison
+
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             $criteria->createOrGroup('question');
+            $notNull = false;
             foreach ($this->dynamics as $questionId => $answerValue) {
                 if ($answerValue != null && !empty($answerValue)) {
+                    $notNull = true;
                     if ($questionId == "examdate") {
                         $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => $answerValue));
                     } else {
@@ -208,23 +226,19 @@ class Answer extends EMongoDocument {
                                 $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => (int) $answerValue));
                                 break;
                             case "notEq":
-                                $criteria->answers_group->answers->id = $questionId;
-                                $criteria->answers_group->answers->answer('!=', (int) $answerValue);
+                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$ne' => (int) $answerValue)));
                                 break;
                             case "less":
-                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, '<' => array('answers_group.answers.answer' => (int) $answerValue)));
+                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$lt' => (int) $answerValue)));
                                 break;
                             case "greater":
-                                $criteria->answers_group->answers->id = $questionId;
-                                $criteria->answers_group->answers->answer('>', (int) $answerValue);
+                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$gt' => (int) $answerValue)));
                                 break;
                             case "lessEq":
-                                $criteria->answers_group->answers->id = $questionId;
-                                $criteria->answers_group->answers->answer('<=', (int) $answerValue);
+                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$lte' => (int) $answerValue)));
                                 break;
                             case "greaterEq":
-                                $criteria->answers_group->answers->id = $questionId;
-                                $criteria->answers_group->answers->answer('>=', (int) $answerValue);
+                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$gte' => (int) $answerValue)));
                                 break;
                             case "contient_uniquement":
                                 if (!is_array($answerValue)) {
@@ -261,10 +275,12 @@ class Answer extends EMongoDocument {
                             default:
                                 $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => $answerValue));
                         }
-                    }
+                    }  
                 }
             }
-            $criteria->addOrGroup('question');
+            if ($notNull) {
+                $criteria->addOrGroup('question');
+            }
         }
         $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
         $criteria->sort('type', EMongoCriteria::SORT_ASC);
