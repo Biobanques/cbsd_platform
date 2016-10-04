@@ -22,8 +22,8 @@ return array(
         'ext.*',
         'ext.bootstrap.*',
         'ext.bootstrap.widgets.*',
-        'ext.YiiMongoDbSuite.*',
-        'ext.YiiMongoDbSuite.extra.*',
+        'ext.MongoDbSuite.*',
+        'ext.MongoDbSuite.extra.*',
         'application.models.*',
         'application.components.*',
         'application.modules.auditTrail.models.AuditTrail',
@@ -81,3 +81,4 @@ return array(
         'mailSystemActif' => CommonProperties::$MAIL_SYSTEM_ACTIVE,
     ),
 );
+
