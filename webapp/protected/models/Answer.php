@@ -196,12 +196,12 @@ class Answer extends EMongoDocument {
             if (!empty($this->last_updated_from) && empty($this->last_updated)) {
                 $criteria->createOrGroup('last_updated');
                 $date_from = str_replace('/', '-', $this->last_updated_from);
-                $criteria->addCondToOrGroup('last_updated', 'last_updated', array('$gte' => new MongoDate(strtotime("01/01/1900")), '$lte' => new MongoDate(strtotime($date_from))));
+                $criteria->addCondToOrGroup('last_updated', array('last_updated' => array('$gte' => new MongoDate(strtotime("01/01/1900")), '$lte' => new MongoDate(strtotime($date_from)))));
                 $criteria->addOrGroup('last_updated');
             } elseif (!empty($this->last_updated) && empty($this->last_updated_from)) {
                 $criteria->createOrGroup('last_updated');
                 $date_to = str_replace('/', '-', $this->last_updated);
-                $criteria->addCondToOrGroup('last_updated', 'last_updated', array('$gte' => new MongoDate(strtotime($date_to)), '$lte' => new MongoDate(strtotime("31-12-9999"))));
+                $criteria->addCondToOrGroup('last_updated', array('last_updated' => array('$gte' => new MongoDate(strtotime($date_to)), '$lte' => new MongoDate(strtotime("31-12-9999")))));
                 $criteria->addOrGroup('last_updated');
             } elseif (!empty($this->last_updated) && !empty($this->last_updated_from)) {
                 $criteria->createOrGroup('last_updated');

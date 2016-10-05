@@ -20,6 +20,7 @@ if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "questionnaire/upda
     if ($model->type === "neuropathologique") {
         // Système de calcul de score pour le Stade de Braak
         Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/stade_de_braak.js', CClientScript::POS_END);
+        Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/thal.js', CClientScript::POS_END);
     }
     if ($model->type === "genetique") {
         // Ajout de gène dans le formulaire génétique
