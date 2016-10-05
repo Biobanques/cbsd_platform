@@ -127,7 +127,7 @@ class SiteController extends Controller
                 if (count($user->profil) == 0) {
                     Yii::app()->user->setFlash('error', 'Votre profil n\'est pas encore activé.');
                 } elseif ($model->login()) {
-                    $this->redirect(array('site/patient'));
+                    $this->redirect(array('site/index'));
                 }
             } else {
                     Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
