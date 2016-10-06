@@ -191,7 +191,6 @@ class Answer extends EMongoDocument {
             $criteria->addCond('name', '==', new MongoRegex($regex));
         }
 
-        // TODO with addCondToOrGroup
         if (isset($this->last_updated_from) || isset($this->last_updated)) {
             if (!empty($this->last_updated_from) && empty($this->last_updated)) {
                 $criteria->createOrGroup('last_updated');
@@ -213,32 +212,40 @@ class Answer extends EMongoDocument {
         }
 
         if (isset($this->dynamics) && !empty($this->dynamics)) {
-            $criteria->createOrGroup('question');
             $notNull = false;
             foreach ($this->dynamics as $questionId => $answerValue) {
                 if ($answerValue != null && !empty($answerValue)) {
+                    $criteria->createOrGroup($questionId);
                     $notNull = true;
                     if ($questionId == "examdate") {
-                        $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => $answerValue));
+                        $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => $answerValue));
+                        $criteria->addOrGroup($questionId);
+                        
                     } else {
                         switch ($this->compare[$questionId]) {
                             case "egale":
-                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => (int) $answerValue));
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => (int) $answerValue));
+                                $criteria->addOrGroup($questionId);
                                 break;
                             case "notEq":
-                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$ne' => (int) $answerValue)));
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$ne' => (int) $answerValue)));
+                                $criteria->addOrGroup($questionId);
                                 break;
                             case "less":
-                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$lt' => (int) $answerValue)));
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$lt' => (int) $answerValue)));
+                                $criteria->addOrGroup($questionId);
                                 break;
                             case "greater":
-                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$gt' => (int) $answerValue)));
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$gt' => (int) $answerValue)));
+                                $criteria->addOrGroup($questionId);
                                 break;
                             case "lessEq":
-                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$lte' => (int) $answerValue)));
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$lte' => (int) $answerValue)));
+                                $criteria->addOrGroup($questionId);
                                 break;
                             case "greaterEq":
-                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$gte' => (int) $answerValue)));
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$gte' => (int) $answerValue)));
+                                $criteria->addOrGroup($questionId);
                                 break;
                             case "contient_uniquement":
                                 if (!is_array($answerValue)) {
@@ -254,7 +261,8 @@ class Answer extends EMongoDocument {
                                     }
                                 }
                                 $regex .= '$/i';
-                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => new MongoRegex($regex)));
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => new MongoRegex($regex)));
+                                $criteria->addOrGroup($questionId);
                                 break;
                             case "partiellement":
                                 if (!is_array($answerValue)) {
@@ -270,16 +278,15 @@ class Answer extends EMongoDocument {
                                     }
                                 }
                                 $regex .= '/i';
-                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => new MongoRegex($regex)));
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => new MongoRegex($regex)));
+                                $criteria->addOrGroup($questionId);
                                 break;
                             default:
-                                $criteria->addCondToOrGroup('question', array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => $answerValue));
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => $answerValue));
+                                $criteria->addOrGroup($questionId);
                         }
                     }  
                 }
-            }
-            if ($notNull) {
-                $criteria->addOrGroup('question');
             }
         }
         $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
@@ -289,6 +296,100 @@ class Answer extends EMongoDocument {
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));
+    }
+    
+    public function searchFilter($caseSensitive = false) {
+        $criteria = new EMongoCriteria;
+        $criteria->id_patient = new MongoRegex($_SESSION['id_patient']);
+        $criteria->name = new MongoRegex('/Démence|Neuropathologique Alzheimer/i');
+        $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
+        $criteria->sort('type', EMongoCriteria::SORT_ASC);
+        $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
+        if (isset($this->dynamics) && !empty($this->dynamics)) {
+            $notNull = false;
+            foreach ($this->dynamics as $questionId => $answerValue) {
+                if ($answerValue != null && !empty($answerValue)) {
+                    $criteria->createOrGroup($questionId);
+                    $notNull = true;
+                    if ($questionId == "examdate") {
+                        $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => $answerValue));
+                        $criteria->addOrGroup($questionId);
+                        
+                    } else {
+                        switch ($this->compare[$questionId]) {
+                            case "egale":
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => (int) $answerValue));
+                                $criteria->addOrGroup($questionId);
+                                break;
+                            case "notEq":
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$ne' => (int) $answerValue)));
+                                $criteria->addOrGroup($questionId);
+                                break;
+                            case "less":
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$lt' => (int) $answerValue)));
+                                $criteria->addOrGroup($questionId);
+                                break;
+                            case "greater":
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$gt' => (int) $answerValue)));
+                                $criteria->addOrGroup($questionId);
+                                break;
+                            case "lessEq":
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$lte' => (int) $answerValue)));
+                                $criteria->addOrGroup($questionId);
+                                break;
+                            case "greaterEq":
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => array('$gte' => (int) $answerValue)));
+                                $criteria->addOrGroup($questionId);
+                                break;
+                            case "contient_uniquement":
+                                if (!is_array($answerValue)) {
+                                    $values = split(',', $answerValue);
+                                } else {
+                                    $values = $answerValue;
+                                }
+                                $regex = '/^';
+                                foreach ($values as $value) {
+                                    $regex .= $value;
+                                    if ($value != end($values)) {
+                                        $regex.= '$|^';
+                                    }
+                                }
+                                $regex .= '$/i';
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => new MongoRegex($regex)));
+                                $criteria->addOrGroup($questionId);
+                                break;
+                            case "partiellement":
+                                if (!is_array($answerValue)) {
+                                    $values = split(',', $answerValue);
+                                } else {
+                                    $values = $answerValue;
+                                }
+                                $regex = '/';
+                                foreach ($values as $value) {
+                                    $regex .= $value;
+                                    if ($value != end($values)) {
+                                        $regex.= '|';
+                                    }
+                                }
+                                $regex .= '/i';
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => new MongoRegex($regex)));
+                                $criteria->addOrGroup($questionId);
+                                break;
+                            default:
+                                $criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' => $answerValue));
+                                $criteria->addOrGroup($questionId);
+                        }
+                    }  
+                }
+            }
+        }
+        Yii::app()->session['criteria'] = $criteria;
+        $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
+        $criteria->sort('type', EMongoCriteria::SORT_ASC);
+        $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
+        return new EMongoDocumentDataProvider($this, array(
+            'criteria' => $criteria
+        ));        
     }
 
     public function getComparaisonNumerique() {

@@ -33,7 +33,6 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'columns' => array(
-        //   'id_patient',
         array('header' => $model->attributeLabels()["id_patient"], 'name' => 'id_patient'),
         array('header' => $model->attributeLabels()["type"], 'name' => 'type'),
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),

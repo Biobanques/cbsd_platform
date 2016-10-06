@@ -63,7 +63,7 @@ class RechercheFicheController extends Controller {
             'model' => $model,
         ));
     }
-   
+
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
@@ -112,7 +112,7 @@ class RechercheFicheController extends Controller {
             'models' => $models,
         ));
     }
-    
+
     public function actionResultSearch() {
         $idPatient = array();
         $model = new Answer('search');
@@ -131,9 +131,9 @@ class RechercheFicheController extends Controller {
         }
         $regex = '/^';
         $nbFiche = count($models);
-        foreach ($models as $model) {
-            if (!in_array($model->id_patient, $idPatient)) {
-                array_push($idPatient, $model->id_patient);
+        foreach ($models as $m) {
+            if (!in_array($m->id_patient, $idPatient)) {
+                array_push($idPatient, $m->id_patient);
             }
         }
         foreach ($idPatient as $id) {
@@ -144,18 +144,10 @@ class RechercheFicheController extends Controller {
             }
         }
         $regex .= '$/i';
-        $criteria1 = new EMongoCriteria;
-        $criteria1->addCond('id_patient', '==', new MongoRegex($regex));
-        $criteria1->sort('id_patient', EMongoCriteria::SORT_ASC);
-        $criteria1->sort('type', EMongoCriteria::SORT_ASC);
-        $criteria1->sort('last_updated', EMongoCriteria::SORT_DESC);
-        $dataProvider = new EMongoDocumentDataProvider('Answer');
-        $dataProvider->setCriteria($criteria1);
-        $_SESSION['criteria'] = $criteria1;
+        $_SESSION['id_patient'] = $regex;
         $this->render('result_search', array(
-            'model' => $model,
-            'dataProvider' => $dataProvider
+            'model' => $model
         ));
     }
-}
 
+}
