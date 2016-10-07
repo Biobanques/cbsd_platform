@@ -21,3 +21,9 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
     ),
 ));
 ?>
+
+<div style="display:inline; margin:40%; width: 100px; ">
+    <?php
+    echo CHtml::link('Retour', array('user/admin'), array('class' => 'btn btn-default'));
+    ?>
+</div>

@@ -28,7 +28,7 @@ class FicheController extends Controller {
             array(
                 'allow',
                 'actions' => array(
-                    'index', 'dynamicquestions', 'admin', 'view', 'update', 'delete', 'viewOnePage'
+                    'index', 'dynamicquestions', 'admin', 'view', 'update', 'delete', 'viewOnePage', 'exportPDF'
                 ),
                 'expression' => '$user->getActiveProfil() == "administrateur"'
             ),
@@ -138,6 +138,14 @@ class FicheController extends Controller {
         $this->render('view_onepage', array(
             'model' => $this->loadModel($id),
         ));
+    }
+    
+    /**
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
+    public function actionExportPDF($id) {
+        AnswerPDFRenderer::renderAnswer($this->loadModel($id));
     }
     
     public function loadModel($id) {

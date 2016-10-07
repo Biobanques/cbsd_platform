@@ -37,3 +37,8 @@ if ($model->last_modified != null && $model->last_modified != "") {
     echo $model->renderTabbedGroup(Yii::app()->language);
     ?>
 </div>
+<div style="display:inline; margin:40%; width: 100px; ">
+    <?php
+    echo CHtml::link('Retour', array('formulaire/admin'), array('class' => 'btn btn-default'));
+    ?>
+</div>

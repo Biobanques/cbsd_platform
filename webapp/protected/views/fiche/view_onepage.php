@@ -22,5 +22,11 @@ $(document).ready(function() {
 ?>
 
 <h3 align="center">Vue HTML du formulaire <?php echo $model->name; ?></h3>
-
+<?php echo CHtml::link('Vue standard', array('fiche/view', 'id' => $model->_id)); ?>
+<div style="margin-top: -20px; text-align:right;">
+    <?php
+    $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
+    echo CHtml::link('Exporter au format PDF' . $img, array('fiche/exportPDF', 'id' => $model->_id), array());
+    ?>
+</div>
 <?php echo $model->renderHTML(Yii::app()->language); ?>

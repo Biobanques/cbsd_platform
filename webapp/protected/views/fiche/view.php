@@ -46,4 +46,8 @@ echo CHtml::link('Vue format HTML', array('fiche/viewOnePage', 'id' => $model->_
     echo $model->renderTabbedGroup(Yii::app()->language);
     ?>
 </div>
-
+<div style="display:inline; margin:40%; width: 100px; ">
+    <?php
+    echo CHtml::link('Retour', array('fiche/admin'), array('class' => 'btn btn-default'));
+    ?>
+</div>

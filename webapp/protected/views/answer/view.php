@@ -68,7 +68,8 @@ echo CHtml::link('Vue format HTML', array('answer/viewOnePage', 'id' => $model->
 </div>
 <div style="display:inline; margin:40%; width: 100px; ">
     <?php
-    echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:20px;'));
+    echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:-40px;'));
+    echo CHtml::link('Mettre à jour la fiche', array('answer/update', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:10px;'));
     ?>
 </div>
 <?php
