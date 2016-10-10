@@ -173,7 +173,6 @@ class FormulaireController extends Controller {
                     if ($question->id == $_POST['old_question']) {
                         $question->label = $_POST['new_question'];
                         $question->label_fr = $_POST['new_question'];
-                        $question->id = $_POST['new_idQuestion'];
                         if ($model->save()) {
                             Yii::app()->user->setFlash('success', 'La question a bien été modifié.');
                         } else {
