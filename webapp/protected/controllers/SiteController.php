@@ -125,7 +125,7 @@ class SiteController extends Controller
             // validate user input and redirect to the previous page if valid
             if ($model->validate()) {
                 if (count($user->profil) == 0) {
-                    Yii::app()->user->setFlash('error', 'Votre profil n\'est pas encore activé.');
+                    Yii::app()->user->setFlash('error', 'Votre profil n\'est pas encore activé. Veuillez contacter l\'administrateur');
                 } elseif ($model->login()) {
                     $this->redirect(array('site/index'));
                 }
@@ -296,28 +296,35 @@ class SiteController extends Controller
      */
     public function actionConfirmUser()
     {
-        $model = User::model()->findByPk(new MongoId($_GET['arg1']));
-        if (!in_array($_GET['arg2'], $model->profil)) {
-            if (!in_array(" ", $model->profil)) {
-                array_push($model->profil, $_GET['arg2']);
-            } else {
-                $model->profil = (array) $_GET['arg2'];
-            }
-            if (isset($_GET['arg2']) && isset($_GET['arg3'])) {
-                if ($_GET['arg2'] == "neuropathologiste") {
-                    $model->centre = $_GET['arg3'];
+        if (isset($_GET['arg1']) && isset($_GET['arg2'])) {
+            $model = User::model()->findByPk(new MongoId($_GET['arg1']));
+            if ($model != null) {
+                if (!in_array($_GET['arg2'], $model->profil)) {
+                    if (!in_array(" ", $model->profil)) {
+                        array_push($model->profil, $_GET['arg2']);
+                    } else {
+                        $model->profil = (array) $_GET['arg2'];
+                    }
+                    if (isset($_GET['arg2']) && isset($_GET['arg3'])) {
+                        if ($_GET['arg2'] == "neuropathologiste") {
+                            $model->centre = $_GET['arg3'];
+                        }
+                    }
+                    if ($model->save()) {
+                        CommonMailer::sendUserRegisterConfirmationMail($model, NULL);
+                        Yii::app()->user->setState('profil', $model->profil);
+                        Yii::app()->user->setFlash('success', 'Le profil ' . $_GET['arg2'] . ' a bien été ajouté.');
+                    }
+                } else {
+                    Yii::app()->user->setFlash('error', 'Le profil ' . $_GET['arg2'] . ' a déjà été ajouté.');
                 }
-            }
-            if ($model->save()) {
-                CommonMailer::sendUserRegisterConfirmationMail($model, NULL);
-                Yii::app()->user->setState('profil', $model->profil);
-                Yii::app()->user->setFlash('success', 'Le profil ' . $_GET['arg2'] . ' a bien été ajouté.');
-                $this->redirect(array('site/index'));
+            } else {
+                Yii::app()->user->setFlash('error', "L'utilisateur n'existe pas.");
             }
         } else {
-            Yii::app()->user->setFlash('error', 'Le profil ' . $_GET['arg2'] . ' a déjà été ajouté.');
-            $this->redirect(array('site/index'));
+            Yii::app()->user->setFlash('error', "Le lien n'est pas valide !");
         }
+        $this->redirect(array('site/index'));
     }
 
     /**
@@ -325,9 +332,17 @@ class SiteController extends Controller
      */
     public function actionRefuseUser()
     {
-        $model = User::model()->findByPk(new MongoId($_GET['arg1']));
-        CommonMailer::sendUserRegisterRefusedMail($model, $_GET['arg2']);
-        Yii::app()->user->setFlash('success', "L'utilisateur " . $model->login . " avec le profil " . $_GET['arg2'] . " a bien été refusé. Un mail a été envoyé à l'utilisateur.");
+        if (isset($_GET['arg1'])) {
+            $model = User::model()->findByPk(new MongoId($_GET['arg1']));
+            if ($model != null && $model->delete()) {
+                CommonMailer::sendUserRegisterRefusedMail($model, $_GET['arg2']);
+                Yii::app()->user->setFlash('success', "L'utilisateur " . $model->login . " avec le profil " . $_GET['arg2'] . " a bien été refusé. Un mail a été envoyé à l'utilisateur.");
+            } else {
+                Yii::app()->user->setFlash('error', "L'utilisateur n'existe pas.");
+            }
+        } else {
+            Yii::app()->user->setFlash('error', "Le lien n'est pas valide !");
+        }
         $this->redirect(array('site/index'));
     }
 }

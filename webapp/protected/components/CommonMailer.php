@@ -267,7 +267,7 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
         </head><body>
         Cher (Chère) " . ucfirst($user->prenom) . " " . strtoupper($user->nom) . "<br><br>
         Merci de vous être inscrit sur le site <a href=\"" . Yii::app()->getBaseUrl(true) . "\">cbsdplatform</a>.<br>
-        Vous pouvez vous connecter dès à présent sur le site avec vos identifiants : <br>
+        Vous pouvez vous connecter dès à présent sur le site <a href=\"" . Yii::app()->getBaseUrl(true) . "\">cbsdplatform</a> avec vos identifiants : <br>
         <ul><li>Nom d'utilisateur : $user->login </li>
         <li>Mot de passe : $user->password </li></ul>
                     Cordialement,<br>
@@ -322,7 +322,7 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
         Suite à votre demande effectuée sur le site cbsdplatform, nous vous rappelons vos codes d'accès :<br>
                 Identifiant : $login<br>
                 Password : $password <br>
-                Vous pouvez dès à présent vous connecter avec ces identifiants.<br>
+                Vous pouvez dès à présent vous connecter sur <a href=\"" . Yii::app()->getBaseUrl(true) . "\">cbsdplatform</a> avec ces identifiants.<br>
 A bientôt sur cbsdplatform.
         </body>
         ";
