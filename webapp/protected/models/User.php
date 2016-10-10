@@ -331,7 +331,7 @@ class User extends EMongoDocument
         }
         if (!in_array($this->telephone, array("", null))) {
             if (!preg_match("/^0[1-9][0-9]{8}$/i", $this->telephone)) {
-                $this->addError('telephone', 'Le numéro de téléphone que vous avez renseigné n\'est pas valide (format 01 02 03 04 05).');
+                $this->addError('telephone', 'Le numéro de téléphone que vous avez renseigné n\'est pas valide (exemple format: 0145825443).');
             }
         }
     }
@@ -340,7 +340,7 @@ class User extends EMongoDocument
     {
         if (!in_array($this->gsm, array("", null))) {
             if (!preg_match("/^0[1-9][0-9]{8}$/i", $this->gsm)) {
-                $this->addError('gsm', 'Le numéro de téléphone portable que vous avez renseigné n\'est pas valide (format 01 02 03 04 05).');
+                $this->addError('gsm', 'Le numéro de téléphone portable que vous avez renseigné n\'est pas valide (exemple format: 0145825443).');
             }
         }
     }

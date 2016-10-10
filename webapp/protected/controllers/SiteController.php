@@ -250,6 +250,7 @@ class SiteController extends Controller
         $model = new User();
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
+            $model->telephone = str_replace(" ", "", $model->telephone);
             $profil = implode("", $model->profil);
             $userLogin = $model->getAllUsersByLogin($model);
             if (count($userLogin) > 0) {
