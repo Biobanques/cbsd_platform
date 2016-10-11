@@ -65,5 +65,12 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'noUserWithLogin' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec le login \'{badLogin}\'',
     'noUserWithFirstname' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec le prénom \'{badFirstname}\'',
     'noUserWithEmail' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'adresse email \'{badEmail}\'',
+    'titleQuestion' => 'Renseignez ce champ si vous voulez ajouter un titre au dessus de la question.',
+    'idQuestion' => 'Entrez un identifiant de la question. <br> Cet identifiant doit être unique et est nécessaire <br> pour pouvoir positionner la question, <br> supprimer une question grâce à son identifiant, ...',
+    'labelQuestion' => 'Entrez le label de la question.',
+    'typeQuestion' => 'Choisissez le type de la question:<br>- texte simple<br>- numérique<br>- date (format jj/mm/yyyy)<br>- radio (1 seul choix possible)<br>- liste déroulante<br>- case(s) à cocher (plusieurs choix possibles)<br>- textarea',
+    'groupQuestion' => 'Choisissez dans quel onglet vous voulez ajouter la question.',
+    'positionQuestion' => '- Alignement à gauche (par défaut): La question sera positionnée à gauche <br>- Alignement à droite: La question sera positionnée à droite',
+    'helpQuestion' => 'Renseignez ce champ si vous voulez ajouter une information à la question. <br>Cette information pourra être affichée en cliquant sur "?" <br>à côté de l\'identifiant de la question.'
 );
 ?>

@@ -56,7 +56,7 @@
 
         <div class="col-lg-3">
             <?php echo $form->labelEx($model, 'telephone'); ?>
-            <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'Format 01 02 03 04 05', 'disabled' => 'disabled')); ?>
+            <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'exemple format: 0145825443', 'disabled' => 'disabled')); ?>
             <?php echo $form->error($model, 'telephone'); ?>
         </div>
     </div>
