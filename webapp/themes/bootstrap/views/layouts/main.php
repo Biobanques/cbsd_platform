@@ -49,12 +49,16 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
 
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <!-- use the link below to test cdn instead of local lib -->
+        <!--<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/font-awesome-4.6.3/css/font-awesome.min.css" />
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-            <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+        <!-- use bootstrap -->
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
 
-            <?php Yii::app()->bootstrap->register(); ?>
+        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+
+        <?php Yii::app()->bootstrap->register(); ?>
     </head>
 
     <?php
@@ -127,6 +131,9 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                 </div><!-- footer -->
             </nav>
         </div><!-- page -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     </body>
 </html>

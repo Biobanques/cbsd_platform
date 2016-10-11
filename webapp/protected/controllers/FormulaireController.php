@@ -106,6 +106,9 @@ class FormulaireController extends Controller {
         if (isset($_POST['QuestionForm'])) {
             $questionForm->attributes = $_POST['QuestionForm'];
             if ($questionForm->validatewithId($model)) {
+                if ($questionForm->help == "") {
+                    $questionForm->help = null;
+                }
                 //traitement ajout de question
                 if ($questionForm->validate()) {
                     $model = $model->saveQuestionnaireNewQuestion($questionForm);
