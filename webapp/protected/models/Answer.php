@@ -301,7 +301,6 @@ class Answer extends EMongoDocument {
     public function searchFilter($caseSensitive = false) {
         $criteria = new EMongoCriteria;
         $criteria->id_patient = new MongoRegex($_SESSION['id_patient']);
-        $criteria->name = new MongoRegex('/Démence|Neuropathologique Alzheimer/i');
         $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
         $criteria->sort('type', EMongoCriteria::SORT_ASC);
         $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);

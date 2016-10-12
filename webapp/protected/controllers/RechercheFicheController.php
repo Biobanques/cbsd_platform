@@ -119,32 +119,19 @@ class RechercheFicheController extends Controller {
         $model->unsetAttributes();
         if (isset($_GET['Answer']))
             $model->attributes = $_GET['Answer'];
-        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
-            $criteria = $_SESSION['criteria'];
-        } else {
+        if (isset($_POST['Answer_id_patient'])) {
             $criteria = new EMongoCriteria;
-        }
-        $models = Answer::model()->findAll($criteria);
-        if (count($models) < 1) {
-            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucune fiche à exporter.");
-            $this->redirect(array("rechercheFiche/admin"));
-        }
-        $regex = '/^';
-        $nbFiche = count($models);
-        foreach ($models as $m) {
-            if (!in_array($m->id_patient, $idPatient)) {
-                array_push($idPatient, $m->id_patient);
+            $regex = '/^';
+            foreach ($_POST['Answer_id_patient'] as $idPatient) {
+                $regex.= $idPatient;
+                if ($idPatient != end($_POST['Answer_id_patient'])) {
+                    $regex.= '$|^';
+                }
             }
+            $regex .= '$/i';
+            $criteria->addCond('id_patient', '==', new MongoRegex($regex));
+            $_SESSION['id_patient'] = $regex;
         }
-        foreach ($idPatient as $id) {
-            $regex.= $id;
-            if ($nbFiche > 1) {
-                $regex.= '$|^';
-                $nbFiche--;
-            }
-        }
-        $regex .= '$/i';
-        $_SESSION['id_patient'] = $regex;
         $this->render('result_search', array(
             'model' => $model
         ));

@@ -28,11 +28,17 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 </div><!-- search-form -->
 
 <?php
+$form = $this->beginWidget('CActiveForm', array(
+    'action' => Yii::app()->createUrl('rechercheFiche/resultsearch'),
+    'method' => 'post',
+        ));
+
 $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'searchFiche-grid',
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'columns' => array(
+        array('id' => 'Answer_id_patient', 'value' => '$data->id_patient', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
         array('header' => $model->attributeLabels()["id_patient"], 'name' => 'id_patient'),
         array('header' => $model->attributeLabels()["type"], 'name' => 'type'),
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
@@ -51,3 +57,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ),
 ));
 ?>
+
+<?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default')); ?>
+
+<?php $this->endWidget(); ?>
