@@ -39,20 +39,34 @@ return false;
     <div class="row">
         <div class="col-lg-12">
             <?php echo CHtml::label('Ajouter une question', 'question'); ?>
-            <?php echo CHtml::dropDownList('question', 'addQuestion', Answer::model()->getAllQuestions(), array('prompt' => '----')); ?>
             <?php
-            echo CHtml::button('ajouter', array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;'));
-            ?>
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'name' => 'question',
+                'source' => array_map(function($key, $value) {
+                            return array('label' => $value, 'value' => $key);
+                        }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions()),
+                        // additional javascript options for the autocomplete plugin
+                        'options' => array(
+                            'minLength' => '2',
+                        ),
+                        'htmlOptions' => array(
+                            'style' => 'height:20px;',
+                        ),
+                    ));
+                    ?>
+                    <?php
+                    echo CHtml::button('ajouter', array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;'));
+                    ?>
 
-        </div>
-    </div>
+                </div>
+            </div>
 
-    <div class="row buttons">
-        <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-        <?php echo CHtml::resetButton('Réinitialiser', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-        <?php echo CHtml::link('Exporter en CSV', array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
-    </div>
+            <div class="row buttons">
+                <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+                <?php echo CHtml::resetButton('Réinitialiser', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+                <?php echo CHtml::link('Exporter en CSV', array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
+            </div>
 
-    <?php $this->endWidget(); ?>
+            <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->
