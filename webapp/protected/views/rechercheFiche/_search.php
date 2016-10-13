@@ -129,10 +129,7 @@ return false;
                         // additional javascript options for the autocomplete plugin
                         'options' => array(
                             'minLength' => '2',
-                        ),
-                        'htmlOptions' => array(
-                            'style' => 'height:20px;',
-                        ),
+                        )
                     ));
                     ?>
                     <?php
