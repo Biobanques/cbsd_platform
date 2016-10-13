@@ -243,13 +243,8 @@ class QuestionnaireHTMLRenderer {
 
     public function renderQuestionForSearchHTML($question, $lang, $isAnswered) {
         $result = "";
-        $style = "style=\"\"";
-        if ($question->style != "" && $question->style != "") {
 
-            $style = "style=\"" . $question->style . "\"";
-        }
-
-        $result.="<div class=\"col-lg-6\" " . $style . ">";
+        $result.="<div class=\"col-lg-6\">";
 
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;

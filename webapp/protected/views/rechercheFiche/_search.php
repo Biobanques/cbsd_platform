@@ -61,27 +61,6 @@ return false;
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <?php
-            echo CHtml::label('Date d\'examen', 'Answer[dynamics][examdate]');
-            ?>
-            <?php
-            $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'name' => 'Answer[dynamics][examdate]',
-                //
-                //  additional javascript options for the date picker plugin
-                'options' => array(
-                    'showAnim' => 'fold',
-                ),
-                'htmlOptions' => array(
-                    'style' => 'height:25px;'
-                ),
-                'language' => 'fr',
-            ));
-            ?>
-        </div>
-    </div>
     <div class ="row">
         <h5 aligen="center">Date de saisie</h5>
         <div class="col-lg-6">
@@ -116,7 +95,7 @@ return false;
             ?>
         </div>
     </div>
-    <div id="dynamicFilters"></div>
+
     <div class="row">
         <div class="col-lg-12">
             <?php echo CHtml::label('Ajouter une question', 'question'); ?>
@@ -138,6 +117,8 @@ return false;
 
                 </div>
             </div>
+
+            <div id="dynamicFilters"></div>
 
             <div class="row buttons">
                 <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
