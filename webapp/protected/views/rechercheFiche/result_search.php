@@ -39,7 +39,6 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->searchFilter(),
     'columns' => array(
-        array('id' => 'Answer_id_patient', 'value' => '$data->id_patient', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
         array('header' => $model->attributeLabels()["id_patient"], 'name' => 'id_patient'),
         array('header' => $model->attributeLabels()["type"], 'name' => 'type'),
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
@@ -57,9 +56,6 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         ),
     ),
 ));
-
-echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default'));
-echo CHtml::link('Exporter en CSV', array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default'));
 ?>
 
 <?php $this->endWidget(); ?>

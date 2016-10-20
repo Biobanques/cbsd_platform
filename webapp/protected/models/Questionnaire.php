@@ -182,7 +182,7 @@ class Questionnaire extends EMongoDocument
      */
     public function getNomsFiches() {
         $res = array();
-        $fiches = Questionnaire::model()->findAll();
+        $fiches = Answer::model()->findAll();
         foreach ($fiches as $fiche) {
             if (!in_array($fiche->name, $res)) {
                 $res[$fiche->name] = $fiche->name;
