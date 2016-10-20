@@ -132,6 +132,9 @@ class RechercheFicheController extends Controller {
             $criteria->addCond('id_patient', '==', new MongoRegex($regex));
             $_SESSION['id_patient'] = $regex;
         }
+        if (!isset($_SESSION['id_patient'])) {
+            $_SESSION['id_patient'] = "";
+        }
         $this->render('result_search', array(
             'model' => $model
         ));

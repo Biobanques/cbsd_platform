@@ -58,6 +58,6 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 ));
 ?>
 
-<?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default')); ?>
+<?php echo CHtml::submitButton('Rechercher les fiches associées aux patients sélectionnés', array('name' => 'rechercher', 'class' => 'btn btn-default')); ?>
 
 <?php $this->endWidget(); ?>
