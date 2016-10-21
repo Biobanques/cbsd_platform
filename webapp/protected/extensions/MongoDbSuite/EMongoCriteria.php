@@ -60,9 +60,9 @@ class EMongoCriteria extends CComponent
         'elemmatch' => '$elemMatch',
         'mod' => '$mod',
         '%' => '$mod',
-        'equals' => '$$eq',
+        'equals' => '$eq',
         'eq' => '$$eq',
-        '==' => '$$eq',
+        '==' => '$eq',
         'where' => '$where',
         'or' => '$or'
     );

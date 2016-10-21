@@ -262,9 +262,7 @@ class QuestionnaireHTMLRenderer {
         }
         $result.="</label>";
         // Liste déroulante des opérateurs de comparaison
-        if ($question->type == "input" || $question->type == "checkbox" || $question->type == "radio" || $question->type == "list" || $question->type == "text") {
-            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonString());
-        } elseif ($question->type == "number" || $question->type == "expression") {
+        if ($question->type == "number" || $question->type == "expression") {
             $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonNumerique());
         }
         $result.="<div class=\"question-input\">";
@@ -553,3 +551,4 @@ class QuestionnaireHTMLRenderer {
     }
 
 }
+
