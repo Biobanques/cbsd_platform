@@ -66,6 +66,15 @@ class EMongoCriteria extends CComponent
         'where' => '$where',
         'or' => '$or'
     );
+    
+	/**
+	 * Supported logical operators list
+	 * @var array
+	 */
+	public static $logicalOperators = array(
+	    '$and', '$or', '$nor',
+	);
+        
     const SORT_ASC = 1;
     const SORT_DESC = -1;
     private $_select = array();
@@ -148,43 +157,56 @@ class EMongoCriteria extends CComponent
      * @param array|EMongoCriteria $criteria
      * @since v1.0
      */
-    public function mergeWith($criteria) {
-        if (is_array($criteria))
-            $criteria = new EMongoCriteria($criteria);
-        else if (empty($criteria))
-            return $this;
-
-        $opTable = array_values(self::$operators);
-
-        foreach ($criteria->_conditions as $fieldName => $conds) {
-            if (
-                    is_array($conds) &&
-                    count(array_diff(array_keys($conds), $opTable)) == 0
-            ) {
-                if (isset($this->_conditions[$fieldName]) && is_array($this->_conditions[$fieldName])) {
-                    foreach ($this->_conditions[$fieldName] as $operator => $value)
-                        if (!in_array($operator, $opTable))
-                            unset($this->_conditions[$fieldName][$operator]);
-                } else
-                    $this->_conditions[$fieldName] = array();
-
-                foreach ($conds as $operator => $value)
-                    $this->_conditions[$fieldName][$operator] = $value;
-            } else
-                $this->_conditions[$fieldName] = $conds;
-        }
-
-        if (!empty($criteria->_limit))
-            $this->_limit = $criteria->_limit;
-        if (!empty($criteria->_offset))
-            $this->_offset = $criteria->_offset;
-        if (!empty($criteria->_sort))
-            $this->_sort = array_merge($this->_sort, $criteria->_sort);
-        if (!empty($criteria->_select))
-            $this->_select = array_merge($this->_select, $criteria->_select);
-
-        return $this;
-    }
+	public function mergeWith($criteria, $operator = null)
+	{
+		if(is_array($criteria))
+			$criteria = new EMongoCriteria($criteria);
+		else if(empty($criteria))
+			return $this;
+		$opTable = array_values(self::$operators);
+		if ($operator !== null && in_array($operator, self::$logicalOperators)) {
+		    if (empty($this->_conditions)) {
+		        $this->_conditions = $criteria->_conditions;
+		    } else if (!empty($criteria->_conditions)) {
+		        $this->_conditions = array($operator => array(
+		            $this->_conditions,
+		            $criteria->_conditions,
+		        ));
+		    }
+		} else {
+    		foreach($criteria->_conditions as $fieldName=>$conds)
+    		{
+    			if(
+    				is_array($conds) &&
+    				count(array_diff(array_keys($conds), $opTable)) == 0
+    			)
+    			{
+    				if(isset($this->_conditions[$fieldName]) && is_array($this->_conditions[$fieldName]))
+    				{
+    					foreach($this->_conditions[$fieldName] as $operator => $value)
+    						if(!in_array($operator, $opTable))
+    							unset($this->_conditions[$fieldName][$operator]);
+    				}
+    				else
+    					$this->_conditions[$fieldName] = array();
+    
+    				foreach($conds as $operator => $value)
+    					$this->_conditions[$fieldName][$operator] = $value;
+    			}
+    			else
+    				$this->_conditions[$fieldName] = $conds;
+    		}
+		}
+		if(!empty($criteria->_limit))
+			$this->_limit	= $criteria->_limit;
+		if(!empty($criteria->_offset))
+			$this->_offset	= $criteria->_offset;
+		if(!empty($criteria->_sort))
+			$this->_sort	= array_merge($this->_sort, $criteria->_sort);
+		if(!empty($criteria->_select))
+			$this->_select	= array_merge($this->_select, $criteria->_select);
+		return $this;
+	}
 
     /**
      * If we have operator add it otherwise call parent implementation

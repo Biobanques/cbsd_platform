@@ -130,6 +130,21 @@ class Answer extends EMongoDocument {
             'last_modified' => 'Date de mise à jour du questionnaire',
         );
     }
+    
+    public function searchTest($caseSensitive = false) {
+        $criteria = new EMongoCriteria;
+        $criteria1 = new EMongoCriteria;
+        $criteria2 = new EMongoCriteria;
+        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => 'adl_score', 'answer' => array('$lt' => 4)));
+        $criteria1->addCond('answers_group.answers', 'elemmatch', array('id' => 'iadl_score', 'answer' => 4));
+        $criteria2->addCond('answers_group.answers', 'elemmatch', array('id' => 'doctorname', 'answer' => "Martin DUPONT"));
+        $criteria->mergeWith($criteria1, '$and');
+        $criteria->mergeWith($criteria2, '$and');
+        Yii::app()->session['criteria'] = $criteria;
+        return new EMongoDocumentDataProvider($this, array(
+            'criteria' => $criteria
+        ));
+    }
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
@@ -212,12 +227,21 @@ class Answer extends EMongoDocument {
         }
 
         if (isset($this->dynamics) && !empty($this->dynamics)) {
-            //$criteria->createOrGroup('mygroup');
+            $index = 0;
             foreach ($this->dynamics as $questionId => $answerValue) {
                 if ($answerValue != null && !empty($answerValue)) {
+                    if ($index == 0) {
+                        $criteria = new EMongoCriteria;
+                    } else {
+                        $nbCriteria = '$criteria' . $index;
+                        $nbCriteria = new EMongoCriteria;
+                    }
                     if (isset($this->compare[$questionId])) {
-                        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
-                        //$criteria->addCondToOrGroup('mygroup', 'answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' =>  array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                        if ($index == 0) {
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                        } else {
+                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                        }
                     } else {
                         if (!is_array($answerValue)) {
                             $values = split(',', $answerValue);
@@ -232,12 +256,18 @@ class Answer extends EMongoDocument {
                             }
                         }
                         $regex .= '/i';
-                        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
-                        //$criteria->addCondToOrGroup('mygroup', 'answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' =>  new MongoRegex($regex)));
+                        if ($index == 0) {
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
+                        } else {
+                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
+                        }
                     }
                 }
+                if ($index != 0) {
+                    $criteria->mergeWith($nbCriteria, '$and');
+                }
+                $index++;
             }
-            //$criteria->addOrGroup('mygroup');
         }
         $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
         $criteria->sort('type', EMongoCriteria::SORT_ASC);
@@ -255,11 +285,21 @@ class Answer extends EMongoDocument {
             $criteria->id_patient = new MongoRegex($_SESSION['id_patient']);
         }
         if (isset($this->dynamics) && !empty($this->dynamics)) {
+            $index = 0;
             foreach ($this->dynamics as $questionId => $answerValue) {
                 if ($answerValue != null && !empty($answerValue)) {
+                    if ($index == 0) {
+                        $criteria = new EMongoCriteria;
+                    } else {
+                        $nbCriteria = '$criteria' . $index;
+                        $nbCriteria = new EMongoCriteria;
+                    }
                     if (isset($this->compare[$questionId])) {
-                        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
-                        //$criteria->addCondToOrGroup($questionId, array('answers_group.answers.id' => $questionId, 'answers_group.answers.answer' =>  array($operators[$this->compare[$questionId]] => (int) $answerValue)));
+                        if ($index == 0) {
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                        } else {
+                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                        }
                     } else {
                         if (!is_array($answerValue)) {
                             $values = split(',', $answerValue);
@@ -274,9 +314,17 @@ class Answer extends EMongoDocument {
                             }
                         }
                         $regex .= '/i';
-                        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
+                        if ($index == 0) {
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
+                        } else {
+                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($regex)));
+                        }
                     }
                 }
+                if ($index != 0) {
+                    $criteria->mergeWith($nbCriteria, '$and');
+                }
+                $index++;
             }
         }
         $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
