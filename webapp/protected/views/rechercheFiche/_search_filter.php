@@ -9,6 +9,11 @@ $('#addFilterButton').click(function(){
         data:$('#question').serialize(),
         success:function(result){
             $('#dynamicFilters').append(result);
+            $('#question').val('');
+            var n = $('.deleteQuestion').length;
+            if (n == 1) {
+                $('.condition').hide();
+            }
             }
          });
 
@@ -17,10 +22,12 @@ $('#addFilterButton').click(function(){
 
 
 $('#dynamicFilters').on('click','.deleteQuestion',function(event){
-
-//alert(event.target.closest('.col-lg-6').className);
-event.target.closest('.col-lg-6').remove();
-return false;
+    event.target.closest('.col-lg-12').remove();
+    var n = $('.deleteQuestion').length;
+    if (n == 1) {
+        $('.condition').hide();
+    }
+    return false;
 });
 
 ");

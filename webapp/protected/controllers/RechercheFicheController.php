@@ -117,16 +117,14 @@ class RechercheFicheController extends Controller {
         $idPatient = array();
         $model = new Answer('search');
         $model->unsetAttributes();
-        if (isset($_GET['Answer']))
+        if (isset($_GET['Answer'])) {
             $model->attributes = $_GET['Answer'];
+        }
         if (isset($_POST['Answer_id_patient'])) {
             $criteria = new EMongoCriteria;
             $regex = '/^';
             foreach ($_POST['Answer_id_patient'] as $idPatient) {
-                $regex.= $idPatient;
-                if ($idPatient != end($_POST['Answer_id_patient'])) {
-                    $regex.= '$|^';
-                }
+                $regex.= $idPatient . '$|^';
             }
             $regex .= '$/i';
             $criteria->addCond('id_patient', '==', new MongoRegex($regex));
@@ -138,3 +136,4 @@ class RechercheFicheController extends Controller {
     }
 
 }
+

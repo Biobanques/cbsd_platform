@@ -244,7 +244,7 @@ class QuestionnaireHTMLRenderer {
     public function renderQuestionForSearchHTML($question, $lang, $isAnswered) {
         $result = "";
 
-        $result.="<div class=\"col-lg-6\">";
+        $result.="<div class=\"col-lg-12\">";
 
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
@@ -254,19 +254,21 @@ class QuestionnaireHTMLRenderer {
         if ($lang == "both") {
             $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
         }
-
+        $result.="<div class=\"condition\"><div style=\"clear:both;\"></div>";
+        $result.=CHtml::dropDownList("Answer[condition][" . $question->id . "]", 'addCondition', array('$and'=>'ET', '$or'=>'OU'));
+        $result.="<div style=\"clear:both;\"></div></div>";
 
         $result.="<label for=\"Answer_dynamics_" . $question->id . "\">" . $label;
         if (isset($question->help)) {
             $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
         }
         $result.="</label>";
+
+        $result.="<div class=\"question-input\">";
         // Liste déroulante des opérateurs de comparaison
         if ($question->type == "number" || $question->type == "expression") {
             $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonNumerique());
         }
-        $result.="<div class=\"question-input\">";
-
         $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\" style=\"margin-left:110px;\"";
         $valueInput = "";
         if (Yii::app()->controller->id != "formulaire") {
@@ -551,3 +553,4 @@ class QuestionnaireHTMLRenderer {
     }
 
 }
+

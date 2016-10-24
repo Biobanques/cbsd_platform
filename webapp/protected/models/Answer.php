@@ -77,6 +77,7 @@ class Answer extends EMongoDocument {
      */
     public $dynamics;
     public $compare;
+    public $condition;
 
     /**
      * use for search by user name
@@ -100,7 +101,7 @@ class Answer extends EMongoDocument {
                 'required'
             ),
             array(
-                'id,name,answers_group,login,type,id_patient,dynamics,compare,last_updated,last_updated_from,user',
+                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,last_updated_from,user',
                 'safe',
                 'on' => 'search'
             )
@@ -129,21 +130,6 @@ class Answer extends EMongoDocument {
             'last_updated' => 'Date de saisie',
             'last_modified' => 'Date de mise à jour du questionnaire',
         );
-    }
-    
-    public function searchTest($caseSensitive = false) {
-        $criteria = new EMongoCriteria;
-        $criteria1 = new EMongoCriteria;
-        $criteria2 = new EMongoCriteria;
-        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => 'adl_score', 'answer' => array('$lt' => 4)));
-        $criteria1->addCond('answers_group.answers', 'elemmatch', array('id' => 'iadl_score', 'answer' => 4));
-        $criteria2->addCond('answers_group.answers', 'elemmatch', array('id' => 'doctorname', 'answer' => "Martin DUPONT"));
-        $criteria->mergeWith($criteria1, '$and');
-        $criteria->mergeWith($criteria2, '$and');
-        Yii::app()->session['criteria'] = $criteria;
-        return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria
-        ));
     }
 
     public function search($caseSensitive = false) {
@@ -228,11 +214,10 @@ class Answer extends EMongoDocument {
 
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             $index = 0;
+            $nbCriteria = array();
             foreach ($this->dynamics as $questionId => $answerValue) {
                 if ($answerValue != null && !empty($answerValue)) {
-                    if ($index == 0) {
-                        $criteria = new EMongoCriteria;
-                    } else {
+                    if ($index != 0) {
                         $nbCriteria = '$criteria' . $index;
                         $nbCriteria = new EMongoCriteria;
                     }
@@ -264,7 +249,7 @@ class Answer extends EMongoDocument {
                     }
                 }
                 if ($index != 0) {
-                    $criteria->mergeWith($nbCriteria, '$and');
+                    $criteria->mergeWith($nbCriteria, $this->condition[$questionId]);
                 }
                 $index++;
             }
@@ -286,11 +271,10 @@ class Answer extends EMongoDocument {
         }
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             $index = 0;
+            $nbCriteria = array();
             foreach ($this->dynamics as $questionId => $answerValue) {
                 if ($answerValue != null && !empty($answerValue)) {
-                    if ($index == 0) {
-                        $criteria = new EMongoCriteria;
-                    } else {
+                    if ($index != 0) {
                         $nbCriteria = '$criteria' . $index;
                         $nbCriteria = new EMongoCriteria;
                     }
@@ -322,7 +306,7 @@ class Answer extends EMongoDocument {
                     }
                 }
                 if ($index != 0) {
-                    $criteria->mergeWith($nbCriteria, '$and');
+                    $criteria->mergeWith($nbCriteria, $this->condition[$questionId]);
                 }
                 $index++;
             }
@@ -830,4 +814,5 @@ class Answer extends EMongoDocument {
     }
 
 }
+
 
