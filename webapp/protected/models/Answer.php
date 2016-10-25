@@ -131,6 +131,14 @@ class Answer extends EMongoDocument {
             'last_modified' => 'Date de mise à jour du questionnaire',
         );
     }
+    
+    public function searchTest($caseSensitive = false) {
+        $criteria = new EMongoCriteria;
+        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => 'examdate', 'answer' => array('$gte' => new MongoDate(strtotime("26-11-2015" . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime("25-10-2016" . " 23:59:59.999Z")))));
+        return new EMongoDocumentDataProvider($this, array(
+            'criteria' => $criteria
+        ));               
+    }
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
@@ -223,9 +231,24 @@ class Answer extends EMongoDocument {
                     }
                     if (isset($this->compare[$questionId])) {
                         if ($index == 0) {
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            if ($this->compare[$questionId] == "between") {
+                                $answerDate = explode(",", $answerValue);
+                                $date_from = str_replace('/', '-', $answerDate[0]);
+                                $date_to = str_replace('/', '-', $answerDate[1]);
+                                $_SESSION['date_from'] = $date_from;
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array('$gte' => new MongoDate(strtotime($date_from . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
+                            } else {
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            }
                         } else {
-                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            if ($this->compare[$questionId] == "between") {
+                                $answerDate = explode(",", $answerValue);
+                                $date_from = str_replace('/', '-', $answerValue[0]);
+                                $date_to = str_replace('/', '-', $answerValue[1]);
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array('$gte' => new MongoDate(strtotime($date_from)), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
+                            } else {
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            }
                         }
                     } else {
                         if (!is_array($answerValue)) {
@@ -280,9 +303,23 @@ class Answer extends EMongoDocument {
                     }
                     if (isset($this->compare[$questionId])) {
                         if ($index == 0) {
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            if ($this->compare[$questionId] == "between") {
+                                $answerDate = explode(",", $answerValue);
+                                $date_from = str_replace('/', '-', $answerDate[0]);
+                                $date_to = str_replace('/', '-', $answerDate[1]);
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array('$gte' => new MongoDate(strtotime($date_from . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
+                            } else {
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            }
                         } else {
-                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            if ($this->compare[$questionId] == "between") {
+                                $answerDate = explode(",", $answerValue);
+                                $date_from = str_replace('/', '-', $answerValue[0]);
+                                $date_to = str_replace('/', '-', $answerValue[1]);
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array('$gte' => new MongoDate(strtotime($date_from)), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
+                            } else {
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            }
                         }
                     } else {
                         if (!is_array($answerValue)) {
@@ -328,6 +365,12 @@ class Answer extends EMongoDocument {
         $res ['greater'] = "supérieure à";
         $res ['lesseq'] = "inférieure ou égale à";
         $res ['greatereq'] = "supérieure ou égale à";
+        return $res;
+    }
+    
+    public function getComparaisonDate() {
+        $res = array();
+        $res ['between'] = "comprise entre";
         return $res;
     }
 

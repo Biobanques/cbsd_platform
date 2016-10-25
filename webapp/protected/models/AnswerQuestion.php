@@ -127,6 +127,11 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
         $this->answer = new MongoInt32($val);
     }
     
+    public function setAnswerDate($val) {
+        $date = str_replace('/', '-', $val);
+        $this->answer = new MongoDate(strtotime($date));
+    }
+    
     /**
      * get literal value to display into a flat grid (csv, xls)
      *  input => values

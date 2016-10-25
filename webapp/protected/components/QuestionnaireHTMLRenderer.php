@@ -172,7 +172,7 @@ class QuestionnaireHTMLRenderer {
             $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
         if ($question->type == "date") {
-            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . date('d/m/Y',$valueInput->sec) . "\" placeholder=\"Format jj/mm/aaaa\"/>";
         }
         if ($question->type == "radio") {
 
@@ -268,28 +268,22 @@ class QuestionnaireHTMLRenderer {
         // Liste déroulante des opérateurs de comparaison
         if ($question->type == "number" || $question->type == "expression") {
             $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonNumerique());
+        } elseif ($question->type == "date") {
+            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonDate());
         }
         $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\" style=\"margin-left:110px;\"";
         $valueInput = "";
-        if (Yii::app()->controller->id != "formulaire") {
-            if ($question->id == "examdate") {
-                $valueInput = date("d/m/Y");
-            }
-            if ($question->id == "doctorname") {
-                $valueInput = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
-            }
-        }
         if ($isAnswered) {
             $valueInput = $question->answer;
         }
         if ($question->type == "input") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"required/>";
         }
         if ($question->type == "number" || $question->type == "expression") {
-            $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+            $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\"required/>";
         }
         if ($question->type == "date") {
-            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"required/>";
         }
         if ($question->type == "radio") {
 
@@ -301,7 +295,7 @@ class QuestionnaireHTMLRenderer {
             $arvalue = split(",", $values);
 
             foreach ($arvalue as $value) {
-                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $valueInput ? 'checked' : '') . ">&nbsp;" . $value . "</input>&nbsp;";
+                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $valueInput ? 'checked' : '') . "required>&nbsp;" . $value . "</input>&nbsp;";
             }
         }
         if ($question->type == "checkbox") {
@@ -320,11 +314,11 @@ class QuestionnaireHTMLRenderer {
                         }
                     }
                 }
-                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . ">&nbsp;" . $value . "</input><br>";
+                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . "required>&nbsp;" . $value . "</input><br>";
             }
         }
         if ($question->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" >" . $valueInput . "</textarea>";
+            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" required>" . $valueInput . "</textarea>";
         }
         if ($question->type == "image") {
             if ($isAnswered) {
@@ -340,7 +334,7 @@ class QuestionnaireHTMLRenderer {
         if ($question->type == "list") {
             $values = $question->values;
             $arvalue = split(",", $values);
-            $result.="<select " . $idInput . ">";
+            $result.="<select " . $idInput . "required>";
             $result.="<option  value=\"\"></option>";
             foreach ($arvalue as $value) {
                 $result.="<option  value=\"" . $value . "\" " . ($valueInput == $value ? 'selected' : '') . ">" . $value . "</option>";

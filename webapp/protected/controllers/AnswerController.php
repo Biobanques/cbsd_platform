@@ -176,8 +176,10 @@ class AnswerController extends Controller {
                     $input = $answer_group->id . "_" . $answerQuestion->id;
                     if (isset($_POST['Questionnaire'][$input])) {
                         $flagNoInputToSave = false;
-                        if ($answerQuestion->type != "number" && $answerQuestion->type != "expression") {
+                        if ($answerQuestion->type != "number" && $answerQuestion->type != "expression" && $answerQuestion->type != "date") {
                             $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
+                        } elseif ($answerQuestion->type == "date") {
+                            $answerQuestion->setAnswerDate($_POST['Questionnaire'][$input]);
                         } else {
                             $answerQuestion->setAnswerNumerique($_POST['Questionnaire'][$input]);
                         }

@@ -44,7 +44,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
         array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
-        array('header' => $model->attributeLabels()["examDate"], 'name' => 'examDate', 'value' => '$data->getAnswerByQuestionId("examdate")'),
+        array('header' => $model->attributeLabels()["examDate"], 'name' => 'examDate', 'value' => 'date("d/m/Y", $data->getAnswerByQuestionId("examdate")->sec)'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{view}',

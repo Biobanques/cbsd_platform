@@ -149,8 +149,11 @@ class AnswerPDFRenderer
         $pdf->MultiCell(55, 10, $label, 1, 'L', 1, 0, '', '', true, 0, false, true, 0, 'T', true);
         //affichage de l input selon son type
         $id = $idanswergroup . "_" . $answer->id;
-        if ($answer->type == "input" || $answer->type == "number" || $answer->type == "expression" || $answer->type == "date") {
+        if ($answer->type == "input" || $answer->type == "number" || $answer->type == "expression") {
             $pdf->MultiCell(120, 10, $answer->answer, 1, 'L', 0, 0, '', '', true, 0, false, true, 0, 'T', true);
+        }
+        if ($answer->type == "date") {
+            $pdf->MultiCell(120, 10, date("d/m/Y", $answer->answer->sec), 1, 'L', 0, 0, '', '', true, 0, false, true, 0, 'T', true);
         }
         if ($answer->type == "radio") {
             if ($lang == "fr" && $answer->values_fr != "") {
