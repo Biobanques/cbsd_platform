@@ -69,37 +69,9 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     </div>
 
     <div class ="row">
-        <h5 aligen="center">Date de saisie</h5>
         <div class="col-lg-6">
-            <?php
-            echo CHtml::label('Du', 'last_updated_from');
-            $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'name' => 'Answer[last_updated_from]',
-                'options' => array(
-                    'showAnim' => 'fold',
-                ),
-                'htmlOptions' => array(
-                    'style' => 'height:25px;'
-                ),
-                'language' => 'fr',
-            ));
-            ?>
-        </div>
-        <div class="col-lg-6">
-            <?php echo CHtml::label('Au', 'last_updated'); ?>
-            <?php
-            $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'name' => 'Answer[last_updated]',
-                // additional javascript options for the date picker plugin
-                'options' => array(
-                    'showAnim' => 'fold',
-                ),
-                'htmlOptions' => array(
-                    'style' => 'height:25px;'
-                ),
-                'language' => 'fr',
-            ));
-            ?>
+            <?php echo $form->label($model, 'last_updated'); ?>
+            <?php echo $form->textField($model, 'last_updated', array("onfocus"=>"datePicker(this.name)")); ?>
         </div>
     </div>
 
@@ -136,3 +108,17 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
             <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->
+
+<script>
+function datePicker(clicked) {
+    $('input[name="' + clicked + '"]').daterangepicker({
+        "applyClass": "btn-primary",
+        "showDropdowns": true,
+        locale: {
+            format: 'DD/MM/YYYY',
+            applyLabel: 'Valider',
+            cancelLabel: 'Effacer'
+        }
+});
+}
+</script>

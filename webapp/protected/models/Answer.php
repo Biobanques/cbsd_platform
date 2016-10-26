@@ -101,7 +101,7 @@ class Answer extends EMongoDocument {
                 'required'
             ),
             array(
-                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,last_updated_from,user',
+                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,user',
                 'safe',
                 'on' => 'search'
             )
@@ -200,24 +200,12 @@ class Answer extends EMongoDocument {
             $criteria->addCond('name', '==', new MongoRegex($regex));
         }
 
-        if (isset($this->last_updated_from) || isset($this->last_updated)) {
-            if (!empty($this->last_updated_from) && empty($this->last_updated)) {
-                $criteria->createOrGroup('last_updated');
-                $date_from = str_replace('/', '-', $this->last_updated_from);
-                $criteria->addCondToOrGroup('last_updated', array('last_updated' => array('$gte' => new MongoDate(strtotime("01/01/1900")), '$lte' => new MongoDate(strtotime($date_from)))));
-                $criteria->addOrGroup('last_updated');
-            } elseif (!empty($this->last_updated) && empty($this->last_updated_from)) {
-                $criteria->createOrGroup('last_updated');
-                $date_to = str_replace('/', '-', $this->last_updated);
-                $criteria->addCondToOrGroup('last_updated', array('last_updated' => array('$gte' => new MongoDate(strtotime($date_to)), '$lte' => new MongoDate(strtotime("31-12-9999")))));
-                $criteria->addOrGroup('last_updated');
-            } elseif (!empty($this->last_updated) && !empty($this->last_updated_from)) {
-                $criteria->createOrGroup('last_updated');
-                $date_from = str_replace('/', '-', $this->last_updated_from);
-                $date_to = str_replace('/', '-', $this->last_updated);
-                $criteria->addCondToOrGroup('last_updated', array('last_updated' => array('$gte' => new MongoDate(strtotime($date_from)), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
-                $criteria->addOrGroup('last_updated');
-            }
+        if (isset($this->last_updated) && !empty($this->last_updated)) {
+            $date = str_replace(' ', '', $this->last_updated);
+            $answerFormat = explode("-", $date);
+            $date_from = str_replace('/', '-', date('d-m-Y', strtotime($answerFormat[0])));
+            $date_to = str_replace('/', '-', date('d-m-Y', strtotime($answerFormat[1])));
+            $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date_from . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")));            
         }
 
         if (isset($this->dynamics) && !empty($this->dynamics)) {
@@ -236,7 +224,6 @@ class Answer extends EMongoDocument {
                                 $answerDate = explode("-", $answerValue);
                                 $date_from = str_replace('/', '-', date('d-m-Y', strtotime($answerDate[0])));
                                 $date_to = str_replace('/', '-', date('d-m-Y', strtotime($answerDate[1])));
-                                $_SESSION['date_from'] = $date_from;
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array('$gte' => new MongoDate(strtotime($date_from . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
                             } else {
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
