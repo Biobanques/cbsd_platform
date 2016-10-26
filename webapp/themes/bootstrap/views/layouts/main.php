@@ -50,11 +50,12 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
         <!-- use the link below to test cdn instead of local lib -->
-        <!--<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/font-awesome-4.6.3/css/font-awesome.min.css" />
 
         <!-- use bootstrap -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+        
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
@@ -135,6 +136,8 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     </body>
 </html>

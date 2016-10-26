@@ -232,9 +232,10 @@ class Answer extends EMongoDocument {
                     if (isset($this->compare[$questionId])) {
                         if ($index == 0) {
                             if ($this->compare[$questionId] == "between") {
-                                $answerDate = explode(",", $answerValue);
-                                $date_from = str_replace('/', '-', $answerDate[0]);
-                                $date_to = str_replace('/', '-', $answerDate[1]);
+                                $answerValue = str_replace(' ', '', $answerValue);
+                                $answerDate = explode("-", $answerValue);
+                                $date_from = str_replace('/', '-', date('d-m-Y', strtotime($answerDate[0])));
+                                $date_to = str_replace('/', '-', date('d-m-Y', strtotime($answerDate[1])));
                                 $_SESSION['date_from'] = $date_from;
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array('$gte' => new MongoDate(strtotime($date_from . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
                             } else {
