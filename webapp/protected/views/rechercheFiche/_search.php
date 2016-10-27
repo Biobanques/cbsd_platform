@@ -83,11 +83,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                 'name' => 'question',
                 'source' => array_map(function($key, $value) {
                             return array('label' => $value, 'value' => $key);
-                        }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions()),
-                        // additional javascript options for the autocomplete plugin
-                        'options' => array(
-                            'minLength' => '2',
-                        )
+                        }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions())
                     ));
                     ?>
                     <?php
@@ -115,10 +111,9 @@ function datePicker(clicked) {
         "applyClass": "btn-primary",
         "showDropdowns": true,
         locale: {
-            format: 'DD/MM/YYYY',
             applyLabel: 'Valider',
             cancelLabel: 'Effacer'
         }
-});
+    });
 }
 </script>
