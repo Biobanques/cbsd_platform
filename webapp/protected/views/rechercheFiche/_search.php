@@ -20,7 +20,6 @@ $('#addFilterButton').click(function(){
      return false;
 });
 
-
 $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     event.target.closest('.col-lg-12').remove();
     var n = $('.deleteQuestion').length;
@@ -30,6 +29,9 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     return false;
 });
 
+$('#reset').click(function(){
+    $('.col-lg-12').remove();
+});
 ");
 ?>
 
@@ -76,7 +78,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <?php echo CHtml::label('Ajouter une question', 'question'); ?>
             <?php
             $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
@@ -97,23 +99,10 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
 
             <div class="row buttons">
                 <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-                <?php echo CHtml::resetButton('Réinitialiser', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+                <?php echo CHtml::resetButton('Réinitialiser', array('id' => 'reset', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
                 <?php echo CHtml::link('Exporter en CSV', array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
             </div>
 
             <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->
-
-<script>
-function datePicker(clicked) {
-    $('input[name="' + clicked + '"]').daterangepicker({
-        "applyClass": "btn-primary",
-        "showDropdowns": true,
-        locale: {
-            applyLabel: 'Valider',
-            cancelLabel: 'Effacer'
-        }
-    });
-}
-</script>

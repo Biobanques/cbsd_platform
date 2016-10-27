@@ -101,7 +101,7 @@ class Answer extends EMongoDocument {
                 'required'
             ),
             array(
-                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,user',
+                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,last_updated_from,user',
                 'safe',
                 'on' => 'search'
             )
@@ -134,7 +134,8 @@ class Answer extends EMongoDocument {
     
     public function searchTest($caseSensitive = false) {
         $criteria = new EMongoCriteria;
-        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => 'examdate', 'answer' => array('$gte' => new MongoDate(strtotime("26-11-2015" . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime("25-10-2016" . " 23:59:59.999Z")))));
+        //$criteria->addCond('answers_group.answers', 'elemmatch', array('id' => 'examdate', 'answer' => array('$gte' => new MongoDate(strtotime("26-11-2015" . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime("25-10-2016" . " 23:59:59.999Z")))));
+        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => 'examdate', 'answer.date' => array('$gte' => "2016-10-26 00:00:00.000000", '$lte' => "2016-10-26 23:59:59.000000")));
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));               
@@ -222,18 +223,19 @@ class Answer extends EMongoDocument {
                             if ($this->compare[$questionId] == "between") {
                                 $answerValue = str_replace(' ', '', $answerValue);
                                 $answerDate = explode("-", $answerValue);
-                                $date_from = str_replace('/', '-', date('d-m-Y', strtotime($answerDate[0])));
-                                $date_to = str_replace('/', '-', date('d-m-Y', strtotime($answerDate[1])));
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array('$gte' => new MongoDate(strtotime($date_from . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
+                                $date_from = str_replace('/', '-', date('Y-m-d', strtotime($answerDate[0])));
+                                $date_to = str_replace('/', '-', date('Y-m-d', strtotime($answerDate[1])));
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $date_from . " 00:00:00.000000", '$lte' => $date_to . " 23:59:59.000000")));
                             } else {
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
                             }
                         } else {
                             if ($this->compare[$questionId] == "between") {
-                                $answerDate = explode(",", $answerValue);
-                                $date_from = str_replace('/', '-', $answerValue[0]);
-                                $date_to = str_replace('/', '-', $answerValue[1]);
-                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array('$gte' => new MongoDate(strtotime($date_from)), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
+                                $answerValue = str_replace(' ', '', $answerValue);
+                                $answerDate = explode("-", $answerValue);
+                                $date_from = str_replace('/', '-', date('d-m-Y', strtotime($answerDate[0])));
+                                $date_to = str_replace('/', '-', date('d-m-Y', strtotime($answerDate[1])));
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $date_from . " 00:00:00.000000", '$lte' => $date_to . " 23:59:59.000000")));
                             } else {
                                 $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
                             }
@@ -292,19 +294,21 @@ class Answer extends EMongoDocument {
                     if (isset($this->compare[$questionId])) {
                         if ($index == 0) {
                             if ($this->compare[$questionId] == "between") {
-                                $answerDate = explode(",", $answerValue);
-                                $date_from = str_replace('/', '-', $answerDate[0]);
-                                $date_to = str_replace('/', '-', $answerDate[1]);
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array('$gte' => new MongoDate(strtotime($date_from . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
+                                $answerValue = str_replace(' ', '', $answerValue);
+                                $answerDate = explode("-", $answerValue);
+                                $date_from = str_replace('/', '-', date('Y-m-d', strtotime($answerDate[0])));
+                                $date_to = str_replace('/', '-', date('Y-m-d', strtotime($answerDate[1])));
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $date_from . " 00:00:00.000000", '$lte' => $date_to . " 23:59:59.000000")));
                             } else {
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
                             }
                         } else {
                             if ($this->compare[$questionId] == "between") {
-                                $answerDate = explode(",", $answerValue);
-                                $date_from = str_replace('/', '-', $answerValue[0]);
-                                $date_to = str_replace('/', '-', $answerValue[1]);
-                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array('$gte' => new MongoDate(strtotime($date_from)), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")))));
+                                $answerValue = str_replace(' ', '', $answerValue);
+                                $answerDate = explode("-", $answerValue);
+                                $date_from = str_replace('/', '-', date('d-m-Y', strtotime($answerDate[0])));
+                                $date_to = str_replace('/', '-', date('d-m-Y', strtotime($answerDate[1])));
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $date_from . " 00:00:00.000000", '$lte' => $date_to . " 23:59:59.000000")));
                             } else {
                                 $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
                             }
@@ -685,7 +689,11 @@ class Answer extends EMongoDocument {
         foreach ($this->answers_group as $group) {
             foreach ($group->answers as $answer) {
                 if ($answer->id == $id) {
-                    $result = $answer->answer;
+                    if ($answer->type != "date") {
+                        $result = $answer->answer;
+                    } else {
+                        $result = $answer->answer['date'];
+                    }
                 }
             }
         }
@@ -845,5 +853,3 @@ class Answer extends EMongoDocument {
     }
 
 }
-
-

@@ -44,7 +44,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
         array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
-        array('header' => $model->attributeLabels()["examDate"], 'name' => 'examDate', 'value' => 'date("d/m/Y", $data->getAnswerByQuestionId("examdate")->sec)'),
+         array('header' => $model->attributeLabels()["examDate"], 'name' => 'examDate', 'value' => 'date("d/m/Y", strtotime($data->getAnswerByQuestionId("examdate")))'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{view}',
@@ -61,3 +61,19 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 <?php echo CHtml::submitButton('Rechercher les fiches associées aux patients sélectionnés', array('name' => 'rechercher', 'class' => 'btn btn-default')); ?>
 
 <?php $this->endWidget(); ?>
+
+<script>
+function datePicker(clicked) {
+    $('input[name="' + clicked + '"]').daterangepicker({
+        "applyClass": "btn-primary",
+        "showDropdowns": true,
+        locale: {
+            applyLabel: 'Valider',
+            cancelLabel: 'Effacer'
+        }
+    });
+    $('input[name="' + clicked + '"]').on('cancel.daterangepicker', function(ev, picker) {
+    $(this).val('');
+    });
+}
+</script>

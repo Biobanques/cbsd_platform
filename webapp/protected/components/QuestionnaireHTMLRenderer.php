@@ -163,7 +163,11 @@ class QuestionnaireHTMLRenderer {
             }
         }
         if ($isAnswered) {
-            $valueInput = $question->answer;
+            if ($question->type == "date") {
+                $valueInput = $question->answer['date'];
+            } else {
+                $valueInput = $question->answer;
+            }
         }
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
@@ -173,9 +177,17 @@ class QuestionnaireHTMLRenderer {
         }
         if ($question->type == "date") {
             if (Yii::app()->controller->id == "answer" || Yii::app()->controller->id == "fiche") {
-                $result.="<input type=\"date\" " . $idInput . " value=\"" . date("d/m/Y", $valueInput->sec) . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+                if ($valueInput != "") {
+                    $result.="<input type=\"date\" " . $idInput . " value=\"" . date("d/m/Y", strtotime($valueInput)) . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+                } else {
+                    $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\"/>";
+                }
             } else {
-                $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+                if ($valueInput != "") {
+                    $result.="<input type=\"date\" " . $idInput . " value=\"" . date("d/m/Y", strtotime($valueInput)) . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+                } else {
+                    $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\"/>";
+                }
             }
         }
         if ($question->type == "radio") {
@@ -552,8 +564,3 @@ class QuestionnaireHTMLRenderer {
 
 }
 ?>
-<script>
-function datePicker(clicked) {
-    $('input[name="' + clicked + '"]').daterangepicker();
-}
-</script>

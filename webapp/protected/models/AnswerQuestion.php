@@ -128,8 +128,7 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
     }
     
     public function setAnswerDate($val) {
-        $date = str_replace('/', '-', $val);
-        $this->answer = new MongoDate(strtotime($date));
+        $this->answer = DateTime::createFromFormat('d/m/Y', $val);
     }
     
     /**

@@ -147,7 +147,11 @@ class AnswerHTMLRenderer
             $result.="<input type=\"number\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
         }
         if ($answer->type == "date") {
-            $result.="<input type=\"date\" " . $idInput . " value=\"" . date("d/m/Y", $answer->answer->sec) . "\" placeholder=\"Format jj/mm/aaaa\" style=\"height:25px;\"/>";
+            if (isset($answer->answer['date'])) {
+                $result.="<input type=\"date\" " . $idInput . " value=\"" . date("d/m/Y", strtotime($answer->answer['date'])) . "\" placeholder=\"Format jj/mm/aaaa\" style=\"height:25px;\"/>";
+            } else {
+                $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\" style=\"height:25px;\"/>";
+            }
         }
         if ($answer->type == "radio") {
 
