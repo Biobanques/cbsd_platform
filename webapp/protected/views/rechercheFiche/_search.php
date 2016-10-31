@@ -41,6 +41,7 @@ $('#reset').click(function(){
     <p>*Lorsque vous ajoutez une question, vous pouvez ajouter plusieurs valeurs dans les champs de type "input" en les séparant par une virgule (opérateur "OU").</p>
     <?php
     $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'light_search-form',
         'action' => Yii::app()->createUrl($this->route),
         'method' => 'get',
     ));

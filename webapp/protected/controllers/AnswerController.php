@@ -328,12 +328,77 @@ class AnswerController extends Controller {
             Yii::app()->end();
         }
     }
-
+    
+    /**
+     * Do a search a selected question.
+     */
     public function actionAddSearchFilter() {
         if (isset($_POST['question']) && !empty($_POST['question'])) {
             $id = $_POST['question'];
             $question = Answer::model()->findAllDetailledQuestionById($id);
             echo QuestionnaireHTMLRenderer::renderQuestionForSearchHTML($question, 'fr', false);
+        }
+    }
+    
+    /**
+     * Write queries (search filter)
+     */
+    public function actionWriteQueries() {
+        $operators = array("equals" => "=", "noteq" => "<>", "less" => "<", "greater" => ">", "lesseq" => "<=", "greatereq" => ">=", '$and' => "ET", '$or' => "OU");
+        $mainQuestions = array();
+        $questions = array();
+        $condition = array();
+        $compare = array();
+        $dynamics = array();
+        echo (count($_POST['Answer']) == 1) ? "<h4>Aucun filtre sélectionné.</h4>" : "<h4>Requête</h4>";
+        if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
+            foreach ($_POST['Answer'] as $label => $answer) {
+                if ($label == "last_updated" && $answer == "") {
+                    
+                } elseif ($label != "condition" && $label != "compare" && $label != "dynamics") {
+                    if (!is_array($answer)) {
+                        $mainQuestions[$label] = $answer;
+                    } else {
+                        $mainQuestions[$label] = implode(', ', $answer);
+                    }
+                } else {
+                    foreach ($answer as $key => $value) {
+                        if ($label == "condition") {
+                            $condition[$key] = $value;
+                        }
+                        if ($label == "compare") {
+                            $compare[$key] = $value;
+                        }
+                        if ($label == "dynamics") {
+                            $dynamics[$key] = $value;
+                        }
+                        if (!isset($compare[$key])) {
+                            $compare[$key] = "";
+                        }
+                    }
+                }
+            }
+            $questions = array_merge_recursive($condition, $compare, $dynamics);
+            echo "<ul>";
+            foreach ($mainQuestions as $label => $answer) {
+                echo "<li>" . Answer::model()->attributeLabels()[$label] . " = " . $answer . "</li>";
+            };
+            foreach ($questions as $key => $value) {
+                echo $operators[$questions[$key][0]];
+                echo "<li>" . Answer::model()->getLabelQuestionById($key);
+                foreach ($value as $label => $answer) {
+                    if ($label != 0) {
+                        if ($label == 1) {
+                            echo ($answer != "") ? " " . $operators[$answer] : " = ";
+                        }
+                        if ($label == 2) {
+                            echo " " . $answer . "</li>";
+                        }
+                    }
+                }
+            }
+            echo "</ul>";
+            //echo CHtml::button('Exporter la requête', array('id' => 'exportQueries', 'class' => 'btn btn-default', 'style' => 'margin:auto;display:block;'));
         }
     }
 

@@ -131,15 +131,6 @@ class Answer extends EMongoDocument {
             'last_modified' => 'Date de mise à jour du questionnaire',
         );
     }
-    
-    public function searchTest($caseSensitive = false) {
-        $criteria = new EMongoCriteria;
-        //$criteria->addCond('answers_group.answers', 'elemmatch', array('id' => 'examdate', 'answer' => array('$gte' => new MongoDate(strtotime("26-11-2015" . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime("25-10-2016" . " 23:59:59.999Z")))));
-        $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => 'examdate', 'answer.date' => array('$gte' => "2016-10-26 00:00:00.000000", '$lte' => "2016-10-26 23:59:59.000000")));
-        return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria
-        ));               
-    }
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
@@ -206,7 +197,7 @@ class Answer extends EMongoDocument {
             $answerFormat = explode("-", $date);
             $date_from = str_replace('/', '-', date('d-m-Y', strtotime($answerFormat[0])));
             $date_to = str_replace('/', '-', date('d-m-Y', strtotime($answerFormat[1])));
-            $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date_from . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")));            
+            $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date_from . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")));           
         }
 
         if (isset($this->dynamics) && !empty($this->dynamics)) {
@@ -359,7 +350,7 @@ class Answer extends EMongoDocument {
         $res ['greatereq'] = "supérieure ou égale à";
         return $res;
     }
-    
+   
     public function getComparaisonDate() {
         $res = array();
         $res ['between'] = "comprise entre";
@@ -700,6 +691,27 @@ class Answer extends EMongoDocument {
         return $result;
     }
 
+   /**
+     * retourne la liste de toutes les labels des questions en fonction de l'id de la question
+     * @return type
+     */
+    public function getLabelQuestionById($id) {
+        $label = "";
+        $criteria = new EMongoCriteria;
+        $criteria->answers_group->answers->id = $id;
+        $fiches = Answer::model()->findAll($criteria);
+        foreach ($fiches as $fiche) {
+            foreach ($fiche->answers_group as $group) {
+                foreach ($group->answers as $answer) {
+                    if ($answer->id == $id) {
+                        $label = $answer->label;
+                    }
+                }
+            }
+        }
+        return $label;
+    }
+    
     /**
      * retourne toutes les id patient des fiches
      * @return type
