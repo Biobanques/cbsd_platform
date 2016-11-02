@@ -330,7 +330,7 @@ class QuestionnaireHTMLRenderer {
                         }
                     }
                 }
-                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . "required>&nbsp;" . $value . "</input><br>";
+                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . ">&nbsp;" . $value . "</input><br>";
             }
         }
         if ($question->type == "text") {

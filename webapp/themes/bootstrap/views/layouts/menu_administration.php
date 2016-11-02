@@ -9,12 +9,12 @@
                 <?php
                 $this->widget('bootstrap.widgets.TbMenu', array(
                     'items' => array(
-                        array('label' => Yii::t('common', 'users'), 'url' => array('/user/admin')),
+                        array('label' => Yii::t('common', 'registeredUsers'), 'url' => array('/user/admin')),
                         array('label' => Yii::t('common', 'forms'), 'url' => array('/formulaire/admin')),
-                        array('label' => 'Fiches', 'url' => array('/fiche/admin')),
+                        array('label' => Yii::t('common', 'fiches'), 'url' => array('/fiche/admin')),
                         array('label' => Yii::t('common', 'manageQuestionsBlock'), 'url' => array('/questionBloc/admin')),
                         array('label' => Yii::t('common', 'manageRules'), 'url' => array('/administration/admin')),
-                        array('label' => 'Log système', 'url' => array('/auditTrail/admin')),
+                        array('label' => Yii::t('common', 'logSystem'), 'url' => array('/auditTrail/admin')),
                     ),
                     'htmlOptions' => array('class' => 'operations'),
                 ));

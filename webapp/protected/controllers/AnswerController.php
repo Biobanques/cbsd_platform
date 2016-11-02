@@ -352,7 +352,7 @@ class AnswerController extends Controller {
         $dynamics = array();
        
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
-            echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4>Aucun filtre sélectionné.</h4>" : "<h4>Requête</h4>";
+            echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">Aucun filtre sélectionné.</h4>" : "<h4 align=\"center\">Requête</h4>";
             foreach ($_POST['Answer'] as $label => $answer) {
                 if ($label == "last_updated" && $answer == "") {
                    
