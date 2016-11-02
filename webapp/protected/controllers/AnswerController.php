@@ -328,7 +328,7 @@ class AnswerController extends Controller {
             Yii::app()->end();
         }
     }
-    
+   
     /**
      * Do a search a selected question.
      */
@@ -339,7 +339,7 @@ class AnswerController extends Controller {
             echo QuestionnaireHTMLRenderer::renderQuestionForSearchHTML($question, 'fr', false);
         }
     }
-    
+   
     /**
      * Write queries (search filter)
      */
@@ -350,11 +350,12 @@ class AnswerController extends Controller {
         $condition = array();
         $compare = array();
         $dynamics = array();
-        echo (count($_POST['Answer']) == 1) ? "<h4>Aucun filtre sélectionné.</h4>" : "<h4>Requête</h4>";
+       
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
+            echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4>Aucun filtre sélectionné.</h4>" : "<h4>Requête</h4>";
             foreach ($_POST['Answer'] as $label => $answer) {
                 if ($label == "last_updated" && $answer == "") {
-                    
+                   
                 } elseif ($label != "condition" && $label != "compare" && $label != "dynamics") {
                     if (!is_array($answer)) {
                         $mainQuestions[$label] = $answer;
@@ -403,3 +404,4 @@ class AnswerController extends Controller {
     }
 
 }
+

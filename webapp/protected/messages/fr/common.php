@@ -1,51 +1,48 @@
 <?php
 
 return array(
+    // onglet
     'accueil' => 'Accueil',
     'administration' => 'Administration',
     'seconnecter' => 'Connexion',
     'sedeconnecter' => 'Déconnexion',
-    'Search' => 'Recherche',
-    'oui' => 'Oui',
-    'non' => 'Non',
-    'contactus' => 'Nous contacter',
-    'contactus_phrase' => '
-Si vous avez des questions commerciales ou autres , veuillez remplir le formulaire suivant pour nous contacter. Merci.',
-    'contactForm_name' => 'Nom',
-    'contactForm_email' => 'Email',
-    'contactForm_subject' => 'Sujet',
-    'contactForm_body' => 'Message',
-    'contactForm_verifcode' => 'Code de vérification',
-    'explain_verify_code' => 'Ce code de vérification nous sert à nous assurer que vous n\'êtes pas une machine.',
-    'submit' => 'Envoyer',
-    'contacts' => 'Contacts',
-    'myaccount' => 'Mon compte',
+    'accessProfil' => 'Accéder en tant que',
+    'seizeForm' => 'Saisir une fiche patient',
+    'searchForm' => 'Recherche',
+    // administration
+    'createUser' => 'Créer un utilisateur',
     'advancedsearch' => 'Recherche avancée',
-     'firstname' => 'Prénom',
+    // boutons
+    'saveBtn' => 'Enregistrer',
+    'createBtn' => 'Créer',
+    'submit' => 'Envoyer',
+    'search' => 'Rechercher',
+    // authentification
+    'Login' => 'Nom d\'utilisateur',
+    // créer un utilisateur
+    'firstname' => 'Prénom',
     'lastname' => 'Nom',
     'profile' => 'Profil',
     'email' => 'Email',
     'phone' => 'Téléphone',
     'address' => 'Adresse',
     'referenceCentre' => 'Centre de référence',
-    'search' => 'Rechercher',
-    'saveBtn' => 'Enregistrer',
-    'createBtn' => 'Créer',
+    // flash message
     'requiredField' => 'Les champs avec <span class="required">*</span> sont obligatoires.',
-    'userUpdate' => 'Mise à jour de l\'utilisateur',
-    'success_register' => 'Votre demande a été envoyée, vous recevrez un e-mail quand elle sera approuvée.',
     'error_register' => 'Une erreur s\'est produite lors de votre inscription, veuillez réessayer plus tard.',
+    'success_register' => 'Votre demande a été envoyée, vous recevrez un e-mail quand elle sera approuvée.',
+    // titre
+    'userUpdate' => 'Mise à jour de l\'utilisateur',
+    // attributs
     'identifier' => 'Identifiant',
     'name' => 'Nom',
     'formName' => 'Nom du formulaire',
-    'Login' => 'Login',
     'notUnique' => 'existe déjà dans la base de données. Merci d\'en choisir un autre.',
     'notEnoughDigits' => 'Le mot de passe doit contenir au minimum 2 chiffres.',
     'rememberMe' => 'Se souvenir de moi',
     'userName' => 'Identifiant',
     'password' => 'Mot de passe',
     'noAccount' => 'Pas encore de compte sur cbsdforms.fr?',
-    'subscribe' => 'S\'inscrire',
     'invalidUsername' => 'Nom d\'utilisateur invalide',
     'invalidPassword' => 'Mot de passe incorrect',
     'inactiveProfil' => 'Votre profil est inactif, merci de contacter un administrateur.',
@@ -71,6 +68,8 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'typeQuestion' => 'Choisissez le type de la question:<br>- texte simple<br>- numérique<br>- date (format jj/mm/yyyy)<br>- radio (1 seul choix possible)<br>- liste déroulante<br>- case(s) à cocher (plusieurs choix possibles)<br>- textarea',
     'groupQuestion' => 'Choisissez dans quel onglet vous voulez ajouter la question.',
     'positionQuestion' => '- Alignement à gauche (par défaut): La question sera positionnée à gauche <br>- Alignement à droite: La question sera positionnée à droite',
-    'helpQuestion' => 'Renseignez ce champ si vous voulez ajouter une information à la question. <br>Cette information pourra être affichée en cliquant sur "?" <br>à côté de l\'identifiant de la question.'
-);
+    'helpQuestion' => 'Renseignez ce champ si vous voulez ajouter une information à la question. <br>Cette information pourra être affichée en cliquant sur "?" <br>à côté de l\'identifiant de la question.',
+    'formName' => 'Nom du formulaire',
+    'idFiche' => 'Identifiant de la fiche'
+        );
 ?>

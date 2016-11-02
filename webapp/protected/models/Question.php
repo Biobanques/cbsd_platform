@@ -84,7 +84,7 @@ class Question extends LoggableActiveRecord {
         $this->label = $questionForm->label;
         $this->label_fr = $questionForm->label;
         $this->style = $questionForm->style;
-        $this->values = str_replace(' ', '', $questionForm->values);
+        $this->values = $questionForm->values;
         $this->type = $questionForm->type;
         $this->precomment = $questionForm->precomment;
         $this->precomment_fr = $questionForm->precomment;

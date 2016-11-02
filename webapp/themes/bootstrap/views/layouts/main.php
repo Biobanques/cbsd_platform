@@ -54,7 +54,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
 
         <!-- use bootstrap -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
-        
+
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -62,37 +62,57 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         <?php Yii::app()->bootstrap->register(); ?>
     </head>
 
-    <?php
-    if (Yii::app()->urlManager->parseUrl(Yii::app()->request) != "rechercheFiche/viewOnePage" && Yii::app()->urlManager->parseUrl(Yii::app()->request) != "rechercheFiche/view") {
-        $menuItems = array(
-            array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil"),
-            array('label' => 'Saisir une fiche patient', 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil"),
-            array('label' => 'Recherche', 'url' => array('/rechercheFiche/admin'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "clinicien"),
-            array('label' => 'Administration', 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin() && Yii::app()->user->getActiveProfil() == "administrateur" && Yii::app()->controller->action->id != "loginProfil"),
-            array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-            array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-            array('label' => 'Accédez en tant que : ', 'url' => '', 'visible' => !Yii::app()->user->isGuest));
-        if (!Yii::app()->user->isGuest)
-            $menuItems[] = array(
-                'template' => GetProfil::getHTML(),
-            );
-
-
-
-        $this->widget('bootstrap.widgets.TbNavbar', array(
-            'brandUrl' => (!Yii::app()->user->isGuest) ? array('/site/index') : "",
-            'items' => array(
-                array(
-                    'class' => 'bootstrap.widgets.TbMenu',
-                    'items' => $menuItems
-                )
-            )
-        ));
-    }
-    ?>
-
     <body>
         <div class="container" id="page">
+            <?php
+            if (Yii::app()->urlManager->parseUrl(Yii::app()->request) != "rechercheFiche/viewOnePage" && Yii::app()->urlManager->parseUrl(Yii::app()->request) != "rechercheFiche/view") {
+                $menuItems = array(
+                    array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil"),
+                    array('label' => Yii::t('common', 'seizeForm'), 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil"),
+                    array('label' => Yii::t('common', 'searchForm'), 'url' => array('/rechercheFiche/admin'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "clinicien"),
+                    array('label' => Yii::t('common', 'administration'), 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin() && Yii::app()->user->getActiveProfil() == "administrateur" && Yii::app()->controller->action->id != "loginProfil"),
+                    array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                    array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                    array('label' => Yii::t('common', 'accessProfil'), 'url' => '', 'visible' => !Yii::app()->user->isGuest));
+                if (!Yii::app()->user->isGuest)
+                    $menuItems[] = array(
+                        'template' => GetProfil::getHTML(),
+                    );
+
+
+
+                $this->widget('bootstrap.widgets.TbNavbar', array(
+                    'brandUrl' => (!Yii::app()->user->isGuest) ? array('/site/index') : "",
+                    'items' => array(
+                        array(
+                            'class' => 'bootstrap.widgets.TbMenu',
+                            'items' => $menuItems
+                        )
+                    )
+                ));
+            }
+            ?>
+
+            <div style="float:right;padding-right:20px;padding-top:20px;">
+                <div >
+                    <?php
+                    /**
+                     * Affichage des liens de traduction en gardant le couple controlleur/action et les parametres d'origine.
+                     */
+                    $controler = Yii::app()->getController()->getId();
+                    $action = Yii::app()->getController()->getAction()->getId();
+                    echo CHtml::link(
+                            CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "fr"))
+                            )
+//                        ,                      $htmlOptions
+                    );
+                    echo CHtml::link(
+                            CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "en")))
+                            , array('style' => "padding-left: 10px;")
+                    );
+                    ?>
+                </div>
+            </div>
 
             <?php
             $this->widget('bootstrap.widgets.TbAlert', array(
@@ -132,8 +152,8 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                 </div><!-- footer -->
             </nav>
         </div><!-- page -->
-                <!-- Bootstrap core JavaScript
-        ================================================== -->
+        <!-- Bootstrap core JavaScript
+================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

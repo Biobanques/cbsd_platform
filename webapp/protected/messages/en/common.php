@@ -1,42 +1,42 @@
 <?php
 
 return array(
+    // tab
     'accueil' => 'Home',
     'administration' => 'Management',
     'seconnecter' => 'Login',
     'sedeconnecter' => 'Logout',
-    'oui' => 'Yes',
-    'non' => 'No',
-    'contactus' => 'Contact us',
-    'contactus_phrase' => 'If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.',
-    'contactForm_name' => 'Name',
-    'contactForm_email' => 'Email',
-    'contactForm_subject' => 'Subjet',
-    'contactForm_body' => 'Body',
-    'contactForm_verifcode' => 'Verification code',
-    'submit' => 'Submit',
-    'explain_verify_code' => 'This verification code helps us to ensure you are not a machine.',
-    'contacts' => 'Contacts',
-    'myaccount' => 'My account',
-    'administration' => 'Administration',
+    'accessProfil' => 'Reach as',
+    'seizeForm' => 'Seize a patient form',
+    'searchForm' => 'Search',
+    // management
+    'createUser' => 'Create a user',
     'advancedsearch' => 'Advanced search',
-     'firstname' => 'First Name',
+    // buttons
+    'saveBtn' => 'Save',
+    'createBtn' => 'Create',
+    'submit' => 'Send',
+    'subscribe' => 'Register',
+    'search' => 'Search',
+    // authentification
+    'Login' => 'Login',
+    // create an user
+    'firstname' => 'First Name',
     'lastname' => 'Last Name',
     'email' => 'Email',
     'phone' => 'Phone',
     'address' => 'Adress',
     'referenceCentre' => 'Reference centre',
     'profile' => 'Profile',
-    'search' => 'Search',
-    'saveBtn' => 'Save',
-    'createBtn' => 'Create',
+    // flash message
     'requiredField' => 'Fields with <span class="required">*</span> are required.',
-    'userUpdate' => 'Update user',
     'success_register' => 'Your application has been send , you will receive an email when it will be approved.',
     'error_register' => 'An error occured during your registration, please try later.',
+    // title
+    'userUpdate' => 'Update user',
+    // attributes
     'name' => 'Name',
     'formName' => 'Form name',
-    'Login' => 'Login',
     'notEnoughDigits' => 'Password must contain at least 2 digits.',
     'rememberMe' => 'Remember me next time',
     'userName' => 'Username',
@@ -60,5 +60,7 @@ return array(
     'noUserWithLastname' => 'There is no user in our database with the lastname \'{badLastname}\'',
     'noUserWithFirstname' => 'There is no user in our database with the firstname \'{badFirstname}\'',
     'download' => 'Download {filename}',
+    'formName' => 'Name of the form',
+    'idFiche' => 'id of the form'
 );
 ?>

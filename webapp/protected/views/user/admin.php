@@ -15,21 +15,21 @@
 <?php
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
+    $('.search-form').toggle();
+    return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('user-grid', {
-		data: $(this).serialize()
-	});
-	return false;
+    $.fn.yiiGridView.update('user-grid', {
+        data: $(this).serialize()
+    });
+    return false;
 });
 ");
 ?>
 
 <h1>Gestion des utilisateurs</h1>
 <?php
-$imagecreateuser = CHtml::image(Yii::app()->baseUrl . '/images/user_add.png', 'Créer un utilisateur');
+$imagecreateuser = CHtml::image(Yii::app()->baseUrl . '/images/user_add.png', Yii::t('common', 'createUser'));
 echo CHtml::link($imagecreateuser . 'Créer un utilisateur', array('user/create'));
 ?>
 <br />
