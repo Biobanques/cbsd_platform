@@ -1,4 +1,4 @@
-<h1>Gestion des droits</h1>
+<h1><?php echo Yii::t('common', 'manageRules'); ?></h1>
 
 <h3>Fiche Clinique</h3>
 <?php

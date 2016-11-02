@@ -20,7 +20,6 @@ $('#addFilterButton').click(function(){
      return false;
 });
 
-
 $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     event.target.closest('.col-lg-12').remove();
     var n = $('.deleteQuestion').length;
@@ -30,6 +29,9 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     return false;
 });
 
+$('#reset').click(function(){
+    $('.col-lg-12').remove();
+});
 ");
 ?>
 
@@ -38,24 +40,20 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     <p>*Lorsque vous ajoutez une question, vous pouvez ajouter plusieurs valeurs dans les champs de type "input" en les séparant par une virgule (opérateur "OU").</p>
     <?php
     $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'light_search-form',
         'action' => Yii::app()->createUrl($this->route),
         'method' => 'get',
     ));
     ?>
-    <div id="dynamicFilters"></div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <?php echo CHtml::label('Ajouter une question', 'question'); ?>
             <?php
             $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                 'name' => 'question',
                 'source' => array_map(function($key, $value) {
                             return array('label' => $value, 'value' => $key);
-                        }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions()),
-                        // additional javascript options for the autocomplete plugin
-                        'options' => array(
-                            'minLength' => '2',
-                        )
+                        }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions())
                     ));
                     ?>
                     <?php
@@ -65,9 +63,11 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                 </div>
             </div>
 
+            <div id="dynamicFilters"></div>
+
             <div class="row buttons">
                 <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-                <?php echo CHtml::resetButton('Réinitialiser', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+                <?php echo CHtml::resetButton('Réinitialiser', array('id' => 'reset', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
                 <?php echo CHtml::link('Exporter en CSV', array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
             </div>
 

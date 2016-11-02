@@ -27,11 +27,11 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Gestion des formulaires</h1>
+<h1><?php echo Yii::t('common', 'manageForms'); ?></h1>
 
 <?php
 $imagecreateform = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', 'Créer un nouveau formulaire');
-echo CHtml::link($imagecreateform . 'Créer un nouveau formulaire', Yii::app()->createUrl('formulaire/create'));
+echo CHtml::link($imagecreateform . Yii::t('common', 'createForm'), Yii::app()->createUrl('formulaire/create'));
 ?>
 <br />
 <?php

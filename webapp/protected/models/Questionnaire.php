@@ -71,7 +71,7 @@ class Questionnaire extends EMongoDocument
         return array(
             'type' => 'Type de formulaire',
             'id' => 'id',
-            'name' => 'Nom du formulaire'
+            'name' => Yii::t('common', 'formName')
         );
     }
 

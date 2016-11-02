@@ -27,11 +27,11 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Gestion des blocs</h1>
+<h1><?php echo Yii::t('common', 'manageQuestionsBlock'); ?></h1>
 
 <?php
 $imagecreatebloc = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', 'Créer un nouveau bloc');
-echo CHtml::link($imagecreatebloc . 'Créer un nouveau bloc', Yii::app()->createUrl('questionBloc/create'));
+echo CHtml::link($imagecreatebloc . Yii::t('common', 'createBlock'), Yii::app()->createUrl('questionBloc/create'));
 ?>
 <br />
 <?php

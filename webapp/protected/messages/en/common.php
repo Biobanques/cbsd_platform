@@ -7,8 +7,10 @@ return array(
     'seconnecter' => 'Login',
     'sedeconnecter' => 'Logout',
     'accessProfil' => 'Reach as',
-    'seizeForm' => 'Seize a patient form',
+    'seizeForm' => 'Insert a patient form',
     'searchForm' => 'Search',
+    'users' => 'Users',
+    'forms' => 'Forms',
     // management
     'createUser' => 'Create a user',
     'advancedsearch' => 'Advanced search',
@@ -33,16 +35,28 @@ return array(
     'success_register' => 'Your application has been send , you will receive an email when it will be approved.',
     'error_register' => 'An error occured during your registration, please try later.',
     // title
+    'manageUsers' => 'Manage users',
+    'manageForms' => 'Manage forms',
+    'manageFiles' => 'Manage files',
+    'manageQuestionsBlock' => 'Manage blocks',
+    'manageRules' => 'Manage rules',
+    'createUser' => 'Create user',
+    'createForm' => 'Create form',
+    'createBlock' => 'Create block',
     'userUpdate' => 'Update user',
     // attributes
     'name' => 'Name',
-    'formName' => 'Form name',
+    'formName' => 'Name of the form',
     'notEnoughDigits' => 'Password must contain at least 2 digits.',
     'rememberMe' => 'Remember me next time',
     'userName' => 'Username',
     'password' => 'Password',
-    'noAccount' => 'No account yet on cbsdforms.fr?',
+    'entryDate' => 'Entry date',
+    // text
+    'signin' => 'Sign in',
+    'noAccount' => 'Not registered yet?',
     'subscribe' => 'Subscribe',
+    'subscribeAs' => 'Subscribe as',
     'invalidUsername' => 'Invalid username.',
     'invalidPassword' => 'Incorrect password.',
     'inactiveProfil' => 'Your profil is inactive. Please contact an admin.',
@@ -60,7 +74,6 @@ return array(
     'noUserWithLastname' => 'There is no user in our database with the lastname \'{badLastname}\'',
     'noUserWithFirstname' => 'There is no user in our database with the firstname \'{badFirstname}\'',
     'download' => 'Download {filename}',
-    'formName' => 'Name of the form',
     'idFiche' => 'id of the form'
 );
 ?>

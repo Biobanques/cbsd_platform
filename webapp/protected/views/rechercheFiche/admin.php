@@ -20,10 +20,6 @@ $('.search-form form').submit(function(){
     });
     return false;
 });
-$('#exportQueries').click(function(){
-    alert('OK');
-
-});
 ");
 ?>
 

@@ -4,7 +4,7 @@
 /* @var $form CActiveForm  */
 ?>
 
-<h1>Connexion utilisateur</h1>
+<h1><?php echo Yii::t('common', 'signin'); ?></h1>
 <hr />
 
 <div class="row">
@@ -54,7 +54,7 @@
     </div>
     <div class="span3" style="margin-top:70px;">
             <div align='center'>
-                <?php echo "Vous n'êtes pas encore inscrit ?" ?><br><br>
+                <?php echo Yii::t('common', 'noAccount'); ?><br><br>
                 <?php
                 echo CHtml::button(Yii::t('common', 'subscribe'), array(
                     'submit' => array_merge(array("site/subscribeProfil"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())

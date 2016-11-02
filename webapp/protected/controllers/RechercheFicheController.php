@@ -129,9 +129,6 @@ class RechercheFicheController extends Controller {
             $regex .= '$/i';
             $criteria->addCond('id_patient', '==', new MongoRegex($regex));
             $_SESSION['id_patient'] = $regex;
-        } else {
-            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Vous n'avez pas sélectionné de fiche.");
-            $this->redirect(array("rechercheFiche/admin"));
         }
         $this->render('result_search', array(
             'model' => $model

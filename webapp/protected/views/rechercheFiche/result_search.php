@@ -1,10 +1,20 @@
 <?php
+$addRouteQuery = Yii::app()->createAbsoluteUrl('answer/writeQueries');
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
     $('.search-form').toggle();
     return false;
 });
 $('.search-form form').submit(function(){
+    $.ajax({
+        url:'$addRouteQuery',
+        type:'POST',
+        data:$('#light_search-form').serialize(),
+        success:function(result){
+            $('#queries').html('');
+            $('#queries').append(result);
+            }
+         });
     $.fn.yiiGridView.update('searchFiche-grid', {
         data: $(this).serialize()
     });
@@ -27,7 +37,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
     ));
     ?>
 </div><!-- search-form -->
-
+<div id="queries" style="background-color:#80CCFF;"></div>
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl($this->route),

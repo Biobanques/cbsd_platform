@@ -9,6 +9,8 @@ return array(
     'accessProfil' => 'Accéder en tant que',
     'seizeForm' => 'Saisir une fiche patient',
     'searchForm' => 'Recherche',
+    'users' => 'Utilisateurs',
+    'forms' => 'Formulaires',
     // administration
     'createUser' => 'Créer un utilisateur',
     'advancedsearch' => 'Recherche avancée',
@@ -32,6 +34,14 @@ return array(
     'error_register' => 'Une erreur s\'est produite lors de votre inscription, veuillez réessayer plus tard.',
     'success_register' => 'Votre demande a été envoyée, vous recevrez un e-mail quand elle sera approuvée.',
     // titre
+    'manageUsers' => 'Gestion des utilisateurs',
+    'manageForms' => 'Gestion des formulaires',
+    'manageFiches' => 'Gestion des fiches',
+    'manageQuestionsBlock' => 'Gestion des blocs',
+    'manageRules' => 'Gestion des droits',
+    'createUser' => 'Créer un utilisateur',
+    'createForm' => 'Créer un formulaire',
+    'createBlock' => 'Créer un bloc',
     'userUpdate' => 'Mise à jour de l\'utilisateur',
     // attributs
     'identifier' => 'Identifiant',
@@ -42,7 +52,12 @@ return array(
     'rememberMe' => 'Se souvenir de moi',
     'userName' => 'Identifiant',
     'password' => 'Mot de passe',
-    'noAccount' => 'Pas encore de compte sur cbsdforms.fr?',
+    'entryDate' => 'Date de saisie',
+    // text
+    'signin' => 'Connexion utilisateur',
+    'noAccount' => 'Vous n\'êtes pas encore inscrit?',
+    'subscribe' => 'S\'inscrire',
+    'subscribeAs' => 'S\'inscrire en tant que',
     'invalidUsername' => 'Nom d\'utilisateur invalide',
     'invalidPassword' => 'Mot de passe incorrect',
     'inactiveProfil' => 'Votre profil est inactif, merci de contacter un administrateur.',
