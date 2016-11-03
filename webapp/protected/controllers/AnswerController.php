@@ -377,6 +377,11 @@ class AnswerController extends Controller {
                             $compare[$key] = "";
                         }
                     }
+                    foreach ($dynamics as $k => $v) {
+                        if (gettype($v) == "array") {
+                            $dynamics[$k] = implode(', ', $v);
+                        }
+                    }
                 }
             }
             $questions = array_merge_recursive($condition, $compare, $dynamics);
