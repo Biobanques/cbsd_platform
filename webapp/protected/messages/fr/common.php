@@ -37,8 +37,9 @@ return array(
     'success_register' => 'Votre demande a été envoyée, vous recevrez un e-mail quand elle sera approuvée.',
     // titre
     'registeredUsers' => 'Utilisateurs enregistrés',
+    'manageUsers' => 'Gestion des utilisateurs',
     'manageForms' => 'Gestion des formulaires',
-    'manageFiches' => 'Gestion des fiches',
+    'managePatientForm' => 'Gestion des fiches',
     'manageQuestionsBlock' => 'Gestion des blocs',
     'manageRules' => 'Gestion des droits',
     'createUser' => 'Créer un utilisateur',

@@ -38,8 +38,9 @@ return array(
     'error_register' => 'An error occured during your registration, please try later.',
     // title
     'registeredUsers' => 'Registered users',
+    'manageUsers' => 'Manage users',
     'manageForms' => 'Templates of the forms',
-    'manageFiles' => 'Manage files',
+    'managePatientForm' => 'Manage patient forms',
     'manageQuestionsBlock' => 'Reusable block of questions',
     'manageRules' => 'Manage access rules',
     'createUser' => 'Create user',

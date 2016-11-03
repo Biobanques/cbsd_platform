@@ -8,13 +8,18 @@
             <div class="panel-body">
                 <?php
                 $this->widget('bootstrap.widgets.TbMenu', array(
+                    'type'=>'list',
                     'items' => array(
-                        array('label' => Yii::t('common', 'registeredUsers'), 'url' => array('/user/admin')),
-                        array('label' => Yii::t('common', 'forms'), 'url' => array('/formulaire/admin')),
-                        array('label' => Yii::t('common', 'fiches'), 'url' => array('/fiche/admin')),
-                        array('label' => Yii::t('common', 'manageQuestionsBlock'), 'url' => array('/questionBloc/admin')),
-                        array('label' => Yii::t('common', 'manageRules'), 'url' => array('/administration/admin')),
-                        array('label' => Yii::t('common', 'logSystem'), 'url' => array('/auditTrail/admin')),
+                        array('label' => Yii::t('common', 'manageUsers')),
+                        array('label' => Yii::t('common', 'registeredUsers'), 'icon'=>'play', 'url' => array('/user/admin')),
+                        array('label' => Yii::t('common', 'manageRules'), 'icon'=>'play', 'url' => array('/administration/admin')),
+                        array('label' => Yii::t('common', 'manageForms')),
+                        array('label' => Yii::t('common', 'forms'), 'icon'=>'play', 'url' => array('/formulaire/admin')),
+                        array('label' => Yii::t('common', 'manageQuestionsBlock'), 'icon'=>'play', 'url' => array('/questionBloc/admin')),
+                        array('label' => Yii::t('common', 'managePatientForm')),
+                        array('label' => Yii::t('common', 'fiches'), 'icon'=>'play', 'url' => array('/fiche/admin')),
+                        array('label' => Yii::t('common', 'logSystem')),
+                        array('label' => Yii::t('common', 'logSystem'), 'icon'=>'play', 'url' => array('/auditTrail/admin')),
                     ),
                     'htmlOptions' => array('class' => 'operations'),
                 ));
