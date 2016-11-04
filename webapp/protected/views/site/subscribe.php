@@ -4,7 +4,7 @@
 /* @var $model User */
 
 if (isset($_SESSION['profil'])) {
-    echo "<h1>" . Yii::t('common', 'subscribe') . " en tant que " . $_SESSION['profil'] . "</h1>";
+    echo "<h1>" . Yii::t('common', 'subscribeAs') . Yii::t('common', $_SESSION['profil']) . "</h1>";
 } else {
     echo "<h1>" . Yii::t('common', 'subscribe') . "</h1>";
 }

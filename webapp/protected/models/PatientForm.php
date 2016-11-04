@@ -45,10 +45,10 @@ class PatientForm extends CFormModel {
     public function attributeLabels() {
         return array(
             'nom' => 'Nom d\'usage',
-            'prenom' => 'Prénom',
-            'date_naissance' => 'Date de naissance',
-            'nom_naissance' => 'Nom de naissance',
-            'sexe' => 'Genre',
+            'prenom' => Yii::t('common', 'firstName'),
+            'date_naissance' => Yii::t('common', 'birthDate'),
+            'nom_naissance' => Yii::t('common', 'birthName'),
+            'sexe' => Yii::t('common', 'sex'),
             'source' => 'Source'
         );
     }
@@ -74,9 +74,9 @@ class PatientForm extends CFormModel {
 
     public function getGenre() {
         $res = array();
-        $res ['M'] = "Homme";
-        $res ['F'] = "Femme";
-        $res ['U'] = "Inconnu";
+        $res ['M'] = Yii::t('common', 'man');
+        $res ['F'] = Yii::t('common', 'woman');
+        $res ['U'] = Yii::t('common', 'unknown');
         return $res;
     }
 

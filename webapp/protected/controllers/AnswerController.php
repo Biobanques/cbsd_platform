@@ -344,7 +344,7 @@ class AnswerController extends Controller {
      * Write queries (search filter)
      */
     public function actionWriteQueries() {
-        $operators = array("equals" => "=", "noteq" => "<>", "less" => "<", "greater" => ">", "lesseq" => "<=", "greatereq" => ">=", '$and' => "ET", '$or' => "OU");
+        $operators = array("equals" => "=", "noteq" => "<>", "less" => "<", "greater" => ">", "lesseq" => "<=", "greatereq" => ">=", '$and' => Yii::t('common', 'and'), '$or' => Yii::t('common', 'or'));
         $mainQuestions = array();
         $questions = array();
         $condition = array();

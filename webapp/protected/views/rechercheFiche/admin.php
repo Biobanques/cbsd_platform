@@ -23,7 +23,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Liste des fiches disponibles</h1>
+<h1><?php echo Yii::t('common', 'availablePatientForms') ?></h1>
 
 <?php
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'rechercheFiche', 'searchable' => true));

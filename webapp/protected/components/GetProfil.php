@@ -19,10 +19,10 @@ class GetProfil
         $profilsList = array();
 
         foreach (Yii::app()->user->getState('profil') as $profil) {
-            $profilsList[$profil] = $profil;
+            $profilsList[$profil] = Yii::t('common', $profil);
         }
         //  if (!Yii::app()->user->isAdmin() && count(Yii::app()->user->getUserProfil()) < 4)
-        if (!Yii::app()->user->isAdmin() && array_merge($profilsList, array("administrateur" => "administrateur")) != User::model()->getArrayProfil()) {
+        if (!Yii::app()->user->isAdmin() && array_merge($profilsList, array("administrator" => Yii::t('common', 'administrator'))) != User::model()->getArrayProfil()) {
             $profilsList['newProfil'] = "Demander un nouveau profil";
         }
         $controler = Yii::app()->getController()->getId();

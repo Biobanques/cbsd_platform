@@ -80,7 +80,7 @@ $('#reset').click(function(){
 
     <div class="row">
         <div class="col-lg-6">
-            <?php echo CHtml::label('Ajouter une question', 'question'); ?>
+            <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
             <?php
             $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                 'name' => 'question',
@@ -90,7 +90,7 @@ $('#reset').click(function(){
                     ));
                     ?>
                     <?php
-                    echo CHtml::button('ajouter', array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;'));
+                    echo CHtml::button(Yii::t('common', 'add'), array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;'));
                     ?>
 
                 </div>
@@ -99,9 +99,9 @@ $('#reset').click(function(){
             <div id="dynamicFilters"></div>
 
             <div class="row buttons">
-                <?php echo CHtml::submitButton('Rechercher', array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-                <?php echo CHtml::resetButton('Réinitialiser', array('id' => 'reset', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-                <?php echo CHtml::link('Exporter en CSV', array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
+                <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+                <?php echo CHtml::resetButton(Yii::t('common', 'reset'), array('id' => 'reset', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+                <?php echo CHtml::link(Yii::t('common', 'exportCSV'), array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
             </div>
 
             <?php $this->endWidget(); ?>

@@ -26,7 +26,7 @@ $(function(){
 $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 ?>
 
-<p><?php echo Yii::app()->user->name ?>, voici les fiches dont vous disposez pour ce patient.</p>
+<p><?php echo Yii::app()->user->name ?>, <?php echo Yii::t('common', 'viewPatientForms') ?></p>
 <div>
     <?php if (Yii::app()->user->getState('activeProfil') != "chercheur") { ?>
         <hr />
@@ -38,11 +38,11 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
             'template' => "{items}",
             'columns' => array(
                 array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->isAdmin()),
-                array('value' => '$data["birthName"]', 'header' => 'Nom de naissance'),
+                array('header' => Yii::t('common', 'birthName'), 'value' => '$data["birthName"]'),
                 array('value' => '$data["useName"]', 'header' => 'Nom d\'usage'),
-                array('value' => '$data["firstName"]', 'header' => 'Prénom'),
-                array('value' => '$data["birthDate"]', 'header' => 'Date de naissance'),
-                array('value' => '$data["sex"]', 'header' => 'Genre'),
+                array('header' => Yii::t('common', 'firstName'), 'value' => '$data["firstName"]'),
+                array('header' => Yii::t('common', 'birthDate'), 'value' => '$data["birthDate"]'),
+                array('header' => Yii::t('common', 'sex'), 'value' => '$data["sex"]'),
             ),
         ));
     }
@@ -51,18 +51,18 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 </div>
 <hr />
 
-<h4> Fiches patient renseignées : </h4>
+<h4><?php echo Yii::t('common', 'patientFilled') ?> : </h4>
 <?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "clinique")) { ?>
-    <h5> Fiches cliniques </h5>
+    <h5><?php echo Yii::t('common', 'patientClinical') ?></h5>
     <?php
     $this->widget('bootstrap.widgets.TbGridView', array(
         'type' => 'striped bordered condensed',
         'dataProvider' => $dataProviderCliniques,
         'template' => "{items}",
-        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'emptyText' => Yii::t('common', 'noPatientForms'),
         'columns' => array(
-            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
+            array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'buttons' => array
@@ -85,16 +85,16 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 ?>
 <?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "neuropathologique")) { ?>
     <hr />
-    <h5> Fiches neuropathologiques </h5>
+    <h5><?php echo Yii::t('common', 'patientNeuropathologist') ?></h5>
     <?php
     $this->widget('bootstrap.widgets.TbGridView', array(
         'type' => 'striped bordered condensed',
         'dataProvider' => $dataProviderNeuropathologiques,
         'template' => "{items}",
-        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'emptyText' => Yii::t('common', 'noPatientForms'),
         'columns' => array(
-            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
+            array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'buttons' => array
@@ -117,16 +117,16 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 ?>
 <?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "genetique")) { ?>
     <hr />
-    <h5> Fiches génétiques </h5>
+    <h5><?php echo Yii::t('common', 'patientGeneticist') ?></h5>
     <?php
     $this->widget('bootstrap.widgets.TbGridView', array(
         'type' => 'striped bordered condensed',
         'dataProvider' => $dataProviderGenetiques,
         'template' => "{items}",
-        'emptyText' => 'Vous n\'avez pas de fiches associées à ce patient.',
+        'emptyText' => Yii::t('common', 'noPatientForms'),
         'columns' => array(
-            array('name' => 'name', 'header' => 'Identifiant de la fiche'),
-            array('name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
+            array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
+            array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'buttons' => array

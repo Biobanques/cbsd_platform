@@ -56,9 +56,9 @@ class User extends EMongoDocument
     {
         return array(
             '_id' => Yii::t('common', 'idUser'),
-            'prenom' => Yii::t('common', 'firstname'),
-            'nom' => Yii::t('common', 'lastname'),
-            'login' => Yii::t('common', 'Login'),
+            'prenom' => Yii::t('common', 'firstName'),
+            'nom' => Yii::t('common', 'lastName'),
+            'login' => Yii::t('common', 'login'),
             'password' => Yii::t('common', 'password'),
             'email' => Yii::t('common', 'email'),
             'telephone' => Yii::t('common', 'phone'),
@@ -233,11 +233,11 @@ class User extends EMongoDocument
     public function getArrayProfil()
     {
         $res = array();
-        $res ['clinicien'] = "clinicien";
-        $res ['administrateur'] = "administrateur";
-        $res ['neuropathologiste'] = "neuropathologiste";
-        $res ['geneticien'] = "geneticien";
-        $res ['chercheur'] = "chercheur";
+        $res ['clinicien'] = 'Clinicien';
+        $res ['administrateur'] = 'Administrateur';
+        $res ['neuropathologiste'] = 'Neuropathologiste';
+        $res ['geneticien'] = 'Généticien';
+        $res ['chercheur'] = 'Chercheur';
         return $res;
     }
 

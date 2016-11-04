@@ -45,7 +45,7 @@ class QuestionBloc extends LoggableActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'title' => 'Titre du bloc',
+            'title' => Yii::t('common', 'titleBloc'),
             'questions' => 'Questions',
             'parent_group' => 'Groupe parent'
         );

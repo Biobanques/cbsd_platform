@@ -111,13 +111,13 @@ class Answer extends EMongoDocument {
     public function attributeLabels() {
         return array(
             'id' => 'Id',
-            'id_patient' => 'N° anonymat',
+            'id_patient' => Yii::t('common', 'anonymat'),
             'name' => Yii::t('common', 'formName'),
-            'type' => 'Type de formulaire',
+            'type' => Yii::t('common', 'formType'),
             'last_updated' => Yii::t('common', 'entryDate'),
             'last_modified' => 'Date de mise à jour du questionnaire',
-            'user' => Yii::t('common', 'Login'),
-            'examDate' => 'Date d\'examen',
+            'user' => Yii::t('common', 'login'),
+            'examDate' => Yii::t('common', 'examDate'),
         );
     }
 
@@ -342,12 +342,12 @@ class Answer extends EMongoDocument {
 
     public function getComparaisonNumerique() {
         $res = array();
-        $res ['equals'] = "égale à";
-        $res ['noteq'] = "différent de";
-        $res ['less'] = "inférieure à";
-        $res ['greater'] = "supérieure à";
-        $res ['lesseq'] = "inférieure ou égale à";
-        $res ['greatereq'] = "supérieure ou égale à";
+        $res ['equals'] = Yii::t('common', 'equals');
+        $res ['noteq'] = Yii::t('common', 'noteq');
+        $res ['less'] = Yii::t('common', 'less');
+        $res ['greater'] = Yii::t('common', 'greater');
+        $res ['lesseq'] = Yii::t('common', 'lesseq');
+        $res ['greatereq'] = Yii::t('common', 'greatereq');
         return $res;
     }
    

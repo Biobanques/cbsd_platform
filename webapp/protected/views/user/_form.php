@@ -84,9 +84,9 @@
     </div>    
 
     <div class="row buttons" style="float:left;">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Créer' : 'Enregistrer', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'createBtn') : Yii::t('common', 'saveBtn'), array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
         <?php if ($model->isNewRecord) {
-            echo CHtml::resetButton('Réinitialiser', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;'));
+            echo CHtml::resetButton(Yii::t('common', 'reset'), array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;'));
         } ?>
     </div>
 

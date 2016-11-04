@@ -125,12 +125,12 @@ class SiteController extends Controller
             // validate user input and redirect to the previous page if valid
             if ($model->validate()) {
                 if (count($user->profil) == 0) {
-                    Yii::app()->user->setFlash('error', 'Votre profil n\'est pas encore activé. Veuillez contacter l\'administrateur');
+                    Yii::app()->user->setFlash('error', Yii::t('common', 'contactAdministrator'));
                 } elseif ($model->login()) {
                     $this->redirect(array('site/index'));
                 }
             } else {
-                    Yii::app()->user->setFlash('error', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
+                    Yii::app()->user->setFlash('error', Yii::t('common', 'incorrectLoginPassword'));
             }
         }
         // display the login form

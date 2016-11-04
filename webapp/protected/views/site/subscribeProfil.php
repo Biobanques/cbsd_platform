@@ -17,21 +17,21 @@ $this->beginWidget('CActiveForm', array(
 <a href="#" class="btn btn-sq-lg btn-default userProfil">
     <i class="fa fa-user fa-5x"></i><br/>
     <?php echo Yii::t('common', 'subscribeAs'); ?> <br>
-    <?php echo CHtml::submitButton('clinicien', array('name' => 'clinicien')); ?>
+    <?php echo CHtml::submitButton(Yii::t('common', 'clinicien'), array('name' => 'clinicien')); ?>
 </a>
 <a href="#" class="btn btn-sq-lg btn-default userProfil">
     <i class="fa fa-user fa-5x"></i><br/>
     <?php echo Yii::t('common', 'subscribeAs'); ?> <br>
-    <?php echo CHtml::submitButton('neuropathologiste', array('name' => 'neuropathologiste')); ?>
+    <?php echo CHtml::submitButton(Yii::t('common', 'neuropathologiste'), array('name' => 'neuropathologiste')); ?>
 </a>
 <a href="#" class="btn btn-sq-lg btn-default userProfil">
     <i class="fa fa-user fa-5x"></i><br/>
     <?php echo Yii::t('common', 'subscribeAs'); ?> <br>
-    <?php echo CHtml::submitButton('geneticien', array('name' => 'geneticien')); ?>
+    <?php echo CHtml::submitButton(Yii::t('common', 'geneticien'), array('name' => 'geneticien')); ?>
 </a>
 <a href="#" class="btn btn-sq-lg btn-default userProfil">
     <i class="fa fa-user fa-5x"></i><br/>
     <?php echo Yii::t('common', 'subscribeAs'); ?> <br>
-    <?php echo CHtml::submitButton('chercheur', array('name' => 'chercheur')); ?>
+    <?php echo CHtml::submitButton(Yii::t('common', 'chercheur'), array('name' => 'chercheur')); ?>
 </a>
 <?php $this->endWidget(); ?>

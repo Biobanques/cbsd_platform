@@ -13,36 +13,26 @@
     ));
     ?>
 
-    <table cellpadding="10" style="margin-left:20px">
-        <tr>
-            <td>
-                <div class="row">
-                    <?php echo $form->labelEx($model, 'login'); ?>
-                    <?php echo $form->textField($model, 'login'); ?>
-                    <?php echo $form->error($model, 'login'); ?>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="row">
-                    <?php echo $form->labelEx($model, 'email'); ?>
-                    <?php echo $form->textField($model, 'email'); ?>
-                    <?php echo $form->error($model, 'email'); ?>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="row buttons">
-                    <?php echo CHtml::submitButton(Yii::t('common', 'submit'), array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-                </div>
-            </td>
-        </tr>
-    </table>
+    <div class="row">
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'login'); ?>
+            <?php echo $form->textField($model, 'login'); ?>
+            <?php echo $form->error($model, 'login'); ?>
+        </div>
+    </div>
 
-    <?php
-    $this->endWidget();
-    ?>
+    <div class="row">
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'email'); ?>
+            <?php echo $form->textField($model, 'email'); ?>
+            <?php echo $form->error($model, 'email'); ?>
+        </div>
+    </div>
 
+    <div class="col-lg-12">
+        <div class="row buttons">
+            <?php echo CHtml::submitButton(Yii::t('common', 'submit')); ?>
+        </div>
+    </div>
+    <?php $this->endWidget(); ?>
 </div>

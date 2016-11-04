@@ -26,8 +26,8 @@ class RecoverPwdForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'login' => "Nom d'utilisateur",
-            'email' => "Adresse email"
+            'login' => Yii::t('common', 'login'),
+            'email' => Yii::t('common', 'email')
         );
     }
 

@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<h1> Recherche de patient </h1>
+<h1><?php echo Yii::t('common', 'searchPatient'); ?></h1>
 
 <div class="form">
 
@@ -20,10 +20,10 @@
     ));
     ?>
 
-    <p>Bienvenue <?php echo Yii::app()->user->name ?></p>
-    <p>Cet outil vous permet de retrouver les fiches patient à partir de son identité.</p>
+    <p><?php echo Yii::t('common', 'welcome') . Yii::app()->user->name ?></p>
+    <p><?php echo Yii::t('common', 'searchPatientForm') ?></p>
     <hr />
-    <p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
+    <p class="note"><?php echo Yii::t('common', 'requiredField') ?></p>
 
     <?php echo $form->errorSummary($model); ?>
     <?php echo $form->hiddenField($model, 'action', array('value' => $actionForm)); ?>
