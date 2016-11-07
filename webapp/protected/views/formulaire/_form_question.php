@@ -93,7 +93,7 @@ $('#QuestionForm_type').change(function(){
     <div>
         <div class="buttons">
             <div class="col-lg-6">
-                <?php echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-default', 'style' => 'margin-top: 8px;')); ?>
+                <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-default', 'style' => 'margin-top: 8px;')); ?>
             </div>
         </div>
     </div>

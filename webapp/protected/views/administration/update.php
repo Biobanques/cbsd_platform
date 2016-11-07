@@ -1,5 +1,6 @@
+<?php (Yii::app()->language == "fr") ? $plural = "s" : $plural = ""; ?>
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4 align="center">Mise à jour des droits du profil <?php echo $model->profil; ?> pour les fiches <?php echo $model->type; ?>s</h4></div>
+    <div class="panel-heading"><h4 align="center"><?php echo Yii::t('common', 'majProfil') . $model->profil . Yii::t('common', 'forPatientForm') . $model->type . $plural; ?></h4></div>
     <div class="panel-body">
         <?php
 

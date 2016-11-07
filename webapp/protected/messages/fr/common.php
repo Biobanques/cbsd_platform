@@ -24,6 +24,11 @@ return array(
     'reset' => 'Réinitialiser',
     'exportCSV' => 'Exporter en CSV',
     'add' => 'Ajouter',
+    'back' => 'Retour',
+    'addGene' => 'Ajouter un gène',
+    'cancel' => 'Annuler',
+    'updatePatientForm' => 'Mettre à jour la fiche',
+    'insert' => 'Saisir',
     // authentification
     'login' => 'Nom d\'utilisateur',
     // créer un utilisateur
@@ -67,6 +72,12 @@ return array(
     'examDate' => 'Date d\'examen',
     'addQuestion' => 'Ajouter une question',
     'titleBloc' => 'Titre du bloc',
+    'viewPatientForm' => 'Consulter une fiche',
+    'updatePatientForm' => 'Mettre à jour une fiche',
+    'deletePatientForm' => 'Supprimer une fiche',
+    'createPatientForm' => 'Créer une fiche',
+    'insertPatientForm' => 'Saisir une nouvelle fiche',
+    'choosePatientForm' => 'Choisir une fiche',
     // profil
     'administrateur' => 'Administrateur',
     'clinicien' => 'Clinicien',
@@ -86,6 +97,27 @@ return array(
     'greatereq' => 'est supérieur ou égal à',
     'and' => 'ET',
     'or' => 'OU',
+    // flash messages
+    'notAllowCreateClinicalPatientForm' => 'Vous n\'êtes pas autorisé à créer une fiche clinique.',
+    'notAllowCreateGeneticPatientForm' => 'Vous n\'êtes pas autorisé à créer une fiche génétique.',
+    'notAllowCreateNeuropathologicalPatientForm' => 'Vous n\'êtes pas autorisé à créer une fiche neuropathologique.',
+    'notAllowViewClinicalPatientForm' => 'Vous n\'êtes pas autorisé à consulter une fiche clinique.',
+    'notAllowViewSelfClinicalPatientForm' => 'Vous n\'êtes pas autorisé à consulter une fiche clinique qui ne vous appartient pas',
+    'notAllowViewGeneticPatientForm' => 'Vous n\'êtes pas autorisé à consulter une fiche génétique.',
+    'notAllowViewNeuropathologicalPatientForm' => 'Vous n\'êtes pas autorisé à consulter une fiche neuropathologique.',
+    'notAllowUpdateClinicalPatientForm' => 'Vous n\'êtes pas autorisé à modifier une fiche clinique.',
+    'notAllowUpdateGeneticPatientForm' => 'Vous n\'êtes pas autorisé à modifier une fiche génétique.',
+    'notAllowUpdateNeuropathologicalPatientForm' => 'Vous n\'êtes pas autorisé à modifier une fiche neuropathologique.',
+    'notAllowSearchPatientForm' => 'Vous n\'êtes pas autorisé à accéder à la liste des fiches disponibles',
+    'notAllowManagement' => 'Vous n\'êtes pas autorisé à accéder à la page d\'administration',
+    'profileUpdated' => 'Le profil a bien été mis à jour.',
+    'missingFields' => 'Tous les champs obligatoires ne sont pas remplis.',
+    'unvalidDate' => 'Entrez une date valide au format jj/mm/aaaa',
+    'noPatient' => 'Aucun patient avec ces informations n’existe dans le système, veuillez compléter le formulaire afin de créer le nouveau patient.',
+    'patientNotSaved' => 'Le patient n\'a pas pu être enregistré, merci de compléter l\'ensemble des champs.',
+    'manyPatient' => 'Plusieurs patients ont été trouvé dans le système, veuillez renseigner les champs supplémentaires.',
+    'savedPatientForm' => 'La fiche a bien été sauvegardée.',
+    'notSavedPatientForm' => 'La fiche n\'a pas été sauvegardée.',
     // text
     'signin' => 'Connexion utilisateur',
     'noAccount' => 'Vous n\'êtes pas encore inscrit?',
@@ -134,6 +166,20 @@ return array(
     'patientNeuropathologist' => 'Fiches neuropathologistes',
     'patientGeneticist' => 'Fiches génétiques',
     'noPatientForms' => 'Vous n\'avez pas de fiches associées à ce patient.',
-    'createblock' => 'Créer un bloc de questions'
-        );
+    'createblock' => 'Créer un bloc de questions',
+    'management' => '
+        <p>Le système d\'administration vous permettra de gérer l\'ensemble des objets présentés dans le système:</p><br>
+        <p>- <b>Gestion des utilisateurs</b>: <i>Affiche la liste des utilisateurs enregistrés, avec un bouton de mise à jour et de suppression. Vous pouvez aussi créer un utilisateur ou gérer les droits sur les fiches pour chaque utilisateur.</i></p>
+        <p>- <b>Gestion des formulaires</b>: <i>Affiche la liste des formulaires, avec un bouton de mise à jour et de suppression. Vous pouvez créer un nouveau formulaire où vous pouvez ajouter ou modifier une nouvelle question, un onglet ou un bloc de question réutilisable.</i></p>
+        <p>- <b>Gestion des fiches</b>: <i>Affiche la liste des fiches, avec un bouton de mise à jour et de suppression.</i></p>
+        <p>- <b>Log système</b>: <i>Affiche la liste des traces des actions utilisateurs.</i></p>',
+    'majProfil' => 'Mise à jour des droits du profil ',
+    'forPatientForm' => ' pour les fiches ',
+    'lastUpdated' => 'Dernière mise à jour: ',
+    'createdBy' => 'Crée par ',
+    'htmlView' => 'Vue format HTML',
+    'standardView' => 'Vue standard',
+    'exportPdf' => 'Exporter au format PDF',
+    'creation' => 'Création de patient'
+);
 ?>

@@ -63,7 +63,7 @@
 
     <div class="row">
         <div class="col-lg-3 row buttons">
-            <?php echo CHtml::submitButton('Valider'); ?>
+            <?php echo CHtml::submitButton(Yii::t('common', 'search')); ?>
         </div>
     </div>
 

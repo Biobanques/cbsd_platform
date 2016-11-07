@@ -84,7 +84,7 @@ class AdministrationController extends Controller {
                 $model->role = [];
             }
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'Le profil a bien été mis à jour.');
+                Yii::app()->user->setFlash('success', Yii::t('common', 'profileUpdated'));
                 $this->redirect(array('admin'));
             }
         }

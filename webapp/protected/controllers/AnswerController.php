@@ -62,11 +62,11 @@ class AnswerController extends Controller {
             $model = new PatientForm;
             $model->attributes = $_POST['PatientForm'];
             if ($_POST['PatientForm']['prenom'] == "" || $_POST['PatientForm']['nom_naissance'] == "" || $_POST['PatientForm']['date_naissance'] == "") {
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Tous les champs ne sont pas remplis.");
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'missingFields'));
                 $this->redirect(array('site/patient'));
             }
             if ($model->dateFormat($model->date_naissance) == false) {
-                Yii::app()->user->setFlash('error', "Entrez une date valide au format jj/mm/aaaa");
+                Yii::app()->user->setFlash('error', Yii::t('common', 'unvalidDate'));
                 $this->redirect(array('site/patient'));
             }
 
@@ -100,21 +100,21 @@ class AnswerController extends Controller {
 
         switch ($patient) {
             case "NoPatient":
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Aucun patient avec ces informations n’existe dans le système, veuillez compléter le formulaire afin de créer le nouveau patient.");
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'noPatient'));
                 Yii::app()->user->setState('patientModel', $model);
                 $model->scenario = 'create';
                 $this->render('patient_bis', array('model' => $model, 'actionForm' => 'create'));
                 exit();
                 break;
             case "PatientNotSaved":
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Le patient n'a pas pu être enregistré, merci de completer l'ensemble des champs");
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'patientNotSaved'));
                 Yii::app()->user->setState('patientModel', $model);
                 $model->scenario = 'create';
                 $this->render('patient_bis', array('model' => $model, 'actionForm' => 'create'));
                 exit();
                 break;
             case "ManyPatient":
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, "Plusieurs patients ont été trouvé dans le système, veuillez renseigner les champs supplémentaires.");
+                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'manyPatient'));
                 Yii::app()->user->setState('patientModel', $model);
                 $this->render('patient_bis', array('model' => $model, 'actionForm' => 'search'));
                 exit();
@@ -188,10 +188,10 @@ class AnswerController extends Controller {
             }
             if ($flagNoInputToSave == false) {
                 if ($model->save()) {
-                    Yii::app()->user->setFlash('success', "La fiche a bien été sauvegardée.");
+                    Yii::app()->user->setFlash('success', Yii::t('common', 'savedPatientForm'));
                     $this->redirect(array('answer/affichepatient'));
                 } else {
-                    Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardée. Un problème est apparu.");
+                    Yii::app()->user->setFlash('error', Yii::t('common', 'notSavedPatientForm'));
                     Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
                 }
             }

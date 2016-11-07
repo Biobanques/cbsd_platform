@@ -25,11 +25,11 @@ $(document).ready(function() {
 <div class="well">
     <table cellpadding="20">
         <tr>
-            <td><b>Nom de naissance : </b><?php echo $patient->birthName; ?></td>
-            <td><b>Prénom : </b><?php echo $patient->firstName; ?></td>
+            <td><b><?php echo Yii::t('common', 'birthName') ?> : </b><?php echo $patient->birthName; ?></td>
+            <td><b><?php echo Yii::t('common', 'firstName') ?> : </b><?php echo $patient->firstName; ?></td>
         </tr>
         <tr>
-            <td><b>Date de naissance : </b><?php echo $patient->birthDate; ?></td>
+            <td><b><?php echo Yii::t('common', 'birthDate') ?> : </b><?php echo $patient->birthDate; ?></td>
             <?php
             if (Yii::app()->user->profil == "administrateur")
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
@@ -46,12 +46,12 @@ $(document).ready(function() {
 <hr />
 
 <?php
-echo CHtml::link('Vue format HTML', array('answer/viewOnePage', 'id' => $model->_id));
+echo CHtml::link(Yii::t('common', 'htmlView'), array('answer/viewOnePage', 'id' => $model->_id));
 ?>
 <div style="margin-top: -20px; text-align:right;">
     <?php
     $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
-    echo CHtml::link('Exporter au format PDF' . $img, array('answer/exportPDF', 'id' => $model->_id), array());
+    echo CHtml::link(Yii::t('common', 'exportPdf') . $img, array('answer/exportPDF', 'id' => $model->_id), array());
     ?>
 </div>
 
@@ -68,8 +68,8 @@ echo CHtml::link('Vue format HTML', array('answer/viewOnePage', 'id' => $model->
 </div>
 <div style="display:inline; margin:40%; width: 100px; ">
     <?php
-    echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:-40px;'));
-    echo CHtml::link('Mettre à jour la fiche', array('answer/update', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:10px;'));
+    echo CHtml::link(Yii::t('common', 'cancel'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:-40px;'));
+    echo CHtml::link(Yii::t('common', 'updateAPatientForm'), array('answer/update', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:10px;'));
     ?>
 </div>
 <?php

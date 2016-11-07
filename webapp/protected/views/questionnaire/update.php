@@ -2,11 +2,11 @@
 <div class="well">
     <table>
         <tr>
-            <td><b>Nom : </b><?php echo $patient->useName; ?></td> 
-            <td><b>Nom de naissance : </b><?php echo $patient->birthName; ?></td>
+            <td><b><?php echo Yii::t('common', 'birthName') ?> : </b><?php echo $patient->birthName; ?></td>
+            <td><b><?php echo Yii::t('common', 'firstName') ?> : </b><?php echo $patient->firstName; ?></td>
         </tr>
         <tr>
-            <td><b>Prénom : </b><?php echo $patient->firstName; ?></td>
+            <td><b><?php echo Yii::t('common', 'birthDate') ?> : </b><?php echo $patient->birthDate; ?></td>
             <?php
             if (Yii::app()->user->profil == "administrateur") {
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
@@ -39,8 +39,8 @@
     </div>
     <div style="display:inline; margin: 35%; width: 100px; ">
         <?php
-        echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-default', 'style' => 'margin-top:8px;padding-bottom:23px;'));
-        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-left:20px;'));
+        echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-default', 'style' => 'margin-top:8px;padding-bottom:23px;'));
+        echo CHtml::link(Yii::t('common', 'cancel'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-left:20px;'));
         ?>
     </div>
     <?php

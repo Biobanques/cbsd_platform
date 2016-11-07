@@ -2,11 +2,11 @@
 <div class="well">
     <table cellpadding="20">
         <tr>
-            <td><b>Nom de naissance : </b><?php echo $patient->birthName; ?></td>
-            <td><b>Prénom : </b><?php echo $patient->firstName; ?></td>
+            <td><b><?php echo Yii::t('common', 'birthName') ?> : </b><?php echo $patient->birthName; ?></td>
+            <td><b><?php echo Yii::t('common', 'firstName') ?> : </b><?php echo $patient->firstName; ?></td>
         </tr>
         <tr>
-            <td><b>Date de naissance : </b><?php echo $patient->birthDate; ?></td>
+            <td><b><?php echo Yii::t('common', 'birthDate') ?> : </b><?php echo $patient->birthDate; ?></td>
             <?php
             if (Yii::app()->user->profil == "administrateur")
                 echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
@@ -40,10 +40,10 @@
     </div>
     <div style="display:inline; margin-left: 35%; width: 100px; ">
         <?php
-        echo CHtml::submitButton('Enregistrer', array('class' => 'btn btn-default', 'style' => 'margin-top:8px;padding-bottom:23px;'));
-        echo CHtml::link('Annuler', array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: 2px; margin-left:20px;'));
+        echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-default', 'style' => 'margin-top:8px;padding-bottom:23px;'));
+        echo CHtml::link(Yii::t('common', 'cancel'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: 2px; margin-left:20px;'));
         if ($model->type == "genetique") {
-            echo CHtml::ajaxSubmitButton('Ajouter un gène', $this->createUrl('updateandadd', array('id' => $model->_id)), array(
+            echo CHtml::ajaxSubmitButton(Yii::t('common', 'addGene'), $this->createUrl('updateandadd', array('id' => $model->_id)), array(
                 'type' => 'POST',
                 'success' => 'js:function(data){'
                 . 'div_content = $(data).find("#questionnaire-form");'

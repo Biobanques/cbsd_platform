@@ -25,6 +25,11 @@ return array(
     'reset' => 'Reset',
     'exportCSV' => 'Export in CSV',
     'add' => 'Add',
+    'back' => 'Back',
+    'addGene' => 'Add a gene',
+    'cancel' => 'Cancel',
+    'updateAPatientForm' => 'Update patient form',
+    'insert' => 'Insert',
     // authentification
     'login' => 'Login',
     // create an user
@@ -67,6 +72,18 @@ return array(
     'examDate' => 'Date of data collection',
     'addQuestion' => 'Add a question',
     'titleBloc' => 'Title of the block',
+    'viewPatientForm' => 'View a patient form',
+    'updatePatientForm' => 'Update a patient form',
+    'deletePatientForm' => 'Delete a patient form',
+    'createPatientForm' => 'Create a patient form',
+    'insertPatientForm' => 'Insert a new patient form',
+    'choosePatientForm' => 'Choose a patient form',
+    // profil
+    'administrateur' => 'Administrator',
+    'clinicien' => 'Clinician',
+    'neuropathologiste' => 'Neuropathologist',
+    'geneticien' => 'Geneticist',
+    'chercheur' => 'Researcher',    
     // genre
     'man' => 'Man',
     'woman' => 'Woman',
@@ -80,12 +97,27 @@ return array(
     'greatereq' => 'is greater or equal than',
     'and' => 'AND',
     'or' => 'OR',
-    // profil
-    'administrateur' => 'Administrator',
-    'clinicien' => 'Clinician',
-    'neuropathologiste' => 'Neuropathologist',
-    'geneticien' => 'Geneticist',
-    'chercheur' => 'Researcher',
+    // flash messages
+    'notAllowCreateClinicalPatientForm' => 'You are not allowed to create a clinical patient form.',
+    'notAllowCreateGeneticPatientForm' => 'You are not allowed to create a genetic patient form.',
+    'notAllowCreateNeuropathologicalPatientForm' => 'You are not allowed to create a neuropathological patient form.',
+    'notAllowViewClinicalPatientForm' => 'You are not allowed to view a clinical patient form.',
+    'notAllowViewSelfClinicalPatientForm' => 'You are not allowed to view a clinical patient form which does not belong to you.',
+    'notAllowViewGeneticPatientForm' => 'You are not allowed to view a genetic patient form.',
+    'notAllowViewNeuropathologicalPatientForm' => 'You are not allowed to view a neuropathological patient form.',
+    'notAllowUpdateClinicalPatientForm' => 'You are not allowed to update a clinical patient form.',
+    'notAllowUpdateGeneticPatientForm' => 'You are not allowed to update a genetic patient form.',
+    'notAllowUpdateNeuropathologicalPatientForm' => 'You are not allowed to update a neuropathological patient form.',
+    'notAllowSearchPatientForm' => 'You are not allowed to access to the list of available patient forms.',
+    'notAllowManagement' => 'You are not allowed to access to the management page.',
+    'profileUpdated' => 'The profile has been updated successfully.',
+    'missingFields' => 'Not all required fields are filled.',
+    'unvalidDate' => 'Enter a valid date in the format jj/mm/aaaa',
+    'noPatient' => 'No patient with these informations exists in the system, please complete the form to create the new patient.',
+    'patientNotSaved' => 'The patient has not been saved, please complete all fields.',
+    'manyPatient' => 'Many patients were found in the system, please complete the additional fields.',
+    'savedPatientForm' => 'The patient form has been saved successfully.',
+    'notSavedPatientForm' => 'The patient form has not been saved.',
     // text
     'signin' => 'Sign in',
     'noAccount' => 'Not registered yet?',
@@ -122,6 +154,20 @@ return array(
     'patientNeuropathologist' => 'Neuropathologist patient forms',
     'patientGeneticist' => 'Geneticist patient forms',
     'noPatientForms' => 'You have no patient forms associated with this patient.',
-    'createblock' => 'Create a block of questions'
+    'createblock' => 'Create a block of questions',
+    'management' => '
+        <p>The management system allow you to manage all the objects into the system:</p><br>
+        <p>- <b>Manage users</b>: <i>Show list of registered users, with update/delete button. You can also create a user or manage access rules on the forms for each user profile.</i></p>
+        <p>- <b>Manage templates of the forms</b>: <i>Show list of templates of the forms, with update/delete button. You can create a new template which you can add or modify a new question, a new tab or a reusable block of questions.</i></p>
+        <p>- <b>Manage patient forms</b>: <i>Show list of patient forms, with update/delete button.</i></p>
+        <p>- <b>System log</b>: <i>Show user activities.</i></p>',
+    'majProfil' => 'update rules for profiles ',
+    'forPatientForm' => 'for patient forms ',
+    'lastUpdated' => 'Last updated: ',
+    'createdBy' => 'Created by ',
+    'htmlView' => 'View HTML format',
+    'standardView' => 'Standard view',
+    'exportPdf' => 'Export as PDF',
+    'creation' => 'Creation of patient'
 );
 ?>

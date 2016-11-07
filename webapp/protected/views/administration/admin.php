@@ -1,6 +1,6 @@
 <h1><?php echo Yii::t('common', 'manageRules'); ?></h1>
 
-<h3>Fiche Clinique</h3>
+<h3><?php echo Yii::t('common', 'patientClinical') ?></h3>
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
@@ -17,7 +17,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 
 <hr />
 
-<h3>Fiche Neuropathologique</h3>
+<h3><?php echo Yii::t('common', 'patientNeuropathologist') ?></h3>
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
@@ -34,7 +34,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 
 <hr />
 
-<h3>Fiche Génétique</h3>
+<h3><?php echo Yii::t('common', 'patientGeneticist') ?></h3>
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',

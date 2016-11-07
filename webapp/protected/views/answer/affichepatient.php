@@ -158,16 +158,16 @@ if (Yii::app()->user->getState('activeProfil') != "chercheur" && Yii::app()->use
 
     <div class="row" id="liste_fiche">
         <div class="span3">
-            <p>Saisir une nouvelle fiche : </p>
+            <p><?php echo Yii::t('common', 'insertPatientForm') ?> : </p>
         </div>
         <div class="span3" style="margin:-5px;">
             <?php
-            echo CHtml::dropDownList('form', '', Questionnaire::model()->getFiche(Yii::app()->user->getActiveProfil(), $neuropath, $genetique), array('prompt' => '--- Choisir une fiche ---'));
+            echo CHtml::dropDownList('form', '', Questionnaire::model()->getFiche(Yii::app()->user->getActiveProfil(), $neuropath, $genetique), array('prompt' => '---' . Yii::t('common', 'choosePatientForm') . '---'));
             ?>
         </div>
 
         <div class="span3" style="margin:-5px;">
-            <?php echo CHtml::submitButton('Saisir', array('class' => 'btn btn-default')); ?>
+            <?php echo CHtml::submitButton(Yii::t('common', 'insert'), array('class' => 'btn btn-default')); ?>
         </div>
         <?php $this->endWidget(); ?>
     </div>

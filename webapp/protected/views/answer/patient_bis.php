@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<h1> <?php echo $actionForm == 'create' ? 'Création' : 'Recherche avancée'; ?> de patient </h1>
+<h1> <?php echo $actionForm == 'create' ? Yii::t('common', 'creation') : Yii::t('common', 'advancedsearch'); ?></h1>
 
 <div class="form">
 
@@ -20,7 +20,7 @@
     ));
     ?>
     <hr />
-    <p class="note">Les champs avec <span class="required">*</span> sont requis.</p>
+    <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
 
     <?php echo $form->errorSummary($model); ?>
     <?php echo $form->hiddenField($model, 'action', array('value' => $actionForm)); ?>
@@ -79,7 +79,7 @@
 
     <div class="row">
         <div class="col-lg-3 row buttons">
-            <?php echo CHtml::submitButton('Valider'); ?>
+            <?php echo CHtml::submitButton($actionForm == 'create' ? Yii::t('common', 'createBtn') : Yii::t('common', 'search')); ?>
         </div>
     </div>
 

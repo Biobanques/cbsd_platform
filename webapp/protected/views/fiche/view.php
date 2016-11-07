@@ -25,18 +25,18 @@ $(document).ready(function() {
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {
-    echo "<p><b>Dernière mise à jour le: </b>" . $model->getLastUpdated() . "</p>";
+    echo "<p><b>" . Yii::t('common', 'lastUpdated') . "</b>" . $model->getLastUpdated() . "</p>";
 }
 ?>
-<p><b>Crée par: </b><?php echo $model->creator; ?></p>
+<p><b> <?php echo Yii::t('common', 'createdBy') ?> </b><?php echo $model->creator; ?></p>
 <hr />
 <?php
-echo CHtml::link('Vue format HTML', array('fiche/viewOnePage', 'id' => $model->_id));
+echo CHtml::link(Yii::t('common', 'htmlView'), array('fiche/viewOnePage', 'id' => $model->_id));
 ?>
 <div style="margin-top: -15px; text-align:right;">
     <?php
     $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
-    echo CHtml::link('Exporter au format PDF' . $img, array('answer/exportPDF', 'id' => $model->_id), array());
+    echo CHtml::link(Yii::t('common', 'exportPdf') . $img, array('answer/exportPDF', 'id' => $model->_id), array());
     ?>
 </div>
 
@@ -48,6 +48,6 @@ echo CHtml::link('Vue format HTML', array('fiche/viewOnePage', 'id' => $model->_
 </div>
 <div style="display:inline; margin:40%; width: 100px; ">
     <?php
-    echo CHtml::link('Retour', array('fiche/admin'), array('class' => 'btn btn-default'));
+    echo CHtml::link(Yii::t('common', 'back'), array('fiche/admin'), array('class' => 'btn btn-default'));
     ?>
 </div>

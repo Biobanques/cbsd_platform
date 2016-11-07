@@ -58,10 +58,10 @@ class Droits extends LoggableActiveRecord {
     
     public function getActions() {
         return array(
-            'view' => 'Consulter une fiche',
-            'update' => 'Mettre à jour une fiche',
-            'delete' => 'Supprimer une fiche',
-            'create' => 'Créer une fiche'
+            'view' => Yii::t('common', 'viewPatientForm'),
+            'update' => Yii::t('common', 'updatePatientForm'),
+            'delete' => Yii::t('common', 'deletePatientForm'),
+            'create' => Yii::t('common', 'createPatientForm')
         );
     }
 
