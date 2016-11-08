@@ -29,6 +29,7 @@ return array(
     'cancel' => 'Annuler',
     'updatePatientForm' => 'Mettre à jour la fiche',
     'insert' => 'Saisir',
+    'patientFormsAssociated' => 'Rechercher les fiches associées aux patients sélectionnés',
     // authentification
     'login' => 'Nom d\'utilisateur',
     // créer un utilisateur
@@ -56,6 +57,8 @@ return array(
     'userNotSaved' => 'L\'utilisateur n\'a pas été enregistré.',
     'userUpdate' => 'Mise à jour de l\'utilisateur',
     'availablePatientForms' => 'Liste des fiches disponibles',
+    'noFilterSelected' => 'Aucun filtre sélectionné.',
+    'query' => 'Requête',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',
@@ -173,7 +176,12 @@ return array(
     'userProfile7' => ' a bien été désactivé.',
     'userProfile8' => ' n\'a pas été désactivé.',
     'contactRespond' => 'Merci de nous avoir contacté. Nous vous répondrons dès que possible.',
-    
+    'insertPhone' => 'Veuillez renseigner au moins un numéro de téléphone.',
+    'unvalidPhone' => 'Le numéro de téléphone que vous avez renseigné n\'est pas valide (format: 0145825443).',
+    'unvalidMobilePhone' => 'Le numéro de téléphone portable que vous avez renseigné n\'est pas valide (format: 0645825443).',
+    'addressClinician' => 'L\'adresse doit être renseignée par le clinicien.',
+    'centerNeuropathologist' => 'Le centre de référence doit être renseigné pour le neuropathologiste.',
+    'insertValues' => 'Veuillez renseigner les valeurs.',    
     // text
     'signin' => 'Connexion utilisateur',
     'noAccount' => 'Vous n\'êtes pas encore inscrit?',

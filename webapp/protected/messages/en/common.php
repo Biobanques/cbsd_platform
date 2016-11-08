@@ -30,6 +30,7 @@ return array(
     'cancel' => 'Cancel',
     'updateAPatientForm' => 'Update patient form',
     'insert' => 'Insert',
+    'patientFormsAssociated' => 'Search patient forms associated with the selected patients.',
     // authentification
     'login' => 'Login',
     // create an user
@@ -57,6 +58,8 @@ return array(
     'userNotSaved' => 'The user has not been saved.',
     'userUpdate' => 'Update user',
     'availablePatientForms' => 'List of available patient forms',
+    'noFilterSelected' => 'No filter selected.',
+    'query' => 'Query',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',
@@ -172,6 +175,12 @@ return array(
     'userProfile7' => ' has been disabled successfully.',
     'userProfile8' => ' has not been disabled.',
     'contactRespond' => 'Thank you for contacting us. We will respond to you as soon as possible.',
+    'insertPhone' => 'Please insert at least a number phone.',
+    'unvalidPhone' => 'The phone number that you provided is incorrect (format: 0145825443).',
+    'unvalidMobilePhone' => 'The mobile phone number that you provided is incorrect (format: 0645825443).',
+    'addressClinician' => 'The address must be specified by the clinician.',
+    'centerNeuropathologist' => 'The center reference must be specified by the neuropathologist.',
+    'insertValues' => 'Please inform values.',
     // text
     'signin' => 'Sign in',
     'noAccount' => 'Not registered yet?',

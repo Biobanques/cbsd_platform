@@ -350,9 +350,9 @@ class AnswerController extends Controller {
         $condition = array();
         $compare = array();
         $dynamics = array();
-       
+        $html = "";
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
-            echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">Aucun filtre sélectionné.</h4>" : "<h4 align=\"center\">Requête</h4>";
+            echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">" . Yii::t('common', 'noFilterSelected') . "</h4>" : "<h4 align=\"center\">" . Yii::t('common', 'query') . "</h4>";
             foreach ($_POST['Answer'] as $label => $answer) {
                 if ($label == "last_updated" && $answer == "") {
                    
@@ -385,25 +385,26 @@ class AnswerController extends Controller {
                 }
             }
             $questions = array_merge_recursive($condition, $compare, $dynamics);
-            echo "<ul>";
+            $html .= "<ul>";
             foreach ($mainQuestions as $label => $answer) {
-                echo "<li>" . Answer::model()->attributeLabels()[$label] . " = " . $answer . "</li>";
+                $html .= "<li>" . Answer::model()->attributeLabels()[$label] . " = " . $answer . "</li>";
             };
             foreach ($questions as $key => $value) {
-                echo $operators[$questions[$key][0]];
-                echo "<li>" . Answer::model()->getLabelQuestionById($key);
+                $html .= $operators[$questions[$key][0]];
+                $html .= "<li>" . Answer::model()->getLabelQuestionById($key);
                 foreach ($value as $label => $answer) {
                     if ($label != 0) {
                         if ($label == 1) {
-                            echo ($answer != "") ? " " . $operators[$answer] : " = ";
+                            $html .= ($answer != "") ? " " . $operators[$answer] : " = ";
                         }
                         if ($label == 2) {
-                            echo " " . $answer . "</li>";
+                            $html .= " " . $answer . "</li>";
                         }
                     }
                 }
             }
-            echo "</ul>";
+            $html .= "</ul>";
+            echo $html;
             //echo CHtml::button('Exporter la requête', array('id' => 'exportQueries', 'class' => 'btn btn-default', 'style' => 'margin:auto;display:block;'));
         }
     }

@@ -138,7 +138,7 @@ class QuestionForm extends CFormModel {
         if ((isset($this->type) && $this->type == "radio")) {
             $this->validatorList->add(CValidator::createValidator('required', $this, 'values', array()));
             if ($this->values == "") {
-                $this->addError('values', 'Veuillez renseigner les valeurs.');
+                $this->addError('values', Yii::t('common', 'insertValues'));
             }
         }
     }
@@ -173,7 +173,7 @@ class QuestionForm extends CFormModel {
             if ($group->questions != "") {
                 foreach ($group->questions as $question) {
                     if ($question->id == $this->id) {
-                        $this->addError('id', 'Cet identifiant est déjà utilisé dans ce formulaire, merci d\'en choisir un différent');
+                        $this->addError('id', Yii::t('common', 'loginExist'));
                     }
                 }
             }

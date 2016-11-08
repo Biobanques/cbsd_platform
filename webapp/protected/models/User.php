@@ -327,11 +327,11 @@ class User extends EMongoDocument
     public function telValidator()
     {
         if (in_array($this->telephone, array("", null)) && in_array($this->gsm, array("", null))) {
-            $this->addError('telephone', 'Veuillez renseigner au moins un numéro de téléphone.');
+            $this->addError('telephone', Yii::t('common', 'insertPhone'));
         }
         if (!in_array($this->telephone, array("", null))) {
             if (!preg_match("/^0[1-9][0-9]{8}$/i", $this->telephone)) {
-                $this->addError('telephone', 'Le numéro de téléphone que vous avez renseigné n\'est pas valide (exemple format: 0145825443).');
+                $this->addError('telephone', Yii::t('common', 'unvalidPhone'));
             }
         }
     }
@@ -340,7 +340,7 @@ class User extends EMongoDocument
     {
         if (!in_array($this->gsm, array("", null))) {
             if (!preg_match("/^0[1-9][0-9]{8}$/i", $this->gsm)) {
-                $this->addError('gsm', 'Le numéro de téléphone portable que vous avez renseigné n\'est pas valide (exemple format: 0145825443).');
+                $this->addError('gsm', Yii::t('common', 'unvalidMobilePhone'));
             }
         }
     }
@@ -376,7 +376,7 @@ class User extends EMongoDocument
             } else
             if (in_array("clinicien", $this->profil) && ($this->address == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
-                $this->addError('address', 'L\'adresse doit être renseignée par le clinicien.');
+                $this->addError('address', Yii::t('common', 'addressClinician'));
             }
         }
     }
@@ -389,7 +389,7 @@ class User extends EMongoDocument
             } else
             if (in_array("neuropathologiste", $this->profil) && ($this->centre == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
-                $this->addError('centre', 'Le centre de référence doit être renseigné pour le neuropathologiste.');
+                $this->addError('centre', Yii::t('common', 'centerNeuropathologist'));
             }
         }
     }
