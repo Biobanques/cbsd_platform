@@ -405,9 +405,9 @@ class Questionnaire extends EMongoDocument
             }
         }
         if ($this->save()) {
-            Yii::app()->user->setFlash('success', "L'onglet a bien été ajouté dans le formulaire.");
+            Yii::app()->user->setFlash('success', Yii::t('common', 'tabAdded'));
         } else {
-            Yii::app()->user->setFlash('error', "L'onglet n'a pas été enregistré. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotAdded'));
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;
@@ -448,9 +448,9 @@ class Questionnaire extends EMongoDocument
             }
         }
         if ($this->save()) {
-            Yii::app()->user->setFlash('success', "La question a bien été ajouté dans le formulaire.");
+            Yii::app()->user->setFlash('success', Yii::t('common', 'questionAdded'));
         } else {
-            Yii::app()->user->setFlash('error', "La question n'a pas été enregistré. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotAdded'));
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;
@@ -491,9 +491,9 @@ class Questionnaire extends EMongoDocument
             }
         }
         if ($this->save()) {
-            Yii::app()->user->setFlash('success', "Le bloc de questions a bien été ajouté dans le formulaire.");
+            Yii::app()->user->setFlash('success', Yii::t('common', 'questionBlockSaved'));
         } else {
-            Yii::app()->user->setFlash('error', "Le bloc de questions n'a pas été enregistré. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', Yii::t('common', 'questionBlockNotSaved'));
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;

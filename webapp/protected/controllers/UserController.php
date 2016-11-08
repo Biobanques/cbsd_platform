@@ -57,14 +57,14 @@ class UserController extends Controller {
             $criteria->login = $model->login;
             $userLogin = User::model()->findAll($criteria);
             if (count($userLogin) > 0) {
-                Yii::app()->user->setFlash('error', 'Le login a déjà été utilisé. Veuillez choisir un login différent.');
+                Yii::app()->user->setFlash('error', Yii::t('common', 'loginExist'));
                 $this->render('create', array('model' => $model));
             } else
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
+                Yii::app()->user->setFlash('success', Yii::t('common', 'userSaved'));
                 $this->redirect(array('view', 'id' => $model->_id));
             } else {
-                Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
+                Yii::app()->user->setFlash('error', Yii::t('common', 'missingFields'));
             }
         }
         $this->render('create', array(
@@ -82,7 +82,7 @@ class UserController extends Controller {
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'L\'utilisateur ' . $model->login . ' a été mise à jour.');
+                Yii::app()->user->setFlash('success', Yii::t('common', 'userProfile1') . $model->login . Yii::t('common', 'userProfile4'));
                 $this->redirect(array('view', 'id' => $model->_id));
             }
         }
@@ -100,15 +100,15 @@ class UserController extends Controller {
         try {
             $this->loadModel($id)->delete();
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('success', "L'utilisateur a bien été supprimé.");
+                Yii::app()->user->setFlash('success', Yii::t('common', 'userDeleted'));
             } else {
-                echo "<div class='alert in alert-block fade alert-success'>L'utilisateur a bien été supprimé.</div>"; //for ajax
+                echo "<div class='alert in alert-block fade alert-success'>" . Yii::t('common', 'userDeleted') . "</div>"; //for ajax
             }
         } catch (CDbException $e) {
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('error', "L'utilisateur n'a pas été supprimé. Un problème est apparu.");
+                Yii::app()->user->setFlash('error', Yii::t('common', 'userNotDeleted'));
             } else {
-                echo "<div class='alert in fade alert-error'>L'utilisateur n'a pas été supprimé. Un problème est apparu.</div>";
+                echo "<div class='alert in fade alert-error'>" . Yii::t('common', 'userNotDeleted') . "</div>";
             } //for ajax
         }
 
@@ -164,9 +164,9 @@ class UserController extends Controller {
         $model->statut = "actif";
         if ($model->update()) {
             CommonMailer::sendUserRegisterConfirmationMail($model);
-            Yii::app()->user->setFlash('success', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') a bien été validé.');
+            Yii::app()->user->setFlash('success', Yii::t('common', 'userProfile1bis') . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ')' . Yii::t('common', 'userProfile5'));
         } else {
-            Yii::app()->user->setFlash('error', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') n\'a pas pu être validé. Consultez les logs pour plus de détails.');
+            Yii::app()->user->setFlash('error', Yii::t('common', 'userProfile1bis') . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ')' . Yii::t('common', 'userProfile6'));
         }
         $this->redirect(array(
             'admin',
@@ -187,9 +187,9 @@ class UserController extends Controller {
         $this->performAjaxValidation($model);
         $model->statut = "inactif";
         if ($model->update()) {
-            Yii::app()->user->setFlash('success', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') a bien été désactivé.');
+            Yii::app()->user->setFlash('success', Yii::t('common', 'userProfile1bis') . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ')' . Yii::t('common', 'userProfile7'));
         } else {
-            Yii::app()->user->setFlash('error', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') n\'a pas pu être désactivé. Consultez les logs pour plus de détails.');
+            Yii::app()->user->setFlash('error', Yii::t('common', 'userProfile1bis') . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ')' .  Yii::t('common', 'userProfile8'));
         }
         $this->redirect(array(
             'admin',

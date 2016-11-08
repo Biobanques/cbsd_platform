@@ -237,9 +237,9 @@ class AnswerController extends Controller {
             $model->addGeneToAnswers($model->answers_group, $gene, $analyse, $mutation, $comment);
 
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', "Le gène a bien été ajouté à la fiche.");
+                Yii::app()->user->setFlash('success', Yii::t('common', 'addGeneSuccess'));
             } else {
-                Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
+                Yii::app()->user->setFlash('error', Yii::t('common', 'patientFormNotSaved'));
                 Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
             }
         }
@@ -272,15 +272,15 @@ class AnswerController extends Controller {
         try {
             $model->delete();
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('success', 'La fiche a bien été supprimé.');
+                Yii::app()->user->setFlash('success', Yii::t('common', 'patientFormDeleted'));
             } else {
-                echo "<div class='alert in alert-block fade alert-success'>La fiche a bien été supprimé.</div>"; //for ajax
+                echo "<div class='alert in alert-block fade alert-success'>" . Yii::t('common', 'patientFormDeleted') . "</div>"; //for ajax
             }
         } catch (CDbException $e) {
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('error', "La fiche n'a pas été supprimé. Un problème est apparu.");
+                Yii::app()->user->setFlash('error', Yii::t('common', 'patientFormNotDeleted'));
             } else {
-                echo "<div class='alert in fade alert-error'>La fiche n'a pas été supprimé. Un problème est apparu.</div>";
+                echo "<div class='alert in fade alert-error'>" . Yii::t('common', 'patientFormNotDeleted') . "</div>";
             } //for ajax
         }
     }

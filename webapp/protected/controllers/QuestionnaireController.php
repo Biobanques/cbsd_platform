@@ -113,13 +113,13 @@ class QuestionnaireController extends Controller {
             }
         }if ($flagNoInputToSave == false) {
             if ($answer->save())
-                Yii::app()->user->setFlash('success', "La fiche bien a été sauvegardé.");
+                Yii::app()->user->setFlash('success', Yii::t('common', 'patientFormSaved'));
             else {
-                Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
+                Yii::app()->user->setFlash('error', Yii::t('common', 'patientFormNotSaved'));
                 Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
             }
         } else {
-            Yii::app()->user->setFlash('error', "La fiche n'a pas été sauvegardé. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', Yii::t('common', 'patientFormNotSaved'));
 //null result
             $answer = null;
         }
@@ -138,7 +138,7 @@ class QuestionnaireController extends Controller {
             $id = Questionnaire::model()->find($criteria);
             $this->redirect(array('questionnaire/update', 'id' => $id->_id));
         } else {
-            Yii::app()->user->setFlash("error", 'Veuillez sélectionner une fiche à remplir.');
+            Yii::app()->user->setFlash("error", Yii::t('common', 'selectPatientForm'));
             $this->redirect(array('answer/affichepatient'));
         }
         $dataProvider = new EMongoDocumentDataProvider('Questionnaire');

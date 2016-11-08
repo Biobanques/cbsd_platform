@@ -73,18 +73,18 @@ class FormulaireController extends Controller {
             $countIdForm = $model->getFormsById($model->id);
             $countNameForm = $model->getFormsByName($model->name);
             if (count($countIdForm) > 0) {
-                Yii::app()->user->setFlash('error', 'L\'id a déjà été utilisé. Veuillez choisir un id différent.');
+                Yii::app()->user->setFlash('error', Yii::t('common', 'idFormExist'));
             } elseif (count($countNameForm) > 0) {
-                Yii::app()->user->setFlash('error', 'Le nom du formulaire a déjà été utilisé. Veuillez choisir un nom différent.');
+                Yii::app()->user->setFlash('error', Yii::t('common', 'nameFormExist'));
             } else {
                 $validate = true;
             }
             if ($validate) {
                 if ($model->save()) {
-                    Yii::app()->user->setFlash('success', 'Le formulaire a été enregistré avec succès.');
+                    Yii::app()->user->setFlash('success', Yii::t('common', 'formSaved'));
                     $this->redirect($this->createUrl('update', array('id' => $model->_id)));
                 } else {
-                    Yii::app()->user->setFlash('error', "Veuillez renseigner tous les champs obligatoires.");
+                    Yii::app()->user->setFlash('error', Yii::t('common', 'missingFields'));
                 }
             }
         }
@@ -113,10 +113,10 @@ class FormulaireController extends Controller {
                 if ($questionForm->validate()) {
                     $model = $model->saveQuestionnaireNewQuestion($questionForm);
                 } else {
-                    Yii::app()->user->setFlash('error', 'La question n\'a pas été ajouté.');
+                    Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotAdded'));
                 }
             } else {
-                Yii::app()->user->setFlash('error', 'La question n\'a pas été ajouté.');
+                Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotAdded'));
             }
         }
         if (isset($_POST['QuestionGroup'])) {
@@ -128,7 +128,7 @@ class FormulaireController extends Controller {
                     $model = $model->saveQuestionnaireNewGroup($questionGroup);
                 }
             } else {
-                Yii::app()->user->setFlash('error', 'L\'onglet de question n\'a pas été ajouté.');
+                Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotAdded'));
             }
         }
 
@@ -153,7 +153,7 @@ class FormulaireController extends Controller {
                     }
                 }
             } else {
-                Yii::app()->user->setFlash('error', 'Le bloc de question n\'a pas été ajouté.');
+                Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotAdded'));
             }
         }
         if (isset($_POST['old_onglet'])) {
@@ -163,9 +163,9 @@ class FormulaireController extends Controller {
                     $onglet->title_fr = $_POST['new_onglet'];
                     $onglet->id = $_POST['new_id'];
                     if ($model->save()) {
-                        Yii::app()->user->setFlash('success', 'L\'onglet a bien été modifié.');
+                        Yii::app()->user->setFlash('success', Yii::t('common', 'tabUpdated'));
                     } else {
-                        Yii::app()->user->setFlash('error', 'L\'onglet n\'a pas été modifié.');
+                        Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotUpdated'));
                     }
                 }
             }
@@ -177,9 +177,9 @@ class FormulaireController extends Controller {
                         $question->label = $_POST['new_question'];
                         $question->label_fr = $_POST['new_question'];
                         if ($model->save()) {
-                            Yii::app()->user->setFlash('success', 'La question a bien été modifié.');
+                            Yii::app()->user->setFlash('success', Yii::t('common', 'questionUpdated'));
                         } else {
-                            Yii::app()->user->setFlash('error', 'La question n\'a pas été modifié.');
+                            Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotUpdated'));
                         }
                     }
                 }
@@ -206,15 +206,15 @@ class FormulaireController extends Controller {
         try {
             $model->delete();
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('success', 'Le formulaire a bien été supprimé.');
+                Yii::app()->user->setFlash('success', Yii::t('common', 'formDeleted'));
             } else {
-                echo "<div class='alert in alert-block fade alert-success'>Le formulaire a bien été supprimé.</div>"; //for ajax
+                echo "<div class='alert in alert-block fade alert-success'>" . Yii::t('common', 'formDeleted') . "</div>"; //for ajax
             }
         } catch (CDbException $e) {
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('error', "Le formulaire n'a pas été supprimé. Un problème est apparu.");
+                Yii::app()->user->setFlash('error', Yii::t('common', 'formNotDeleted'));
             } else {
-                echo "<div class='alert in fade alert-error'>Le formulaire n'a pas été supprimé. Un problème est apparu.</div>";
+                echo "<div class='alert in fade alert-error'>" . Yii::t('common', 'formNotDeleted') . "</div>";
             } //for ajax
         }
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -232,9 +232,9 @@ class FormulaireController extends Controller {
         $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
         if ($model->deleteQuestion($idQuestion)) {
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', "La question a bien été supprimé.");
+                Yii::app()->user->setFlash('success', Yii::t('common', 'questionDeleted'));
             } else {
-                Yii::app()->user->setFlash('error', "La question n'a pas été supprimé. Un problème est apparu.");
+                Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotDeleted'));
                 Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
             }
         }
@@ -252,9 +252,9 @@ class FormulaireController extends Controller {
         $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
         if ($model->deleteQuestionGroup($idQuestionGroup)) {
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', "L'onglet a bien été supprimé.");
+                Yii::app()->user->setFlash('success', Yii::t('common', 'tabDeleted'));
             } else {
-                Yii::app()->user->setFlash('error', "L'onglet n'a pas été supprimé. Un problème est apparu.");
+                Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotDeleted'));
                 Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
             }
         }
@@ -301,9 +301,9 @@ class FormulaireController extends Controller {
             }
         }
         if ($questionnaire->save())
-            Yii::app()->user->setFlash('success', "La question a bien été supprimé.");
+            Yii::app()->user->setFlash('success', Yii::t('common', 'questionDeleted'));
         else {
-            Yii::app()->user->setFlash('error', "La question n'a pas été supprimé. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotDeleted'));
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $questionnaire;
@@ -346,9 +346,9 @@ class FormulaireController extends Controller {
             }
         }
         if ($questionnaire->save())
-            Yii::app()->user->setFlash('success', "L'onglet a bien été supprimé");
+            Yii::app()->user->setFlash('success', Yii::t('common', 'tabDeleted'));
         else {
-            Yii::app()->user->setFlash('error', "L'onglet n'a pas été supprimé. Un problème est apparu.");
+            Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotDeleted'));
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $questionnaire;
