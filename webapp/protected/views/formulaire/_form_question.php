@@ -28,8 +28,8 @@ $('#QuestionForm_type').change(function(){
     <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
 
     <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
-    <p><b>*L'id doit être unique parmi les questions. Il permet de gérer des mécanismes liées à l'ordonnancement des questions et aux traitements de validation.</b></p>
-    <p><b>*Les valeurs sont utilisées pour les listes (radio bouton et listes déroulantes). Le séparateur de valeurs est la virgule.</b></p>
+    <p><b><?php echo Yii::t('common', 'uniqueIdQuestion') ?></b></p>
+    <p><b><?php echo Yii::t('common', 'valuesQuestion') ?></b></p>
 
     <div >
         <div class="col-lg-6">

@@ -30,7 +30,7 @@ $('.search-form form').submit(function(){
 <h1><?php echo Yii::t('common', 'manageForms'); ?></h1>
 
 <?php
-$imagecreateform = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', 'Créer un nouveau formulaire');
+$imagecreateform = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', Yii::t('common', 'createForm'));
 echo CHtml::link($imagecreateform . Yii::t('common', 'createForm'), Yii::app()->createUrl('formulaire/create'));
 ?>
 <br />

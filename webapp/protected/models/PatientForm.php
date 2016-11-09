@@ -44,7 +44,7 @@ class PatientForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'nom' => 'Nom d\'usage',
+            'nom' => Yii::t('common', 'usualName'),
             'prenom' => Yii::t('common', 'firstName'),
             'date_naissance' => Yii::t('common', 'birthDate'),
             'nom_naissance' => Yii::t('common', 'birthName'),
@@ -82,8 +82,8 @@ class PatientForm extends CFormModel {
 
     public function getSource() {
         $res = array();
-        $res ['1'] = "bb_cerveau";
-        $res ['2'] = "bb_adn";
+        $res ['1'] = "Banque de cerveaux";
+        $res ['2'] = "Banque d'ADN";
         return $res;
     }
 

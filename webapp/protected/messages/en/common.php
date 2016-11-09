@@ -28,7 +28,7 @@ return array(
     'back' => 'Back',
     'addGene' => 'Add a gene',
     'cancel' => 'Cancel',
-    'updateAPatientForm' => 'Update patient form',
+    'updateThePatientForm' => 'Update patient form',
     'insert' => 'Insert',
     'patientFormsAssociated' => 'Search patient forms associated with the selected patients.',
     // authentification
@@ -36,6 +36,7 @@ return array(
     // create an user
     'firstName' => 'First Name',
     'lastName' => 'Last Name',
+    'usualName' => 'Usual name',
     'email' => 'Email',
     'phone' => 'Phone',
     'address' => 'Address',
@@ -60,6 +61,14 @@ return array(
     'availablePatientForms' => 'List of available patient forms',
     'noFilterSelected' => 'No filter selected.',
     'query' => 'Query',
+    'exportQueriesDate' => "The query result (" . date("d/m/Y") . ' à ' . date("H:i") . ")\n\n",
+    'form' => 'Form ',
+    'patientForm' => 'Patient form ',
+    'forAddQuestion' => 'To add a question',
+    'forAddQuestionBlock' => 'To add an existing block of questions',
+    'forAddTab' => 'To add a tab',
+    'forModifyTab' => 'To modify a tab',
+    'forModifyQuestion' => 'To modify a question',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',
@@ -73,6 +82,8 @@ return array(
     'birthDate' => 'Birth date',
     'sex' => 'Gender',
     'lastModified' => 'Last updated',
+    'lastModifiedDate' => 'Last modified',
+    'lastUpdatedDate' => 'Last updated ',
     'examDate' => 'Date of data collection',
     'addQuestion' => 'Add a question',
     'titleBloc' => 'Title of the block',
@@ -82,12 +93,13 @@ return array(
     'createPatientForm' => 'Create a patient form',
     'insertPatientForm' => 'Insert a new patient form',
     'choosePatientForm' => 'Choose a patient form',
+    'htmlViewForm' => 'HTML view of the form ',
     // profil
     'administrateur' => 'Administrator',
     'clinicien' => 'Clinician',
     'neuropathologiste' => 'Neuropathologist',
     'geneticien' => 'Geneticist',
-    'chercheur' => 'Researcher',    
+    'chercheur' => 'Researcher',   
     // genre
     'man' => 'Man',
     'woman' => 'Woman',
@@ -231,6 +243,9 @@ return array(
     'htmlView' => 'View HTML format',
     'standardView' => 'Standard view',
     'exportPdf' => 'Export as PDF',
-    'creation' => 'Creation of patient'
+    'creation' => 'Creation of patient',
+    'valuesQuestion' => '*Values are used for lists (radio button and dropdownlist). The value separator is the comma.',
+    'uniqueIdQuestion' => '*Id must be unique doit être unique among the questions.',
+    'uniqueIdForm' => 'Id must be unique.',
 );
 ?>

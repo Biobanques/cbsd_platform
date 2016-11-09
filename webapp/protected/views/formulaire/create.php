@@ -1,3 +1,3 @@
-<h1>Créer un formulaire</h1>
+<h1><?php echo Yii::t('common', 'createForm') ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model));

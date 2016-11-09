@@ -8,7 +8,6 @@
     ?>
 
     <div class="row">
-        <p>Vous pouvez modifier un onglet en sélectionnant l'onglet à modifier puis de renseigner la valeur du nouvel onglet ainsi que son nouvel identifiant.</p>
         <?php
         echo CHtml::label('Onglet à modifier', 'old_onglet');
         echo CHtml::dropDownList('old_onglet', '', $questionGroup->getOnglets(), array("prompt" => "----", "required" => "required"));

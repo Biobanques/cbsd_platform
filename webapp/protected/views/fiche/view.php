@@ -21,7 +21,7 @@ $(document).ready(function() {
 ");
 ?>
 
-<h3 align="center">Fiche <?php echo $model->name; ?></h3>
+<h3 align="center"><?php echo Yii::t('common', 'patientForm') . $model->name; ?></h3>
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {
@@ -35,7 +35,7 @@ echo CHtml::link(Yii::t('common', 'htmlView'), array('fiche/viewOnePage', 'id' =
 ?>
 <div style="margin-top: -15px; text-align:right;">
     <?php
-    $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', 'export as pdf');
+    $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', Yii::t('common', 'exportPdf'));
     echo CHtml::link(Yii::t('common', 'exportPdf') . $img, array('answer/exportPDF', 'id' => $model->_id), array());
     ?>
 </div>

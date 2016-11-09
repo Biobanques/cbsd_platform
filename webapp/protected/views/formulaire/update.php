@@ -16,14 +16,14 @@ height: 25px;
 ");
 ?>
 
-<h3 align="center">Formulaire <?php echo $model->name; ?></h3>
+<h3 align="center"><?php echo Yii::t('common', 'form') . $model->name; ?></h3>
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {
-    echo "<p><b>Dernière mise à jour le: </b>" . $model->getLastModified() . "</p>";
+    echo "<p><b>" . Yii::t('common', 'lastModifiedDate') . ": </b>" . $model->getLastModified() . "</p>";
 }
 ?>
-<p><b>Crée par: </b><?php echo $model->creator; ?></p>
+<p><?php echo "<b>" . Yii::t('common', 'createdBy') . "</b>: " . $model->creator; ?></p>
 <hr />
 
 <?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
@@ -49,7 +49,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                Pour ajouter une rubrique
+                <?php echo Yii::t('common', 'forAddQuestion') ?>
             </h3>
         </div>
         <div id="collapse1" class="panel-collapse collapse in">
@@ -64,7 +64,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                Pour ajouter un bloc de questions déjà existant
+                <?php echo Yii::t('common', 'forAddQuestionBlock') ?>
             </h3>
         </div>
         <div id="collapse2" class="panel-collapse collapse">
@@ -79,7 +79,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                Pour ajouter un onglet
+                <?php echo Yii::t('common', 'forAddTab') ?>
             </h3>
         </div>
         <div id="collapse3" class="panel-collapse collapse">
@@ -94,7 +94,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                Pour modifier un onglet
+                <?php echo Yii::t('common', 'forModifyTab') ?>
             </h3>
         </div>
         <div id="collapse4" class="panel-collapse collapse">
@@ -109,7 +109,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-                Pour modifier une question
+                <?php echo Yii::t('common', 'forModifyQuestion') ?>
             </h3>
         </div>
         <div id="collapse5" class="panel-collapse collapse">

@@ -328,7 +328,7 @@ class AnswerController extends Controller {
             Yii::app()->end();
         }
     }
-   
+  
     /**
      * Do a search a selected question.
      */
@@ -339,7 +339,7 @@ class AnswerController extends Controller {
             echo QuestionnaireHTMLRenderer::renderQuestionForSearchHTML($question, 'fr', false);
         }
     }
-   
+  
     /**
      * Write queries (search filter)
      */
@@ -351,11 +351,12 @@ class AnswerController extends Controller {
         $compare = array();
         $dynamics = array();
         $html = "";
+        $htmlQueries = "";
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
             echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">" . Yii::t('common', 'noFilterSelected') . "</h4>" : "<h4 align=\"center\">" . Yii::t('common', 'query') . "</h4>";
             foreach ($_POST['Answer'] as $label => $answer) {
                 if ($label == "last_updated" && $answer == "") {
-                   
+                  
                 } elseif ($label != "condition" && $label != "compare" && $label != "dynamics") {
                     if (!is_array($answer)) {
                         $mainQuestions[$label] = $answer;
@@ -404,10 +405,30 @@ class AnswerController extends Controller {
                 }
             }
             $html .= "</ul>";
-            echo $html;
-            //echo CHtml::button('Exporter la requête', array('id' => 'exportQueries', 'class' => 'btn btn-default', 'style' => 'margin:auto;display:block;'));
+            $htmlQueries .= $html;
+            $htmlQueries .= CHtml::form(Yii::app()->createUrl("answer/exportQueries"), "POST"); 
+            $htmlQueries .= CHtml::hiddenField('exportQueries', $html);
+            $htmlQueries .= CHtml::submitButton('Exporter la requête', array('class' => 'btn btn-default', 'style' => 'margin:auto;display:block;'));
+            $htmlQueries.= CHtml::endForm();
+            echo $htmlQueries;
+           
         }
     }
 
+    public function actionExportQueries() {
+        if (isset($_POST['exportQueries'])) {
+            $html = Yii::t('common', 'exportQueriesDate');
+            $html .= $_POST['exportQueries'];
+            $html = str_replace("<ul><li>", '- ', $html);
+            $html = str_replace("</li></ul>", '', $html);
+            $html = str_replace("</li><li>", "\n- ", $html);
+            $html = str_replace("</li>" . Yii::t('common', 'and') . "<li>", "\n" . Yii::t('common', 'and') . "\n- ", $html);
+            $html = str_replace("</li>" . Yii::t('common', 'or') . "<li>", "\n" . Yii::t('common', 'and') . "\n- ", $html);
+            $html = str_replace("<ul>" . Yii::t('common', 'and') . "<li>", "- ", $html);
+            $html = str_replace("<ul>" . Yii::t('common', 'or') . "<li>", "- ", $html);
+            Yii::app()->getRequest()->sendFile(date('Ymd_H') . 'h' . date('i') . "_queries_CBSD_Platform.txt", $html, "text/html; charset=UTF-8");
+        }
+    }
 }
+
 

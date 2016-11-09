@@ -10,7 +10,8 @@ return array(
     'seizeForm' => 'Saisir une fiche patient',
     'searchForm' => 'Recherche',
     'users' => 'Utilisateurs',
-    'forms' => 'Formulaires',
+    'form' => 'Formulaire ',
+    'patientForm' => 'Fiche ',
     'fiches' => 'Fiches',
     'logSystem' => 'Log système',
     // administration
@@ -27,7 +28,7 @@ return array(
     'back' => 'Retour',
     'addGene' => 'Ajouter un gène',
     'cancel' => 'Annuler',
-    'updatePatientForm' => 'Mettre à jour la fiche',
+    'updateThePatientForm' => 'Mettre à jour la fiche',
     'insert' => 'Saisir',
     'patientFormsAssociated' => 'Rechercher les fiches associées aux patients sélectionnés',
     // authentification
@@ -35,6 +36,7 @@ return array(
     // créer un utilisateur
     'firstName' => 'Prénom',
     'lastName' => 'Nom',
+    'usualName' => 'Nom d\'usage',
     'profile' => 'Profil',
     'email' => 'Email',
     'phone' => 'Téléphone',
@@ -59,6 +61,13 @@ return array(
     'availablePatientForms' => 'Liste des fiches disponibles',
     'noFilterSelected' => 'Aucun filtre sélectionné.',
     'query' => 'Requête',
+    'exportQueriesDate' => "Résultat de la requête (" . date("Y/m/d") . ' at ' . date("H:i") . ")\n\n",
+    'form' => 'Formulaire ',
+    'forAddQuestion' => 'Pour ajouter une rubrique',
+    'forAddQuestionBlock' => 'Pour ajouter un bloc de questions déjà existant',
+    'forAddTab' => 'Pour ajouter un onglet',
+    'forModifyTab' => 'Pour modifier un onglet',
+    'forModifyQuestion' => 'Pour modifier une question',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',
@@ -73,6 +82,8 @@ return array(
     'birthDate' => 'Date de naissance',
     'sex' => 'Genre',
     'lastModified' => 'Date de modification',
+    'lastModifiedDate' => 'Date de modification',
+    'lastUpdatedDate' => 'Dernière mise à jour le ',
     'examDate' => 'Date d\'examen',
     'addQuestion' => 'Ajouter une question',
     'titleBloc' => 'Titre du bloc',
@@ -82,6 +93,7 @@ return array(
     'createPatientForm' => 'Créer une fiche',
     'insertPatientForm' => 'Saisir une nouvelle fiche',
     'choosePatientForm' => 'Choisir une fiche',
+    'htmlViewForm' => 'Vue HTML du formulaire ',
     // profil
     'administrateur' => 'Administrateur',
     'clinicien' => 'Clinicien',
@@ -181,7 +193,7 @@ return array(
     'unvalidMobilePhone' => 'Le numéro de téléphone portable que vous avez renseigné n\'est pas valide (format: 0645825443).',
     'addressClinician' => 'L\'adresse doit être renseignée par le clinicien.',
     'centerNeuropathologist' => 'Le centre de référence doit être renseigné pour le neuropathologiste.',
-    'insertValues' => 'Veuillez renseigner les valeurs.',    
+    'insertValues' => 'Veuillez renseigner les valeurs.',   
     // text
     'signin' => 'Connexion utilisateur',
     'noAccount' => 'Vous n\'êtes pas encore inscrit?',
@@ -243,6 +255,9 @@ return array(
     'createdBy' => 'Crée par ',
     'htmlView' => 'Vue format HTML',
     'standardView' => 'Vue standard',
-    'exportPdf' => 'Exporter au format PDF'
+    'exportPdf' => 'Exporter au format PDF',
+    'valuesQuestion' => '*Les valeurs sont utilisées pour les listes (radio bouton et listes déroulantes). Le séparateur de valeurs est la virgule.',
+    'uniqueIdQuestion' => 'L\'id doit être unique parmi les questions.',
+    'uniqueIdForm' => 'Id doit être unique.'
 );
 ?>

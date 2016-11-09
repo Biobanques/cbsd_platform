@@ -4,7 +4,7 @@
     <div class="col-lg-3">
         <div class="panel panel-primary">
             <!-- Default panel contents -->
-            <div class="panel-heading">Administration</div>
+            <div class="panel-heading"><?php echo Yii::t('common', 'administration') ?></div>
             <div class="panel-body">
                 <?php
                 $this->widget('bootstrap.widgets.TbMenu', array(

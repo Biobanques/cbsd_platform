@@ -8,7 +8,6 @@
     ?>
 
     <div class="row">
-        <p>Vous pouvez modifier une question en sélectionnant la question à modifier puis de renseigner la valeur de la nouvelle question ainsi que son nouvel identifiant.</p>
         <?php
         echo CHtml::label('Question à modifier', 'old_onglet');
         echo CHtml::dropDownList('old_question', '', $model->getArrayQuestions(), array("prompt" => "----", "required" => "required"));

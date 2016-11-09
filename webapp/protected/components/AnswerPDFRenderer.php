@@ -153,7 +153,7 @@ class AnswerPDFRenderer
             $pdf->MultiCell(120, 10, $answer->answer, 1, 'L', 0, 0, '', '', true, 0, false, true, 0, 'T', true);
         }
         if ($answer->type == "date") {
-            $pdf->MultiCell(120, 10, date("d/m/Y", $answer->answer->sec), 1, 'L', 0, 0, '', '', true, 0, false, true, 0, 'T', true);
+            $pdf->MultiCell(120, 10, date("d/m/Y", strtotime($answer->answer['date'])), 1, 'L', 0, 0, '', '', true, 0, false, true, 0, 'T', true);
         }
         if ($answer->type == "radio") {
             if ($lang == "fr" && $answer->values_fr != "") {

@@ -69,7 +69,7 @@ echo CHtml::link(Yii::t('common', 'htmlView'), array('answer/viewOnePage', 'id' 
 <div style="display:inline; margin:40%; width: 100px; ">
     <?php
     echo CHtml::link(Yii::t('common', 'cancel'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:-40px;'));
-    echo CHtml::link(Yii::t('common', 'updateAPatientForm'), array('answer/update', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:10px;'));
+    echo CHtml::link(Yii::t('common', 'updateThePatientForm'), array('answer/update', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:10px;'));
     ?>
 </div>
 <?php

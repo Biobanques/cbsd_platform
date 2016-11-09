@@ -11,13 +11,11 @@
 
     <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
     <div class="row">
-        <p>Le titre est le libellé affiché de l'onglet.</p>
         <?php echo $form->labelEx($model, 'title'); ?>
         <?php echo $form->textField($model, 'title'); ?>
         <?php echo $form->error($model, 'title'); ?>
     </div>
     <div class="row">
-        <p>L'id permet de repérer rapidement l'onglet dans l arborescence de questions.</p>
         <?php echo $form->labelEx($model, 'id'); ?>
         <?php echo $form->textField($model, 'id'); ?>
         <?php echo $form->error($model, 'id'); ?>

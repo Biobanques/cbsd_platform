@@ -273,7 +273,7 @@ class SiteController extends Controller
                                 CommonMailer::sendSubscribeUserMail($model, $profil);
                                 CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['centre']);
                                 Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                                $this->redirect(array('site/index'));
+                                $this->redirect(array('site/login'));
                             }
                         }
                     }
@@ -283,7 +283,7 @@ class SiteController extends Controller
                         CommonMailer::sendSubscribeUserMail($model, $profil);
                         CommonMailer::sendMailConfirmationProfilEmail($model, $profil, NULL);
                         Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                        $this->redirect(array('site/index'));
+                        $this->redirect(array('site/login'));
                     }
                 }
                 Yii::app()->user->setFlash('error', Yii::t('common', 'userNotSaved'));
@@ -325,7 +325,7 @@ class SiteController extends Controller
         } else {
             Yii::app()->user->setFlash('error', Yii::t('common', 'unvalidLink'));
         }
-        $this->redirect(array('site/index'));
+        $this->redirect(array('site/login'));
     }
 
     /**
@@ -344,6 +344,6 @@ class SiteController extends Controller
         } else {
             Yii::app()->user->setFlash('error', Yii::t('common', 'unvalidLink'));
         }
-        $this->redirect(array('site/index'));
+        $this->redirect(array('site/login'));
     }
 }
