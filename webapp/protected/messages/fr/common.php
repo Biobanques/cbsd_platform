@@ -11,8 +11,9 @@ return array(
     'searchForm' => 'Recherche',
     'users' => 'Utilisateurs',
     'form' => 'Formulaire ',
+    'forms' => 'Modèles de formulaires',
     'patientForm' => 'Fiche ',
-    'fiches' => 'Fiches',
+    'fiches' => 'Fiches de patient',
     'logSystem' => 'Log système',
     // administration
     'createUser' => 'Créer un utilisateur',
@@ -49,9 +50,9 @@ return array(
     // titre
     'registeredUsers' => 'Utilisateurs enregistrés',
     'manageUsers' => 'Gestion des utilisateurs',
-    'manageForms' => 'Gestion des formulaires',
+    'manageForms' => 'Modèles de formulaires',
     'managePatientForm' => 'Gestion des fiches',
-    'manageQuestionsBlock' => 'Gestion des blocs',
+    'manageQuestionsBlock' => 'Blocs de questions réutilisables',
     'manageRules' => 'Gestion des droits',
     'createUser' => 'Créer un utilisateur',
     'createForm' => 'Créer un formulaire',
@@ -193,7 +194,7 @@ return array(
     'unvalidMobilePhone' => 'Le numéro de téléphone portable que vous avez renseigné n\'est pas valide (format: 0645825443).',
     'addressClinician' => 'L\'adresse doit être renseignée par le clinicien.',
     'centerNeuropathologist' => 'Le centre de référence doit être renseigné pour le neuropathologiste.',
-    'insertValues' => 'Veuillez renseigner les valeurs.',   
+    'insertValues' => 'Veuillez renseigner les valeurs.',  
     // text
     'signin' => 'Connexion utilisateur',
     'noAccount' => 'Vous n\'êtes pas encore inscrit?',

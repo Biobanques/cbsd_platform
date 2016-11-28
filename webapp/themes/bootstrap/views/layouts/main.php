@@ -101,6 +101,9 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                      */
                     $controler = Yii::app()->getController()->getId();
                     $action = Yii::app()->getController()->getAction()->getId();
+                    if ($controler == "admin") {
+                        $controler = "auditTrail";
+                    }
                     echo CHtml::link(
                             CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "fr"))
                             )

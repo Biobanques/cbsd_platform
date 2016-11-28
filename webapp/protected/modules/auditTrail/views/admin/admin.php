@@ -1,19 +1,19 @@
 <?php
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
+    $('.search-form').toggle();
+    return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('audit-trail-grid', {
-		data: $(this).serialize()
-	});
-	return false;
+    $.fn.yiiGridView.update('audit-trail-grid', {
+        data: $(this).serialize()
+    });
+    return false;
 });
 ");
 ?>
 
-<h1>Suivi des actions sur la base</h1>
+<h1><?php echo Yii::t('common', 'logSystem'); ?></h1>
 
 <?php
 $imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
@@ -21,7 +21,7 @@ echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('
 ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
-	'model'=>$model,
+    'model'=>$model,
 )); ?>
 </div><!-- search-form -->
 

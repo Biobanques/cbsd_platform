@@ -27,7 +27,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Yii::t('common', 'manageUsers'); ?></h1>
+<h1><?php echo Yii::t('common', 'registeredUsers'); ?></h1>
 <?php
 $imagecreateuser = CHtml::image(Yii::app()->baseUrl . '/images/user_add.png', Yii::t('common', 'createUser'));
 echo CHtml::link($imagecreateuser . Yii::t('common', 'createUser'), array('user/create'));

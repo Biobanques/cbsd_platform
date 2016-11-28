@@ -15,19 +15,19 @@
 <?php
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
+    $('.search-form').toggle();
+    return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('formulaire-grid', {
-		data: $(this).serialize()
-	});
-	return false;
+    $.fn.yiiGridView.update('formulaire-grid', {
+        data: $(this).serialize()
+    });
+    return false;
 });
 ");
 ?>
 
-<h1><?php echo Yii::t('common', 'manageForms'); ?></h1>
+<h1><?php echo Yii::t('common', 'forms'); ?></h1>
 
 <?php
 $imagecreateform = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', Yii::t('common', 'createForm'));
@@ -61,4 +61,3 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ),
 ));
 ?>
-
