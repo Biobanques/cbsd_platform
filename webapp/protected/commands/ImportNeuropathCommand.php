@@ -283,9 +283,19 @@ class ImportNeuropathCommand extends CConsoleCommand {
                             $answerQuestion->id = $k;
                             $answerQuestion->label = $k;
                             $answerQuestion->label_fr = $k;
-                            $answerQuestion->type = "input";
+                            if (is_numeric($v)) {
+                                $answerQuestion->type = "number";
+                            } elseif (CommonTools::isDate($v)) {
+                                $answerQuestion->type = "date";
+                            } else {
+                                $answerQuestion->type = "input";
+                            }
                             $answerQuestion->style = "";
-                            $answerQuestion->answer = $v;
+                            if ($answerQuestion->type == "date") {
+                                $answerQuestion->answer = DateTime::createFromFormat('d/m/Y', date('d/m/Y', strtotime($v)));
+                            } else {
+                                $answerQuestion->answer = $v;
+                            }
                             $answerGroup->answers[] = $answerQuestion;
                         }
                     }

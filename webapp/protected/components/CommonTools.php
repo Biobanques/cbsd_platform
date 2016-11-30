@@ -45,4 +45,19 @@ class CommonTools
     {
         return CommonProperties::$DEV_MODE;
     }
+    
+    public function isDate($date) {
+        if (preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/", $date, $matches) || preg_match("/([0-9]{2})-([0-9]{2})-([0-9]{4})/", $date, $matches)) {
+            if (!checkdate($matches[2], $matches[1], $matches[3])) {
+                return false;
+            }
+        } elseif (preg_match("/([0-9]{4})\/([0-9]{2})\/([0-9]{2})/", $date, $matches) || preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})/", $date, $matches)) {
+            if (!checkdate($matches[2], $matches[3], $matches[1])) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
 }

@@ -78,6 +78,7 @@ function datePicker(clicked) {
         "applyClass": "btn-primary",
         "showDropdowns": true,
         locale: {
+            format: "DD/MM/YYYY",
             applyLabel: 'Valider',
             cancelLabel: 'Effacer'
         }
