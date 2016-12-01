@@ -147,7 +147,7 @@ class QuestionnaireHTMLRenderer {
         $valueInput = "";
         if (Yii::app()->controller->id != "formulaire") {
             if ($question->id == "examdate") {
-                $valueInput = date("d/m/Y");
+                $valueInput = date("m/d/Y");
             }
             if ($question->id == "doctorname") {
                 $valueInput = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());

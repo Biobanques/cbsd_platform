@@ -159,6 +159,7 @@ class Questionnaire extends EMongoDocument
                 $res[$value['id']] = $value['name'];
             }
         }
+        asort($res, SORT_NATURAL | SORT_FLAG_CASE);
         return $res;
     }
     
