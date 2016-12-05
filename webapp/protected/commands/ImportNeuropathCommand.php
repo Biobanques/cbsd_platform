@@ -267,9 +267,9 @@ class ImportNeuropathCommand extends CConsoleCommand {
                 $answer->login = new MongoId($user->_id);
                 $answer->questionnaireMongoId = new MongoId();
                 $answer->name = "Import Neuropath";
-                $answer->last_modified = new MongoDate();
+                $answer->last_modified = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
                 $answer->description = "Données neuropathologiques de la base FileMaker";
-                $answer->last_updated = new MongoDate();
+                $answer->last_updated = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
                 $answerGroup = new AnswerGroup;
                 $answerGroup->id = "onglet";
                 $answerGroup->title = "Données neuropathologiques FileMaker";

@@ -31,6 +31,7 @@ return array(
     'updateThePatientForm' => 'Update patient form',
     'insert' => 'Insert',
     'patientFormsAssociated' => 'Search patient forms associated with the selected patients.',
+    'exportQuery' => 'Export query',
     // authentification
     'login' => 'Login',
     // create an user
@@ -61,7 +62,7 @@ return array(
     'availablePatientForms' => 'List of available patient forms',
     'noFilterSelected' => 'No filter selected.',
     'query' => 'Query',
-    'exportQueriesDate' => "The query result (" . date("d/m/Y") . ' à ' . date("H:i") . ")\n\n",
+    'exportQueriesDate' => "The query result (" . date("d/m/Y") . ' at ' . date("H:i") . ")\n\n",
     'form' => 'Form ',
     'patientForm' => 'Patient form ',
     'forAddQuestion' => 'To add a question',

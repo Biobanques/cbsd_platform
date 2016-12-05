@@ -32,6 +32,7 @@ return array(
     'updateThePatientForm' => 'Mettre à jour la fiche',
     'insert' => 'Saisir',
     'patientFormsAssociated' => 'Rechercher les fiches associées aux patients sélectionnés',
+    'exportQuery' => 'Exporter la requête',
     // authentification
     'login' => 'Nom d\'utilisateur',
     // créer un utilisateur
@@ -62,7 +63,7 @@ return array(
     'availablePatientForms' => 'Liste des fiches disponibles',
     'noFilterSelected' => 'Aucun filtre sélectionné.',
     'query' => 'Requête',
-    'exportQueriesDate' => "Résultat de la requête (" . date("Y/m/d") . ' at ' . date("H:i") . ")\n\n",
+    'exportQueriesDate' => "Résultat de la requête (" . date("Y/m/d") . ' à ' . date("H:i") . ")\n\n",
     'form' => 'Formulaire ',
     'forAddQuestion' => 'Pour ajouter une rubrique',
     'forAddQuestionBlock' => 'Pour ajouter un bloc de questions déjà existant',

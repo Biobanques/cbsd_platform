@@ -344,7 +344,7 @@ class AnswerController extends Controller {
      * Write queries (search filter)
      */
     public function actionWriteQueries() {
-        $operators = array("equals" => "=", "noteq" => "<>", "less" => "<", "greater" => ">", "lesseq" => "<=", "greatereq" => ">=", '$and' => Yii::t('common', 'and'), '$or' => Yii::t('common', 'or'));
+        $operators = array("equals" => "=", "noteq" => "<>", "less" => "<", "greater" => ">", "lesseq" => "<=", "greatereq" => ">=", "between" => "comprise entre", '$and' => Yii::t('common', 'and'), '$or' => Yii::t('common', 'or'));
         $mainQuestions = array();
         $questions = array();
         $condition = array();
@@ -381,6 +381,8 @@ class AnswerController extends Controller {
                     foreach ($dynamics as $k => $v) {
                         if (gettype($v) == "array") {
                             $dynamics[$k] = implode(', ', $v);
+                        } elseif (CommonTools::isDate($v)) {
+                            $dynamics[$k] = str_replace('-', strtolower(Yii::t('common', 'and')), $dynamics[$k]);
                         }
                     }
                 }
@@ -408,7 +410,7 @@ class AnswerController extends Controller {
             $htmlQueries .= $html;
             $htmlQueries .= CHtml::form(Yii::app()->createUrl("answer/exportQueries"), "POST");
             $htmlQueries .= CHtml::hiddenField('exportQueries', $html);
-            $htmlQueries .= CHtml::submitButton('Exporter la requête', array('class' => 'btn btn-default', 'style' => 'margin:auto;display:block;'));
+            $htmlQueries .= CHtml::submitButton(Yii::t('common', 'exportQuery'), array('class' => 'btn btn-default', 'style' => 'margin:auto;display:block;'));
             $htmlQueries.= CHtml::endForm();
             echo $htmlQueries;
           

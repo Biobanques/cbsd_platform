@@ -389,6 +389,20 @@ class Answer extends EMongoDocument {
             $this->answers_group[] = $answerGroup;
         }
     }
+    
+    public function isDatePickerRangeFormat($date) {
+        $dateArray = array();
+        if (strpos($date, "-")) {
+            $dateArray = explode(' - ', $date);
+            if (CommonTools::isDate($dateArray[0]) && CommonTools::isDate($dateArray[1])) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }  
+    }
 
     /**
      * get the last modified value into a french date format JJ/MM/AAAA
