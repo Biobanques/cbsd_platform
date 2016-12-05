@@ -61,8 +61,8 @@ class AnswerPDFRenderer
         $pdf->Cell(0, 5, $answer->name, 0, 1, 'C');
         $pdf->Ln(30);
         $pdf->SetFont('helvetica', 'N', 12);
-        $dd = $answer->last_modified; //mongo date
-        $html = '<span>' . "<b>Description :</b> " . $answer->description . '<br /><b>Dernière modification :</b>' . date("d/m/Y", $dd->sec) . '</span>';
+        $dd = $answer->last_modified['date']; //mongo date
+        $html = '<span>' . "<b>Description :</b> " . $answer->description . '<br /><b>Dernière modification : </b>' . date("d/m/Y H:i", strtotime($dd)) . '</span>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
         $pdf->Ln(10);
 

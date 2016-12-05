@@ -69,7 +69,6 @@ class Answer extends EMongoDocument {
      * last date of save action
      */
     public $last_updated;
-    public $last_updated_from;
 
     /**
      * Working variable to add dynamic search filters
@@ -101,7 +100,7 @@ class Answer extends EMongoDocument {
                 'required'
             ),
             array(
-                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,last_updated_from,user',
+                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,user',
                 'safe',
                 'on' => 'search'
             )
@@ -287,9 +286,9 @@ class Answer extends EMongoDocument {
                             if ($this->compare[$questionId] == "between") {
                                 $answerValue = str_replace(' ', '', $answerValue);
                                 $answerDate = explode("-", $answerValue);
-                                $date_from = str_replace('/', '-', date('Y-m-d', strtotime($answerDate[0])));
-                                $date_to = str_replace('/', '-', date('Y-m-d', strtotime($answerDate[1])));
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $date_from . " 00:00:00.000000", '$lte' => $date_to . " 23:59:59.000000")));
+                                $date_from = str_replace('/', '-', $answerDate[0]);
+                                $date_to = str_replace('/', '-', $answerDate[1]);
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000")));
                             } else {
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
                             }

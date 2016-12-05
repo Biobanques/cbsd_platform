@@ -69,8 +69,8 @@ class QuestionnairePDFRenderer
         $pdf->Cell(0, 5, $questionnaire->name_fr, 0, 1, 'C');
         $pdf->Ln(30);
         $pdf->SetFont('helvetica', 'N', 12);
-        $dd = $questionnaire->last_modified; //mongo date
-        $html = '<span>' . "<b>Description :</b> " . $questionnaire->description . '<br /><b>Last Modified :</b>' . date("d/m/Y", $dd->sec) . '</span>';
+        $dd = $questionnaire->last_modified['date']; //mongo date
+        $html = '<span>' . "<b>Description :</b> " . $questionnaire->description . '<br /><b>Last Modified : </b>' . date("d/m/Y H:i", strtotime($dd)) . '</span>';
         $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
         $pdf->Ln(10);
 
