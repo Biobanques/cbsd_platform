@@ -195,9 +195,9 @@ class Answer extends EMongoDocument {
         if (isset($this->last_updated) && !empty($this->last_updated)) {
             $date = str_replace(' ', '', $this->last_updated);
             $answerFormat = explode("-", $date);
-            $date_from = str_replace('/', '-', date('d-m-Y', strtotime($answerFormat[0])));
-            $date_to = str_replace('/', '-', date('d-m-Y', strtotime($answerFormat[1])));
-            $criteria->last_updated = array('$gte' => new MongoDate(strtotime($date_from . " 00:00:00.000Z")), '$lte' => new MongoDate(strtotime($date_to . " 23:59:59.999Z")));           
+            $date_from = str_replace('/', '-', $answerFormat[0]);
+            $date_to = str_replace('/', '-', $answerFormat[1]);
+            $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
         }
 
         if (isset($this->dynamics) && !empty($this->dynamics)) {
@@ -350,7 +350,7 @@ class Answer extends EMongoDocument {
         $res ['greatereq'] = Yii::t('common', 'greatereq');
         return $res;
     }
-   
+  
     public function getComparaisonDate() {
         $res = array();
         $res ['between'] = "comprise entre";
@@ -396,7 +396,7 @@ class Answer extends EMongoDocument {
      */
     public function getLastModified() {
         if ($this->last_modified != null) {
-            return date("d/m/Y H:m", $this->last_modified->sec);
+            return date('d/m/Y', strtotime($this->last_modified['date']));
         } else {
             return null;
         }
@@ -416,7 +416,7 @@ class Answer extends EMongoDocument {
      */
     public function getLastUpdated() {
         if ($this->last_updated != null) {
-            return date("d/m/Y H:m", $this->last_updated->sec);
+            return date('d/m/Y', strtotime($this->last_updated['date']));
         } else {
             return null;
         }
@@ -711,7 +711,7 @@ class Answer extends EMongoDocument {
         }
         return $label;
     }
-    
+   
     /**
      * retourne toutes les id patient des fiches
      * @return type
@@ -848,8 +848,16 @@ class Answer extends EMongoDocument {
                 $valueExists = false;
                 foreach ($cQuestions as $cQuestion) {
                     if ($cQuestion['label'] == $columnHeader) {
-
-                        $resultLine[] = is_array($cQuestion['answer']) ? implode(', ', $cQuestion['answer']) : $cQuestion['answer'];
+                        //$resultLine[] = is_array($cQuestion['answer']) ? implode(', ', $cQuestion['answer']) : $cQuestion['answer'];
+                        if (is_array($cQuestion['answer'])) {
+                            if (isset($cQuestion['answer']['date'])) {
+                                $resultLine[] = date('d/m/Y', strtotime($cQuestion['answer']['date']));
+                            } else {
+                                $resultLine[] = implode(', ', $cQuestion['answer']);
+                            }
+                        } else {
+                            $resultLine[] = $cQuestion['answer'];
+                        }
                         $valueExists = true;
                         break;
                     }

@@ -162,21 +162,21 @@ class Questionnaire extends EMongoDocument
         asort($res, SORT_NATURAL | SORT_FLAG_CASE);
         return $res;
     }
-    
+   
     public function getFormsById($idForm) {
         $criteria = new EMongoCriteria;
         $criteria->id = $idForm;
         $form = Questionnaire::model()->findAll($criteria);
         return $form;
     }
-    
+   
     public function getFormsByName($nameForm) {
         $criteria = new EMongoCriteria;
         $criteria->name = $nameForm;
         $form = Questionnaire::model()->findAll($criteria);
         return $form;
     }
-    
+   
     /**
      * retourne toutes les noms des fiches
      * @return type
@@ -394,7 +394,7 @@ class Questionnaire extends EMongoDocument
      */
     public function saveQuestionnaireNewGroup($questionGroup)
     {
-        $this->last_modified = new MongoDate();
+        $this->last_modified = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
         if ($questionGroup != null) {
 
             //sinon positionnement relatif
@@ -416,7 +416,7 @@ class Questionnaire extends EMongoDocument
 
     public function saveQuestionnaireNewQuestion($questionForm)
     {
-        $this->last_modified = new MongoDate();
+        $this->last_modified = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
         $cquestion = new Question;
         $cquestion->setAttributesByQuestionForm($questionForm);
         Yii::log("save questionnaire", CLogger::LEVEL_TRACE);
@@ -459,7 +459,7 @@ class Questionnaire extends EMongoDocument
 
     public function saveQuestionnaireNewQuestionBloc($questionForm)
     {
-        $this->last_modified = new MongoDate();
+        $this->last_modified = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
         $cquestion = new Question;
         $cquestion->setAttributesByQuestionForm($questionForm);
         Yii::log("save questionnaire", CLogger::LEVEL_TRACE);

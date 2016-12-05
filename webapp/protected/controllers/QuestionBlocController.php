@@ -240,7 +240,7 @@ class QuestionBlocController extends Controller {
     }
 
     public function saveQuestionnaireNewGroup($questionnaire, $questionGroup) {
-        $questionnaire->last_modified = new MongoDate();
+        $questionnaire->last_modified = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
         if ($questionGroup != null) {
 
             //sinon positionnement relatif

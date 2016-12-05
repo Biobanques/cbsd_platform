@@ -169,7 +169,7 @@ class AnswerController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
         if (isset($_POST['Questionnaire'])) {
-            $model->last_updated = new MongoDate();
+            $model->last_updated = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
             $flagNoInputToSave = true;
             foreach ($model->answers_group as $answer_group) {
                 foreach ($answer_group->answers as $answerQuestion) {
@@ -209,7 +209,7 @@ class AnswerController extends Controller {
         $model = $this->loadModel($id);
         $nbMax = 0;
         if (isset($_POST['Questionnaire'])) {
-            $model->last_updated = new MongoDate();
+            $model->last_updated = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
             foreach ($model->answers_group as $answer_group) {
                 foreach ($answer_group->answers as $answerQuestion) {
                     $nbMax = $model->getMaxIdGene($nbMax, $answerQuestion->id);
@@ -328,7 +328,7 @@ class AnswerController extends Controller {
             Yii::app()->end();
         }
     }
-  
+ 
     /**
      * Do a search a selected question.
      */
@@ -339,7 +339,7 @@ class AnswerController extends Controller {
             echo QuestionnaireHTMLRenderer::renderQuestionForSearchHTML($question, 'fr', false);
         }
     }
-  
+ 
     /**
      * Write queries (search filter)
      */
@@ -356,7 +356,7 @@ class AnswerController extends Controller {
             echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">" . Yii::t('common', 'noFilterSelected') . "</h4>" : "<h4 align=\"center\">" . Yii::t('common', 'query') . "</h4>";
             foreach ($_POST['Answer'] as $label => $answer) {
                 if ($label == "last_updated" && $answer == "") {
-                  
+                 
                 } elseif ($label != "condition" && $label != "compare" && $label != "dynamics") {
                     if (!is_array($answer)) {
                         $mainQuestions[$label] = $answer;
@@ -406,12 +406,12 @@ class AnswerController extends Controller {
             }
             $html .= "</ul>";
             $htmlQueries .= $html;
-            $htmlQueries .= CHtml::form(Yii::app()->createUrl("answer/exportQueries"), "POST"); 
+            $htmlQueries .= CHtml::form(Yii::app()->createUrl("answer/exportQueries"), "POST");
             $htmlQueries .= CHtml::hiddenField('exportQueries', $html);
             $htmlQueries .= CHtml::submitButton('Exporter la requête', array('class' => 'btn btn-default', 'style' => 'margin:auto;display:block;'));
             $htmlQueries.= CHtml::endForm();
             echo $htmlQueries;
-           
+          
         }
     }
 
@@ -430,5 +430,3 @@ class AnswerController extends Controller {
         }
     }
 }
-
-

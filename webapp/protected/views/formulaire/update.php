@@ -20,7 +20,8 @@ height: 25px;
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {
-    echo "<p><b>" . Yii::t('common', 'lastModifiedDate') . ": </b>" . $model->getLastModified() . "</p>";
+    $q = Questionnaire::model()->findByPk(new MongoId($_GET['id']));
+    echo "<p><b>" . Yii::t('common', 'lastModifiedDate') . ": </b>" . date('d/m/Y', strtotime($q->last_modified['date'])) . "</p>";
 }
 ?>
 <p><?php echo "<b>" . Yii::t('common', 'createdBy') . "</b>: " . $model->creator; ?></p>
@@ -90,7 +91,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
             </div>
         </div>
     </div>
-    
+   
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
@@ -105,7 +106,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
             </div>
         </div>
     </div>
-    
+   
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse5">

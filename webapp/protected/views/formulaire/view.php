@@ -25,7 +25,8 @@ $(document).ready(function() {
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {
-    echo "<p><b>" . Yii::t('common', 'lastUpdated') . "</b>" . $model->getLastModified() . "</p>";
+    $q = Questionnaire::model()->findByPk(new MongoId($_GET['id']));
+    echo "<p><b>" . Yii::t('common', 'lastModifiedDate') . ": </b>" . date('d/m/Y', strtotime($q->last_modified['date'])) . "</p>";
 }
 ?>
 <p><b>Crée par: </b><?php echo $model->creator; ?></p>
