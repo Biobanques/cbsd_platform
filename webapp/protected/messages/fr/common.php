@@ -70,6 +70,7 @@ return array(
     'forAddTab' => 'Pour ajouter un onglet',
     'forModifyTab' => 'Pour modifier un onglet',
     'forModifyQuestion' => 'Pour modifier une question',
+    'bloc' => 'Bloc ',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',
@@ -96,6 +97,21 @@ return array(
     'insertPatientForm' => 'Saisir une nouvelle fiche',
     'choosePatientForm' => 'Choisir une fiche',
     'htmlViewForm' => 'Vue HTML du formulaire ',
+    'idQuestion' => 'Id de la question',
+    'label' => 'Etiquette',
+    'questionType' => 'Type de la question',
+    'questionGroup' => 'Onglet de questions',
+    'values' => 'Valeurs',
+    'questionFloat' => 'Alignement de la question',
+    'questionPosition' => 'La question devra apparaître en dessous de',
+    'addTitleQuestion' => 'Pour ajouter un titre au dessus de la question',
+    'help' => 'Infobulle',
+    'idBlock' => 'Id du bloc',
+    'idQuestionGroup' => 'Id de l\'onglet',
+    'currentQuestionGroup' => 'Onglet actuel',
+    'newQuestionGroup' => 'Nouvel onglet',
+    'currentLabel' => 'Etiquette actuelle',
+    'newLabel' => 'Nouvelle étiquette',
     // profil
     'administrateur' => 'Administrateur',
     'clinicien' => 'Clinicien',
@@ -260,6 +276,7 @@ return array(
     'exportPdf' => 'Exporter au format PDF',
     'valuesQuestion' => '*Les valeurs sont utilisées pour les listes (radio bouton et listes déroulantes). Le séparateur de valeurs est la virgule.',
     'uniqueIdQuestion' => 'L\'id doit être unique parmi les questions.',
-    'uniqueIdForm' => 'Id doit être unique.'
+    'uniqueIdForm' => 'Id doit être unique.',
+    'chooseQuestionBlock' => 'Choisissez un bloc de questions à inclure dans le formulaire '
 );
 ?>

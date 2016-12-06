@@ -161,7 +161,6 @@ class FormulaireController extends Controller {
                 if ($onglet->id == $_POST['old_onglet']) {
                     $onglet->title = $_POST['new_onglet'];
                     $onglet->title_fr = $_POST['new_onglet'];
-                    $onglet->id = $_POST['new_id'];
                     if ($model->save()) {
                         Yii::app()->user->setFlash('success', Yii::t('common', 'tabUpdated'));
                     } else {

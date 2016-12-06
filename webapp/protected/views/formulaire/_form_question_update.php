@@ -9,14 +9,14 @@
 
     <div class="row">
         <?php
-        echo CHtml::label('Question à modifier', 'old_onglet');
-        echo CHtml::dropDownList('old_question', '', $model->getArrayQuestions(), array("prompt" => "----", "required" => "required"));
+        echo CHtml::label(Yii::t('common', 'currentLabel'), 'old_onglet');
+        echo CHtml::dropDownList(Yii::t('common', 'currentLabel'), '', $model->getArrayQuestions(), array("prompt" => "----", "required" => "required"));
         ?>
     </div>
     <div class="row">
     <?php
-        echo CHtml::label('Nouvelle question', '');
-        echo CHtml::textfield('new_question', '', array("required" => "required"));
+        echo CHtml::label(Yii::t('common', 'newLabel'), '');
+        echo CHtml::textfield(Yii::t('common', 'newLabel'), '', array("required" => "required"));
     ?>
     </div>
     <div class="row buttons">

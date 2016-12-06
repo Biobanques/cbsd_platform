@@ -31,9 +31,10 @@ class QuestionBlocForm extends CFormModel
      */
     public function attributeLabels() {
         return array(
-            'title' => 'Titre',
+            'title' => Yii::t('common', 'titleBloc'),
             'questions' => 'Questions',
-            'parent_group' => 'Groupe parent'
+            'parent_group' => 'Groupe parent',
+            'id' => Yii::t('common', 'idBlock')
         );
     }
 

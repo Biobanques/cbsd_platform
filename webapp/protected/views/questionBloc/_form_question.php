@@ -7,11 +7,11 @@
     ));
     ?>
 
-    <p class="note"><?php echo Yii::t('common', 'ChampsObligatoires'); ?></p>
+    <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
 
     <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
-    <p>*L'id doit être unique parmi les questions. Il permet de gérer des mécanismes liées à l'ordonnancement des questions et aux traitements de validation.</p>
-    <p>*Les valeurs sont utilisées pour les listes (radio bouton et listes déroulantes). Le séparateur de valeurs est la virgule.</p>
+    <p><b><?php echo Yii::t('common', 'uniqueIdQuestion') ?></b></p>
+    <p><b><?php echo Yii::t('common', 'valuesQuestion') ?></b></p>
 
     <div >
         <div class="col-lg-6">

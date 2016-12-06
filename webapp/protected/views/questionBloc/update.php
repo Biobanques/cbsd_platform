@@ -1,4 +1,4 @@
-<h3 align="center">Bloc <?php echo $model->title; ?></h3>
+<h3 align="center"><?php echo Yii::t('common', 'bloc') . $model->title; ?></h3>
 
 <div class="form">
     <?php
@@ -22,7 +22,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">
-            Pour ajouter une rubrique
+            <?php echo Yii::t('common', 'forAddQuestion') ?>
         </h3>
     </div>
     <div class="panel-body">

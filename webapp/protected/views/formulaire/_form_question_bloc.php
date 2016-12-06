@@ -11,7 +11,7 @@
 
     <?php echo $form->errorSummary($questionBloc, null, null, array('class' => 'alert alert-error')); ?>
     <div class="row">
-        <p>Choisissez un bloc de questions à inclure dans le formulaire <?php echo $model->name; ?>.</p>
+        <p><?php echo Yii::t('common', 'chooseQuestionBlock') . $model->name; ?>.</p>
         <?php echo $form->labelEx($questionBloc, 'title'); ?>
         <?php echo $form->dropDownList($questionBloc, 'title', QuestionBloc::model()->getAllBlocsTitles(), array('prompt' => '----')); ?>
         <?php echo $form->error($questionBloc, 'title'); ?>

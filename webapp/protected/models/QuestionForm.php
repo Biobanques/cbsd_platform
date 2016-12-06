@@ -95,14 +95,14 @@ class QuestionForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'label' => 'Etiquette',
-            'idQuestionBefore' => 'La question devrait apparaître en dessous de',
-            'idQuestionGroup' => 'Onglet de questions',
-            'style' => 'Alignement de la question',
-            'values' => 'Valeurs',
-            'precomment' => 'Pour ajouter un titre au dessus de la question',
-            'precomment_fr' => 'Pour ajouter un titre au dessus de la question',
-            'help' => 'Info-bulle'
+            'label' => Yii::t('common', 'label'),
+            'idQuestionBefore' => Yii::t('common', 'questionPosition'),
+            'idQuestionGroup' => Yii::t('common', 'questionGroup'),
+            'style' => Yii::t('common', 'questionFloat'),
+            'values' => Yii::t('common', 'values'),
+            'precomment' => Yii::t('common', 'addTitleQuestion'),
+            'precomment_fr' => Yii::t('common', 'addTitleQuestion'),
+            'help' => Yii::t('common', 'help'),
         );
     }
 

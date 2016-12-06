@@ -1,4 +1,4 @@
-<h3 align="center">Bloc <?php echo $model->title; ?></h3>
+<h3 align="center"><?php echo Yii::t('common', 'bloc') . $model->title; ?></h3>
 <hr />
 
 <div>

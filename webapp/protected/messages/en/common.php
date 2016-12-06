@@ -67,9 +67,10 @@ return array(
     'patientForm' => 'Patient form ',
     'forAddQuestion' => 'To add a question',
     'forAddQuestionBlock' => 'To add an existing block of questions',
-    'forAddTab' => 'To add a tab',
-    'forModifyTab' => 'To modify a tab',
+    'forAddTab' => 'To add a questions group',
+    'forModifyTab' => 'To modify a questions group',
     'forModifyQuestion' => 'To modify a question',
+    'bloc' => 'Block ',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',
@@ -95,6 +96,21 @@ return array(
     'insertPatientForm' => 'Insert a new patient form',
     'choosePatientForm' => 'Choose a patient form',
     'htmlViewForm' => 'HTML view of the form ',
+    'idQuestion' => 'Question id',
+    'label' => 'Label',
+    'questionType' => 'Question type',
+    'questionGroup' => 'Questions group',
+    'values' => 'Values',
+    'questionFloat' => 'Position of the question',
+    'questionPosition' => 'The question shall be shown below',
+    'addTitleQuestion' => 'To add a title above the question',
+    'help' => 'Tooltip',
+    'idBlock' => 'Block id',
+    'idQuestionGroup' => 'Questions group id',
+    'currentQuestionGroup' => 'Current questions group',
+    'newQuestionGroup' => 'New questions group',
+    'currentLabel' => 'Current label',
+    'newLabel' => 'New label',
     // profil
     'administrateur' => 'Administrator',
     'clinicien' => 'Clinician',
@@ -248,5 +264,6 @@ return array(
     'valuesQuestion' => '*Values are used for lists (radio button and dropdownlist). The value separator is the comma.',
     'uniqueIdQuestion' => '*Id must be unique doit être unique among the questions.',
     'uniqueIdForm' => 'Id must be unique.',
+    'chooseQuestionBlock' => 'Choose a block of questions to include in the form '
 );
 ?>

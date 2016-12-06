@@ -58,7 +58,7 @@ class QuestionGroup extends EMongoEmbeddedDocument {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'id',
+            'id' => Yii::t('common', 'idQuestionGroup'),
             'title' => 'Titre',
             'title_fr' => 'Titre',
             'parent_group' => 'Groupe parent'
