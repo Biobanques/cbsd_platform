@@ -240,7 +240,7 @@ return array(
     'majProfil' => 'update rules for profiles ',
     'forPatientForm' => 'for patient forms ',
     'lastUpdated' => 'Last updated: ',
-    'createdBy' => 'Created by ',
+    'createdBy' => 'Created by',
     'htmlView' => 'View HTML format',
     'standardView' => 'Standard view',
     'exportPdf' => 'Export as PDF',

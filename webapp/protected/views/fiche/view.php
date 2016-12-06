@@ -28,7 +28,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     echo "<p><b>" . Yii::t('common', 'lastUpdated') . "</b>" . $model->getLastUpdated() . "</p>";
 }
 ?>
-<p><b> <?php echo Yii::t('common', 'createdBy') ?> </b><?php echo $model->creator; ?></p>
+<p><b> <?php echo Yii::t('common', 'createdBy') ?>: </b><?php echo $model->creator; ?></p>
 <hr />
 <?php
 echo CHtml::link(Yii::t('common', 'htmlView'), array('fiche/viewOnePage', 'id' => $model->_id));

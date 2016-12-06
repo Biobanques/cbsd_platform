@@ -22,13 +22,13 @@ for (var i = 0; i < len_selectlist; i++) {
 ?>
 
 <h3 align="center"><?php echo Yii::t('common', 'patientForm') . $model->name; ?></h3>
-<p>Description: <?php echo $model->description; ?></p>
+<p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {
     echo "<p><b>" . Yii::t('common', 'lastUpdated') . "</b>" . $model->getLastUpdated() . "</p>";
 }
 ?>
-<p><b> <?php echo Yii::t('common', 'createdBy') ?> </b><?php echo $model->creator; ?></p>
+<p><b> <?php echo Yii::t('common', 'createdBy') ?>: </b><?php echo $model->creator; ?></p>
 <hr />
 <?php
 echo CHtml::link(Yii::t('common', 'htmlView'), array('rechercheFiche/viewOnePage', 'id' => $model->_id));

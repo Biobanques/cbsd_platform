@@ -164,29 +164,29 @@ class QuestionnaireHTMLRenderer {
         }
         if ($isAnswered) {
             if ($question->type == "date") {
-                $valueInput = $question->answer['date'];
+                $valueInput = date("d/m/Y", strtotime($question->answer['date']));
             } else {
                 $valueInput = $question->answer;
             }
         }
         if ($question->type == "input") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\" style=\"height:30px;\"/>";
         }
         if ($question->type == "number" || $question->type == "expression") {
-            $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\"/>";
+            $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\" style=\"height:30px;\"/>";
         }
         if ($question->type == "date") {
             if (Yii::app()->controller->id == "answer" || Yii::app()->controller->id == "fiche") {
                 if ($valueInput != "") {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+                    $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\" style=\"height:30px;\"/>";
                 } else {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\"/>";
+                    $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\" style=\"height:30px;\"/>";
                 }
             } else {
                 if ($valueInput != "") {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+                    $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\" style=\"height:30px;\"/>";
                 } else {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\"/>";
+                    $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\" style=\"height:30px;\"/>";
                 }
             }
         }

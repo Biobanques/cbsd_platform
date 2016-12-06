@@ -29,7 +29,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     echo "<p><b>" . Yii::t('common', 'lastModifiedDate') . ": </b>" . date('d/m/Y', strtotime($q->last_modified['date'])) . "</p>";
 }
 ?>
-<p><b>Crée par: </b><?php echo $model->creator; ?></p>
+<p><b><?php echo Yii::t('common', 'createdBy') ?>: </b><?php echo $model->creator; ?></p>
 <hr />
 
 <?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
@@ -40,6 +40,6 @@ if ($model->last_modified != null && $model->last_modified != "") {
 </div>
 <div style="display:inline; margin:40%; width: 100px; ">
     <?php
-    echo CHtml::link('Retour', array('formulaire/admin'), array('class' => 'btn btn-default'));
+    echo CHtml::link(Yii::t('common', 'back'), array('formulaire/admin'), array('class' => 'btn btn-default'));
     ?>
 </div>

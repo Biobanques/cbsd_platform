@@ -1,19 +1,19 @@
-<h4>Patient</h4>
-<div class="well">
-    <table cellpadding="20">
-        <tr>
-            <td><b><?php echo Yii::t('common', 'birthName') ?> : </b><?php echo $patient->birthName; ?></td>
-            <td><b><?php echo Yii::t('common', 'firstName') ?> : </b><?php echo $patient->firstName; ?></td>
-        </tr>
-        <tr>
-            <td><b><?php echo Yii::t('common', 'birthDate') ?> : </b><?php echo $patient->birthDate; ?></td>
-            <?php
-            if (Yii::app()->user->profil == "administrateur")
-                echo "<td><b>Patient ID : </b>" . $patient->id . "</td>";
-            ?>
-        </tr>
-    </table>
-</div>
+    <?php if (Yii::app()->user->getState('activeProfil') != "chercheur") { ?>
+        <h4>Patient</h4>
+        <?php
+        $this->widget('bootstrap.widgets.TbGridView', array(
+            'type' => 'striped bordered condensed',
+            'dataProvider' => new CArrayDataProvider(array(get_object_vars($patient))),
+            'template' => "{items}",
+            'columns' => array(
+                array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->isAdmin()),
+                array('header' => Yii::t('common', 'birthName'), 'value' => '$data["birthName"]'),
+                array('header' => Yii::t('common', 'firstName'), 'value' => '$data["firstName"]'),
+                array('header' => Yii::t('common', 'birthDate'), 'value' => '$data["birthDate"]')
+            ),
+        ));
+    }
+    ?>
 
 <hr />
 

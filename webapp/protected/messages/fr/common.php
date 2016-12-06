@@ -254,7 +254,7 @@ return array(
     'majProfil' => 'Mise à jour des droits du profil ',
     'forPatientForm' => ' pour les fiches ',
     'lastUpdated' => 'Dernière mise à jour: ',
-    'createdBy' => 'Crée par ',
+    'createdBy' => 'Crée par',
     'htmlView' => 'Vue format HTML',
     'standardView' => 'Vue standard',
     'exportPdf' => 'Exporter au format PDF',
