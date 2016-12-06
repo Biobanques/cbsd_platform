@@ -62,7 +62,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
         'emptyText' => Yii::t('common', 'noPatientForms'),
         'columns' => array(
             array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
-            array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => 'date("m/d/Y", strtotime($data->getLastUpdated()))'),
+            array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'buttons' => array
@@ -94,7 +94,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
         'emptyText' => Yii::t('common', 'noPatientForms'),
         'columns' => array(
             array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
-            array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => 'date("m/d/Y", strtotime($data->getLastUpdated()))'),
+            array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'buttons' => array
@@ -126,7 +126,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
         'emptyText' => Yii::t('common', 'noPatientForms'),
         'columns' => array(
             array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
-            array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => 'date("m/d/Y", strtotime($data->getLastUpdated()))'),
+            array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'buttons' => array

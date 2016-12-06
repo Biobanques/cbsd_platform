@@ -429,7 +429,7 @@ class Answer extends EMongoDocument {
      */
     public function getLastUpdated() {
         if ($this->last_updated != null) {
-            return date('d/m/Y', strtotime($this->last_updated['date']));
+            return date('d/m/Y H:i', strtotime($this->last_updated['date']));
         } else {
             return null;
         }
@@ -696,7 +696,7 @@ class Answer extends EMongoDocument {
                     if ($answer->type != "date") {
                         $result = $answer->answer;
                     } else {
-                        $result = $answer->answer['date'];
+                        $result = date('d/m/Y', strtotime($answer->answer['date']));
                     }
                 }
             }

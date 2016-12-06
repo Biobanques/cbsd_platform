@@ -147,7 +147,7 @@ class QuestionnaireHTMLRenderer {
         $valueInput = "";
         if (Yii::app()->controller->id != "formulaire") {
             if ($question->id == "examdate") {
-                $valueInput = date("m/d/Y");
+                $valueInput = date("d/m/Y");
             }
             if ($question->id == "doctorname") {
                 $valueInput = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
@@ -178,13 +178,13 @@ class QuestionnaireHTMLRenderer {
         if ($question->type == "date") {
             if (Yii::app()->controller->id == "answer" || Yii::app()->controller->id == "fiche") {
                 if ($valueInput != "") {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"" . date("d/m/Y", strtotime($valueInput)) . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+                    $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
                 } else {
                     $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\"/>";
                 }
             } else {
                 if ($valueInput != "") {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"" . date("d/m/Y", strtotime($valueInput)) . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+                    $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
                 } else {
                     $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\"/>";
                 }
