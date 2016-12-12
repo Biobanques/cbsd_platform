@@ -271,7 +271,7 @@ class QuestionnaireHTMLRenderer {
             $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
         }
         $result.="<div class=\"condition\"><div style=\"clear:both;\"></div>";
-        $result.=CHtml::dropDownList("Answer[condition][" . $question->id . "]", 'addCondition', array('$and'=>'ET', '$or'=>'OU'));
+        $result.=CHtml::dropDownList("Answer[condition][" . $question->id . "]", 'addCondition', array('$and'=>Yii::t('common', 'and'), '$or'=>Yii::t('common', 'or')));
         $result.="<div style=\"clear:both;\"></div></div>";
 
         $result.="<label for=\"Answer_dynamics_" . $question->id . "\">" . $label;

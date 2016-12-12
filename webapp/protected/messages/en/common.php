@@ -130,6 +130,7 @@ return array(
     'greatereq' => 'is greater or equal than',
     'and' => 'AND',
     'or' => 'OR',
+    'between' => 'Between',
     // flash messages
     'notAllowCreateClinicalPatientForm' => 'You are not allowed to create a clinical patient form.',
     'notAllowCreateGeneticPatientForm' => 'You are not allowed to create a genetic patient form.',
@@ -264,6 +265,7 @@ return array(
     'valuesQuestion' => '*Values are used for lists (radio button and dropdownlist). The value separator is the comma.',
     'uniqueIdQuestion' => '*Id must be unique doit être unique among the questions.',
     'uniqueIdForm' => 'Id must be unique.',
-    'chooseQuestionBlock' => 'Choose a block of questions to include in the form '
+    'chooseQuestionBlock' => 'Choose a block of questions to include in the form ',
+    'search1' => 'For multiple choice fields, you can select one or several values by holding the CTRL key.'
 );
 ?>

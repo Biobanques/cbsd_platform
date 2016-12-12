@@ -37,8 +37,7 @@ $('#reset').click(function(){
 
 
 <div class="wide form">
-    <p>*Pour les champs à choix multiples, vous pouvez sélectionner plusieurs valeurs avec la touche CTRL du clavier.</p>
-    <p>*Lorsque vous ajoutez une question, vous pouvez ajouter plusieurs valeurs dans les champs de type "input" en les séparant par une virgule (opérateur "OU").</p>
+    <p>*<?php echo Yii::t('common', 'search1') ?></p>
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'light_search-form',

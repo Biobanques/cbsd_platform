@@ -352,7 +352,7 @@ class Answer extends EMongoDocument {
   
     public function getComparaisonDate() {
         $res = array();
-        $res ['between'] = "comprise entre";
+        $res ['between'] = Yii::t('common', 'between');
         return $res;
     }
 

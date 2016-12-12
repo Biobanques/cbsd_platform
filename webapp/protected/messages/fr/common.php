@@ -131,6 +131,7 @@ return array(
     'greatereq' => 'est supérieur ou égal à',
     'and' => 'ET',
     'or' => 'OU',
+    'between' => 'Comprise entre',
     // flash messages
     'notAllowCreateClinicalPatientForm' => 'Vous n\'êtes pas autorisé à créer une fiche clinique.',
     'notAllowCreateGeneticPatientForm' => 'Vous n\'êtes pas autorisé à créer une fiche génétique.',
@@ -277,6 +278,7 @@ return array(
     'valuesQuestion' => '*Les valeurs sont utilisées pour les listes (radio bouton et listes déroulantes). Le séparateur de valeurs est la virgule.',
     'uniqueIdQuestion' => 'L\'id doit être unique parmi les questions.',
     'uniqueIdForm' => 'Id doit être unique.',
-    'chooseQuestionBlock' => 'Choisissez un bloc de questions à inclure dans le formulaire '
+    'chooseQuestionBlock' => 'Choisissez un bloc de questions à inclure dans le formulaire ',
+    'search1' => 'Pour les champs à choix multiples, vous pouvez sélectionner plusieurs valeurs avec la touche CTRL du clavier.'
 );
 ?>
