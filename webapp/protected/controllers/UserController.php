@@ -51,6 +51,7 @@ class UserController extends Controller {
      */
     public function actionCreate() {
         $model = new User;
+        $model->setScenario('subscribe');
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             $criteria = new EMongoCriteria();

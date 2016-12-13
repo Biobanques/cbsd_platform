@@ -9,6 +9,7 @@ class User extends EMongoDocument
 {
     public $login;
     public $password;
+    protected $passwordCompare;
     public $profil;
     public $nom;
     public $prenom;
@@ -44,6 +45,9 @@ class User extends EMongoDocument
             array('centre', 'centreValidator'),
             array('password', 'passwordValidator'),
             array('password', 'length', 'min' => 6),
+            array('password', 'compare', 'compareAttribute' => 'passwordCompare', 'on' => 'subscribe'),
+            array('passwordCompare', 'safe', 'on' => 'subscribe'),
+            array('passwordCompare', 'required', 'on' => 'subscribe'),
             array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre', 'safe', 'on' => 'search, update')
         );
         return $result;
@@ -60,6 +64,7 @@ class User extends EMongoDocument
             'nom' => Yii::t('common', 'lastName'),
             'login' => Yii::t('common', 'login'),
             'password' => Yii::t('common', 'password'),
+            'passwordCompare' => Yii::t('common', 'passwordCompare'),
             'email' => Yii::t('common', 'email'),
             'telephone' => Yii::t('common', 'phone'),
             'gsm' => Yii::t('common', 'gsm'),
@@ -134,6 +139,14 @@ class User extends EMongoDocument
                 'defaultOrder' => 'login ASC',
             )
         ));
+    }
+    
+    public function getPasswordCompare() {
+        return $this->passwordCompare;
+    }
+
+    public function setPasswordCompare($value) {
+        $this->passwordCompare = $value;
     }
     
     /**

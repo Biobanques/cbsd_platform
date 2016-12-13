@@ -80,6 +80,7 @@ return array(
     'rememberMe' => 'Se souvenir de moi',
     'userName' => 'Identifiant',
     'password' => 'Mot de passe',
+    'passwordCompare' => 'Répétez le mot de passe',
     'entryDate' => 'Date de saisie',
     'birthName' => 'Nom de naissance',
     'birthDate' => 'Date de naissance',

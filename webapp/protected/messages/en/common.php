@@ -79,6 +79,7 @@ return array(
     'rememberMe' => 'Remember me',
     'userName' => 'Username',
     'password' => 'Password',
+    'passwordCompare' => 'Repeat password',
     'entryDate' => 'Date of entry',
     'birthName' => 'Birth name',
     'birthDate' => 'Birth date',

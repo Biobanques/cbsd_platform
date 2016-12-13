@@ -12,82 +12,97 @@
     <?php echo $form->errorSummary($model); ?>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'prenom'); ?>
-        <?php echo $form->textField($model, 'prenom', array('size' => 20, 'maxlength' => 250)); ?>
-        <?php echo $form->error($model, 'prenom'); ?>
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'prenom'); ?>
+            <?php echo $form->textField($model, 'prenom', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'prenom'); ?>
+        </div>
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'nom'); ?>
+            <?php echo $form->textField($model, 'nom', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'nom'); ?>
+        </div>
     </div>
-
+    
     <div class="row">
-        <?php echo $form->labelEx($model, 'nom'); ?>
-        <?php echo $form->textField($model, 'nom', array('size' => 20, 'maxlength' => 250)); ?>
-        <?php echo $form->error($model, 'nom'); ?>
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'login'); ?>
+            <?php echo $form->textField($model, 'login', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'login'); ?>
+        </div>
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'email'); ?>
+            <?php echo $form->textField($model, 'email', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'email'); ?>
+        </div>
     </div>
-
+    
     <div class="row">
-        <?php echo $form->labelEx($model, 'login'); ?>
-        <?php echo $form->textField($model, 'login', array('size' => 20, 'maxlength' => 250)); ?>
-        <?php echo $form->error($model, 'login'); ?>
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'password'); ?>
+            <?php echo $form->passwordField($model, 'password', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'password'); ?>
+        </div>
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'passwordCompare'); ?>
+            <?php echo $form->passwordField($model, 'passwordCompare', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'passwordCompare'); ?>
+        </div>
     </div>
-
+    
     <div class="row">
-        <?php echo $form->labelEx($model, 'password'); ?>
-        <?php echo $form->passwordField($model, 'password', array('size' => 20, 'maxlength' => 250)); ?>
-        <?php echo $form->error($model, 'password'); ?>
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'telephone'); ?>
+            <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'exemple format: 0145825443')); ?>
+            <?php echo $form->error($model, 'telephone'); ?>
+        </div>
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'gsm'); ?>
+            <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'gsm'); ?>
+        </div>
     </div>
-
+    
     <div class="row">
-        <?php echo $form->labelEx($model, 'email'); ?>
-        <?php echo $form->textField($model, 'email', array('size' => 20, 'maxlength' => 250)); ?>
-        <?php echo $form->error($model, 'email'); ?>
-    </div>
-
-    <div class="row">
-        <div id="profil">
-            <?php echo $form->labelEx($model, 'profil'); ?>
-            <?php
-            if (Yii::app()->user->isGuest) {
-                echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'getProfil()', 'labelOptions' => array('style' => 'display:inline')));
-            } else {
-                echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilSorted(), array('onchange' => 'getProfil()', 'labelOptions' => array('style' => 'display:inline')));
-            }
-            ?>
-            <?php echo $form->error($model, 'profil'); ?>
+        <div class="col-lg-4">
+            <div id="profil">
+                <?php echo $form->labelEx($model, 'profil'); ?>
+                <?php
+                if (Yii::app()->user->isGuest) {
+                    echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilFiltered(), array('onchange' => 'getProfil()', 'labelOptions' => array('style' => 'display:inline')));
+                } else {
+                    echo $form->checkBoxList($model, 'profil', User::model()->getArrayProfilSorted(), array('onchange' => 'getProfil()', 'labelOptions' => array('style' => 'display:inline')));
+                }
+                ?>
+                <?php echo $form->error($model, 'profil'); ?>
+            </div>
         </div>
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'telephone'); ?>
-        <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'exemple format: 0145825443')); ?>
-        <?php echo $form->error($model, 'telephone'); ?>
+        <div class="col-lg-4">
+            <div id="address" style="display:none;">
+                <?php echo CHtml::activeLabel($model, 'address', array('required' => true)); ?>
+                <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
+                <?php echo $form->error($model, 'address'); ?>
+            </div>
+        </div>
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'gsm'); ?>
-        <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250)); ?>
-        <?php echo $form->error($model, 'gsm'); ?>
+        <div class="col-lg-4">
+            <div id="centre" style="display:none;">
+                <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
+                <?php echo $form->dropDownList($model, 'centre', User::model()->getArrayCentre(), array('prompt' => '----')); ?>
+                <?php echo $form->error($model, 'centre'); ?>
+            </div>
+        </div>
     </div>
-
-    <div class="row">
-        <div id="address" style="display:none;">
-            <?php echo CHtml::activeLabel($model, 'address', array('required' => true)); ?>
-            <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
-            <?php echo $form->error($model, 'address'); ?>
+    
+    <div class="col-lg-12">
+        <div class="row buttons" style="float:left;">
+            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save')); ?>
         </div>
-    </div>    
-
-    <div class="row">
-        <div id="centre" style="display:none;">
-            <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
-            <?php echo $form->dropDownList($model, 'centre', User::model()->getArrayCentre(), array('prompt' => '----')); ?>
-            <?php echo $form->error($model, 'centre'); ?>
-        </div>
-    </div>    
-
-    <div class="row buttons" style="float:left;">
-        <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'createBtn') : Yii::t('common', 'saveBtn'), array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-        <?php if ($model->isNewRecord) {
-            echo CHtml::resetButton(Yii::t('common', 'reset'), array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;'));
-        } ?>
     </div>
 
     <?php $this->endWidget(); ?>
