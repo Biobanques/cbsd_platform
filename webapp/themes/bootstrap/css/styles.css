@@ -11,6 +11,10 @@ table {
     text-align: center;
 }
 
+thead {
+    background-color: #C3D9FF;
+}
+
 div.form .rememberMe label
 {
     display: inline;
