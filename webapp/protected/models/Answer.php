@@ -162,8 +162,8 @@ class Answer extends EMongoDocument {
 
         if (isset($this->last_updated) && !empty($this->last_updated)) {
             $answerFormat = $this->formatDatePicker($this->last_updated);
-            $date_from = str_replace('/', '-', $answerFormat[0]);
-            $date_to = str_replace('/', '-', $answerFormat[1]);
+            $date_from = str_replace('/', '-', $answerFormat['date_from']);
+            $date_to = str_replace('/', '-', $answerFormat['date_to']);
             $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
         }
 
