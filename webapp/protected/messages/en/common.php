@@ -13,7 +13,7 @@ return array(
     'forms' => 'Templates of the forms',
     'fiches' => 'Patient forms',
     'logSystem' => 'System log',
-    // management
+    // administration
     'createUser' => 'Create a user',
     'advancedsearch' => 'Advanced search',
     // buttons
@@ -35,13 +35,13 @@ return array(
     // authentification
     'login' => 'Login',
     // create an user
-    'firstName' => 'First Name',
-    'lastName' => 'Last Name',
+    'firstName' => 'First name',
+    'lastName' => 'Last name',
     'usualName' => 'Usual name',
     'email' => 'Email',
     'phone' => 'Phone',
     'address' => 'Address',
-    'referenceCentre' => 'Reference centre',
+    'referenceCentre' => 'Reference center',
     'profile' => 'Profile',
     // flash message
     'requiredField' => 'Fields with <span class="required">*</span> are required.',
@@ -52,7 +52,7 @@ return array(
     'manageUsers' => 'Manage users',
     'manageForms' => 'Templates of the forms',
     'managePatientForm' => 'Manage patient forms',
-    'manageQuestionsBlock' => 'Reusable block of questions',
+    'manageQuestionsBlock' => 'Reusable blocks of questions',
     'manageRules' => 'Manage access rules',
     'createUser' => 'Create user',
     'createForm' => 'Create form',
@@ -215,8 +215,8 @@ return array(
     // text
     'signin' => 'Sign in',
     'noAccount' => 'Not registered yet?',
-    'subscribe' => 'Subscribe',
-    'subscribeAs' => 'Subscribe as ',
+    'subscribe' => 'Register',
+    'subscribeAs' => 'Register as ',
     'invalidUsername' => 'Invalid username.',
     'invalidPassword' => 'Incorrect password.',
     'inactiveProfil' => 'Your profil is inactive. Please contact an admin.',

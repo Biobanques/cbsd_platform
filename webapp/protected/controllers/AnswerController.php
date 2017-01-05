@@ -27,7 +27,22 @@ class AnswerController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', 'users' => array('@'),
+            array(
+                'allow',
+                'actions' => array(
+                    'view',
+                    'affichepatient',
+                    'update',
+                    'updateAndAdd',
+                    'index',
+                    'delete',
+                    'viewOnePage',
+                    'exportPDF',
+                    'addSearchFilter',
+                    'writeQueries',
+                    'exportQueries'
+                ),
+                'expression' => '$user->getActiveProfil() != "chercheur"'
             ),
             array('deny', // deny all users
                 'users' => array('*'),

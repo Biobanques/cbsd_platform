@@ -49,13 +49,19 @@ class SiteController extends Controller
             array(
                 'allow',
                 'actions' => array(
-                    'patient',
                     'setActiveProfil',
                     'updateSubscribe'
                 ),
                 'users' => array(
                     '@'
                 )
+            ),
+            array(
+                'allow',
+                'actions' => array(
+                    'patient'
+                ),
+                'expression' => '$user->getActiveProfil() != "chercheur"'
             ),
             array(
                 'deny', // deny all users
