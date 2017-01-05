@@ -44,12 +44,28 @@ class RechercheFicheController extends Controller {
      */
     public function actionAdmin() {
         $model = new Answer('search');
+        $uploadedFile = new UploadedFile;
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Answer']))
             $model->attributes = $_GET['Answer'];
-
+        if(isset($_POST['UploadedFile']))
+        {
+            $uploadedFile->attributes=$_POST['UploadedFile'];
+            $uploadedFile->filename=CUploadedFile::getInstance($uploadedFile,'filename');
+            $folderAnonyme = CommonProperties::$IMPORT_FOLDER_ANONYME;
+            if (substr($folderAnonyme, -1) != '/') {
+                $folderAnonyme.='/';
+            }
+            chdir(Yii::app()->basePath . "/" . $folderAnonyme);
+            if ($uploadedFile->validate()){
+                $uploadedFile->filename->saveAs('treated/' . date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName());
+                chmod('treated/' . date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName(), 0777);
+                Yii::app()->user->setFlash('success', 'La base FileMaker a bien été importé !');
+            }
+        }
         $this->render('admin', array(
-            'model' => $model
+            'model' => $model,
+            'uploadedFile' => $uploadedFile
         ));
     }
 

@@ -5,6 +5,10 @@ $('.search-button').click(function(){
     $('.search-form').toggle();
     return false;
 });
+$('.import-button').click(function(){
+    $('.import-form').toggle();
+    return false;
+});
 $('.search-form form').submit(function(){
     $.ajax({
         url:'$addRouteQuery',
@@ -25,10 +29,23 @@ $('.search-form form').submit(function(){
 
 <h1><?php echo Yii::t('common', 'availablePatientForms') ?></h1>
 
+<?php 
+$importFileMaker = CHtml::image(Yii::app()->baseUrl . '/images/database_add.png', Yii::t('common', 'importFileMaker'));
+echo CHtml::link($importFileMaker . Yii::t('common', 'importFileMaker'), array('uploadedFile/admin'), array('class' => 'import-button')); 
+?>
+<div class="import-form" style="display:none">
+    <?php
+    $this->renderPartial('_import', array(
+        'uploadedFile' => $uploadedFile,
+    ));
+    ?>
+</div><!-- import-form -->
+
+<div style="clear:both"></div>
+
 <?php
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'rechercheFiche', 'searchable' => true));
 ?>
-
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(

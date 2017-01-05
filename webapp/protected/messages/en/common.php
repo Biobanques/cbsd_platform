@@ -71,6 +71,7 @@ return array(
     'forModifyTab' => 'To modify a questions group',
     'forModifyQuestion' => 'To modify a question',
     'bloc' => 'Block ',
+    'importFileMaker' => 'Import FileMaker',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',
@@ -112,6 +113,7 @@ return array(
     'newQuestionGroup' => 'New questions group',
     'currentLabel' => 'Current label',
     'newLabel' => 'New label',
+    'importFile' => 'File to import',
     // profil
     'administrateur' => 'Administrator',
     'clinicien' => 'Clinician',

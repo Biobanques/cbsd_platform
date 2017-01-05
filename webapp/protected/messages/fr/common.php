@@ -71,6 +71,7 @@ return array(
     'forModifyTab' => 'Pour modifier un onglet',
     'forModifyQuestion' => 'Pour modifier une question',
     'bloc' => 'Bloc ',
+    'importFileMaker' => 'Importer la base FileMaker',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',
@@ -113,6 +114,7 @@ return array(
     'newQuestionGroup' => 'Nouvel onglet',
     'currentLabel' => 'Etiquette actuelle',
     'newLabel' => 'Nouvelle étiquette',
+    'importFile' => 'Fichier à importer',
     // profil
     'administrateur' => 'Administrateur',
     'clinicien' => 'Clinicien',
