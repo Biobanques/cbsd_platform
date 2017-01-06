@@ -42,12 +42,19 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="en" />
-
+        
+        <!-- blueprint CSS framework -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
+        <!--[if lt IE 8]>
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
+        <![endif]-->
 
-        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/questionnaire.css" />
-
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
+        
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/questionnaire.css" />
 
         <!-- use the link below to test cdn instead of local lib -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/font-awesome-4.6.3/css/font-awesome.min.css" />
@@ -55,11 +62,16 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         <!-- use bootstrap -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
 
+        <!-- use DateRangePicker http://www.daterangepicker.com/ -->
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
         <?php Yii::app()->bootstrap->register(); ?>
+        <?php
+        Yii::app()->clientScript->registerCoreScript('jquery');
+        Yii::app()->clientScript->registerCoreScript('jquery.ui');
+        ?>
     </head>
 
     <body>
@@ -68,7 +80,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
             if (Yii::app()->urlManager->parseUrl(Yii::app()->request) != "rechercheFiche/viewOnePage" && Yii::app()->urlManager->parseUrl(Yii::app()->request) != "rechercheFiche/view") {
                 $menuItems = array(
                     array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil"),
-                    array('label' => Yii::t('common', 'seizeForm'), 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest && !Yii::app()->user->getActiveProfil() != "chercheur" && Yii::app()->controller->action->id != "loginProfil"),
+                    array('label' => Yii::t('common', 'seizeForm'), 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "chercheur" && Yii::app()->controller->action->id != "loginProfil"),
                     array('label' => Yii::t('common', 'searchForm'), 'url' => array('/rechercheFiche/admin'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "clinicien"),
                     array('label' => Yii::t('common', 'administration'), 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin() && Yii::app()->user->getActiveProfil() == "administrateur" && Yii::app()->controller->action->id != "loginProfil"),
                     array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
