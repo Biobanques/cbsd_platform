@@ -9,6 +9,7 @@ return array(
     'accessProfil' => 'Accéder en tant que',
     'seizeForm' => 'Saisir une fiche patient',
     'searchForm' => 'Recherche',
+    'user' => 'Utilisateur',
     'users' => 'Utilisateurs',
     'form' => 'Formulaire ',
     'forms' => 'Modèles de formulaires',
@@ -115,6 +116,9 @@ return array(
     'currentLabel' => 'Etiquette actuelle',
     'newLabel' => 'Nouvelle étiquette',
     'importFile' => 'Fichier à importer',
+    'filename' => 'Nom du fichier',
+    'filesize' => 'Taille du fichier',
+    'dateImport' => 'Date de l\'import',
     // profil
     'administrateur' => 'Administrateur',
     'clinicien' => 'Clinicien',

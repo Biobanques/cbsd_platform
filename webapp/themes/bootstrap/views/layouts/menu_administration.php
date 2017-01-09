@@ -20,6 +20,7 @@
                         array('label' => Yii::t('common', 'fiches'), 'icon'=>'play', 'url' => array('/fiche/admin')),
                         array('label' => Yii::t('common', 'logSystem')),
                         array('label' => Yii::t('common', 'logSystem'), 'icon'=>'play', 'url' => array('/auditTrail/admin')),
+                        array('label' => 'Fichier importé', 'icon'=>'play', 'url' => array('/fileImport/admin'))
                     ),
                     'htmlOptions' => array('class' => 'operations'),
                 ));

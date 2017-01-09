@@ -9,6 +9,7 @@ return array(
     'accessProfil' => 'Reach as',
     'seizeForm' => 'Insert a patient form',
     'searchForm' => 'Search',
+    'user' => 'User',
     'users' => 'Users',
     'forms' => 'Templates of the forms',
     'fiches' => 'Patient forms',
@@ -114,6 +115,9 @@ return array(
     'currentLabel' => 'Current label',
     'newLabel' => 'New label',
     'importFile' => 'File to import',
+    'filename' => 'Filename',
+    'filesize' => 'Filesize',
+    'dateImport' => 'Import date',
     // profil
     'administrateur' => 'Administrator',
     'clinicien' => 'Clinician',

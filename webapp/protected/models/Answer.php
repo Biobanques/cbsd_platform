@@ -381,7 +381,7 @@ class Answer extends EMongoDocument {
         $result = "-";
         $user = User::model()->findByPk(new MongoID($this->login));
         if ($user != null) {
-            $result = "$user->prenom $user->nom";
+            $result = ucfirst($user->prenom) . " " . strtoupper($user->nom);
         }
         return $result;
     }

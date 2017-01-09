@@ -44,6 +44,7 @@ class RechercheFicheController extends Controller {
      */
     public function actionAdmin() {
         $model = new Answer('search');
+        $fileImport = new FileImport;
         $uploadedFile = new UploadedFile;
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Answer']))
@@ -60,6 +61,12 @@ class RechercheFicheController extends Controller {
             if ($uploadedFile->validate()){
                 $uploadedFile->filename->saveAs('treated/' . date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName());
                 chmod('treated/' . date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName(), 0777);
+                $fileImport->user = Yii::app()->user->id;
+                $fileImport->filename = date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName();
+                $fileImport->filesize = $uploadedFile->filename->getSize();
+                $fileImport->extension = $uploadedFile->filename->getExtensionName();
+                $fileImport->date_import = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+                $fileImport->save();
                 Yii::app()->user->setFlash('success', 'La base FileMaker a bien été importé !');
             }
         }
