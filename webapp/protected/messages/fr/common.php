@@ -119,6 +119,8 @@ return array(
     'filename' => 'Nom du fichier',
     'filesize' => 'Taille du fichier',
     'dateImport' => 'Date de l\'import',
+    'importedFiles' => 'Fichiers importés',
+    'historyImport' => 'Historique des fichiers importés',
     // profil
     'administrateur' => 'Administrateur',
     'clinicien' => 'Clinicien',

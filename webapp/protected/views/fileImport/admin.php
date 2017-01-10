@@ -27,7 +27,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo "Historique des fichiers importés"; ?></h1>
+<h1><?php echo Yii::t('common', 'historyImport'); ?></h1>
 
 <?php
 $imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
@@ -49,7 +49,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'columns' => array(
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
         array('header' => $model->attributeLabels()["filename"], 'name' => 'filename'),
-        array('header' => $model->attributeLabels()["filesize"], 'name' => 'filesize', 'value' => '$data->formatSizeUnits($data["filesize"])'),
+        array('header' => $model->attributeLabels()["filesize"], 'name' => 'filesize', 'value' => 'CommonTools::formatSizeUnits($data["filesize"])'),
         array('header' => $model->attributeLabels()["extension"], 'name' => 'extension'),
         array('header' => $model->attributeLabels()["date_import"], 'name' => 'date_import', 'value' => '$data->getDateImport()'),
     ),

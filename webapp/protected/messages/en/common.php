@@ -118,6 +118,8 @@ return array(
     'filename' => 'Filename',
     'filesize' => 'Filesize',
     'dateImport' => 'Import date',
+    'importedFiles' => 'Imported files',
+    'historyImport' => 'History of imported files',
     // profil
     'administrateur' => 'Administrator',
     'clinicien' => 'Clinician',

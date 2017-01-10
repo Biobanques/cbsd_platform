@@ -1,6 +1,8 @@
 <?php
 //locale du serveur en francais si besoin
 setlocale(LC_ALL, 'fr_FR.utf8', 'fra');
+ini_set('memory_limit', -1);
+set_time_limit(0);
 //timezone des dates
 date_default_timezone_set('Europe/Paris');
 // change the following paths if necessary

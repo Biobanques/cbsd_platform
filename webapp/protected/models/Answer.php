@@ -134,11 +134,11 @@ class Answer extends EMongoDocument {
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
         if (isset($this->type) && !empty($this->type)) {
-            $criteria->addCond('type', '==', new MongoRegex($this->regexString($this->type)));
+            $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($this->type)));
         }
 
         if (isset($this->user) && !empty($this->user)) {
-            $regex = $this->regexString($this->user);
+            $regex = CommonTools::regexString($this->user);
             $criteriaUser = new EMongoCriteria;
             $criteriaUser->nom = new MongoRegex($regex);
             $criteriaUser->select(array('_id'));
@@ -153,15 +153,15 @@ class Answer extends EMongoDocument {
         }
 
         if (isset($this->id_patient) && !empty($this->id_patient)) {
-            $criteria->addCond('id_patient', '==', new MongoRegex($this->regexString($this->id_patient)));
+            $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($this->id_patient)));
         }
 
         if (isset($this->name) && !empty($this->name)) {
-            $criteria->addCond('name', '==', new MongoRegex($this->regexString($this->name)));
+            $criteria->addCond('name', '==', new MongoRegex(CommonTools::regexString($this->name)));
         }
 
         if (isset($this->last_updated) && !empty($this->last_updated)) {
-            $answerFormat = $this->formatDatePicker($this->last_updated);
+            $answerFormat = CommonTools::formatDatePicker($this->last_updated);
             $date_from = str_replace('/', '-', $answerFormat['date_from']);
             $date_to = str_replace('/', '-', $answerFormat['date_to']);
             $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
@@ -179,14 +179,14 @@ class Answer extends EMongoDocument {
                     if (isset($this->compare[$questionId])) {
                         if ($index == 0) {
                             if ($this->compare[$questionId] == "between") {
-                                $answerDate = $this->formatDatePicker($answerValue);
+                                $answerDate = CommonTools::formatDatePicker($answerValue);
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
                             } else {
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
                             }
                         } else {
                             if ($this->compare[$questionId] == "between") {
-                                $answerDate = $this->formatDatePicker($answerValue);
+                                $answerDate = CommonTools::formatDatePicker($answerValue);
                                 $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
                             } else {
                                 $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
@@ -195,9 +195,9 @@ class Answer extends EMongoDocument {
                     } else {
                         $values = (!is_array($answerValue)) ? split(',', $answerValue) : $answerValue;
                         if ($index == 0) {
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($this->regexString($values))));
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
                         } else {
-                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($this->regexString($values))));
+                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
                         }
                     }
                 }
@@ -234,14 +234,14 @@ class Answer extends EMongoDocument {
                     if (isset($this->compare[$questionId])) {
                         if ($index == 0) {
                             if ($this->compare[$questionId] == "between") {
-                                $answerDate = $this->formatDatePicker($answerValue);
+                                $answerDate = CommonTools::formatDatePicker($answerValue);
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
                             } else {
                                 $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
                             }
                         } else {
                             if ($this->compare[$questionId] == "between") {
-                                $answerDate = $this->formatDatePicker($answerValue);
+                                $answerDate = CommonTools::formatDatePicker($answerValue);
                                 $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
                             } else {
                                 $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
@@ -250,9 +250,9 @@ class Answer extends EMongoDocument {
                     } else {
                         $values = (!is_array($answerValue)) ? split(',', $answerValue) : $answerValue;
                         if ($index == 0) {
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($this->regexString($values))));
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
                         } else {
-                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex($this->regexString($values))));
+                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
                         }
                     }
                 }
@@ -286,34 +286,6 @@ class Answer extends EMongoDocument {
         $res = array();
         $res ['between'] = Yii::t('common', 'between');
         return $res;
-    }
-    
-    /**
-     * convert DatePickerRange to an array
-     * @return type
-     */
-    public function formatDatePicker($date) {
-        $res = array();
-        $answerDate = explode("-", str_replace(' ', '', $date));
-        $res['date_from'] = date('Y-m-d', strtotime(str_replace('/', '-', $answerDate[0])));
-        $res['date_to'] = date('Y-m-d', strtotime(str_replace('/', '-', $answerDate[1])));
-        return $res;
-    }
-
-    /**
-     * regex for criteria search
-     * @return type
-     */
-    public function regexString($values) {
-        $regex = '/';
-        foreach ($values as $word) {
-            $regex.= $word;
-            if ($word != end($values)) {
-                $regex.= '|';
-            }
-        }
-        $regex .= '/i';
-        return $regex;
     }
 
     /**

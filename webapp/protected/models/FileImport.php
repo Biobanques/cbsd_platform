@@ -62,11 +62,11 @@ class FileImport extends EMongoDocument {
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
         if (isset($this->type) && !empty($this->type)) {
-            $criteria->addCond('type', '==', new MongoRegex($this->regexString($this->type)));
+            $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($this->type)));
         }
 
         if (isset($this->user) && !empty($this->user)) {
-            $regex = $this->regexString($this->user);
+            $regex = CommonTools::regexString($this->user);
             $criteriaUser = new EMongoCriteria;
             $criteriaUser->nom = new MongoRegex($regex);
             $criteriaUser->select(array('_id'));
@@ -81,15 +81,15 @@ class FileImport extends EMongoDocument {
         }
 
         if (isset($this->filename) && !empty($this->filename)) {
-            $criteria->addCond('filename', '==', new MongoRegex($this->regexString($this->filename)));
+            $criteria->addCond('filename', '==', new MongoRegex(CommonTools::regexString($this->filename)));
         }
 
         if (isset($this->filesize) && !empty($this->filesize)) {
-            $criteria->addCond('filesize', '==', new MongoRegex($this->regexNumeric($this->filesize)));
+            $criteria->addCond('filesize', '==', new MongoRegex(CommonTools::regexNumeric($this->filesize)));
         }
 
         if (isset($this->date_import) && !empty($this->date_import)) {
-            $answerFormat = $this->formatDatePicker($this->date_import);
+            $answerFormat = CommonTools::formatDatePicker($this->date_import);
             $date_from = str_replace('/', '-', $answerFormat['date_from']);
             $date_to = str_replace('/', '-', $answerFormat['date_to']);
             $criteria->date_import->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
@@ -113,67 +113,6 @@ class FileImport extends EMongoDocument {
             $result = ucfirst($user->prenom) . " " . strtoupper($user->nom);
         }
         return $result;
-    }
-
-    public function formatSizeUnits($bytes) {
-        if ($bytes >= 1073741824) {
-            $bytes = number_format($bytes / 1073741824, 2) . ' GB';
-        } elseif ($bytes >= 1048576) {
-            $bytes = number_format($bytes / 1048576, 2) . ' MB';
-        } elseif ($bytes >= 1024) {
-            $bytes = number_format($bytes / 1024, 2) . ' kB';
-        } elseif ($bytes > 1) {
-            $bytes = $bytes . ' bytes';
-        } elseif ($bytes == 1) {
-            $bytes = $bytes . ' byte';
-        } else {
-            $bytes = '0 bytes';
-        }
-        return $bytes;
-    }
-    
-    /**
-     * convert DatePickerRange to an array
-     * @return type
-     */
-    public function formatDatePicker($date) {
-        $res = array();
-        $answerDate = explode("-", str_replace(' ', '', $date));
-        $res['date_from'] = date('Y-m-d', strtotime(str_replace('/', '-', $answerDate[0])));
-        $res['date_to'] = date('Y-m-d', strtotime(str_replace('/', '-', $answerDate[1])));
-        return $res;
-    }
-    
-    /**
-     * regex for criteria search
-     * @return type
-     */
-    public function regexString($values) {
-        $regex = '/';
-        foreach ($values as $word) {
-            $regex.= $word;
-            if ($word != end($values)) {
-                $regex.= '|';
-            }
-        }
-        $regex .= '/i';
-        return $regex;
-    }
-    
-    /**
-     * regex for criteria search
-     * @return type
-     */
-    public function regexNumeric($values) {
-        $regex = '/^';
-        foreach ($values as $word) {
-            $regex.= $word;
-            if ($word != end($values)) {
-                $regex.= '$|^';
-            }
-        }
-        $regex .= '$/i';
-        return $regex;
     }
     
     /**
