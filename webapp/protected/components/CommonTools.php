@@ -60,6 +60,14 @@ class CommonTools
         }
         return true;
     }
+
+    /**
+     * format date d/m/Y
+     * @return type
+     */
+    public function formatDateFR($date) {
+        return date('d/m/Y', strtotime($date));
+    }
     
     /**
      * convert DatePickerRange to an array

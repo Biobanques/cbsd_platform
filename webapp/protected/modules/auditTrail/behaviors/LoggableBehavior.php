@@ -1,7 +1,7 @@
 <?php
 
-class LoggableBehavior extends CActiveRecordBehavior
-{
+class LoggableBehavior extends CActiveRecordBehavior {
+
     private $_oldattributes = array();
 
     public function afterSave($event) {
@@ -50,7 +50,11 @@ class LoggableBehavior extends CActiveRecordBehavior
                     }
                     $log->action = 'CHANGE';
                     $log->model = get_class($this->Owner);
-                    $log->model_id = $this->Owner->getPrimaryKey();
+                    if (is_array($this->Owner->getPrimaryKey()))
+                        $modelId = implode(", ", $this->Owner->getPrimaryKey());
+                    else
+                        $modelId = $this->Owner->getPrimaryKey();
+                    $log->model_id = $modelId;
                     $log->field = $name;
                     $log->stamp = date('Y-m-d H:i:s');
                     $log->user_id = $userid;
@@ -83,7 +87,11 @@ class LoggableBehavior extends CActiveRecordBehavior
                 }
                 $log->action = 'SET';
                 $log->model = get_class($this->Owner);
-                $log->model_id = $this->Owner->getPrimaryKey();
+                if (is_array($this->Owner->getPrimaryKey()))
+                    $modelId = implode(", ", $this->Owner->getPrimaryKey());
+                else
+                    $modelId = $this->Owner->getPrimaryKey();
+                $log->model_id = $modelId;
                 $log->field = $name;
                 $log->stamp = date('Y-m-d H:i:s');
                 $log->user_id = $userid;
@@ -116,7 +124,11 @@ class LoggableBehavior extends CActiveRecordBehavior
         $log->new_value = '';
         $log->action = 'DELETE';
         $log->model = get_class($this->Owner);
-        $log->model_id = $this->Owner->getPrimaryKey();
+        if (is_array($this->Owner->getPrimaryKey()))
+            $modelId = implode(", ", $this->Owner->getPrimaryKey());
+        else
+            $modelId = $this->Owner->getPrimaryKey();
+        $log->model_id = $modelId;
         $log->field = 'N/A';
         $log->stamp = date('Y-m-d H:i:s');
         $log->user_id = $userid;
@@ -140,4 +152,5 @@ class LoggableBehavior extends CActiveRecordBehavior
     }
 
 }
+
 ?>

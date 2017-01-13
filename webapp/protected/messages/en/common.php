@@ -38,7 +38,7 @@ return array(
     // create an user
     'firstName' => 'First name',
     'lastName' => 'Last name',
-    'usualName' => 'Usual name',
+    'usualName' => 'Married name',
     'email' => 'Email',
     'phone' => 'Phone',
     'address' => 'Address',

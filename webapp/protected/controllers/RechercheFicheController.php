@@ -291,7 +291,7 @@ class RechercheFicheController extends Controller {
      */
 
     public function writePatientsNotImported($patient, $importedFile) {
-        $file = "log/$importedFile.txt";
+        $file = "not_imported/$importedFile.txt";
         file_put_contents($file, print_r($patient, true), FILE_APPEND);
     }
 

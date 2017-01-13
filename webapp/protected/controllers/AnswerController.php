@@ -89,10 +89,11 @@ class AnswerController extends Controller {
             $patient->source = null; //à identifier en fonction de l'app
             $patient->sourceId = null;
             $patient->birthName = $model->nom_naissance;
-            if ($model->nom != "")
+            if ($model->nom != "") {
                 $patient->useName = $model->nom;
-            else
-                $patient->useName = null;
+            } else {
+                $patient->useName = $model->nom_naissance;
+            }
             $patient->firstName = $model->prenom;
             $patient->birthDate = $model->date_naissance;
             if ($model->sexe != "") {
@@ -101,12 +102,10 @@ class AnswerController extends Controller {
                 $patient->sex = null;
             }
             if ($actionForm == 'create') {
-                $patient->source = (($model->source == "1") ? "1" : "2");
+                $patient->source = 1;
                 $patientest = CommonTools::wsGetPatient($patient);
                 if ($patientest == 'NoPatient') {
                     $patient = CommonTools::wsAddPatient($patient);
-                } else {
-                    $patient = $patientTest;
                 }
             } else {
                 $patient = CommonTools::wsGetPatient($patient);

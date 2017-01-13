@@ -39,7 +39,7 @@ return array(
     // créer un utilisateur
     'firstName' => 'Prénom',
     'lastName' => 'Nom',
-    'usualName' => 'Nom d\'usage',
+    'usualName' => 'Nom marital (le cas échéant)',
     'profile' => 'Profil',
     'email' => 'Email',
     'phone' => 'Téléphone',

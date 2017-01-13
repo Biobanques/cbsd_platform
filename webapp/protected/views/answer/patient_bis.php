@@ -69,12 +69,6 @@
             <?php echo $form->dropDownList($model, 'sexe', $model->getGenre(), array('prompt' => '----')); ?>
             <?php echo $form->error($model, 'sexe'); ?>
         </div>
-
-        <div class="col-lg-4">
-            <?php echo $form->labelEx($model, 'source'); ?>
-            <?php echo $form->dropDownList($model, 'source', $model->getSource(), array('prompt' => '----')); ?>
-            <?php echo $form->error($model, 'source'); ?>
-        </div>
     </div>
 
     <div class="row">

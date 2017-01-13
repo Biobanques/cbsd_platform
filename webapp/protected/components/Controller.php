@@ -132,11 +132,12 @@ class Controller extends CController
                         $this->redirect('index.php?r=site/index');
                     }
                 }
-                if (Yii::app()->controller->id == "questionnaire" || Yii::app()->controller->id == "answer" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "site/patient") {
-                    Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'Vous n\'êtes pas autorisé à accéder à cette page.'));
-                    $this->redirect('index.php?r=site/index');
+                if (Yii::app()->user->getActiveProfil() == "chercheur") {
+                    if (Yii::app()->controller->id == "questionnaire" || Yii::app()->controller->id == "answer" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "site/patient") {
+                        Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'Vous n\'êtes pas atorisé à accéder à cette page.'));
+                        $this->redirect('index.php?r=site/index');
+                    }
                 }
-
                 if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/view" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/update") {
                     if ($_SESSION['id']->type == "clinique") {
                         if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/view") {
