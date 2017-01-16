@@ -14,6 +14,7 @@ return array(
     'forms' => 'Templates of the forms',
     'fiches' => 'Patient forms',
     'logSystem' => 'System log',
+    'userLog' => 'User log',
     // administration
     'createUser' => 'Create a user',
     'advancedsearch' => 'Advanced search',

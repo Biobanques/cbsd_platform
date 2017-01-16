@@ -16,6 +16,7 @@ return array(
     'patientForm' => 'Fiche ',
     'fiches' => 'Fiches de patient',
     'logSystem' => 'Log système',
+    'userLog' => 'Log utilisateur',
     // administration
     'createUser' => 'Créer un utilisateur',
     'advancedsearch' => 'Recherche avancée',

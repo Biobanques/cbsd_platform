@@ -114,6 +114,8 @@ class SiteController extends Controller
     public function actionLogin()
     {
         $model = new LoginForm;
+        
+        $userLog = new UserLog;
 
         // if it is ajax validation request
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
@@ -133,6 +135,11 @@ class SiteController extends Controller
                 if (count($user->profil) == 0) {
                     Yii::app()->user->setFlash('error', Yii::t('common', 'contactAdministrator'));
                 } elseif ($model->login()) {
+                    $userLog->user = Yii::app()->user->getNomPrenom();
+                    $userLog->ipAddress = $_SERVER['REMOTE_ADDR'];
+                    $userLog->profil = Yii::app()->user->getActiveProfil();
+                    $userLog->connectionDate = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+                    $userLog->save();
                     $this->redirect(array('site/index'));
                 }
             } else {
