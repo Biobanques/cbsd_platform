@@ -91,8 +91,10 @@ class AnswerController extends Controller {
             $patient->birthName = $model->nom_naissance;
             if ($model->nom != "") {
                 $patient->useName = $model->nom;
-            } else {
+            } else if ($model->nom != "" && $actionForm == 'create') {
                 $patient->useName = $model->nom_naissance;
+            } else {
+                $patient->useName = null;
             }
             $patient->firstName = $model->prenom;
             $patient->birthDate = $model->date_naissance;
