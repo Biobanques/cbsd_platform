@@ -61,7 +61,7 @@ class SiteController extends Controller
                 'actions' => array(
                     'patient'
                 ),
-                'expression' => '$user->getActiveProfil() != "chercheur"'
+                'expression' => '$user->getActiveProfil() != "chercheur" && $user->getActiveProfil() != ""'
             ),
             array(
                 'deny', // deny all users

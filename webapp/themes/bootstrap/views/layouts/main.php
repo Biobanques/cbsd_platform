@@ -145,6 +145,9 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                 ),
             ));
             ?>
+            <div id="img-container">
+
+</div>
             <?php echo $content; ?>
 
             <div class="clear"></div>
@@ -172,7 +175,8 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>      
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/maintenance.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     </body>
 </html>
