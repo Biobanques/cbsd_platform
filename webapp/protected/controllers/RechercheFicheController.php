@@ -162,14 +162,6 @@ class RechercheFicheController extends Controller {
         ));
     }
 
-    /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionExportPDF($id) {
-        AnswerPDFRenderer::renderAnswer($this->loadModel($id));
-    }
-
     public function loadModel($id) {
         $model = Answer::model()->findByPk(new MongoID($id));
         if ($model === null)

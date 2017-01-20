@@ -9,13 +9,13 @@ $(function(){
 ?>
 
 <div id="statusMsg">
-    <?php 
+    <?php
     if (!Yii::app()->user->hasFlash('success')) {
         echo Yii::app()->user->getFlash('success');
     }
     if (!Yii::app()->user->hasFlash('error')) {
         echo Yii::app()->user->getFlash('error');
-    } 
+    }
     ?>
 </div>
 
@@ -63,6 +63,10 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'buttons' => array
                     (
+                    'view' => array
+                        (
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedView(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
+                    ),
                     'update' => array
                         (
                         'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
@@ -95,6 +99,10 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'buttons' => array
                     (
+                    'view' => array
+                        (
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedView(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
+                    ),
                     'update' => array
                         (
                         'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "neuropathologique")'
@@ -127,6 +135,10 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'buttons' => array
                     (
+                    'view' => array
+                        (
+                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedView(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
+                    ),
                     'update' => array
                         (
                         'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), "genetique")'

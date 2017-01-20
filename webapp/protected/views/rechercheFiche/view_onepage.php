@@ -3,7 +3,7 @@
 <div style="margin-top: -20px; text-align:right;">
     <?php
     $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.png', Yii::t('common', 'exportPdf'));
-    echo CHtml::link(Yii::t('common', 'exportPdf') . $img, array('rechercheFiche/exportPDF', 'id' => $model->_id), array());
+    echo CHtml::link(Yii::t('common', 'exportPdf') . $img, array('answer/exportPDF', 'id' => $model->_id), array());
     ?>
 </div>
 <?php echo $model->renderHTML(Yii::app()->language); ?>
