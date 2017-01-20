@@ -264,6 +264,8 @@ class SiteController extends Controller
         $model->setScenario('subscribe');
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
+            strtoupper($model->nom);
+            ucfirst($model->prenom);
             $model->telephone = str_replace(" ", "", $model->telephone);
             $profil = implode("", $model->profil);
             $userLogin = $model->getAllUsersByLogin($model);

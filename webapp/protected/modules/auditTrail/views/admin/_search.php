@@ -46,19 +46,7 @@
     <div class="row">
         <div class="col-lg-6">
             <?php echo $form->label($model, 'stamp'); ?>
-            <?php
-            $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'name' => 'AuditTrail[stamp]',
-                // additional javascript options for the date picker plugin
-                'options' => array(
-                    'showAnim' => 'fold',
-                ),
-                'htmlOptions' => array(
-                    'style' => 'height:25px;'
-                ),
-                'language' => 'fr',
-            ));
-            ?>
+            <?php echo $form->textField($model, 'stamp', array("onfocus"=>"datePicker(this.name)")); ?>
         </div>
 
         <div class="col-lg-6">

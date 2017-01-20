@@ -16,7 +16,7 @@ class WebUser extends CWebUser
     public function getNom()
     {
         $model = User::model()->findByPk(new MongoId(Yii::app()->user->id));
-        return $model->nom;
+        return $model != null ? $model->nom : null;
     }
 
     /**
@@ -26,7 +26,7 @@ class WebUser extends CWebUser
     public function getPrenom()
     {
         $model = User::model()->findByPk(new MongoId(Yii::app()->user->id));
-        return $model->prenom;
+        return $model != null ? $model->prenom : null;
     }
     
     /**
@@ -36,7 +36,7 @@ class WebUser extends CWebUser
     public function getNomPrenom()
     {
         $model = User::model()->findByPk(new MongoId(Yii::app()->user->id));
-        return ucfirst($model->prenom) . " " . strtoupper($model->nom);
+        return $model != null ? ucfirst($model->prenom) . " " . strtoupper($model->nom) : null;
     }
 
     /**
@@ -96,7 +96,7 @@ class WebUser extends CWebUser
     public function getUserProfil()
     {
         $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
-        return $user->profil;
+        return $user != null ? $user->profil : null;
     }
 
     /**

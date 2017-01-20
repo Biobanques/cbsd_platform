@@ -86,7 +86,7 @@ class AuditTrail extends EMongoDocument {
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search($options = array()) {
+    public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
         if (isset($this->old_value) && !empty($this->old_value))
             $criteria->addCond('old_value', '==', new MongoRegex('/' . $this->old_value . '/i'));
@@ -99,8 +99,12 @@ class AuditTrail extends EMongoDocument {
         if (isset($this->field) && !empty($this->field))
             $criteria->addCond('field', '==', new MongoRegex('/' . $this->field . '/i'));
         if (isset($this->stamp) && !empty($this->stamp)) {
-            $criteria->stamp = array('$gte' => $this->stamp, '$lte' => $this->stamp);
+            $answerFormat = CommonTools::formatDatePicker($this->stamp);
+            $date_from = str_replace('/', '-', $answerFormat['date_from']);
+            $date_to = str_replace('/', '-', $answerFormat['date_to']);
+            $criteria->stamp->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
         }
+        $criteria->sort('stamp', EMongoCriteria::SORT_DESC);
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));
@@ -132,7 +136,7 @@ class AuditTrail extends EMongoDocument {
      */
     public function getTimestamp() {
         if ($this->stamp != null)
-            return date("d/m/Y H:m", strtotime($this->stamp));
+            return date('d/m/Y H:i:s', strtotime($this->stamp['date']));
         else
             return null;
     }

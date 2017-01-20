@@ -7,7 +7,7 @@
  * @author nmalservet
  *
  */
-class Answer extends EMongoDocument {
+class Answer extends LoggableActiveRecord {
 
     /**
      *

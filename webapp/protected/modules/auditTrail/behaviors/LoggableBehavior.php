@@ -7,19 +7,13 @@ class LoggableBehavior extends CActiveRecordBehavior {
     public function afterSave($event) {
         Yii::log("go on loggable behaviors", CLogger::LEVEL_ERROR);
         try {
-            $username = Yii::app()->user->nom;
-            $userid = Yii::app()->user->name;
+            $userid = Yii::app()->user->getNomPrenom();
         } catch (Exception $e) { //If we have no user object, this must be a command line program
-            $username = 'NO_USER';
             $userid = null;
-        }
-
-        if (empty($username)) {
-            $username = 'NO_USER';
         }
 
         if (empty($userid)) {
-            $userid = null;
+            $userid = 'NO_USER';
         }
 
         $newattributes = $this->Owner->getAttributes();
@@ -35,30 +29,25 @@ class LoggableBehavior extends CActiveRecordBehavior {
                 } else {
                     $old = '';
                 }
-
                 if ($value != $old) {
-//                if (is_string($value) && ($value != $old)) {
                     $log = new AuditTrail();
-
                     $log->old_value = $old;
-
-                    if (is_string($value))
+                    if (is_string($value)) {
                         $log->new_value = $value;
-                    else {
-
+                    }else {
                         $log->new_value = json_decode(json_encode($value));
                     }
                     $log->action = 'CHANGE';
                     $log->model = get_class($this->Owner);
-                    if (is_array($this->Owner->getPrimaryKey()))
+                    if (is_array($this->Owner->getPrimaryKey())) {
                         $modelId = implode(", ", $this->Owner->getPrimaryKey());
-                    else
+                    } else {
                         $modelId = $this->Owner->getPrimaryKey();
+                    }
                     $log->model_id = $modelId;
                     $log->field = $name;
-                    $log->stamp = date('Y-m-d H:i:s');
+                    $log->stamp = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
                     $log->user_id = $userid;
-
                     $log->save();
                 }
             }
@@ -70,30 +59,28 @@ class LoggableBehavior extends CActiveRecordBehavior {
             $log->model = get_class($this->Owner);
             $log->model_id = $this->Owner->_id;
             $log->field = 'N/A';
-            $log->stamp = date('Y-m-d H:i:s');
+            $log->stamp = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
             $log->user_id = $userid;
-
             $log->save();
-
 
             foreach ($newattributes as $name => $value) {
                 $log = new AuditTrail();
                 $log->old_value = '';
-                if (is_string($value))
+                if (is_string($value)) {
                     $log->new_value = $value;
-                else {
-
+                } else {
                     $log->new_value = json_decode(json_encode($value));
                 }
                 $log->action = 'SET';
                 $log->model = get_class($this->Owner);
-                if (is_array($this->Owner->getPrimaryKey()))
+                if (is_array($this->Owner->getPrimaryKey())) {
                     $modelId = implode(", ", $this->Owner->getPrimaryKey());
-                else
+                } else {
                     $modelId = $this->Owner->getPrimaryKey();
+                }
                 $log->model_id = $modelId;
                 $log->field = $name;
-                $log->stamp = date('Y-m-d H:i:s');
+                $log->stamp = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
                 $log->user_id = $userid;
                 $log->save();
             }
@@ -104,15 +91,9 @@ class LoggableBehavior extends CActiveRecordBehavior {
     public function afterDelete($event) {
 
         try {
-            $username = Yii::app()->user->Name;
-            $userid = Yii::app()->user->name;
+            $userid = Yii::app()->user->getNomPrenom();
         } catch (Exception $e) {
-            $username = 'NO_USER';
             $userid = null;
-        }
-
-        if (empty($username)) {
-            $username = 'NO_USER';
         }
 
         if (empty($userid)) {
@@ -124,13 +105,14 @@ class LoggableBehavior extends CActiveRecordBehavior {
         $log->new_value = '';
         $log->action = 'DELETE';
         $log->model = get_class($this->Owner);
-        if (is_array($this->Owner->getPrimaryKey()))
+        if (is_array($this->Owner->getPrimaryKey())) {
             $modelId = implode(", ", $this->Owner->getPrimaryKey());
-        else
+        } else {
             $modelId = $this->Owner->getPrimaryKey();
+        }
         $log->model_id = $modelId;
         $log->field = 'N/A';
-        $log->stamp = date('Y-m-d H:i:s');
+        $log->stamp = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
         $log->user_id = $userid;
         $log->save();
         return parent::afterDelete($event);
