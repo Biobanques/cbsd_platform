@@ -521,7 +521,7 @@ class Answer extends LoggableActiveRecord {
         $answers = $this->getAllDetailledQuestionsByFilter($model);
         foreach ($answers as $answer) {
             //$result[$answer->answer->id] = "[" . $answer->fiche . "][" . $answer->group . "] " . $answer->answer->label_fr;
-            $result["(" . $answer->answer->id . ")" . $answer->answer->label_fr] = "(" . $answer->fiche . ")" . "<b> " . $answer->answer->label_fr . "</b> <font color='#0C5D86'>(" . $answer->answer->id . ")</font>";
+            $result["(" . $answer->answer->id . ")" . $answer->answer->label_fr] = "(" . $answer->fiche . ")" . $answer->answer->label_fr . " <font color='#0C5D86'>(" . $answer->answer->id . ")</font>";
         }
         natcasesort($result);
         return $result;

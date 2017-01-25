@@ -42,7 +42,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php
     $fiches = Answer::model()->getNomsFichesByFilter($models);
     echo CHtml::checkBoxList('filter', 'addFilter', Answer::model()->attributeExportedLabels(), array(
-            'labelOptions' => array('style' => 'display:inline;font-weight: bold;'),
+            'labelOptions' => array('style' => 'display:inline'),
             'separator' => '',
             'template' => '<div>{input}&nbsp;{label}</div><br>'
         ));

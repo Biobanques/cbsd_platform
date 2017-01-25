@@ -80,7 +80,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
             if (Yii::app()->urlManager->parseUrl(Yii::app()->request) != "rechercheFiche/viewOnePage" && Yii::app()->urlManager->parseUrl(Yii::app()->request) != "rechercheFiche/view") {
                 $menuItems = array(
                     array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil"),
-                    array('label' => Yii::t('common', 'seizeForm'), 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "chercheur" && Yii::app()->controller->action->id != "loginProfil"),
+                    array('label' => Yii::t('common', 'searchPatient'), 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "chercheur" && Yii::app()->controller->action->id != "loginProfil"),
                     array('label' => Yii::t('common', 'searchForm'), 'url' => array('/rechercheFiche/admin'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "clinicien"),
                     array('label' => Yii::t('common', 'administration'), 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin() && Yii::app()->user->getActiveProfil() == "administrateur" && Yii::app()->controller->action->id != "loginProfil"),
                     array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),

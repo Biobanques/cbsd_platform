@@ -84,9 +84,14 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ),
 ));
 ?>
-
+<div class="row">
+    <div class="col-lg-5">
+<?php echo CHtml::link(Yii::t('common', 'exportCSV'), array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
+    </div>
+    <div class="col-lg-5">
 <?php echo CHtml::submitButton(Yii::t('common', 'patientFormsAssociated'), array('name' => 'rechercher', 'class' => 'btn btn-default')); ?>
-
+    </div>
+</div>
 <?php $this->endWidget(); ?>
 
 <script>

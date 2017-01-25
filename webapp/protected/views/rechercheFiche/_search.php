@@ -100,7 +100,7 @@ $('#reset').click(function(){
             <div class="row buttons">
                 <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
                 <?php echo CHtml::resetButton(Yii::t('common', 'reset'), array('id' => 'reset', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-                <?php echo CHtml::link(Yii::t('common', 'exportCSV'), array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
+                
             </div>
 
             <?php $this->endWidget(); ?>
