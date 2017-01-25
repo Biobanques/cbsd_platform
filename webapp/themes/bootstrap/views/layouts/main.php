@@ -151,7 +151,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
             <?php echo $content; ?>
 
             <div class="clear"></div>
-            <div style="height:100px;"/>
+            <div style="height:150px;"/>
             <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
                 <div id="footer">
                     <div class="container">

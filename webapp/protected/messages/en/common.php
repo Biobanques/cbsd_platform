@@ -34,6 +34,7 @@ return array(
     'insert' => 'Insert',
     'patientFormsAssociated' => 'Search patient forms associated with the selected patients.',
     'exportQuery' => 'Export query',
+    'selectAll' => 'Select All',
     // authentification
     'login' => 'Login',
     // create an user
@@ -74,6 +75,7 @@ return array(
     'forModifyQuestion' => 'To modify a question',
     'bloc' => 'Block ',
     'importFileMaker' => 'Import FileMaker',
+    'exportFields' => 'Export fields',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',

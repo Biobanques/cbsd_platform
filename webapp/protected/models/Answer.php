@@ -109,7 +109,7 @@ class Answer extends LoggableActiveRecord {
 
     public function attributeLabels() {
         return array(
-            'id' => 'Id',
+            'id' => 'Identifiant de la fiche',
             'id_patient' => Yii::t('common', 'anonymat'),
             'name' => Yii::t('common', 'formName'),
             'type' => Yii::t('common', 'formType'),
@@ -123,7 +123,7 @@ class Answer extends LoggableActiveRecord {
     public function attributeExportedLabels() {
         return array(
             'id_patient' => 'N° anonymat',
-            'id' => 'N° fiche',
+            'id' => 'Identifiant de la fiche',
             'name' => 'Nom de la fiche',
             'type' => 'Type de fiche',
             'last_updated' => 'Date de saisie',
@@ -281,7 +281,7 @@ class Answer extends LoggableActiveRecord {
         $res ['greatereq'] = Yii::t('common', 'greatereq');
         return $res;
     }
-  
+ 
     public function getComparaisonDate() {
         $res = array();
         $res ['between'] = Yii::t('common', 'between');
@@ -521,7 +521,7 @@ class Answer extends LoggableActiveRecord {
         $answers = $this->getAllDetailledQuestionsByFilter($model);
         foreach ($answers as $answer) {
             //$result[$answer->answer->id] = "[" . $answer->fiche . "][" . $answer->group . "] " . $answer->answer->label_fr;
-            $result["(" . $answer->answer->id . ")" . $answer->answer->label_fr] = "(" . $answer->fiche . ")" . "(" . $answer->answer->id . ") " . $answer->answer->label_fr;
+            $result["(" . $answer->answer->id . ")" . $answer->answer->label_fr] = "(" . $answer->fiche . ")" . "<b> " . $answer->answer->label_fr . "</b> <font color='#0C5D86'>(" . $answer->answer->id . ")</font>";
         }
         natcasesort($result);
         return $result;
@@ -626,7 +626,7 @@ class Answer extends LoggableActiveRecord {
         }
         return $label;
     }
-   
+  
     /**
      * retourne toutes les id patient des fiches
      * @return type
@@ -747,15 +747,45 @@ class Answer extends LoggableActiveRecord {
         $intersect = array();
         $intersect = array_intersect($headerLineDynamic, $filter);
         $headerLine = array_merge($headerLineFixe, $intersect);
+        if (!in_array('id_patient', $filter)) {
+            unset($headerLine['id_patient']);
+        }
+        if (!in_array('id', $filter)) {
+            unset($headerLine['id']);
+        }
+        if (!in_array('name', $filter)) {
+            unset($headerLine['name']);
+        }
+        if (!in_array('type', $filter)) {
+            unset($headerLine['type']);
+        }
+        if (!in_array('last_updated', $filter)) {
+            unset($headerLine['last_updated']);
+        }
+        if (!in_array('last_modified', $filter)) {
+            unset($headerLine['last_modified']);
+        }
         $result[] = $headerLine;
         foreach ($answersList as $cAnswer) {
             $resultLine = array();
-            $resultLine[] = $cAnswer['id_patient'];
-            $resultLine[] = $cAnswer['id'];
-            $resultLine[] = $cAnswer['name'];
-            $resultLine[] = $cAnswer['type'];
-            $resultLine[] = $cAnswer['last_updated'];
-            $resultLine[] = $cAnswer['last_modified'];
+            if (in_array('id_patient', $filter)) {
+                $resultLine[] = $cAnswer['id_patient'];
+            }
+            if (in_array('id', $filter)) {
+                $resultLine[] = $cAnswer['id'];
+            }
+            if (in_array('name', $filter)) {
+                $resultLine[] = $cAnswer['name'];
+            }
+            if (in_array('type', $filter)) {
+                $resultLine[] = $cAnswer['type'];
+            }
+            if (in_array('last_updated', $filter)) {
+                $resultLine[] = $cAnswer['last_updated'];
+            }
+            if (in_array('last_modified', $filter)) {
+                $resultLine[] = $cAnswer['last_modified'];
+            }
             $cQuestions = $cAnswer['questions'];
             //ajout des valeurs à la ligne, si aucune valeur existante pour cette column, ajoute null
 

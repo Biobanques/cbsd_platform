@@ -29,19 +29,19 @@
     <?php echo $form->hiddenField($model, 'action', array('value' => $actionForm)); ?>
 
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'prenom'); ?>
             <?php echo $form->textField($model, 'prenom'); ?>
             <?php echo $form->error($model, 'prenom'); ?>
         </div>
 
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'nom_naissance'); ?>
             <?php echo $form->textField($model, 'nom_naissance'); ?>
             <?php echo $form->error($model, 'nom_naissance'); ?>
         </div>
 
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'date_naissance'); ?>
             <?php
             $this->widget('zii.widgets.jui.CJuiDatePicker', array(

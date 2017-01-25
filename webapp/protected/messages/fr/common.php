@@ -35,6 +35,7 @@ return array(
     'insert' => 'Saisir',
     'patientFormsAssociated' => 'Rechercher les fiches associées aux patients sélectionnés',
     'exportQuery' => 'Exporter la requête',
+    'selectAll' => 'Selectionner tout',
     // authentification
     'login' => 'Nom d\'utilisateur',
     // créer un utilisateur
@@ -74,6 +75,7 @@ return array(
     'forModifyQuestion' => 'Pour modifier une question',
     'bloc' => 'Bloc ',
     'importFileMaker' => 'Importer la base FileMaker',
+    'exportFields' => 'Champs à exporter',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',
