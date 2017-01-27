@@ -15,6 +15,8 @@ return array(
     'fiches' => 'Patient forms',
     'logSystem' => 'System log',
     'userLog' => 'User log',
+    'filemaker' => 'Database FileMaker',
+    'importFilemaker' => 'Import FileMaker database',
     // administration
     'createUser' => 'Create a user',
     'advancedsearch' => 'Advanced search',
@@ -35,6 +37,7 @@ return array(
     'patientFormsAssociated' => 'New query on the selected patient forms',
     'exportQuery' => 'Export query',
     'selectAll' => 'Select All',
+    'deleteQuery' => 'Clear the query',
     // authentification
     'login' => 'Login',
     // create an user

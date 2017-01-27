@@ -47,60 +47,51 @@ $('#reset').click(function(){
     ?>
     <div class="row">
         <div class="col-lg-6">
-            <?php echo $form->label($model, 'id_patient'); ?>
+            <?php echo CHtml::label('Sélection individuelle', 'Answer_id_patient'); ?>
             <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("multiple" => "multiple")); ?>
-        </div>
-
-
-        <div class="col-lg-6">
-            <?php echo $form->label($model, 'user'); ?>
-            <?php echo $form->dropDownList($model, 'user', Answer::model()->getNamesUsers(), array("multiple" => "multiple")); ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-6">
-            <?php echo $form->label($model, 'type'); ?>
+            <?php echo CHtml::label('Restreindre la requête à un formulaire', 'Answer_type'); ?>
             <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("multiple" => "multiple")); ?>
-        </div>
-
-        <div class="col-lg-6">
-            <?php echo $form->label($model, 'name'); ?>
-            <?php echo $form->dropDownList($model, 'name', Answer::model()->getNomsFiches(), array("multiple" => "multiple")); ?>
         </div>
     </div>
 
     <div class ="row">
         <div class="col-lg-6">
-            <?php echo $form->label($model, 'last_updated'); ?>
-            <?php echo $form->textField($model, 'last_updated', array("onfocus"=>"datePicker(this.name)")); ?>
+            <?php echo CHtml::label('Restreindre la requête à une période', 'Answer_last_updated'); ?>
+            <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)")); ?>
         </div>
     </div>
+    <fieldset style="border:2">
+        <legend>Formulation de la requête:</legend>
+        <div class="row">
+            <div class="col-lg-6">
+                <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
+                <?php
+                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                    'name' => 'question',
+                    'source' => array_map(function($key, $value) {
+                                return array('label' => $value, 'value' => $key);
+                            }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions())
+                        ));
+                        ?>
+                        <?php
+                        echo CHtml::button(Yii::t('common', 'add'), array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;'));
+                        ?>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
-            <?php
-            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                'name' => 'question',
-                'source' => array_map(function($key, $value) {
-                            return array('label' => $value, 'value' => $key);
-                        }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions())
-                    ));
-                    ?>
-                    <?php
-                    echo CHtml::button(Yii::t('common', 'add'), array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;'));
-                    ?>
-
+                    </div>
                 </div>
-            </div>
 
-            <div id="dynamicFilters"></div>
+                <div id="dynamicFilters"></div>
+            </fieldset>
 
             <div class="row buttons">
                 <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-                <?php echo CHtml::resetButton(Yii::t('common', 'reset'), array('id' => 'reset', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-                
+                <?php echo CHtml::resetButton(Yii::t('common', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+
             </div>
 
             <?php $this->endWidget(); ?>

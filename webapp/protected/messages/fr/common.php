@@ -17,6 +17,8 @@ return array(
     'fiches' => 'Fiches de patient',
     'logSystem' => 'Log système',
     'userLog' => 'Log utilisateur',
+    'filemaker' => 'FileMaker',
+    'importFilemaker' => 'Importer un Fichier FileMaker',
     // administration
     'createUser' => 'Créer un utilisateur',
     'advancedsearch' => 'Recherche avancée',
@@ -36,6 +38,7 @@ return array(
     'patientFormsAssociated' => 'Nouvelle requête sur les fiches sélectionnées',
     'exportQuery' => 'Exporter la requête',
     'selectAll' => 'Selectionner tout',
+    'deleteQuery' => 'Effacer la requête',
     // authentification
     'login' => 'Nom d\'utilisateur',
     // créer un utilisateur
