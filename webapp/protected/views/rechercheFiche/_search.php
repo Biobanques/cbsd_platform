@@ -9,6 +9,7 @@ $('#addFilterButton').click(function(){
         data:$('#question').serialize(),
         success:function(result){
             $('#dynamicFilters').append(result);
+            $('#addFilterButton').show();
             $('#question').val('');
             var n = $('.deleteQuestion').length;
             if (n == 1) {
@@ -46,29 +47,29 @@ $('#reset').click(function(){
     ));
     ?>
     <div class="row">
-        <div class="col-lg-6">
-            <?php echo CHtml::label('Sélection individuelle', 'Answer_id_patient'); ?>
+        <div class="col-lg-12">
+            <?php echo CHtml::label('Sélection individuelle', 'Answer_id_patient', array('style'=>'width:200px')); ?>
             <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("multiple" => "multiple")); ?>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
-            <?php echo CHtml::label('Restreindre la requête à un formulaire', 'Answer_type'); ?>
+        <div class="col-lg-12">
+            <?php echo CHtml::label('Restreindre la requête à un formulaire', 'Answer_type', array('style'=>'width:200px')); ?>
             <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("multiple" => "multiple")); ?>
         </div>
     </div>
 
     <div class ="row">
-        <div class="col-lg-6">
-            <?php echo CHtml::label('Restreindre la requête à une période', 'Answer_last_updated'); ?>
+        <div class="col-lg-12">
+            <?php echo CHtml::label('Restreindre la requête à une période', 'Answer_last_updated', array('style'=>'width:200px')); ?>
             <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)")); ?>
         </div>
     </div>
     <fieldset style="border:2">
         <legend>Formulation de la requête:</legend>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
                 <?php
                 $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
@@ -79,7 +80,7 @@ $('#reset').click(function(){
                         ));
                         ?>
                         <?php
-                        echo CHtml::button(Yii::t('common', 'add'), array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;'));
+                        echo CHtml::button(Yii::t('common', 'add'), array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;', 'onclick' => '$("#addFilterButton").hide();'));
                         ?>
 
                     </div>

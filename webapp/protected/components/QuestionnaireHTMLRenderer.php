@@ -258,6 +258,7 @@ class QuestionnaireHTMLRenderer {
      */
 
     public function renderQuestionForSearchHTML($question, $lang, $isAnswered) {
+        $condition = false;
         $result = "";
 
         $result.="<div class=\"col-lg-12\">";
@@ -271,7 +272,7 @@ class QuestionnaireHTMLRenderer {
             $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
         }
         $result.="<div class=\"condition\"><div style=\"clear:both;\"></div>";
-        $result.=CHtml::dropDownList("Answer[condition][" . $question->id . "]", 'addCondition', array('$and'=>Yii::t('common', 'and'), '$or'=>Yii::t('common', 'or')));
+        $result.=CHtml::dropDownList("Answer[condition][" . $question->id . "]", 'addCondition', array('$and'=>Yii::t('common', 'and'), '$or'=>Yii::t('common', 'or')), array('style'=>'width:auto'));
         $result.="<div style=\"clear:both;\"></div></div>";
 
         $result.="<label for=\"Answer_dynamics_" . $question->id . "\">" . $label;
@@ -283,11 +284,17 @@ class QuestionnaireHTMLRenderer {
         $result.="<div class=\"question-input\">";
         // Liste déroulante des opérateurs de comparaison
         if ($question->type == "number" || $question->type == "expression") {
-            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonNumerique());
+            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonNumerique(), array('style'=>'width:auto'));
+            $condition = true;
         } elseif ($question->type == "date") {
-            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonDate());
+            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonDate(), array('style'=>'width:auto'));
+            $condition = true;
         }
-        $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\" style=\"margin-left:110px;\"";
+        if ($condition) {
+            $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\" style=\"margin-left:110px;\"";
+        } else {
+            $idInput = "id=\"Answer_dynamics_" . $question->id . "\" name=\"Answer[dynamics][" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
+        }
         $valueInput = "";
         if ($isAnswered) {
             $valueInput = $question->answer;
@@ -361,7 +368,7 @@ class QuestionnaireHTMLRenderer {
         $result.="</div>";
 
         //display cross delete picture
-        $imgHtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:25px;width:25px;'));
+        $imgHtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
 
         $result.=$imgHtml;
         //close row input
@@ -427,7 +434,7 @@ class QuestionnaireHTMLRenderer {
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
         if (Yii::app()->controller->id != "questionBloc") {
-            $imghtml = CHtml::image('images/cross.png');
+            $imghtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
             $lienSupprimer = "<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml . " Supprimer l'onglet de questions", Yii::app()->createUrl('formulaire/deleteQuestionGroup', array('idFormulaire' => $questionnaire->_id, 'idQuestionGroup' => $group->id))) . "</div>";
 
             $result.="<div class=\"question_group\">" . $title . $lienSupprimer . "</div>";
@@ -549,10 +556,10 @@ class QuestionnaireHTMLRenderer {
         }
         //add link delete
         if (Yii::app()->controller->id == "questionBloc") {
-            $imghtml = CHtml::image('images/cross.png');
+            $imghtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
             $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('questionBloc/deleteQuestion', array('id' => $_GET['id'], 'idQuestion' => $question->_id))) . "</div>";
         } else {
-            $imghtml = CHtml::image('images/cross.png');
+            $imghtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
             $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion', array('idFormulaire' => $idMongoQuestionnaire, 'idQuestion' => $question->id))) . "</div>";
         }
         $result.="</div>";

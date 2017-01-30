@@ -273,12 +273,12 @@ class Answer extends LoggableActiveRecord {
 
     public function getComparaisonNumerique() {
         $res = array();
-        $res ['equals'] = Yii::t('common', 'equals');
-        $res ['noteq'] = Yii::t('common', 'noteq');
-        $res ['less'] = Yii::t('common', 'less');
-        $res ['greater'] = Yii::t('common', 'greater');
-        $res ['lesseq'] = Yii::t('common', 'lesseq');
-        $res ['greatereq'] = Yii::t('common', 'greatereq');
+        $res ['equals'] = "=";
+        $res ['noteq'] = "<>";
+        $res ['less'] = "<";
+        $res ['greater'] = ">";
+        $res ['lesseq'] = "<=";
+        $res ['greatereq'] = ">=";
         return $res;
     }
  

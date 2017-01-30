@@ -271,7 +271,7 @@ class AnswerHTMLRenderer
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
         if (Yii::app()->controller->id != "questionBloc") {
-            $imghtml = CHtml::image('images/cross.png');
+            $imghtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
             $lienSupprimer = "<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml . " Supprimer l'onglet de questions", Yii::app()->createUrl('formulaire/deleteQuestionGroup', array('idFormulaire' => $questionnaire->_id, 'idQuestionGroup' => $group->id))) . "</div>";
 
             $result.="<div class=\"question_group\">" . $title . $lienSupprimer . "</div>";
@@ -394,7 +394,7 @@ class AnswerHTMLRenderer
         }
         //close question input
         //add link delete
-        $imghtml = CHtml::image('images/cross.png');
+        $imghtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
         $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion', array('idFormulaire' => $idMongoQuestionnaire, 'idQuestion' => $question->id))) . "</div>";
         $result.="</div>";
 
