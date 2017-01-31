@@ -79,6 +79,8 @@ return array(
     'bloc' => 'Bloc ',
     'importFileMaker' => 'Importer la base FileMaker',
     'exportFields' => 'Champs à exporter',
+    'newQuestion' => 'Nouvelle rubrique',
+    'optional' => 'optionnel',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',
@@ -114,6 +116,7 @@ return array(
     'questionFloat' => 'Alignement de la question',
     'questionPosition' => 'La question devra apparaître en dessous de',
     'addTitleQuestion' => 'Pour ajouter un titre au dessus de la question',
+    'questionTitle' => 'Titre de la question',
     'help' => 'Infobulle',
     'idBlock' => 'Id du bloc',
     'idQuestionGroup' => 'Id de l\'onglet',

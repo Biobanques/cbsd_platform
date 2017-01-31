@@ -100,8 +100,8 @@ class QuestionForm extends CFormModel {
             'idQuestionGroup' => Yii::t('common', 'questionGroup'),
             'style' => Yii::t('common', 'questionFloat'),
             'values' => Yii::t('common', 'values'),
-            'precomment' => Yii::t('common', 'addTitleQuestion'),
-            'precomment_fr' => Yii::t('common', 'addTitleQuestion'),
+            'precomment' => Yii::t('common', 'questionTitle'),
+            'precomment_fr' => Yii::t('common', 'questionTitle'),
             'help' => Yii::t('common', 'help'),
         );
     }

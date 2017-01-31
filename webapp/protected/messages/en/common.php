@@ -79,6 +79,8 @@ return array(
     'bloc' => 'Block ',
     'importFileMaker' => 'Import FileMaker',
     'exportFields' => 'Export fields',
+    'newQuestion' => 'New question',
+    'optional' => 'optional',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',
@@ -113,6 +115,7 @@ return array(
     'questionFloat' => 'Position of the question',
     'questionPosition' => 'The question shall be shown below',
     'addTitleQuestion' => 'To add a title above the question',
+    'questionTitle' => 'Question title',
     'help' => 'Tooltip',
     'idBlock' => 'Block id',
     'idQuestionGroup' => 'Questions group id',
