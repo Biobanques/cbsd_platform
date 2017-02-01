@@ -101,7 +101,7 @@
     
     <div class="col-lg-12">
         <div class="row buttons" style="float:left;">
-            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save')); ?>
+            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save'), array('class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;')); ?>
         </div>
     </div>
 

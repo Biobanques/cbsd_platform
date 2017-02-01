@@ -81,6 +81,8 @@ return array(
     'exportFields' => 'Export fields',
     'newQuestion' => 'New question',
     'optional' => 'optional',
+    'queryAnonymous' => 'Query by anonymity number',
+    'queryFormulation' => 'Formulation of the query',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',

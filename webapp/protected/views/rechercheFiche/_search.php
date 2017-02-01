@@ -3,6 +3,8 @@ $addRoute = Yii::app()->createAbsoluteUrl('answer/addSearchFilter');
 
 Yii::app()->clientScript->registerScript('searchView', "
 $('#addFilterButton').click(function(){
+    $('#addFilterButton').hide();
+    $('#loading').show();
     $.ajax({
         url:'$addRoute',
         type:'POST',
@@ -10,6 +12,7 @@ $('#addFilterButton').click(function(){
         success:function(result){
             $('#dynamicFilters').append(result);
             $('#addFilterButton').show();
+            document.getElementById('addFilterButton').disabled = true;
             $('#loading').hide();
             $('#question').val('');
             var n = $('.deleteQuestion').length;
@@ -32,7 +35,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
 });
 
 $('#reset').click(function(){
-    $('.col-lg-12').remove();
+    $('#dynamicFilters').remove();
 });
 ");
 ?>
@@ -47,28 +50,35 @@ $('#reset').click(function(){
         'method' => 'get',
     ));
     ?>
-    <div class="row">
-        <div class="col-lg-12">
-            <?php echo CHtml::label('Sélection individuelle', 'Answer_id_patient', array('style' => 'width:200px')); ?>
-            <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("multiple" => "multiple")); ?>
+
+    <div style="border:1px solid black;">
+        <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryAnonymous') ?></b></u></h4>
+        <div class="row">
+            <div class="col-lg-12">
+                <?php echo CHtml::label('Sélection individuelle', 'Answer_id_patient', array('style' => 'width:200px')); ?>
+                <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("multiple" => "multiple")); ?>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <?php echo CHtml::label('Restreindre la requête à un formulaire', 'Answer_type', array('style' => 'width:200px')); ?>
+                <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("multiple" => "multiple")); ?>
+            </div>
+        </div>
+
+        <div class ="row">
+            <div class="col-lg-12">
+                <?php echo CHtml::label('Restreindre la requête à une période', 'Answer_last_updated', array('style' => 'width:200px')); ?>
+                <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)")); ?>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <?php echo CHtml::label('Restreindre la requête à un formulaire', 'Answer_type', array('style' => 'width:200px')); ?>
-            <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("multiple" => "multiple")); ?>
-        </div>
-    </div>
+    <hr/>
 
-    <div class ="row">
-        <div class="col-lg-12">
-            <?php echo CHtml::label('Restreindre la requête à une période', 'Answer_last_updated', array('style' => 'width:200px')); ?>
-            <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)")); ?>
-        </div>
-    </div>
-    <fieldset style="border:2">
-        <legend>Formulation de la requête:</legend>
+    <div style="border:1px solid black;">
+        <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryFormulation') ?></b></u></h4>
         <div class="row">
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
@@ -77,26 +87,27 @@ $('#reset').click(function(){
                     'name' => 'question',
                     'source' => array_map(function($key, $value) {
                                 return array('label' => $value, 'value' => $key);
-                            }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions())
-                        ));
-                        ?>
-                        <?php
-                        echo CHtml::button(Yii::t('common', 'add'), array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;', 'onclick' => '$("#addFilterButton").hide(); $("#loading").show();'));
+                            }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions()),
+                    'htmlOptions'=>array(
+                        'onkeyup'=>'document.getElementById("addFilterButton").disabled = false;'
+                        )));
+                        echo CHtml::button(Yii::t('common', 'add'), array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'margin-left:10px; padding-bottom:23px;', 'disabled' => 'disabled'));
                         echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
                         ?>
-
                     </div>
                 </div>
 
                 <div id="dynamicFilters"></div>
-            </fieldset>
 
-            <div class="row buttons">
-                <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-                <?php echo CHtml::resetButton(Yii::t('common', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-
+                <div class="row">
+                    <div class="col-lg-2 col-lg-offset-7">
+                        <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+                    </div>
+                    <div class="col-lg-2">
+                        <?php echo CHtml::resetButton(Yii::t('common', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+                    </div>
+                </div>
             </div>
-
             <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->

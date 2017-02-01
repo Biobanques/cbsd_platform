@@ -81,6 +81,8 @@ return array(
     'exportFields' => 'Champs à exporter',
     'newQuestion' => 'Nouvelle rubrique',
     'optional' => 'optionnel',
+    'queryAnonymous' => 'Requête par n° d\'anonymat',
+    'queryFormulation' => 'Formulation de la requête',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',
