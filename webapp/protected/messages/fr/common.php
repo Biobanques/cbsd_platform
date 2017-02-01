@@ -297,6 +297,7 @@ return array(
     'uniqueIdQuestion' => 'L\'id doit être unique parmi les questions.',
     'uniqueIdForm' => 'Id doit être unique.',
     'chooseQuestionBlock' => 'Choisissez un bloc de questions à inclure dans le formulaire ',
-    'search1' => 'Pour les champs à choix multiples, vous pouvez sélectionner plusieurs valeurs avec la touche CTRL du clavier.'
+    'search1' => 'Pour les champs à choix multiples, vous pouvez sélectionner plusieurs valeurs avec la touche CTRL du clavier.',
+    'deleteQuestionGroup' => 'Supprimer l\'onglet de questions',
+    'deleteQuestion' => 'Supprimer la question'
 );
-?>

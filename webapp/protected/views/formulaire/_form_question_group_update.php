@@ -10,13 +10,13 @@
     <div class="row">
         <?php
         echo CHtml::label(Yii::t('common', 'currentQuestionGroup'), 'old_onglet');
-        echo CHtml::dropDownList(Yii::t('common', 'currentQuestionGroup'), '', $questionGroup->getOnglets(), array("prompt" => "----", "required" => "required"));
+        echo CHtml::dropDownList('old_onglet', '', $questionGroup->getOnglets(), array("prompt" => "----", "required" => "required"));
         ?>
     </div>
     <div class="row">
     <?php
-        echo CHtml::label(Yii::t('common', 'newQuestionGroup'), '');
-        echo CHtml::textfield(Yii::t('common', 'newQuestionGroup'), '', array("required" => "required"));
+        echo CHtml::label(Yii::t('common', 'newQuestionGroup'), 'new_onglet');
+        echo CHtml::textfield('new_onglet', '', array("required" => "required"));
     ?>
     </div>
     <div class="row buttons">

@@ -368,7 +368,7 @@ class QuestionnaireHTMLRenderer {
         $result.="</div>";
 
         //display cross delete picture
-        $imgHtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
+        $imgHtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'), array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
 
         $result.=$imgHtml;
         //close row input
@@ -434,8 +434,8 @@ class QuestionnaireHTMLRenderer {
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
         if (Yii::app()->controller->id != "questionBloc") {
-            $imghtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
-            $lienSupprimer = "<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml . " Supprimer l'onglet de questions", Yii::app()->createUrl('formulaire/deleteQuestionGroup', array('idFormulaire' => $questionnaire->_id, 'idQuestionGroup' => $group->id))) . "</div>";
+            $imghtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'), array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
+            $lienSupprimer = "<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml . " " . Yii::t('common', 'deleteQuestionGroup'), Yii::app()->createUrl('formulaire/deleteQuestionGroup', array('idFormulaire' => $questionnaire->_id, 'idQuestionGroup' => $group->id))) . "</div>";
 
             $result.="<div class=\"question_group\">" . $title . $lienSupprimer . "</div>";
         } else {
@@ -556,10 +556,10 @@ class QuestionnaireHTMLRenderer {
         }
         //add link delete
         if (Yii::app()->controller->id == "questionBloc") {
-            $imghtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
+            $imghtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'), array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
             $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('questionBloc/deleteQuestion', array('id' => $_GET['id'], 'idQuestion' => $question->_id))) . "</div>";
         } else {
-            $imghtml = CHtml::image('images/cross.png', 'Supprimer la question', array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
+            $imghtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'), array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
             $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion', array('idFormulaire' => $idMongoQuestionnaire, 'idQuestion' => $question->id))) . "</div>";
         }
         $result.="</div>";

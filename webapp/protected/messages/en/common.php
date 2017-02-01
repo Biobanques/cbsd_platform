@@ -284,6 +284,7 @@ return array(
     'uniqueIdQuestion' => '*Id must be unique doit être unique among the questions.',
     'uniqueIdForm' => 'Id must be unique.',
     'chooseQuestionBlock' => 'Choose a block of questions to include in the form ',
-    'search1' => 'For multiple choice fields, you can select one or several values by holding the CTRL key.'
+    'search1' => 'For multiple choice fields, you can select one or several values by holding the CTRL key.',
+    'deleteQuestionGroup' => 'Delete questions group',
+    'deleteQuestion' => 'Delete question'
 );
-?>
