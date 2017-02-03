@@ -33,10 +33,6 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     }
     return false;
 });
-
-$('#reset').click(function(){
-    $('#dynamicFilters').remove();
-});
 ");
 ?>
 
@@ -55,21 +51,21 @@ $('#reset').click(function(){
         <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryAnonymous') ?></b></u></h4>
         <div class="row">
             <div class="col-lg-12">
-                <?php echo CHtml::label('Sélection individuelle', 'Answer_id_patient', array('style' => 'width:200px')); ?>
+                <?php echo CHtml::label(Yii::t('common', 'indivualSelection'), 'Answer_id_patient', array('style' => 'width:200px')); ?>
                 <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("multiple" => "multiple")); ?>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-12">
-                <?php echo CHtml::label('Restreindre la requête à un formulaire', 'Answer_type', array('style' => 'width:200px')); ?>
+                <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type', array('style' => 'width:200px')); ?>
                 <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("multiple" => "multiple")); ?>
             </div>
         </div>
 
         <div class ="row">
             <div class="col-lg-12">
-                <?php echo CHtml::label('Restreindre la requête à une période', 'Answer_last_updated', array('style' => 'width:200px')); ?>
+                <?php echo CHtml::label(Yii::t('common', 'restrictPeriod'), 'Answer_last_updated', array('style' => 'width:200px')); ?>
                 <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)")); ?>
             </div>
         </div>
@@ -79,6 +75,7 @@ $('#reset').click(function(){
 
     <div style="border:1px solid black;">
         <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryFormulation') ?></b></u></h4>
+        <p>&nbsp;&nbsp;*Taper une lettre ou la touche "espace" pour afficher toutes les variables</p>
         <div class="row">
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
@@ -91,13 +88,13 @@ $('#reset').click(function(){
                     'htmlOptions'=>array(
                         'onkeyup'=>'document.getElementById("addFilterButton").disabled = false;'
                         )));
-                        echo CHtml::button(Yii::t('common', 'add'), array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'margin-left:10px; padding-bottom:23px;', 'disabled' => 'disabled'));
+                        echo CHtml::button(Yii::t('common', 'logicOperator'), array('id' => 'addFilterButton', 'class' => 'btn btn-default', 'style' => 'margin-left:10px; padding-bottom:23px; font-weight:bold;', 'disabled' => 'disabled'));
                         echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
                         ?>
                     </div>
                 </div>
 
-                <div id="dynamicFilters"></div>
+                <div id="dynamicFilters" style="margin-left:50px;"></div>
 
                 <div class="row">
                     <div class="col-lg-2 col-lg-offset-7">

@@ -369,10 +369,9 @@ class AnswerController extends Controller {
         $html = "";
         $htmlQueries = "";
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
-            echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">" . Yii::t('common', 'noFilterSelected') . "</h4>" : "<h4 align=\"center\">" . Yii::t('common', 'query') . "</h4>";
+            echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">" . Yii::t('common', 'noFilterSelected') . "</h4>" : "<h4 align=\"center\">" . Yii::t('common', 'query') . CHtml::image('images/disk.png', 'Export la requête', array('onclick'=>'document.forms["exportForm"].submit();', 'style'=>'float:right;margin-right:10px;margin-top:5px;width:20px;height:auto;')) . "</h4>";
             foreach ($_POST['Answer'] as $label => $answer) {
-                if ($label == "last_updated" && $answer == "") {
-                 
+                if ($label == "last_updated" && $answer == "") {                 
                 } elseif ($label != "condition" && $label != "compare" && $label != "dynamics") {
                     if (!is_array($answer)) {
                         $mainQuestions[$label] = $answer;
@@ -424,9 +423,8 @@ class AnswerController extends Controller {
             }
             $html .= "</ul>";
             $htmlQueries .= $html;
-            $htmlQueries .= CHtml::form(Yii::app()->createUrl("answer/exportQueries"), "POST");
+            $htmlQueries .= CHtml::form(Yii::app()->createUrl("answer/exportQueries"), "POST", array('id'=>'exportForm'));
             $htmlQueries .= CHtml::hiddenField('exportQueries', $html);
-            $htmlQueries .= CHtml::submitButton(Yii::t('common', 'exportQuery'), array('class' => 'btn btn-default', 'style' => 'margin:auto;display:block;'));
             $htmlQueries.= CHtml::endForm();
             echo $htmlQueries;
           

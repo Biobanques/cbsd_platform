@@ -122,7 +122,7 @@ class Controller extends CController
             } else {
                 $app->user->setState('activeProfil', $_POST['activeProfil']);
                 $_SESSION['activeProfil'] = $_POST['activeProfil'];
-                if (Yii::app()->controller->id == "rechercheFiche" && Yii::app()->user->getActiveProfil() == "clinicien") {
+                if (Yii::app()->controller->id == "rechercheFiche" && Yii::app()->user->getActiveProfil() == "clinicien" && Yii::app()->user->getActiveProfil() == "chercheur" && Yii::app()->user->getActiveProfil() == "administrateur de projet") {
                     Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'notAllowSearchPatientForm'));
                     $this->redirect('index.php?r=site/index');
                 }

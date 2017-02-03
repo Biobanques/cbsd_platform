@@ -26,9 +26,12 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-
+<?php
+if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
+    ?> <h1><?php echo "Gestion de projet"; ?></h1>
+<?php } else { ?>
 <h1><?php echo Yii::t('common', 'availablePatientForms') ?></h1>
-
+<?php } ?>
 <?php
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'rechercheFiche', 'searchable' => true));
 ?>
@@ -39,7 +42,8 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
     ));
     ?>
 </div><!-- search-form -->
-<div id="queries" style="background-color:#80CCFF;"></div>
+<div id="queries" style="background-color:#C6DAFF;box-shadow: 5px 5px 5px #888888;"></div>
+
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl('rechercheFiche/resultsearch'),
@@ -78,6 +82,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 <?php echo CHtml::submitButton(Yii::t('common', 'patientFormsAssociated'), array('name' => 'rechercher', 'class' => 'btn btn-default')); ?>
     </div>
 </div>
+
 <?php $this->endWidget(); ?>
 
 <script>

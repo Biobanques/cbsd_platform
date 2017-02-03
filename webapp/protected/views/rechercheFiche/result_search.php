@@ -23,8 +23,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1> Voir les fiches associées à ces patients </h1>
-<p>*Vous pouvez consulter toutes les fiches associées à ces patients et ajouter de nouvelles conditions (les ID de la requête précédente sont stockés dans une variable).</p>
+<h1>La nouvelle recherche va porter sur les fiches sélectionnées.</h1>
 
 <?php
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'rechercheFiche', 'searchable' => true));
@@ -69,6 +68,12 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 ?>
 
 <?php $this->endWidget(); ?>
+
+<div class="row">
+    <div class="col-lg-12">
+<?php echo CHtml::link(Yii::t('common', 'exportCSV'), array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
+    </div>
+</div>
 
 <script>
 function datePicker(clicked) {

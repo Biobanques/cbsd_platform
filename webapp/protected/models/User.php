@@ -248,6 +248,7 @@ class User extends LoggableActiveRecord
         $res = array();
         $res ['clinicien'] = 'Clinicien';
         $res ['administrateur'] = 'Administrateur';
+        $res ['administrateur de projet'] = 'Administrateur de projet';
         $res ['neuropathologiste'] = 'Neuropathologiste';
         $res ['geneticien'] = 'Généticien';
         $res ['chercheur'] = 'Chercheur';

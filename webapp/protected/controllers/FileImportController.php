@@ -156,8 +156,50 @@ class FileImportController extends Controller {
                                     $neuropath->initSoftAttribute("id_cbsd");
                                     $neuropath->id_cbsd = $v;
                                     foreach ($attributes as $key => $value) {
-                                        $neuropath->initSoftAttribute($key);
-                                        $neuropath->$key = $value;
+                                        $var1 = str_replace('birthPlace', 'Lieu de naissance', $key);
+                                        $var2 = str_replace('signature_date', 'Date de signature', $var1);
+                                        $var3 = str_replace('family_tree', 'Arbre familial', $var2);
+                                        $var4 = str_replace('detail_treatment', 'Détail du traitement', $var3);
+                                        $var5 = str_replace("associated_clinical_data", 'Données cliniques associées', $var4);
+                                        $var6 = str_replace('associated_molecular_data', 'Données moléculaires associées', $var5);
+                                        $var7 = str_replace('associated_imagin_data', 'Associated imagin data', $var6);
+                                        $var8 = str_replace('quantity_available', 'Quantité disponible', $var7);
+                                        $var9 = str_replace('biobank_collection_name', 'Biobank collection name', $var8);
+                                        $var10 = str_replace('trouble_start_date', 'Trouble start date', $var9);
+                                        $var11 = str_replace('first_trouble', 'First trouble', $var10);
+                                        $var12 = str_replace('mms', 'Mms', $var11);
+                                        $var13 = str_replace('id_sample', 'Identifiant de l\'échantillon', $var12);
+                                        $var14 = str_replace('collect_date', 'Collect date', $var13);
+                                        $var15 = str_replace('diagnosis_1', 'Diagnostique 1', $var14);
+                                        $var16 = str_replace('diagnosis_2', 'Diagnostique 2', $var15);
+                                        $var17 = str_replace('diagnosis_3', 'Diagnostique 3', $var16);
+                                        $var18 = str_replace('diagnosis_4', 'Diagnostique 4', $var17);
+                                        $var19 = str_replace('origin_sample_tissue', 'Origin sample tissue', $var18);
+                                        $var20 = str_replace('nature_sample_tissue', 'Nature sample tissue', $var19);
+                                        $var21 = str_replace('name_samples_tissue', 'Name sample tissue', $var20);
+                                        $var22 = str_replace('date_death', 'Date de décès', $var21);
+                                        $var23 = str_replace('pmd', 'Pmd', $var22);
+                                        $var24 = str_replace('city_brain_removal', 'City brain removal', $var23);
+                                        $var25 = str_replace('neuropathologist', 'Neuropathologiste', $var24);
+                                        $var26 = str_replace('braak_tau', 'Braak score', $var25);
+                                        $var27 = str_replace('thal_amyloid', 'Thal score', $var26);
+                                        $var28 = str_replace('lewy_type_kosaka', 'Lewy type Kosaka', $var27);
+                                        $var29 = str_replace('braak_lewy', 'Braak Lewy', $var28);
+                                        $var30 = str_replace('angiopathy_type', 'Angiopathy type', $var29);
+                                        $var31 = str_replace('angiopathy_stage', 'Angiopathy stage', $var30);
+                                        $var32 = str_replace('dft_harmonized', 'Dft Harmonized', $var31);
+                                        $var33 = str_replace('dm_frontal', 'Dm frontal', $var32);
+                                        $var34 = str_replace('dm_temporal', 'Dm temporal', $var33);
+                                        $var35 = str_replace('dm_hippocampal', 'Dm hippocampal', $var34);
+                                        $var36 = str_replace('dm_basal_ganglia', 'Dm basal ganglia', $var35);
+                                        $var37 = str_replace('dm_total', 'Dm total', $var36);
+                                        $neuropath->initSoftAttribute($var37);
+                                        $pos = strpos((string) $value, "-");
+                                        if ($pos) {
+                                            $neuropath->$var37 = $this->convertNumeric(substr($value, 0, $pos));
+                                        } else {
+                                            $neuropath->$var37 = $this->convertNumeric($value);
+                                        }
                                     }
                                     $neuropath->save();
                                 }
@@ -267,6 +309,24 @@ class FileImportController extends Controller {
                 $answer->answers_group[] = $answerGroup;
                 $answer->save();
             }
+        }
+    }
+    
+    public function convertNumeric($value) {
+        switch ($value) {
+            case "I": return 1;
+                break;
+            case "II": return 2;
+                break;
+            case "III": return 3;
+                break;
+            case "IV": return 4;
+                break;
+            case "V": return 5;
+                break;
+            case "VI": return 6;
+                break;
+            default: return $value;
         }
     }
 }
