@@ -371,6 +371,8 @@ class QuestionnaireHTMLRenderer {
         $imgHtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'), array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
 
         $result.=$imgHtml;
+        
+        $result .= CHtml::button('OK', array('class' => 'btn btn-success validateQuery', 'style' => 'margin-left:15px;'));
         //close row input
         $result.="</div>";
         return $result;
