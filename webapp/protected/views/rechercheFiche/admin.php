@@ -44,7 +44,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 <div id="queries" style="background-color:#C6DAFF;box-shadow: 5px 5px 5px #888888;padding:1px;display:none;"></div>
 
 <br>
-    
+
 <div id="showResultQuery" style="display:none;">
     <div class="row">
         <div class="col-lg-5">
@@ -107,8 +107,18 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
                 cancelLabel: 'Effacer'
             }
         });
+        $('#restrictSearch').show();
+        $('#restrictReset').show();
+        $('input[name="' + clicked + '"]').on('apply.daterangepicker', function (ev, picker) {
+            $('#restrictSearch').show();
+            $('#restrictReset').show();
+        });
         $('input[name="' + clicked + '"]').on('cancel.daterangepicker', function (ev, picker) {
             $(this).val('');
+            if ($('.col-lg-12 :selected').text() == "") {
+                $('#restrictSearch').hide();
+                $('#restrictReset').hide();
+            }
         });
     }
 </script>

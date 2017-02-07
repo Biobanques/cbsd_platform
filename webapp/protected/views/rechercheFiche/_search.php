@@ -69,14 +69,14 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
         <div class="row">
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'individualSelection'), 'Answer_id_patient', array('style' => 'width:250px')); ?>
-                <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("multiple" => "multiple")); ?>
+                <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("multiple" => "multiple", "onclick" => "restrictQuery()")); ?>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type', array('style' => 'width:250px')); ?>
-                <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("multiple" => "multiple")); ?>
+                <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("multiple" => "multiple", "onclick" => "restrictQuery()")); ?>
             </div>
         </div>
 
@@ -87,6 +87,14 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
             </div>
         </div>
         <p style="margin-left:10px;">*Sinon la recherche porte sur l'ensemble de la base</p>
+        <div class="row">
+            <div class="col-lg-2 col-lg-offset-7">
+                <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('id' => 'restrictSearch', 'class' => 'btn btn-primary', 'style' => 'margin-top: 8px; padding-bottom: 23px; display:none;')); ?>
+            </div>
+            <div class="col-lg-2">
+                <?php echo CHtml::resetButton(Yii::t('common', 'deleteQuery'), array('id' => 'restrictReset', 'class' => 'btn btn-danger', 'style' => 'margin-top: 8px; padding-bottom: 23px; display:none;', 'onclick' => 'location.reload();')); ?>
+            </div>
+        </div>
     </div>
 
     <hr/>
@@ -103,8 +111,8 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                     'source' => array_map(function($key, $value) {
                                 return array('label' => $value, 'value' => $key);
                             }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions()),
-                    'htmlOptions'=>array(
-                        'onkeyup'=>'document.getElementById("addFilterButton").disabled = false;'
+                            'htmlOptions' => array(
+                                'onkeyup' => 'document.getElementById("addFilterButton").disabled = false;'
                         )));
                         echo CHtml::button(Yii::t('common', 'logicOperator'), array('id' => 'addFilterButton', 'class' => 'btn btn-info', 'style' => 'margin-left:10px; padding-bottom:23px; font-weight:bold;', 'disabled' => 'disabled'));
                         echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
@@ -123,7 +131,20 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                     </div>
                 </div>
             </div>
-        
+
             <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->
+
+<script>
+    function restrictQuery() {
+        var value = $('.col-lg-12 :selected').text();
+        if (value != "") {
+            $('#restrictSearch').show();
+            $('#restrictReset').show();
+        } else {
+            $('#restrictSearch').hide();
+            $('#restrictReset').hide();
+        }
+    }
+</script>
