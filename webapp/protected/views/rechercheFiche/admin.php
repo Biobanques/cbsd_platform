@@ -47,6 +47,14 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 <br>
 
 <div id="showResultQuery" style="display:none;">
+
+    <?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'action' => Yii::app()->createUrl('rechercheFiche/resultsearch'),
+        'method' => 'post',
+    ));
+    ?>
+    
     <div class="row">
         <div class="col-lg-5">
             <?php echo CHtml::link(Yii::t('common', 'exportCSV'), array('rechercheFiche/exportCsv'), array('class' => 'btn btn-default')); ?>
@@ -57,11 +65,6 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
     </div>
 
     <?php
-    $form = $this->beginWidget('CActiveForm', array(
-        'action' => Yii::app()->createUrl('rechercheFiche/resultsearch'),
-        'method' => 'post',
-    ));
-
     $this->widget('bootstrap.widgets.TbGridView', array(
         'id' => 'searchFiche-grid',
         'type' => 'striped bordered condensed',

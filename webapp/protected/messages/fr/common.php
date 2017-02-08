@@ -83,8 +83,8 @@ return array(
     'exportFields' => 'Champs à exporter',
     'newQuestion' => 'Nouvelle rubrique',
     'optional' => 'optionnel',
-    'queryAnonymous' => 'Requête par n° d\'anonymat',
-    'queryFormulation' => 'Formulation de la requête',
+    'queryAnonymous' => 'Restreindre la requête à',
+    'queryFormulation' => 'Formuler la requête',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',
@@ -134,9 +134,9 @@ return array(
     'dateImport' => 'Date de l\'import',
     'importedFiles' => 'Fichiers importés',
     'historyImport' => 'Historique des fichiers importés',
-    'individualSelection' => 'Sélection individuelle',
-    'restrictQuery' => 'Restreindre la requête à un formulaire',
-    'restrictPeriod' => 'Restreindre la requête à une période',
+    'individualSelection' => 'une sélection individuelle',
+    'restrictQuery' => 'un formulaire',
+    'restrictPeriod' => 'une période',
     // profil
     'administrateur' => 'Administrateur',
     'administrateur de projet' => 'Administrateur du projet',
@@ -307,5 +307,7 @@ return array(
     'chooseQuestionBlock' => 'Choisissez un bloc de questions à inclure dans le formulaire ',
     'search1' => 'Pour les champs à choix multiples, vous pouvez sélectionner plusieurs valeurs avec la touche CTRL du clavier.',
     'deleteQuestionGroup' => 'Supprimer l\'onglet de questions',
-    'deleteQuestion' => 'Supprimer la question'
+    'deleteQuestion' => 'Supprimer la question',
+    'notRestrict' => '*Si vous ne restrignez pas la requête, la recherche portera sur l\'ensemble de la base.',
+    'writeQuestion' => '*Taper une lettre ou la touche "espace" pour afficher toutes les variables.'
 );

@@ -86,7 +86,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                 <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)")); ?>
             </div>
         </div>
-        <p style="margin-left:10px;">*Sinon la recherche porte sur l'ensemble de la base</p>
+        <p style="margin-left:10px;"><?php echo Yii::t('common', 'notRestrict'); ?></p>
         <div class="row">
             <div class="col-lg-2 col-lg-offset-7">
                 <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('id' => 'restrictSearch', 'class' => 'btn btn-primary', 'style' => 'margin-top: 8px; padding-bottom: 23px; display:none;')); ?>
@@ -101,10 +101,10 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
 
     <div style="border:1px solid black;">
         <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryFormulation') ?></b></u></h4>
-        <p>&nbsp;&nbsp;*Taper une lettre ou la touche "espace" pour afficher toutes les variables</p>
+        <p>&nbsp;&nbsp;<?php echo Yii::t('common', 'writeQuestion'); ?></p>
         <div class="row">
             <div class="col-lg-12">
-                <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question', array('style' => 'width:200px')); ?>
+                <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
                 <?php
                 $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                     'name' => 'question',

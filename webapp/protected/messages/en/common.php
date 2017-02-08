@@ -83,8 +83,8 @@ return array(
     'exportFields' => 'Export fields',
     'newQuestion' => 'New question',
     'optional' => 'optional',
-    'queryAnonymous' => 'Query by anonymous ID',
-    'queryFormulation' => 'Formulation of the query',
+    'queryAnonymous' => 'Restrict the query ID to',
+    'queryFormulation' => 'Formulate the query',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',
@@ -133,9 +133,9 @@ return array(
     'dateImport' => 'Import date',
     'importedFiles' => 'Imported files',
     'historyImport' => 'History of imported files',
-    'individualSelection' => 'Individual selection',
-    'restrictQuery' => 'Restrict the query to a form',
-    'restrictPeriod' => 'Restrict the query to a period',
+    'individualSelection' => 'individuals',
+    'restrictQuery' => 'a form',
+    'restrictPeriod' => 'a period',
     // profil
     'administrateur' => 'Administrator',
     'administrateur de projet' => 'Administrator of the project',
@@ -294,5 +294,7 @@ return array(
     'chooseQuestionBlock' => 'Choose a block of questions to include in the form ',
     'search1' => 'For multiple choice fields, you can select one or several values by holding the CTRL key.',
     'deleteQuestionGroup' => 'Delete questions group',
-    'deleteQuestion' => 'Delete question'
+    'deleteQuestion' => 'Delete question',
+    'notRestrict' => '*If you do not restrict the query, it will involve all the database.',
+    'writeQuestion' => '*Type a letter or the space key to display all variables.'
 );

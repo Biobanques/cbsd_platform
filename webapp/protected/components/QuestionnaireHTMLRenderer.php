@@ -264,7 +264,7 @@ class QuestionnaireHTMLRenderer {
         $result.=CHtml::dropDownList("Answer[condition][" . $question->id . "]", 'addCondition', array('$and'=>Yii::t('common', 'and'), '$or'=>Yii::t('common', 'or')), array('style'=>'width:auto'));
         $result.="<div style=\"clear:both;\"></div></div>";
 
-        $result.="<label for=\"Answer_dynamics_" . $question->id . "\">" . $label;
+        $result.="<label for=\"Answer_dynamics_" . $question->id . "\" style=\"font-style:italic; color:blue;\">" . $label;
         if (isset($question->help)) {
             $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
         }
