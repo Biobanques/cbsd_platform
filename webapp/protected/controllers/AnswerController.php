@@ -368,6 +368,7 @@ class AnswerController extends Controller {
         $dynamics = array();
         $html = "";
         $htmlQueries = "";
+        $ok = false;
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
             echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">" . Yii::t('common', 'noFilterSelected') . "</h4>" : "<h4 align=\"center\">" . Yii::t('common', 'query') . CHtml::image('images/disk.png', 'Export la requête', array('onclick'=>'document.forms["exportForm"].submit();', 'style'=>'float:right;margin-right:10px;margin-top:5px;width:20px;height:auto;')) . "</h4>";
             foreach ($_POST['Answer'] as $label => $answer) {
@@ -406,9 +407,16 @@ class AnswerController extends Controller {
             $html .= "<ul>";
             foreach ($mainQuestions as $label => $answer) {
                 $html .= "<li>" . Answer::model()->attributeLabels()[$label] . " = " . $answer . "</li>";
-            };
+                if ($answer != end($mainQuestions)) {
+                    $html .= Yii::t('common', 'and');
+                }
+            }
             foreach ($questions as $key => $value) {
-                $html .= $operators[$questions[$key][0]];
+                if ($ok) {
+                    $html .= $operators[$questions[$key][0]];
+                } else {
+                    $ok = true;
+                }
                 $html .= "<li>" . Answer::model()->getLabelQuestionById($key);
                 foreach ($value as $label => $answer) {
                     if ($label != 0) {
@@ -434,7 +442,12 @@ class AnswerController extends Controller {
     public function actionExportQueries() {
         if (isset($_POST['exportQueries'])) {
             $html = Yii::t('common', 'exportQueriesDate');
-            $html .= $_POST['exportQueries'];
+            $word = explode(' ', $_POST['exportQueries'], 2);
+            if ($word[0] == Yii::t('common', 'and') || $word[0] == Yii::t('common', 'or')) {
+                $html .= $word[1];
+            } else {
+                $html .= $_POST['exportQueries'];
+            }
             $html = str_replace("<ul><li>", '- ', $html);
             $html = str_replace("</li></ul>", '', $html);
             $html = str_replace("</li><li>", "\n- ", $html);

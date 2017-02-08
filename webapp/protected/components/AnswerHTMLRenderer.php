@@ -188,13 +188,6 @@ class AnswerHTMLRenderer
         if ($answer->type == "text") {
             $result.="<textarea rows=\"4\" cols=\"100\" " . $idInput . " style=\"width: 220px; height: 70px;\" >" . $answer->answer . "</textarea>";
         }
-        if ($answer->type == "image") {
-            $result.="<input " . $idInput . " type=\"file\" />";
-
-            if ($answer->answer != null) {
-                $result.="<div>here the image</div>";
-            }
-        }
         if ($answer->type == "list") {
             $values = $answer->values;
             $arvalue = split(",", $values);
@@ -378,9 +371,6 @@ class AnswerHTMLRenderer
         }
         if ($question->type == "text") {
             $result.="<textarea rows=\"4\" cols=\"100\" " . $idInput . " style=\"width: 220px; height: 70px;\" ></textarea>";
-        }
-        if ($question->type == "image") {
-            $result.="<div style=\"width:128px;height:128px;\"> </div>";
         }
         if ($question->type == "list") {
             $values = $question->values;

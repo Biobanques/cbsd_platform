@@ -206,11 +206,6 @@ class QuestionnairePDFRenderer
             $pdf->TextField($id, 60, 18, array('multiline' => true, 'lineWidth' => 0, 'borderStyle' => 'none'), array('v' => '', 'dv' => ''));
             $pdf->Ln(22);
         }
-        if ($question->type == "image") {
-            //TODO ameliorer le rendu des images et leur integration
-            $pdf->Image('images/gnome_mime_image.png', '', '', '', '', 'PNG', '', '', true, 100);
-            $pdf->Ln(40);
-        }
         if ($question->type == "list") {
             $values = $question->values;
             $arvalue = split(",", $values);

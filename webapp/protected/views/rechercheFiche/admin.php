@@ -12,6 +12,7 @@ $('.search-form form').submit(function(){
         type:'POST',
         data:$('#light_search-form').serialize(),
         success:function(result){
+            $('#queries').show();
             $('#queries').html('');
             $('#queries').append(result);
             $('#showResultQuery').show();
