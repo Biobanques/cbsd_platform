@@ -584,8 +584,9 @@ class Answer extends LoggableActiveRecord {
     public function findAllDetailledQuestionById($id) {
         $result = null;
         foreach ($this->getAllDetailledQuestions() as $question) {
-            if ($question->answer->id == $id)
+            if ($question->answer->id == $id) {
                 $result = $question->answer;
+            }
         }
         return $result;
     }
