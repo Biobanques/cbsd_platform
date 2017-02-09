@@ -23,7 +23,7 @@
             <?php echo $form->error($model, 'nom'); ?>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'login'); ?>
@@ -36,7 +36,7 @@
             <?php echo $form->error($model, 'email'); ?>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'password'); ?>
@@ -49,7 +49,7 @@
             <?php echo $form->error($model, 'passwordCompare'); ?>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'telephone'); ?>
@@ -62,7 +62,7 @@
             <?php echo $form->error($model, 'gsm'); ?>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-lg-4">
             <div id="profil">
@@ -80,7 +80,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-12">
             <div id="address" style="display:none;">
                 <?php echo CHtml::activeLabel($model, 'address', array('required' => true)); ?>
                 <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
@@ -90,7 +90,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-12">
             <div id="centre" style="display:none;">
                 <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
                 <?php echo $form->dropDownList($model, 'centre', User::model()->getArrayCentre(), array('prompt' => '----')); ?>
@@ -98,10 +98,11 @@
             </div>
         </div>
     </div>
-    
-    <div class="col-lg-12">
-        <div class="row buttons" style="float:left;">
-            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save'), array('class' => 'btn btn-default', 'style' => 'padding-bottom: 23px;')); ?>
+
+    <div class="row buttons">
+        <div class="col-lg-12">
+            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'createBtn') : Yii::t('common', 'updateBtn'), array('class' => 'btn btn-primary', 'style' => 'padding-bottom: 23px;')); ?>
+            <?php echo CHtml::resetButton(Yii::t('common', 'reset'), array('class' => 'btn btn-danger', 'style' => 'padding-bottom: 23px;')); ?>
         </div>
     </div>
 

@@ -356,8 +356,9 @@ input[type="color"],
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
+    width:200px;
 }
 
-.panel-body > .nav-list > .active > a {
-    color: white;
+.navbar .nav > li > a {
+    padding: 15px 15px 10px !important;
 }

@@ -65,7 +65,9 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     ?>
 
     <div style="border:1px solid black;">
+
         <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryAnonymous') ?></b></u></h4>
+
         <div class="row">
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'individualSelection'), 'Answer_id_patient', array('style' => 'width:250px')); ?>
@@ -86,23 +88,28 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                 <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)")); ?>
             </div>
         </div>
+
         <p style="margin-left:10px;"><?php echo Yii::t('common', 'notRestrict'); ?></p>
-        <div class="row">
-            <div class="col-lg-2 col-lg-offset-7">
+
+        <div class="row buttons">
+            <div class="col-lg-7 col-lg-offset-7">
                 <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('id' => 'restrictSearch', 'class' => 'btn btn-primary', 'style' => 'margin-top: 8px; padding-bottom: 23px; display:none;')); ?>
-            </div>
-            <div class="col-lg-2">
                 <?php echo CHtml::resetButton(Yii::t('common', 'deleteQuery'), array('id' => 'restrictReset', 'class' => 'btn btn-danger', 'style' => 'margin-top: 8px; padding-bottom: 23px; display:none;', 'onclick' => 'location.reload();')); ?>
             </div>
         </div>
+
     </div>
 
     <hr/>
 
     <div style="border:1px solid black;">
+
         <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryFormulation') ?></b></u></h4>
+
         <p>&nbsp;&nbsp;<?php echo Yii::t('common', 'writeQuestion'); ?></p>
+
         <div class="row">
+
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
                 <?php
@@ -118,18 +125,18 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                         echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
                         ?>
                     </div>
+
                 </div>
 
                 <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
 
-                <div class="row">
-                    <div class="col-lg-2 col-lg-offset-7">
-                        <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'margin-top: 8px; padding-bottom: 23px; display:none;')); ?>
-                    </div>
-                    <div class="col-lg-2">
-                        <?php echo CHtml::resetButton(Yii::t('common', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'style' => 'margin-top: 8px; padding-bottom: 23px; display:none;', 'onclick' => 'location.reload();')); ?>
+                <div class="row buttons">
+                    <div class="col-lg-7 col-lg-offset-7">
+                        <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'padding-bottom: 23px; display:none;')); ?>
+                        <?php echo CHtml::resetButton(Yii::t('common', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'style' => 'padding-bottom: 23px; display:none;', 'onclick' => 'location.reload();')); ?>
                     </div>
                 </div>
+
             </div>
 
             <?php $this->endWidget(); ?>

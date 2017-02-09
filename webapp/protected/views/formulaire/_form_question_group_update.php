@@ -8,19 +8,23 @@
     ?>
 
     <div class="row">
-        <?php
-        echo CHtml::label(Yii::t('common', 'currentQuestionGroup'), 'old_onglet');
-        echo CHtml::dropDownList('old_onglet', '', $questionGroup->getOnglets(), array("prompt" => "----", "required" => "required"));
-        ?>
+        <div class="col-lg-12">
+            <?php echo CHtml::label(Yii::t('common', 'currentQuestionGroup'), 'old_onglet'); ?>
+            <?php echo CHtml::dropDownList('old_onglet', '', $questionGroup->getOnglets(), array("prompt" => "----", "required" => "required")); ?>
+        </div>
     </div>
+
     <div class="row">
-    <?php
-        echo CHtml::label(Yii::t('common', 'newQuestionGroup'), 'new_onglet');
-        echo CHtml::textfield('new_onglet', '', array("required" => "required"));
-    ?>
+        <div class="col-lg-12">
+            <?php echo CHtml::label(Yii::t('common', 'newQuestionGroup'), 'new_onglet'); ?>
+            <?php echo CHtml::textfield('new_onglet', '', array("required" => "required")); ?>
+        </div>
     </div>
+
     <div class="row buttons">
-        <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+        <div class="col-lg-1 col-lg-offset-10">
+            <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary', 'style' => 'padding-bottom: 23px;')); ?>
+        </div>
     </div>
 
     <?php $this->endWidget(); ?>

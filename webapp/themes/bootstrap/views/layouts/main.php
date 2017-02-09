@@ -42,7 +42,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="en" />
-        
+
         <!-- blueprint CSS framework -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
@@ -53,7 +53,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
 
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-        
+
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/questionnaire.css" />
 
         <!-- use the link below to test cdn instead of local lib -->
@@ -67,43 +67,56 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-        <?php Yii::app()->bootstrap->register(); ?>
         <?php
+        Yii::app()->bootstrap->register();
         Yii::app()->clientScript->registerCoreScript('jquery');
         Yii::app()->clientScript->registerCoreScript('jquery.ui');
         ?>
     </head>
 
     <body>
-        <div class="container" id="page">
-            <?php
-            if (Yii::app()->urlManager->parseUrl(Yii::app()->request) != "rechercheFiche/viewOnePage" && Yii::app()->urlManager->parseUrl(Yii::app()->request) != "rechercheFiche/view") {
-                $menuItems = array(
-                    array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil"),
-                    array('label' => Yii::t('common', 'searchPatient'), 'url' => array('/site/patient'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "chercheur" && Yii::app()->user->getActiveProfil() != "administrateur de projet" && Yii::app()->controller->action->id != "loginProfil"),
-                    array('label' => (Yii::app()->user->getActiveProfil() != "administrateur de projet") ? Yii::t('common', 'searchForm') : Yii::t('common', 'projectManager'), 'url' => array('/rechercheFiche/admin'), 'visible' => !Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "clinicien" && Yii::app()->user->getActiveProfil() != "chercheur"),
-                    array('label' => Yii::t('common', 'administration'), 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin() && Yii::app()->user->getActiveProfil() == "administrateur" && Yii::app()->controller->action->id != "loginProfil"),
-                    array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                    array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-                    array('label' => Yii::t('common', 'accessProfil'), 'url' => '', 'visible' => !Yii::app()->user->isGuest));
-                if (!Yii::app()->user->isGuest)
-                    $menuItems[] = array(
-                        'template' => GetProfil::getHTML(),
-                    );
-
-
-
-                $this->widget('bootstrap.widgets.TbNavbar', array(
-                    'brandUrl' => (!Yii::app()->user->isGuest) ? array('/site/index') : "",
-                    'items' => array(
-                        array(
-                            'class' => 'bootstrap.widgets.TbMenu',
-                            'items' => $menuItems
-                        )
-                    )
-                ));
-            }
-            ?>
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid"> <!-- Brand and toggle get grouped for better mobile display --> 
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> 
+                            <span class="sr-only">Toggle navigation</span> 
+                            <span class="icon-bar"></span> 
+                            <span class="icon-bar"></span> 
+                            <span class="icon-bar"></span> 
+                        </button>
+                        <a class="navbar-brand" href="<?php echo Yii::app()->createUrl('site/index'); ?>"> <span class="stylelogo">CBSDPlatform</span> </a>
+                    </div> <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
+                        <ul class="nav navbar-nav">
+                            <?php if (!Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil") { ?>
+                                <li><a href="<?php echo Yii::app()->createUrl('site/index'); ?>"><?php echo Yii::t('common', 'accueil'); ?></a></li>
+                            <?php } ?>
+                            <?php if (!Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "chercheur" && Yii::app()->user->getActiveProfil() != "administrateur de projet" && Yii::app()->controller->action->id != "loginProfil") { ?>
+                                <li><a href="<?php echo Yii::app()->createUrl('site/patient'); ?>"><?php echo Yii::t('common', 'searchPatient'); ?></a></li>
+                            <?php } ?>
+                            <?php if (!Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "clinicien" && Yii::app()->user->getActiveProfil() != "chercheur") { ?>
+                                <li><a href="<?php echo Yii::app()->createUrl('rechercheFiche/admin'); ?>"><?php echo (Yii::app()->user->getActiveProfil() != "administrateur de projet") ? Yii::t('common', 'searchForm') : Yii::t('common', 'projectManager'); ?></a></li>
+                            <?php } ?>
+                            <?php if (Yii::app()->user->isAdmin() && Yii::app()->user->getActiveProfil() == "administrateur" && Yii::app()->controller->action->id != "loginProfil") { ?>
+                                <li><a href="<?php echo Yii::app()->createUrl('administration/index'); ?>"><?php echo Yii::t('common', 'administration'); ?></a></li>
+                            <?php } ?>
+                            <?php if (!Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil") { ?>
+                                <li><a><?php echo Yii::t('common', 'accessProfil'); ?></a></li>
+                                <li><?php echo GetProfil::getHTML(); ?></li>
+                            <?php } ?>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <?php if (Yii::app()->user->isGuest) { ?>
+                                <li><a href="<?php echo Yii::app()->createUrl('site/login'); ?>"><?php echo Yii::t('common', 'seconnecter'); ?></a></li>
+                            <?php } ?>
+                            <?php if (!Yii::app()->user->isGuest) { ?>
+                                <li><a href="<?php echo Yii::app()->createUrl('site/logout'); ?>"><?php echo Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')'; ?></a></li>
+                            <?php } ?>
+                        </ul>    
+                    </div>
+                </div>
+            </nav>
 
             <div style="float:right;padding-right:20px;padding-top:20px;">
                 <div >
@@ -147,11 +160,11 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
             ?>
             <div id="img-container">
 
-</div>
+            </div>
             <?php echo $content; ?>
 
             <div class="clear"></div>
-            <div style="height:150px;"/>
+            <div style="height:200px;"/>
             <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
                 <div id="footer">
                     <div class="container">

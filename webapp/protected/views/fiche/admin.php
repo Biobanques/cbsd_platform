@@ -41,16 +41,15 @@ echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('
 </div><!-- search-form -->
 
 <?php
-$this->widget('bootstrap.widgets.TbGridView', array(
+$this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'fiche-grid',
-    'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'columns' => array(
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
         array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
         array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'class' => 'CButtonColumn',
             'template' => '{view}{delete}',
             'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }'
         ),

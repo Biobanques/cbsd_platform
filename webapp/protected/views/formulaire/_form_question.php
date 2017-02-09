@@ -32,7 +32,9 @@ $('#QuestionForm_type').change(function(){
     <p><b><?php echo Yii::t('common', 'valuesQuestion') ?></b></p>
 
     <div style="border:1px solid black;">
+
         <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'addTitleQuestion') ?></b></u>&nbsp;(<?php echo Yii::t('common', 'optional') ?>)</h4>
+
         <div class="row">
             <div class="col-lg-12">
                 <?php echo $form->labelEx($model, 'precomment'); ?>
@@ -40,12 +42,15 @@ $('#QuestionForm_type').change(function(){
                 <?php echo $form->error($model, 'precomment'); ?>
             </div>        
         </div>
+
     </div>
 
     <hr/>
-    
+
     <div style="border:1px solid black;">
+
         <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'newQuestion') ?></b></u></h4>
+
         <div class="row">
             <div class="col-lg-6">
                 <?php echo $form->labelEx($model, 'id'); ?>
@@ -84,6 +89,7 @@ $('#QuestionForm_type').change(function(){
                 <?php echo $form->error($model, 'style'); ?>    
             </div> 
         </div>
+
         <div class="row">
             <div class="col-lg-6">
                 <?php echo $form->labelEx($model, 'help'); ?>
@@ -94,9 +100,9 @@ $('#QuestionForm_type').change(function(){
     </div>
 
     <div class="row">
-        <div class="col-lg-4 col-lg-offset-8">
+        <div class="col-lg-1 col-lg-offset-10">
             <div class="buttons">
-                <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+                <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary', 'style' => 'padding-bottom: 23px;')); ?>
             </div>        
         </div>
     </div>

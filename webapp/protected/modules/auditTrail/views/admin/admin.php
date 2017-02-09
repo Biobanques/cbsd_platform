@@ -26,9 +26,8 @@ echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('
 </div><!-- search-form -->
 
 <?php
-$this->widget('bootstrap.widgets.TbGridView', array(
+$this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'audit-trail-grid',
-    'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
     'columns' => array(
         array('header' => $model->attributeLabels()["action"], 'name' => 'action'),

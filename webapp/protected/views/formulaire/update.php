@@ -45,7 +45,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     $this->endWidget();
     ?>
 </div>
-
+<hr/>
 <div class="panel-group" id="accordion">
     <div class="panel panel-primary">
         <div class="panel-heading">

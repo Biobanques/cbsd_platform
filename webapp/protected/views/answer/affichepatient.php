@@ -29,8 +29,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
         <hr />
         <h4>Patient</h4>
         <?php
-        $this->widget('bootstrap.widgets.TbGridView', array(
-            'type' => 'striped bordered condensed',
+        $this->widget('zii.widgets.grid.CGridView', array(
             'dataProvider' => new CArrayDataProvider(array(get_object_vars($patient))),
             'template' => "{items}",
             'columns' => array(
@@ -51,8 +50,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 <?php if (Yii::app()->user->isAuthorizedView(Yii::app()->user->getState('activeProfil'), "clinique")) { ?>
     <h5><?php echo Yii::t('common', 'patientClinical') ?></h5>
     <?php
-    $this->widget('bootstrap.widgets.TbGridView', array(
-        'type' => 'striped bordered condensed',
+    $this->widget('zii.widgets.grid.CGridView', array(
         'dataProvider' => $dataProviderCliniques,
         'template' => "{items}",
         'emptyText' => Yii::t('common', 'noPatientForms'),
@@ -60,7 +58,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
             array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
             array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
-                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'class' => 'CButtonColumn',
                 'buttons' => array
                     (
                     'view' => array
@@ -87,8 +85,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
     <hr />
     <h5><?php echo Yii::t('common', 'patientNeuropathologist') ?></h5>
     <?php
-    $this->widget('bootstrap.widgets.TbGridView', array(
-        'type' => 'striped bordered condensed',
+    $this->widget('zii.widgets.grid.CGridView', array(
         'dataProvider' => $dataProviderNeuropathologiques,
         'template' => "{items}",
         'emptyText' => Yii::t('common', 'noPatientForms'),
@@ -96,7 +93,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
             array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
             array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
-                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'class' => 'CButtonColumn',
                 'buttons' => array
                     (
                     'view' => array
@@ -123,8 +120,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
     <hr />
     <h5><?php echo Yii::t('common', 'patientGeneticist') ?></h5>
     <?php
-    $this->widget('bootstrap.widgets.TbGridView', array(
-        'type' => 'striped bordered condensed',
+    $this->widget('zii.widgets.grid.CGridView', array(
         'dataProvider' => $dataProviderGenetiques,
         'template' => "{items}",
         'emptyText' => Yii::t('common', 'noPatientForms'),
@@ -132,7 +128,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
             array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
             array('header' => Yii::t('common', 'lastModified'), 'name' => 'Date de modification', 'value' => '$data->getLastUpdated()'),
             array(
-                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'class' => 'CButtonColumn',
                 'buttons' => array
                     (
                     'view' => array
@@ -165,19 +161,18 @@ if (Yii::app()->user->getState('activeProfil') != "chercheur" && Yii::app()->use
     ?>
 
     <div class="row" id="liste_fiche">
-        <div class="span3">
+        <div class="col-lg-3">
             <p><?php echo Yii::t('common', 'insertPatientForm') ?> : </p>
         </div>
-        <div class="span3" style="margin:-5px;">
+        <div class="col-lg-4">
             <?php
             echo CHtml::dropDownList('form', '', Questionnaire::model()->getFiche(Yii::app()->user->getActiveProfil(), $neuropath, $genetique), array('prompt' => '---' . Yii::t('common', 'choosePatientForm') . '---'));
             ?>
         </div>
 
-        <div class="span3" style="margin:-5px;">
-            <?php echo CHtml::submitButton(Yii::t('common', 'insert'), array('class' => 'btn btn-default')); ?>
+        <div class="col-lg-5">
+            <?php echo CHtml::submitButton(Yii::t('common', 'insert'), array('class' => 'btn btn-primary')); ?>
         </div>
         <?php $this->endWidget(); ?>
     </div>
-    <?php
-}?>
+<?php } ?>

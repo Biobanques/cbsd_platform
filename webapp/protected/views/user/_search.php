@@ -39,9 +39,9 @@
     </div>
 
     <div class="row buttons">
-        <div class="col-lg-6">
-            <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('name' => 'rechercher', 'class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
-            <?php echo CHtml::resetButton(Yii::t('common', 'reset'), array('class' => 'btn btn-default', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+        <div class="col-lg-7 col-lg-offset-7">
+            <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('name' => 'rechercher', 'class' => 'btn btn-primary', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+            <?php echo CHtml::resetButton(Yii::t('common', 'reset'), array('class' => 'btn btn-danger', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
         </div>
     </div>
 

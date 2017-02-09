@@ -24,6 +24,7 @@ return array(
     // buttons
     'saveBtn' => 'Save',
     'createBtn' => 'Create',
+    'updateBtn' => 'Update',
     'submit' => 'Send',
     'subscribe' => 'Register',
     'search' => 'Search',
@@ -263,6 +264,7 @@ return array(
     'noUserWithFirstname' => 'There is no user in our database with the firstname \'{badFirstname}\'',
     'idFiche' => 'id of the form',
     'searchPatient' => 'Creation of a patient form',
+    'createPatient' => 'Create a new "anonymous identity card"',
     'welcome' => 'Welcome ',
     'welcomeTo' => 'Welcome to ',
     'cbsdDescription' => 'CBSDPlatform allows you to manage standardized forms for the clinical, genetic and neuropathological informations to the clinicians.',
@@ -280,7 +282,7 @@ return array(
         <p>- <b>Manage templates of the forms</b>: <i>Show list of templates of the forms, with update/delete button. You can create a new template which you can add or modify a new question, a new tab or a reusable block of questions.</i></p>
         <p>- <b>Manage patient forms</b>: <i>Show list of patient forms, with update/delete button.</i></p>
         <p>- <b>System log</b>: <i>Show user activities.</i></p>',
-    'majProfil' => 'update rules for profiles ',
+    'majProfil' => 'Update rules for profiles ',
     'forPatientForm' => ' for patient forms ',
     'lastUpdated' => 'Last updated: ',
     'createdBy' => 'Created by',

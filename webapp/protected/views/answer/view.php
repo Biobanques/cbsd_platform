@@ -21,22 +21,21 @@ $(document).ready(function() {
 ");
 ?>
 
-    <?php if (Yii::app()->user->getState('activeProfil') != "chercheur") { ?>
-        <h4>Patient</h4>
-        <?php
-        $this->widget('bootstrap.widgets.TbGridView', array(
-            'type' => 'striped bordered condensed',
-            'dataProvider' => new CArrayDataProvider(array(get_object_vars($patient))),
-            'template' => "{items}",
-            'columns' => array(
-                array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->isAdmin()),
-                array('header' => Yii::t('common', 'birthName'), 'value' => '$data["birthName"]'),
-                array('header' => Yii::t('common', 'firstName'), 'value' => '$data["firstName"]'),
-                array('header' => Yii::t('common', 'birthDate'), 'value' => '$data["birthDate"]')
-            ),
-        ));
-    }
-    ?>
+<?php if (Yii::app()->user->getState('activeProfil') != "chercheur") { ?>
+    <h4>Patient</h4>
+    <?php
+    $this->widget('zii.widgets.grid.CGridView', array(
+        'dataProvider' => new CArrayDataProvider(array(get_object_vars($patient))),
+        'template' => "{items}",
+        'columns' => array(
+            array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->isAdmin()),
+            array('header' => Yii::t('common', 'birthName'), 'value' => '$data["birthName"]'),
+            array('header' => Yii::t('common', 'firstName'), 'value' => '$data["firstName"]'),
+            array('header' => Yii::t('common', 'birthDate'), 'value' => '$data["birthDate"]')
+        ),
+    ));
+}
+?>
 
 <hr />
 
@@ -55,7 +54,7 @@ echo CHtml::link(Yii::t('common', 'htmlView'), array('answer/viewOnePage', 'id' 
     ?>
 </div>
 
-<br /><br />
+<br />
 
 <div class="form">
     <?php
@@ -66,14 +65,17 @@ echo CHtml::link(Yii::t('common', 'htmlView'), array('answer/viewOnePage', 'id' 
     echo $model->renderTabbedGroup(Yii::app()->language);
     ?>
 </div>
-<div style="display:inline; margin:40%; width: 100px; ">
+
+<hr />
+
+<div style="display:inline; margin:35%; width: 100px; ">
     <?php
-    echo CHtml::link(Yii::t('common', 'cancel'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:-40px;'));
+    echo CHtml::link(Yii::t('common', 'back'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:-40px;'));
     if (Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState('activeProfil'), $model->type)) {
-        echo CHtml::link(Yii::t('common', 'updateThePatientForm'), array('answer/update', 'id' => $model->_id), array('class' => 'btn btn-default', 'style' => 'margin-top: -15px;margin-left:10px;'));
+        echo CHtml::link(Yii::t('common', 'updateThePatientForm'), array('answer/update', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:10px;'));
     }
     ?>
+
+    <?php $this->endWidget(); ?>
+    
 </div>
-<?php
-$this->endWidget();
-?>

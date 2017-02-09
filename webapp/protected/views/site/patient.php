@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<h1><?php echo Yii::t('common', 'searchPatient'); ?></h1>
+<h1><?php echo Yii::t('common', 'createPatient'); ?></h1>
 
 <div class="form">
 
@@ -22,7 +22,9 @@
 
     <p><?php echo Yii::t('common', 'welcome') . Yii::app()->user->name ?></p>
     <p><?php echo Yii::t('common', 'searchPatientForm') ?></p>
+    
     <hr />
+    
     <p class="note"><?php echo Yii::t('common', 'requiredField') ?></p>
 
     <?php echo $form->errorSummary($model); ?>
@@ -34,13 +36,11 @@
             <?php echo $form->textField($model, 'prenom'); ?>
             <?php echo $form->error($model, 'prenom'); ?>
         </div>
-
         <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'nom_naissance'); ?>
             <?php echo $form->textField($model, 'nom_naissance'); ?>
             <?php echo $form->error($model, 'nom_naissance'); ?>
         </div>
-
         <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'date_naissance'); ?>
             <?php
@@ -62,8 +62,10 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-3 row buttons">
-            <?php echo CHtml::submitButton('OK'); ?>
+        <div class="row buttons">
+            <div class="col-lg-1 col-lg-offset-10">
+            <?php echo CHtml::submitButton('OK', array('class' => 'btn btn-primary', 'style' => 'padding-bottom: 23px;')); ?>
+        </div>
         </div>
     </div>
 

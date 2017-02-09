@@ -28,8 +28,7 @@ class GetProfil
         $controler = Yii::app()->getController()->getId();
         $action = Yii::app()->getController()->getAction()->getId();
         $html = CHtml::form(Yii::app()->createUrl("$controler/$action"), "POST", array('class' => "navbar-form pull-left"));
-
-        $html.=CHtml::dropDownList("activeProfil", Yii::app()->user->getState('activeProfil'), $profilsList, array('id' => "profil", "style" => "width:150px; margin-top: -3px; margin-left: -25px;", "onchange" => "this.form.submit()"));
+        $html.=CHtml::dropDownList("activeProfil", Yii::app()->user->getState('activeProfil'), $profilsList, array('id' => "profil", "style" => "width:135px; margin-top: 0px; margin-left: -25px;", "onchange" => "this.form.submit()"));
         $html.= CHtml::endForm();
         return $html;
     }

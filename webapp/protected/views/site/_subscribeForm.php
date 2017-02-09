@@ -47,7 +47,7 @@
             <?php echo $form->error($model, 'email'); ?>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'password'); ?>
@@ -75,8 +75,7 @@
     </div>
 
     <div class="row">
-
-        <div class="col-lg-4">
+        <div class="col-lg-12">
             <?php echo $form->labelEx($model, 'profil'); ?>
             <?php
             echo $form->textField($model, 'profil[]', array(
@@ -88,25 +87,29 @@
         </div>
     </div>
 
-    <div class="col-lg-4">
-        <div id="address" <?php if ($profil != "clinicien") echo "style=\"display:none;\"" ?>>
-            <?php echo CHtml::activeLabel($model, 'address', array('required' => true)); ?>
-            <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
-            <?php echo $form->error($model, 'address'); ?>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="address" <?php if ($profil != "clinicien") echo "style=\"display:none;\"" ?>>
+                <?php echo CHtml::activeLabel($model, 'address', array('required' => true)); ?>
+                <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
+                <?php echo $form->error($model, 'address'); ?>
+            </div>
         </div>
     </div>
 
-    <div class="col-lg-4">
-        <div id="centre" <?php if ($profil != "neuropathologiste") echo "style=\"display:none;\"" ?>>
-            <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
-            <?php echo $form->dropDownList($model, 'centre', User::model()->getArrayCentre(), array('prompt' => '----')); ?>
-            <?php echo $form->error($model, 'centre'); ?>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="centre" <?php if ($profil != "neuropathologiste") echo "style=\"display:none;\"" ?>>
+                <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
+                <?php echo $form->dropDownList($model, 'centre', User::model()->getArrayCentre(), array('prompt' => '----')); ?>
+                <?php echo $form->error($model, 'centre'); ?>
+            </div>
         </div>
     </div>
 
-    <div class="col-lg-12">
-        <div class="row buttons" style="float:left;">
-            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save')); ?>
+    <div class="row buttons">
+        <div class="col-lg-6 col-lg-offset-5">
+            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save'), array('class' => 'btn btn-primary', 'style' => 'padding-bottom: 23px;')); ?>
         </div>
     </div>
     <?php $this->endWidget(); ?>

@@ -9,15 +9,13 @@
     ?>
     <br>
     <div>
-        <?php
-        echo $questionnaire->renderTabbedGroupEditMode(Yii::app()->language);
-        ?>
+        <?php echo $questionnaire->renderTabbedGroupEditMode(Yii::app()->language); ?>
     </div>
-    <?php
-    $this->endWidget();
-    ?>
+    <?php $this->endWidget(); ?>
 
 </div>
+
+<hr />
 
 <div class="panel panel-primary">
     <div class="panel-heading">

@@ -2,13 +2,12 @@
 
 <h3><?php echo Yii::t('common', 'patientClinical') ?></h3>
 <?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
+$this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProviderClinique,
     'columns' => array(
         array('header' => $model->attributeLabels()["profil"], 'name' => 'profil'),
         array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'class' => 'CButtonColumn',
             'template' => '{update}',
         ),
     ),
@@ -19,13 +18,12 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 
 <h3><?php echo Yii::t('common', 'patientNeuropathologist') ?></h3>
 <?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
+$this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProviderNeuropath,
     'columns' => array(
         array('header' => $model->attributeLabels()["profil"], 'name' => 'profil'),
         array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'class' => 'CButtonColumn',
             'template' => '{update}',
         ),
     ),
@@ -36,13 +34,12 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 
 <h3><?php echo Yii::t('common', 'patientGeneticist') ?></h3>
 <?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
+$this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProviderGene,
     'columns' => array(
         array('header' => $model->attributeLabels()["profil"], 'name' => 'profil'),
         array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'class' => 'CButtonColumn',
             'template' => '{update}',
         ),
     ),

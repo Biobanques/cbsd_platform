@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<h1> <?php echo $actionForm == 'create' ? Yii::t('common', 'creation') : Yii::t('common', 'advancedsearch'); ?></h1>
+<h1><?php echo Yii::t('common', 'createPatient'); ?></h1>
 
 <div class="form">
 

@@ -44,7 +44,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 </div><!-- search-form -->
 <div id="queries" style="background-color:#C6DAFF;box-shadow: 5px 5px 5px #888888;padding:1px;display:none;"></div>
 
-<br>
+<hr />
 
 <div id="showResultQuery" style="display:none;">
 
@@ -65,9 +65,8 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
     </div>
 
     <?php
-    $this->widget('bootstrap.widgets.TbGridView', array(
+    $this->widget('zii.widgets.grid.CGridView', array(
         'id' => 'searchFiche-grid',
-        'type' => 'striped bordered condensed',
         'dataProvider' => $model->search(),
         'columns' => array(
             array('id' => 'Answer_id_patient', 'value' => '$data->id_patient', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
@@ -78,7 +77,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
             array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
             array('header' => $model->attributeLabels()["examDate"], 'name' => 'examDate', 'value' => '$data->getAnswerByQuestionId("examdate")'),
             array(
-                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'class' => 'CButtonColumn',
                 'template' => '{view}',
                 'buttons' => array(
                     'view' => array(

@@ -26,6 +26,7 @@ return array(
     // boutons
     'saveBtn' => 'Enregistrer',
     'createBtn' => 'Créer',
+    'updateBtn' => 'Mettre à jour',
     'submit' => 'Envoyer',
     'search' => 'Rechercher',
     'reset' => 'Réinitialiser',
@@ -277,6 +278,7 @@ return array(
     'formName' => 'Nom du formulaire',
     'idFiche' => 'Identifiant de la fiche',
     'searchPatient' => 'Création d\'une fiche',
+    'createPatient' => 'Créer une nouvelle identité patient',
     'welcome' => 'Bienvenue ',
     'welcomeTo' => 'Bienvenue sur ',
     'cbsdDescription' => 'CBSDPlatform vous permet de gérer les formulaires standardisés pour les informations cliniques, génétiques et neuropathologiques diffusées aux cliniciens.',
