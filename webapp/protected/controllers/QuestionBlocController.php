@@ -73,12 +73,12 @@ class QuestionBlocController extends Controller {
             $model->title_fr = $model->title;
             $countBloc = $model->getBlocsByTitle($model->title_fr);
             if (count($countBloc) > 0) {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'titleExist'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'titleExist'));
             } elseif ($model->save()) {
-                Yii::app()->user->setFlash('success', Yii::t('common', 'questionBlockSaved'));
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'questionBlockSaved'));
                 $this->redirect($this->createUrl('update', array('id' => $model->_id)));
             } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'missingFields'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'missingFields'));
             }
         }
 
@@ -113,7 +113,7 @@ class QuestionBlocController extends Controller {
             if ($model->save())
                 $this->redirect($this->createUrl('update', array('id' => $model->_id)));
             else
-                Yii::app()->user->setFlash('error', Yii::t('common', 'missingFields'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'missingFields'));
         }
 
         $questionGroup->id = $model->title;
@@ -148,9 +148,9 @@ class QuestionBlocController extends Controller {
         $criteriaQuestion->_id = new MongoId($idQuestion);
         $question = Question::model()->find($criteriaQuestion);
         if ($question->delete()) {
-            Yii::app()->user->setFlash('success', Yii::t('common', 'questionDeleted'));
+            Yii::app()->user->setFlash('succès', Yii::t('common', 'questionDeleted'));
         } else {
-            Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotDeleted'));
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotDeleted'));
             Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
         }
         $this->redirect('index.php?r=questionBloc/update&id=' . $id);
@@ -171,15 +171,15 @@ class QuestionBlocController extends Controller {
             }
             $this->loadModel($id)->delete();
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('success', Yii::t('common', 'questionBlockDeleted'));
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'questionBlockDeleted'));
             } else {
-                echo "<div class='alert in alert-block fade alert-success'>" . Yii::t('common', 'questionBlockDeleted') . "</div>"; //for ajax
+                echo "<div class='flash-success'>" . Yii::t('common', 'questionBlockDeleted') . "</div>"; //for ajax
             }
         } catch (CDbException $e) {
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'questionBlockNotDeleted'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionBlockNotDeleted'));
             } else {
-                echo "<div class='alert in fade alert-error'>" . Yii::t('common', 'questionBlockNotDeleted') . "</div>";
+                echo "<div class='flash-error'>" . Yii::t('common', 'questionBlockNotDeleted') . "</div>";
             } //for ajax
         }
 
@@ -232,9 +232,9 @@ class QuestionBlocController extends Controller {
         $cquestion->setAttributesByQuestionForm($questionForm);
         $bloc->questions = $questionForm->id;
         if ($bloc->save())
-            Yii::app()->user->setFlash('success', Yii::t('common', 'questionBlockSaved'));
+            Yii::app()->user->setFlash('succès', Yii::t('common', 'questionBlockSaved'));
         else {
-            Yii::app()->user->setFlash('error', Yii::t('common', 'questionBlockNotSaved'));
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionBlockNotSaved'));
         }
         return $bloc;
     }

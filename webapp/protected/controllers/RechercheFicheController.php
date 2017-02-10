@@ -105,7 +105,7 @@ class RechercheFicheController extends Controller {
         $models = Answer::model()->findAll($criteria);
         $_SESSION['models'] = $models;
         if (count($models) < 1) {
-            Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'emptyPatientFormExport'));
+            Yii::app()->user->setFlash("erreur", Yii::t('common', 'emptyPatientFormExport'));
             $this->redirect(array("rechercheFiche/admin"));
         }
         $this->render('exportFilter', array(

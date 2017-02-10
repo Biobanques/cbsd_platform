@@ -77,11 +77,11 @@ class AnswerController extends Controller {
             $model = new PatientForm;
             $model->attributes = $_POST['PatientForm'];
             if ($_POST['PatientForm']['prenom'] == "" || $_POST['PatientForm']['nom_naissance'] == "" || $_POST['PatientForm']['date_naissance'] == "") {
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'missingFields'));
+                Yii::app()->user->setFlash("erreur", Yii::t('common', 'missingFields'));
                 $this->redirect(array('site/patient'));
             }
             if ($model->dateFormat($model->date_naissance) == false) {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'unvalidDate'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'unvalidDate'));
                 $this->redirect(array('site/patient'));
             }
 
@@ -116,21 +116,21 @@ class AnswerController extends Controller {
 
         switch ($patient) {
             case "NoPatient":
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'noPatient'));
+                Yii::app()->user->setFlash("erreur", Yii::t('common', 'noPatient'));
                 Yii::app()->user->setState('patientModel', $model);
                 $model->scenario = 'create';
                 $this->render('patient_bis', array('model' => $model, 'actionForm' => 'create'));
                 exit();
                 break;
             case "PatientNotSaved":
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'patientNotSaved'));
+                Yii::app()->user->setFlash("erreur", Yii::t('common', 'patientNotSaved'));
                 Yii::app()->user->setState('patientModel', $model);
                 $model->scenario = 'create';
                 $this->render('patient_bis', array('model' => $model, 'actionForm' => 'create'));
                 exit();
                 break;
             case "ManyPatient":
-                Yii::app()->user->setFlash(TbAlert::TYPE_ERROR, Yii::t('common', 'manyPatient'));
+                Yii::app()->user->setFlash("erreur", Yii::t('common', 'manyPatient'));
                 Yii::app()->user->setState('patientModel', $model);
                 $this->render('patient_bis', array('model' => $model, 'actionForm' => 'search'));
                 exit();
@@ -204,10 +204,10 @@ class AnswerController extends Controller {
             }
             if ($flagNoInputToSave == false) {
                 if ($model->save()) {
-                    Yii::app()->user->setFlash('success', Yii::t('common', 'savedPatientForm'));
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'savedPatientForm'));
                     $this->redirect(array('answer/affichepatient'));
                 } else {
-                    Yii::app()->user->setFlash('error', Yii::t('common', 'notSavedPatientForm'));
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'notSavedPatientForm'));
                     Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
                 }
             }
@@ -253,9 +253,9 @@ class AnswerController extends Controller {
             $model->addGeneToAnswers($model->answers_group, $gene, $analyse, $mutation, $comment);
 
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', Yii::t('common', 'addGeneSuccess'));
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'addGeneSuccess'));
             } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'patientFormNotSaved'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'patientFormNotSaved'));
                 Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
             }
         }
@@ -288,15 +288,15 @@ class AnswerController extends Controller {
         try {
             $model->delete();
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('success', Yii::t('common', 'patientFormDeleted'));
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'patientFormDeleted'));
             } else {
-                echo "<div class='alert in alert-block fade alert-success'>" . Yii::t('common', 'patientFormDeleted') . "</div>"; //for ajax
+                echo "<div class='flash-success'>" . Yii::t('common', 'patientFormDeleted') . "</div>"; //for ajax
             }
         } catch (CDbException $e) {
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'patientFormNotDeleted'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'patientFormNotDeleted'));
             } else {
-                echo "<div class='alert in fade alert-error'>" . Yii::t('common', 'patientFormNotDeleted') . "</div>";
+                echo "<div class='flash-error'>" . Yii::t('common', 'patientFormNotDeleted') . "</div>";
             } //for ajax
         }
     }

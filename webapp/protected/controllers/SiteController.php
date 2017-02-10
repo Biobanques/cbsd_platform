@@ -133,7 +133,7 @@ class SiteController extends Controller
             // validate user input and redirect to the previous page if valid
             if ($model->validate()) {
                 if (count($user->profil) == 0) {
-                    Yii::app()->user->setFlash('error', Yii::t('common', 'contactAdministrator'));
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'contactAdministrator'));
                 } elseif ($model->login()) {
                     $userLog->user = Yii::app()->user->getNomPrenom();
                     $userLog->ipAddress = $_SERVER['REMOTE_ADDR'];
@@ -143,7 +143,7 @@ class SiteController extends Controller
                     $this->redirect(array('site/index'));
                 }
             } else {
-                    Yii::app()->user->setFlash('error', Yii::t('common', 'incorrectLoginPassword'));
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'incorrectLoginPassword'));
             }
         }
         // display the login form
@@ -205,21 +205,21 @@ class SiteController extends Controller
                         CommonMailer::sendConfirmationAdminProfilUser($model);
                         CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password);
                         Yii::app()->user->setState('profil', $model->profil);
-                        Yii::app()->user->setFlash('success', Yii::t('common', 'clinicianProfileCreated'));
+                        Yii::app()->user->setFlash('succès', Yii::t('common', 'clinicianProfileCreated'));
                         $this->redirect(array('site/index'));
                     }
                 } else {
                     if (in_array('neuropathologiste', $profilSelected)) {
                         if ($_POST['User']['centre'] == null || $_POST['User']['centre'] == "") {
                             $model->addError('centre', Yii::t('common', 'referenceCenterRequired'));
-                            Yii::app()->user->setFlash('error', Yii::t('common', 'referenceCenterRequired'));
+                            Yii::app()->user->setFlash('erreur', Yii::t('common', 'referenceCenterRequired'));
                         } else
                             $model->centre = $_POST['User']['centre'];
                     }
                     if (!$model->hasErrors()) {
                         CommonMailer::sendMailConfirmationProfilEmail($model, implode('', $profilSelected), $model->centre);
 
-                        Yii::app()->user->setFlash('success', Yii::t('common', 'askProfile') . implode("", $profilSelected) . Yii::t('common', 'askProfile1'));
+                        Yii::app()->user->setFlash('succès', Yii::t('common', 'askProfile') . implode("", $profilSelected) . Yii::t('common', 'askProfile1'));
                         $this->redirect(array('site/index'));
                     }
                 }
@@ -270,13 +270,13 @@ class SiteController extends Controller
             $profil = implode("", $model->profil);
             $userLogin = $model->getAllUsersByLogin($model);
             if (count($userLogin) > 0) {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'loginExist'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'loginExist'));
             } else {
                 if ($model->profil == array("clinicien")) {
                     if ($model->save()) {
                         CommonMailer::sendSubscribeAdminMail($model, NULL);
                         CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password, NULL);
-                        Yii::app()->user->setFlash('success', Yii::t('common', 'welcomeTo') . Yii::app()->name);
+                        Yii::app()->user->setFlash('succès', Yii::t('common', 'welcomeTo') . Yii::app()->name);
                         $this->redirect(array('site/index'));
                     }
                 }
@@ -288,7 +288,7 @@ class SiteController extends Controller
                             if ($model->save()) {
                                 CommonMailer::sendSubscribeUserMail($model, $profil);
                                 CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['centre']);
-                                Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                                Yii::app()->user->setFlash('succès', Yii::t('common', 'success_register'));
                                 $this->redirect(array('site/login'));
                             }
                         }
@@ -298,11 +298,11 @@ class SiteController extends Controller
                     if ($model->save()) {
                         CommonMailer::sendSubscribeUserMail($model, $profil);
                         CommonMailer::sendMailConfirmationProfilEmail($model, $profil, NULL);
-                        Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                        Yii::app()->user->setFlash('succès', Yii::t('common', 'success_register'));
                         $this->redirect(array('site/login'));
                     }
                 }
-                Yii::app()->user->setFlash('error', Yii::t('common', 'userNotSaved'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'userNotSaved'));
             }
         }
         $this->render('subscribe', array('model' => $model));
@@ -330,16 +330,16 @@ class SiteController extends Controller
                     if ($model->save()) {
                         CommonMailer::sendUserRegisterConfirmationMail($model, NULL);
                         Yii::app()->user->setState('profil', $model->profil);
-                        Yii::app()->user->setFlash('success', Yii::t('common', 'profile1') . $_GET['arg2'] . Yii::t('common', 'profile2'));
+                        Yii::app()->user->setFlash('succès', Yii::t('common', 'profile1') . $_GET['arg2'] . Yii::t('common', 'profile2'));
                     }
                 } else {
-                    Yii::app()->user->setFlash('error', Yii::t('common', 'profile1') . $_GET['arg2'] . Yii::t('common', 'profile3'));
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'profile1') . $_GET['arg2'] . Yii::t('common', 'profile3'));
                 }
             } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'userNotExist'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'userNotExist'));
             }
         } else {
-            Yii::app()->user->setFlash('error', Yii::t('common', 'unvalidLink'));
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'unvalidLink'));
         }
         $this->redirect(array('site/login'));
     }
@@ -353,12 +353,12 @@ class SiteController extends Controller
             $model = User::model()->findByPk(new MongoId($_GET['arg1']));
             if ($model != null && $model->delete()) {
                 CommonMailer::sendUserRegisterRefusedMail($model, $_GET['arg2']);
-                Yii::app()->user->setFlash('success', Yii::t('common', 'userProfile1') . $model->login . Yii::t('common', 'userProfile2') . Yii::t('common', $_GET['arg2']) . Yii::t('common', 'userProfile3'));
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'userProfile1') . $model->login . Yii::t('common', 'userProfile2') . Yii::t('common', $_GET['arg2']) . Yii::t('common', 'userProfile3'));
             } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'userNotExist'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'userNotExist'));
             }
         } else {
-            Yii::app()->user->setFlash('error', Yii::t('common', 'unvalidLink'));
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'unvalidLink'));
         }
         $this->redirect(array('site/login'));
     }

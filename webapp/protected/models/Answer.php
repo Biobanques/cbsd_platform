@@ -643,6 +643,11 @@ class Answer extends LoggableActiveRecord {
         asort($res, SORT_NUMERIC);
         return $res;
     }
+    
+    public function getUserFicheById($idFiche) {
+        $fiche = Answer::model()->findByPk(new MongoId($idFiche));
+        return $fiche->login;
+    }
 
     /**
      * retourne toutes les noms des utilisateurs qui ont renseigné les fiches

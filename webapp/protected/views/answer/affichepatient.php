@@ -63,7 +63,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
                     (
                     'view' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedView(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
+                        'visible' => 'Yii::app()->user->isAuthorizedViewFiche($data->getUserFicheById($data->_id), Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                     ),
                     'update' => array
                         (
@@ -98,7 +98,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
                     (
                     'view' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedView(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
+                        'visible' => 'Yii::app()->user->isAuthorizedViewFiche($data->getUserFicheById($data->_id), Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                     ),
                     'update' => array
                         (
@@ -133,7 +133,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
                     (
                     'view' => array
                         (
-                        'visible' => 'Yii::app()->user->id == $data->getUserId() && Yii::app()->user->isAuthorizedView(Yii::app()->user->getState(\'activeProfil\'), "clinique")'
+                        'visible' => 'Yii::app()->user->isAuthorizedViewFiche($data->getUserFicheById($data->_id), Yii::app()->user->getState(\'activeProfil\'), "clinique")'
                     ),
                     'update' => array
                         (

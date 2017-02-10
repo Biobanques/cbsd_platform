@@ -64,7 +64,9 @@ class FileImportController extends Controller {
                 $fileImport->extension = $uploadedFile->filename->getExtensionName();
                 $fileImport->date_import = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
                 $fileImport->save();
-                Yii::app()->user->setFlash('success', 'La base FileMaker a bien été importé !');
+                Yii::app()->user->setFlash('succès', 'La base FileMaker a bien été importé.');
+            } else {
+                Yii::app()->user->setFlash('erreur', 'La base FileMaker n\'a pas été importé.');
             }
         }
         $this->render('admin', array(

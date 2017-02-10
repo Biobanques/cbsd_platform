@@ -68,7 +68,6 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
         <?php
-        Yii::app()->bootstrap->register();
         Yii::app()->clientScript->registerCoreScript('jquery');
         Yii::app()->clientScript->registerCoreScript('jquery.ui');
         ?>
@@ -158,10 +157,26 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                 ),
             ));
             ?>
-            <div id="img-container">
-
-            </div>
-            <?php echo $content; ?>
+            <section class="main-body">
+                <div class="container-fluid" style="height:70%; background-color: white; padding: 0px">
+                    <div id="flashMessages">
+                        <?php
+                        $flashMessages = Yii::app()->user->getFlashes();
+                        if ($flashMessages) {
+                            foreach ($flashMessages as $key => $message) {
+                                if ($key == "erreur") {
+                                    $key = "error";
+                                } elseif ($key == "succès") {
+                                    $key = "success";
+                                }
+                                echo '<br><div class="flash-' . $key . '">' . $message . "</div>";
+                            }
+                        }
+                        ?>
+                    </div>
+                    <?php echo $content; ?>
+                </div>
+            </section>
 
             <div class="clear"></div>
             <div style="height:200px;"/>

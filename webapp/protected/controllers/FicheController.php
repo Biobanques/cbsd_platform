@@ -114,15 +114,15 @@ class FicheController extends Controller {
         try {
             $model->delete();
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('success', Yii::t('common', 'patientFormDeleted'));
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'patientFormDeleted'));
             } else {
-                echo "<div class='alert in alert-block fade alert-success'>" . Yii::t('common', 'patientFormDeleted') . "</div>"; //for ajax
+                echo "<div class='flash-success'>" . Yii::t('common', 'patientFormDeleted') . "</div>"; //for ajax
             }
         } catch (CDbException $e) {
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'patientFormNotDeleted'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'patientFormNotDeleted'));
             } else {
-                echo "<div class='alert in fade alert-error'>" . Yii::t('common', 'patientFormNotDeleted') . "</div>";
+                echo "<div class='flash-error'>" . Yii::t('common', 'patientFormNotDeleted') . "</div>";
             } //for ajax
         }
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser

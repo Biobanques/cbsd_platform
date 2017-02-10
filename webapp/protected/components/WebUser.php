@@ -139,7 +139,7 @@ class WebUser extends CWebUser
     }
 
     /**
-     * affiche l'item "view" qui dépend du profil de l'utilisateur et de ses droits sur une fiche
+     * retourne vrai si l'utilisateur peut voir la liste des fiches (clinique, neuropathologique, génétique) en fonction des droits
      * @return boolean
      */
     public function isAuthorizedView($profil, $fiche)
@@ -149,6 +149,27 @@ class WebUser extends CWebUser
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
         return $droit != null ? in_array("view", $droit->role) : false;
+    }
+    
+    /**
+     * Affiche l'item "view" sur une fiche en fonction des droits de l'utilisateur
+     * @return boolean
+     */
+    public function isAuthorizedViewFiche($user, $profil, $fiche)
+    {
+        $criteria = new EMongoCriteria();
+        $criteria->profil = $profil;
+        $criteria->type = $fiche;
+        $droit = Droits::model()->find($criteria);
+        if ($droit != null) {
+            if ($fiche == "clinique" && Yii::app()->user->id == $user) {
+                return true;
+            } else {
+                return in_array("view", $droit->role);
+            }
+        } else {
+            return false;
+        }
     }
 
     /**

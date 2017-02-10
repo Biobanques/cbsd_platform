@@ -73,18 +73,18 @@ class FormulaireController extends Controller {
             $countIdForm = $model->getFormsById($model->id);
             $countNameForm = $model->getFormsByName($model->name);
             if (count($countIdForm) > 0) {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'idFormExist'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'idFormExist'));
             } elseif (count($countNameForm) > 0) {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'nameFormExist'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'nameFormExist'));
             } else {
                 $validate = true;
             }
             if ($validate) {
                 if ($model->save()) {
-                    Yii::app()->user->setFlash('success', Yii::t('common', 'formSaved'));
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'formSaved'));
                     $this->redirect($this->createUrl('update', array('id' => $model->_id)));
                 } else {
-                    Yii::app()->user->setFlash('error', Yii::t('common', 'missingFields'));
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'missingFields'));
                 }
             }
         }
@@ -113,10 +113,10 @@ class FormulaireController extends Controller {
                 if ($questionForm->validate()) {
                     $model = $model->saveQuestionnaireNewQuestion($questionForm);
                 } else {
-                    Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotAdded'));
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotAdded'));
                 }
             } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotAdded'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotAdded'));
             }
         }
         if (isset($_POST['QuestionGroup'])) {
@@ -128,7 +128,7 @@ class FormulaireController extends Controller {
                     $model = $model->saveQuestionnaireNewGroup($questionGroup);
                 }
             } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotAdded'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'tabNotAdded'));
             }
         }
 
@@ -153,7 +153,7 @@ class FormulaireController extends Controller {
                     }
                 }
             } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotAdded'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'tabNotAdded'));
             }
         }
         if (isset($_POST['old_onglet'])) {
@@ -162,9 +162,9 @@ class FormulaireController extends Controller {
                     $onglet->title = $_POST['new_onglet'];
                     $onglet->title_fr = $_POST['new_onglet'];
                     if ($model->save()) {
-                        Yii::app()->user->setFlash('success', Yii::t('common', 'tabUpdated'));
+                        Yii::app()->user->setFlash('succès', Yii::t('common', 'tabUpdated'));
                     } else {
-                        Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotUpdated'));
+                        Yii::app()->user->setFlash('erreur', Yii::t('common', 'tabNotUpdated'));
                     }
                 }
             }
@@ -176,9 +176,9 @@ class FormulaireController extends Controller {
                         $question->label = $_POST['new_question'];
                         $question->label_fr = $_POST['new_question'];
                         if ($model->save()) {
-                            Yii::app()->user->setFlash('success', Yii::t('common', 'questionUpdated'));
+                            Yii::app()->user->setFlash('succès', Yii::t('common', 'questionUpdated'));
                         } else {
-                            Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotUpdated'));
+                            Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotUpdated'));
                         }
                     }
                 }
@@ -205,15 +205,15 @@ class FormulaireController extends Controller {
         try {
             $model->delete();
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('success', Yii::t('common', 'formDeleted'));
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'formDeleted'));
             } else {
-                echo "<div class='alert in alert-block fade alert-success'>" . Yii::t('common', 'formDeleted') . "</div>"; //for ajax
+                echo "<div class='flash-success'>" . Yii::t('common', 'formDeleted') . "</div>"; //for ajax
             }
         } catch (CDbException $e) {
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'formNotDeleted'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'formNotDeleted'));
             } else {
-                echo "<div class='alert in fade alert-error'>" . Yii::t('common', 'formNotDeleted') . "</div>";
+                echo "<div class='flash-error'>" . Yii::t('common', 'formNotDeleted') . "</div>";
             } //for ajax
         }
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -231,9 +231,9 @@ class FormulaireController extends Controller {
         $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
         if ($model->deleteQuestion($idQuestion)) {
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', Yii::t('common', 'questionDeleted'));
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'questionDeleted'));
             } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotDeleted'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotDeleted'));
                 Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
             }
         }
@@ -251,9 +251,9 @@ class FormulaireController extends Controller {
         $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
         if ($model->deleteQuestionGroup($idQuestionGroup)) {
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', Yii::t('common', 'tabDeleted'));
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'tabDeleted'));
             } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotDeleted'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'tabNotDeleted'));
                 Yii::log("pb save delete question", CLogger::LEVEL_ERROR);
             }
         }
@@ -300,9 +300,9 @@ class FormulaireController extends Controller {
             }
         }
         if ($questionnaire->save())
-            Yii::app()->user->setFlash('success', Yii::t('common', 'questionDeleted'));
+            Yii::app()->user->setFlash('succès', Yii::t('common', 'questionDeleted'));
         else {
-            Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotDeleted'));
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotDeleted'));
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $questionnaire;
@@ -345,9 +345,9 @@ class FormulaireController extends Controller {
             }
         }
         if ($questionnaire->save())
-            Yii::app()->user->setFlash('success', Yii::t('common', 'tabDeleted'));
+            Yii::app()->user->setFlash('succès', Yii::t('common', 'tabDeleted'));
         else {
-            Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotDeleted'));
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'tabNotDeleted'));
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $questionnaire;

@@ -406,9 +406,9 @@ class Questionnaire extends LoggableActiveRecord
             }
         }
         if ($this->save()) {
-            Yii::app()->user->setFlash('success', Yii::t('common', 'tabAdded'));
+            Yii::app()->user->setFlash('succès', Yii::t('common', 'tabAdded'));
         } else {
-            Yii::app()->user->setFlash('error', Yii::t('common', 'tabNotAdded'));
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'tabNotAdded'));
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;
@@ -449,9 +449,9 @@ class Questionnaire extends LoggableActiveRecord
             }
         }
         if ($this->save()) {
-            Yii::app()->user->setFlash('success', Yii::t('common', 'questionAdded'));
+            Yii::app()->user->setFlash('succès', Yii::t('common', 'questionAdded'));
         } else {
-            Yii::app()->user->setFlash('error', Yii::t('common', 'questionNotAdded'));
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotAdded'));
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;
@@ -492,9 +492,9 @@ class Questionnaire extends LoggableActiveRecord
             }
         }
         if ($this->save()) {
-            Yii::app()->user->setFlash('success', Yii::t('common', 'questionBlockSaved'));
+            Yii::app()->user->setFlash('succès', Yii::t('common', 'questionBlockSaved'));
         } else {
-            Yii::app()->user->setFlash('error', Yii::t('common', 'questionBlockNotSaved'));
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionBlockNotSaved'));
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $this;

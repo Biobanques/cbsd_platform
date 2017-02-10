@@ -68,9 +68,9 @@ echo CHtml::link(Yii::t('common', 'htmlView'), array('answer/viewOnePage', 'id' 
 
 <hr />
 
-<div style="display:inline; margin:35%; width: 100px; ">
+<div style="display:inline; margin:40%; width: 100px; ">
     <?php
-    echo CHtml::link(Yii::t('common', 'back'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:-40px;'));
+    echo CHtml::link(Yii::t('common', 'back'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:20px;'));
     if (Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState('activeProfil'), $model->type)) {
         echo CHtml::link(Yii::t('common', 'updateThePatientForm'), array('answer/update', 'id' => $model->_id), array('class' => 'btn btn-primary', 'style' => 'margin-top: -15px;margin-left:10px;'));
     }
