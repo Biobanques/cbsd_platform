@@ -13,6 +13,7 @@
         ),
     ));
 }
+$_SESSION["patientBirthDate"] = $patient->birthDate;
 ?>
 
 <hr />

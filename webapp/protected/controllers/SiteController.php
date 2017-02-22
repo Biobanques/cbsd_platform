@@ -176,7 +176,7 @@ class SiteController extends Controller
                     $result = 'success';
                     CommonMailer::sendMailRecoverPassword($mixedResult['user'], null);
                 } else {
-                    $result = 'error';
+                    $result = 'erreur';
                 }
                 $message = $mixedResult['message'];
                 Yii::app()->user->setFlash($result, $message);

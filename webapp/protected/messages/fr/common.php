@@ -310,6 +310,6 @@ return array(
     'search1' => 'Pour les champs à choix multiples, vous pouvez sélectionner plusieurs valeurs avec la touche CTRL du clavier.',
     'deleteQuestionGroup' => 'Supprimer l\'onglet de questions',
     'deleteQuestion' => 'Supprimer la question',
-    'notRestrict' => '*Si vous ne restrignez pas la requête, la recherche portera sur l\'ensemble de la base.',
+    'notRestrict' => '*Si vous ne restreignez pas la requête, la recherche portera sur l\'ensemble de la base.',
     'writeQuestion' => '*Taper une lettre ou la touche "espace" pour afficher toutes les variables.'
 );

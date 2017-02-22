@@ -28,10 +28,6 @@ Yii::app()->clientScript->registerCss('checkBoxListColumn', "
 } 
 ");
 ?>
-
-<h1><?php echo Yii::t('common', 'exportFields'); ?></h1>
-<br>
-
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl($this->route),

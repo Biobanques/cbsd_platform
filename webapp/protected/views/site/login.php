@@ -12,7 +12,7 @@ Yii::app()->clientScript->registerScript('loginForm', "
 <hr />
 
 <div class="row">
-    <div class="span4" style="margin-left:60px;">
+    <div class="col-lg-6" style="margin-left:60px;">
         <div class="form">
             <?php
             $form = $this->beginWidget('CActiveForm', array(
@@ -56,7 +56,7 @@ Yii::app()->clientScript->registerScript('loginForm', "
 
         </div><!-- form -->
     </div>
-    <div class="span3" style="margin-top:70px;">
+    <div class="col-lg-5" style="margin-top:70px;">
         <div align='center'>
             <?php echo Yii::t('common', 'noAccount'); ?><br><br>
             <?php

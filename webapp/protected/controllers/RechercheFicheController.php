@@ -48,6 +48,16 @@ class RechercheFicheController extends Controller {
         if (isset($_GET['Answer'])) {
             $model->attributes = $_GET['Answer'];
         }
+        if (isset($_POST['exporter'])) {
+            $filter = array();
+            if (isset($_POST['filter'])) {
+                $filter = $_POST['filter'];
+            }
+            $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
+            $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
+            $csv = new ECSVExport($arAnswers, true, false, null, null);
+            Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
+        }
         $this->render('admin', array(
             'model' => $model
         ));
@@ -75,10 +85,8 @@ class RechercheFicheController extends Controller {
         ));
     }
 
-    /**
-     * export csv liste des fiches disponibles
-     */
-    public function actionExportCsv() {
+    public function actionResultSearch() {
+        $idPatient = array();
         if (isset($_POST['exporter'])) {
             $filter = array();
             if (isset($_POST['filter'])) {
@@ -89,32 +97,6 @@ class RechercheFicheController extends Controller {
             $csv = new ECSVExport($arAnswers, true, false, null, null);
             Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
         }
-        $model = new Answer('search');
-        $model->unsetAttributes();
-        if (isset($_GET['Answer'])) {
-            $model->attributes = $_GET['Answer'];
-        }
-        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
-            $criteria = $_SESSION['criteria'];
-        } else {
-            $criteria = new EMongoCriteria;
-        }
-        // trier par id_patient et type de fiche dans l'ordre croissant
-        $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
-        $criteria->sort('type', EMongoCriteria::SORT_ASC);
-        $models = Answer::model()->findAll($criteria);
-        $_SESSION['models'] = $models;
-        if (count($models) < 1) {
-            Yii::app()->user->setFlash("erreur", Yii::t('common', 'emptyPatientFormExport'));
-            $this->redirect(array("rechercheFiche/admin"));
-        }
-        $this->render('exportFilter', array(
-            'models' => $models,
-        ));
-    }
-
-    public function actionResultSearch() {
-        $idPatient = array();
         $model = new Answer('search');
         $model->unsetAttributes();
         if (isset($_GET['Answer'])) {
