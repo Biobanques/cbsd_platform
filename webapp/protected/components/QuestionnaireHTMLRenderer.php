@@ -155,7 +155,7 @@ class QuestionnaireHTMLRenderer {
             if ($question->id == "patientage" && isset($_SESSION["patientBirthDate"])) {
                 $birthdateFormat = explode('/', $_SESSION["patientBirthDate"]);
                 $dateNow = explode('/', date('d/m/Y'));
-                if(($birthdateFormat[1] < $dateNow[1]) || (($birthdateFormat[1] == $dateNow[1]) && ($birthdateFormat[0] <= $dateNow[0]))) {
+                if (($birthdateFormat[1] < $dateNow[1]) || (($birthdateFormat[1] == $dateNow[1]) && ($birthdateFormat[0] <= $dateNow[0]))) {
                     $valueInput = $dateNow[2] - $birthdateFormat[2];
                 } else {
                     $valueInput = $dateNow[2] - $birthdateFormat[2] - 1;
@@ -261,7 +261,7 @@ class QuestionnaireHTMLRenderer {
             $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
         }
         $result.="<div class=\"condition\"><div style=\"clear:both;\"></div>";
-        $result.=CHtml::dropDownList("Answer[condition][" . $question->id . "]", 'addCondition', array('$and'=>Yii::t('common', 'and'), '$or'=>Yii::t('common', 'or')), array('style'=>'width:auto'));
+        $result.=CHtml::dropDownList("Answer[condition][" . $question->id . "]", 'addCondition', array('$and' => Yii::t('common', 'and'), '$or' => Yii::t('common', 'or')), array('style' => 'width:auto'));
         $result.="<div style=\"clear:both;\"></div></div>";
 
         $result.="<label for=\"Answer_dynamics_" . $question->id . "\" style=\"font-style:italic; color:blue;\">" . $label;
@@ -273,10 +273,10 @@ class QuestionnaireHTMLRenderer {
         $result.="<div class=\"question-input\">";
         // Liste déroulante des opérateurs de comparaison
         if ($question->type == "number" || $question->type == "expression") {
-            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonNumerique(), array('style'=>'width:auto'));
+            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonNumerique(), array('style' => 'width:auto'));
             $condition = true;
         } elseif ($question->type == "date") {
-            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonDate(), array('style'=>'width:auto'));
+            $result .= CHtml::dropDownList("Answer[compare][" . $question->id . "]", 'addCompare', Answer::model()->getComparaisonDate(), array('style' => 'width:auto'));
             $condition = true;
         }
         if ($condition) {
@@ -349,7 +349,7 @@ class QuestionnaireHTMLRenderer {
         $imgHtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'), array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
 
         $result.=$imgHtml;
-        
+
         $result .= CHtml::button('OK', array('class' => 'btn btn-success validateQuery', 'style' => 'margin-left:15px; padding-bottom: 23px;'));
         //close row input
         $result.="</div>";
@@ -474,7 +474,7 @@ class QuestionnaireHTMLRenderer {
         }
         $label.="<br><font color=\"blue\"><b><i>" . $question->id . "</i></b></font>";
 
-        $result.="<div class=\"question-label\" >" . $label;
+        $result.="<div class=\"question-label\" id=\"" . $question->id . "\">" . $label;
         if (isset($question->help)) {
             $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
         }

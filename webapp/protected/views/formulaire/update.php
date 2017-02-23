@@ -1,5 +1,11 @@
 <?php
 Yii::app()->clientScript->registerScript('form_question', "
+$('.question-label').on('click', function(event) {
+    $('#updateQuestion').modal();
+    $('.col-lg-12 #old_question').val($(this).attr('id'));
+    $('option:not(:selected)').hide();
+});
+
 $('#QuestionBlocForm_title').change(function(){
     var e = document.getElementById('QuestionBlocForm_title').value;
     if (e !== '') {
@@ -91,7 +97,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
             </div>
         </div>
     </div>
-   
+
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
@@ -106,19 +112,40 @@ if ($model->last_modified != null && $model->last_modified != "") {
             </div>
         </div>
     </div>
-   
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-                <?php echo Yii::t('common', 'forModifyQuestion') ?>
-            </h3>
-        </div>
-        <div id="collapse5" class="panel-collapse collapse">
-            <div class="panel-body">
-                <?php
-                echo $this->renderPartial('_form_question_update', array('model' => $questionForm));
-                ?>
-            </div>
-        </div>
-    </div>
 </div>
+
+<?php
+$form = $this->beginWidget('CActiveForm', array(
+    'id' => 'updateQuestion-form',
+    'enableAjaxValidation' => false,
+        ));
+?>
+<div id="updateQuestion"  class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h1 class="modal-title"><?php echo Yii::t('common', 'forModifyQuestion') ?></h1>
+            </div>
+            <div class="modal-body">
+                <div class="prefs-form">
+                    <?php echo $this->renderPartial('_form_question_update', array('model' => $questionForm)); ?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"  role="button"><?php echo Yii::t('common', 'cancel'); ?></button>
+                    </div>
+                    <div class="btn-group btn-delete hidden" role="group">
+                        <button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<?php $this->endWidget(); ?>
