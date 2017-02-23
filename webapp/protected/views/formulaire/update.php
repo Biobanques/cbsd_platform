@@ -3,7 +3,7 @@ Yii::app()->clientScript->registerScript('form_question', "
 $('.question-label').on('click', function(event) {
     $('#updateQuestion').modal();
     $('.col-lg-12 #old_question').val($(this).attr('id'));
-    $('option:not(:selected)').hide();
+    $('#old_question option:not(:selected)').hide();
 });
 
 $('#QuestionBlocForm_title').change(function(){
