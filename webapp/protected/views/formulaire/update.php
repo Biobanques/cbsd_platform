@@ -1,6 +1,6 @@
 <?php
 Yii::app()->clientScript->registerScript('form_question', "
-$('.question-label').on('click', function(event) {
+$('.question-label').on('dblclick', function(event) {
     $('#updateQuestion').modal();
     $('.col-lg-12 #old_question').val($(this).attr('id'));
     $('#old_question option:not(:selected)').hide();

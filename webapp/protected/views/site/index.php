@@ -3,14 +3,10 @@
 $this->pageTitle = Yii::app()->name;
 ?>
 
-<div class="row-fluid">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <?php
-        $this->beginWidget('bootstrap.widgets.TbHeroUnit', array(
-            'heading' => Yii::t('common', 'welcomeTo') . CHtml::encode(Yii::app()->name),
-        ));
-        ?>
-        <?php echo Yii::t('common', 'cbsdDescription') ?>
-        <?php $this->endWidget(); ?>
+<div class="jumbotron">
+<div class="container">    
+    
+      <h1><?php echo Yii::t('common', 'welcomeTo') . CHtml::encode(Yii::app()->name); ?></h1>
+      <p><?php echo Yii::t('common', 'cbsdDescription') ?></p>
     </div>
 </div>

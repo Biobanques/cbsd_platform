@@ -362,3 +362,7 @@ input[type="color"],
 .navbar .nav > li > a {
     padding: 15px 15px 10px !important;
 }
+
+ul.yiiPager a:link, ul.yiiPager a:visited {
+    padding: 5px 5px !important;
+}
