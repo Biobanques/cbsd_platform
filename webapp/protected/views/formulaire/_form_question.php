@@ -8,6 +8,7 @@ $('#QuestionForm_type').change(function(){
         $('#valueTypeQuestion').hide();
     }
 });
+$('div .alert alert-error').removeClass('alert alert-error').addClass('alert alert-danger');
 ");
 ?>
 
@@ -83,14 +84,19 @@ $('#QuestionForm_type').change(function(){
                 <?php echo $form->dropDownList($model, 'type', $model->getArrayTypes(), array('prompt' => '----', "class" => "tooltipster", "title" => Yii::t('common', 'typeQuestion'))); ?>
                 <?php echo $form->error($model, 'type'); ?>           
             </div>
+            <div class="col-lg-6" id ="valueTypeQuestion" style="display:none;">
+                <?php echo $form->labelEx($model, 'values'); ?>
+                <?php echo $form->textField($model, 'values'); ?>
+                <?php echo $form->error($model, 'values'); ?>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-lg-6">
                 <?php echo $form->labelEx($model, 'style'); ?>
                 <?php echo $form->dropDownList($model, 'style', $model->getArrayStyles(), array("class" => "tooltipster", "title" => Yii::t('common', 'positionQuestion'))); ?>
                 <?php echo $form->error($model, 'style'); ?>    
-            </div> 
-        </div>
-
-        <div class="row">
+            </div>
             <div class="col-lg-6">
                 <?php echo $form->labelEx($model, 'help'); ?>
                 <?php echo $form->textField($model, 'help', array("class" => "tooltipster", "title" => Yii::t('common', 'helpQuestion'))); ?>
