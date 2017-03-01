@@ -314,9 +314,7 @@ class User extends LoggableActiveRecord
     public function beforeSave()
     {
         if (Yii::app()->controller->action->id == "subscribe") {
-            if (in_array("neuropathologiste", $this->profil) || in_array("geneticien", $this->profil) || in_array("chercheur", $this->profil)) {
             $this->profil = [];
-            }
         }
         return parent::beforeSave();
     }

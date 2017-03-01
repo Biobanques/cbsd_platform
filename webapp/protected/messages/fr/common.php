@@ -220,6 +220,7 @@ return array(
     'selectPatientForm' => 'Veuillez sélectionner une fiche.',
     'emptyPatientFormExport' => 'Aucune fiche à exporter.',
     'clinicianProfileCreated' => 'Le profil Clinicien a bien été créé.',
+    'addressRequired' => 'L\'adresse est obligatoire pour le profil clinicien.',
     'referenceCenterRequired' => 'Le centre est obligatoire pour le profil neuropathologiste',
     'askProfile' => 'La demande pour le profil ',
     'askProfile1' => ' a bien été prise en compte. Vous recevrez un mail de confirmation.',

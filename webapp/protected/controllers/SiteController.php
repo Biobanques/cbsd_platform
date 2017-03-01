@@ -272,12 +272,18 @@ class SiteController extends Controller
             if (count($userLogin) > 0) {
                 Yii::app()->user->setFlash('erreur', Yii::t('common', 'loginExist'));
             } else {
-                if ($model->profil == array("clinicien")) {
-                    if ($model->save()) {
-                        CommonMailer::sendSubscribeAdminMail($model, NULL);
-                        CommonMailer::sendMailInscriptionUser($model->email, $model->login, $model->prenom, $model->nom, $model->password, NULL);
-                        Yii::app()->user->setFlash('succès', Yii::t('common', 'welcomeTo') . Yii::app()->name);
-                        $this->redirect(array('site/index'));
+                if ($profil == "clinicien") {
+                    if ($model->validate()) {
+                        if (empty($_POST['User']['address'])) {
+                            $model->addError('address', Yii::t('common', 'addressRequired'));
+                        } else {
+                            if ($model->save()) {
+                                CommonMailer::sendSubscribeUserMail($model, $profil);
+                                CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['address']);
+                                Yii::app()->user->setFlash('succès', Yii::t('common', 'success_register'));
+                                $this->redirect(array('site/login'));
+                            }
+                        }
                     }
                 }
                 if ($profil == "neuropathologiste") {

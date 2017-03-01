@@ -218,6 +218,7 @@ return array(
     'selectPatientForm' => 'Plese select a patient form.',
     'emptyPatientFormExport' => 'There is not patient form to export.',
     'clinicianProfileCreated' => 'The clinician profile has been created successfully.',
+    'addressRequired' => 'The address is required for clinician profile.',
     'referenceCenterRequired' => 'The reference center is required for neuropathologist profile.',
     'askProfile' => 'The request for the profile ',
     'askProfile1' => ' has been taken into account. You will receive a confirmation email.',
