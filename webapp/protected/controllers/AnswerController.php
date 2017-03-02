@@ -184,6 +184,20 @@ class AnswerController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        if (Yii::app()->user->id != $model->login) {
+            switch ($model->type) {
+                case "clinique" :
+                    Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowUpdateClinicalPatientForm'));
+                    break;
+                case "neuropathologique" :
+                    Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowUpdateNeuropathologicalPatientForm'));
+                    break;
+                case "genetique" :
+                    Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowUpdateGeneticPatientForm'));
+                    break;
+            }
+            $this->redirect(array('answer/affichepatient'));
+        }
         if (isset($_POST['Questionnaire'])) {
             $model->last_updated = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
             $flagNoInputToSave = true;

@@ -39,17 +39,19 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
     ));
     ?>
 </div><!-- search-form -->
-<div id="queries" style="background-color:#80CCFF;"></div>
+<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;display:none;"></div>
+
+<hr />
+
 <div id="showResultQuery">
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
             <?php echo CHtml::button(Yii::t('common', 'exportCSV'), array('class' => 'btn btn-primary btn-md', 'data-toggle' => "modal", 'data-target' => "#myModal")); ?>
-        </div>
-        <div class="col-lg-5">
-            <?php echo CHtml::submitButton(Yii::t('common', 'patientFormsAssociated'), array('name' => 'rechercher', 'class' => 'btn btn-default')); ?>
         </div>
     </div>
 
+    <br>
+    
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'action' => Yii::app()->createUrl($this->route),
@@ -80,7 +82,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
     ));
     ?>
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
             <?php echo CHtml::button(Yii::t('common', 'exportCSV'), array('class' => 'btn btn-primary btn-md', 'data-toggle' => "modal", 'data-target' => "#myModal")); ?>
         </div>
     </div>

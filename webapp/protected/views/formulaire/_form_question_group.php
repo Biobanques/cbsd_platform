@@ -29,7 +29,7 @@
 
     <div class="row buttons">
         <div class="col-lg-1 col-lg-offset-10">
-            <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary', 'style' => 'margin-top: 8px; padding-bottom: 23px;')); ?>
+            <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
         </div>
     </div>
 

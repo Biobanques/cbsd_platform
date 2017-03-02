@@ -23,7 +23,7 @@
     <div class="row buttons">
         <div class="col-lg-12">
             <?php
-            echo CHtml::submitButton('Importer', array('class' => 'btn btn-primary', 'id' => 'import', 'style' => 'margin-top: 8px; padding-bottom: 23px;', 'onclick' => '$("#loading").show();'));
+            echo CHtml::submitButton('Importer', array('class' => 'btn btn-primary', 'id' => 'import', 'onclick' => '$("#loading").show();'));
             echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; display: none;"));
             ?>
         </div>

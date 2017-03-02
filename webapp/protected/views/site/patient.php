@@ -64,7 +64,7 @@
     <div class="row">
         <div class="row buttons">
             <div class="col-lg-1 col-lg-offset-10">
-            <?php echo CHtml::submitButton('OK', array('class' => 'btn btn-primary', 'style' => 'padding-bottom: 23px;')); ?>
+            <?php echo CHtml::submitButton('OK', array('class' => 'btn btn-primary')); ?>
         </div>
         </div>
     </div>

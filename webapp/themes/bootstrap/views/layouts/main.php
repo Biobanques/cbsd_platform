@@ -117,7 +117,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                 </div>
             </nav>
 
-            <div style="float:right;padding-right:20px;padding-top:20px;">
+            <div style="float:right; margin-top:10px; padding-right:20px; padding-top:20px;">
                 <div >
                     <?php
                     /**

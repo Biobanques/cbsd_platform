@@ -196,7 +196,6 @@ class SiteController extends Controller
 
         if (isset($_POST['User'])) {
             $profilSelected = array_filter($_POST['User']['profil']);
-            $test = empty($profilSelected);
             if (!empty($profilSelected)) {
                 if (in_array('clinicien', $profilSelected)) {
                     array_push($model->profil, 'clinicien');

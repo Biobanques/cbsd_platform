@@ -7,8 +7,7 @@
             <div class="panel-heading"><?php echo Yii::t('common', 'administration') ?></div>
             <div class="panel-body">
                 <?php
-                $this->widget('bootstrap.widgets.TbMenu', array(
-                    'type'=>'list',
+                $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
                         array('label' => Yii::t('common', 'manageUsers')),
                         array('label' => Yii::t('common', 'registeredUsers'), 'icon'=>'play', 'url' => array('/user/admin')),

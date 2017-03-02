@@ -109,7 +109,7 @@
 
     <div class="row buttons">
         <div class="col-lg-6 col-lg-offset-5">
-            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save'), array('class' => 'btn btn-primary', 'style' => 'padding-bottom: 23px;')); ?>
+            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save'), array('class' => 'btn btn-primary')); ?>
         </div>
     </div>
     <?php $this->endWidget(); ?>

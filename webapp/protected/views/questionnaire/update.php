@@ -41,7 +41,7 @@ $_SESSION["patientBirthDate"] = $patient->birthDate;
     <hr />
     <div style="display:inline; margin: 35%; width: 100px; ">
         <?php
-        echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary', 'style' => 'margin-top:8px;padding-bottom:23px;'));
+        echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary', 'style' => 'margin-top:8px'));
         echo CHtml::link(Yii::t('common', 'cancel'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-danger', 'style' => 'margin-left:20px;'));
         ?>
     </div>

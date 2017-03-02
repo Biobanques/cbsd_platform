@@ -45,7 +45,7 @@
 
     <div style="display:inline; margin-left: 35%; width: 100px; ">
         <?php
-        echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary', 'style' => 'padding-bottom:23px;'));
+        echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary'));
         echo CHtml::link(Yii::t('common', 'cancel'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-danger', 'style' => 'margin-top: -5px; margin-left:20px; padding-bottom:5px;'));
         if ($model->type == "genetique") {
             echo CHtml::ajaxSubmitButton(Yii::t('common', 'addGene'), $this->createUrl('updateandadd', array('id' => $model->_id)), array(
@@ -56,7 +56,7 @@
                 . '}',
                 'error' => 'js:function(xhr, status, error){
                                 alert(xhr.responseText);}',
-                    ), array('class' => 'btn btn-primary', 'style' => 'margin-top: 8px; margin-left:20px;padding-bottom:25px;')
+                    ), array('class' => 'btn btn-primary', 'style' => 'margin-left:20px;')
             );
         }
         ?>

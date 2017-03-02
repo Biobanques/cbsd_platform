@@ -21,8 +21,8 @@
 
     <div class="row buttons">
         <div class="col-lg-12">
-            <?php echo CHtml::submitButton(Yii::t('common', 'createBtn'), array('class' => 'btn btn-primary', 'style' => 'padding-bottom: 23px;')); ?>
-            <?php echo CHtml::resetButton(Yii::t('common', 'reset'), array('class' => 'btn btn-danger', 'style' => 'padding-bottom: 23px;')); ?>
+            <?php echo CHtml::submitButton(Yii::t('common', 'createBtn'), array('class' => 'btn btn-primary')); ?>
+            <?php echo CHtml::resetButton(Yii::t('common', 'reset'), array('class' => 'btn btn-danger')); ?>
         </div>
     </div>
 

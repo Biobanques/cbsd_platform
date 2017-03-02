@@ -53,5 +53,5 @@ $form = $this->beginWidget('CActiveForm', array(
     }
     ?>
 </div><br>
-<?php echo CHtml::submitButton('Exporter', array('name' => 'exporter', 'class' => 'btn btn-default')); ?>
+<?php echo CHtml::submitButton('Exporter', array('name' => 'exporter', 'class' => 'btn btn-primary')); ?>
 <?php $this->endWidget(); ?>
