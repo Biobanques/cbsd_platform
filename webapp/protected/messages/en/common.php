@@ -277,7 +277,7 @@ return array(
     'labelQuestion' => 'Entrez le label de la question.<hr />' . CHtml::image(Yii::app()->request->baseUrl . '/images/tooltip/questionLabel.png', '#'),
     'typeQuestion' => 'Choisissez le type de la question:<br>- texte simple<br>- numérique<br>- date (format jj/mm/yyyy)<br>- radio (1 seul choix possible)<br>- liste déroulante<br>- case(s) à cocher (plusieurs choix possibles)<br>- textarea<hr />' . CHtml::image(Yii::app()->request->baseUrl . '/images/tooltip/questionType.png', '#'),
     'groupQuestion' => 'Choisissez dans quel onglet vous voulez ajouter la question.',
-    'positionQuestion' => '- Alignement à gauche (par défaut): La question sera positionnée à gauche <br>- Alignement à droite: La question sera positionnée à droite',
+    'positionQuestion' => '- Alignement à gauche (par défaut): La question sera positionnée à gauche <br>- Alignement à droite: La question sera positionnée à droite<hr />' . CHtml::image(Yii::app()->request->baseUrl . '/images/tooltip/float.png', '#', array('style' => 'width:700px')),
     'helpQuestion' => 'Renseignez ce champ si vous voulez ajouter une information à la question. <br>Cette information pourra être affichée en cliquant sur "?" <br>à côté de l\'identifiant de la question.<hr />' . CHtml::image(Yii::app()->request->baseUrl . '/images/tooltip/questionTooltip.png', '#'),
     'idFiche' => 'id of the form',
     'searchPatient' => 'Creation of a patient form',

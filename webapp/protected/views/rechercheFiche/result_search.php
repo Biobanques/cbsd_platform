@@ -70,7 +70,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
             array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
             array('header' => $model->attributeLabels()["examDate"], 'name' => 'examDate', 'value' => '$data->getAnswerByQuestionId("examdate")'),
             array(
-                'class' => 'bootstrap.widgets.TbButtonColumn',
+                'class' => 'CButtonColumn',
                 'template' => '{view}',
                 'buttons' => array(
                     'view' => array(

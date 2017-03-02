@@ -21,6 +21,7 @@
                         array('label' => Yii::t('common', 'logSystem'), 'icon'=>'play', 'url' => array('/auditTrail/admin')),
                         array('label' => Yii::t('common', 'userLog'), 'icon'=>'play', 'url' => array('/administration/userLog')),
                         array('label' => Yii::t('common', 'filemaker')),
+                        array('label' => 'formatter colonnes', 'icon'=>'play', 'url' => array('/fileImport/formatColumn')),
                         array('label' => Yii::t('common', 'importFilemaker'), 'icon'=>'play', 'url' => array('/fileImport/admin')),
                     ),
                     'htmlOptions' => array('class' => 'operations'),
