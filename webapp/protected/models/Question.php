@@ -122,5 +122,21 @@ class Question extends LoggableActiveRecord {
             'help' => 'Info-bulle'
         );
     }
+    
+    /**
+     * get an array of types of questions possibles
+     */
+    public function getArrayTypes() {
+        $res = array();
+        $res ['input'] = "texte simple";
+        $res ['number'] = "numérique";
+        $res ['date'] = "date";
+        $res ['radio'] = "radio bouton";
+        $res ['list'] = "liste déroulante";
+        $res ['checkbox'] = "case(s) à cocher";
+        $res ['text'] = "aire de texte";
+        $res ['expression'] = "expression";
+        return $res;
+    }
 
 }

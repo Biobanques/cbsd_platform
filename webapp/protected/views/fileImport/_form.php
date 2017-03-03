@@ -30,14 +30,14 @@
     <div class="row">
         <div class="col-lg-12">
             <?php echo $form->labelEx($model, 'type'); ?>
-            <?php echo $form->textField($model, 'type', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->dropdownlist($model, 'type', $model->getTypesQuestions(), array('prompt' => '----')); ?>
             <?php echo $form->error($model, 'type'); ?>
         </div>
     </div>
 
     <div class="row buttons">
         <div class="col-lg-12">
-            <?php echo CHtml::submitButton('Créer', array('class' => 'btn btn-primary')); ?>
+            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'createBtn') : Yii::t('common', 'updateBtn'), array('class' => 'btn btn-primary')); ?>
             <?php echo CHtml::resetButton(Yii::t('common', 'reset'), array('class' => 'btn btn-danger')); ?>
         </div>
     </div>

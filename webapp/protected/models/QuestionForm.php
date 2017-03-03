@@ -119,7 +119,6 @@ class QuestionForm extends CFormModel {
         $res ['checkbox'] = "case(s) à cocher";
         $res ['text'] = "aire de texte";
         $res ['expression'] = "expression";
-        //$res ['image'] = "image";
         return $res;
     }
 

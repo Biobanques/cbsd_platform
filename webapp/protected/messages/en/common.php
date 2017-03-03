@@ -56,6 +56,12 @@ return array(
     'requiredField' => 'Fields with <span class="required">*</span> are required.',
     'success_register' => 'Your application has been send , you will receive an email when it will be approved.',
     'error_register' => 'An error occured during your registration, please try later.',
+    'columnCreated' => 'The column has been saved successfully.',
+    'columnUpdated' => 'La colonne has been updated successfully.',
+    'columnDeleted' => 'La colonne has been deleted successfully.',
+    'columnNotDeleted' => 'La colonne has not been deleted.',
+    'fileMakerImported' => 'The FileMaker file has been imported successfully.',
+    'fileMakerNotImported' => 'The FileMaker file has not been imported.',
     // title
     'registeredUsers' => 'Registered users',
     'manageUsers' => 'Manage users',
@@ -86,6 +92,8 @@ return array(
     'optional' => 'optional',
     'queryAnonymous' => 'Restrict the query ID to',
     'queryFormulation' => 'Formulate the query',
+    'createColumn' => 'Create column',
+    'updateColumn' => 'Update column',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',
@@ -137,6 +145,8 @@ return array(
     'individualSelection' => 'individuals',
     'restrictQuery' => 'a form',
     'restrictPeriod' => 'a period',
+    'fileMakerColumn' => 'FileMaker column',
+    'cbsdColumn' => 'CBSD column',
     // profil
     'administrateur' => 'Administrator',
     'administrateur de projet' => 'Administrator of the project',

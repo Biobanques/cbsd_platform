@@ -39,8 +39,8 @@ class ColumnFileMaker extends EMongoDocument
     public function attributeLabels()
     {
         return array(
-            'currentColumn' => 'Colonne actuelle',
-            'newColumn' => 'Nouvelle colonne',
+            'currentColumn' => Yii::t('common', 'fileMakerColumn'),
+            'newColumn' => Yii::t('common', 'cbsdColumn'),
             'type' => 'Type'
         );
     }
@@ -52,6 +52,14 @@ class ColumnFileMaker extends EMongoDocument
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));
+    }
+    
+    public function getTypesQuestions() {
+        return Question::model()->getArrayTypes();
+    }
+    
+    public function getType() {
+        return $this->getTypesQuestions()[$this->type];
     }
 
 }

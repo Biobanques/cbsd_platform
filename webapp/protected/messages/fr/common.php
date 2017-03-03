@@ -57,6 +57,12 @@ return array(
     'requiredField' => 'Les champs avec <span class="required">*</span> sont obligatoires.',
     'error_register' => 'Une erreur s\'est produite lors de votre inscription, veuillez réessayer plus tard.',
     'success_register' => 'Votre demande a été envoyée, vous recevrez un e-mail quand elle sera approuvée.',
+    'columnCreated' => 'La colonne a bien été enregistrée.',
+    'columnUpdated' => 'La colonne a bien été mise à jour.',
+    'columnDeleted' => 'La colonne a bien été supprimée.',
+    'columnNotDeleted' => 'La colonne n\'a pas été supprimée.',
+    'fileMakerImported' => 'La base FileMaker a bien été importée.',
+    'fileMakerNotImported' => 'La base FileMaker n\'a pas été importée.',
     // titre
     'registeredUsers' => 'Utilisateurs enregistrés',
     'manageUsers' => 'Gestion des utilisateurs',
@@ -86,6 +92,8 @@ return array(
     'optional' => 'optionnel',
     'queryAnonymous' => 'Restreindre la requête à',
     'queryFormulation' => 'Formuler la requête',
+    'createColumn' => 'Créer une colonne',
+    'updateColumn' => 'Mettre à jour une colonne',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',
@@ -138,6 +146,8 @@ return array(
     'individualSelection' => 'une sélection individuelle',
     'restrictQuery' => 'un formulaire',
     'restrictPeriod' => 'une période',
+    'fileMakerColumn' => 'Colonne FileMaker',
+    'cbsdColumn' => 'Colonne CBSD',
     // profil
     'administrateur' => 'Administrateur',
     'administrateur de projet' => 'Administrateur du projet',

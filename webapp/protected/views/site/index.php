@@ -1,10 +1,6 @@
 <?php
 /* @var $this SiteController */
 $this->pageTitle = Yii::app()->name;
-$columnFileMaker = ColumnFileMaker::model()->findAll();
-foreach ($columnFileMaker as $model) {
-echo $model->currentColumn;
-                                    }
 ?>
 
 <div class="jumbotron">

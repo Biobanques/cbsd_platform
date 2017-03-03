@@ -26,6 +26,8 @@ class FileImportController extends Controller {
                 'actions' => array(
                     'admin',
                     'create',
+                    'update',
+                    'delete',
                     'formatColumn'
                 ),
                 'expression' => '$user->getActiveProfil() == "administrateur"'
@@ -55,7 +57,7 @@ class FileImportController extends Controller {
             if ($uploadedFile->validate()) {
                 $uploadedFile->filename->saveAs(date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName());
                 chmod(date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName(), 0777);
-                $this->dropNeuropathCollection();
+                //$this->dropNeuropathCollection();
                 $this->deleteNeuropathForms();
                 $this->importNeuropathNominatif();
                 $this->deleteUnvalidNeuropath();
@@ -66,9 +68,9 @@ class FileImportController extends Controller {
                 $fileImport->extension = $uploadedFile->filename->getExtensionName();
                 $fileImport->date_import = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
                 $fileImport->save();
-                Yii::app()->user->setFlash('succès', 'La base FileMaker a bien été importé.');
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'fileMakerImported'));
             } else {
-                Yii::app()->user->setFlash('erreur', 'La base FileMaker n\'a pas été importé.');
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'fileMakerNotImported'));
             }
         }
         $this->render('admin', array(
@@ -86,7 +88,7 @@ class FileImportController extends Controller {
         if (isset($_POST['ColumnFileMaker'])) {
             $model->attributes = $_POST['ColumnFileMaker'];
             if ($model->save()) {
-                Yii::app()->user->setFlash('succès', 'colonne créée');
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'columnCreated'));
                 $this->redirect(array('fileImport/formatColumn'));
             } else {
                 Yii::app()->user->setFlash('erreur', Yii::t('common', 'missingFields'));
@@ -97,14 +99,56 @@ class FileImportController extends Controller {
         ));
     }
     
+    /**
+     * Updates a particular model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionUpdate($id) {
+        $model = ColumnFileMaker::model()->findByPk(new MongoId($id));
+        if (isset($_POST['ColumnFileMaker'])) {
+            $model->attributes = $_POST['ColumnFileMaker'];
+            if ($model->save()) {
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'columnUpdated'));
+                $this->redirect(array('fileImport/formatColumn'));
+            }
+        }
+        $this->render('update', array(
+            'model' => $model,
+        ));
+    }
+    
+    /**
+     * Deletes a particular model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id the ID of the model to be deleted
+     */
+    public function actionDelete($id) {
+        $model = ColumnFileMaker::model()->findByPk(new MongoId($id));
+        try {
+            $model->delete();
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'columnDeleted'));
+            } else {
+                echo "<div class='flash-success'>" . Yii::t('common', 'columnDeleted') . "</div>"; //for ajax
+            }
+        } catch (CDbException $e) {
+            if (!isset($_GET['ajax'])) {
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'columnNotDeleted'));
+            } else {
+                echo "<div class='flash-error'>" . Yii::t('common', 'columnNotDeleted') . "</div>";
+            } //for ajax
+        }
+    }
+    
     public function actionFormatColumn() {
-        $model = new ColumnFileMaker('search');
-        $model->unsetAttributes();
+        $modelColumn = new ColumnFileMaker('search');
+        $modelColumn->unsetAttributes();
         if (isset($_GET['ColumnFileMaker'])) {
-            $model->setAttributes($_GET['ColumnFileMaker']);
+            $modelColumn->setAttributes($_GET['ColumnFileMaker']);
         }
         $this->render('formatColumn', array(
-            'model' => $model
+            'modelColumn' => $modelColumn
         ));
     }
 
@@ -191,17 +235,14 @@ class FileImportController extends Controller {
                                 if ($k == "id") {
                                     $neuropath->initSoftAttribute("id_cbsd");
                                     $neuropath->id_cbsd = $v;
-                                    $columnFileMaker = ColumnFileMaker::model()->findAll();
-                                    foreach ($columnFileMaker as $model) {
-                                        $neuropath->initSoftAttribute($model->newColumn);
-                                        $test[$model->currentColumn] = $model->newColumn;
-                                    }
                                     foreach ($attributes as $key => $value) {
+                                        $columnFileMaker = ColumnFileMaker::model()->findByAttributes(array('currentColumn' => $key))->newColumn;
+                                        $neuropath->initSoftAttribute($columnFileMaker);
                                         $pos = strpos((string) $value, "-");
                                         if ($pos && $key == "braak_tau") {
-                                            $neuropath->$test[$key] = $this->convertNumeric(substr($value, 0, $pos));
+                                            $neuropath->$columnFileMaker = $this->convertNumeric(substr($value, 0, $pos));
                                         } else {
-                                            $neuropath->$test[$key] = $this->convertNumeric($value);
+                                            $neuropath->$columnFileMaker = $this->convertNumeric($value);
                                         }
                                     }
                                     $neuropath->save();
@@ -292,16 +333,12 @@ class FileImportController extends Controller {
                             $answerQuestion->id = $k;
                             $answerQuestion->label = $k;
                             $answerQuestion->label_fr = $k;
-                            if (is_numeric($v)) {
-                                $answerQuestion->type = "number";
-                            } elseif (CommonTools::isDate($v)) {
-                                $answerQuestion->type = "date";
-                            } else {
-                                $answerQuestion->type = "input";
-                            }
+                            $answerQuestion->type = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->type;
                             $answerQuestion->style = "";
                             if ($answerQuestion->type == "date") {
                                 $answerQuestion->answer = DateTime::createFromFormat('d/m/Y', date('d/m/Y', strtotime($v)));
+                            } elseif ($answerQuestion->type == "number") {
+                                $answerQuestion->answer = new MongoInt32($v);
                             } else {
                                 $answerQuestion->answer = $v;
                             }
