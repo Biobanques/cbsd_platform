@@ -27,7 +27,7 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
 
     <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
 
-    <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+    <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-danger')); ?>
 
     <p><b><?php echo Yii::t('common', 'uniqueIdQuestion') ?></b></p>
     <p><b><?php echo Yii::t('common', 'valuesQuestion') ?></b></p>

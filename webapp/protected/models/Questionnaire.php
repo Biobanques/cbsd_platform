@@ -394,7 +394,7 @@ class Questionnaire extends LoggableActiveRecord
      */
     public function saveQuestionnaireNewGroup($questionGroup)
     {
-        $this->last_modified = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+        $this->last_modified = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
         if ($questionGroup != null) {
 
             //sinon positionnement relatif
@@ -416,7 +416,7 @@ class Questionnaire extends LoggableActiveRecord
 
     public function saveQuestionnaireNewQuestion($questionForm)
     {
-        $this->last_modified = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+        $this->last_modified = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
         $cquestion = new Question;
         $cquestion->setAttributesByQuestionForm($questionForm);
         Yii::log("save questionnaire", CLogger::LEVEL_TRACE);
@@ -459,7 +459,7 @@ class Questionnaire extends LoggableActiveRecord
 
     public function saveQuestionnaireNewQuestionBloc($questionForm)
     {
-        $this->last_modified = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+        $this->last_modified = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
         $cquestion = new Question;
         $cquestion->setAttributesByQuestionForm($questionForm);
         Yii::log("save questionnaire", CLogger::LEVEL_TRACE);

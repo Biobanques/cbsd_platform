@@ -23,7 +23,7 @@ $_SESSION["patientBirthDate"] = $patient->birthDate;
 
 <hr />
 
-<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-danger')); ?>
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(

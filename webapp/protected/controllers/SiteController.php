@@ -138,7 +138,7 @@ class SiteController extends Controller
                     $userLog->user = Yii::app()->user->getNomPrenom();
                     $userLog->ipAddress = $_SERVER['REMOTE_ADDR'];
                     $userLog->profil = Yii::app()->user->getActiveProfil();
-                    $userLog->connectionDate = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+                    $userLog->connectionDate = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
                     $userLog->save();
                     $this->redirect(array('site/index'));
                 }

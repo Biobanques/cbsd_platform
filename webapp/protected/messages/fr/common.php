@@ -331,5 +331,15 @@ return array(
     'deleteQuestionGroup' => 'Supprimer l\'onglet de questions',
     'deleteQuestion' => 'Supprimer la question',
     'notRestrict' => '*Si vous ne restreignez pas la requête, la recherche portera sur l\'ensemble de la base.',
-    'writeQuestion' => '*Taper une lettre ou la touche "espace" pour afficher toutes les variables.'
+    'writeQuestion' => '*Taper une lettre ou la touche "espace" pour afficher toutes les variables.',
+    'floatLeft' => 'Alignement à gauche',
+    'floatRight' => 'Alignement à droite',
+    'simpleText' => 'Texte simple',
+    'number' => 'Numérique',
+    'date' => 'Date',
+    'radio' => 'Radio bouton',
+    'list' => 'Liste déroulante',
+    'checkbox' => 'Case(s) à cocher',
+    'textarea' => 'Aire de texte',
+    'expression' => 'Expression'
 );

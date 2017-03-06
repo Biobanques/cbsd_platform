@@ -128,7 +128,7 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
     }
     
     public function setAnswerDate($val) {
-        $this->answer = DateTime::createFromFormat('d/m/Y', $val);
+        $this->answer = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, $val);
     }
     
     /**

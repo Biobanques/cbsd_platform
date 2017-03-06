@@ -3,7 +3,6 @@ Yii::app()->clientScript->registerScript('form_question', "
 $('.question-label').on('dblclick', function(event) {
     $('#updateQuestion').modal();
     $('.col-lg-12 #old_question').val($(this).attr('id'));
-    $('#old_question option:not(:selected)').hide();
 });
 
 $('#QuestionBlocForm_title').change(function(){
@@ -27,13 +26,13 @@ height: 25px;
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {
     $q = Questionnaire::model()->findByPk(new MongoId($_GET['id']));
-    echo "<p><b>" . Yii::t('common', 'lastModifiedDate') . ": </b>" . date('d/m/Y', strtotime($q->last_modified['date'])) . "</p>";
+    echo "<p><b>" . Yii::t('common', 'lastModifiedDate') . ": </b>" . date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($q->last_modified['date'])) . "</p>";
 }
 ?>
 <p><?php echo "<b>" . Yii::t('common', 'createdBy') . "</b>: " . $model->creator; ?></p>
 <hr />
 
-<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-danger')); ?>
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(

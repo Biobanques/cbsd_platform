@@ -46,7 +46,7 @@ class LoggableBehavior extends CActiveRecordBehavior {
                     }
                     $log->model_id = $modelId;
                     $log->field = $name;
-                    $log->stamp = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+                    $log->stamp = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
                     $log->user_id = $userid;
                     $log->save();
                 }
@@ -59,7 +59,7 @@ class LoggableBehavior extends CActiveRecordBehavior {
             $log->model = get_class($this->Owner);
             $log->model_id = $this->Owner->_id;
             $log->field = 'N/A';
-            $log->stamp = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+            $log->stamp = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
             $log->user_id = $userid;
             $log->save();
 
@@ -80,7 +80,7 @@ class LoggableBehavior extends CActiveRecordBehavior {
                 }
                 $log->model_id = $modelId;
                 $log->field = $name;
-                $log->stamp = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+                $log->stamp = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
                 $log->user_id = $userid;
                 $log->save();
             }
@@ -112,7 +112,7 @@ class LoggableBehavior extends CActiveRecordBehavior {
         }
         $log->model_id = $modelId;
         $log->field = 'N/A';
-        $log->stamp = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+        $log->stamp = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
         $log->user_id = $userid;
         $log->save();
         return parent::afterDelete($event);

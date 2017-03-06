@@ -325,5 +325,15 @@ return array(
     'deleteQuestionGroup' => 'Delete questions group',
     'deleteQuestion' => 'Delete question',
     'notRestrict' => '*If you do not restrict the query, it will involve all the database.',
-    'writeQuestion' => '*Type a letter or the space key to display all variables.'
+    'writeQuestion' => '*Type a letter or the space key to display all variables.',
+    'floatLeft' => 'Float left',
+    'floatRight' => 'Float right',
+    'simpleText' => 'Simple text',
+    'number' => 'Number',
+    'date' => 'Date',
+    'radio' => 'Radio button',
+    'list' => 'Dropdown list',
+    'checkbox' => 'Checkbox',
+    'textarea' => 'Textarea',
+    'expression' => 'Expression'
 );

@@ -111,14 +111,14 @@ class QuestionForm extends CFormModel {
      */
     public function getArrayTypes() {
         $res = array();
-        $res ['input'] = "texte simple";
-        $res ['number'] = "numérique";
-        $res ['date'] = "date";
-        $res ['radio'] = "radio bouton";
-        $res ['list'] = "liste déroulante";
-        $res ['checkbox'] = "case(s) à cocher";
-        $res ['text'] = "aire de texte";
-        $res ['expression'] = "expression";
+        $res ['input'] = Yii::t('common', 'simpleText');
+        $res ['number'] = Yii::t('common', 'number');
+        $res ['date'] = Yii::t('common', 'date');
+        $res ['radio'] = Yii::t('common', 'radio');
+        $res ['list'] = Yii::t('common', 'list');
+        $res ['checkbox'] = Yii::t('common', 'checkbox');
+        $res ['text'] = Yii::t('common', 'textarea');
+        $res ['expression'] = Yii::t('common', 'expression');
         return $res;
     }
 
@@ -127,8 +127,8 @@ class QuestionForm extends CFormModel {
      */
     public function getArrayStyles() {
         $res = array();
-        $res [''] = "Alignement à gauche";
-        $res ['float:right'] = "Alignement à droite";
+        $res [''] = Yii::t('common', 'floatLeft');
+        $res ['float:right'] = Yii::t('common', 'floatRight');
         return $res;
     }
    

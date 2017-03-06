@@ -8,6 +8,17 @@
 
 class CommonTools
 {
+    /*
+     * FORMAT DATE
+     */
+    const MYSQL_DATE_FORMAT = "Y-m-d H:i:s";
+    const MYSQL_DATE_DAY_FORMAT = "Y-m-d 00:00:00";
+    const FRENCH_DATE_FORMAT = "H:i:s d/m/Y";
+    const FRENCH_SHORT_DATE_FORMAT = "d/m/Y";
+    const ENGLISH_SHORT_DATE_FORMAT = "Y-m-d";
+    const FRENCH_HD_DATE_FORMAT = "d/m/Y H:i";
+    const ENGLISH_HD_DATE_FORMAT = "Y-m-d H:i";
+    const HOUR_DATE_FORMAT = "H:i";
 
     public function wsGetPatient($patient)
     {
@@ -66,7 +77,7 @@ class CommonTools
      * @return type
      */
     public function formatDateFR($date) {
-        return date('d/m/Y', strtotime($date));
+        return date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($date));
     }
     
     /**
@@ -76,8 +87,8 @@ class CommonTools
     public function formatDatePicker($date) {
         $res = array();
         $answerDate = explode("-", str_replace(' ', '', $date));
-        $res['date_from'] = date('Y-m-d', strtotime(str_replace('/', '-', $answerDate[0])));
-        $res['date_to'] = date('Y-m-d', strtotime(str_replace('/', '-', $answerDate[1])));
+        $res['date_from'] = date(CommonTools::ENGLISH_SHORT_DATE_FORMAT, strtotime(str_replace('/', '-', $answerDate[0])));
+        $res['date_to'] = date(CommonTools::ENGLISH_SHORT_DATE_FORMAT, strtotime(str_replace('/', '-', $answerDate[1])));
         return $res;
     }
     

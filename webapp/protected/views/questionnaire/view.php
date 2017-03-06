@@ -43,7 +43,7 @@ $img = CHtml::image(Yii::app()->request->baseUrl . '/images/page_white_acrobat.p
 echo CHtml::link($img, array('questionnaire/exportPDF', 'id' => $model->_id), array());
 ?>
 
-<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-danger')); ?>
 <div>
     <?php
     echo $model->renderTabbedGroup(Yii::app()->language);

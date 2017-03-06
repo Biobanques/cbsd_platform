@@ -9,7 +9,7 @@
 
     <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
 
-    <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+    <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-danger')); ?>
     <div class="row">
         <div class="col-lg-12">
             <?php echo $form->labelEx($model, 'type'); ?>

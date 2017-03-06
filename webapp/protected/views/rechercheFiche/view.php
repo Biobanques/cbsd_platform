@@ -40,7 +40,7 @@ echo CHtml::link(Yii::t('common', 'htmlView'), array('rechercheFiche/viewOnePage
     ?>
 </div>
 
-<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-error')); ?>
+<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-danger')); ?>
 <div>
     <?php
     echo $model->renderTabbedGroup(Yii::app()->language);

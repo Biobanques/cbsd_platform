@@ -199,7 +199,7 @@ class AnswerController extends Controller {
             $this->redirect(array('answer/affichepatient'));
         }
         if (isset($_POST['Questionnaire'])) {
-            $model->last_updated = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+            $model->last_updated = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
             $flagNoInputToSave = true;
             foreach ($model->answers_group as $answer_group) {
                 foreach ($answer_group->answers as $answerQuestion) {
@@ -239,7 +239,7 @@ class AnswerController extends Controller {
         $model = $this->loadModel($id);
         $nbMax = 0;
         if (isset($_POST['Questionnaire'])) {
-            $model->last_updated = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+            $model->last_updated = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
             foreach ($model->answers_group as $answer_group) {
                 foreach ($answer_group->answers as $answerQuestion) {
                     $nbMax = $model->getMaxIdGene($nbMax, $answerQuestion->id);

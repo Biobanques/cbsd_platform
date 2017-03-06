@@ -73,7 +73,7 @@ class QuestionnaireController extends Controller {
         }
         $answer = new Answer;
         $answer->creator = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
-        $answer->last_updated = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+        $answer->last_updated = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
         $answer->copy($model);
         $answer->type = $model->type;
         $answer->login = Yii::app()->user->id;

@@ -267,9 +267,9 @@ class ImportNeuropathCommand extends CConsoleCommand {
                 $answer->login = new MongoId($user->_id);
                 $answer->questionnaireMongoId = new MongoId();
                 $answer->name = "Import Neuropath";
-                $answer->last_modified = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+                $answer->last_modified = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
                 $answer->description = "Données neuropathologiques de la base FileMaker";
-                $answer->last_updated = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
+                $answer->last_updated = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
                 $answerGroup = new AnswerGroup;
                 $answerGroup->id = "onglet";
                 $answerGroup->title = "Données neuropathologiques FileMaker";
@@ -292,7 +292,7 @@ class ImportNeuropathCommand extends CConsoleCommand {
                             }
                             $answerQuestion->style = "";
                             if ($answerQuestion->type == "date") {
-                                $answerQuestion->answer = DateTime::createFromFormat('d/m/Y', date('d/m/Y', strtotime($v)));
+                                $answerQuestion->answer = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($v)));
                             } else {
                                 $answerQuestion->answer = $v;
                             }

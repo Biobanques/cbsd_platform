@@ -327,7 +327,7 @@ class Answer extends LoggableActiveRecord {
      */
     public function getLastModified() {
         if ($this->last_modified != null) {
-            return date('d/m/Y', strtotime($this->last_modified['date']));
+            return date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($this->last_modified['date']));
         } else {
             return null;
         }
@@ -599,7 +599,7 @@ class Answer extends LoggableActiveRecord {
                     if ($answer->type != "date") {
                         $result = $answer->answer;
                     } else {
-                        $result = date('d/m/Y', strtotime($answer->answer['date']));
+                        $result = date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($answer->answer['date']));
                     }
                 }
             }
@@ -802,7 +802,7 @@ class Answer extends LoggableActiveRecord {
                         //$resultLine[] = is_array($cQuestion['answer']) ? implode(', ', $cQuestion['answer']) : $cQuestion['answer'];
                         if (is_array($cQuestion['answer'])) {
                             if (isset($cQuestion['answer']['date'])) {
-                                $resultLine[] = date('d/m/Y', strtotime($cQuestion['answer']['date']));
+                                $resultLine[] = date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($cQuestion['answer']['date']));
                             } else {
                                 $resultLine[] = implode(', ', $cQuestion['answer']);
                             }

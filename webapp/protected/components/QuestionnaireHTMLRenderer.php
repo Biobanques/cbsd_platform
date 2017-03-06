@@ -154,7 +154,7 @@ class QuestionnaireHTMLRenderer {
             }
             if ($question->id == "patientage" && isset($_SESSION["patientBirthDate"])) {
                 $birthdateFormat = explode('/', $_SESSION["patientBirthDate"]);
-                $dateNow = explode('/', date('d/m/Y'));
+                $dateNow = explode('/', date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
                 if (($birthdateFormat[1] < $dateNow[1]) || (($birthdateFormat[1] == $dateNow[1]) && ($birthdateFormat[0] <= $dateNow[0]))) {
                     $valueInput = $dateNow[2] - $birthdateFormat[2];
                 } else {
