@@ -1,11 +1,31 @@
 <?php
 Yii::app()->clientScript->registerScript('typeQuestion', "
+$(document).ready(function(){
+    var e = document.getElementById('QuestionForm_type').value;
+    if (e == 'radio' || e == 'list' || e == 'checkbox') {
+        $('#valueTypeQuestion').show();
+    } else {
+        $('#valueTypeQuestion').hide();
+        $('#QuestionForm_values').val('');
+    }
+});
+
 $('#QuestionForm_type').change(function(){
     var e = document.getElementById('QuestionForm_type').value;
     if (e == 'radio' || e == 'list' || e == 'checkbox') {
         $('#valueTypeQuestion').show();
     } else {
         $('#valueTypeQuestion').hide();
+        $('#QuestionForm_values').val('');
+    }
+});
+$('#question-form').submit(function(){
+    var e = document.getElementById('QuestionForm_type').value;
+    if (e == 'radio' || e == 'list' || e == 'checkbox') {
+        $('#valueTypeQuestion').show();
+    } else {
+        $('#valueTypeQuestion').hide();
+        $('#QuestionForm_values').val('');
     }
 });
 $('div .alert alert-error').removeClass('alert alert-error').addClass('alert alert-danger');
@@ -84,7 +104,7 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
                 <?php echo $form->dropDownList($model, 'type', $model->getArrayTypes(), array('prompt' => '----', "class" => "tooltipster", "title" => Yii::t('common', 'typeQuestion'))); ?>
                 <?php echo $form->error($model, 'type'); ?>           
             </div>
-            <div class="col-lg-6" id ="valueTypeQuestion" style="display:none;">
+            <div class="col-lg-6" id ="valueTypeQuestion">
                 <?php echo $form->labelEx($model, 'values'); ?>
                 <?php echo $form->textField($model, 'values'); ?>
                 <?php echo $form->error($model, 'values'); ?>

@@ -134,10 +134,12 @@ class QuestionForm extends CFormModel {
    
     public function valuesValidator()
     {
-        if ((isset($this->type) && $this->type == "radio")) {
-            $this->validatorList->add(CValidator::createValidator('required', $this, 'values', array()));
-            if ($this->values == "") {
-                $this->addError('values', Yii::t('common', 'insertValues'));
+        if ((isset($this->type))) {
+            if ($this->type == "radio" || $this->type == "list") {
+                $this->validatorList->add(CValidator::createValidator('required', $this, 'values', array()));
+                if ($this->values == "") {
+                    $this->addError('values', Yii::t('common', 'insertValues'));
+                }
             }
         }
     }
