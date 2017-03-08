@@ -99,21 +99,15 @@ class QuestionBlocController extends Controller {
         $questionnaire = new Questionnaire;
         $questionGroup = new QuestionGroup;
 
-        if (isset($_POST['QuestionBloc'])) {
-            $model->attributes = $_POST['QuestionBloc'];
-        }
-
         if (isset($_POST['QuestionForm'])) {
             $questionModel->attributes = $_POST['QuestionForm'];
             if ($questionModel->save()) {
                 $idQuestion = (string) $questionModel->_id;
                 $model->questions[] = $idQuestion;
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'questionBlockSaved'));
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionBlockNotSaved'));
             }
-
-            if ($model->save())
-                $this->redirect($this->createUrl('update', array('id' => $model->_id)));
-            else
-                Yii::app()->user->setFlash('erreur', Yii::t('common', 'missingFields'));
         }
 
         $questionGroup->id = $model->title;

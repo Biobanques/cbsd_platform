@@ -102,7 +102,7 @@ class Question extends LoggableActiveRecord {
     public function rules() {
         return array(
             array(
-                'id',
+                'id, label, type',
                 'required'
             ),
             array(

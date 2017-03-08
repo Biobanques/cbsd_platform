@@ -69,7 +69,9 @@ class FormulaireController extends Controller {
         if (isset($_POST['Questionnaire'])) {
             $model->attributes = $_POST['Questionnaire'];
             $model->creator = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
-            $model->addQuestionGroup("firstgroup", "Questionnaire principal");
+            $model->id = str_replace(' ', '_', strtolower($model->name));
+            //$model->addQuestionGroup("firstgroup", "Questionnaire principal");
+            $this->addQuestionGroupSituation($model);
             $countIdForm = $model->getFormsById($model->id);
             $countNameForm = $model->getFormsByName($model->name);
             if (count($countIdForm) > 0) {
@@ -351,6 +353,77 @@ class FormulaireController extends Controller {
             Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
         }
         return $questionnaire;
+    }
+    
+    public function addQuestionGroupSituation($questionnaire) {
+        $qg = new QuestionGroup;
+        $qg->id = 'situation';
+        $qg->title = 'Renseignements individuels';
+        $qg->title_fr = $qg->title;
+        $questionnaire->questions_group[] = $qg;
+        $q1 = new Question;
+        $q1->id = 'patientaddress';
+        $q1->label = 'Adresse du patient';
+        $q1->label_fr = $q1->label;
+        $q1->type = 'input';
+        $q1->style = '';
+        $q1->values = '';
+        $q1->values_fr = '';
+        $q1->help = null;
+        $q1->precomment = '';
+        $q1->precomment_fr = '';
+        $qg->questions[] = $q1;
+        $q2 = new Question;
+        $q2->id = 'patientage';
+        $q2->label = 'Age du patient';
+        $q2->label_fr = $q2->label;
+        $q2->type = 'number';
+        $q2->style = 'float:right';
+        $q2->values = '';
+        $q2->values_fr = '';
+        $q2->help = null;
+        $q2->precomment = '';
+        $q2->precomment_fr = '';
+        $qg->questions[] = $q2;
+        $q3 = new Question;
+        $q3->id = 'doctorname';
+        $q3->label = 'Nom du médecin';
+        $q3->label_fr = $q3->label;
+        $q3->type = 'input';
+        $q3->style = '';
+        $q3->values = '';
+        $q3->values_fr = '';
+        $q3->help = null;
+        $q3->precomment = '';
+        $q3->precomment_fr = '';
+        $qg->questions[] = $q3;
+        $q4 = new Question;
+        $q4->id = 'examdate';
+        $q4->label = 'Date de l\'examen';
+        $q4->label_fr = $q1->label;
+        $q4->type = 'date';
+        $q4->style = 'float:right';
+        $q4->values = '';
+        $q4->values_fr = '';
+        $q4->help = null;
+        $q4->precomment = '';
+        $q4->precomment_fr = '';
+        $qg->questions[] = $q4;
+        if ($questionnaire->type == "neuropathologique") {
+            $q5 = new Question;
+            $q5->id = 'deathdate';
+            $q5->label = 'Date de décès';
+            $q5->label_fr = $q5->label;
+            $q5->type = 'date';
+            $q5->style = '';
+            $q5->values = '';
+            $q5->values_fr = '';
+            $q5->help = null;
+            $q5->precomment = '';
+            $q5->precomment_fr = '';
+            $qg->questions[] = $q5;
+        }
+        
     }
 
 }

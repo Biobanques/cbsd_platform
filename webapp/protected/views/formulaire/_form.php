@@ -19,14 +19,6 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <p><?php echo Yii::t('common', 'uniqueIdForm') ?></p>
-            <?php echo $form->labelEx($model, 'id'); ?>
-            <?php echo $form->textField($model, 'id', array('size' => 5, 'maxlength' => 45)); ?>
-            <?php echo $form->error($model, 'id'); ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
             <?php echo $form->labelEx($model, 'name'); ?>
             <?php echo $form->textField($model, 'name', array('size' => 5, 'maxlength' => 45)); ?>
             <?php echo $form->error($model, 'name'); ?>
