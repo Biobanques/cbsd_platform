@@ -29,7 +29,7 @@ class AdministrationController extends Controller {
                     'update',
                     'userLog'
                 ),
-                'expression' => '$user->getActiveProfil() == "administrateur"'
+                'expression' => '$user->isAdmin()'
             ),
             array('deny', // deny all users
                 'users' => array('*'),

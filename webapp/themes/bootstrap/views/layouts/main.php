@@ -91,13 +91,13 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                             <?php if (!Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil") { ?>
                                 <li><a href="<?php echo Yii::app()->createUrl('site/index'); ?>"><?php echo Yii::t('common', 'accueil'); ?></a></li>
                             <?php } ?>
-                            <?php if (!Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "chercheur" && Yii::app()->user->getActiveProfil() != "administrateur de projet" && Yii::app()->controller->action->id != "loginProfil") { ?>
+                            <?php if (Yii::app()->user->isAuthorizedViewPatientNavbar() && Yii::app()->controller->action->id != "loginProfil") { ?>
                                 <li><a href="<?php echo Yii::app()->createUrl('site/patient'); ?>"><?php echo Yii::t('common', 'searchPatient'); ?></a></li>
                             <?php } ?>
                             <?php if (!Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "clinicien" && Yii::app()->user->getActiveProfil() != "chercheur") { ?>
                                 <li><a href="<?php echo Yii::app()->createUrl('rechercheFiche/admin'); ?>"><?php echo (Yii::app()->user->getActiveProfil() != "administrateur de projet") ? Yii::t('common', 'searchForm') : Yii::t('common', 'projectManager'); ?></a></li>
                             <?php } ?>
-                            <?php if (Yii::app()->user->isAdmin() && Yii::app()->user->getActiveProfil() == "administrateur" && Yii::app()->controller->action->id != "loginProfil") { ?>
+                            <?php if (Yii::app()->user->isAdmin() && Yii::app()->controller->action->id != "loginProfil") { ?>
                                 <li><a href="<?php echo Yii::app()->createUrl('administration/index'); ?>"><?php echo Yii::t('common', 'administration'); ?></a></li>
                             <?php } ?>
                             <?php if (!Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil") { ?>

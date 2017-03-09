@@ -67,7 +67,7 @@ class Controller extends CController
             $fiche = Answer::model()->findByPk(new MongoId($_GET['id']));
             $_SESSION['id'] = $fiche;
             if (isset($_SESSION['activeProfil'])) {
-                if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/view" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/update") {
+                if (Yii::app()->controller->id == "answer") {
                     if ($_SESSION['id']->type == "clinique") {
                         if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/view") {
                             if (!Yii::app()->user->isAuthorizedView($_SESSION['activeProfil'], "clinique")) {
@@ -122,19 +122,19 @@ class Controller extends CController
             } else {
                 $app->user->setState('activeProfil', $_POST['activeProfil']);
                 $_SESSION['activeProfil'] = $_POST['activeProfil'];
-                if (Yii::app()->controller->id == "rechercheFiche" && Yii::app()->user->getActiveProfil() == "clinicien" && Yii::app()->user->getActiveProfil() == "chercheur" && Yii::app()->user->getActiveProfil() == "administrateur de projet") {
+                if (!Yii::app()->user->isAuthorizedViewPatientNavbar()) {
                     Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowSearchPatientForm'));
                     $this->redirect('index.php?r=site/index');
                 }
                 if (Yii::app()->controller->id == "user" || Yii::app()->controller->id == "formulaire" || Yii::app()->controller->id == "fiche" || Yii::app()->controller->id == "questionBloc" || Yii::app()->controller->id == "administration" || Yii::app()->controller->id == "auditTrail" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "admin/admin") {
-                    if (Yii::app()->user->getActiveProfil() != "administrateur") {
+                    if (!Yii::app()->user->isAdmin()) {
                         Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowManagement'));
                         $this->redirect('index.php?r=site/index');
                     }
                 }
                 if (Yii::app()->user->getActiveProfil() == "chercheur") {
                     if (Yii::app()->controller->id == "questionnaire" || Yii::app()->controller->id == "answer" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "site/patient") {
-                        Yii::app()->user->setFlash("erreur", Yii::t('common', 'Vous n\'êtes pas atorisé à accéder à cette page.'));
+                        Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowAccessPage'));
                         $this->redirect('index.php?r=site/index');
                     }
                 }

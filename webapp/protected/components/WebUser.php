@@ -54,7 +54,7 @@ class WebUser extends CWebUser
      */
     public function isAdmin()
     {
-        return $this->getState('profil') != null ? in_array("administrateur", $this->getState('profil')) : false;
+        return $this->getState('activeProfil') == "administrateur" ? true : false; 
     }
 
     /**
@@ -63,7 +63,7 @@ class WebUser extends CWebUser
      */
     public function isClinicien()
     {
-        return in_array("clinicien", $this->getState('profil'));
+        return $this->getState('activeProfil') == "clinicien" ? true : false; 
     }
 
     /**
@@ -72,7 +72,7 @@ class WebUser extends CWebUser
      */
     public function isNeuropathologiste()
     {
-        return in_array("neuropathologiste", $this->getState('profil'));
+        return $this->getState('activeProfil') == "neuropathologiste" ? true : false; 
     }
 
     /**
@@ -81,7 +81,7 @@ class WebUser extends CWebUser
      */
     public function isGeneticien()
     {
-        return in_array("geneticien", $this->getState('profil'));
+        return $this->getState('activeProfil') == "geneticien" ? true : false; 
     }
 
     /**
@@ -90,7 +90,17 @@ class WebUser extends CWebUser
      */
     public function isChercheur()
     {
-        return (in_array("chercheur", $this->getState('profil')));
+        return $this->getState('activeProfil') == "chercheur" ? true : false; 
+    }
+    
+    /**
+     * return true if user is Master
+     * @return boolean
+     */
+    public function isMaster()
+    {
+        $profil = array("clinicienMaster", "neuroMaster", "geneticienMaster");
+        return in_array($this->getState('activeProfil'), $profil) ? true : false;
     }
 
     public function getUserProfil()
@@ -136,6 +146,24 @@ class WebUser extends CWebUser
             $userProfil[$profil] = $profil;
         }
         return $userProfil;
+    }
+    
+    public function isAuthorizedViewPatientNavbar()
+    {
+        $profil = array("administrateur", "clinicien", "neuropathologiste", "geneticien");
+        return in_array($this->getState('activeProfil'), $profil) ? true : false; 
+    }
+
+    public function isAuthorizedViewSearchNavbar()
+    {
+        $profil = array("administrateur", "administrateur de projet", "neuropathologiste", "geneticien", "chercheur", "clinicienMaster", "neuroMaster", "geneticienMaster");
+        return in_array($this->getState('activeProfil'), $profil) ? true : false; 
+    }
+    
+    public function isAuthorizedViewAdminNavbar()
+    {
+        $profil = array("administrateur");
+        return in_array($this->getState('activeProfil'), $profil) ? true : false; 
     }
 
     /**

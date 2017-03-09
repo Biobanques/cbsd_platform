@@ -61,7 +61,7 @@ class SiteController extends Controller
                 'actions' => array(
                     'patient'
                 ),
-                'expression' => '$user->getActiveProfil() != "chercheur" && $user->getActiveProfil() != ""'
+                'expression' => '$user->isAuthorizedViewPatientNavbar()'
             ),
             array(
                 'deny', // deny all users
@@ -135,6 +135,21 @@ class SiteController extends Controller
                 if (count($user->profil) == 0) {
                     Yii::app()->user->setFlash('erreur', Yii::t('common', 'contactAdministrator'));
                 } elseif ($model->login()) {
+                    if (Yii::app()->user->isMaster()) {
+                        $nbDay = CommonTools::fromRegisterDateToNow();
+                        if ($nbDay >= 0 && $nbDay <= 31) {
+                            $day = 31 - $nbDay;
+                            if ($day == 0) {
+                                Yii::app()->user->setFlash('info', Yii::t('common', 'deleteAccount'));
+                            } else {
+                                Yii::app()->user->setFlash('info', Yii::t('common', 'deletedAccount1') . $day . Yii::t('common', 'deletedAccount2'));
+                            }
+                        } else {
+                            User::model()->findByPk(new MongoId(Yii::app()->user->id))->delete();
+                            Yii::app()->user->setFlash('info', Yii::t('common', 'deletedAccount'));
+                            $this->redirect(array('site/login'));
+                        }
+                    }
                     $userLog->user = Yii::app()->user->getNomPrenom();
                     $userLog->ipAddress = $_SERVER['REMOTE_ADDR'];
                     $userLog->profil = Yii::app()->user->getActiveProfil();
@@ -238,20 +253,27 @@ class SiteController extends Controller
         if (isset($_POST['clinicien'])) {
             $_SESSION['profil'] = $profil = "clinicien";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
-        } else
-        if (isset($_POST['neuropathologiste'])) {
+        } elseif (isset($_POST['neuropathologiste'])) {
             $_SESSION['profil'] = $profil = "neuropathologiste";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
-        } else
-        if (isset($_POST['geneticien'])) {
+        } elseif (isset($_POST['geneticien'])) {
             $_SESSION['profil'] = $profil = "geneticien";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
-        } else
-        if (isset($_POST['chercheur'])) {
+        } elseif (isset($_POST['chercheur'])) {
             $_SESSION['profil'] = $profil = "chercheur";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
-        } else
+        } elseif (isset($_POST['clinicienMaster'])) {
+            $_SESSION['profil'] = $profil = "clinicienMaster";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } elseif (isset($_POST['neuroMaster'])) {
+            $_SESSION['profil'] = $profil = "neuroMaster";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } elseif (isset($_POST['geneticienMaster'])) {
+            $_SESSION['profil'] = $profil = "geneticienMaster";
+            $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
+        } else {
             $this->render('subscribeProfil', array('model' => $model));
+        }
     }
 
     /**
@@ -299,7 +321,7 @@ class SiteController extends Controller
                         }
                     }
                 }
-                if ($profil == "geneticien" || $profil == "chercheur") {
+                if ($profil == "geneticien" || $profil == "chercheur" || $profil == "clinicienMaster" || $profil == "neuroMaster" || $profil == "geneticienMaster") {
                     if ($model->save()) {
                         CommonMailer::sendSubscribeUserMail($model, $profil);
                         CommonMailer::sendMailConfirmationProfilEmail($model, $profil, NULL);
@@ -332,6 +354,7 @@ class SiteController extends Controller
                             $model->centre = $_GET['arg3'];
                         }
                     }
+                    $model->registerDate = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
                     if ($model->save()) {
                         CommonMailer::sendUserRegisterConfirmationMail($model, NULL);
                         Yii::app()->user->setState('profil', $model->profil);

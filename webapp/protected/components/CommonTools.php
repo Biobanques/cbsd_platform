@@ -71,6 +71,20 @@ class CommonTools
         }
         return true;
     }
+ 
+    /**
+     * get number of days from register date
+     * @return dateNow - registerDate
+     */
+    public function fromRegisterDateToNow() {
+        $dateNow = date(CommonTools::FRENCH_SHORT_DATE_FORMAT);
+        $registerDate = User::model()->getRegisterDate();
+        list($jour1, $mois1, $annee1) = explode('/', $dateNow);
+        list($jour2, $mois2, $annee2) = explode('/', $registerDate);
+        $timestamp1 = mktime(0,0,0,$mois1,$jour1,$annee1);
+        $timestamp2 = mktime(0,0,0,$mois2,$jour2,$annee2);
+        return round(abs($timestamp2 - $timestamp1)/86400, 0, PHP_ROUND_HALF_DOWN);
+    }
 
     /**
      * format date d/m/Y

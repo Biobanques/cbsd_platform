@@ -18,6 +18,7 @@ class User extends LoggableActiveRecord
     public $gsm;
     public $address;
     public $centre;
+    public $registerDate;
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__)
@@ -252,6 +253,9 @@ class User extends LoggableActiveRecord
         $res ['neuropathologiste'] = 'Neuropathologiste';
         $res ['geneticien'] = 'Généticien';
         $res ['chercheur'] = 'Chercheur';
+        $res ['clinicienMaster'] = 'Clinicien Master';
+        $res ['neuroMaster'] = 'Neuropathologique Master';
+        $res ['geneticienMaster'] = 'Généticien Master';
         return $res;
     }
 
@@ -309,6 +313,10 @@ class User extends LoggableActiveRecord
         $res ['Strasbourg'] = "Strasbourg";
         $res ['Toulouse'] = "Toulouse";
         return $res;
+    }
+    
+    public function getRegisterDate() {
+        return CommonTools::formatDateFR(User::model()->findByPk(new MongoId(Yii::app()->user->id))->registerDate['date']);
     }
     
     public function beforeSave()
@@ -422,6 +430,15 @@ class User extends LoggableActiveRecord
         }
         if (in_array("chercheur", $this->profil)) {
             return "chercheur";
+        }
+        if (in_array("clinicienMaster", $this->profil)) {
+            return "clinicienMaster";
+        }
+        if (in_array("neuroMaster", $this->profil)) {
+            return "neuroMaster";
+        }
+        if (in_array("geneticienMaster", $this->profil)) {
+            return "geneticienMaster";
         }
     }
 }
