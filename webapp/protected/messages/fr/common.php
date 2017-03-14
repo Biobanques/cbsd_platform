@@ -84,6 +84,7 @@ return array(
     'queryFormulation' => 'Formuler la requête',
     'createColumn' => 'Créer une colonne',
     'updateColumn' => 'Mettre à jour une colonne',
+    'columnFileMaker' => 'Colonne FileMaker',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',
@@ -304,8 +305,8 @@ return array(
     'helpQuestion' => 'Renseignez ce champ si vous voulez ajouter une information à la question. <br>Cette information pourra être affichée en cliquant sur "?" <br>à côté de l\'identifiant de la question.<hr />' . CHtml::image(Yii::app()->request->baseUrl . '/images/tooltip/questionTooltip.png', '#'),
     'formName' => 'Nom du formulaire',
     'idFiche' => 'Identifiant de la fiche',
-    'searchPatient' => 'Création d\'une fiche',
-    'createPatient' => 'Créer une nouvelle identité patient',
+    'searchPatient' => 'Créer/Voir une fiche',
+    'createPatient' => 'Entrez le nom du patient',
     'welcome' => 'Bienvenue ',
     'welcomeTo' => 'Bienvenue sur ',
     'cbsdDescription' => 'CBSDPlatform vous permet de gérer les formulaires standardisés pour les informations cliniques, génétiques et neuropathologiques diffusées aux cliniciens.',

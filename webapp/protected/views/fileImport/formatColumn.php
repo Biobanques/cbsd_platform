@@ -24,9 +24,10 @@ $('.search-form form').submit(function(){
     ?>
 </div>
 
-<h1>Colonne Filemaker</h1>
+<h1><?php echo Yii::t('common', 'columnFileMaker'); ?></h1>
 <?php
-echo CHtml::link('Créer une colonne', array('fileImport/create'));
+$imagecreateColumn = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', Yii::t('common', 'createColumn'));
+echo CHtml::link($imagecreateColumn . Yii::t('common', 'createColumn'), array('fileImport/create'));
 ?>
 <br />
 <?php

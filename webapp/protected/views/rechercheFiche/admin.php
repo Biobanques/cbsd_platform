@@ -17,8 +17,8 @@ $('.search-form form').submit(function(){
             $('#queries').append(result);
             $('#showResultQuery').show();
             $('.search-form').hide();
-            }
-         });
+        }
+    });
     $.fn.yiiGridView.update('searchFiche-grid', {
         data: $(this).serialize()
     });
@@ -26,6 +26,7 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
+
 <?php
 if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
     ?> <h1><?php echo "Gestion de projet"; ?></h1>
@@ -79,11 +80,17 @@ if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
             array('header' => $model->attributeLabels()["examDate"], 'name' => 'examDate', 'value' => '$data->getAnswerByQuestionId("examdate")'),
             array(
                 'class' => 'CButtonColumn',
-                'template' => '{view}',
+                'template' => '{view}{update}{delete}',
                 'buttons' => array(
                     'view' => array(
                         'click' => 'function(){window.open(this.href,"_blank","left=100,top=100,width=1200,height=650,toolbar=yes, scrollbars=yes, resizable=yes, location=no");return false;}'
                     ),
+                    'update' => array(
+                        'visible' => 'Yii::app()->user->isMaster() && Yii::app()->user->isAuthorizedUpdate(Yii::app()->user->getState(\'activeProfil\'), $data->type)'
+                    ),
+                    'delete' => array(
+                        'visible' => 'Yii::app()->user->isMaster() && Yii::app()->user->isAuthorizedDelete(Yii::app()->user->getState(\'activeProfil\'), $data->type)'
+                    )
                 ),
             ),
         ),
@@ -101,30 +108,3 @@ if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
     <?php $this->endWidget(); ?>
 
 </div>
-
-<script>
-    function datePicker(clicked) {
-        $('input[name="' + clicked + '"]').daterangepicker({
-            "applyClass": "btn-primary",
-            "showDropdowns": true,
-            locale: {
-                format: "DD/MM/YYYY",
-                applyLabel: 'Valider',
-                cancelLabel: 'Effacer'
-            }
-        });
-        $('#restrictSearch').show();
-        $('#restrictReset').show();
-        $('input[name="' + clicked + '"]').on('apply.daterangepicker', function (ev, picker) {
-            $('#restrictSearch').show();
-            $('#restrictReset').show();
-        });
-        $('input[name="' + clicked + '"]').on('cancel.daterangepicker', function (ev, picker) {
-            $(this).val('');
-            if ($('.col-lg-12 :selected').text() == "") {
-                $('#restrictSearch').hide();
-                $('#restrictReset').hide();
-            }
-        });
-    }
-</script>

@@ -43,7 +43,7 @@
 
     <hr />
 
-    <div style="display:inline; margin-left: 35%; width: 100px; ">
+    <div>
         <?php
         echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary'));
         echo CHtml::link(Yii::t('common', 'cancel'), array('answer/affichepatient', 'id' => $model->_id), array('class' => 'btn btn-danger', 'style' => 'margin-top: -5px; margin-left:20px; padding-bottom:5px;'));

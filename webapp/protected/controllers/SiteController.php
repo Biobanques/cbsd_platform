@@ -137,8 +137,8 @@ class SiteController extends Controller
                 } elseif ($model->login()) {
                     if (Yii::app()->user->isMaster()) {
                         $nbDay = CommonTools::fromRegisterDateToNow();
-                        if ($nbDay >= 0 && $nbDay <= 31) {
-                            $day = 31 - $nbDay;
+                        if ($nbDay >= 0 && $nbDay <= 7) {
+                            $day = 7 - $nbDay;
                             if ($day == 0) {
                                 Yii::app()->user->setFlash('info', Yii::t('common', 'deleteAccount'));
                             } else {

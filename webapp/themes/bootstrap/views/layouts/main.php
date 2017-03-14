@@ -45,7 +45,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
 
         <!-- blueprint CSS framework -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
+
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
         <!--[if lt IE 8]>
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
@@ -89,7 +89,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
                         <ul class="nav navbar-nav">
                             <?php if (!Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil") { ?>
-                                <li><a href="<?php echo Yii::app()->createUrl('site/index'); ?>"><?php echo Yii::t('common', 'accueil'); ?></a></li>
+                                <li><a href="<?php echo Yii::app()->createUrl('site/index'); ?>"><i class="glyphicon glyphicon-home"></i> <?php echo Yii::t('common', 'accueil'); ?></a></li>
                             <?php } ?>
                             <?php if (Yii::app()->user->isAuthorizedViewPatientNavbar() && Yii::app()->controller->action->id != "loginProfil") { ?>
                                 <li><a href="<?php echo Yii::app()->createUrl('site/patient'); ?>"><?php echo Yii::t('common', 'searchPatient'); ?></a></li>
@@ -184,7 +184,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                 <div id="footer">
                     <div class="container">
                         <div class="row">
-                            <?php echo CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class' => 'logo')); ?>
+                            <?php echo CHtml::link(CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class' => 'logo')), 'http://www.francealzheimer.org/'); ?>
                             <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class' => 'logo')); ?>
                             <?php echo CHtml::image(Base . '/images/logo FP.jpg', 'France Parkinson', array('class' => 'logo')); ?>
                             <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class' => 'logo')); ?>
@@ -203,7 +203,8 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>      
+        <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/datePicker.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/maintenance.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     </body>

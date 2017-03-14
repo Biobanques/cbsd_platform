@@ -30,7 +30,7 @@ class RechercheFicheController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'view', 'exportCsv', 'resultSearch', 'viewOnePage'),
+                'actions' => array('admin', 'view','update', 'exportCsv', 'resultSearch', 'viewOnePage'),
                 'expression' => '!Yii::app()->user->isGuest && $user->getActiveProfil() != "clinicien"'
             ),
             array('deny', // deny all users
@@ -73,6 +73,40 @@ class RechercheFicheController extends Controller {
             'model' => $model,
         ));
     }
+   
+    public function actionUpdate($id) {
+        $model = Answer::model()->findByPk(new MongoID($id));
+        if (isset($_POST['Questionnaire'])) {
+            $model->last_updated = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
+            $flagNoInputToSave = true;
+            foreach ($model->answers_group as $answer_group) {
+                foreach ($answer_group->answers as $answerQuestion) {
+                    $input = $answer_group->id . "_" . $answerQuestion->id;
+                    if (isset($_POST['Questionnaire'][$input])) {
+                        $flagNoInputToSave = false;
+                        if ($answerQuestion->type != "number" && $answerQuestion->type != "expression" && $answerQuestion->type != "date") {
+                            $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
+                        } elseif ($answerQuestion->type == "date") {
+                            $answerQuestion->setAnswerDate($_POST['Questionnaire'][$input]);
+                        } else {
+                            $answerQuestion->setAnswerNumerique($_POST['Questionnaire'][$input]);
+                        }
+                    }
+                }
+            }
+            if ($flagNoInputToSave == false) {
+                if ($model->save()) {
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'savedPatientForm'));
+                    $this->redirect(array('rechercheFiche/admin'));
+                } else {
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'notSavedPatientForm'));
+                }
+            }
+        }
+        $this->render('update', array(
+            'model' => $model,
+        ));
+    }
 
     /**
      * Displays a particular model.
@@ -84,7 +118,7 @@ class RechercheFicheController extends Controller {
             'model' => $model,
         ));
     }
-    
+   
     /**
      * export csv liste des fiches disponibles
      */
@@ -162,3 +196,4 @@ class RechercheFicheController extends Controller {
         return $model;
     }
 }
+

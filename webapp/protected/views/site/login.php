@@ -45,7 +45,7 @@ Yii::app()->clientScript->registerScript('loginForm', "
             </div>
 
             <div class="row buttons">
-                <?php echo CHtml::submitButton(Yii::t('common', 'seconnecter')); ?>
+                <?php echo CHtml::submitButton(Yii::t('common', 'seconnecter'), array('class' => 'btn btn-primary')); ?>
             </div>
 
             <?php
@@ -61,6 +61,7 @@ Yii::app()->clientScript->registerScript('loginForm', "
             <?php echo Yii::t('common', 'noAccount'); ?><br><br>
             <?php
             echo CHtml::button(Yii::t('common', 'subscribe'), array(
+                'class' => 'btn btn-primary',
                 'submit' => array_merge(array("site/subscribeProfil"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())
             ));
             ?>

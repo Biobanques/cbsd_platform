@@ -84,6 +84,7 @@ return array(
     'queryFormulation' => 'Formulate the query',
     'createColumn' => 'Create column',
     'updateColumn' => 'Update column',
+    'columnFileMaker' => 'Column FileMaker',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',
@@ -294,8 +295,8 @@ return array(
     'positionQuestion' => '- Alignement à gauche (par défaut): La question sera positionnée à gauche <br>- Alignement à droite: La question sera positionnée à droite<hr />' . CHtml::image(Yii::app()->request->baseUrl . '/images/tooltip/float.png', '#', array('style' => 'width:700px')),
     'helpQuestion' => 'Renseignez ce champ si vous voulez ajouter une information à la question. <br>Cette information pourra être affichée en cliquant sur "?" <br>à côté de l\'identifiant de la question.<hr />' . CHtml::image(Yii::app()->request->baseUrl . '/images/tooltip/questionTooltip.png', '#'),
     'idFiche' => 'id of the form',
-    'searchPatient' => 'Creation of a patient form',
-    'createPatient' => 'Create a new "anonymous identity card"',
+    'searchPatient' => 'Create/View a patient form',
+    'createPatient' => 'Enter the name of the patient',
     'welcome' => 'Welcome ',
     'welcomeTo' => 'Welcome to ',
     'cbsdDescription' => 'CBSDPlatform allows you to manage standardized forms for the clinical, genetic and neuropathological informations to the clinicians.',
