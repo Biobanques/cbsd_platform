@@ -67,7 +67,7 @@ class Controller extends CController
             $fiche = Answer::model()->findByPk(new MongoId($_GET['id']));
             $_SESSION['id'] = $fiche;
             if (isset($_SESSION['activeProfil'])) {
-                if (Yii::app()->controller->id == "answer") {
+                if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/view" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/update") {
                     if ($_SESSION['id']->type == "clinique") {
                         if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "answer/view") {
                             if (!Yii::app()->user->isAuthorizedView($_SESSION['activeProfil'], "clinique")) {

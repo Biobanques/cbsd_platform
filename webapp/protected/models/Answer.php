@@ -526,6 +526,38 @@ class Answer extends LoggableActiveRecord {
         natcasesort($result);
         return $result;
     }
+    
+    public function getAllQuestionsByFilterBis($model) {
+        $result = array();
+        $answers = $this->getAllDetailledQuestionsByFilter($model);
+        foreach ($answers as $answer) {
+            $result[$answer->answer->id] = "(" . $answer->fiche . ")" . $answer->answer->label_fr;
+        }
+        natcasesort($result);
+        return $result;
+    }
+    
+    public function getAllAnswersByFilter($model, $idQuestion) {
+        $result = array();
+        $answers = $this->getAllDetailledQuestionsByFilter($model);
+        foreach ($answers as $answer) {
+            if ($idQuestion == $answer->answer->id) {
+                if ($answer->answer->type == "date") {
+                    $result[$answer->answer->answer['date']] = CommonTools::formatDateAndTimeFR($answer->answer->answer['date']);
+                } elseif ($answer->answer->type == "checkbox") {
+                    if (is_array($answer->answer->answer)) {
+                        foreach ($answer->answer->answer as $k => $v) {
+                            $result[$v] = $v;
+                        }
+                    }
+                } else {
+                    $result[$answer->answer->answer] = $answer->answer->answer;
+                }
+            }
+        }
+        natcasesort($result);
+        return $result;
+    }
 
     public function getAllDetailledQuestionsByFilter($fiches) {
         $result = array();

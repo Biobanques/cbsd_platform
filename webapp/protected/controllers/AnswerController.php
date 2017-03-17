@@ -39,6 +39,7 @@ class AnswerController extends Controller {
                     'viewOnePage',
                     'exportPDF',
                     'addSearchFilter',
+                    'addSearchReplaceFilter',
                     'writeQueries',
                     'exportQueries'
                 ),
@@ -370,6 +371,17 @@ class AnswerController extends Controller {
                 Yii::app()->controller->refresh();
             }
             echo QuestionnaireHTMLRenderer::renderQuestionForSearchHTML($question, 'fr', false);
+        }
+    }
+    
+    public function actionAddSearchReplaceFilter() {
+        if (isset($_POST['question']) && !empty($_POST['question'])) {
+            $id = $_POST['question'];
+            $question = Answer::model()->findAllDetailledQuestionById($id);
+            if ($question == null) {
+                Yii::app()->controller->refresh();
+            }
+            echo QuestionnaireHTMLRenderer::renderQuestionForSearchReplaceHTML($question, 'fr', false);
         }
     }
  

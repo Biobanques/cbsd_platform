@@ -356,6 +356,104 @@ class QuestionnaireHTMLRenderer {
         return $result;
     }
 
+    public function renderQuestionForSearchReplaceHTML($question, $lang, $isAnswered) {
+        $condition = false;
+        $result = "";
+
+        $result.="<div class=\"col-lg-12\">";
+
+        //par defaut lang = enif ($lang == "en")
+        $label = $question->label;
+        if ($lang == "fr") {
+            $label = $question->label_fr;
+        }
+        if ($lang == "both") {
+            $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
+        }
+
+        $result.="<label for=\"result\" style=\"font-style:italic; color:blue;\">" . $label;
+        if (isset($question->help)) {
+            $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
+        }
+        $result.="</label>";
+
+        $result.="<div class=\"question-input\">";
+        $valueInput = "";
+        if ($isAnswered) {
+            $valueInput = $question->answer;
+        }
+        if ($question->type == "input") {
+            $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
+            $result.="<input type=\"text\" id=\"result\" name=\"result\" required/>";
+            $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
+        }
+        if ($question->type == "number" || $question->type == "expression") {
+            $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
+            $result.="<input type=\"number\" id=\"result\" name=\"result\" required/>";
+            $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
+        }
+        if ($question->type == "date") {
+            $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
+            $result.="<input type=\"date\" id=\"result\" name=\"result\" placeholder=\"Format jj/mm/aaaa\" required/>";
+            $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
+        }
+        if ($question->type == "radio") {
+
+            if ($lang == "fr" && $question->values_fr != "") {
+                $values = $question->values_fr;
+            } else {
+                $values = $question->values;
+            }
+            $arvalue = split(",", $values);
+
+            foreach ($arvalue as $value) {
+                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $valueInput ? 'checked' : '') . "required>&nbsp;" . $value . "</input>&nbsp;";
+            }
+        }
+        if ($question->type == "checkbox") {
+            $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
+            $result.="<select id=\"result\" name=\"result\" required>";
+            $values = $question->values;
+            if ($lang == "fr" && isset($question->values_fr)) {
+                $values = $question->values_fr;
+            }
+            $arvalue = split(",", $values);
+            $result.="<option  value=\"\"></option>";
+            foreach ($arvalue as $value) {
+                $result.="<option  value=\"" . $value . "\" " . ($valueInput == $value ? 'selected' : '') . ">" . $value . "</option>";
+            }
+            $result.="</select>";
+            //$result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
+            $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
+        }
+        if ($question->type == "text") {
+            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" required>" . $valueInput . "</textarea>";
+        }
+        if ($question->type == "list") {
+            $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
+            $result.="<select id=\"result\" name=\"result\" required>";
+            $values = $question->values;
+            $arvalue = split(",", $values);
+            $result.="<option  value=\"\"></option>";
+            foreach ($arvalue as $value) {
+                $result.="<option  value=\"" . $value . "\" " . ($valueInput == $value ? 'selected' : '') . ">" . $value . "</option>";
+            }
+
+            $result.="</select>";
+            $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
+        }
+        $result.="</div>";
+
+        //display cross delete picture
+        $imgHtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'), array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
+
+        $result.=$imgHtml;
+        
+        //close row input
+        $result.="</div>";
+        return $result;
+    }
+    
     /**
      * render tab associated to each group for a questionnaire in edit mode
      * if isAnswered is filled, we are in case of answer.

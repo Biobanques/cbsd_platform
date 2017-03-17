@@ -94,6 +94,10 @@ class CommonTools
         return date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($date));
     }
     
+    public function formatDateAndTimeFR($date) {
+        return date(CommonTools::FRENCH_HD_DATE_FORMAT, strtotime($date));
+    }
+    
     /**
      * convert DatePickerRange to an array
      * @return type

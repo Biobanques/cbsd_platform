@@ -30,7 +30,7 @@ class RechercheFicheController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'view','update', 'exportCsv', 'resultSearch', 'viewOnePage'),
+                'actions' => array('admin', 'view','update', 'exportCsv', 'searchReplace', 'resultSearch', 'viewOnePage'),
                 'expression' => '!Yii::app()->user->isGuest && $user->getActiveProfil() != "clinicien"'
             ),
             array('deny', // deny all users
@@ -154,6 +154,68 @@ class RechercheFicheController extends Controller {
         }
         $this->render('exportFilter', array(
             'models' => $models,
+        ));
+    }
+    
+    public function actionSearchReplace() {
+        $model = new Answer;
+        if (isset($_POST['result'])) {
+            $old = $_POST['test'];
+            $new = $_POST['result'];
+            $test = $_POST['hidden_id'];
+            $criteria = new EMongoCriteria;
+            $criteria = $_SESSION['criteria'];
+            $criteria1 = new EMongoCriteria;
+            $criteria1->addCond('answers_group.answers.id', '==', $test);
+            $criteria->mergeWith($criteria1);
+            $model = Answer::model()->findAll($criteria);
+            foreach ($model as $k) {
+                foreach ($k->answers_group as $answers) {
+                    foreach ($answers->answers as $a) {
+                        if (!is_array($a->answer)) {
+                            if (($test == $a->id) && ($old == $a->answer)) {
+                                $a->answer = $new;
+                                $k->save();
+                            }
+                        } elseif ($a->type == 'date') {
+                            if (($test == $a->id) && ($old == $a->answer['date'])) {
+                                $a->answer['date'] = $new;
+                                $k->save();
+                            }
+                        } elseif ($a->type == 'checkbox') {
+                            $temp = array();
+                            if (($test == $a->id) && (in_array($old, $a->answer))) {
+                                foreach ($a->answer as $v) {
+                                    if ($old != $v) {
+                                        array_push($temp, $v);
+                                    }
+                                }
+                                if (!in_array($new, $temp)) {
+                                    array_push($temp, $new);
+                                }
+                                $a->answer = $temp;
+                                if ($k->save()) {
+                                    Yii::app()->user->setFlash("succès", 'OK');
+                                } else {
+                                    Yii::app()->user->setFlash("erreur", 'KO');
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+            $criteria = $_SESSION['criteria'];
+        } else {
+            $criteria = new EMongoCriteria;
+        }
+        $model = Answer::model()->findAll($criteria);
+        if ($model != null) {
+            $_SESSION['model'] = $model;
+        }
+        $this->render('searchReplace', array(
+            'model' => $model,
         ));
     }
 
