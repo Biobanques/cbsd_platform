@@ -384,21 +384,28 @@ class QuestionnaireHTMLRenderer {
         }
         if ($question->type == "input") {
             $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
-            $result.="<input type=\"text\" id=\"result\" name=\"result\" required/>";
+            $result.= '<br>';
+            $result.="<label for=\"result\" style=\"font-style:italic; color:blue;\">Nouvelle variable</label>";
+            $result.= "<input type=\"text\" id=\"result\" name=\"result\" required/>";
             $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
         }
         if ($question->type == "number" || $question->type == "expression") {
             $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
+            $result.= '<br>';
+            $result.="<label for=\"result\" style=\"font-style:italic; color:blue;\">Nouvelle variable</label>";
             $result.="<input type=\"number\" id=\"result\" name=\"result\" required/>";
             $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
         }
         if ($question->type == "date") {
             $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
+            $result.= '<br>';
+            $result.="<label for=\"result\" style=\"font-style:italic; color:blue;\">Nouvelle variable</label>";
             $result.="<input type=\"date\" id=\"result\" name=\"result\" placeholder=\"Format jj/mm/aaaa\" required/>";
             $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
         }
         if ($question->type == "radio") {
-
+            $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
+            $result.="<select id=\"result\" name=\"result\" required>";
             if ($lang == "fr" && $question->values_fr != "") {
                 $values = $question->values_fr;
             } else {
@@ -407,8 +414,10 @@ class QuestionnaireHTMLRenderer {
             $arvalue = split(",", $values);
 
             foreach ($arvalue as $value) {
-                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $valueInput ? 'checked' : '') . "required>&nbsp;" . $value . "</input>&nbsp;";
+                $result.="<option  value=\"" . $value . "\" " . ($valueInput == $value ? 'selected' : '') . ">" . $value . "</option>";
             }
+            $result.="</select>";
+            $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
         }
         if ($question->type == "checkbox") {
             $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
@@ -423,11 +432,11 @@ class QuestionnaireHTMLRenderer {
                 $result.="<option  value=\"" . $value . "\" " . ($valueInput == $value ? 'selected' : '') . ">" . $value . "</option>";
             }
             $result.="</select>";
-            //$result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));
             $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
         }
         if ($question->type == "text") {
             $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" required>" . $valueInput . "</textarea>";
+            $result.="<input type='hidden' name=\"hidden_id\" value=\"" . $question->id . "\" />";
         }
         if ($question->type == "list") {
             $result.= CHtml::dropDownList('test', 'select', Answer::model()->getAllAnswersByFilter($_SESSION['model'], $question->id));

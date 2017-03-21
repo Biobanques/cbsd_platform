@@ -64,6 +64,9 @@ if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
         <div class="col-lg-5">
             <?php echo CHtml::submitButton(Yii::t('common', 'patientFormsAssociated'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
         </div>
+    </div>
+    <br>
+    <div class="row">
         <div class="col-lg-5">
             <?php echo CHtml::link('Rechercher/Remplacer', array('rechercheFiche/searchReplace'), array('class' => 'btn btn-primary')); ?>
         </div>

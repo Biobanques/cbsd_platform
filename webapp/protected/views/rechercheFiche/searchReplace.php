@@ -17,6 +17,7 @@ $('#addFilterButton').click(function(){
             document.getElementById('addFilterButton').disabled = true;
             $('#loading').hide();
             $('#question').val('');
+            $('#search').show();
             var n = $('.deleteQuestion').length;
             if (n == 1) {
                 $('.condition').hide();
@@ -64,7 +65,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     ?>
 
     <div style="border:1px solid black;">
-        <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryFormulation') ?></b></u></h4>
+        <h4 style="margin-left:10px;"><u><b>Rechercher/Remplacer</b></u></h4>
         <p>&nbsp;&nbsp;*Taper une lettre ou la touche "espace" pour afficher toutes les variables</p>
         <div class="row">
             <div class="col-lg-12">
@@ -78,7 +79,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                     'htmlOptions'=>array(
                         'onkeyup'=>'document.getElementById("addFilterButton").disabled = false;'
                         )));
-                        echo CHtml::button(Yii::t('common', 'logicOperator'), array('id' => 'addFilterButton', 'class' => 'btn btn-info', 'style' => 'margin-left:10px; font-weight:bold;', 'disabled' => 'disabled'));
+                        echo CHtml::button('Valider', array('id' => 'addFilterButton', 'class' => 'btn btn-info', 'style' => 'margin-left:10px; font-weight:bold;', 'disabled' => 'disabled'));
                         echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
                         ?>
                     </div>
@@ -88,10 +89,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
 
                 <div class="row">
                     <div class="col-lg-2 col-lg-offset-7">
-                        <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('id' => 'search', 'class' => 'btn btn-primary')); ?>
-                    </div>
-                    <div class="col-lg-2">
-                        <?php echo CHtml::resetButton(Yii::t('common', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'onclick' => 'location.reload();')); ?>
+                        <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'display:none;')); ?>
                     </div>
                 </div>
             </div>

@@ -175,12 +175,20 @@ class RechercheFicheController extends Controller {
                         if (!is_array($a->answer)) {
                             if (($test == $a->id) && ($old == $a->answer)) {
                                 $a->answer = $new;
-                                $k->save();
+                                if ($k->save()) {
+                                    Yii::app()->user->setFlash("succès", 'La valeur de la variable a bien été mise à jour.');
+                                } else {
+                                    Yii::app()->user->setFlash("erreur", 'Une erreur s\'est produite.');
+                                }
                             }
                         } elseif ($a->type == 'date') {
                             if (($test == $a->id) && ($old == $a->answer['date'])) {
                                 $a->answer['date'] = $new;
-                                $k->save();
+                                if ($k->save()) {
+                                    Yii::app()->user->setFlash("succès", 'La valeur de la variable a bien été mise à jour.');
+                                } else {
+                                    Yii::app()->user->setFlash("erreur", 'Une erreur s\'est produite.');
+                                }
                             }
                         } elseif ($a->type == 'checkbox') {
                             $temp = array();
@@ -195,9 +203,9 @@ class RechercheFicheController extends Controller {
                                 }
                                 $a->answer = $temp;
                                 if ($k->save()) {
-                                    Yii::app()->user->setFlash("succès", 'OK');
+                                    Yii::app()->user->setFlash("succès", 'La valeur de la variable a bien été mise à jour.');
                                 } else {
-                                    Yii::app()->user->setFlash("erreur", 'KO');
+                                    Yii::app()->user->setFlash("erreur", 'Une erreur s\'est produite.');
                                 }
                             }
                         }
