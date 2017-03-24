@@ -27,14 +27,18 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Yii::t('common', 'registeredUsers'); ?></h1>
+<h1><?php echo Yii::t('administration', 'registeredUsers'); ?></h1>
+<div class="info">
+    <div class="title"><?php echo Yii::t('user', 'infoTitle') ?></div>
+    <div class="content"><?php echo Yii::t('user', 'infoContent') ?></div>
+</div>
 <?php
 $imagecreateuser = CHtml::image(Yii::app()->baseUrl . '/images/user_add.png', Yii::t('common', 'createUser'));
-echo CHtml::link($imagecreateuser . Yii::t('common', 'createUser'), array('user/create'));
+echo CHtml::link($imagecreateuser . Yii::t('administration', 'createUser'), array('user/create'));
 ?>
 <br />
 <?php
-$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
 echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
 ?>
 <div class="search-form" style="display:none">

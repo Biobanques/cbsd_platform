@@ -27,15 +27,18 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Yii::t('common', 'manageQuestionsBlock'); ?></h1>
-
+<h1><?php echo Yii::t('administration', 'manageQuestionsBlock'); ?></h1>
+<div class="info">
+    <div class="title"><?php echo Yii::t('questionBlock', 'infoTitle') ?></div>
+    <div class="content"><?php echo Yii::t('questionBlock', 'infoContent') ?></div>
+</div>
 <?php
 $imagecreatebloc = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', 'Créer un nouveau bloc');
-echo CHtml::link($imagecreatebloc . Yii::t('common', 'createBlock'), Yii::app()->createUrl('questionBloc/create'));
+echo CHtml::link($imagecreatebloc . Yii::t('administration', 'createBlock'), Yii::app()->createUrl('questionBloc/create'));
 ?>
 <br />
 <?php
-$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
 echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
 ?>
 <div class="search-form" style="display:none">

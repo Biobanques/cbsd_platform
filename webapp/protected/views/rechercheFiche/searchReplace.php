@@ -89,7 +89,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
 
                 <div class="row">
                     <div class="col-lg-2 col-lg-offset-7">
-                        <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'display:none;')); ?>
+                        <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'display:none;')); ?>
                     </div>
                 </div>
             </div>

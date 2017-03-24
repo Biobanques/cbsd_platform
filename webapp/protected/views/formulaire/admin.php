@@ -27,15 +27,18 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Yii::t('common', 'forms'); ?></h1>
-
+<h1><?php echo Yii::t('administration', 'forms'); ?></h1>
+<div class="info">
+    <div class="title"><?php echo Yii::t('form', 'infoTitle') ?></div>
+    <div class="content"><?php echo Yii::t('form', 'infoContent') ?></div>
+</div>
 <?php
 $imagecreateform = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', Yii::t('common', 'createForm'));
-echo CHtml::link($imagecreateform . Yii::t('common', 'createForm'), Yii::app()->createUrl('formulaire/create'));
+echo CHtml::link($imagecreateform . Yii::t('administration', 'createForm'), Yii::app()->createUrl('formulaire/create'));
 ?>
 <br />
 <?php
-$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
 echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
 ?>
 <div class="search-form" style="display:none">

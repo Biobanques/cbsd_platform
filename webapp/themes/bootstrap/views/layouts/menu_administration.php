@@ -4,25 +4,25 @@
     <div class="col-lg-3">
         <div class="panel panel-primary">
             <!-- Default panel contents -->
-            <div class="panel-heading"><?php echo Yii::t('common', 'administration') ?></div>
+            <div class="panel-heading"><?php echo Yii::t('administration', 'administration') ?></div>
             <div class="panel-body">
                 <?php
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
-                        array('label' => Yii::t('common', 'manageUsers')),
-                        array('label' => Yii::t('common', 'registeredUsers'), 'icon'=>'play', 'url' => array('/user/admin')),
-                        array('label' => Yii::t('common', 'manageRules'), 'icon'=>'play', 'url' => array('/administration/admin')),
-                        array('label' => Yii::t('common', 'manageForms')),
-                        array('label' => Yii::t('common', 'forms'), 'icon'=>'play', 'url' => array('/formulaire/admin')),
-                        array('label' => Yii::t('common', 'manageQuestionsBlock'), 'icon'=>'play', 'url' => array('/questionBloc/admin')),
-                        array('label' => Yii::t('common', 'managePatientForm')),
-                        array('label' => Yii::t('common', 'fiches'), 'icon'=>'play', 'url' => array('/fiche/admin')),
-                        array('label' => Yii::t('common', 'logSystem')),
-                        array('label' => Yii::t('common', 'logSystem'), 'icon'=>'play', 'url' => array('/auditTrail/admin')),
-                        array('label' => Yii::t('common', 'userLog'), 'icon'=>'play', 'url' => array('/administration/userLog')),
-                        array('label' => Yii::t('common', 'filemaker')),
-                        array('label' => Yii::t('common', 'columnFileMaker'), 'icon'=>'play', 'url' => array('/fileImport/formatColumn')),
-                        array('label' => Yii::t('common', 'importFilemaker'), 'icon'=>'play', 'url' => array('/fileImport/admin')),
+                        array('label' => Yii::t('administration', 'manageUsers')),
+                        array('label' => Yii::t('administration', 'registeredUsers'), 'icon'=>'play', 'url' => array('/user/admin')),
+                        array('label' => Yii::t('administration', 'manageRules'), 'icon'=>'play', 'url' => array('/administration/admin')),
+                        array('label' => Yii::t('administration', 'manageForms')),
+                        array('label' => Yii::t('administration', 'forms'), 'icon'=>'play', 'url' => array('/formulaire/admin')),
+                        array('label' => Yii::t('administration', 'manageQuestionsBlock'), 'icon'=>'play', 'url' => array('/questionBloc/admin')),
+                        array('label' => Yii::t('administration', 'managePatientForm')),
+                        array('label' => Yii::t('administration', 'fiches'), 'icon'=>'play', 'url' => array('/fiche/admin')),
+                        array('label' => Yii::t('administration', 'logSystem')),
+                        array('label' => Yii::t('administration', 'logSystem'), 'icon'=>'play', 'url' => array('/auditTrail/admin')),
+                        array('label' => Yii::t('administration', 'userLog'), 'icon'=>'play', 'url' => array('/administration/userLog')),
+                        array('label' => Yii::t('administration', 'filemaker')),
+                        array('label' => Yii::t('administration', 'columnFileMaker'), 'icon'=>'play', 'url' => array('/fileImport/formatColumn')),
+                        array('label' => Yii::t('administration', 'importFilemaker'), 'icon'=>'play', 'url' => array('/fileImport/admin')),
                     ),
                     'htmlOptions' => array('class' => 'operations'),
                 ));

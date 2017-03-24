@@ -31,11 +31,14 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Yii::t('common', 'historyImport'); ?></h1>
-
+<h1><?php echo Yii::t('administration', 'historyImport'); ?></h1>
+<div class="info">
+    <div class="title"><?php echo Yii::t('uploadFileMaker', 'infoTitle') ?></div>
+    <div class="content"><?php echo Yii::t('uploadFileMaker', 'infoContent') ?></div>
+</div>
 <?php 
 $importFileMaker = CHtml::image(Yii::app()->baseUrl . '/images/database_add.png', Yii::t('common', 'importFileMaker'));
-echo CHtml::link($importFileMaker . Yii::t('common', 'importFileMaker'), array('uploadedFile/admin'), array('class' => 'import-button')); 
+echo CHtml::link($importFileMaker . Yii::t('administration', 'importFileMaker'), array('uploadedFile/admin'), array('class' => 'import-button')); 
 ?>
 <div class="import-form" style="display:none">
     <?php
@@ -48,7 +51,7 @@ echo CHtml::link($importFileMaker . Yii::t('common', 'importFileMaker'), array('
 <div style="clear:both"></div>
 
 <?php
-$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
 echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
 ?>
 <div class="search-form" style="display:none">

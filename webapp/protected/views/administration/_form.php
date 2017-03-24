@@ -13,7 +13,7 @@
     ?>
     <br>
     <div class="row buttons" style="float:left;">
-        <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
+        <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
     </div>
     <?php $this->endWidget(); ?>
 </div>

@@ -53,6 +53,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
 
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/custom.css" />
 
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/questionnaire.css" />
 
@@ -89,28 +90,28 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
                         <ul class="nav navbar-nav">
                             <?php if (!Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil") { ?>
-                                <li><a href="<?php echo Yii::app()->createUrl('site/index'); ?>"><i class="glyphicon glyphicon-home"></i> <?php echo Yii::t('common', 'accueil'); ?></a></li>
+                                <li><a href="<?php echo Yii::app()->createUrl('site/index'); ?>"><i class="glyphicon glyphicon-home"></i> <?php echo Yii::t('navbar', 'accueil'); ?></a></li>
                             <?php } ?>
                             <?php if (Yii::app()->user->isAuthorizedViewPatientNavbar() && Yii::app()->controller->action->id != "loginProfil") { ?>
-                                <li><a href="<?php echo Yii::app()->createUrl('site/patient'); ?>"><?php echo Yii::t('common', 'searchPatient'); ?></a></li>
+                                <li><a href="<?php echo Yii::app()->createUrl('site/patient'); ?>"><?php echo Yii::t('navbar', 'seizeForm'); ?></a></li>
                             <?php } ?>
                             <?php if (!Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "clinicien" && Yii::app()->user->getActiveProfil() != "chercheur") { ?>
-                                <li><a href="<?php echo Yii::app()->createUrl('rechercheFiche/admin'); ?>"><?php echo (Yii::app()->user->getActiveProfil() != "administrateur de projet") ? Yii::t('common', 'searchForm') : Yii::t('common', 'projectManager'); ?></a></li>
+                                <li><a href="<?php echo Yii::app()->createUrl('rechercheFiche/admin'); ?>"><?php echo (Yii::app()->user->getActiveProfil() != "administrateur de projet") ? Yii::t('navbar', 'searchForm') : Yii::t('navbar', 'projectManager'); ?></a></li>
                             <?php } ?>
                             <?php if (Yii::app()->user->isAdmin() && Yii::app()->controller->action->id != "loginProfil") { ?>
-                                <li><a href="<?php echo Yii::app()->createUrl('administration/index'); ?>"><?php echo Yii::t('common', 'administration'); ?></a></li>
+                                <li><a href="<?php echo Yii::app()->createUrl('administration/index'); ?>"><?php echo Yii::t('navbar', 'administration'); ?></a></li>
                             <?php } ?>
                             <?php if (!Yii::app()->user->isGuest && Yii::app()->controller->action->id != "loginProfil") { ?>
-                                <li><a><?php echo Yii::t('common', 'accessProfil'); ?></a></li>
+                                <li><a><?php echo Yii::t('navbar', 'accessProfil'); ?></a></li>
                                 <li><?php echo GetProfil::getHTML(); ?></li>
                             <?php } ?>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <?php if (Yii::app()->user->isGuest) { ?>
-                                <li><a href="<?php echo Yii::app()->createUrl('site/login'); ?>"><?php echo Yii::t('common', 'seconnecter'); ?></a></li>
+                                <li><a href="<?php echo Yii::app()->createUrl('site/login'); ?>"><?php echo Yii::t('navbar', 'login'); ?></a></li>
                             <?php } ?>
                             <?php if (!Yii::app()->user->isGuest) { ?>
-                                <li><a href="<?php echo Yii::app()->createUrl('site/logout'); ?>"><?php echo Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')'; ?></a></li>
+                                <li><a href="<?php echo Yii::app()->createUrl('site/logout'); ?>"><?php echo Yii::t('navbar', 'logout') . ' (' . Yii::app()->user->name . ')'; ?></a></li>
                             <?php } ?>
                         </ul>    
                     </div>

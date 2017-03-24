@@ -46,7 +46,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 <div id="showResultQuery">
     <div class="row">
         <div class="col-lg-12">
-            <?php echo CHtml::button(Yii::t('common', 'exportCSV'), array('class' => 'btn btn-primary btn-md', 'data-toggle' => "modal", 'data-target' => "#myModal")); ?>
+            <?php echo CHtml::button(Yii::t('button', 'exportCSV'), array('class' => 'btn btn-primary btn-md', 'data-toggle' => "modal", 'data-target' => "#myModal")); ?>
         </div>
     </div>
 
@@ -83,7 +83,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
     ?>
     <div class="row">
         <div class="col-lg-12">
-            <?php echo CHtml::button(Yii::t('common', 'exportCSV'), array('class' => 'btn btn-primary btn-md', 'data-toggle' => "modal", 'data-target' => "#myModal")); ?>
+            <?php echo CHtml::button(Yii::t('button', 'exportCSV'), array('class' => 'btn btn-primary btn-md', 'data-toggle' => "modal", 'data-target' => "#myModal")); ?>
         </div>
     </div>
 
@@ -124,7 +124,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
                             'action' => Yii::app()->createUrl($this->route),
                         ));
                         ?>
-                        <label><input type="checkbox" name="select-all" id="select-all" />&nbsp;&nbsp;&nbsp;<?php echo Yii::t('common', 'selectAll'); ?></label><br>
+                        <label><input type="checkbox" name="select-all" id="select-all" />&nbsp;&nbsp;&nbsp;<?php echo Yii::t('addGene', 'selectAll'); ?></label><br>
                         <div class="checkboxgroup"> 
                             <?php
                             $fiches = Answer::model()->getNomsFichesByFilter($models);
@@ -156,7 +156,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
                             <button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
                         </div>
                         <div class="btn-group" role="group">
-                            <?php echo CHtml::submitButton('Exporter', array('name' => 'exporter', 'class' => 'btn btn-primary')); ?>
+                            <?php echo CHtml::submitButton(Yii::t('button', 'export'), array('name' => 'exporter', 'class' => 'btn btn-primary')); ?>
                         </div>
                     </div>
                     <?php $this->endWidget(); ?>

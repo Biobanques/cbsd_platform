@@ -21,7 +21,7 @@ height: 25px;
 ");
 ?>
 
-<h3 align="center"><?php echo Yii::t('common', 'form') . $model->name; ?></h3>
+<h3 align="center"><?php echo Yii::t('administration', 'form') . $model->name; ?></h3>
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {

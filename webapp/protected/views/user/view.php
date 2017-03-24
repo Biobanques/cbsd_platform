@@ -1,4 +1,4 @@
-<h1>Utilisateur <?php echo $model->login; ?></h1>
+<h1><?php echo Yii::t('administration', 'user') . " " . $model->login; ?></h1>
 
 <div class="row">
     <div class="col-lg-12">

@@ -33,7 +33,7 @@ $form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl($this->route),
 ));
 ?>
-<label><input type="checkbox" name="select-all" id="select-all" />&nbsp;&nbsp;&nbsp;<?php echo Yii::t('common', 'selectAll'); ?></label><br>
+<label><input type="checkbox" name="select-all" id="select-all" />&nbsp;&nbsp;&nbsp;<?php echo Yii::t('button', 'selectAll'); ?></label><br>
 <div class="checkboxgroup"> 
     <?php
     $fiches = Answer::model()->getNomsFichesByFilter($models);

@@ -70,7 +70,7 @@ class CMenuBarLineWidget extends CWidget
         if (isset($this->controllerName)) {
             //recherche avancee
             if ($this->searchable) {
-                $imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+                $imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
                 echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
             }
             echo "<div style=\"display:inline;float:right;\">";

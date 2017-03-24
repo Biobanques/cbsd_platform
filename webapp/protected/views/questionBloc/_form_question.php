@@ -102,7 +102,7 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
     <div class="row">
         <div class="col-lg-1 col-lg-offset-10">
             <div class="buttons">
-                <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
+                <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
             </div>        
         </div>
     </div>

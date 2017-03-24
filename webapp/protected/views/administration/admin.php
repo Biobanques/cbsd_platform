@@ -1,4 +1,4 @@
-<h1><?php echo Yii::t('common', 'manageRules'); ?></h1>
+<h1><?php echo Yii::t('administration', 'manageRules'); ?></h1>
 
 <h3><?php echo Yii::t('common', 'patientClinical') ?></h3>
 <?php

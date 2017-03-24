@@ -6,7 +6,7 @@
 if (isset($_SESSION['profil'])) {
     echo "<h1>" . Yii::t('common', 'subscribeAs') . Yii::t('common', $_SESSION['profil']) . "</h1>";
 } else {
-    echo "<h1>" . Yii::t('common', 'subscribe') . "</h1>";
+    echo "<h1>" . Yii::t('button', 'subscribe') . "</h1>";
 }
 
 if ($model->isNewRecord) {

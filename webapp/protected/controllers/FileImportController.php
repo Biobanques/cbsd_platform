@@ -195,17 +195,17 @@ class FileImportController extends Controller {
                                 $id_donor = (string) $note->value;
                                 break;
                             case "birthName":
-                                $patient->birthName = (string) $note->value;
+                                $patient->birthName = str_replace("'", " ", (string) $note->value);
                                 break;
                             case "useName":
-                                $patient->useName = (string) $note->value;
+                                $patient->useName = str_replace("'", " ", (string) $note->value);
                                 break;
                             case "firstName":
                                 $pos = strpos((string) $note->value, ",");
                                 if ($pos) {
-                                    $patient->firstName = substr((string) $note->value, 0, $pos);
+                                    $patient->firstName = str_replace("'", " ", substr((string) $note->value, 0, $pos));
                                 } else {
-                                    $patient->firstName = (string) $note->value;
+                                    $patient->firstName = str_replace("'", " ", (string) $note->value);
                                 }
                                 break;
                             case "birthDate":

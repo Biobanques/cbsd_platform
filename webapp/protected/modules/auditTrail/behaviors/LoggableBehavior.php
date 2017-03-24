@@ -97,7 +97,7 @@ class LoggableBehavior extends CActiveRecordBehavior {
         }
 
         if (empty($userid)) {
-            $userid = null;
+            $userid = 'NO_USER';
         }
 
         $log = new AuditTrail();

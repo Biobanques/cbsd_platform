@@ -21,7 +21,7 @@ $(document).ready(function() {
 ");
 ?>
 
-<h3 align="center"><?php echo Yii::t('common', 'patientForm') . $model->name; ?></h3>
+<h3 align="center"><?php echo Yii::t('administration', 'patientForm') . $model->name; ?></h3>
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {
@@ -51,6 +51,6 @@ echo CHtml::link(Yii::t('common', 'htmlView'), array('fiche/viewOnePage', 'id' =
 
 <div style="display:inline; margin:40%; width: 100px; ">
     <?php
-    echo CHtml::link(Yii::t('common', 'back'), array('fiche/admin'), array('class' => 'btn btn-primary'));
+    echo CHtml::link(Yii::t('button', 'back'), array('fiche/admin'), array('class' => 'btn btn-primary'));
     ?>
 </div>

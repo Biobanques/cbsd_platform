@@ -21,7 +21,7 @@ $(document).ready(function() {
 ");
 ?>
 
-<h3 align="center"><?php echo Yii::t('common', 'form') . $model->name; ?></h3>
+<h3 align="center"><?php echo Yii::t('administration', 'form') . $model->name; ?></h3>
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {
@@ -41,6 +41,6 @@ if ($model->last_modified != null && $model->last_modified != "") {
 <hr />
 <div style="display:inline; margin:40%; width: 100px; ">
     <?php
-    echo CHtml::link(Yii::t('common', 'back'), array('formulaire/admin'), array('class' => 'btn btn-primary'));
+    echo CHtml::link(Yii::t('button', 'back'), array('formulaire/admin'), array('class' => 'btn btn-primary'));
     ?>
 </div>

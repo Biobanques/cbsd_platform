@@ -37,7 +37,7 @@
 
     <div class="row buttons">
         <div class="col-lg-12">
-            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'createBtn') : Yii::t('common', 'updateBtn'), array('class' => 'btn btn-primary')); ?>
+            <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('button', 'createBtn') : Yii::t('button', 'updateBtn'), array('class' => 'btn btn-primary')); ?>
         </div>
     </div>
 

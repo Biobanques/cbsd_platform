@@ -171,7 +171,7 @@ if (Yii::app()->user->getState('activeProfil') != "chercheur" && Yii::app()->use
         </div>
 
         <div class="col-lg-5">
-            <?php echo CHtml::submitButton(Yii::t('common', 'insert'), array('class' => 'btn btn-primary')); ?>
+            <?php echo CHtml::submitButton(Yii::t('button', 'insert'), array('class' => 'btn btn-primary')); ?>
         </div>
         <?php $this->endWidget(); ?>
     </div>

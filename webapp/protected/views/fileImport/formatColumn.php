@@ -24,14 +24,14 @@ $('.search-form form').submit(function(){
     ?>
 </div>
 
-<h1><?php echo Yii::t('common', 'columnFileMaker'); ?></h1>
+<h1><?php echo Yii::t('administration', 'columnFileMaker'); ?></h1>
 <?php
-$imagecreateColumn = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', Yii::t('common', 'createColumn'));
-echo CHtml::link($imagecreateColumn . Yii::t('common', 'createColumn'), array('fileImport/create'));
+$imagecreateColumn = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', Yii::t('administration', 'createColumn'));
+echo CHtml::link($imagecreateColumn . Yii::t('administration', 'createColumn'), array('fileImport/create'));
 ?>
 <br />
 <?php
-$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
 echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
 ?>
 <div class="search-form" style="display:none">

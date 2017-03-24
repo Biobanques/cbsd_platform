@@ -31,7 +31,7 @@
 
     <div class="col-lg-12">
         <div class="row buttons">
-            <?php echo CHtml::submitButton(Yii::t('common', 'submit'), array('class' => 'btn btn-primary')); ?>
+            <?php echo CHtml::submitButton(Yii::t('button', 'submit'), array('class' => 'btn btn-primary')); ?>
         </div>
     </div>
     <?php $this->endWidget(); ?>

@@ -27,9 +27,13 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Yii::t('common', 'managePatientForm'); ?></h1>
+<h1><?php echo Yii::t('administration', 'managePatientForm'); ?></h1>
+<div class="info">
+    <div class="title"><?php echo Yii::t('patientForm', 'infoTitle') ?></div>
+    <div class="content"><?php echo Yii::t('patientForm', 'infoContent') ?></div>
+</div>
 <?php
-$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('common', 'advancedsearch'));
+$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
 echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
 ?>
 <div class="search-form" style="display:none">

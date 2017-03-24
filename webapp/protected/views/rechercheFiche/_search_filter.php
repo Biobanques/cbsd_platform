@@ -78,7 +78,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                     'htmlOptions'=>array(
                         'onkeyup'=>'document.getElementById("addFilterButton").disabled = false;'
                         )));
-                        echo CHtml::button(Yii::t('common', 'logicOperator'), array('id' => 'addFilterButton', 'class' => 'btn btn-info', 'style' => 'margin-left:10px; font-weight:bold;', 'disabled' => 'disabled'));
+                        echo CHtml::button(Yii::t('button', 'logicOperator'), array('id' => 'addFilterButton', 'class' => 'btn btn-info', 'style' => 'margin-left:10px; font-weight:bold;', 'disabled' => 'disabled'));
                         echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
                         ?>
                     </div>
@@ -88,10 +88,10 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
 
                 <div class="row">
                     <div class="col-lg-2 col-lg-offset-7">
-                        <?php echo CHtml::submitButton(Yii::t('common', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'display:none;')); ?>
+                        <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'display:none;')); ?>
                     </div>
                     <div class="col-lg-2">
-                        <?php echo CHtml::resetButton(Yii::t('common', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'style' => 'display:none;', 'onclick' => 'location.reload();')); ?>
+                        <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'style' => 'display:none;', 'onclick' => 'location.reload();')); ?>
                     </div>
                 </div>
             </div>

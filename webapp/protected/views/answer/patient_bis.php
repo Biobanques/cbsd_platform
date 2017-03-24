@@ -73,7 +73,7 @@
 
     <div class="row">
         <div class="col-lg-3 row buttons">
-            <?php echo CHtml::submitButton($actionForm == 'create' ? Yii::t('common', 'createBtn') : Yii::t('common', 'search')); ?>
+            <?php echo CHtml::submitButton($actionForm == 'create' ? Yii::t('button', 'createBtn') : Yii::t('button', 'search')); ?>
         </div>
     </div>
 

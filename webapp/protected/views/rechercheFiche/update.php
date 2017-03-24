@@ -45,7 +45,7 @@ height: 25px;
     <hr />
         <div style="display:inline; margin-left: 35%; width: 100px; ">
         <?php
-        echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary'));
+        echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('class' => 'btn btn-primary'));
         ?>
     </div>
     <?php
