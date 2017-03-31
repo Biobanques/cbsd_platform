@@ -188,7 +188,7 @@ class SiteController extends Controller
             if ($model->validate()) {
                 $mixedResult = $model->validateFields();
                 if ($mixedResult['result'] == true) {
-                    $result = 'success';
+                    $result = 'succès';
                     CommonMailer::sendMailRecoverPassword($mixedResult['user'], null);
                 } else {
                     $result = 'erreur';
@@ -196,7 +196,8 @@ class SiteController extends Controller
                 $message = $mixedResult['message'];
                 Yii::app()->user->setFlash($result, $message);
             }
-        }$this->render('recoverPwd', array('model' => $model,));
+        }
+        $this->render('recoverPwd', array('model' => $model));
     }
 
     /**

@@ -111,6 +111,7 @@ return array(
     'notAllowManagement' => 'You are not authorized to access to the management page.',
     'notAllowAccessPage' => 'You are not authorized to reach this page.',
     'profileUpdated' => 'The profile has been updated successfully.',
+    'profileNotUpdated' => 'The profile has not been updated.',
     'missingFields' => 'Please complete all mandatory fields.',
     'unvalidDate' => 'Enter a valid date in the format jj/mm/aaaa',
     'noPatient' => 'No patient with these informations exists in the system, please complete the form to create the new patient.',

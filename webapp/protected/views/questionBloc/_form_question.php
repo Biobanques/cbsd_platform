@@ -62,9 +62,6 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
                 <?php echo $form->textField($model, 'id', array('size' => 5, 'maxlength' => 45, "class" => "tooltipster", "title" => Yii::t('common', 'idQuestion'))); ?>
                 <?php echo $form->error($model, 'id'); ?>            
             </div>
-        </div>
-
-        <div class="row">
             <div class="col-lg-6">
                 <?php echo $form->labelEx($model, 'label'); ?>
                 <?php echo $form->textField($model, 'label', array('size' => 5, 'maxlength' => 500, "class" => "tooltipster", "title" => Yii::t('common', 'labelQuestion'))); ?>

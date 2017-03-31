@@ -143,24 +143,20 @@ class CommonTools
     }
  
     /**
-     * convert Byte > kB, MB or GB
+     * convert Byte > ko, Mo or Go
      * @return type
      */    
-    public function formatSizeUnits($bytes) {
-        if ($bytes >= 1073741824) {
-            $bytes = number_format($bytes / 1073741824, 2) . ' GB';
-        } elseif ($bytes >= 1048576) {
-            $bytes = number_format($bytes / 1048576, 2) . ' MB';
-        } elseif ($bytes >= 1024) {
-            $bytes = number_format($bytes / 1024, 2) . ' kB';
-        } elseif ($bytes > 1) {
-            $bytes = $bytes . ' bytes';
-        } elseif ($bytes == 1) {
-            $bytes = $bytes . ' byte';
-        } else {
-            $bytes = '0 bytes';
+    public static function formatSizeUnits($fileSize) {
+        $result;
+        switch (true) {
+            case ($fileSize > 1024 * 1024):$result = round($fileSize / (1024 * 1024), 2) . ' Mo';
+                break;
+            case ($fileSize > 1024):$result = round($fileSize / (1024), 2) . ' ko';
+                break;
+            default: $result = $fileSize . ' o';
+                break;
         }
-        return $bytes;
+        return $result;
     }
     
 }

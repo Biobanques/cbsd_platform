@@ -20,7 +20,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">
-            <?php echo Yii::t('common', 'forAddQuestion') ?>
+            <?php echo Yii::t('administration', 'forAddQuestion') ?>
         </h3>
     </div>
     <div class="panel-body">

@@ -50,7 +50,7 @@ class Questionnaire extends LoggableActiveRecord
     {
         return array(
             array(
-                'type,id,name',
+                'type,name',
                 'required'
             ),
             array(

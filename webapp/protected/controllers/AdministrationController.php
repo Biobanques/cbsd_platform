@@ -97,9 +97,9 @@ class AdministrationController extends Controller {
     public function actionUserLog() {
         $model = new UserLog('search');
         $model->unsetAttributes();
-        if (isset($_GET['UserLog']))
+        if (isset($_GET['UserLog'])) {
             $model->setAttributes($_GET['UserLog']);
-
+        }
         $this->render('userLog', array(
             'model' => $model
         ));

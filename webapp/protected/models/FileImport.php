@@ -51,7 +51,7 @@ class FileImport extends EMongoDocument {
      */
     public function attributeLabels() {
         return array(
-            'user' => Yii::t('common','user'),
+            'user' => Yii::t('common','login'),
             'filename' => Yii::t('common','filename'),
             'filesize' => Yii::t('common','filesize'),
             'extension' => 'Extension',

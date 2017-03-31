@@ -55,7 +55,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                <?php echo Yii::t('common', 'forAddQuestion') ?>
+                <?php echo Yii::t('administration', 'forAddQuestion') ?>
             </h3>
         </div>
         <div id="collapse1" class="panel-collapse collapse in">
@@ -70,7 +70,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                <?php echo Yii::t('common', 'forAddQuestionBlock') ?>
+                <?php echo Yii::t('administration', 'forAddQuestionBlock') ?>
             </h3>
         </div>
         <div id="collapse2" class="panel-collapse collapse">
@@ -85,7 +85,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                <?php echo Yii::t('common', 'forAddTab') ?>
+                <?php echo Yii::t('administration', 'forAddTab') ?>
             </h3>
         </div>
         <div id="collapse3" class="panel-collapse collapse">
@@ -100,7 +100,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                <?php echo Yii::t('common', 'forModifyTab') ?>
+                <?php echo Yii::t('administration', 'forModifyTab') ?>
             </h3>
         </div>
         <div id="collapse4" class="panel-collapse collapse">
@@ -124,7 +124,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h1 class="modal-title"><?php echo Yii::t('common', 'forModifyQuestion') ?></h1>
+                <h1 class="modal-title"><?php echo Yii::t('administration', 'forModifyQuestion') ?></h1>
             </div>
             <div class="modal-body">
                 <div class="prefs-form">
@@ -134,13 +134,13 @@ $form = $this->beginWidget('CActiveForm', array(
             <div class="modal-footer">
                 <div class="btn-group btn-group-justified" role="group" aria-label="group button">
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal"  role="button"><?php echo Yii::t('common', 'cancel'); ?></button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"  role="button"><?php echo Yii::t('button', 'cancel'); ?></button>
                     </div>
                     <div class="btn-group btn-delete hidden" role="group">
                         <button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
                     </div>
                     <div class="btn-group" role="group">
-                        <?php echo CHtml::submitButton(Yii::t('common', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
+                        <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
                     </div>
                 </div>
             </div>

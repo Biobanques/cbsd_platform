@@ -57,8 +57,6 @@ class FileImportController extends Controller {
             if ($uploadedFile->validate()) {
                 $uploadedFile->filename->saveAs(date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName());
                 chmod(date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName(), 0777);
-                //$this->dropNeuropathCollection();
-                $this->deleteNeuropathForms();
                 $this->importNeuropathNominatif();
                 $this->deleteUnvalidNeuropath();
                 $this->createFicheNeuropath();
@@ -164,12 +162,6 @@ class FileImportController extends Controller {
         return Neuropath::model()->deleteAll();
     }
 
-    public function deleteNeuropathForms() {
-        $criteria = new EMongoCriteria;
-        $criteria->id = "neuropath_filemaker_form";
-        return Answer::model()->deleteAll($criteria);
-    }
-
     public function importNeuropathNominatif() {
         $countNotImported = 0;
         $attributes = array();
@@ -232,7 +224,7 @@ class FileImportController extends Controller {
                             $patient = CommonTools::wsAddPatient($patient);
                             $patientSIP = get_object_vars($patient);
                             foreach ($patientSIP as $k => $v) {
-                                if ($k == "id") {
+                                if ($k == "id" && $v != "") {
                                     $neuropath->initSoftAttribute("id_cbsd");
                                     $neuropath->id_cbsd = $v;
                                     foreach ($attributes as $key => $value) {

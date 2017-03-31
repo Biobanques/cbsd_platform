@@ -5,8 +5,7 @@
  * @author nmalservet
  *
  */
-class CommonMailer
-{
+class CommonMailer {
 
     /**
      * "send" an email. To do it, store an email into db and a crontask will pull emails to send them.
@@ -15,8 +14,7 @@ class CommonMailer
      * @param unknown $subject
      * @param unknown $body
      */
-    public static function sendMail($to, $subject, $body)
-    {
+    public static function sendMail($to, $subject, $body) {
         $mailq = new mailqueue();
         try {
             $headers = 'MIME-Version: 1.0' . "\r\n";
@@ -39,10 +37,9 @@ class CommonMailer
     /**
      * envoi de mail inscription avec infos de connexion.
      */
-    public static function sendConfirmationAdminProfilUser($user)
-    {
+    public static function sendConfirmationAdminProfilUser($user) {
         $to = Yii::app()->params['adminEmail'];
-        $subject = "Mise à jour d'un profil utilisateur sur cbsdplatform";
+        $subject = "Mise à jour d'un profil utilisateur sur CBSD";
         $userDetails = '';
         foreach ($user->getAttributes() as $label => $value) {
             if ($label == "profil") {
@@ -54,13 +51,13 @@ class CommonMailer
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
                 <?xml version=\"1.0\" encoding=\"utf-8\"?>
                 <html><head>
-                <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Mise à jour d'un profil utilisateur sur cbsdplatform</title>
+                <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Mise à jour d'un profil utilisateur sur CBSD</title>
                 </head><body>" .
                 ucfirst($user->prenom) . " " . strtoupper($user->nom) . " a mis à jour son profil (clinicien).<br>
                         Détails :<br>
     <ul>$userDetails</ul><br>
              Cordialement,<br>
-                    L'équipe cbsdplatform
+                    L'équipe CBSD
     </body>
         ";
         return CommonMailer::sendMail($to, $subject, $body);
@@ -78,11 +75,10 @@ class CommonMailer
      * @param type $nom
      * @param type $pass
      */
-    public static function sendMailInscriptionUser($to, $identifiant, $prenom, $nom, $pass)
-    {
-        $subject = "Bienvenue sur cbsdplatform !";
+    public static function sendMailInscriptionUser($to, $identifiant, $prenom, $nom, $pass) {
+        $subject = "Bienvenue sur CBSD !";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\"><html><head>
-                <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Message de cbsdplatform.fr</title>
+                <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Message de CBSD</title>
                 </head><body>
                 <table style=\"font-family:Verdana,sans-serif; font-size:11px; color:#374953; width: 550px;\">
                 <tr>
@@ -92,7 +88,7 @@ class CommonMailer
                         <tr>
                         <td align=\"left\" style=\"background-color:#DB3484; color:#FFF; font-size: 12px; font-weight:bold; padding: 0.5em 1em;\">
 
-                        Merci d'avoir cr&eacute;&eacute; un compte sur cbsdplatform. Voici un rappel de vos codes d'acc&egrave;s:</td>
+                        Merci d'avoir cr&eacute;&eacute; un compte sur CBSD. Voici un rappel de vos codes d'acc&egrave;s:</td>
                         </tr>
                         <tr><td>&nbsp;</td></tr>
                         <tr>
@@ -113,7 +109,7 @@ class CommonMailer
                                         <tr>
                                         <td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
                                         <a href=\"" . Yii::app()->getBaseUrl(true) . "\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
-                                cbsdplatform </a> - Copyright Biobanques 2015
+                                CBSD </a>
 
                                 </td>
                                 </tr>
@@ -127,8 +123,7 @@ class CommonMailer
     /**
      * envoi de mail inscription avec le nouveau profil .
      */
-    public static function sendMailConfirmationProfilEmail($user, $profil, $complement)
-    {
+    public static function sendMailConfirmationProfilEmail($user, $profil, $complement) {
         $to = Yii::app()->params['adminEmail'];
         $params = array('arg1' => $user->_id, 'arg2' => $profil);
         if ($complement != null) {
@@ -138,7 +133,7 @@ class CommonMailer
             $urlConfirm = Yii::app()->createAbsoluteUrl('site/confirmUser', $params);
         }
         $urlRefuse = Yii::app()->createAbsoluteUrl('site/refuseUser', $params);
-        $subject = "Inscription d'un nouveau profil pour un utilisateur sur cbsdplatform.";
+        $subject = "Inscription d'un nouveau profil pour un utilisateur sur CBSD.";
         $userDetails = '';
         foreach ($user->getAttributes() as $label => $value) {
             if ($label == "profil") {
@@ -150,7 +145,7 @@ class CommonMailer
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
                 <?xml version=\"1.0\" encoding=\"utf-8\"?>
                 <html><head>
-                <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Confirmation profil de cbsdplatform</title>
+                <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Confirmation profil de CBSD</title>
                 </head><body>
                 <table style=\"font-family:Verdana,sans-serif; font-size:11px; color:#374953; width: 550px;\">
                 <tr><td>&nbsp;</td></tr>
@@ -176,14 +171,14 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
                                     <td>
                                 <tr>
                                 <td align=\"left\">
-                                Rendez-vous sur notre site internet <a href=\"" . Yii::app()->getBaseUrl(true) . "\">cbsdplatform</a>.
+                                Rendez-vous sur notre site internet <a href=\"" . Yii::app()->getBaseUrl(true) . "\">CBSD</a>.
                                 </td>
                                 </tr>
                                 <tr><td>&nbsp;</td></tr>
                                 <tr>
                                 <td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
                                 <a href=\"" . Yii::app()->getBaseUrl(true) . "\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
-                                cbsdplatform </a> - Copyright Biobanques 2015
+                                CBSD </a>
 
                                 </td>
                                 </tr>
@@ -199,8 +194,7 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
      * @param type $user
      * @return type
      */
-    public static function sendSubscribeAdminMail($user)
-    {
+    public static function sendSubscribeAdminMail($user) {
         $to = Yii::app()->params['adminEmail'];
         $subject = "Inscription d'un nouvel utilisateur sur cbsdplatform";
         $userDetails = '';
@@ -214,13 +208,13 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
                 <?xml version=\"1.0\" encoding=\"utf-8\"?>
                 <html><head>
-                <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Inscription d'un nouvel utilisateur sur cbsdplatform</title>
+                <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Inscription d'un nouvel utilisateur sur CBSD</title>
                 </head><body>" .
                 ucfirst($user->prenom) . " " . strtoupper($user->nom) . " s'est inscrit sur le site " . Yii::app()->getBaseUrl(true) . ".<br>
                         Détails :<br>
     <ul>$userDetails</ul><br>
              Cordialement,<br>
-                    L'équipe cbsdplatform
+                    L'équipe CBSD
     </body>
         ";
         return CommonMailer::sendMail($to, $subject, $body);
@@ -231,21 +225,20 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
      * @param type $user
      * @return type
      */
-    public static function sendSubscribeUserMail($user)
-    {
+    public static function sendSubscribeUserMail($user) {
         $to = $user->email;
         $subject = "Bienvenue sur cbsdplatform " . ucfirst($user->prenom) . " " . strtoupper($user->nom);
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
                 <?xml version=\"1.0\" encoding=\"utf-8\"?>
                 <html><head>
                 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
-                                <title>Bienvenue " . ucfirst($user->prenom) . " " . strtoupper($user->nom) . " sur cbsdplatform</title>
+                                <title>Bienvenue " . ucfirst($user->prenom) . " " . strtoupper($user->nom) . " sur CBSD</title>
                 </head><body>
-                                Bienvenue " . ucfirst($user->prenom) . " " . strtoupper($user->nom) . " sur cbsdplatform.<br>
-            Votre compte est en attente de confirmation par l'administrateur de cbsdplatform.<br>
-                        Si vous rencontrez des problèmes sur cbsdplatform n'hésitez pas à envoyer un email à " . Yii::app()->params['adminEmail'] . "<br>
+                                Bienvenue " . ucfirst($user->prenom) . " " . strtoupper($user->nom) . " sur CBSD.<br>
+            Votre compte est en attente de confirmation par l'administrateur de la plate-forme CBSD.<br>
+                        Si vous rencontrez des problèmes sur CBSD n'hésitez pas à envoyer un email à " . Yii::app()->params['adminEmail'] . "<br>
                             Cordialement,
-                            L'équipe cbsdplatform
+                            L'équipe CBSD
     </body>
         ";
         return CommonMailer::sendMail($to, $subject, $body);
@@ -256,42 +249,40 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
      * @param type $user
      * @return type
      */
-    public static function sendUserRegisterConfirmationMail($user)
-    {
+    public static function sendUserRegisterConfirmationMail($user) {
         $to = $user->email;
         $subject = "Confirmation de votre inscription sur cbsdplatform";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
         <?xml version=\"1.0\" encoding=\"utf-8\"?>
         <html><head>
-        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Confirmation de votre inscription sur cbsdplatform</title>
+        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Confirmation de votre inscription sur CBSD</title>
         </head><body>
         Cher (Chère) " . ucfirst($user->prenom) . " " . strtoupper($user->nom) . "<br><br>
         Merci de vous être inscrit sur le site <a href=\"" . Yii::app()->getBaseUrl(true) . "\">cbsdplatform</a>.<br>
-        Vous pouvez vous connecter dès à présent sur le site <a href=\"" . Yii::app()->getBaseUrl(true) . "\">cbsdplatform</a> avec vos identifiants : <br>
+        Vous pouvez vous connecter dès à présent sur le site <a href=\"" . Yii::app()->getBaseUrl(true) . "\">CBSD</a> avec vos identifiants : <br>
         <ul><li>Nom d'utilisateur : $user->login </li>
         <li>Mot de passe : $user->password </li></ul>
                     Cordialement,<br>
-                    L'équipe cbsdplatform
+                    L'équipe CBSD
         </body>
         ";
         return CommonMailer::sendMail($to, $subject, $body);
     }
 
-    public static function sendUserRegisterRefusedMail($user)
-    {
+    public static function sendUserRegisterRefusedMail($user) {
         $to = $user->email;
         $subject = "Refus de votre inscription sur cbsdplatform";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
         <?xml version=\"1.0\" encoding=\"utf-8\"?>
         <html><head>
-        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Refus de votre inscription sur cbsdplatform</title>
+        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Refus de votre inscription sur la plate-forme <a href=\"" . Yii::app()->getBaseUrl(true) . "\">CBSD</a></title>
         </head><body>
         Cher (Chère) " . ucfirst($user->prenom) . " " . strtoupper($user->nom) . ",<br><br>
-        Merci de vous être intéressé à la plate-forme <a href=\"" . Yii::app()->getBaseUrl(true) . "\">cbsdplatform</a>.<br>
+        Merci de vous être intéressé à la plate-forme <a href=\"" . Yii::app()->getBaseUrl(true) . "\">CBSD</a>.<br>
         Malheureusement, nous ne pouvons donner suite à votre inscription.<br>
                 Pour toute question, merci de contacter l'administrateur de la plate-forme.<br><br>
                 Cordialement,<br>
-                L'équipe cbsdplatform
+                L'équipe CBSD
         </body>
         ";
         return CommonMailer::sendMail($to, $subject, $body);
@@ -302,8 +293,7 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
      * @param type $user
      * @return true if it s sent ( stored in db then pull by the cron task)
      */
-    public static function sendMailRecoverPassword($user)
-    {
+    public static function sendMailRecoverPassword($user) {
         try {
             if ($user != null) {
                 $to = $user->email;
@@ -319,11 +309,11 @@ Cliquez sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de
         <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">    <title>Vos exports sur cbsdplatform.fr</title>
         </head><body>
         Cher (Chère) $fname $lname,<br><br>
-        Suite à votre demande effectuée sur le site cbsdplatform, nous vous rappelons vos codes d'accès :<br>
+        Suite à votre demande effectuée sur la platforme <a href=\"" . Yii::app()->getBaseUrl(true) . "\">CBSD</a>, nous vous rappelons vos codes d'accès :<br>
                 Identifiant : $login<br>
                 Password : $password <br>
-                Vous pouvez dès à présent vous connecter sur <a href=\"" . Yii::app()->getBaseUrl(true) . "\">cbsdplatform</a> avec ces identifiants.<br>
-A bientôt sur cbsdplatform.
+                Vous pouvez dès à présent vous connecter sur la palteforme <a href=\"" . Yii::app()->getBaseUrl(true) . "\">CBSD</a> avec ces identifiants.<br>
+A bientôt sur CBSD.
         </body>
         ";
             return CommonMailer::sendMail($to, $subject, $body);
@@ -332,4 +322,5 @@ A bientôt sur cbsdplatform.
             return false;
         }
     }
+
 }

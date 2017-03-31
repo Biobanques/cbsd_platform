@@ -81,7 +81,7 @@ class AnswerController extends Controller {
                 Yii::app()->user->setFlash("erreur", Yii::t('common', 'missingFields'));
                 $this->redirect(array('site/patient'));
             }
-            if ($model->dateFormat($model->date_naissance) == false) {
+            if (CommonTools::isDate($model->date_naissance) == false) {
                 Yii::app()->user->setFlash('erreur', Yii::t('common', 'unvalidDate'));
                 $this->redirect(array('site/patient'));
             }
@@ -92,7 +92,7 @@ class AnswerController extends Controller {
             $patient->birthName = $model->nom_naissance;
             if ($model->nom != "") {
                 $patient->useName = $model->nom;
-            } else if ($model->nom != "" && $actionForm == 'create') {
+            } else if ($model->nom == "" && $actionForm == 'create') {
                 $patient->useName = $model->nom_naissance;
             } else {
                 $patient->useName = null;
@@ -143,8 +143,9 @@ class AnswerController extends Controller {
             $criteria = new EMongoCriteria();
             $criteria->id_patient = (string) $model->id;
             $criteriaCliniques = new EMongoCriteria($criteria);
-            if (Yii::app()->user->getState('activeProfil') == "clinicien")
+            if (Yii::app()->user->getState('activeProfil') == "clinicien") {
                 $criteriaCliniques->login = Yii::app()->user->id;
+            }
             $criteriaCliniques->type = "clinique";
             $criteriaNeuropathologiques = new EMongoCriteria($criteria);
             $criteriaNeuropathologiques->type = "neuropathologique";

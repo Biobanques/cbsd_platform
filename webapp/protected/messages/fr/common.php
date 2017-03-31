@@ -112,6 +112,7 @@ return array(
     'notAllowManagement' => 'Vous n\'êtes pas autorisé à accéder à la page d\'administration',
     'notAllowAccessPage' => 'Vous n\'êtes pas autorisé à accéder à cette page.',
     'profileUpdated' => 'Le profil a bien été mis à jour.',
+    'profileNotUpdated' => 'Le profil n\'a pas été mis à jour.',
     'missingFields' => 'Veuillez renseigner tous les champs obligatoires.',
     'unvalidDate' => 'Entrez une date valide au format jj/mm/aaaa',
     'noPatient' => 'Aucun patient avec ces informations n’existe dans le système, veuillez compléter le formulaire afin de créer le nouveau patient.',
