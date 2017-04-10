@@ -32,7 +32,6 @@ class SiteController extends Controller
             array(
                 'allow',
                 'actions' => array(
-                    'index',
                     'login',
                     'logout',
                     'error',
@@ -49,6 +48,7 @@ class SiteController extends Controller
             array(
                 'allow',
                 'actions' => array(
+                    'index',
                     'setActiveProfil',
                     'updateSubscribe'
                 ),

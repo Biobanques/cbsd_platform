@@ -20,6 +20,8 @@
                         array('label' => Yii::t('administration', 'logSystem')),
                         array('label' => Yii::t('administration', 'logSystem'), 'icon'=>'play', 'url' => array('/auditTrail/admin')),
                         array('label' => Yii::t('administration', 'userLog'), 'icon'=>'play', 'url' => array('/administration/userLog')),
+                        array('label' => Yii::t('administration', 'manageProjects')),
+                        array('label' => Yii::t('administration', 'manageProjects'), 'icon'=>'play', 'url' => array('/project/admin')),
                         array('label' => Yii::t('administration', 'filemaker')),
                         array('label' => Yii::t('administration', 'columnFileMaker'), 'icon'=>'play', 'url' => array('/fileImport/formatColumn')),
                         array('label' => Yii::t('administration', 'importFilemaker'), 'icon'=>'play', 'url' => array('/fileImport/admin')),

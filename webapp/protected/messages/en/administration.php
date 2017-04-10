@@ -12,6 +12,7 @@ return array(
     'fiches' => 'Patient forms',
     'logSystem' => 'System log',
     'userLog' => 'User log',
+    'manageProjects' => 'Project manager',
     'filemaker' => 'Database FileMaker',
     'importFilemaker' => 'FileMaker',
     // title

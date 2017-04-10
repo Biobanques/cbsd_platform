@@ -33,6 +33,13 @@ $form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl($this->route),
 ));
 ?>
+<?php 
+if (Yii::app()->user->getState('activeProfil') == "administrateur de projet") {
+    echo CHtml::label('Donner un nom au projet', 'project', array('required' => 'required'));
+    echo CHtml::textField('project');
+} 
+?>
+<br>
 <label><input type="checkbox" name="select-all" id="select-all" />&nbsp;&nbsp;&nbsp;<?php echo Yii::t('button', 'selectAll'); ?></label><br>
 <div class="checkboxgroup"> 
     <?php

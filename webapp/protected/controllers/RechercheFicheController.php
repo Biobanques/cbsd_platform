@@ -30,7 +30,7 @@ class RechercheFicheController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'view','update', 'exportCsv', 'searchReplace', 'resultSearch', 'viewOnePage'),
+                'actions' => array('admin', 'view', 'update', 'exportCsv', 'searchReplace', 'resultSearch', 'viewOnePage'),
                 'expression' => '!Yii::app()->user->isGuest && $user->getActiveProfil() != "clinicien"'
             ),
             array('deny', // deny all users
@@ -73,7 +73,7 @@ class RechercheFicheController extends Controller {
             'model' => $model,
         ));
     }
-   
+
     public function actionUpdate($id) {
         $model = Answer::model()->findByPk(new MongoID($id));
         if (isset($_POST['Questionnaire'])) {
@@ -118,7 +118,7 @@ class RechercheFicheController extends Controller {
             'model' => $model,
         ));
     }
-   
+
     /**
      * export csv liste des fiches disponibles
      */
@@ -129,8 +129,19 @@ class RechercheFicheController extends Controller {
                 $filter = $_POST['filter'];
             }
             $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
+            if (isset($_POST['project'])) {
+                $project = new Project;
+                $project->user = CommonTools::getUserRecorderName();
+                $project->project_name = $_POST['project'];
+                $project->file = $filename;
+                $project->project_date = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
+                $project->save();
+            }
             $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
             $csv = new ECSVExport($arAnswers, true, false, null, null);
+            $fh = fopen('protected/exported/' . $filename, 'a+');
+            fwrite($fh, $csv->toCSV());
+            fclose($fh);
             Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
         }
         $model = new Answer('search');
@@ -156,7 +167,7 @@ class RechercheFicheController extends Controller {
             'models' => $models,
         ));
     }
-    
+
     public function actionSearchReplace() {
         $model = new Answer;
         if (isset($_POST['result'])) {
@@ -265,5 +276,5 @@ class RechercheFicheController extends Controller {
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
     }
-}
 
+}

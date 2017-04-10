@@ -14,6 +14,7 @@ return array(
     'fiches' => 'Fiches de patient',
     'logSystem' => 'Log système',
     'userLog' => 'Log utilisateur',
+    'manageProjects' => 'Gestion des projets',
     'filemaker' => 'FileMaker',
     'importFilemaker' => 'FileMaker',
     // titre

@@ -159,4 +159,17 @@ class CommonTools
         return $result;
     }
     
+    /**
+     * retourne l'utilisateur connecté
+     * @return type
+     */
+    public function getUserRecorderName() {
+        $result = "-";
+        $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
+        if ($user != null) {
+            $result = ucfirst($user->prenom) . " " . strtoupper($user->nom);
+        }
+        return $result;
+    }
+    
 }

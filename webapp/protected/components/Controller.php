@@ -122,8 +122,8 @@ class Controller extends CController
             } else {
                 $app->user->setState('activeProfil', $_POST['activeProfil']);
                 $_SESSION['activeProfil'] = $_POST['activeProfil'];
-                if (!Yii::app()->user->isAuthorizedViewPatientNavbar()) {
-                    Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowSearchPatientForm'));
+                if (Yii::app()->urlManager->parseUrl(Yii::app()->request) == "site/patient" && !Yii::app()->user->isAuthorizedViewPatientNavbar()) {
+                    Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowAccessPage'));
                     $this->redirect('index.php?r=site/index');
                 }
                 if (Yii::app()->controller->id == "user" || Yii::app()->controller->id == "formulaire" || Yii::app()->controller->id == "fiche" || Yii::app()->controller->id == "questionBloc" || Yii::app()->controller->id == "administration" || Yii::app()->controller->id == "auditTrail" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "admin/admin") {
