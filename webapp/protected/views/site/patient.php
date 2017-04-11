@@ -49,9 +49,14 @@
                 'attribute' => 'date_naissance',
                 'options' => array(
                     'showAnim' => 'fold',
+                    'dateFormat'=>'mm/dd/yy',
+                    'yearRange'=>'-200:+0',
+                    'changeMonth' => true,
+                  'changeYear' => true,
+                    'minDate'=>'01/01/1900',      // minimum date
+        'maxDate' => '0',
                 ),
                 'htmlOptions' => array(
-                    'style' => 'height:25px;',
                     'placeholder' => 'Format jj/mm/aaaa'
                 ),
                 'language' => 'fr',

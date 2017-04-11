@@ -153,7 +153,11 @@ class QuestionnaireHTMLRenderer {
                 $valueInput = ucfirst(Yii::app()->user->getPrenom()) . " " . strtoupper(Yii::app()->user->getNom());
             }
             if ($question->id == "patientage" && isset($_SESSION["patientBirthDate"])) {
-                $birthdateFormat = explode('/', $_SESSION["patientBirthDate"]);
+                if (strpos($_SESSION["patientBirthDate"], '/')) {
+                    $birthdateFormat = explode('/', $_SESSION["patientBirthDate"]);
+                } else {
+                    $birthdateFormat = array_swap(explode('-', $_SESSION["patientBirthDate"]), $_SESSION["patientBirthDate"][0], $_SESSION["patientBirthDate"][2]);
+                }
                 $dateNow = explode('/', date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
                 if (($birthdateFormat[1] < $dateNow[1]) || (($birthdateFormat[1] == $dateNow[1]) && ($birthdateFormat[0] <= $dateNow[0]))) {
                     $valueInput = $dateNow[2] - $birthdateFormat[2];
@@ -178,7 +182,7 @@ class QuestionnaireHTMLRenderer {
         if ($question->type == "date") {
             if (Yii::app()->controller->id == "answer" || Yii::app()->controller->id == "fiche") {
                 if ($valueInput != "") {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\" style=\"height:30px;\"/>";
+                    $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" style=\"height:30px;\"/>";
                 } else {
                     $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\" style=\"height:30px;\"/>";
                 }

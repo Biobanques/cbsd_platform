@@ -6,11 +6,11 @@
  * and open the template in the editor.
  */
 
-class CommonTools
-{
+class CommonTools {
     /*
      * FORMAT DATE
      */
+
     const MYSQL_DATE_FORMAT = "Y-m-d H:i:s";
     const MYSQL_DATE_DAY_FORMAT = "Y-m-d 00:00:00";
     const FRENCH_DATE_FORMAT = "H:i:s d/m/Y";
@@ -20,8 +20,7 @@ class CommonTools
     const ENGLISH_HD_DATE_FORMAT = "Y-m-d H:i";
     const HOUR_DATE_FORMAT = "H:i";
 
-    public function wsGetPatient($patient)
-    {
+    public function wsGetPatient($patient) {
         try {
             $soapClient = new SoapClient(CommonProperties::$SIP_WSDL);
             $token = $soapClient->login(CommonProperties::$SIP_LOGIN, CommonProperties::$SIP_PASSWORD);
@@ -36,8 +35,7 @@ class CommonTools
         }
     }
 
-    public function wsAddPatient($patient)
-    {
+    public function wsAddPatient($patient) {
         try {
             $soapClient = new SoapClient(CommonProperties::$SIP_WSDL);
             $token = $soapClient->login(CommonProperties::$SIP_LOGIN, CommonProperties::$SIP_PASSWORD);
@@ -52,11 +50,10 @@ class CommonTools
         }
     }
 
-    public static function isInDevMode()
-    {
+    public static function isInDevMode() {
         return CommonProperties::$DEV_MODE;
     }
-    
+
     public function isDate($date) {
         if (preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/", $date, $matches) || preg_match("/([0-9]{2})-([0-9]{2})-([0-9]{4})/", $date, $matches)) {
             if (!checkdate($matches[2], $matches[1], $matches[3])) {
@@ -71,7 +68,7 @@ class CommonTools
         }
         return true;
     }
- 
+
     /**
      * get number of days from register date
      * @return dateNow - registerDate
@@ -81,9 +78,9 @@ class CommonTools
         $registerDate = User::model()->getRegisterDate();
         list($jour1, $mois1, $annee1) = explode('/', $dateNow);
         list($jour2, $mois2, $annee2) = explode('/', $registerDate);
-        $timestamp1 = mktime(0,0,0,$mois1,$jour1,$annee1);
-        $timestamp2 = mktime(0,0,0,$mois2,$jour2,$annee2);
-        return round(abs($timestamp2 - $timestamp1)/86400, 0, PHP_ROUND_HALF_DOWN);
+        $timestamp1 = mktime(0, 0, 0, $mois1, $jour1, $annee1);
+        $timestamp2 = mktime(0, 0, 0, $mois2, $jour2, $annee2);
+        return round(abs($timestamp2 - $timestamp1) / 86400, 0, PHP_ROUND_HALF_DOWN);
     }
 
     /**
@@ -93,11 +90,11 @@ class CommonTools
     public function formatDateFR($date) {
         return date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($date));
     }
-    
+
     public function formatDateAndTimeFR($date) {
         return date(CommonTools::FRENCH_HD_DATE_FORMAT, strtotime($date));
     }
-    
+
     /**
      * convert DatePickerRange to an array
      * @return type
@@ -109,7 +106,7 @@ class CommonTools
         $res['date_to'] = date(CommonTools::ENGLISH_SHORT_DATE_FORMAT, strtotime(str_replace('/', '-', $answerDate[1])));
         return $res;
     }
-    
+
     /**
      * regex for criteria search
      * @return type
@@ -125,7 +122,7 @@ class CommonTools
         $regex .= '/i';
         return $regex;
     }
-    
+
     /**
      * regex for criteria search
      * @return type
@@ -141,11 +138,11 @@ class CommonTools
         $regex .= '$/i';
         return $regex;
     }
- 
+
     /**
      * convert Byte > ko, Mo or Go
      * @return type
-     */    
+     */
     public static function formatSizeUnits($fileSize) {
         $result;
         switch (true) {
@@ -158,7 +155,7 @@ class CommonTools
         }
         return $result;
     }
-    
+
     /**
      * retourne l'utilisateur connecté
      * @return type
@@ -171,5 +168,9 @@ class CommonTools
         }
         return $result;
     }
-    
+
+    public function array_swap(&$array, $swap_a, $swap_b) {
+        list($array[$swap_a], $array[$swap_b]) = array($array[$swap_b], $array[$swap_a]);
+    }
+
 }

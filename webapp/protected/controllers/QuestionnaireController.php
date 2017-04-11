@@ -87,7 +87,7 @@ class QuestionnaireController extends Controller {
                         if ($answerQuestion->type != "number" && $answerQuestion->type != "expression" && $answerQuestion->type != "date") {
                             $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
                         } elseif ($answerQuestion->type == "date") {
-                            $answerQuestion->setAnswerDate($_POST['Questionnaire'][$input]);
+                            $answerQuestion->setAnswerDate(CommonTools::formatDateFR($_POST['Questionnaire'][$input]));
                         } else {
                             $answerQuestion->setAnswerNumerique($_POST['Questionnaire'][$input]);
                         }
