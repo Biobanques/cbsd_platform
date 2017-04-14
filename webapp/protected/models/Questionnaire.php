@@ -134,13 +134,13 @@ class Questionnaire extends LoggableActiveRecord
         $arFicheNeuropath = array();
         $arFicheGenetique = array();
         $arFiche = array();
-        if ($activeProfil == "clinicien") {
+        if ($activeProfil == "Clinicien") {
             $typeFiche = "clinique";
         }
-        if ($activeProfil == "neuropathologiste") {
+        if ($activeProfil == "Neuropathologiste") {
             $typeFiche = "neuropathologique";
         }
-        if ($activeProfil == "geneticien") {
+        if ($activeProfil == "Généticien") {
             $typeFiche = "genetique";
         }
         $criteria = new EMongoCriteria();

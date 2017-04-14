@@ -30,7 +30,7 @@ class FileImportController extends Controller {
                     'delete',
                     'formatColumn'
                 ),
-                'expression' => '$user->getActiveProfil() == "administrateur"'
+                'expression' => '$user->getActiveProfil() == "Administrateur"'
             ),
             array('deny', // deny all users
                 'users' => array('*'),

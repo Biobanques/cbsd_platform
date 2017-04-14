@@ -89,7 +89,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div id="address" <?php if ($profil != "clinicien") echo "style=\"display:none;\"" ?>>
+            <div id="address" <?php if ($profil != "Clinicien") echo "style=\"display:none;\"" ?>>
                 <?php echo CHtml::activeLabel($model, 'address', array('required' => true)); ?>
                 <?php echo $form->textField($model, 'address', array('size' => 20, 'maxlength' => 250)); ?>
                 <?php echo $form->error($model, 'address'); ?>
@@ -99,7 +99,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div id="centre" <?php if ($profil != "neuropathologiste") echo "style=\"display:none;\"" ?>>
+            <div id="centre" <?php if ($profil != "Neuropathologiste") echo "style=\"display:none;\"" ?>>
                 <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
                 <?php echo $form->dropDownList($model, 'centre', User::model()->getArrayCentre(), array('prompt' => '----')); ?>
                 <?php echo $form->error($model, 'centre'); ?>

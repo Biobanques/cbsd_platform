@@ -47,5 +47,8 @@ return array(
         <p>- <b>Manage users</b>: <i>Show list of registered users, with update/delete button. You can also create a user or manage access rules on the forms for each user profile.</i></p>
         <p>- <b>Manage templates of the forms</b>: <i>Show list of templates of the forms, with update/delete button. You can create a new template which you can add or modify a new question, a new tab or a reusable block of questions.</i></p>
         <p>- <b>Manage patient forms</b>: <i>Show list of patient forms, with update/delete button.</i></p>
-        <p>- <b>System log</b>: <i>Show user activities.</i></p>'
+        <p>- <b>System log</b>: <i>Show user activities.</i></p>',
+    'projectName' => 'Project name',
+    'file' => 'File',
+    'projectDate' => 'Project date'
 );

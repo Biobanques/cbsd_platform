@@ -48,5 +48,9 @@ return array(
         <p>- <b>Gestion des utilisateurs</b>: <i>Affiche la liste des utilisateurs enregistrés, avec un bouton de mise à jour et de suppression. Vous pouvez aussi créer un utilisateur ou gérer les droits sur les fiches pour chaque utilisateur.</i></p>
         <p>- <b>Gestion des formulaires</b>: <i>Affiche la liste des formulaires, avec un bouton de mise à jour et de suppression. Vous pouvez créer un nouveau formulaire où vous pouvez ajouter ou modifier une nouvelle question, un onglet ou un bloc de question réutilisable.</i></p>
         <p>- <b>Gestion des fiches</b>: <i>Affiche la liste des fiches, avec un bouton de mise à jour et de suppression.</i></p>
-        <p>- <b>Log système</b>: <i>Affiche la liste des traces des actions utilisateurs.</i></p>'
+        <p>- <b>Log système</b>: <i>Affiche la liste des traces des actions utilisateurs.</i></p>',
+    // attributs
+    'projectName' => 'Nom du projet',
+    'file' => 'Fichier',
+    'projectDate' => 'Date du projet'
 );

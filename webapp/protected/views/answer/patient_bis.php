@@ -39,20 +39,7 @@
 
         <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'date_naissance'); ?>
-            <?php
-            $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'model' => $model,
-                'attribute' => 'date_naissance',
-                'options' => array(
-                    'showAnim' => 'fold',
-                ),
-                'htmlOptions' => array(
-                    'style' => 'height:25px;',
-                    'placeholder' => 'Format jj/mm/aaaa'
-                ),
-                'language' => 'fr',
-            ));
-            ?>
+            <?php echo $form->dateField($model, 'date_naissance'); ?>
             <?php echo $form->error($model, 'date_naissance'); ?>
         </div>
     </div>

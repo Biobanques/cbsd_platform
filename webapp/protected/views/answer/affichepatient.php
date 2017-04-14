@@ -25,7 +25,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 
 <p><?php echo Yii::app()->user->name ?>, <?php echo Yii::t('common', 'viewPatientForms') ?></p>
 <div>
-    <?php if (Yii::app()->user->getState('activeProfil') != "chercheur") { ?>
+    <?php if (Yii::app()->user->getState('activeProfil') != "Chercheur") { ?>
         <hr />
         <h4>Patient</h4>
         <?php
@@ -153,7 +153,7 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
 ?>
 
 <?php
-if (Yii::app()->user->getState('activeProfil') != "chercheur" && Yii::app()->user->getState('activeProfil') != "administrateur") {
+if (Yii::app()->user->getState('activeProfil') != "Chercheur" && Yii::app()->user->getState('activeProfil') != "Administrateur") {
     $form = $this->beginWidget('CActiveForm', array(
         'action' => Yii::app()->createUrl('questionnaire/index'),
         'enableAjaxValidation' => false,

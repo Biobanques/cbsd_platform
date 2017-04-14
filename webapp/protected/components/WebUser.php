@@ -54,7 +54,7 @@ class WebUser extends CWebUser
      */
     public function isAdmin()
     {
-        return $this->getState('activeProfil') == "administrateur" ? true : false; 
+        return $this->getState('activeProfil') == "Administrateur" ? true : false; 
     }
 
     /**
@@ -63,7 +63,7 @@ class WebUser extends CWebUser
      */
     public function isClinicien()
     {
-        return $this->getState('activeProfil') == "clinicien" ? true : false; 
+        return $this->getState('activeProfil') == "Clinicien" ? true : false; 
     }
 
     /**
@@ -72,7 +72,7 @@ class WebUser extends CWebUser
      */
     public function isNeuropathologiste()
     {
-        return $this->getState('activeProfil') == "neuropathologiste" ? true : false; 
+        return $this->getState('activeProfil') == "Neuropathologiste" ? true : false; 
     }
 
     /**
@@ -81,7 +81,7 @@ class WebUser extends CWebUser
      */
     public function isGeneticien()
     {
-        return $this->getState('activeProfil') == "geneticien" ? true : false; 
+        return $this->getState('activeProfil') == "Généticien" ? true : false; 
     }
 
     /**
@@ -90,7 +90,7 @@ class WebUser extends CWebUser
      */
     public function isChercheur()
     {
-        return $this->getState('activeProfil') == "chercheur" ? true : false; 
+        return $this->getState('activeProfil') == "Chercheur" ? true : false; 
     }
     
     /**
@@ -99,7 +99,7 @@ class WebUser extends CWebUser
      */
     public function isMaster()
     {
-        $profil = array("clinicienMaster", "neuroMaster", "geneticienMaster");
+        $profil = array("Clinicien Master", "Neuropathologique Master", "Généticien Master");
         return in_array($this->getState('activeProfil'), $profil) ? true : false;
     }
 
@@ -150,19 +150,18 @@ class WebUser extends CWebUser
     
     public function isAuthorizedViewPatientNavbar()
     {
-        $profil = array("administrateur", "clinicien", "neuropathologiste", "geneticien");
+        $profil = array("Administrateur", "Clinicien", "Neuropathologiste", "Généticien", "Chercheur");
         return in_array($this->getState('activeProfil'), $profil) ? true : false; 
     }
 
     public function isAuthorizedViewSearchNavbar()
     {
-        $profil = array("administrateur", "administrateur de projet", "neuropathologiste", "geneticien", "chercheur", "clinicienMaster", "neuroMaster", "geneticienMaster");
-        return in_array($this->getState('activeProfil'), $profil) ? true : false; 
+        return !in_array($this->getState('activeProfil'), "Clinicien") ? true : false; 
     }
     
     public function isAuthorizedViewAdminNavbar()
     {
-        $profil = array("administrateur");
+        $profil = array("Administrateur");
         return in_array($this->getState('activeProfil'), $profil) ? true : false; 
     }
 
@@ -235,6 +234,16 @@ class WebUser extends CWebUser
         $criteria->type = $fiche;
         $droit = Droits::model()->find($criteria);
         return $droit != null ? in_array("create", $droit->role) : false;
+    }
+    
+    public function getFicheById($id) {
+        $fiche = Answer::model()->findByPk(new MongoId($id));
+        return $fiche != null ? $fiche : null;
+    }
+    
+    public function getQuestionnaireById($id) {
+        $questionnaire = Questionnaire::model()->findByPk(new MongoId($id));
+        return $questionnaire != null ? $questionnaire : null;
     }
 
 }

@@ -71,7 +71,8 @@ class User extends LoggableActiveRecord
             'gsm' => Yii::t('common', 'gsm'),
             'profil' => Yii::t('common', 'profile'),
             'address' => Yii::t('common', 'address'),
-            'centre' => Yii::t('common', 'referenceCentre')
+            'centre' => Yii::t('common', 'referenceCentre'),
+            'registerDate' => Yii::t('common', 'registerDate')
         );
     }
 
@@ -247,15 +248,15 @@ class User extends LoggableActiveRecord
     public function getArrayProfil()
     {
         $res = array();
-        $res ['clinicien'] = 'Clinicien';
-        $res ['administrateur'] = 'Administrateur';
-        $res ['administrateur de projet'] = 'Administrateur de projet';
-        $res ['neuropathologiste'] = 'Neuropathologiste';
-        $res ['geneticien'] = 'Généticien';
-        $res ['chercheur'] = 'Chercheur';
-        $res ['clinicienMaster'] = 'Clinicien Master';
-        $res ['neuroMaster'] = 'Neuropathologique Master';
-        $res ['geneticienMaster'] = 'Généticien Master';
+        $res ['Clinicien'] = 'Clinicien';
+        $res ['Administrateur'] = 'Administrateur';
+        $res ['Administrateur de projet'] = 'Administrateur du projet';
+        $res ['Neuropathologiste'] = 'Neuropathologiste';
+        $res ['Généticien'] = 'Généticien';
+        $res ['Chercheur'] = 'Chercheur';
+        $res ['Clinicien Master'] = 'Clinicien Master';
+        $res ['Neuropathologique Master'] = 'Neuropathologiste Master';
+        $res ['Généticien Master'] = 'Généticien Master';
         return $res;
     }
 
@@ -276,7 +277,7 @@ class User extends LoggableActiveRecord
     {
         $resArrayFiltered = (array) $this->getArrayProfilSorted();
         foreach ($resArrayFiltered AS $key => $value) {
-            if ($value == "administrateur") {
+            if ($value == "Administrateur") {
                 unset($resArrayFiltered[$key]);
             }
         }
@@ -289,7 +290,11 @@ class User extends LoggableActiveRecord
     public function getArrayAvailableProfil($user)
     {
         $users = User::model()->findByPk(new MongoID($user));
-        return array_diff($this->getArrayProfilFiltered(), $users->profil);
+        $user = array();
+        foreach ($users->profil as $u) {
+            $user[$u] = ucfirst($u);
+        }
+        return array_diff($this->getArrayProfilFiltered(), $user);
     }
 
     /**
@@ -394,7 +399,7 @@ class User extends LoggableActiveRecord
             if (gettype($this->profil) == "string") {
                 
             } else
-            if (in_array("clinicien", $this->profil) && ($this->address == "")) {
+            if (in_array("Clinicien", $this->profil) && ($this->address == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'address', array()));
                 $this->addError('address', Yii::t('common', 'addressClinician'));
             }
@@ -407,7 +412,7 @@ class User extends LoggableActiveRecord
             if (gettype($this->profil) == "string") {
                 
             } else
-            if (in_array("neuropathologiste", $this->profil) && ($this->centre == "")) {
+            if (in_array("Neuropathologiste", $this->profil) && ($this->centre == "")) {
                 $this->validatorList->add(CValidator::createValidator('required', $this, 'centre', array()));
                 $this->addError('centre', Yii::t('common', 'centerNeuropathologist'));
             }
@@ -416,29 +421,29 @@ class User extends LoggableActiveRecord
 
     public function getDefaultProfil()
     {
-        if (in_array("administrateur", $this->profil)) {
-            return "administrateur";
+        if (in_array("Administrateur", $this->profil)) {
+            return "Administrateur";
         }
-        if (in_array("neuropathologiste", $this->profil)) {
-            return "neuropathologiste";
+        if (in_array("Neuropathologiste", $this->profil)) {
+            return "Neuropathologiste";
         }
-        if (in_array("geneticien", $this->profil)) {
-            return "geneticien";
+        if (in_array("Généticien", $this->profil)) {
+            return "Généticien";
         }
-        if (in_array("clinicien", $this->profil)) {
-            return "clinicien";
+        if (in_array("Clinicien", $this->profil)) {
+            return "Clinicien";
         }
-        if (in_array("chercheur", $this->profil)) {
-            return "chercheur";
+        if (in_array("Chercheur", $this->profil)) {
+            return "Chercheur";
         }
-        if (in_array("clinicienMaster", $this->profil)) {
-            return "clinicienMaster";
+        if (in_array("Clinicien Master", $this->profil)) {
+            return "Clinicien Master";
         }
-        if (in_array("neuroMaster", $this->profil)) {
-            return "neuroMaster";
+        if (in_array("Neuropathologiste Master", $this->profil)) {
+            return "Neuropathologiste Master";
         }
-        if (in_array("geneticienMaster", $this->profil)) {
-            return "geneticienMaster";
+        if (in_array("Généticien Master", $this->profil)) {
+            return "Généticien Master";
         }
     }
 }

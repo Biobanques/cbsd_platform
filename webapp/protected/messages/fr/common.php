@@ -12,6 +12,8 @@ return array(
     'phone' => 'Téléphone',
     'address' => 'Adresse',
     'referenceCentre' => 'Centre de référence',
+    'profile' => 'Profil',
+    'registerDate' => 'Date d\'inscription',
     // attributs
     'identifier' => 'Identifiant',
     'anonymat' => 'N° anonymat',

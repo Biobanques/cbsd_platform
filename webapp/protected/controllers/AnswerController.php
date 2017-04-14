@@ -143,7 +143,7 @@ class AnswerController extends Controller {
             $criteria = new EMongoCriteria();
             $criteria->id_patient = (string) $model->id;
             $criteriaCliniques = new EMongoCriteria($criteria);
-            if (Yii::app()->user->getState('activeProfil') == "clinicien") {
+            if (Yii::app()->user->getState('activeProfil') == "Clinicien") {
                 $criteriaCliniques->login = Yii::app()->user->id;
             }
             $criteriaCliniques->type = "clinique";

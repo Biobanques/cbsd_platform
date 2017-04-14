@@ -213,8 +213,8 @@ class SiteController extends Controller
         if (isset($_POST['User'])) {
             $profilSelected = array_filter($_POST['User']['profil']);
             if (!empty($profilSelected)) {
-                if (in_array('clinicien', $profilSelected)) {
-                    array_push($model->profil, 'clinicien');
+                if (in_array('Clinicien', $profilSelected)) {
+                    array_push($model->profil, 'Clinicien');
                     $model->address = $_POST['User']['address'];
                     if ($model->save()) {
                         CommonMailer::sendConfirmationAdminProfilUser($model);
@@ -224,7 +224,7 @@ class SiteController extends Controller
                         $this->redirect(array('site/index'));
                     }
                 } else {
-                    if (in_array('neuropathologiste', $profilSelected)) {
+                    if (in_array('Neuropathologiste', $profilSelected)) {
                         if ($_POST['User']['centre'] == null || $_POST['User']['centre'] == "") {
                             $model->addError('centre', Yii::t('common', 'referenceCenterRequired'));
                             Yii::app()->user->setFlash('erreur', Yii::t('common', 'referenceCenterRequired'));
@@ -251,26 +251,26 @@ class SiteController extends Controller
     public function actionSubscribeProfil()
     {
         $model = new User ();
-        if (isset($_POST['clinicien'])) {
-            $_SESSION['profil'] = $profil = "clinicien";
+        if (isset($_POST['Clinicien'])) {
+            $_SESSION['profil'] = $profil = "Clinicien";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
-        } elseif (isset($_POST['neuropathologiste'])) {
-            $_SESSION['profil'] = $profil = "neuropathologiste";
+        } elseif (isset($_POST['Neuropathologiste'])) {
+            $_SESSION['profil'] = $profil = "Neuropathologiste";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
-        } elseif (isset($_POST['geneticien'])) {
-            $_SESSION['profil'] = $profil = "geneticien";
+        } elseif (isset($_POST['Généticien'])) {
+            $_SESSION['profil'] = $profil = "Généticien";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
-        } elseif (isset($_POST['chercheur'])) {
-            $_SESSION['profil'] = $profil = "chercheur";
+        } elseif (isset($_POST['Chercheur'])) {
+            $_SESSION['profil'] = $profil = "Chercheur";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
-        } elseif (isset($_POST['clinicienMaster'])) {
-            $_SESSION['profil'] = $profil = "clinicienMaster";
+        } elseif (isset($_POST['Clinicien Master'])) {
+            $_SESSION['profil'] = $profil = "Clinicien Master";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
-        } elseif (isset($_POST['neuroMaster'])) {
-            $_SESSION['profil'] = $profil = "neuroMaster";
+        } elseif (isset($_POST['Neuropathologiste Master'])) {
+            $_SESSION['profil'] = $profil = "Neuropathologiste Master";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
-        } elseif (isset($_POST['geneticienMaster'])) {
-            $_SESSION['profil'] = $profil = "geneticienMaster";
+        } elseif (isset($_POST['Généticien Master'])) {
+            $_SESSION['profil'] = $profil = "Généticien Master";
             $this->render('subscribe', array('model' => $model, 'profil' => $_SESSION['profil']));
         } else {
             $this->render('subscribeProfil', array('model' => $model));
@@ -294,7 +294,7 @@ class SiteController extends Controller
             if (count($userLogin) > 0) {
                 Yii::app()->user->setFlash('erreur', Yii::t('common', 'loginExist'));
             } else {
-                if ($profil == "clinicien") {
+                if ($profil == "Clinicien") {
                     if ($model->validate()) {
                         if (empty($_POST['User']['address'])) {
                             $model->addError('address', Yii::t('common', 'addressRequired'));
@@ -308,7 +308,7 @@ class SiteController extends Controller
                         }
                     }
                 }
-                if ($profil == "neuropathologiste") {
+                if ($profil == "Neuropathologiste") {
                     if ($model->validate()) {
                         if (empty($_POST['User']['centre'])) {
                             $model->addError('centre', Yii::t('common', 'referenceCenterRequired'));
@@ -322,7 +322,7 @@ class SiteController extends Controller
                         }
                     }
                 }
-                if ($profil == "geneticien" || $profil == "chercheur" || $profil == "clinicienMaster" || $profil == "neuroMaster" || $profil == "geneticienMaster") {
+                if ($profil == "Généticien" || $profil == "Chercheur" || $profil == "Clinicien Master" || $profil == "Neuropathologiste Master" || $profil == "Généticien Master") {
                     if ($model->save()) {
                         CommonMailer::sendSubscribeUserMail($model, $profil);
                         CommonMailer::sendMailConfirmationProfilEmail($model, $profil, NULL);
@@ -351,7 +351,7 @@ class SiteController extends Controller
                         $model->profil = (array) $_GET['arg2'];
                     }
                     if (isset($_GET['arg2']) && isset($_GET['arg3'])) {
-                        if ($_GET['arg2'] == "neuropathologiste") {
+                        if ($_GET['arg2'] == "Neuropathologiste") {
                             $model->centre = $_GET['arg3'];
                         }
                     }

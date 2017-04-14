@@ -12,6 +12,7 @@ return array(
     'address' => 'Address',
     'referenceCentre' => 'Reference center',
     'profile' => 'Profile',
+    'registerDate' => 'Register date',
     // attributes
     'anonymat' => 'Anonymity number',
     'name' => 'Name',

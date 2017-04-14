@@ -30,7 +30,7 @@ class FicheController extends Controller {
                 'actions' => array(
                     'index', 'dynamicquestions', 'admin', 'view', 'update', 'delete', 'viewOnePage', 'exportPDF'
                 ),
-                'expression' => '$user->getActiveProfil() == "administrateur"'
+                'expression' => '$user->getActiveProfil() == "Administrateur"'
             ),
             array('deny', // deny all users
                 'users' => array('*'),

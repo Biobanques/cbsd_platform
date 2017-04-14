@@ -5,13 +5,13 @@
  * French translations file for user items and messages
  */
 return array(
-    'administrateur' => 'Administrateur',
-    'administrateur de projet' => 'Administrateur du projet',
-    'clinicien' => 'Clinicien',
-    'neuropathologiste' => 'Neuropathologiste',
-    'geneticien' => 'Généticien',
-    'chercheur' => 'Chercheur',
-    'clinicienMaster' => 'Clinicien Master',
-    'neuroMaster' => 'Neuropathologiste Master',
-    'geneticienMaster' => 'Généticien Master'
+    'Administrateur' => 'Administrateur',
+    'Administrateur du projet' => 'Administrateur du projet',
+    'Clinicien' => 'Clinicien',
+    'Neuropathologiste' => 'Neuropathologiste',
+    'Généticien' => 'Généticien',
+    'Chercheur' => 'Chercheur',
+    'Clinicien Master' => 'Clinicien Master',
+    'Neuropathologiste Master' => 'Neuropathologiste Master',
+    'Généticien Master' => 'Généticien Master'
 );

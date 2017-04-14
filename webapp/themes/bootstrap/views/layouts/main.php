@@ -95,8 +95,8 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                             <?php if (Yii::app()->user->isAuthorizedViewPatientNavbar() && Yii::app()->controller->action->id != "loginProfil") { ?>
                                 <li><a href="<?php echo Yii::app()->createUrl('site/patient'); ?>"><?php echo Yii::t('navbar', 'seizeForm'); ?></a></li>
                             <?php } ?>
-                            <?php if (!Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "clinicien" && Yii::app()->user->getActiveProfil() != "chercheur") { ?>
-                                <li><a href="<?php echo Yii::app()->createUrl('rechercheFiche/admin'); ?>"><?php echo (Yii::app()->user->getActiveProfil() != "administrateur de projet") ? Yii::t('navbar', 'searchForm') : Yii::t('navbar', 'projectManager'); ?></a></li>
+                            <?php if (!Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "Clinicien" && Yii::app()->user->getActiveProfil() != "Chercheur") { ?>
+                                <li><a href="<?php echo Yii::app()->createUrl('rechercheFiche/admin'); ?>"><?php echo (Yii::app()->user->getActiveProfil() != "Administrateur du projet") ? Yii::t('navbar', 'searchForm') : Yii::t('navbar', 'projectManager'); ?></a></li>
                             <?php } ?>
                             <?php if (Yii::app()->user->isAdmin() && Yii::app()->controller->action->id != "loginProfil") { ?>
                                 <li><a href="<?php echo Yii::app()->createUrl('administration/index'); ?>"><?php echo Yii::t('navbar', 'administration'); ?></a></li>
@@ -208,18 +208,6 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/datePicker.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/maintenance.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-        <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
-        <script>
-            webshims.setOptions('forms-ext', {types: 'date'});
-            webshims.polyfill('forms forms-ext');
-            webshims.formcfg = {
-                en: {
-                    dateSigns: '-',
-                    patterns: {
-                        d: "dd/mm/yy"
-                    }
-                }
-            };
-        </script>
+
     </body>
 </html>

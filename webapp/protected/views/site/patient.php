@@ -43,25 +43,7 @@
         </div>
         <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'date_naissance'); ?>
-            <?php
-            $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'model' => $model,
-                'attribute' => 'date_naissance',
-                'options' => array(
-                    'showAnim' => 'fold',
-                    'dateFormat'=>'mm/dd/yy',
-                    'yearRange'=>'-200:+0',
-                    'changeMonth' => true,
-                  'changeYear' => true,
-                    'minDate'=>'01/01/1900',      // minimum date
-        'maxDate' => '0',
-                ),
-                'htmlOptions' => array(
-                    'placeholder' => 'Format jj/mm/aaaa'
-                ),
-                'language' => 'fr',
-            ));
-            ?>
+            <?php echo $form->dateField($model, 'date_naissance'); ?>
             <?php echo $form->error($model, 'date_naissance'); ?>
         </div>
     </div>

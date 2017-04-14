@@ -12,9 +12,9 @@ $(document).ready(function () {
         return this.value;
     }).get();
     for (var i = 0; i < checkedVals.length; i++) {
-        if (checkedVals[i] == "clinicien")
+        if (checkedVals[i] == "Clinicien")
             clinicien = true;
-        if (checkedVals[i] == "neuropathologiste")
+        if (checkedVals[i] == "Neuropathologiste")
             neuropathologiste = true;
     }
     if (clinicien) {
@@ -37,9 +37,9 @@ function getProfil() {
         return this.value;
     }).get();
     for (var i = 0; i < checkedVals.length; i++) {
-        if (checkedVals[i] == "clinicien")
+        if (checkedVals[i] == "Clinicien")
             clinicien = true;
-        if (checkedVals[i] == "neuropathologiste")
+        if (checkedVals[i] == "Neuropathologiste")
             neuropathologiste = true;
     }
     if (clinicien) {

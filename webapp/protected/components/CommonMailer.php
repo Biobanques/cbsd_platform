@@ -137,9 +137,13 @@ class CommonMailer {
         $userDetails = '';
         foreach ($user->getAttributes() as $label => $value) {
             if ($label == "profil") {
-                $userDetails.="<li>" . $label . " : " . $profil . "</li>";
+                $userDetails.="<li>" . $user->attributeLabels()[$label] . ": " . $profil . "</li>";
             } else {
-                $userDetails.="<li>$label : $value</li>";
+                if (is_array($value)) {
+                    $userDetails.="<li>" . $user->attributeLabels()[$label] . ": " . date('d/m/Y', strtotime($value['date'])) . "</li>";
+                } else {
+                    $userDetails.="<li>" . $user->attributeLabels()[$label] . ": $value</li>";
+                }
             }
         }
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">

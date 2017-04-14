@@ -52,9 +52,9 @@ class Project extends EMongoDocument {
     public function attributeLabels() {
         return array(
             'user' => Yii::t('common','login'),
-            'project_name' => 'Nom du projet',
-            'file' => 'Fichier',
-            'project_date' => 'Date du projet'
+            'project_name' => Yii::t('administration','projectName'),
+            'file' => Yii::t('administration','file'),
+            'project_date' => Yii::t('administration','projectDate')
         );
     }
     

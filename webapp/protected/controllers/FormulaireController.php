@@ -26,7 +26,7 @@ class FormulaireController extends Controller {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('create', 'update', 'admin', 'view', 'delete', 'deleteQuestion', 'deleteQuestionGroup', 'dynamicquestions'),
-                'expression' => '$user->getActiveProfil() == "administrateur"'
+                'expression' => '$user->getActiveProfil() == "Administrateur"'
             ),
             array('deny', // deny all users
                 'users' => array('*'),
