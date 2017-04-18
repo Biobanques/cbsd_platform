@@ -1,8 +1,7 @@
 <?php if (Yii::app()->user->getState('activeProfil') != "chercheur") { ?>
     <h4>Patient</h4>
     <?php
-    $this->widget('bootstrap.widgets.TbGridView', array(
-        'type' => 'striped bordered condensed',
+    $this->widget('zii.widgets.grid.CGridView', array(
         'dataProvider' => new CArrayDataProvider(array(get_object_vars($patient))),
         'template' => "{items}",
         'columns' => array(

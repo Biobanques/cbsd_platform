@@ -5,6 +5,7 @@
  * English translations file for user items and messages
  */
 return array(
+    'login' => 'Login',
     'saveBtn' => 'Save',
     'createBtn' => 'Create',
     'updateBtn' => 'Update',

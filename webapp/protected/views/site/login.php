@@ -45,7 +45,7 @@ Yii::app()->clientScript->registerScript('loginForm', "
             </div>
 
             <div class="row buttons">
-                <?php echo CHtml::submitButton(Yii::t('button', 'seconnecter'), array('class' => 'btn btn-primary')); ?>
+                <?php echo CHtml::submitButton(Yii::t('button', 'login'), array('class' => 'btn btn-primary')); ?>
             </div>
 
             <?php

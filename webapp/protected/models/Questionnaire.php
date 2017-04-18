@@ -137,11 +137,14 @@ class Questionnaire extends LoggableActiveRecord
         if ($activeProfil == "Clinicien") {
             $typeFiche = "clinique";
         }
-        if ($activeProfil == "Neuropathologiste") {
+        elseif ($activeProfil == "Neuropathologiste") {
             $typeFiche = "neuropathologique";
         }
-        if ($activeProfil == "Généticien") {
+        elseif ($activeProfil == "Généticien") {
             $typeFiche = "genetique";
+        } else {
+            Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowAccessPage'));
+            Yii::app()->getController()->redirect(array('site/index'));
         }
         $criteria = new EMongoCriteria();
         $criteria->type = $typeFiche;

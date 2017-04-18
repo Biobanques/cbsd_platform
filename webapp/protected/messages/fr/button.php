@@ -5,6 +5,7 @@
  * French translations file for user items and messages
  */
 return array(
+    'login' => 'Connexion',
     'saveBtn' => 'Enregistrer',
     'createBtn' => 'Créer',
     'updateBtn' => 'Mettre à jour',
