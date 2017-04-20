@@ -83,48 +83,59 @@ class QuestionnaireController extends Controller {
             foreach ($answer_group->answers as $answerQuestion) {
                 $input = $answer_group->id . "_" . $answerQuestion->id;
                 if (isset($_POST['Questionnaire'][$input])) {
-                        $flagNoInputToSave = false;
-                        if ($answerQuestion->type != "number" && $answerQuestion->type != "expression" && $answerQuestion->type != "date") {
+                    $flagNoInputToSave = false;
+                    switch ($answerQuestion->type) {
+                        case "input":
+                        case "text":
                             $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
-                        } elseif ($answerQuestion->type == "date") {
-                            $answerQuestion->setAnswerDate(CommonTools::formatDateFR($_POST['Questionnaire'][$input]));
-                        } else {
+                            break;
+                        case "number":
+                        case "expression":
                             $answerQuestion->setAnswerNumerique($_POST['Questionnaire'][$input]);
-                        }
-                }
+                            break;
+                        case "date":
+                            $answerQuestion->setAnswerDate(CommonTools::formatDateFR($_POST['Questionnaire'][$input]));
+                            break;
+                        case "radio":
+                        case "list":
+                        case "checkbox":
+                            $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
+                            break;
+                    }
 //if array, specific save action
-                if ($answerQuestion->type == "array") {
+                    if ($answerQuestion->type == "array") {
 //construct each id input an dget the result to store it
-                    $rows = $answerQuestion->rows;
-                    $arrows = split(",", $rows);
-                    $cols = $answerQuestion->columns;
-                    $arcols = split(",", $cols);
-                    $answerArray = "";
-                    foreach ($arrows as $row) {
-                        foreach ($arcols as $col) {
-                            $idunique = $idquestiongroup . "_" . $question->id . "_" . $row . "_" . $col;
-                            if (isset($_POST['Questionnaire'][$idunique])) {
-                                $answerArray.=$_POST['Questionnaire'][$idunique] . ",";
+                        $rows = $answerQuestion->rows;
+                        $arrows = split(",", $rows);
+                        $cols = $answerQuestion->columns;
+                        $arcols = split(",", $cols);
+                        $answerArray = "";
+                        foreach ($arrows as $row) {
+                            foreach ($arcols as $col) {
+                                $idunique = $idquestiongroup . "_" . $question->id . "_" . $row . "_" . $col;
+                                if (isset($_POST['Questionnaire'][$idunique])) {
+                                    $answerArray.=$_POST['Questionnaire'][$idunique] . ",";
+                                }
                             }
                         }
+                        $answerQuestion->setAnswer($answerArray);
                     }
-                    $answerQuestion->setAnswer($answerArray);
                 }
-            }
-        }if ($flagNoInputToSave == false) {
-            if ($answer->save())
-                Yii::app()->user->setFlash('succès', Yii::t('common', 'patientFormSaved'));
-            else {
+            }if ($flagNoInputToSave == false) {
+                if ($answer->save())
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'patientFormSaved'));
+                else {
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'patientFormNotSaved'));
+                    Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+                }
+            } else {
                 Yii::app()->user->setFlash('erreur', Yii::t('common', 'patientFormNotSaved'));
-                Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
-            }
-        } else {
-            Yii::app()->user->setFlash('erreur', Yii::t('common', 'patientFormNotSaved'));
 //null result
-            $answer = null;
-        }
+                $answer = null;
+            }
 
-        return $answer;
+            return $answer;
+        }
     }
 
     /**
@@ -173,4 +184,3 @@ class QuestionnaireController extends Controller {
     }
 
 }
-
