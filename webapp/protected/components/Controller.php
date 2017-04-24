@@ -131,7 +131,7 @@ class Controller extends CController {
                         Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowAccessPage'));
                         $this->redirect(array('site/index'));
                     }
-                    if (Yii::app()->controller->id == "user" || Yii::app()->controller->id == "formulaire" || Yii::app()->controller->id == "fiche" || Yii::app()->controller->id == "questionBloc" || Yii::app()->controller->id == "administration" || Yii::app()->controller->id == "auditTrail" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "admin/admin") {
+                    if (Yii::app()->controller->id == "user" || Yii::app()->controller->id == "formulaire" || Yii::app()->controller->id == "fiche" || Yii::app()->controller->id == "questionBloc" || Yii::app()->controller->id == "administration" || Yii::app()->controller->id == "auditTrail" || Yii::app()->controller->id == "project" || Yii::app()->controller->id == "fileImport" || Yii::app()->urlManager->parseUrl(Yii::app()->request) == "admin/admin") {
                         if (!Yii::app()->user->isAdmin()) {
                             Yii::app()->user->setFlash("erreur", Yii::t('common', 'notAllowManagement'));
                             $this->redirect(array('site/index'));

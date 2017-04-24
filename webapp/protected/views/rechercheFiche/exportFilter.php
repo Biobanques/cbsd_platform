@@ -34,7 +34,7 @@ $form = $this->beginWidget('CActiveForm', array(
 ));
 ?>
 <?php 
-if (Yii::app()->user->getState('activeProfil') == "administrateur de projet") {
+if (Yii::app()->user->getState('activeProfil') == "Administrateur du projet") {
     echo CHtml::label('Donner un nom au projet', 'project', array('required' => 'required'));
     echo CHtml::textField('project');
 } 
