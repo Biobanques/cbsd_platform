@@ -206,30 +206,9 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/datePicker.js"></script>
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/singleDatePicker.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/maintenance.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-        <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
-        <script>
-            webshims.setOptions('forms-ext', {types: 'date'});
-            webshims.polyfill('forms forms-ext');
-            webshims.formcfg = {
-                en: {
-                    dateSigns: '-',
-                    patterns: {
-                        d: "dd/mm/yy"
-                    }
-                }
-            };
-        </script>
-        <script>
-            $(function () {
-                $("#datepicker").datepicker({
-                    changeMonth: true,
-                    changeYear: true,
-                    yearRange: "1900:2999",
-                    dateFormat: "dd/mm/yy"
-                });
-            });
-        </script>
+
     </body>
 </html>
