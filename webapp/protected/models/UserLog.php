@@ -5,7 +5,7 @@
  * @author nmalservet
  *
  */
-class UserLog extends EMongoDocument
+class UserLog extends LoggableActiveRecord
 {
     public $user;
     public $ipAddress;

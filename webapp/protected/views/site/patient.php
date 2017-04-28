@@ -43,7 +43,7 @@
         </div>
         <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'date_naissance'); ?>
-            <?php echo $form->dateField($model, 'date_naissance', array("onfocus" => "singleDatePicker(this.name)")); ?>
+            <?php echo $form->textField($model, 'date_naissance', array("onfocus" => "singleDatePicker(this.name)")); ?>
             <?php echo $form->error($model, 'date_naissance'); ?>
         </div>
     </div>

@@ -7,7 +7,7 @@
  * @author Bernard TE
  *
  */
-class Project extends EMongoDocument {
+class Project extends LoggableActiveRecord {
 
     /**
      * 

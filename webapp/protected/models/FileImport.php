@@ -7,7 +7,7 @@
  * @author Bernard TE
  *
  */
-class FileImport extends EMongoDocument {
+class FileImport extends LoggableActiveRecord {
 
     /**
      * 

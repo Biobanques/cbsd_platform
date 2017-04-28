@@ -174,23 +174,23 @@ class QuestionnaireHTMLRenderer {
             }
         }
         if ($question->type == "input") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\" style=\"height:30px;\"/>";
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
         if ($question->type == "number" || $question->type == "expression") {
-            $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\" style=\"height:30px;\"/>";
+            $result.="<input type=\"number\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
         if ($question->type == "date") {
             if (Yii::app()->controller->id == "answer" || Yii::app()->controller->id == "fiche") {
                 if ($valueInput != "") {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" style=\"height:30px;\"/>";
+                    $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\" onfocus=\"singleDatePicker(this.name)\"/>";
                 } else {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\" style=\"height:30px;\"/>";
+                    $result.="<input type=\"text\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\" onfocus=\"singleDatePicker(this.name)\"/>";
                 }
             } else {
                 if ($valueInput != "") {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\" style=\"height:30px;\"/>";
+                    $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\" onfocus=\"singleDatePicker(this.name)\"/>";
                 } else {
-                    $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\" style=\"height:30px;\"/>";
+                    $result.="<input type=\"text\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\" onfocus=\"singleDatePicker(this.name)\"/>";
                 }
             }
         }

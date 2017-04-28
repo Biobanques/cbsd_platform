@@ -5,7 +5,7 @@
  * @author nmalservet
  *
  */
-class ColumnFileMaker extends EMongoDocument
+class ColumnFileMaker extends LoggableActiveRecord
 {
     public $currentColumn;
     public $newColumn;
