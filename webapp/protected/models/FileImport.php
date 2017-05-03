@@ -101,19 +101,6 @@ class FileImport extends LoggableActiveRecord {
             'criteria' => $criteria
         ));
     }
-
-    /**
-     * retourne l'utilisateur
-     * @return type
-     */
-    public function getUserRecorderName() {
-        $result = "-";
-        $user = User::model()->findByPk(new MongoID($this->user));
-        if ($user != null) {
-            $result = ucfirst($user->prenom) . " " . strtoupper($user->nom);
-        }
-        return $result;
-    }
     
     /**
      * get the last updatedvalue into a french date format JJ/MM/AAAA

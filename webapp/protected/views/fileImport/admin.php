@@ -67,7 +67,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'fileImport-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
+        array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => 'CommonTools::getUserLogin()'),
         array('header' => $model->attributeLabels()["filename"], 'name' => 'filename'),
         array('header' => $model->attributeLabels()["filesize"], 'name' => 'filesize', 'value' => 'CommonTools::formatSizeUnits($data["filesize"])'),
         array('header' => $model->attributeLabels()["extension"], 'name' => 'extension'),

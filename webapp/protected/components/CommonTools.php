@@ -168,6 +168,15 @@ class CommonTools {
         }
         return $result;
     }
+    
+    public function getUserLogin() {
+        $result = "-";
+        $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
+        if ($user != null) {
+            $result = $user->login;
+        }
+        return $result;
+    }
 
     public function array_swap(&$array, $swap_a, $swap_b) {
         list($array[$swap_a], $array[$swap_b]) = array($array[$swap_b], $array[$swap_a]);

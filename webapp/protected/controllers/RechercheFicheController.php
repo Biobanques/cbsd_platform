@@ -131,7 +131,7 @@ class RechercheFicheController extends Controller {
             $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
             if (isset($_POST['project'])) {
                 $project = new Project;
-                $project->user = CommonTools::getUserRecorderName();
+                $project->user = CommonTools::getUserLogin();
                 $project->project_name = $_POST['project'];
                 $project->file = $filename;
                 $project->project_date = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
