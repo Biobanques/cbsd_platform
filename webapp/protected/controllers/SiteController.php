@@ -1,7 +1,7 @@
 <?php
 
-class SiteController extends Controller
-{
+class SiteController extends Controller {
+
     /**
      * NB : boostrap theme need this column2 layout
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -12,22 +12,20 @@ class SiteController extends Controller
     /**
      * @return array action filters
      */
-    public function filters()
-    {
+    public function filters() {
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
         );
     }
-    
+
     /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
      *
      * @return array access control rules
      */
-    public function accessRules()
-    {
+    public function accessRules() {
         return array(
             array(
                 'allow',
@@ -76,8 +74,7 @@ class SiteController extends Controller
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         // renders the view file 'protected/views/site/index.php'
         // using the default layout 'protected/views/layouts/main.php'
 
@@ -87,8 +84,7 @@ class SiteController extends Controller
     /**
      * This is the action to handle external exceptions.
      */
-    public function actionError()
-    {
+    public function actionError() {
         if ($error == Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
@@ -111,10 +107,9 @@ class SiteController extends Controller
     /**
      * Displays the login page
      */
-    public function actionLogin()
-    {
+    public function actionLogin() {
         $model = new LoginForm;
-        
+
         $userLog = new UserLog;
 
         // if it is ajax validation request
@@ -158,7 +153,7 @@ class SiteController extends Controller
                     $this->redirect(array('site/index'));
                 }
             } else {
-                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'incorrectLoginPassword'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'incorrectLoginPassword'));
             }
         }
         // display the login form
@@ -168,8 +163,7 @@ class SiteController extends Controller
     /**
      * Logs out the current user and redirect to homepage.
      */
-    public function actionLogout()
-    {
+    public function actionLogout() {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
     }
@@ -179,8 +173,7 @@ class SiteController extends Controller
     /**
      * display the recover password page
      */
-    public function actionRecoverPwd()
-    {
+    public function actionRecoverPwd() {
         $model = new RecoverPwdForm();
         $result = '';
         if (isset($_POST['RecoverPwdForm'])) {
@@ -203,8 +196,7 @@ class SiteController extends Controller
     /**
      * action to add a new profil to an user.
      */
-    public function actionUpdateSubscribe()
-    {
+    public function actionUpdateSubscribe() {
         $model = new User;
         if (isset(Yii::app()->user->id)) {
             $model = User::model()->findByPk(new MongoID(Yii::app()->user->id));
@@ -248,8 +240,7 @@ class SiteController extends Controller
     /**
      * Displays the subscribeProfil page. User can choose which profil he wants to subscribe.
      */
-    public function actionSubscribeProfil()
-    {
+    public function actionSubscribeProfil() {
         $model = new User ();
         if (isset($_POST['Clinicien'])) {
             $_SESSION['profil'] = $profil = "Clinicien";
@@ -280,58 +271,61 @@ class SiteController extends Controller
     /**
      * action to subscribe a new user account.
      */
-    public function actionSubscribe()
-    {
+    public function actionSubscribe() {
         $model = new User();
         $model->setScenario('subscribe');
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             strtoupper($model->nom);
             ucfirst($model->prenom);
+            $model->login = strtolower($model->prenom . "." . $model->nom);
             $model->telephone = str_replace(" ", "", $model->telephone);
             $profil = implode("", $model->profil);
             $userLogin = $model->getAllUsersByLogin($model);
             if (count($userLogin) > 0) {
-                Yii::app()->user->setFlash('erreur', Yii::t('common', 'loginExist'));
-            } else {
-                if ($profil == "Clinicien") {
-                    if ($model->validate()) {
-                        if (empty($_POST['User']['address'])) {
-                            $model->addError('address', Yii::t('common', 'addressRequired'));
-                        } else {
-                            if ($model->save()) {
-                                CommonMailer::sendSubscribeUserMail($model, $profil);
-                                CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['address']);
-                                Yii::app()->user->setFlash('succès', Yii::t('common', 'success_register'));
-                                $this->redirect(array('site/login'));
-                            }
-                        }
-                    }
+                $nbUserLogin = count($userLogin);
+                $model->login = strtolower($model->prenom . "." . $model->nom . $nbUserLogin);
+                while (User::model()->findByAttributes(array('login' => $model->login)) != null) {
+                    $model->login = strtolower($model->prenom . "." . $model->nom . $nbUserLogin++);
                 }
-                if ($profil == "Neuropathologiste") {
-                    if ($model->validate()) {
-                        if (empty($_POST['User']['centre'])) {
-                            $model->addError('centre', Yii::t('common', 'referenceCenterRequired'));
-                        } else {
-                            if ($model->save()) {
-                                CommonMailer::sendSubscribeUserMail($model, $profil);
-                                CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['centre']);
-                                Yii::app()->user->setFlash('succès', Yii::t('common', 'success_register'));
-                                $this->redirect(array('site/login'));
-                            }
-                        }
-                    }
-                }
-                if ($profil == "Généticien" || $profil == "Chercheur" || $profil == "Clinicien Master" || $profil == "Neuropathologiste Master" || $profil == "Généticien Master") {
-                    if ($model->save()) {
-                        CommonMailer::sendSubscribeUserMail($model, $profil);
-                        CommonMailer::sendMailConfirmationProfilEmail($model, $profil, NULL);
-                        Yii::app()->user->setFlash('succès', Yii::t('common', 'success_register'));
-                        $this->redirect(array('site/login'));
-                    }
-                }
-                Yii::app()->user->setFlash('erreur', Yii::t('common', 'userNotSaved'));
             }
+            if ($profil == "Clinicien") {
+                if ($model->validate()) {
+                    if (empty($_POST['User']['address'])) {
+                        $model->addError('address', Yii::t('common', 'addressRequired'));
+                    } else {
+                        if ($model->save()) {
+                            CommonMailer::sendSubscribeUserMail($model, $profil);
+                            CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['address']);
+                            Yii::app()->user->setFlash('succès', Yii::t('common', 'success_register'));
+                            $this->redirect(array('site/login'));
+                        }
+                    }
+                }
+            }
+            if ($profil == "Neuropathologiste") {
+                if ($model->validate()) {
+                    if (empty($_POST['User']['centre'])) {
+                        $model->addError('centre', Yii::t('common', 'referenceCenterRequired'));
+                    } else {
+                        if ($model->save()) {
+                            CommonMailer::sendSubscribeUserMail($model, $profil);
+                            CommonMailer::sendMailConfirmationProfilEmail($model, $profil, $_POST['User']['centre']);
+                            Yii::app()->user->setFlash('succès', Yii::t('common', 'success_register'));
+                            $this->redirect(array('site/login'));
+                        }
+                    }
+                }
+            }
+            if ($profil == "Généticien" || $profil == "Chercheur" || $profil == "Clinicien Master" || $profil == "Neuropathologiste Master" || $profil == "Généticien Master") {
+                if ($model->save()) {
+                    CommonMailer::sendSubscribeUserMail($model, $profil);
+                    CommonMailer::sendMailConfirmationProfilEmail($model, $profil, NULL);
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'success_register'));
+                    $this->redirect(array('site/login'));
+                }
+            }
+            Yii::app()->user->setFlash('erreur', Yii::t('administration', 'userNotSaved'));
         }
         $this->render('subscribe', array('model' => $model));
     }
@@ -339,8 +333,7 @@ class SiteController extends Controller
     /**
      * action to confirm new profil on mail validation.
      */
-    public function actionConfirmUser()
-    {
+    public function actionConfirmUser() {
         if (isset($_GET['arg1']) && isset($_GET['arg2'])) {
             $model = User::model()->findByPk(new MongoId($_GET['arg1']));
             if ($model != null) {
@@ -376,8 +369,7 @@ class SiteController extends Controller
     /**
      * action to refuse user on mail validation.
      */
-    public function actionRefuseUser()
-    {
+    public function actionRefuseUser() {
         if (isset($_GET['arg1'])) {
             $model = User::model()->findByPk(new MongoId($_GET['arg1']));
             if ($model != null && $model->delete()) {
@@ -391,4 +383,5 @@ class SiteController extends Controller
         }
         $this->redirect(array('site/login'));
     }
+
 }

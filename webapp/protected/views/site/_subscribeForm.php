@@ -37,14 +37,14 @@
 
     <div class="row">
         <div class="col-lg-4">
-            <?php echo $form->labelEx($model, 'login'); ?>
-            <?php echo $form->textField($model, 'login', array('size' => 20, 'maxlength' => 250)); ?>
-            <?php echo $form->error($model, 'login'); ?>
-        </div>
-        <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'email'); ?>
             <?php echo $form->textField($model, 'email', array('size' => 20, 'maxlength' => 250)); ?>
             <?php echo $form->error($model, 'email'); ?>
+        </div>
+        <div class="col-lg-4">
+            <?php echo $form->labelEx($model, 'emailCompare'); ?>
+            <?php echo $form->textField($model, 'emailCompare', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'emailCompare'); ?>
         </div>
     </div>
 

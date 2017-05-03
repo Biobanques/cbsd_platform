@@ -31,7 +31,7 @@ return array(
     'patientForm' => 'Patient form ',
     'forAddQuestion' => 'To add a question',
     'forAddQuestionBlock' => 'To add an existing block of questions',
-    'forAddTab' => 'To add a questions group',
+    'forAddTab' => 'To add a tab of questions',
     'forModifyTab' => 'To modify a questions group',
     'forModifyQuestion' => 'To modify a question',
     'bloc' => 'Block ',

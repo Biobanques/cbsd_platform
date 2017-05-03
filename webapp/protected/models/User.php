@@ -14,6 +14,7 @@ class User extends LoggableActiveRecord
     public $nom;
     public $prenom;
     public $email;
+    protected $emailCompare;
     public $telephone;
     public $gsm;
     public $address;
@@ -49,6 +50,9 @@ class User extends LoggableActiveRecord
             array('password', 'compare', 'compareAttribute' => 'passwordCompare', 'on' => 'subscribe'),
             array('passwordCompare', 'safe', 'on' => 'subscribe'),
             array('passwordCompare', 'required', 'on' => 'subscribe'),
+            array('email', 'compare', 'compareAttribute' => 'emailCompare', 'on' => 'subscribe'),
+            array('emailCompare', 'safe', 'on' => 'subscribe'),
+            array('emailCompare', 'required', 'on' => 'subscribe'),
             array('prenom, nom, login, password, email, telephone, gsm, profil, address, centre', 'safe', 'on' => 'search, update')
         );
         return $result;
@@ -67,6 +71,7 @@ class User extends LoggableActiveRecord
             'password' => Yii::t('common', 'password'),
             'passwordCompare' => Yii::t('common', 'passwordCompare'),
             'email' => Yii::t('common', 'email'),
+            'emailCompare' => Yii::t('common', 'emailCompare'),
             'telephone' => Yii::t('common', 'phone'),
             'gsm' => Yii::t('common', 'gsm'),
             'profil' => Yii::t('common', 'profile'),
@@ -149,6 +154,14 @@ class User extends LoggableActiveRecord
 
     public function setPasswordCompare($value) {
         $this->passwordCompare = $value;
+    }
+    
+    public function getEmailCompare() {
+        return $this->emailCompare;
+    }
+
+    public function setEmailCompare($value) {
+        $this->emailCompare = $value;
     }
     
     /**

@@ -24,6 +24,7 @@ return array(
     'userName' => 'Identifiant',
     'password' => 'Mot de passe',
     'passwordCompare' => 'Répétez le mot de passe',
+    'emailCompare' => 'Répéter l\'email',
     'entryDate' => 'Date de saisie',
     'birthName' => 'Nom de naissance',
     'birthDate' => 'Date de naissance',

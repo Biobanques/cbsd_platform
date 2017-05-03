@@ -22,6 +22,7 @@ return array(
     'userName' => 'Username',
     'password' => 'Password',
     'passwordCompare' => 'Repeat password',
+    'emailCompare' => 'Repeat email',
     'entryDate' => 'Date of entry',
     'birthName' => 'Birth name',
     'birthDate' => 'Birth date',
