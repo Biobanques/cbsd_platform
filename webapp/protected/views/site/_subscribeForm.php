@@ -64,7 +64,7 @@
     <div class="row">
         <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'telephone'); ?>
-            <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'exemple format: 0145825443')); ?>
+            <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => 'format: 0145825443')); ?>
             <?php echo $form->error($model, 'telephone'); ?>
         </div>
         <div class="col-lg-4">
