@@ -34,9 +34,9 @@ $form = $this->beginWidget('CActiveForm', array(
 ));
 ?>
 <?php 
-if (Yii::app()->user->getState('activeProfil') == "Administrateur du projet") {
-    echo CHtml::label('Donner un nom au projet', 'project', array('required' => 'required'));
-    echo CHtml::textField('project');
+if (Yii::app()->user->getState('activeProfil') == "Administrateur de projet") {
+    echo CHtml::label(Yii::t('common', 'projectName'), 'project', array('required' => 'required'));
+    echo " " . CHtml::textField('project');
 } 
 ?>
 <br>
@@ -51,7 +51,7 @@ if (Yii::app()->user->getState('activeProfil') == "Administrateur du projet") {
         ));
     foreach ($fiches as $key => $value) {
         ?><table><?php
-        echo "<h3>Fiche " . $value . "</h3>"; 
+        echo "<h3><u>" . $value . "</u></h3>"; 
         echo CHtml::checkBoxList('filter', 'addFilter', Answer::model()->getAllQuestionsByFilterName($models, $value), array(
             'labelOptions' => array('style' => 'display:inline'),
             'separator' => '',

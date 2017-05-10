@@ -54,13 +54,18 @@ class UserController extends Controller {
         $model->setScenario('subscribe');
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
+            $model->nom = strtoupper($model->nom);
+            $model->prenom = ucfirst($model->prenom);
             $criteria = new EMongoCriteria();
-            $criteria->login = $model->login;
+            $criteria->login = $model->login = strtolower($model->prenom . "." . $model->nom);
             $userLogin = User::model()->findAll($criteria);
             if (count($userLogin) > 0) {
-                Yii::app()->user->setFlash('erreur', Yii::t('common', 'loginExist'));
-                $this->render('create', array('model' => $model));
-            } else
+                $nbUserLogin = count($userLogin);
+                $model->login = strtolower($model->prenom . "." . $model->nom . $nbUserLogin);
+                while (User::model()->findByAttributes(array('login' => $model->login)) != null) {
+                    $model->login = strtolower($model->prenom . "." . $model->nom . $nbUserLogin++);
+                }
+            }
             if ($model->save()) {
                 Yii::app()->user->setFlash('succès', Yii::t('common', 'userSaved'));
                 $this->redirect(array('view', 'id' => $model->_id));

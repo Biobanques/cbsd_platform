@@ -264,5 +264,6 @@ return array(
     'newQuestion' => 'New question',
     'optional' => 'optional',
     'queryAnonymous' => 'Restrict the query ID to',
-    'queryFormulation' => 'Formulate the query'
+    'queryFormulation' => 'Formulate the query',
+    'projectName' => 'Give a project name'
 );

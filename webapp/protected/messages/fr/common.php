@@ -271,5 +271,6 @@ return array(
     'newQuestion' => 'Nouvelle rubrique',
     'optional' => 'optionnel',
     'queryAnonymous' => 'Restreindre la requête à',
-    'queryFormulation' => 'Formuler la requête'
+    'queryFormulation' => 'Formuler la requête',
+    'projectName' => 'Donnez un nom au projet'
 );

@@ -12,6 +12,7 @@
                         array('label' => Yii::t('administration', 'manageUsers')),
                         array('label' => Yii::t('administration', 'registeredUsers'), 'icon'=>'play', 'url' => array('/user/admin')),
                         array('label' => Yii::t('administration', 'manageRules'), 'icon'=>'play', 'url' => array('/administration/admin')),
+                        array('label' => Yii::t('administration', 'referenceCenter'), 'icon'=>'play', 'url' => array('/referenceCenter/admin')),
                         array('label' => Yii::t('administration', 'manageForms')),
                         array('label' => Yii::t('administration', 'forms'), 'icon'=>'play', 'url' => array('/formulaire/admin')),
                         array('label' => Yii::t('administration', 'manageQuestionsBlock'), 'icon'=>'play', 'url' => array('/questionBloc/admin')),
