@@ -212,6 +212,19 @@ class User extends LoggableActiveRecord
         return $usersLogin;
     }
     
+     /**
+     * return all the profiles from an user.
+     */
+    public function getAllProfilesUser($userLogin)
+    {
+        $profilesUser = "";
+        $user = User::model()->findByAttributes(array('login' => $userLogin));
+        if ($user != null) {
+            $profilesUser = implode(", ", $user->profil);
+        }
+        return $profilesUser;
+    }
+    
     /**
      * get all the users email.
      */
@@ -261,15 +274,15 @@ class User extends LoggableActiveRecord
     public function getArrayProfil()
     {
         $res = array();
-        $res ['Clinicien'] = 'Clinicien';
-        $res ['Administrateur'] = 'Administrateur';
-        $res ['Administrateur de projet'] = 'Administrateur du projet';
-        $res ['Neuropathologiste'] = 'Neuropathologiste';
-        $res ['Généticien'] = 'Généticien';
-        $res ['Chercheur'] = 'Chercheur';
-        $res ['Clinicien Master'] = 'Clinicien Master';
-        $res ['Neuropathologique Master'] = 'Neuropathologiste Master';
-        $res ['Généticien Master'] = 'Généticien Master';
+        $res ['Clinicien'] = Yii::t('profile', 'Clinicien');
+        $res ['Administrateur'] = Yii::t('profile', 'Administrateur');
+        $res ['Administrateur de projet'] = Yii::t('profile', 'Administrateur du projet');
+        $res ['Neuropathologiste'] = Yii::t('profile', 'Neuropathologiste');
+        $res ['Généticien'] = Yii::t('profile', 'Généticien');
+        $res ['Chercheur'] = Yii::t('profile', 'Chercheur');
+        $res ['Clinicien Master'] = Yii::t('profile', 'Clinicien Master');
+        $res ['Neuropathologique Master'] = Yii::t('profile', 'Neuropathologiste Master');
+        $res ['Généticien Master'] = Yii::t('profile', 'Généticien Master');
         return $res;
     }
 

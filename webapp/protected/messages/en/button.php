@@ -13,6 +13,7 @@ return array(
     'subscribe' => 'Register',
     'search' => 'Search',
     'reset' => 'Reset',
+    'import' => 'Import',
     'export' => 'Export',
     'exportCSV' => 'Export the selected cases in CSV',
     'logicOperator' => 'Logic operators to be applied to the variable',

@@ -49,7 +49,7 @@ class UserTest extends PHPUnit_Framework_TestCase {
         $this->assertInternalType('object', $model->getArrayProfilSorted());
         $this->assertInternalType('array', $model->getArrayProfilFiltered());
         $this->assertInternalType('array', $model->getArrayAvailableProfil($user->_id));
-        $this->assertInternalType('array', $model->getArrayCentre());
+        $this->assertInternalType('array', CommonTools::getAllReferenceCenter());
         $this->assertNull($model->passwordValidator());
         $this->assertNull($model->telValidator());
         $this->assertNull($model->gsmValidator());

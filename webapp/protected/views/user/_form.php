@@ -93,7 +93,7 @@
         <div class="col-lg-12">
             <div id="centre" style="display:none;">
                 <?php echo CHtml::activeLabel($model, 'centre', array('required' => true)); ?>
-                <?php echo $form->dropDownList($model, 'centre', User::model()->getArrayCentre(), array('prompt' => '----')); ?>
+                <?php echo $form->dropDownList($model, 'centre', CommonTools::getAllReferenceCenter(), array('prompt' => '----')); ?>
                 <?php echo $form->error($model, 'centre'); ?>
             </div>
         </div>

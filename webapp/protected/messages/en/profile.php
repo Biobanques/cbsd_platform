@@ -11,7 +11,7 @@ return array(
     'Neuropathologiste' => 'Neuropathologist',
     'Généticien' => 'Geneticist',
     'Chercheur' => 'Researcher',
-    'Clinicien Master' => 'Clinicien Master',
-    'Neuropathologique Master' => 'Neuropathologiste Master',
-    'Généticien Master' => 'Généticien Master'
+    'Clinicien Master' => 'Clinician Master',
+    'Neuropathologiste Master' => 'Neuropathologist Master',
+    'Généticien Master' => 'Geneticist Master'
 );

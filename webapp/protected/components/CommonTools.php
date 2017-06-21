@@ -181,5 +181,17 @@ class CommonTools {
     public function array_swap(&$array, $swap_a, $swap_b) {
         list($array[$swap_a], $array[$swap_b]) = array($array[$swap_b], $array[$swap_a]);
     }
+    
+    public function getAllReferenceCenter() {
+        $aRCenter = array();
+        $referenceCenter = ReferenceCenter::model()->findAll();
+        if ($referenceCenter != null) {
+            foreach ($referenceCenter as $center) {
+                $aRCenter[$center->center] = $center->center;
+            }
+        }
+        asort($aRCenter, SORT_NATURAL | SORT_FLAG_CASE);
+        return $aRCenter;
+    }
 
 }

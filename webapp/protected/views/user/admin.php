@@ -58,6 +58,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => $model->attributeLabels()["nom"], 'name' => 'nom'),
         array('header' => $model->attributeLabels()["prenom"], 'name' => 'prenom'),
         array('header' => $model->attributeLabels()["email"], 'name' => 'email'),
+        array('header' => $model->attributeLabels()["profil"], 'name' => 'profil', 'value' => '$data->getAllProfilesUser($data->login)'),
         array(
             'class' => 'CButtonColumn',
             'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }',

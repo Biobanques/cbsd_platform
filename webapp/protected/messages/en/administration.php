@@ -15,7 +15,7 @@ return array(
     'userLog' => 'User log',
     'manageProjects' => 'Project manager',
     'filemaker' => 'Database FileMaker',
-    'importFilemaker' => 'FileMaker',
+    'importFilemaker' => 'History of FileMaker imports',
     // title
     'registeredUsers' => 'Registered users',
     'manageUsers' => 'Manage users',
@@ -40,7 +40,7 @@ return array(
     'importFileMaker' => 'Import FileMaker',
     'createColumn' => 'Create column',
     'updateColumn' => 'Update column',
-    'columnFileMaker' => 'Manage column FileMaker',
+    'columnFileMaker' => 'Manage FileMaker columns',
     'majProfil' => 'Update rules for profiles',
     'forPatientForm' => ' for patient forms',
     'historyImport' => 'History of imported files',

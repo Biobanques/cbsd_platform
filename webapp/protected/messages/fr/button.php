@@ -13,6 +13,7 @@ return array(
     'subscribe' => 'S\'inscrire',
     'search' => 'Rechercher',
     'reset' => 'Réinitialiser',
+    'import' => 'Importer',
     'export' => 'Exporter',
     'exportCSV' => 'Exporter les cas sélectionnés en CSV',
     'logicOperator' => 'Opération logique à appliquer à la variable',

@@ -36,7 +36,7 @@ class ReferenceCenter extends LoggableActiveRecord
     public function attributeLabels()
     {
         return array(
-            'center' => Yii::t('common', 'center')
+            'center' => Yii::t('common', 'referenceCentre')
         );
     }
 

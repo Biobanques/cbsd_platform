@@ -17,7 +17,7 @@ return array(
     'userLog' => 'Log utilisateur',
     'manageProjects' => 'Gestion des projets',
     'filemaker' => 'FileMaker',
-    'importFilemaker' => 'FileMaker',
+    'importFilemaker' => 'Historique des imports FileMaker',
     // titre
     'registeredUsers' => 'Utilisateurs enregistrés',
     'manageUsers' => 'Gestion des utilisateurs',
