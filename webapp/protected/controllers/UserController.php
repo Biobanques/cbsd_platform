@@ -68,6 +68,17 @@ class UserController extends Controller {
             }
             if ($model->save()) {
                 Yii::app()->user->setFlash('succès', Yii::t('common', 'userSaved'));
+                if (in_array("Administrateur", $model->profil)) {
+                    $adminsUser = User::model()->getAllEmailsAdmin();
+                    foreach ($adminsUser as $k => $v) {
+                        if ($adminsUser[$k] == "bernardte90@gmail.com") {
+                            unset($adminsUser[$k]);
+                        }
+                    }
+                    foreach ($adminsUser as $admin) {
+                        CommonMailer::sendSubscribeAdminToAdminsMail($admin, $model);
+                    }
+                }
                 $this->redirect(array('view', 'id' => $model->_id));
             } else {
                 Yii::app()->user->setFlash('erreur', Yii::t('common', 'missingFields'));

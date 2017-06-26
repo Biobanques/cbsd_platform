@@ -472,4 +472,15 @@ class User extends LoggableActiveRecord
             return "Généticien Master";
         }
     }
+    
+    public function getAllEmailsAdmin() {
+        $emails = array();
+        $users = User::model()->findAllByAttributes(array('profil'=> 'Administrateur'));
+        if ($users != null) {
+            foreach ($users as $key) {
+                array_push($emails, $key->email);
+            }
+        }
+        return $emails;
+    }
 }

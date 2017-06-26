@@ -327,4 +327,35 @@ A bientôt sur CBSD.
         }
     }
 
+    public static function sendSubscribeAdminToAdminsMail($adminUsers, $user) {
+        $to = $adminUsers;
+        $subject = "Un nouvel utilisateur admin vient d'être inscrit sur CBSD";
+        $userDetails = '';
+        foreach ($user->getAttributes() as $label => $value) {
+            if ($label == "profil") {
+                $userDetails.="<li>" . $user->attributeLabels()[$label] . ": " . implode(",", $user->profil) . "</li>";
+            } else {
+                if (is_array($value)) {
+                    $userDetails.="<li>" . $user->attributeLabels()[$label] . ": " . date('d/m/Y', strtotime($value['date'])) . "</li>";
+                } else {
+                    $userDetails.="<li>" . $user->attributeLabels()[$label] . ": $value</li>";
+                }
+            }
+        }
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+                <?xml version=\"1.0\" encoding=\"utf-8\"?>
+                <html><head>
+                <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
+                                <title>Bienvenue " . ucfirst($user->prenom) . " " . strtoupper($user->nom) . " sur CBSD</title>
+                </head><body>
+                                 Bonjour<br>Un nouvel utilisateur admin " . strtoupper($user->nom) . " " . ucfirst($user->prenom) . " s'est inscrit sur CBSD, voici ces informations:<br>
+                                 Détails :<br>
+                <ul>$userDetails</ul><br>
+                            Cordialement,
+                            L'équipe CBSD
+    </body>
+        ";
+        return CommonMailer::sendMail($to, $subject, $body);
+    }
+
 }
