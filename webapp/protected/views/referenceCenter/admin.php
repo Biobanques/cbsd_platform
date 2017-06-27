@@ -28,6 +28,10 @@ $('.search-form form').submit(function(){
 ?>
 
 <h1><?php echo Yii::t('administration', 'referenceCenter'); ?></h1>
+<div class="info">
+    <div class="title"><?php echo Yii::t('common', 'referenceTitle') ?></div>
+    <div class="content"><?php echo Yii::t('common', 'referenceContent') ?></div>
+</div>
 <?php
 $imagecreateuser = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', Yii::t('administration', 'createCenter'));
 echo CHtml::link($imagecreateuser . Yii::t('administration', 'createCenter'), array('referenceCenter/create'));

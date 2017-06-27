@@ -70,15 +70,15 @@ class AuditTrail extends EMongoDocument {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'old_value' => 'Ancienne valeur',
-            'new_value' => 'Nouvelle valeur',
-            'action' => 'Action',
-            'model' => 'Modèle',
-            'field' => 'Champs',
-            'stamp' => 'Horodatage',
-            'user_id' => 'Utilisateur',
-            'model_id' => 'Modèle ID',
+            'id' => Yii::t('audittrail', 'id'),
+            'old_value' => Yii::t('audittrail', 'old_value'),
+            'new_value' => Yii::t('audittrail', 'new_value'),
+            'action' => Yii::t('audittrail', 'action'),
+            'model' => Yii::t('audittrail', 'model'),
+            'field' => Yii::t('audittrail', 'field'),
+            'stamp' => Yii::t('audittrail', 'stamp'),
+            'user_id' => Yii::t('audittrail', 'user_id'),
+            'model_id' => Yii::t('audittrail', 'model_id'),
         );
     }
 
