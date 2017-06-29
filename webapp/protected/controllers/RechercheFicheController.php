@@ -255,15 +255,19 @@ class RechercheFicheController extends Controller {
         if (isset($_GET['Answer'])) {
             $model->attributes = $_GET['Answer'];
         }
-        if (isset($_POST['Answer_id_patient'])) {
-            $criteria = new EMongoCriteria;
-            $regex = '/^';
-            foreach ($_POST['Answer_id_patient'] as $idPatient) {
-                $regex.= $idPatient . '$|^';
+        if (isset($_POST['rechercher'])) {
+            if (isset($_POST['Answer_id_patient'])) {
+                $criteria = new EMongoCriteria;
+                $regex = '/^';
+                foreach ($_POST['Answer_id_patient'] as $idPatient) {
+                    $regex.= $idPatient . '$|^';
+                }
+                $regex .= '$/i';
+                $criteria->addCond('id_patient', '==', new MongoRegex($regex));
+                $_SESSION['id_patient'] = $regex;
+            } else {
+                $this->redirect(array('rechercheFiche/admin'));
             }
-            $regex .= '$/i';
-            $criteria->addCond('id_patient', '==', new MongoRegex($regex));
-            $_SESSION['id_patient'] = $regex;
         }
         $this->render('result_search', array(
             'model' => $model

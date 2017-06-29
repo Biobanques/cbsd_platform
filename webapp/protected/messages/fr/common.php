@@ -188,6 +188,11 @@ return array(
     'deletedAccount2' => ' jour(s).',
     'deleteAccount' => 'Votre compte ne sera plus valide à minuit.',
     'deletedAccount' => 'Votre compte n\'est plus valide.',
+    'referenceSaved' => 'Le centre de référence a bien été enregistré.',
+    'referenceUpdated' => 'Le centre de référence a bien été mis à jour.',
+    'referenceNotUpdated' => 'Le centre de référence n\'a pas été mis à jour.',
+    'referenceDeleted' => 'Le centre de référence a bien été supprimé.',
+    'referenceNotDeleted' => 'Le centre de référence n\'a pas été supprimé.',
     // text
     'signin' => 'Connexion utilisateur',
     'noAccount' => 'Vous n\'êtes pas encore inscrit?',

@@ -52,10 +52,10 @@ class ReferenceCenterController extends Controller {
         if (isset($_POST['ReferenceCenter'])) {
             $model->attributes = $_POST['ReferenceCenter'];
             if ($model->save()) {
-                Yii::app()->user->setFlash('succès', 'OK');
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'referenceSaved'));
                 $this->redirect(array('referenceCenter/admin'));
             } else {
-                Yii::app()->user->setFlash('erreur', 'KO');
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'missingFields'));
             }
         }
         $this->render('create', array(
@@ -73,8 +73,10 @@ class ReferenceCenterController extends Controller {
         if (isset($_POST['ReferenceCenter'])) {
             $model->attributes = $_POST['ReferenceCenter'];
             if ($model->save()) {
-                Yii::app()->user->setFlash('succès', 'OK');
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'referenceUpdated'));
                 $this->redirect(array('referenceCenter/admin'));
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'referenceNotUpdated'));
             }
         }
         $this->render('update', array(
@@ -99,15 +101,15 @@ class ReferenceCenterController extends Controller {
         try {
             $this->loadModel($id)->delete();
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('succès', Yii::t('common', 'OK'));
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'referenceDeleted'));
             } else {
-                echo "<div class='flash-success'>" . Yii::t('common', 'OK') . "</div>"; //for ajax
+                echo "<div class='flash-success'>" . Yii::t('common', 'referenceDeleted') . "</div>"; //for ajax
             }
         } catch (CDbException $e) {
             if (!isset($_GET['ajax'])) {
-                Yii::app()->user->setFlash('erreur', Yii::t('common', 'KO'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'referenceNotDeleted'));
             } else {
-                echo "<div class='flash-error'>" . Yii::t('common', 'KO') . "</div>";
+                echo "<div class='flash-error'>" . Yii::t('common', 'referenceNotDeleted') . "</div>";
             } //for ajax
         }
 

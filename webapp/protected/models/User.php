@@ -96,14 +96,14 @@ class User extends LoggableActiveRecord
             $criteria->addCond('login', '==', new MongoRegex($regex));
         }
         if (isset($this->profil) && !empty($this->profil)) {
-            $regex = '/';
+            $regex = '/^';
             foreach ($this->profil as $value) {
                 $regex .= $value;
                 if ($value != end($this->profil)) {
-                    $regex.= '|';
+                    $regex.= '$|^';
                 }
             }
-            $regex .= '/i';
+            $regex .= '$/i';
             $criteria->addCond('profil', '==', new MongoRegex($regex));
         }
         if (isset($this->nom) && !empty($this->nom)) {
@@ -276,7 +276,7 @@ class User extends LoggableActiveRecord
         $res = array();
         $res ['Clinicien'] = Yii::t('profile', 'Clinicien');
         $res ['Administrateur'] = Yii::t('profile', 'Administrateur');
-        $res ['Administrateur de projet'] = Yii::t('profile', 'Administrateur du projet');
+        $res ['Administrateur de projet'] = Yii::t('profile', 'Administrateur de projet');
         $res ['Neuropathologiste'] = Yii::t('profile', 'Neuropathologiste');
         $res ['Généticien'] = Yii::t('profile', 'Généticien');
         $res ['Chercheur'] = Yii::t('profile', 'Chercheur');

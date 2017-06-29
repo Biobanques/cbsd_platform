@@ -185,6 +185,11 @@ return array(
     'deletedAccount2' => ' day(s).',
     'deleteAccount' => 'Your account will be deleted at midnight.',
     'deletedAccount' => 'Your account is not valid anymore.',
+    'referenceSaved' => 'The reference center has been saved successfully.',
+    'referenceUpdated' => 'The reference center has been updated successfully.',
+    'referenceNotUpdated' => 'The reference center has not been updated.',
+    'referenceDeleted' => 'The reference center has been deleted successfully.',
+    'referenceNotDeleted' => 'The reference center has not been deleted.',
     // text
     'signin' => 'Sign in',
     'noAccount' => 'Not registered yet?',
