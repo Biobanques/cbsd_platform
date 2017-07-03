@@ -86,10 +86,10 @@ function getAnswer(value, id) {
                     adl_score[3] = 0;
                     break;
                 case tabs_adl.continence:
-                    adl_score[3] = 0;
+                    adl_score[4] = 0;
                     break;
                 case tabs_adl.alimentation:
-                    adl_score[3] = 0;
+                    adl_score[5] = 0;
                     break;
             }
             answer = adl_score
