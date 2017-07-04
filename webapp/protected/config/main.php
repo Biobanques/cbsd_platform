@@ -16,7 +16,7 @@ return array(
     // page au démarrage
     'defaultController' => 'site/login',
     // preloading 'log' component
-    'preload' => array('log'),
+    'preload' => array('log', 'maintenanceMode'),
     // autoloading model and component classes
     'import' => array(
         'ext.*',
@@ -36,6 +36,10 @@ return array(
     ),
     // application components
     'components' => array(
+        'maintenanceMode' => array(
+            'class' => 'application.extensions.MaintenanceMode.MaintenanceMode',
+            'enabledMode' => true,
+        ),
         'user' => array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
