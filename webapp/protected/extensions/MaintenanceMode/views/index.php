@@ -17,9 +17,9 @@ and open the template in the editor.
     <body>
         <h1>Maintenance en cours</h1>
 	<p>Nous sommes en train d'effectuer une opération de maintenance.</p>
-	<p>L'application sera de nouveau disponible dans 10 min! Pour toute question relative à cette opération, veuillez contact Bernard Te.</p>
+        <p>L'application sera de nouveau disponible dans 5 min! Pour toute question relative à cette opération, veuillez contacter <a href="mailto:bernard.te@inserm.fr" target="_top">Bernard Te</a>.</p>
         <h1>Down for Maintenance</h1>
-	<p>Sorry for the inconvenience, but we’re performing a maintenance at the moment.</p>
+	<p>Sorry for the inconvenience, but we’re currently performing a maintenance.</p>
 	<p>We’ll be back online shortly!</p>
     </body>
 </html>

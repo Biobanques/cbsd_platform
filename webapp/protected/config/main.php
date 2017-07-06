@@ -38,7 +38,7 @@ return array(
     'components' => array(
         'maintenanceMode' => array(
             'class' => 'application.extensions.MaintenanceMode.MaintenanceMode',
-            'enabledMode' => true,
+            'enabledMode' => false,
         ),
         'user' => array(
             // enable cookie-based authentication
