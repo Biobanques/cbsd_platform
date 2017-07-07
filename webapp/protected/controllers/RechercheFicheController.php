@@ -30,7 +30,7 @@ class RechercheFicheController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'view', 'update', 'exportCsv', 'searchReplace', 'resultSearch', 'viewOnePage'),
+                'actions' => array('admin', 'admin2', 'admin3', 'view', 'update', 'exportCsv', 'searchReplace', 'resultSearch', 'viewOnePage'),
                 'expression' => '!Yii::app()->user->isGuest && $user->getActiveProfil() != "Clinicien"'
             ),
             array('deny', // deny all users
@@ -39,15 +39,81 @@ class RechercheFicheController extends Controller {
         );
     }
 
-    /**
-     * Recherche des fiches disponibles.
-     */
     public function actionAdmin() {
-        $model = new Answer('search');
-        $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Answer'])) {
-            $model->attributes = $_GET['Answer'];
+        $model = new Answer;
+        if (isset($_POST['Answer'])) {
+            if (isset($_POST['Answer']['id_patient'])) {
+                $_SESSION['idPatient'] = $_POST['Answer']['id_patient'];
+            }
+            if (isset($_POST['Answer']['type'])) {
+                $_SESSION['typeForm'] = $_POST['Answer']['type'];
+            }
+            if (isset($_POST['Answer']['last_updated'])) {
+                $_SESSION['Period'] = $_POST['Answer']['last_updated'];
+            }
+            $this->redirect(array('rechercheFiche/admin2'));
         }
+        $this->render('admin', array(
+            'model' => $model
+        ));
+    }
+
+    public function actionAdmin2() {
+        $criteria = new EMongoCriteria;
+        if (isset($_POST['Answer'])) {
+            $index = 0;
+            $nbCriteria = array();
+            foreach ($_POST['Answer']['dynamics'] as $questionId => $answerValue) {
+                if ($answerValue != null && !empty($answerValue)) {
+                    if ($index != 0) {
+                        $nbCriteria = '$criteria' . $index;
+                        $nbCriteria = new EMongoCriteria;
+                    }
+                    if (isset($_POST['Answer']['compare'][$questionId])) {
+                        if ($index == 0) {
+                            if ($_POST['Answer']['compare'][$questionId] == "between") {
+                                $answerDate = CommonTools::formatDatePicker($answerValue);
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
+                            } else {
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$_POST['Answer']['compare'][$questionId]] => (int) $answerValue)));
+                            }
+                        } else {
+                            if ($_POST['Answer']['compare'][$questionId] == "between") {
+                                $answerDate = CommonTools::formatDatePicker($answerValue);
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
+                            } else {
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$_POST['Answer']['compare'][$questionId]] => (int) $answerValue)));
+                            }
+                        }
+                    } else {
+                        $values = (!is_array($answerValue)) ? split(',', $answerValue) : $answerValue;
+                        if ($index == 0) {
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
+                        } else {
+                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
+                        }
+                    }
+                }
+                if ($index != 0) {
+                    $criteria->mergeWith($nbCriteria, $_POST['Answer']['condition'][$questionId]);
+                }
+                $index++;
+            }
+            $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
+            $criteria->sort('type', EMongoCriteria::SORT_ASC);
+            $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
+            Yii::app()->session['criteria'] = $criteria;
+            $criteriaFiches = new EMongoCriteria($criteria);
+            $dataProviderFiches = new EMongoDocumentDataProvider('Answer');
+            $dataProviderFiches->setCriteria($criteriaFiches);
+            $_SESSION['resultFiches'] = $dataProviderFiches;
+            $this->redirect(array('rechercheFiche/admin3'));
+        }
+        $this->render('admin2');
+    }
+
+    public function actionAdmin3() {
+        $model = new Answer;
         if (isset($_POST['exporter'])) {
             $filter = array();
             if (isset($_POST['filter'])) {
@@ -58,7 +124,44 @@ class RechercheFicheController extends Controller {
             $csv = new ECSVExport($arAnswers, true, false, null, null);
             Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
         }
-        $this->render('admin', array(
+        $this->render('admin3', array(
+            'model' => $model,
+            'dataProvider' => $_SESSION['resultFiches']
+        ));
+    }
+
+    public function actionResultSearch() {
+        $idPatient = array();
+        if (isset($_POST['exporter'])) {
+            $filter = array();
+            if (isset($_POST['filter'])) {
+                $filter = $_POST['filter'];
+            }
+            $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
+            $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
+            $csv = new ECSVExport($arAnswers, true, false, null, null);
+            Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
+        }
+        $model = new Answer('search');
+        $model->unsetAttributes();
+        if (isset($_GET['Answer'])) {
+            $model->attributes = $_GET['Answer'];
+        }
+        if (isset($_POST['rechercher'])) {
+            if (isset($_POST['Answer_id_patient'])) {
+                $criteria = new EMongoCriteria;
+                $regex = '/^';
+                foreach ($_POST['Answer_id_patient'] as $idPatient) {
+                    $regex.= $idPatient . '$|^';
+                }
+                $regex .= '$/i';
+                $criteria->addCond('id_patient', '==', new MongoRegex($regex));
+                $_SESSION['id_patient'] = $regex;
+            } else {
+                $this->redirect(array('rechercheFiche/admin3'));
+            }
+        }
+        $this->render('result_search', array(
             'model' => $model
         ));
     }
@@ -235,42 +338,6 @@ class RechercheFicheController extends Controller {
         }
         $this->render('searchReplace', array(
             'model' => $model,
-        ));
-    }
-
-    public function actionResultSearch() {
-        $idPatient = array();
-        if (isset($_POST['exporter'])) {
-            $filter = array();
-            if (isset($_POST['filter'])) {
-                $filter = $_POST['filter'];
-            }
-            $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
-            $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
-            $csv = new ECSVExport($arAnswers, true, false, null, null);
-            Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
-        }
-        $model = new Answer('search');
-        $model->unsetAttributes();
-        if (isset($_GET['Answer'])) {
-            $model->attributes = $_GET['Answer'];
-        }
-        if (isset($_POST['rechercher'])) {
-            if (isset($_POST['Answer_id_patient'])) {
-                $criteria = new EMongoCriteria;
-                $regex = '/^';
-                foreach ($_POST['Answer_id_patient'] as $idPatient) {
-                    $regex.= $idPatient . '$|^';
-                }
-                $regex .= '$/i';
-                $criteria->addCond('id_patient', '==', new MongoRegex($regex));
-                $_SESSION['id_patient'] = $regex;
-            } else {
-                $this->redirect(array('rechercheFiche/admin'));
-            }
-        }
-        $this->render('result_search', array(
-            'model' => $model
         ));
     }
 

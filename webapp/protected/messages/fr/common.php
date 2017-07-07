@@ -63,7 +63,7 @@ return array(
     'filesize' => 'Taille du fichier',
     'dateImport' => 'Date de l\'import',
     'importedFiles' => 'Fichiers importés',
-    'individualSelection' => 'une sélection individuelle',
+    'individualSelection' => 'des cas individuels',
     'restrictQuery' => 'un formulaire',
     'restrictPeriod' => 'une période',
     'fileMakerColumn' => 'Colonne FileMaker',

@@ -1,53 +1,60 @@
 <?php
-$addRoute = Yii::app()->createAbsoluteUrl('answer/addSearchFilter');
-$addRouteQuery = Yii::app()->createAbsoluteUrl('answer/writeQueries');
 
 Yii::app()->clientScript->registerScript('searchView', "
-$('#addFilterButton').click(function(){
-    $('#addFilterButton').hide();
-    $('#loading').show();
-    $.ajax({
-        url:'$addRoute',
-        type:'POST',
-        data:$('#question').serialize(),
-        success:function(result){
-            $('#dynamicFilters').show();
-            $('#dynamicFilters').append(result);
-            $('#addFilterButton').show();
-            document.getElementById('addFilterButton').disabled = true;
-            $('#loading').hide();
-            $('#question').val('');
-            var n = $('.deleteQuestion').length;
-            if (n == 1) {
-                $('.condition').hide();
-            }
-            }
-         });
-
-     return false;
-});
-$('#dynamicFilters').on('click','.validateQuery',function(event){
-    $(this).parent().hide();
-    $.ajax({
-        url:'$addRouteQuery',
-        type:'POST',
-        data:$('#light_search-form').serialize(),
-        success:function(result){
-        $('#queries').show();
-            $('#queries').html('');
-            $('#queries').append(result);
-            $('#search').show();
-            $('#reset').show();
-        }
-    })
+$('#selectCas').click(function(){
+    if ($('#Answer_id_patient :selected').length > 0) {
+        $('#selectCas').attr('disabled',true);
+        $('#selection').append('<p id=\"CasSelected\">- Cas sélectionnés</p><br>');
+    }
     return false;
 });
-$('#dynamicFilters').on('click','.deleteQuestion',function(event){
-    event.target.closest('.col-lg-12').remove();
-    var n = $('.deleteQuestion').length;
-    if (n == 1) {
-        $('.condition').hide();
+$('#selectForm').click(function(){
+    if ($('#Answer_type :selected').length > 0) {
+        $('#selectForm').attr('disabled',true);
+        $('#selection').append('<p id=\"FormSelected\">- Formulaires sélectionnés</p><br>');
     }
+    return false;
+});
+$('#selectDate').click(function(){
+    if ($('#Answer_last_updated').val().length > 0) {
+        $('#selectDate').attr('disabled',true);
+        $('#selection').append('<p id=\"DateSelected\">- Période sélectionnée</p><br>');
+    }
+    return false;
+});
+
+$('#Answer_id_patient').change(function(){
+    if ($('#Answer_id_patient :selected').length == 0) {
+        $('#selectCas').attr('disabled',false);
+        $('#CasSelected').remove();
+    }
+    return false;
+});
+
+$('#Answer_type').change(function(){
+    if ($('#Answer_type :selected').length == 0) {
+        $('#selectForm').attr('disabled',false);
+        $('#FormSelected').remove();
+    }
+    return false;
+});
+
+$('#resetCas').click(function(){
+    $('#Answer_id_patient').val('0');
+    $('#selectCas').attr('disabled',false);
+    $('#CasSelected').remove();
+    return false;
+});
+$('#resetForm').click(function(){
+    $('#Answer_type').val('0');
+    $('#selectForm').attr('disabled',false);
+    $('#FormSelected').remove();
+    return false;
+});
+$('#resetDate').click(function(){
+    $('#Answer_last_updated') = '';
+    $('#selectDate').attr('disabled',false);
+    $('#DateSelected').remove();
     return false;
 });
 ");
@@ -60,7 +67,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'light_search-form',
         'action' => Yii::app()->createUrl($this->route),
-        'method' => 'get',
+        'method' => 'post',
     ));
     ?>
 
@@ -72,6 +79,8 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'individualSelection'), 'Answer_id_patient', array('style' => 'width:250px')); ?>
                 <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("multiple" => "multiple", "onclick" => "restrictQuery()")); ?>
+                <?php echo CHtml::submitButton('Sélectionner', array('id' => 'selectCas', 'class' => 'btn btn-success')); ?>
+                <?php echo CHtml::resetButton('Réinitialiser', array('id' => 'resetCas', 'class' => 'btn btn-danger')); ?>
             </div>
         </div>
 
@@ -79,6 +88,8 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type', array('style' => 'width:250px')); ?>
                 <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("multiple" => "multiple", "onclick" => "restrictQuery()")); ?>
+                <?php echo CHtml::submitButton('Sélectionner', array('id' => 'selectForm', 'class' => 'btn btn-success')); ?>
+                <?php echo CHtml::resetButton('Réinitialiser', array('id' => 'resetForm', 'class' => 'btn btn-danger')); ?>
             </div>
         </div>
 
@@ -86,72 +97,25 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'restrictPeriod'), 'Answer_last_updated', array('style' => 'width:250px')); ?>
                 <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)")); ?>
+                <?php echo CHtml::submitButton('Sélectionner', array('id' => 'selectDate', 'class' => 'btn btn-success')); ?>
+                <?php echo CHtml::resetButton('Réinitialiser', array('id' => 'resetDate', 'class' => 'btn btn-danger')); ?>
             </div>
         </div>
 
         <p style="margin-left:10px;"><?php echo Yii::t('common', 'notRestrict'); ?></p>
 
-        <div class="row buttons">
-            <div class="col-lg-7 col-lg-offset-7">
-                <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'restrictSearch', 'class' => 'btn btn-primary', 'style' => 'display:none;')); ?>
-                <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'restrictReset', 'class' => 'btn btn-danger', 'style' => 'display:none;', 'onclick' => 'location.reload();')); ?>
-            </div>
-        </div>
-
+    </div>
+    
+    <div class="well">
+        <p id="selection"> Pas de sélection. </p>
     </div>
 
-    <hr/>
+    <div class="row buttons">
+        <div class="col-lg-7 col-lg-offset-7">
+            <?php echo CHtml::submitButton('Suivant', array('id' => 'next', 'class' => 'btn btn-primary')); ?>
+        </div>
+    </div>
 
-    <div style="border:1px solid black;">
-
-        <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryFormulation') ?></b></u></h4>
-
-        <p>&nbsp;&nbsp;<?php echo Yii::t('common', 'writeQuestion'); ?></p>
-
-        <div class="row">
-
-            <div class="col-lg-12">
-                <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
-                <?php
-                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                    'name' => 'question',
-                    'source' => array_map(function($key, $value) {
-                                return array('label' => $value, 'value' => $key);
-                            }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions()),
-                            'htmlOptions' => array(
-                                'onkeyup' => 'document.getElementById("addFilterButton").disabled = false;'
-                        )));
-                        echo CHtml::button(Yii::t('button', 'logicOperator'), array('id' => 'addFilterButton', 'class' => 'btn btn-info', 'style' => 'margin-left:10px; font-weight:bold;', 'disabled' => 'disabled'));
-                        echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
-                        ?>
-                    </div>
-
-                </div>
-
-                <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
-
-                <div class="row buttons">
-                    <div class="col-lg-7 col-lg-offset-7">
-                        <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'display:none;')); ?>
-                        <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'style' => 'display:none;', 'onclick' => 'location.reload();')); ?>
-                    </div>
-                </div>
-
-            </div>
-
-            <?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->
-
-<script>
-    function restrictQuery() {
-        var value = $('.col-lg-12 :selected').text();
-        if (value != "") {
-            $('#restrictSearch').show();
-            $('#restrictReset').show();
-        } else {
-            $('#restrictSearch').hide();
-            $('#restrictReset').hide();
-        }
-    }
-</script>

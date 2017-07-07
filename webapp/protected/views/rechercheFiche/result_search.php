@@ -58,9 +58,8 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
         'method' => 'post',
     ));
 
-    $this->widget('bootstrap.widgets.TbGridView', array(
+    $this->widget('zii.widgets.grid.CGridView', array(
         'id' => 'searchFiche-grid',
-        'type' => 'striped bordered condensed',
         'dataProvider' => $model->searchFilter(),
         'columns' => array(
             array('header' => $model->attributeLabels()["id_patient"], 'name' => 'id_patient'),
@@ -124,7 +123,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
                             'action' => Yii::app()->createUrl($this->route),
                         ));
                         ?>
-                        <label><input type="checkbox" name="select-all" id="select-all" />&nbsp;&nbsp;&nbsp;<?php echo Yii::t('addGene', 'selectAll'); ?></label><br>
+                        <label><input type="checkbox" name="select-all" id="select-all" />&nbsp;&nbsp;&nbsp;<?php echo Yii::t('button', 'selectAll'); ?></label><br>
                         <div class="checkboxgroup"> 
                             <?php
                             $fiches = Answer::model()->getNomsFichesByFilter($models);
