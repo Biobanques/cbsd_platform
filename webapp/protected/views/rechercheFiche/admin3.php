@@ -2,7 +2,7 @@
     <div class="myBreadcrumb">
         <div class="active">Restreindre la requête</div>
         <div class="active">Formuler la requête</div>
-    	<div class="active">Résultat de la requête</div>
+        <div class="active">Résultat de la requête</div>
     </div>
 </div>
 
@@ -54,6 +54,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
     </div>
     <div class="col-lg-5">
         <?php echo CHtml::submitButton(Yii::t('button', 'patientFormsAssociated'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
+    </div>
+</div>
+    <br>
+<div class="row">
+    <div class="col-lg-5">
+        <?php echo CHtml::link('Nouvelle requête', array('rechercheFiche/admin'), array('class' => 'btn btn-primary')); ?>
     </div>
 </div>
 
