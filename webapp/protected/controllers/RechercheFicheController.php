@@ -40,6 +40,15 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionAdmin() {
+        if (isset($_SESSION['idPatient'])) {
+            $_SESSION['idPatient'] = null;
+        }
+        if (isset($_SESSION['typeForm'])) {
+            $_SESSION['typeForm'] = null;
+        }
+        if (isset($_SESSION['Period'])) {
+            $_SESSION['Period'] = null;
+        }
         $model = new Answer;
         if (isset($_POST['Answer'])) {
             if (isset($_POST['Answer']['id_patient'])) {
@@ -68,10 +77,10 @@ class RechercheFicheController extends Controller {
                 $criteriaRestrict->addCond('type', '==', new MongoRegex(CommonTools::regexString($_SESSION['typeForm'])));
             }
             if (isset($_SESSION['Period']) && !empty($_SESSION['Period'])) {
-                $answerFormat = CommonTools::formatDatePicker($_SESSION['typeForm']);
--               $date_from = str_replace('/', '-', $answerFormat['date_from']);
--               $date_to = str_replace('/', '-', $answerFormat['date_to']);
--               $criteriaRestrict->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
+                $answerFormat = CommonTools::formatDatePicker($_SESSION['Period']);
+                $date_from = str_replace('/', '-', $answerFormat['date_from']);
+                $date_to = str_replace('/', '-', $answerFormat['date_to']);
+                $criteriaRestrict->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
             }
         }
         $criteria = new EMongoCriteria;

@@ -1,8 +1,8 @@
 <div style="margin-left:20px;">
     <div class="myBreadcrumb">
-        <div class="active">Restreindre la requête</div>
-        <div class="active">Formuler la requête</div>
-        <div class="active">Résultat de la requête</div>
+        <div class="active"><?php echo Yii::t('common', 'queryAnonymous') ?></div>
+        <div class="active"><?php echo Yii::t('common', 'queryFormulation') ?></div>
+        <div class="active"><?php echo Yii::t('common', 'resultQuery') ?></div>
     </div>
 </div>
 

@@ -306,7 +306,7 @@ class FileImportController extends Controller {
                 $answer->creator = "Bernard TE";
                 $answer->id = "neuropath_filemaker_form";
                 $answer->type = "neuropathologique";
-                $answer->login = new MongoId($user->_id);
+                $answer->login = new MongoId("561b82c3cfa2418dd83529cb");
                 $answer->questionnaireMongoId = new MongoId();
                 $answer->name = "Import Neuropath";
                 $answer->last_modified = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));

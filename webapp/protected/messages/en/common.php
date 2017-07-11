@@ -61,7 +61,7 @@ return array(
     'filesize' => 'Filesize',
     'dateImport' => 'Import date',
     'importedFiles' => 'Imported files',
-    'individualSelection' => 'individuals',
+    'individualSelection' => 'individual cases',
     'restrictQuery' => 'a form',
     'restrictPeriod' => 'a period',
     'fileMakerColumn' => 'FileMaker column',
@@ -268,10 +268,13 @@ return array(
     'exportQueriesDate' => "The query result (" . date("d/m/Y") . ' at ' . date("H:i") . ")\n\n",
     'newQuestion' => 'New question',
     'optional' => 'optional',
-    'queryAnonymous' => 'Restrict the query ID to',
+    'queryAnonymous' => 'Restrict the query ID',
+    'to' => 'to',
     'queryFormulation' => 'Formulate the query',
+    'resultQuery' => 'Result of the query',
     'projectName' => 'Give a project name',
     'referenceTitle' => 'How to manage reference centers?',
     'referenceContent' => 'You can create a new reference center by clicking on the link <b><i>\'Create a reference center\'</b></i> above.<br>'
-    . 'You can also edit or delete reference centers using pictures at the end of the lines.'
+    . 'You can also edit or delete reference centers using pictures at the end of the lines.',
+    'period' => 'Period'
 );

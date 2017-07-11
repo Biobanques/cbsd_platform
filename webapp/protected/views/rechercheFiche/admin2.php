@@ -16,7 +16,6 @@ $('#addFilterButton').click(function(){
             $('#addFilterButton').show();
             document.getElementById('addFilterButton').disabled = true;
             $('#loading').hide();
-            $('#question').val('');
             var n = $('.deleteQuestion').length;
             if (n == 1) {
                 $('.condition').hide();
@@ -54,9 +53,9 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
 ?>
 <div style="margin-left:20px;">
     <div class="myBreadcrumb">
-        <div class="active">Restreindre la requête</div>
-        <div class="active">Formuler la requête</div>
-    	<div>Résultat de la requête</div>
+        <div class="active"><?php echo Yii::t('common', 'queryAnonymous') ?></div>
+        <div class="active"><?php echo Yii::t('common', 'queryFormulation') ?></div>
+        <div><?php echo Yii::t('common', 'resultQuery') ?></div>
     </div>
 </div>
 <div class="wide form">
@@ -92,20 +91,18 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                         echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
                         ?>
                     </div>
-
+                    <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
                 </div>
-
-                <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
-
-                <div class="row buttons">
-                    <div class="col-lg-7 col-lg-offset-7">
-                        <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'display:none;')); ?>
-                        <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'style' => 'display:none;', 'onclick' => 'location.reload();')); ?>
-                    </div>
-                </div>
-
             </div>
-            <?php $this->endWidget(); ?>
-</div>
+        </div>
 
-<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;display:none;"></div>
+        <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;display:none;"></div>
+        <br>
+        <div class="row buttons">
+            <div class="col-lg-7 col-lg-offset-7">
+                <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'display:none;')); ?>
+                <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'style' => 'display:none;', 'onclick' => 'location.reload();')); ?>
+    </div>
+</div>
+        
+<?php $this->endWidget(); ?>

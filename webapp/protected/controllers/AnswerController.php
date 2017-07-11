@@ -435,6 +435,29 @@ class AnswerController extends Controller {
             }
             $questions = array_merge_recursive($condition, $compare, $dynamics);
             $html .= "<ul>";
+            if (isset($_SESSION['idPatient'])) {
+                $html .= "<li>" . Yii::t('common', 'anonymat') . " = ";
+                foreach ($_SESSION['idPatient'] as $idPatient) {
+                    $html .= $idPatient;
+                    if ($idPatient != end($_SESSION['idPatient'])) {
+                        $html .= ", ";
+                    }
+                }
+                $html .= "</li>";
+            }
+            if (isset($_SESSION['typeForm'])) {
+                $html .= "<li>" . Yii::t('common', 'formType') . " = ";
+                foreach ($_SESSION['typeForm'] as $typeForm) {
+                    $html .= $typeForm;
+                    if ($typeForm != end($_SESSION['typeForm'])) {
+                        $html .= ", ";
+                    }
+                }
+                $html .= "</li>";
+            }
+            if (isset($_SESSION['Period'])) {
+                $html .= "<li>" . Yii::t('common', 'period') . " = " . $_SESSION['Period'] . "</li>";
+            }
             foreach ($mainQuestions as $label => $answer) {
                 $html .= "<li>" . Answer::model()->attributeLabels()[$label] . " = " . $answer . "</li>";
                 if ($answer != end($mainQuestions)) {

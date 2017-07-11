@@ -105,9 +105,9 @@ $('#resetDate').click(function(){
 ?>
 <div style="margin-left:20px;">
     <div class="myBreadcrumb">
-        <div class="active">Restreindre la requête</div>
-        <div>Formuler la requête</div>
-        <div>Résultat de la requête</div>
+        <div class="active"><?php echo Yii::t('common', 'queryAnonymous') ?></div>
+        <div><?php echo Yii::t('common', 'queryFormulation') ?></div>
+        <div><?php echo Yii::t('common', 'resultQuery') ?></div>
     </div>
 </div>
 
@@ -124,14 +124,14 @@ $('#resetDate').click(function(){
 
         <div style="border:1px solid black;">
 
-            <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryAnonymous') ?></b></u></h4>
+            <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryAnonymous') . " " . Yii::t('common', 'to') ?></b></u></h4>
 
             <div class="row">
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'individualSelection'), 'Answer_id_patient', array('style' => 'width:250px; padding-top:30px;')); ?>
                     <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("multiple" => "multiple", "onclick" => "restrictQuery()")); ?>
-                    <?php echo CHtml::submitButton('Sélectionner', array('id' => 'selectCas', 'class' => 'btn btn-success')); ?>
-                    <?php echo CHtml::resetButton('Réinitialiser', array('id' => 'resetCas', 'class' => 'btn btn-danger')); ?>
+                    <?php echo CHtml::submitButton(Yii::t('button', 'select'), array('id' => 'selectCas', 'class' => 'btn btn-success')); ?>
+                    <?php echo CHtml::resetButton(Yii::t('button', 'reset'), array('id' => 'resetCas', 'class' => 'btn btn-danger')); ?>
                 </div>
             </div>
 
@@ -139,8 +139,8 @@ $('#resetDate').click(function(){
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type', array('style' => 'width:250px; padding-top:30px;')); ?>
                     <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("multiple" => "multiple", "onclick" => "restrictQuery()")); ?>
-                    <?php echo CHtml::submitButton('Sélectionner', array('id' => 'selectForm', 'class' => 'btn btn-success')); ?>
-                    <?php echo CHtml::resetButton('Réinitialiser', array('id' => 'resetForm', 'class' => 'btn btn-danger')); ?>
+                    <?php echo CHtml::submitButton(Yii::t('button', 'select'), array('id' => 'selectForm', 'class' => 'btn btn-success')); ?>
+                    <?php echo CHtml::resetButton(Yii::t('button', 'reset'), array('id' => 'resetForm', 'class' => 'btn btn-danger')); ?>
                 </div>
             </div>
 
@@ -148,12 +148,12 @@ $('#resetDate').click(function(){
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'restrictPeriod'), 'Answer_last_updated', array('style' => 'width:250px; padding-top:10px;')); ?>
                     <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)")); ?>
-                    <?php echo CHtml::submitButton('Sélectionner', array('id' => 'selectDate', 'class' => 'btn btn-success')); ?>
-                    <?php echo CHtml::resetButton('Réinitialiser', array('id' => 'resetDate', 'class' => 'btn btn-danger')); ?>
+                    <?php echo CHtml::submitButton(Yii::t('button', 'select'), array('id' => 'selectDate', 'class' => 'btn btn-success')); ?>
+                    <?php echo CHtml::resetButton(Yii::t('button', 'reset'), array('id' => 'resetDate', 'class' => 'btn btn-danger')); ?>
                 </div>
             </div>
 
-            <p style="margin-left:10px;"><?php echo Yii::t('common', 'notRestrict'); ?></p>
+            <p style="margin-left:10px; color:red;"><?php echo Yii::t('common', 'notRestrict'); ?></p>
 
         </div>
 
@@ -163,7 +163,7 @@ $('#resetDate').click(function(){
 
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
-                <?php echo CHtml::submitButton('Suivant', array('id' => 'next', 'class' => 'btn btn-primary')); ?>
+                <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary')); ?>
             </div>
         </div>
 

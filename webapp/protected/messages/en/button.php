@@ -25,6 +25,8 @@ return array(
     'patientFormsAssociated' => 'New query on the selected patient forms',
     'exportQuery' => 'Export query',
     'selectAll' => 'Select All',
-    'deleteQuery' => 'Clear the query'
+    'deleteQuery' => 'Clear the query',
+    'select' => 'Select',
+    'next' => 'Next'
 );
 
