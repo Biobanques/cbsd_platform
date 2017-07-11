@@ -59,6 +59,21 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionAdmin2() {
+        if (isset($_SESSION['idPatient']) || isset($_SESSION['typeForm']) || isset($_SESSION['Period'])) {
+            $criteriaRestrict = new EMongoCriteria;
+            if (isset($_SESSION['idPatient']) && !empty($_SESSION['idPatient'])) {
+                $criteriaRestrict->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_SESSION['idPatient'])));
+            }
+            if (isset($_SESSION['typeForm']) && !empty($_SESSION['typeForm'])) {
+                $criteriaRestrict->addCond('type', '==', new MongoRegex(CommonTools::regexString($_SESSION['typeForm'])));
+            }
+            if (isset($_SESSION['Period']) && !empty($_SESSION['Period'])) {
+                $answerFormat = CommonTools::formatDatePicker($_SESSION['typeForm']);
+-               $date_from = str_replace('/', '-', $answerFormat['date_from']);
+-               $date_to = str_replace('/', '-', $answerFormat['date_to']);
+-               $criteriaRestrict->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
+            }
+        }
         $criteria = new EMongoCriteria;
         if (isset($_POST['Answer'])) {
             $index = 0;
@@ -98,6 +113,9 @@ class RechercheFicheController extends Controller {
                     $criteria->mergeWith($nbCriteria, $_POST['Answer']['condition'][$questionId]);
                 }
                 $index++;
+            }
+            if (isset($criteriaRestrict)) {
+                $criteria->mergeWith($criteriaRestrict, 'AND');
             }
             $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
             $criteria->sort('type', EMongoCriteria::SORT_ASC);
