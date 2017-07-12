@@ -49,6 +49,9 @@ class RechercheFicheController extends Controller {
         if (isset($_SESSION['Period'])) {
             $_SESSION['Period'] = null;
         }
+        if (isset($_SESSION['Answer'])) {
+            $_SESSION['Answer'] = null;
+        }
         $model = new Answer;
         if (isset($_POST['Answer'])) {
             if (isset($_POST['Answer']['id_patient'])) {
@@ -83,64 +86,16 @@ class RechercheFicheController extends Controller {
                 $criteriaRestrict->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
             }
         }
-        $criteria = new EMongoCriteria;
         if (isset($_POST['Answer'])) {
-            $index = 0;
-            $nbCriteria = array();
-            foreach ($_POST['Answer']['dynamics'] as $questionId => $answerValue) {
-                if ($answerValue != null && !empty($answerValue)) {
-                    if ($index != 0) {
-                        $nbCriteria = '$criteria' . $index;
-                        $nbCriteria = new EMongoCriteria;
-                    }
-                    if (isset($_POST['Answer']['compare'][$questionId])) {
-                        if ($index == 0) {
-                            if ($_POST['Answer']['compare'][$questionId] == "between") {
-                                $answerDate = CommonTools::formatDatePicker($answerValue);
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
-                            } else {
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$_POST['Answer']['compare'][$questionId]] => (int) $answerValue)));
-                            }
-                        } else {
-                            if ($_POST['Answer']['compare'][$questionId] == "between") {
-                                $answerDate = CommonTools::formatDatePicker($answerValue);
-                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
-                            } else {
-                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$_POST['Answer']['compare'][$questionId]] => (int) $answerValue)));
-                            }
-                        }
-                    } else {
-                        $values = (!is_array($answerValue)) ? split(',', $answerValue) : $answerValue;
-                        if ($index == 0) {
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
-                        } else {
-                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
-                        }
-                    }
-                }
-                if ($index != 0) {
-                    $criteria->mergeWith($nbCriteria, $_POST['Answer']['condition'][$questionId]);
-                }
-                $index++;
-            }
-            if (isset($criteriaRestrict)) {
-                $criteria->mergeWith($criteriaRestrict, 'AND');
-            }
-            $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
-            $criteria->sort('type', EMongoCriteria::SORT_ASC);
-            $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
-            Yii::app()->session['criteria'] = $criteria;
-            $criteriaFiches = new EMongoCriteria($criteria);
-            $dataProviderFiches = new EMongoDocumentDataProvider('Answer');
-            $dataProviderFiches->setCriteria($criteriaFiches);
-            $_SESSION['resultFiches'] = $dataProviderFiches;
+            $_SESSION['Answer'] = $_POST['Answer'];
             $this->redirect(array('rechercheFiche/admin3'));
         }
         $this->render('admin2');
     }
 
     public function actionAdmin3() {
-        $model = new Answer;
+        $model = new Answer('search');
+        $model->unsetAttributes();
         if (isset($_POST['exporter'])) {
             $filter = array();
             if (isset($_POST['filter'])) {
@@ -151,9 +106,11 @@ class RechercheFicheController extends Controller {
             $csv = new ECSVExport($arAnswers, true, false, null, null);
             Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
         }
+        if (isset($_SESSION['Answer'])) {
+            $model->setAttributes($_SESSION['Answer']);
+        }
         $this->render('admin3', array(
-            'model' => $model,
-            'dataProvider' => $_SESSION['resultFiches']
+            'model' => $model
         ));
     }
 

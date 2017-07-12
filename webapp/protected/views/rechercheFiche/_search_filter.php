@@ -59,7 +59,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'light_search-form',
         'action' => Yii::app()->createUrl($this->route),
-        'method' => 'get',
+        'method' => 'post',
     ));
     ?>
 

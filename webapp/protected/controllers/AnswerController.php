@@ -374,7 +374,7 @@ class AnswerController extends Controller {
             echo QuestionnaireHTMLRenderer::renderQuestionForSearchHTML($question, 'fr', false);
         }
     }
-    
+   
     public function actionAddSearchReplaceFilter() {
         if (isset($_POST['question']) && !empty($_POST['question'])) {
             $id = $_POST['question'];
@@ -402,7 +402,7 @@ class AnswerController extends Controller {
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
             echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">" . Yii::t('common', 'noFilterSelected') . "</h4>" : "<h4 align=\"center\">" . Yii::t('common', 'query') . CHtml::image('images/disk.png', 'Export la requête', array('onclick'=>'document.forms["exportForm"].submit();', 'style'=>'float:right;margin-right:10px;margin-top:5px;width:20px;height:auto;')) . "</h4>";
             foreach ($_POST['Answer'] as $label => $answer) {
-                if ($label == "last_updated" && $answer == "") {                 
+                if ($label == "last_updated" && $answer == "") {                
                 } elseif ($label != "condition" && $label != "compare" && $label != "dynamics") {
                     if (!is_array($answer)) {
                         $mainQuestions[$label] = $answer;
@@ -435,7 +435,7 @@ class AnswerController extends Controller {
             }
             $questions = array_merge_recursive($condition, $compare, $dynamics);
             $html .= "<ul>";
-            if (isset($_SESSION['idPatient'])) {
+            if (isset($_SESSION['idPatient'])&& $_SESSION['idPatient'] != null) {
                 $html .= "<li>" . Yii::t('common', 'anonymat') . " = ";
                 foreach ($_SESSION['idPatient'] as $idPatient) {
                     $html .= $idPatient;
@@ -445,7 +445,7 @@ class AnswerController extends Controller {
                 }
                 $html .= "</li>";
             }
-            if (isset($_SESSION['typeForm'])) {
+            if (isset($_SESSION['typeForm'])&& $_SESSION['typeForm'] != null) {
                 $html .= "<li>" . Yii::t('common', 'formType') . " = ";
                 foreach ($_SESSION['typeForm'] as $typeForm) {
                     $html .= $typeForm;
@@ -455,7 +455,7 @@ class AnswerController extends Controller {
                 }
                 $html .= "</li>";
             }
-            if (isset($_SESSION['Period'])) {
+            if (isset($_SESSION['Period']) && $_SESSION['Period'] != null) {
                 $html .= "<li>" . Yii::t('common', 'period') . " = " . $_SESSION['Period'] . "</li>";
             }
             foreach ($mainQuestions as $label => $answer) {
@@ -488,7 +488,7 @@ class AnswerController extends Controller {
             $htmlQueries .= CHtml::hiddenField('exportQueries', $html);
             $htmlQueries.= CHtml::endForm();
             echo $htmlQueries;
-          
+         
         }
     }
 

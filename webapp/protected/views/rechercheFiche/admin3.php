@@ -21,7 +21,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'searchFiche-grid',
-    'dataProvider' => $_SESSION['resultFiches'],
+    'dataProvider' => $model->search(),
     'columns' => array(
         array('id' => 'Answer_id_patient', 'value' => '$data->id_patient', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
         array('header' => $model->attributeLabels()["id_patient"], 'name' => 'id_patient'),

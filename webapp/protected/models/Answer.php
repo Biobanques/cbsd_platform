@@ -130,6 +130,72 @@ class Answer extends LoggableActiveRecord {
             'last_modified' => 'Date de mise à jour du questionnaire',
         );
     }
+   
+    public function search($caseSensitive = false) {
+        $criteria = new EMongoCriteria;
+        if (isset($_SESSION['idPatient']) || isset($_SESSION['typeForm']) || isset($_SESSION['Period'])) {
+            if (isset($_SESSION['idPatient']) && !empty($_SESSION['idPatient'])) {
+                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_SESSION['idPatient'])));
+            }
+            if (isset($_SESSION['typeForm']) && !empty($_SESSION['typeForm'])) {
+                $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($_SESSION['typeForm'])));
+            }
+            if (isset($_SESSION['Period']) && !empty($_SESSION['Period'])) {
+                $answerFormat = CommonTools::formatDatePicker($_SESSION['Period']);
+                $date_from = str_replace('/', '-', $answerFormat['date_from']);
+                $date_to = str_replace('/', '-', $answerFormat['date_to']);
+                $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
+            }
+        }
+
+        if (isset($this->dynamics) && !empty($this->dynamics)) {
+            $index = 0;
+            $nbCriteria = array();
+            foreach ($this->dynamics as $questionId => $answerValue) {
+                if ($answerValue != null && !empty($answerValue)) {
+                    if ($index != 0) {
+                        $nbCriteria = '$criteria' . $index;
+                        $nbCriteria = new EMongoCriteria;
+                    }
+                    if (isset($this->compare[$questionId])) {
+                        if ($index == 0) {
+                            if ($this->compare[$questionId] == "between") {
+                                $answerDate = CommonTools::formatDatePicker($answerValue);
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
+                            } else {
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            }
+                        } else {
+                            if ($this->compare[$questionId] == "between") {
+                                $answerDate = CommonTools::formatDatePicker($answerValue);
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
+                            } else {
+                               $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            }
+                        }
+                    } else {
+                        $values = (!is_array($answerValue)) ? split(',', $answerValue) : $answerValue;
+                        if ($index == 0) {
+                           $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
+                        } else {
+                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
+                        }
+                    }
+                }
+                if ($index != 0) {
+                    $criteria->mergeWith($nbCriteria, $this->condition[$questionId]);
+                }
+                $index++;
+            }
+        }
+        $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
+        $criteria->sort('type', EMongoCriteria::SORT_ASC);
+        $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
+        Yii::app()->session['criteria'] = $criteria;
+        return new EMongoDocumentDataProvider($this, array(
+            'criteria' => $criteria
+        ));
+    }
 
     // Filtre de recherche secondaire (TODO refactoring)
     public function searchFilter($caseSensitive = false) {
@@ -771,3 +837,4 @@ class Answer extends LoggableActiveRecord {
     }
 
 }
+
