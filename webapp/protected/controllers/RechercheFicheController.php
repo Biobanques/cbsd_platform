@@ -216,6 +216,8 @@ class RechercheFicheController extends Controller {
                 $filter = $_POST['filter'];
             }
             $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
+            $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
+            $csv = new ECSVExport($arAnswers, true, false, null, null);
             if (isset($_POST['project'])) {
                 $project = new Project;
                 $project->user = CommonTools::getUserLogin();
@@ -223,12 +225,10 @@ class RechercheFicheController extends Controller {
                 $project->file = $filename;
                 $project->project_date = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
                 $project->save();
+                $fh = fopen('protected/exported/' . $filename, 'a+');
+                fwrite($fh, $csv->toCSV());
+                fclose($fh);
             }
-            $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
-            $csv = new ECSVExport($arAnswers, true, false, null, null);
-            $fh = fopen('protected/exported/' . $filename, 'a+');
-            fwrite($fh, $csv->toCSV());
-            fclose($fh);
             Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
         }
         $model = new Answer('search');

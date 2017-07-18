@@ -28,7 +28,8 @@ class FileImportController extends Controller {
                     'create',
                     'update',
                     'delete',
-                    'formatColumn'
+                    'formatColumn',
+                    'exportNonImported'
                 ),
                 'expression' => '$user->getActiveProfil() == "Administrateur"'
             ),
@@ -47,6 +48,7 @@ class FileImportController extends Controller {
             $model->setAttributes($_GET['FileImport']);
         }
         if (isset($_POST['UploadedFile'])) {
+            $date = date('Ymd_H') . 'h' . date('i');
             $uploadedFile->attributes = $_POST['UploadedFile'];
             $uploadedFile->filename = CUploadedFile::getInstance($uploadedFile, 'filename');
             $folderNominatif = CommonProperties::$IMPORT_FOLDER_NOMINATIF;
@@ -55,16 +57,20 @@ class FileImportController extends Controller {
             }
             chdir(Yii::app()->basePath . "/" . $folderNominatif);
             if ($uploadedFile->validate()) {
-                $uploadedFile->filename->saveAs(date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName());
-                chmod(date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName(), 0777);
-                $this->importNeuropathNominatif();
+                $uploadedFile->filename->saveAs($date . '_' . $uploadedFile->filename->getName());
+                chmod($date . '_' . $uploadedFile->filename->getName(), 0777);
+                $file = "not_imported/" . $date . '_' . $uploadedFile->filename->getName();
+                $filename = str_replace('.xml', '.txt', $file);
+                $this->importNeuropathNominatif($filename);
                 $this->deleteUnvalidNeuropath();
                 $this->createFicheNeuropath();
                 $fileImport->user = Yii::app()->user->id;
-                $fileImport->filename = date('Ymd_H') . 'h' . date('i') . '_' . $uploadedFile->filename->getName();
+                $fileImport->filename = $date . '_' . $uploadedFile->filename->getName();
                 $fileImport->filesize = $uploadedFile->filename->getSize();
                 $fileImport->extension = $uploadedFile->filename->getExtensionName();
                 $fileImport->date_import = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
+                $fileImport->imported = $_SESSION['countImported'];
+                $fileImport->not_imported = $_SESSION['countNotImported'];
                 $fileImport->save();
                 Yii::app()->user->setFlash('succès', Yii::t('common', 'fileMakerImported'));
             } else {
@@ -76,7 +82,7 @@ class FileImportController extends Controller {
             'uploadedFile' => $uploadedFile
         ));
     }
-    
+   
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -96,7 +102,7 @@ class FileImportController extends Controller {
             'model' => $model,
         ));
     }
-    
+   
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -115,7 +121,7 @@ class FileImportController extends Controller {
             'model' => $model,
         ));
     }
-    
+   
     /**
      * Deletes a particular model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -138,7 +144,7 @@ class FileImportController extends Controller {
             } //for ajax
         }
     }
-    
+   
     public function actionFormatColumn() {
         $modelColumn = new ColumnFileMaker('search');
         $modelColumn->unsetAttributes();
@@ -157,22 +163,21 @@ class FileImportController extends Controller {
         }
         return $model;
     }
-    
+   
     public function dropNeuropathCollection() {
         return Neuropath::model()->deleteAll();
     }
 
-    public function importNeuropathNominatif() {
+    public function importNeuropathNominatif($file) {
+        $countImported = 0;
         $countNotImported = 0;
+        $_SESSION['countImported'] = null;
+        $_SESSION['countNotImported'] = null;
         $attributes = array();
-        $test = array();
         $files = array_filter(glob('*'), 'is_file');
         foreach ($files as $importedFile) {
             $pos = strpos($importedFile, '.');
             $file_pos = substr($importedFile, 0, $pos);
-            if (file_exists("log/$file_pos.txt")) {
-                unlink("log/$file_pos.txt");
-            }
             $dataPatient = simplexml_load_file($importedFile);
             foreach ($dataPatient->children()->children() as $sample) {
                 $neuropath = new Neuropath;
@@ -238,18 +243,25 @@ class FileImportController extends Controller {
                                         }
                                     }
                                     $neuropath->save();
+                                    $countImported++;
                                 }
                             }
                         }
                     } else {
                         $countNotImported++;
-                        $this->writePatientsNotImported($patient, $file_pos);
+                        $this->writePatientsNotImported($patient, $file);
                     }
                 }
             }
-
+            if ($countImported > 0) {
+                $_SESSION['countImported'] = $countImported;
+            } else {
+                $_SESSION['countImported'] = 0;
+            }
             if ($countNotImported > 0) {
-                $this->log($countNotImported);
+                $_SESSION['countNotImported'] = $countNotImported;
+            } else {
+                $_SESSION['countNotImported'] = 0;
             }
             copy($importedFile, "treated/$importedFile");
             unlink($importedFile);
@@ -272,18 +284,8 @@ class FileImportController extends Controller {
      * Ecrit dans un fichier les patients qui n'ont pas pu être importé ("A SIP item is missing in the file")
      */
 
-    public function writePatientsNotImported($patient, $importedFile) {
-        $file = "not_imported/$importedFile.txt";
+    public function writePatientsNotImported($patient, $file) {
         file_put_contents($file, print_r($patient, true), FILE_APPEND);
-    }
-
-    /*
-     * Ecrit dans un fichier de log le nombre de patient qui n'ont pas été importé
-     */
-
-    public function log($countNotImported) {
-        $log = "log/neuropath_nominatif.log";
-        file_put_contents($log, "[" . date('d/m/Y H:i:s') . "] Nombre de patient qui n'ont pas été importé: " . $countNotImported . ".\n", FILE_APPEND);
     }
 
     public function deleteUnvalidNeuropath() {
@@ -343,7 +345,7 @@ class FileImportController extends Controller {
             }
         }
     }
-    
+   
     public function convertNumeric($value) {
         switch ($value) {
             case "I": return 1;
@@ -361,4 +363,31 @@ class FileImportController extends Controller {
             default: return $value;
         }
     }
+   
+    public function actionExportNonImported($id) {
+        $fileImport = FileImport::model()->findByPk(new MongoId($id));
+        $file = $fileImport->filename;
+        $filePath = CommonProperties::$EXPORT_NON_IMPORTED_PATH;
+        if (substr($filePath, -1) != '/') {
+            $filePath.='/';
+        }
+        chdir(Yii::app()->basePath . "/" . $filePath);
+        $filename = str_replace('.xml', '.txt', $file);
+        if (file_exists($filename)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . basename($filename));
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filename));
+            ob_clean();
+            flush();
+            readfile($filename);
+        } else {
+            Yii::app()->user->setFlash('erreur', 'Le projet n\'a pas été supprimé.');
+        }
+    }
 }
+

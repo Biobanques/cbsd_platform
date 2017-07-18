@@ -36,9 +36,9 @@ $('.search-form form').submit(function(){
     <div class="title"><?php echo Yii::t('uploadFileMaker', 'infoTitle') ?></div>
     <div class="content"><?php echo Yii::t('uploadFileMaker', 'infoContent') ?></div>
 </div>
-<?php 
+<?php
 $importFileMaker = CHtml::image(Yii::app()->baseUrl . '/images/database_add.png', Yii::t('common', 'importFileMaker'));
-echo CHtml::link($importFileMaker . Yii::t('administration', 'importFileMaker'), array('uploadedFile/admin'), array('class' => 'import-button')); 
+echo CHtml::link($importFileMaker . Yii::t('administration', 'importFileMaker'), array('uploadedFile/admin'), array('class' => 'import-button'));
 ?>
 <div class="import-form" style="display:none">
     <?php
@@ -72,7 +72,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => $model->attributeLabels()["filesize"], 'name' => 'filesize', 'value' => 'CommonTools::formatSizeUnits($data["filesize"])'),
         array('header' => $model->attributeLabels()["extension"], 'name' => 'extension'),
         array('header' => $model->attributeLabels()["date_import"], 'name' => 'date_import', 'value' => '$data->getDateImport()'),
+        array('header' => $model->attributeLabels()["imported"], 'name' => 'imported'),
+        array(
+            'class' => 'CLinkColumn',
+            'labelExpression' => '$data->getNonImportedNumber()',
+            'urlExpression' => 'Yii::app()->createUrl("fileImport/exportNonImported",array("id"=>$data->_id))',
+            'htmlOptions' => array('style' => "text-align:center"),
+            'header' => $model->attributeLabels()["not_imported"]
+        )
     ),
 ));
 ?>
-

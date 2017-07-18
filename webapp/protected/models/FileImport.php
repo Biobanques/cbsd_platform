@@ -10,7 +10,7 @@
 class FileImport extends LoggableActiveRecord {
 
     /**
-     * 
+     *
      */
 // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public $user;
@@ -18,6 +18,8 @@ class FileImport extends LoggableActiveRecord {
     public $filesize;
     public $extension;
     public $date_import;
+    public $imported;
+    public $not_imported;
 
     /**
      * Returns the static model of the specified AR class.
@@ -42,7 +44,7 @@ class FileImport extends LoggableActiveRecord {
         // will receive user inputs.
         return array(
             // The following rule is used by search().
-            array('user, filename, filesize, extension, date_import', 'safe', 'on' => 'search'),
+            array('user, filename, filesize, extension, date_import, imported, not_imported', 'safe', 'on' => 'search'),
         );
     }
 
@@ -55,10 +57,12 @@ class FileImport extends LoggableActiveRecord {
             'filename' => Yii::t('common','filename'),
             'filesize' => Yii::t('common','filesize'),
             'extension' => 'Extension',
-            'date_import' => Yii::t('common','dateImport')
+            'date_import' => Yii::t('common','dateImport'),
+            'imported' => 'Importé',
+            'not_imported' => 'Non importé'
         );
     }
-    
+   
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
         if (isset($this->type) && !empty($this->type)) {
@@ -94,14 +98,14 @@ class FileImport extends LoggableActiveRecord {
             $date_to = str_replace('/', '-', $answerFormat['date_to']);
             $criteria->date_import->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
         }
-        
+       
         $criteria->sort('date_import', EMongoCriteria::SORT_DESC);
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));
     }
-    
+   
     /**
      * get the last updatedvalue into a french date format JJ/MM/AAAA
      * @return type
@@ -113,7 +117,13 @@ class FileImport extends LoggableActiveRecord {
             return null;
         }
     }
+   
+    public function getNonImportedNumber() {
+        if ($this->not_imported != null) {
+            return $this->not_imported;
+        } else {
+            return null;
+        }
+    }
 
 }
-
-?>
