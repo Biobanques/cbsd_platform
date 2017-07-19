@@ -28,9 +28,9 @@ $('#selectCas').click(function(){
     if ($('#Answer_id_patient :selected').length > 0) {
         $('#selectCas').attr('disabled',true);
         if (document.getElementById('selection').innerText == 'Pas de sélection.') {
-            $('#selection').html('<p id=\"CasSelected\">- Cas sélectionnés</p><br>');
+            $('#selection').html('<p id=\"CasSelected\">- Cas sélectionnés: ' + $('#Answer_id_patient').val() + '</p><br>');
         } else {
-            $('#selection').append('<p id=\"CasSelected\">- Cas sélectionnés</p><br>');
+            $('#selection').append('<p id=\"CasSelected\">- Cas sélectionnés: ' + $('#Answer_id_patient').val() + '</p><br>');
         }
     }
     return false;
@@ -39,9 +39,9 @@ $('#selectForm').click(function(){
     if ($('#Answer_type :selected').length > 0) {
         $('#selectForm').attr('disabled',true);
         if (document.getElementById('selection').innerText == 'Pas de sélection.') {
-            $('#selection').html('<p id=\"FormSelected\">- Formulaires sélectionnés</p><br>');
+            $('#selection').html('<p id=\"FormSelected\">- Formulaires sélectionnés: ' + $('#Answer_type').val() + '</p><br>');
         } else {
-            $('#selection').append('<p id=\"FormSelected\">- Formulaires sélectionnés</p><br>');
+            $('#selection').append('<p id=\"FormSelected\">- Formulaires sélectionnés: ' + $('#Answer_type').val() + '</p><br>');
         }
     }
     return false;
@@ -50,9 +50,9 @@ $('#selectDate').click(function(){
     if ($('#Answer_last_updated').val().length > 0) {
         $('#selectDate').attr('disabled',true);
         if (document.getElementById('selection').innerText == 'Pas de sélection.') {
-            $('#selection').html('<p id=\"DateSelected\">- Période sélectionnée</p><br>');
+            $('#selection').html('<p id=\"DateSelected\">- Période sélectionnée: ' + $('#Answer_last_updated').val() + '</p><br>');
         } else {
-            $('#selection').append('<p id=\"DateSelected\">- Période sélectionnée</p><br>');
+            $('#selection').append('<p id=\"DateSelected\">- Période sélectionnée: ' + $('#Answer_last_updated').val() + '</p><br>');
             }
     }
     return false;
