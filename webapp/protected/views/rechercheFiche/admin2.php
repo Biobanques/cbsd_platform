@@ -83,7 +83,7 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                     'name' => 'question',
                     'source' => array_map(function($key, $value) {
                                 return array('label' => $value, 'value' => $key);
-                            }, array_keys(Answer::model()->getAllQuestions()), Answer::model()->getAllQuestions()),
+                            }, array_keys(Answer::model()->getAllQuestionsByTypeForm($_SESSION['typeForm'])), Answer::model()->getAllQuestionsByTypeForm($_SESSION['typeForm'])),
                             'htmlOptions' => array(
                                 'onkeyup' => 'document.getElementById("addFilterButton").disabled = false;'
                         )));

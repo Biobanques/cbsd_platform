@@ -478,6 +478,21 @@ class Answer extends LoggableActiveRecord {
         natcasesort($result);
         return $result;
     }
+    
+    /**
+     * retourne la liste de toutes les questions en fonction des types de fiches sélectionnées
+     * @return type
+     */
+    public function getAllQuestionsByTypeForm($typeForm) {
+        $result = array();
+        $answers = $this->getAllDetailledQuestionsByTypeForm($typeForm);
+        foreach ($answers as $answer) {
+            //$result[$answer->answer->id] = "[" . $answer->fiche . "][" . $answer->group . "] " . $answer->answer->label_fr;
+            $result[$answer->answer->id] = "[" . $answer->group . "] " . $answer->answer->label_fr;
+        }
+        natcasesort($result);
+        return $result;
+    }
 
     public function getAllQuestionsByFilterName($model, $name) {
         $result = array();
@@ -580,6 +595,29 @@ class Answer extends LoggableActiveRecord {
     public function getAllDetailledQuestions() {
         $result = array();
         $fiches = Answer::model()->findAll();
+        foreach ($fiches as $fiche) {
+            foreach ($fiche->answers_group as $group) {
+                foreach ($group->answers as $answer) {
+                    $toAdd = new stdClass();
+                    $toAdd->answer = $answer;
+                    $toAdd->fiche = $fiche->name;
+                    $toAdd->group = $group->title_fr;
+                    $result[] = $toAdd;
+                }
+            }
+        }
+        return $result;
+    }
+    
+    public function getAllDetailledQuestionsByTypeForm($typeForm) {
+        $result = array();
+        if ($typeForm != null) {
+            $criteria = new EMongoCriteria;
+            $criteria->type = new MongoRegex(CommonTools::regexString($typeForm));
+            $fiches = Answer::model()->findAll($criteria);
+        } else {
+            $fiches = Answer::model()->findAll();
+        }
         foreach ($fiches as $fiche) {
             foreach ($fiche->answers_group as $group) {
                 foreach ($group->answers as $answer) {
