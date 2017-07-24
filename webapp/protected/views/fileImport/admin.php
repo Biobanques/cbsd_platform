@@ -67,6 +67,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'fileImport-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
+        //array('id' => 'User_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => 'CommonTools::getUserLogin()'),
         array('header' => $model->attributeLabels()["filename"], 'name' => 'filename'),
         array('header' => $model->attributeLabels()["filesize"], 'name' => 'filesize', 'value' => 'CommonTools::formatSizeUnits($data["filesize"])'),

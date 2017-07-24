@@ -40,18 +40,10 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionAdmin() {
-        if (isset($_SESSION['idPatient'])) {
-            $_SESSION['idPatient'] = null;
-        }
-        if (isset($_SESSION['typeForm'])) {
-            $_SESSION['typeForm'] = null;
-        }
-        if (isset($_SESSION['Period'])) {
-            $_SESSION['Period'] = null;
-        }
-        if (isset($_SESSION['Answer'])) {
-            $_SESSION['Answer'] = null;
-        }
+        $_SESSION['idPatient'] = null;
+        $_SESSION['typeForm'] = null;
+        $_SESSION['Period'] = null;
+        $_SESSION['Answer'] = null;
         $model = new Answer;
         if (isset($_POST['Answer'])) {
             if (isset($_POST['Answer']['id_patient'])) {

@@ -26,7 +26,7 @@ class UserController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('create', 'update', 'index', 'admin', 'view', 'delete'),
+                'actions' => array('create', 'update', 'index', 'admin', 'view', 'delete', 'deleteMany'),
                 'expression' => '$user->getActiveProfil() == "Administrateur"'
             ),
             array('deny', // deny all users
@@ -133,6 +133,22 @@ class UserController extends Controller {
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
+    
+    /*public function actionDeleteMany() {
+        if (isset($_POST['deleteMany'])) {
+            if (isset($_POST['User_id'])) {
+                $criteria = new EMongoCriteria;
+                $regex = '/^';
+                foreach ($_POST['User_id'] as $login) {
+                    $regex.= $login . '$|^';
+                }
+                $regex .= '$/i';
+                $criteria->addCond('login', '==', new MongoRegex($regex));
+                $model = User::model()->findAll($criteria);
+                print_r($model);
+            }
+        }
+    }*/
 
     /**
      * Lists all models.

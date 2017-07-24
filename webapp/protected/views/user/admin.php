@@ -54,6 +54,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'user-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
+        //array('id' => 'User_id', 'value' => '$data->login', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
         array('header' => $model->attributeLabels()["login"], 'name' => 'login'),
         array('header' => $model->attributeLabels()["nom"], 'name' => 'nom'),
         array('header' => $model->attributeLabels()["prenom"], 'name' => 'prenom'),
