@@ -52,7 +52,6 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
     <?php
     $this->widget('zii.widgets.grid.CGridView', array(
         'dataProvider' => $dataProviderCliniques,
-        'template' => "{items}",
         'emptyText' => Yii::t('common', 'noPatientForms'),
         'columns' => array(
             array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
@@ -87,7 +86,6 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
     <?php
     $this->widget('zii.widgets.grid.CGridView', array(
         'dataProvider' => $dataProviderNeuropathologiques,
-        'template' => "{items}",
         'emptyText' => Yii::t('common', 'noPatientForms'),
         'columns' => array(
             array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
@@ -122,7 +120,6 @@ $this->pageTitle = Yii::app()->name . ' - Affiche patient';
     <?php
     $this->widget('zii.widgets.grid.CGridView', array(
         'dataProvider' => $dataProviderGenetiques,
-        'template' => "{items}",
         'emptyText' => Yii::t('common', 'noPatientForms'),
         'columns' => array(
             array('header' => Yii::t('common', 'formName'), 'name' => 'name'),
