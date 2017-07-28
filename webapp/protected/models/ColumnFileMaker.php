@@ -61,5 +61,9 @@ class ColumnFileMaker extends LoggableActiveRecord
     public function getType() {
         return $this->getTypesQuestions()[$this->type];
     }
+    
+    public function getCurrentColumnByNewColumn($columnCBSD) {
+        return ColumnFileMaker::model()->findByAttributes(array('newColumn' => $columnCBSD))->currentColumn;
+    }
 
 }

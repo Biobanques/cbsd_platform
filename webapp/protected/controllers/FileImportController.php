@@ -53,7 +53,7 @@ class FileImportController extends Controller {
             $uploadedFile->filename = CUploadedFile::getInstance($uploadedFile, 'filename');
             $folderNominatif = CommonProperties::$IMPORT_FOLDER_NOMINATIF;
             if (substr($folderNominatif, -1) != '/') {
-                $folderNominatif.='/';
+                $folderNominatif .= '/';
             }
             chdir(Yii::app()->basePath . "/" . $folderNominatif);
             if ($uploadedFile->validate()) {
@@ -63,6 +63,7 @@ class FileImportController extends Controller {
                 $filename = str_replace('.xml', '.txt', $file);
                 $this->importNeuropathNominatif($filename);
                 $this->deleteUnvalidNeuropath();
+                $this->deleteImportNeuropathForms();
                 $this->createFicheNeuropath();
                 $fileImport->user = Yii::app()->user->id;
                 $fileImport->filename = $date . '_' . $uploadedFile->filename->getName();
@@ -82,7 +83,7 @@ class FileImportController extends Controller {
             'uploadedFile' => $uploadedFile
         ));
     }
-   
+
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -102,7 +103,7 @@ class FileImportController extends Controller {
             'model' => $model,
         ));
     }
-   
+
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -121,7 +122,7 @@ class FileImportController extends Controller {
             'model' => $model,
         ));
     }
-   
+
     /**
      * Deletes a particular model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -144,7 +145,7 @@ class FileImportController extends Controller {
             } //for ajax
         }
     }
-   
+
     public function actionFormatColumn() {
         $modelColumn = new ColumnFileMaker('search');
         $modelColumn->unsetAttributes();
@@ -163,7 +164,7 @@ class FileImportController extends Controller {
         }
         return $model;
     }
-   
+
     public function dropNeuropathCollection() {
         return Neuropath::model()->deleteAll();
     }
@@ -246,6 +247,21 @@ class FileImportController extends Controller {
                                     $countImported++;
                                 }
                             }
+                        } else {
+                            $patientSIP = get_object_vars($patientest);
+                            foreach ($patientSIP as $k => $v) {
+                                if ($k == "id") {
+                                    $criteria = new EMongoCriteria;
+                                    $criteria->id_cbsd = $v;
+                                    $neuropath = Neuropath::model()->find($criteria);
+                                    foreach ($neuropath as $key => $value) {
+                                        if ($key != '_id' && $key != 'id_cbsd' && $neuropath->$key != $attributes[ColumnFileMaker::model()->getCurrentColumnByNewColumn($key)]) {
+                                            $neuropath->$key = $attributes[ColumnFileMaker::model()->getCurrentColumnByNewColumn($key)];
+                                            $neuropath->save();
+                                        }
+                                    }
+                                }
+                            }
                         }
                     } else {
                         $countNotImported++;
@@ -292,6 +308,17 @@ class FileImportController extends Controller {
         $neuropath = Neuropath::model()->findAll();
         foreach ($neuropath as $neuro) {
             if (!isset($neuro->id_cbsd)) {
+                $neuro->delete();
+            }
+        }
+    }
+
+    public function deleteImportNeuropathForms() {
+        $criteria = new EMongoCriteria;
+        $criteria->id = 'neuropath_filemaker_form';
+        $neuropath = Answer::model()->findAll($criteria);
+        if ($neuropath != null) {
+            foreach ($neuropath as $neuro) {
                 $neuro->delete();
             }
         }
@@ -345,7 +372,7 @@ class FileImportController extends Controller {
             }
         }
     }
-   
+
     public function convertNumeric($value) {
         switch ($value) {
             case "I": return 1;
@@ -363,13 +390,13 @@ class FileImportController extends Controller {
             default: return $value;
         }
     }
-   
+
     public function actionExportNonImported($id) {
         $fileImport = FileImport::model()->findByPk(new MongoId($id));
         $file = $fileImport->filename;
         $filePath = CommonProperties::$EXPORT_NON_IMPORTED_PATH;
         if (substr($filePath, -1) != '/') {
-            $filePath.='/';
+            $filePath .= '/';
         }
         chdir(Yii::app()->basePath . "/" . $filePath);
         $filename = str_replace('.xml', '.txt', $file);
@@ -389,5 +416,5 @@ class FileImportController extends Controller {
             Yii::app()->user->setFlash('erreur', 'Le projet n\'a pas été supprimé.');
         }
     }
-}
 
+}
