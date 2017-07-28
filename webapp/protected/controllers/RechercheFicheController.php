@@ -44,6 +44,7 @@ class RechercheFicheController extends Controller {
         $_SESSION['typeForm'] = null;
         $_SESSION['Period'] = null;
         $_SESSION['Answer'] = null;
+        $_SESSION['id_patientBis'] = null;
         $model = new Answer;
         if (isset($_POST['Answer'])) {
             if (isset($_POST['Answer']['id_patient'])) {
@@ -108,16 +109,11 @@ class RechercheFicheController extends Controller {
 
     public function actionResultSearch() {
         $idPatient = array();
-        if (isset($_POST['exporter'])) {
-            $filter = array();
-            if (isset($_POST['filter'])) {
-                $filter = $_POST['filter'];
-            }
-            $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
-            $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
-            $csv = new ECSVExport($arAnswers, true, false, null, null);
-            Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
-        }
+        $_SESSION['idPatient'] = null;
+        $_SESSION['typeForm'] = null;
+        $_SESSION['Period'] = null;
+        $_SESSION['Answer'] = null;
+        $_SESSION['id_patientBis'] = null;
         $model = new Answer('search');
         $model->unsetAttributes();
         if (isset($_GET['Answer'])) {
@@ -132,7 +128,7 @@ class RechercheFicheController extends Controller {
                 }
                 $regex .= '$/i';
                 $criteria->addCond('id_patient', '==', new MongoRegex($regex));
-                $_SESSION['id_patient'] = $regex;
+                $_SESSION['id_patientBis'] = $regex;
             } else {
                 $this->redirect(array('rechercheFiche/admin3'));
             }
@@ -248,12 +244,10 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionSearchReplace() {
-        $model = new Answer;
         if (isset($_POST['result'])) {
             $old = $_POST['test'];
             $new = $_POST['result'];
             $test = $_POST['hidden_id'];
-            $criteria = new EMongoCriteria;
             $criteria = $_SESSION['criteria'];
             $criteria1 = new EMongoCriteria;
             $criteria1->addCond('answers_group.answers.id', '==', $test);
@@ -319,8 +313,9 @@ class RechercheFicheController extends Controller {
 
     public function loadModel($id) {
         $model = Answer::model()->findByPk(new MongoID($id));
-        if ($model === null)
+        if ($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
+        }
         return $model;
     }
 
