@@ -58,8 +58,8 @@ class FileImport extends LoggableActiveRecord {
             'filesize' => Yii::t('common','filesize'),
             'extension' => 'Extension',
             'date_import' => Yii::t('common','dateImport'),
-            'imported' => 'Importé',
-            'not_imported' => 'Non importé'
+            'imported' => Yii::t('common','imported'),
+            'not_imported' => Yii::t('common','notImported')
         );
     }
    

@@ -79,6 +79,9 @@ class RechercheFicheController extends Controller {
                 $criteriaRestrict->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
             }
         }
+        if (isset($_POST['question']) && $_POST['question'] == null) {
+            $this->redirect(array('rechercheFiche/admin3'));
+        }
         if (isset($_POST['Answer'])) {
             $_SESSION['Answer'] = $_POST['Answer'];
             $this->redirect(array('rechercheFiche/admin3'));
@@ -124,7 +127,7 @@ class RechercheFicheController extends Controller {
                 $criteria = new EMongoCriteria;
                 $regex = '/^';
                 foreach ($_POST['Answer_id_patient'] as $idPatient) {
-                    $regex.= $idPatient . '$|^';
+                    $regex .= $idPatient . '$|^';
                 }
                 $regex .= '$/i';
                 $criteria->addCond('id_patient', '==', new MongoRegex($regex));

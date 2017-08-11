@@ -61,6 +61,8 @@ return array(
     'filesize' => 'Filesize',
     'dateImport' => 'Import date',
     'importedFiles' => 'Imported files',
+    'imported' => 'Imported',
+    'notImported' => 'Not imported',
     'individualSelection' => 'individual cases',
     'restrictQuery' => 'a form',
     'restrictPeriod' => 'a period',

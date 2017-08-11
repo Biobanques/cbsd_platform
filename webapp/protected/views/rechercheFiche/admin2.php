@@ -35,8 +35,6 @@ $('#dynamicFilters').on('click','.validateQuery',function(event){
         $('#queries').show();
             $('#queries').html('');
             $('#queries').append(result);
-            $('#search').show();
-            $('#reset').show();
         }
     })
     return false;
@@ -96,12 +94,12 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
             </div>
         </div>
 
-        <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;display:none;"></div>
+        <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"></div>
         <br>
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
-                <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'style' => 'display:none;')); ?>
-                <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'style' => 'display:none;', 'onclick' => 'location.reload();')); ?>
+                <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary')); ?>
+                <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'onclick' => 'location.reload();')); ?>
     </div>
 </div>
         
