@@ -47,6 +47,16 @@ class FileImportController extends Controller {
         if (isset($_GET['FileImport'])) {
             $model->setAttributes($_GET['FileImport']);
         }
+        if (isset($_POST['rechercher'])) {
+            if (isset($_POST['FileImport_id'])) {
+                foreach($_POST['FileImport_id'] as $key => $value) {
+                    $this->loadModelFileImport($value)->delete();
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'importedFilesDeleted'));
+                }
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'importedFilesNotDeleted'));
+            }
+        }
         if (isset($_POST['UploadedFile'])) {
             $date = date('Ymd_H') . 'h' . date('i');
             $uploadedFile->attributes = $_POST['UploadedFile'];
@@ -152,13 +162,31 @@ class FileImportController extends Controller {
         if (isset($_GET['ColumnFileMaker'])) {
             $modelColumn->setAttributes($_GET['ColumnFileMaker']);
         }
+        if (isset($_POST['rechercher'])) {
+            if (isset($_POST['ColumnFileMaker_id'])) {
+                foreach($_POST['ColumnFileMaker_id'] as $key => $value) {
+                    $this->loadModel($value)->delete();
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'columnFileMakersDeleted'));
+                }
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'columnFileMakersNotDeleted'));
+            }
+        }
         $this->render('formatColumn', array(
             'modelColumn' => $modelColumn
         ));
     }
+    
+    public function loadModelFileImport($id) {
+        $model = FileImport::model()->findByPk(new MongoId($id));
+        if ($model === null) {
+            throw new CHttpException(404, 'The requested page does not exist.');
+        }
+        return $model;
+    }
 
     public function loadModel($id) {
-        $model = UploadedFile::model()->findByPk(new MongoId($id));
+        $model = columnFileMaker::model()->findByPk(new MongoId($id));
         if ($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
         }

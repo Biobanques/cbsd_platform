@@ -192,6 +192,17 @@ return array(
     'referenceNotUpdated' => 'The reference center has not been updated.',
     'referenceDeleted' => 'The reference center has been deleted successfully.',
     'referenceNotDeleted' => 'The reference center has not been deleted.',
+    'referencesDeleted' => 'The reference centers have been deleted successfully.',
+    'referencesNotDeleted' => 'The reference centers have not been deleted.',
+    'blocksDeleted' => 'The blocks have been deleted successfully.',
+    'blocksNotDeleted' => 'The blocks have not been deleted.',
+    'columnFileMakersDeleted' => 'The columns have been deleted successfully.',
+    'columnFileMakersNotDeleted' => 'The columns have not been deleted.',
+    'importedFilesDeleted' => 'The imported files have been deleted successfully.',
+    'importedFilesNotDeleted' => 'The imported files have not been deleted.',
+    'projectsDeleted' => 'The projects have been deleted successfully.',
+    'projectsNotDeleted' => 'The projects have not been deleted.',
+    
     // text
     'signin' => 'Sign in',
     'noAccount' => 'Not registered yet?',

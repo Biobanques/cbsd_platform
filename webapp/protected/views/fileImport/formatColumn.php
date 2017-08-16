@@ -43,10 +43,16 @@ echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('
 </div><!-- search-form -->
 
 <?php
+$form = $this->beginWidget('CActiveForm', array(
+    'action' => Yii::app()->createUrl($this->route),
+    'method' => 'post',
+        ));
+
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'columnFilemaker-grid',
     'dataProvider' => $modelColumn->search(),
     'columns' => array(
+        array('id' => 'ColumnFileMaker_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
         array('header' => $modelColumn->attributeLabels()["currentColumn"], 'name' => 'currentColumn'),
         array('header' => $modelColumn->attributeLabels()["newColumn"], 'name' => 'newColumn'),
         array('header' => $modelColumn->attributeLabels()["type"], 'name' => 'type', 'value' => '$data->getType()'),
@@ -57,3 +63,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
     ),
 ));
+?>
+
+<div class="row">
+    <div class="col-lg-5">
+        <?php echo CHtml::submitButton(Yii::t('button', 'deleteSelectedcolumnFileMakers'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
+    </div>
+</div>
+<?php $this->endWidget(); ?>

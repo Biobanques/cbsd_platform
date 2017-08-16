@@ -7,5 +7,7 @@
 return array(
     'infoTitle' => 'How to manage forms?',
     'infoContent' => 'You can create a new form by clicking on the link <b><i>\'Create form\'</b></i> above.<br>'
-    . 'You can also edit or delete forms using pictures at the end of the lines.'
+    . 'You can also edit or delete forms using pictures at the end of the lines.',
+    'formsDeleted' => 'Forms have been deleted successfully.',
+    'formsNotDeleted' => 'Forms have not been deleted.'
 );

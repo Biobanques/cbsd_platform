@@ -27,5 +27,13 @@ return array(
     'selectAll' => 'Selectionner tout',
     'deleteQuery' => 'Effacer la requête',
     'select' => 'Sélectionner',
-    'next' => 'Suivant'
+    'next' => 'Suivant',
+    'deleteSelectedUsers' => 'Supprimer les utilisateurs sélectionnés',
+    'deleteSelectedReferences' => 'Supprimer les centres de références',
+    'deleteSelectedForms' => 'Supprimer les formulaires sélectionnés',
+    'deleteSelectedBlocks' => 'Supprimer les blocs sélectionnés',
+    'deleteSelectedPatientForms' => 'Supprimer les fiches sélectionnées',
+    'deleteSelectedcolumnFileMakers' => 'Supprimer les colonnes',
+    'deleteSelectedImportedFiles' => 'Supprimer les fichiers importés sélectionnés',
+    'deleteSelectedProjects' => 'Supprimer les projets sélectionnés'
 );

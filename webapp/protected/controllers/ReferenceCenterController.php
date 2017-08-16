@@ -40,8 +40,19 @@ class ReferenceCenterController extends Controller {
     public function actionAdmin() {
         $model = new ReferenceCenter('search');
         $model->unsetAttributes();
-        if (isset($_GET['User']))
+        if (isset($_GET['User'])) {
             $model->setAttributes($_GET['ReferenceCenter']);
+        }
+        if (isset($_POST['rechercher'])) {
+            if (isset($_POST['ReferenceCenter_id'])) {
+                foreach($_POST['ReferenceCenter_id'] as $key => $value) {
+                    $this->loadModel($value)->delete();
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'referencesDeleted'));
+                }
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'referencesNotDeleted'));
+            }
+        }
         $this->render('admin', array(
             'model' => $model
         ));

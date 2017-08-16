@@ -46,14 +46,24 @@ class FicheController extends Controller {
     public function actionAdmin() {
         $model = new Answer('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Answer']))
+        if (isset($_GET['Answer'])) {
             $model->attributes = $_GET['Answer'];
-        
+        }
         $modelUser = new User('search');
         $modelUser->unsetAttributes(); 
-        if (isset($_GET['User']))
+        if (isset($_GET['User'])) {
             $model->attributes = $_GET['User'];
-
+        }   
+        if (isset($_POST['rechercher'])) {
+            if (isset($_POST['Fiche_id'])) {
+                foreach($_POST['Fiche_id'] as $key => $value) {
+                    $this->loadModel($value)->delete();
+                    Yii::app()->user->setFlash('succès', Yii::t('patientForm', 'patientFormsDeleted'));
+                }
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('patientForm', 'patientFormsNotDeleted'));
+            }
+        }
         $this->render('admin', array(
             'model' => $model,
             'modelUser' => $modelUser

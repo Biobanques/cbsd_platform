@@ -38,10 +38,16 @@ echo CHtml::link($imagecreateuser . Yii::t('administration', 'createCenter'), ar
 ?>
 
 <?php
+$form = $this->beginWidget('CActiveForm', array(
+    'action' => Yii::app()->createUrl($this->route),
+    'method' => 'post',
+        ));
+
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'referenceCenter-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
+        array('id' => 'ReferenceCenter_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
         array('header' => $model->attributeLabels()["center"], 'name' => 'center'),
         array(
             'class' => 'CButtonColumn',
@@ -52,3 +58,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 ));
 ?>
+
+<div class="row">
+    <div class="col-lg-5">
+        <?php echo CHtml::submitButton(Yii::t('button', 'deleteSelectedReferences'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
+    </div>
+</div>
+<?php $this->endWidget(); ?>

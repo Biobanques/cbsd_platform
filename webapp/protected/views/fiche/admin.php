@@ -45,10 +45,16 @@ echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('
 </div><!-- search-form -->
 
 <?php
+$form = $this->beginWidget('CActiveForm', array(
+    'action' => Yii::app()->createUrl($this->route),
+    'method' => 'post',
+        ));
+
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'fiche-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
+        array('id' => 'Fiche_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
         array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
@@ -60,3 +66,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 ));
 ?>
+
+<div class="row">
+    <div class="col-lg-5">
+        <?php echo CHtml::submitButton(Yii::t('button', 'deleteSelectedPatientForms'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
+    </div>
+</div>
+<?php $this->endWidget(); ?>

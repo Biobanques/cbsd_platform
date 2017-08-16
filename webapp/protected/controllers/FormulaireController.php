@@ -40,8 +40,19 @@ class FormulaireController extends Controller {
     public function actionAdmin() {
         $model = new Questionnaire('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Questionnaire']))
+        if (isset($_GET['Questionnaire'])) {
             $model->attributes = $_GET['Questionnaire'];
+        }
+        if (isset($_POST['rechercher'])) {
+            if (isset($_POST['Form_id'])) {
+                foreach($_POST['Form_id'] as $key => $value) {
+                    $this->loadModel($value)->delete();
+                    Yii::app()->user->setFlash('succès', Yii::t('form', 'formsDeleted'));
+                }
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('form', 'formsNotDeleted'));
+            }
+        }
 
         $this->render('admin', array(
             'model' => $model,
@@ -195,6 +206,14 @@ class FormulaireController extends Controller {
             'questionGroup' => $questionGroup,
             'questionBloc' => $questionBlocForm
         ));
+    }
+    
+    public function loadModel($id) {
+        $model = Questionnaire::model()->findByPk(new MongoId($id));
+        if ($model === null) {
+            throw new CHttpException(404, 'The requested page does not exist.');
+        }
+        return $model;
     }
 
     /**

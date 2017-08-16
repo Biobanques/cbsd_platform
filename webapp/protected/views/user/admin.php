@@ -50,11 +50,16 @@ echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('
 </div><!-- search-form -->
 
 <?php
+$form = $this->beginWidget('CActiveForm', array(
+    'action' => Yii::app()->createUrl($this->route),
+    'method' => 'post',
+        ));
+
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'user-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        //array('id' => 'User_id', 'value' => '$data->login', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
+        array('id' => 'User_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
         array('header' => $model->attributeLabels()["login"], 'name' => 'login'),
         array('header' => $model->attributeLabels()["nom"], 'name' => 'nom'),
         array('header' => $model->attributeLabels()["prenom"], 'name' => 'prenom'),
@@ -68,3 +73,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 ));
 ?>
+<div class="row">
+    <div class="col-lg-5">
+        <?php echo CHtml::submitButton(Yii::t('button', 'deleteSelectedUsers'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
+    </div>
+</div>
+<?php $this->endWidget(); ?>

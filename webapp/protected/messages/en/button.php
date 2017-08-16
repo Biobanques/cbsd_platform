@@ -27,6 +27,14 @@ return array(
     'selectAll' => 'Select All',
     'deleteQuery' => 'Clear the query',
     'select' => 'Select',
-    'next' => 'Next'
+    'next' => 'Next',
+    'deleteSelectedUsers' => 'Delete selected users',
+    'deleteSelectedReferences' => 'Delete selected reference centers',
+    'deleteSelectedForms' => 'Delete selected forms',
+    'deleteSelectedBlocks' => 'Delete selected blocks',
+    'deleteSelectedPatientForms' => 'Delete selected patient forms',
+    'deleteSelectedcolumnFileMakers' => 'Delete selected columns',
+    'deleteSelectedImportedFiles' => 'Delete selected imported files',
+    'deleteSelectedProjects' => 'Delete selected projects'
 );
 

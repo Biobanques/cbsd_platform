@@ -44,6 +44,7 @@ if (Yii::app()->user->getState('activeProfil') == "Administrateur de projet") {
 <div class="checkboxgroup"> 
     <?php
     $fiches = Answer::model()->getNomsFichesByFilter($models);
+    echo "<h3><u>Variables communes</u></h3>"; 
     echo CHtml::checkBoxList('filter', 'addFilter', Answer::model()->attributeExportedLabels(), array(
             'labelOptions' => array('style' => 'display:inline'),
             'separator' => '',

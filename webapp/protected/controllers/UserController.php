@@ -133,22 +133,22 @@ class UserController extends Controller {
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
-    
-    /*public function actionDeleteMany() {
-        if (isset($_POST['deleteMany'])) {
-            if (isset($_POST['User_id'])) {
-                $criteria = new EMongoCriteria;
-                $regex = '/^';
-                foreach ($_POST['User_id'] as $login) {
-                    $regex.= $login . '$|^';
-                }
-                $regex .= '$/i';
-                $criteria->addCond('login', '==', new MongoRegex($regex));
-                $model = User::model()->findAll($criteria);
-                print_r($model);
-            }
-        }
-    }*/
+
+    /* public function actionDeleteMany() {
+      if (isset($_POST['deleteMany'])) {
+      if (isset($_POST['User_id'])) {
+      $criteria = new EMongoCriteria;
+      $regex = '/^';
+      foreach ($_POST['User_id'] as $login) {
+      $regex.= $login . '$|^';
+      }
+      $regex .= '$/i';
+      $criteria->addCond('login', '==', new MongoRegex($regex));
+      $model = User::model()->findAll($criteria);
+      print_r($model);
+      }
+      }
+      } */
 
     /**
      * Lists all models.
@@ -166,9 +166,19 @@ class UserController extends Controller {
     public function actionAdmin() {
         $model = new User('search');
         $model->unsetAttributes();
-        if (isset($_GET['User']))
+        if (isset($_GET['User'])) {
             $model->setAttributes($_GET['User']);
-
+        }
+        if (isset($_POST['rechercher'])) {
+            if (isset($_POST['User_id'])) {
+                foreach($_POST['User_id'] as $key => $value) {
+                    $this->loadModel($value)->delete();
+                    Yii::app()->user->setFlash('succès', Yii::t('user', 'usersDeleted'));
+                }
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('user', 'usersNotDeleted'));
+            }
+        }
         $this->render('admin', array(
             'model' => $model
         ));
@@ -222,7 +232,7 @@ class UserController extends Controller {
         if ($model->update()) {
             Yii::app()->user->setFlash('succès', Yii::t('common', 'userProfile1bis') . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ')' . Yii::t('common', 'userProfile7'));
         } else {
-            Yii::app()->user->setFlash('erreur', Yii::t('common', 'userProfile1bis') . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ')' .  Yii::t('common', 'userProfile8'));
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'userProfile1bis') . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ')' . Yii::t('common', 'userProfile8'));
         }
         $this->redirect(array(
             'admin',

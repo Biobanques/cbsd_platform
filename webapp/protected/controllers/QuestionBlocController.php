@@ -188,10 +188,19 @@ class QuestionBlocController extends Controller {
     public function actionAdmin() {
         $model = new QuestionBloc('search');
         $model->unsetAttributes();
-
-        if (isset($_GET['QuestionBloc']))
+        if (isset($_GET['QuestionBloc'])) {
             $model->setAttributes($_GET['QuestionBloc']);
-
+        }
+        if (isset($_POST['rechercher'])) {
+            if (isset($_POST['QuerstionBloc_id'])) {
+                foreach($_POST['QuerstionBloc_id'] as $key => $value) {
+                    $this->loadModel($value)->delete();
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'blocksDeleted'));
+                }
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'blocksNotDeleted'));
+            }
+        }
         $this->render('admin', array(
             'model' => $model
         ));

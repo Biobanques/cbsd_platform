@@ -83,9 +83,19 @@ class ProjectController extends Controller {
     public function actionAdmin() {
         $model = new Project('search');
         $model->unsetAttributes();
-        if (isset($_GET['Project']))
+        if (isset($_GET['Project'])) {
             $model->setAttributes($_GET['Project']);
-
+        }
+        if (isset($_POST['rechercher'])) {
+            if (isset($_POST['Project_id'])) {
+                foreach($_POST['Project_id'] as $key => $value) {
+                    $this->loadModelFileImport($value)->delete();
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'projectsDeleted'));
+                }
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'projectsNotDeleted'));
+            }
+        }
         $this->render('admin', array(
             'model' => $model
         ));
