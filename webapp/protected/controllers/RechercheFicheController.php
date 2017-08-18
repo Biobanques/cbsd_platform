@@ -45,17 +45,32 @@ class RechercheFicheController extends Controller {
         $_SESSION['Period'] = null;
         $_SESSION['Answer'] = null;
         $_SESSION['id_patientBis'] = null;
+        $_SESSION['fiches'] = null;
+        $_SESSION['fiche'] = null;
+        $_SESSION['indexFiche'] = null;
         $model = new Answer;
         if (isset($_POST['Answer'])) {
-            if (isset($_POST['Answer']['id_patient'])) {
+            $criteria = new EMongoCriteria;
+            if (isset($_POST['Answer']['id_patient']) && $_POST['Answer']['id_patient'] != null) {
                 $_SESSION['idPatient'] = $_POST['Answer']['id_patient'];
+                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_POST['Answer']['id_patient'])));
             }
-            if (isset($_POST['Answer']['type'])) {
+            if (isset($_POST['Answer']['type']) && $_POST['Answer']['type'] != null) {
                 $_SESSION['typeForm'] = $_POST['Answer']['type'];
+                $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($_POST['Answer']['type'])));
             }
-            if (isset($_POST['Answer']['last_updated'])) {
+            if (isset($_POST['Answer']['last_updated']) && $_POST['Answer']['last_updated'] != null) {
                 $_SESSION['Period'] = $_POST['Answer']['last_updated'];
+                $answerFormat = CommonTools::formatDatePicker($_POST['Answer']['last_updated']);
+                $date_from = str_replace('/', '-', $answerFormat['date_from']);
+                $date_to = str_replace('/', '-', $answerFormat['date_to']);
+                $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
             }
+            $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
+            $criteria->sort('type', EMongoCriteria::SORT_ASC);
+            $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
+            $fiches = Answer::model()->findAll($criteria);
+            $_SESSION['fiches'] = $fiches;
             $this->redirect(array('rechercheFiche/admin2'));
         }
         $this->render('admin', array(
@@ -64,21 +79,21 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionAdmin2() {
-        if (isset($_SESSION['idPatient']) || isset($_SESSION['typeForm']) || isset($_SESSION['Period'])) {
-            $criteriaRestrict = new EMongoCriteria;
-            if (isset($_SESSION['idPatient']) && !empty($_SESSION['idPatient'])) {
-                $criteriaRestrict->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_SESSION['idPatient'])));
-            }
-            if (isset($_SESSION['typeForm']) && !empty($_SESSION['typeForm'])) {
-                $criteriaRestrict->addCond('type', '==', new MongoRegex(CommonTools::regexString($_SESSION['typeForm'])));
-            }
-            if (isset($_SESSION['Period']) && !empty($_SESSION['Period'])) {
-                $answerFormat = CommonTools::formatDatePicker($_SESSION['Period']);
-                $date_from = str_replace('/', '-', $answerFormat['date_from']);
-                $date_to = str_replace('/', '-', $answerFormat['date_to']);
-                $criteriaRestrict->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
-            }
+        $idFiches = array();
+        $countFiche = 0;
+        foreach ($_SESSION['fiches'] as $fiche) {
+            array_push($idFiches, $fiche->_id);
+            $countFiche = count($idFiches);
         }
+        if (isset($_POST['yt3'])) {
+            if ($_SESSION['indexFiche'] < count($idFiches) - 1) {
+                $_SESSION['indexFiche'] += 1;
+            }
+        } elseif ($_SESSION['indexFiche'] < 1) {
+            $_SESSION['indexFiche'] = 0;
+        }        
+        $fiche = Answer::model()->findByPk(new MongoId($idFiches[$_SESSION['indexFiche']]));
+        $_SESSION['fiche'] = $fiche;
         if (isset($_POST['question']) && $_POST['question'] == null) {
             $this->redirect(array('rechercheFiche/admin3'));
         }
@@ -86,7 +101,12 @@ class RechercheFicheController extends Controller {
             $_SESSION['Answer'] = $_POST['Answer'];
             $this->redirect(array('rechercheFiche/admin3'));
         }
-        $this->render('admin2');
+        if (isset($_POST['hash'])) {
+            $anchor = $_POST['hash'];
+            $this->redirect(array('rechercheFiche/admin2#' . $anchor));
+        } else {
+            $this->render('admin2', array('fiche' => $_SESSION['fiche']));
+        }
     }
 
     public function actionAdmin3() {

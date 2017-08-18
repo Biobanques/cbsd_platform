@@ -47,6 +47,11 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     }
     return false;
 });
+
+$('#search_fiche-form').on('click','.question-input',function(event){
+    '#'+$('#hash').val(event.target.id);
+    location.hash = event.target.id;
+});
 ");
 ?>
 <div style="margin-left:20px;">
@@ -82,25 +87,49 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
                     'source' => array_map(function($key, $value) {
                                 return array('label' => $value, 'value' => $key);
                             }, array_keys(Answer::model()->getAllQuestionsByTypeForm($_SESSION['typeForm'])), Answer::model()->getAllQuestionsByTypeForm($_SESSION['typeForm'])),
-                            'htmlOptions' => array(
-                                'onkeyup' => 'document.getElementById("addFilterButton").disabled = false;'
-                        )));
-                        echo CHtml::button(Yii::t('button', 'logicOperator'), array('id' => 'addFilterButton', 'class' => 'btn btn-info', 'style' => 'margin-left:10px; font-weight:bold;', 'disabled' => 'disabled'));
-                        echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
-                        ?>
-                    </div>
-                    <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
-                </div>
+                    'htmlOptions' => array(
+                        'onkeyup' => 'document.getElementById("addFilterButton").disabled = false;'
+                )));
+                echo CHtml::button(Yii::t('button', 'logicOperator'), array('id' => 'addFilterButton', 'class' => 'btn btn-info', 'style' => 'margin-left:10px; font-weight:bold;', 'disabled' => 'disabled'));
+                echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
+                ?>
             </div>
+            <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
         </div>
-
-        <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"></div>
-        <br>
-        <div class="row buttons">
-            <div class="col-lg-7 col-lg-offset-7">
-                <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary')); ?>
-                <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'onclick' => 'location.reload();')); ?>
     </div>
 </div>
-        
+
+<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"></div>
+<br>
+<div class="row buttons">
+    <div class="col-lg-7 col-lg-offset-7">
+        <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary')); ?>
+        <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'onclick' => 'location.reload();')); ?>
+    </div>
+</div>
+
 <?php $this->endWidget(); ?>
+
+<div class="search-form">
+    <div class="wide form">
+        <?php
+        $form = $this->beginWidget('CActiveForm', array(
+            'id' => 'search_fiche-form',
+            'action' => Yii::app()->createUrl($this->route),
+            'method' => 'post',
+        ));
+        ?>
+
+        <?php echo $_SESSION['fiche']->renderHTML(Yii::app()->language); ?>
+    </div><!-- search-form -->
+    <?php echo CHtml::hiddenField('hash', '', array('id' => 'hash')); ?>
+    <div class="row buttons">
+        <div class="col-lg-7 col-lg-offset-7">
+            <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary')); ?>
+        </div>
+    </div>
+
+    <?php $this->endWidget(); ?>
+
+
+</div>
