@@ -1,6 +1,7 @@
 <?php
 $addRoute = Yii::app()->createAbsoluteUrl('answer/addSearchFilter');
 $addRouteQuery = Yii::app()->createAbsoluteUrl('answer/writeQueries');
+$add = Yii::app()->createAbsoluteUrl('answer/test');
 
 Yii::app()->clientScript->registerScript('searchView', "
 $('#addFilterButton').click(function(){
@@ -32,9 +33,8 @@ $('#dynamicFilters').on('click','.validateQuery',function(event){
         type:'POST',
         data:$('#light_search-form').serialize(),
         success:function(result){
-        $('#queries').show();
-            $('#queries').html('');
-            $('#queries').append(result);
+        $('#queries').html('');
+        $('#queries').append(result);
         }
     })
     return false;
@@ -51,6 +51,19 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
 $('#search_fiche-form').on('click','.question-input',function(event){
     '#'+$('#hash').val(event.target.id);
     location.hash = event.target.id;
+});
+
+$('#next').click(function(){
+    $.ajax({
+        url:'$add',
+        type:'POST',
+        data:$('#search_fiche-form').serialize(),
+        success:function(result){
+            $('#renderFiche').html(result);
+        }
+    });
+
+     return false;
 });
 ");
 ?>
@@ -99,7 +112,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
     </div>
 </div>
 
-<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"></div>
+<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;">Pas de requete.</div>
 <br>
 <div class="row buttons">
     <div class="col-lg-7 col-lg-offset-7">
@@ -110,26 +123,31 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 
 <?php $this->endWidget(); ?>
 
-<div class="search-form">
-    <div class="wide form">
-        <?php
-        $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'search_fiche-form',
-            'action' => Yii::app()->createUrl($this->route),
-            'method' => 'post',
-        ));
-        ?>
-
-        <?php echo $_SESSION['fiche']->renderHTML(Yii::app()->language); ?>
-    </div><!-- search-form -->
-    <?php echo CHtml::hiddenField('hash', '', array('id' => 'hash')); ?>
-    <div class="row buttons">
-        <div class="col-lg-7 col-lg-offset-7">
-            <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary')); ?>
+<?php if (isset($_SESSION['fiche']) && $_SESSION['fiche'] != null) { ?>
+    <div class="search-form">
+        <div class="wide form">
+            <?php
+            $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'search_fiche-form',
+                'action' => Yii::app()->createUrl($this->route),
+                'method' => 'post',
+            ));
+            ?>
+            <div id="renderFiche">
+                <?php echo $_SESSION['fiche']->renderHTML(Yii::app()->language); ?>
+            </div>
+        </div><!-- search-form -->
+        <?php echo CHtml::hiddenField('hash', '', array('id' => 'hash')); ?>
+        <div class="row buttons">
+            <div class="col-lg-7 col-lg-offset-7">
+                <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary')); ?>
+            </div>
         </div>
+
+        <?php $this->endWidget(); ?>
+
+
     </div>
+<?php } ?>
 
-    <?php $this->endWidget(); ?>
-
-
-</div>
+<div id="test"></div>

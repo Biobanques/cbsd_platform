@@ -41,7 +41,8 @@ class AnswerController extends Controller {
                     'addSearchFilter',
                     'addSearchReplaceFilter',
                     'writeQueries',
-                    'exportQueries'
+                    'exportQueries',
+                    'test'
                 ),
                 'expression' => '$user->getActiveProfil() != "chercheur"'
             ),
@@ -360,7 +361,7 @@ class AnswerController extends Controller {
             Yii::app()->end();
         }
     }
- 
+
     /**
      * Do a search a selected question.
      */
@@ -374,7 +375,7 @@ class AnswerController extends Controller {
             echo QuestionnaireHTMLRenderer::renderQuestionForSearchHTML($question, 'fr', false);
         }
     }
-   
+
     public function actionAddSearchReplaceFilter() {
         if (isset($_POST['question']) && !empty($_POST['question'])) {
             $id = $_POST['question'];
@@ -385,7 +386,7 @@ class AnswerController extends Controller {
             echo QuestionnaireHTMLRenderer::renderQuestionForSearchReplaceHTML($question, 'fr', false);
         }
     }
- 
+
     /**
      * Write queries (search filter)
      */
@@ -400,9 +401,10 @@ class AnswerController extends Controller {
         $htmlQueries = "";
         $ok = false;
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
-            echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">" . Yii::t('common', 'noFilterSelected') . "</h4>" : "<h4 align=\"center\">" . Yii::t('common', 'query') . CHtml::image('images/disk.png', 'Export la requête', array('onclick'=>'document.forms["exportForm"].submit();', 'style'=>'float:right;margin-right:10px;margin-top:5px;width:20px;height:auto;')) . "</h4>";
+            echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">" . Yii::t('common', 'noFilterSelected') . "</h4>" : "<h4 align=\"center\">" . Yii::t('common', 'query') . CHtml::image('images/disk.png', 'Export la requête', array('onclick' => 'document.forms["exportForm"].submit();', 'style' => 'float:right;margin-right:10px;margin-top:5px;width:20px;height:auto;')) . "</h4>";
             foreach ($_POST['Answer'] as $label => $answer) {
-                if ($label == "last_updated" && $answer == "") {                
+                if ($label == "last_updated" && $answer == "") {
+                    
                 } elseif ($label != "condition" && $label != "compare" && $label != "dynamics") {
                     if (!is_array($answer)) {
                         $mainQuestions[$label] = $answer;
@@ -435,7 +437,7 @@ class AnswerController extends Controller {
             }
             $questions = array_merge_recursive($condition, $compare, $dynamics);
             $html .= "<ul>";
-            if (isset($_SESSION['idPatient'])&& $_SESSION['idPatient'] != null) {
+            if (isset($_SESSION['idPatient']) && $_SESSION['idPatient'] != null) {
                 $html .= "<li>" . Yii::t('common', 'anonymat') . " = ";
                 foreach ($_SESSION['idPatient'] as $idPatient) {
                     $html .= $idPatient;
@@ -445,7 +447,7 @@ class AnswerController extends Controller {
                 }
                 $html .= "</li>";
             }
-            if (isset($_SESSION['typeForm'])&& $_SESSION['typeForm'] != null) {
+            if (isset($_SESSION['typeForm']) && $_SESSION['typeForm'] != null) {
                 $html .= "<li>" . Yii::t('common', 'formType') . " = ";
                 foreach ($_SESSION['typeForm'] as $typeForm) {
                     $html .= $typeForm;
@@ -484,11 +486,10 @@ class AnswerController extends Controller {
             }
             $html .= "</ul>";
             $htmlQueries .= $html;
-            $htmlQueries .= CHtml::form(Yii::app()->createUrl("answer/exportQueries"), "POST", array('id'=>'exportForm'));
+            $htmlQueries .= CHtml::form(Yii::app()->createUrl("answer/exportQueries"), "POST", array('id' => 'exportForm'));
             $htmlQueries .= CHtml::hiddenField('exportQueries', $html);
-            $htmlQueries.= CHtml::endForm();
+            $htmlQueries .= CHtml::endForm();
             echo $htmlQueries;
-         
         }
     }
 
@@ -511,4 +512,20 @@ class AnswerController extends Controller {
             Yii::app()->getRequest()->sendFile(date('Ymd_H') . 'h' . date('i') . "_queries_CBSD_Platform.txt", $html, "text/html; charset=UTF-8");
         }
     }
+
+    public function actionTest() {
+        $idFiches = array();
+        $countFiche = 0;
+        foreach ($_SESSION['fiches'] as $fiche) {
+            array_push($idFiches, $fiche->_id);
+            $countFiche = count($idFiches);
+        }
+        if ($_SESSION['indexFiche'] < count($idFiches) - 1) {
+            $_SESSION['indexFiche'] += 1;
+        }
+        $fiche = Answer::model()->findByPk(new MongoId($idFiches[$_SESSION['indexFiche']]));
+        $_SESSION['fiche'] = $fiche;
+        echo $_SESSION['fiche']->renderHTML(Yii::app()->language);
+    }
+
 }

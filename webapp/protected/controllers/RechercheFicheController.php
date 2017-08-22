@@ -81,19 +81,23 @@ class RechercheFicheController extends Controller {
     public function actionAdmin2() {
         $idFiches = array();
         $countFiche = 0;
-        foreach ($_SESSION['fiches'] as $fiche) {
-            array_push($idFiches, $fiche->_id);
-            $countFiche = count($idFiches);
-        }
-        if (isset($_POST['yt3'])) {
-            if ($_SESSION['indexFiche'] < count($idFiches) - 1) {
-                $_SESSION['indexFiche'] += 1;
+        if ($_SESSION['fiches'] != null) {
+            foreach ($_SESSION['fiches'] as $fiche) {
+                array_push($idFiches, $fiche->_id);
+                $countFiche = count($idFiches);
             }
-        } elseif ($_SESSION['indexFiche'] < 1) {
-            $_SESSION['indexFiche'] = 0;
-        }        
-        $fiche = Answer::model()->findByPk(new MongoId($idFiches[$_SESSION['indexFiche']]));
-        $_SESSION['fiche'] = $fiche;
+            if (isset($_POST['yt3'])) {
+                if ($_SESSION['indexFiche'] < count($idFiches) - 1) {
+                    $_SESSION['indexFiche'] += 1;
+                }
+            } elseif ($_SESSION['indexFiche'] < 1) {
+                $_SESSION['indexFiche'] = 0;
+            }
+            $fiche = Answer::model()->findByPk(new MongoId($idFiches[$_SESSION['indexFiche']]));
+        }
+        if (isset($fiche) && $fiche != null) {
+            $_SESSION['fiche'] = $fiche;
+        }
         if (isset($_POST['question']) && $_POST['question'] == null) {
             $this->redirect(array('rechercheFiche/admin3'));
         }
@@ -104,8 +108,10 @@ class RechercheFicheController extends Controller {
         if (isset($_POST['hash'])) {
             $anchor = $_POST['hash'];
             $this->redirect(array('rechercheFiche/admin2#' . $anchor));
-        } else {
+        } elseif ($_SESSION['fiche'] != null) {
             $this->render('admin2', array('fiche' => $_SESSION['fiche']));
+        } else {
+            $this->render('admin2');
         }
     }
 
