@@ -60,6 +60,8 @@ $('#next').click(function(){
         data:$('#search_fiche-form').serialize(),
         success:function(result){
             $('#renderFiche').html(result);
+            var hash = window.location.hash.substr(1);
+            location.hash = hash;
         }
     });
 

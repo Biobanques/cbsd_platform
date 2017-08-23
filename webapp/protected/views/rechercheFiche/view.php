@@ -21,7 +21,7 @@ for (var i = 0; i < len_selectlist; i++) {
 ");
 ?>
 
-<h3 align="center"><?php echo Yii::t('common', 'patientForm') . $model->name; ?></h3>
+<h3 align="center"><?php echo Yii::t('administration', 'patientForm') . $model->name; ?></h3>
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {
