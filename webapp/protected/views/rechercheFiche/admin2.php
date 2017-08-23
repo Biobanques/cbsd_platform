@@ -54,6 +54,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 });
 
 $('#next').click(function(){
+    $('#loading_next').show();
     $.ajax({
         url:'$add',
         type:'POST',
@@ -62,6 +63,7 @@ $('#next').click(function(){
             $('#renderFiche').html(result);
             var hash = window.location.hash.substr(1);
             location.hash = hash;
+            $('#loading_next').hide();
         }
     });
 
@@ -114,7 +116,7 @@ $('#next').click(function(){
     </div>
 </div>
 
-<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;">Pas de requete.</div>
+<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"></div>
 <br>
 <div class="row buttons">
     <div class="col-lg-7 col-lg-offset-7">
@@ -143,6 +145,7 @@ $('#next').click(function(){
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
                 <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary')); ?>
+                <?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading_next", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));?>
             </div>
         </div>
 

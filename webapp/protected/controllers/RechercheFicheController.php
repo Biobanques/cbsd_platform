@@ -97,6 +97,8 @@ class RechercheFicheController extends Controller {
         }
         if (isset($fiche) && $fiche != null) {
             $_SESSION['fiche'] = $fiche;
+        } else {
+            $this->redirect(array('rechercheFiche/admin'));
         }
         if (isset($_POST['question']) && $_POST['question'] == null) {
             $this->redirect(array('rechercheFiche/admin3'));
