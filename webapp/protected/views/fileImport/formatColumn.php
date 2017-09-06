@@ -56,6 +56,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => $modelColumn->attributeLabels()["currentColumn"], 'name' => 'currentColumn'),
         array('header' => $modelColumn->attributeLabels()["newColumn"], 'name' => 'newColumn'),
         array('header' => $modelColumn->attributeLabels()["type"], 'name' => 'type', 'value' => '$data->getType()'),
+        array('header' => $modelColumn->attributeLabels()["values"], 'name' => 'values', 'value' => '$data->getValues()'),
         array(
             'class' => 'CButtonColumn',
             'template' => '{update}{delete}',

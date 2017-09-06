@@ -34,6 +34,14 @@
             <?php echo $form->error($model, 'type'); ?>
         </div>
     </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <?php echo $form->labelEx($model, 'values'); ?>
+            <?php echo $form->textField($model, 'values', array('size' => 20, 'maxlength' => 250)); ?>
+            <?php echo $form->error($model, 'values'); ?>
+        </div>
+    </div>
 
     <div class="row buttons">
         <div class="col-lg-12">

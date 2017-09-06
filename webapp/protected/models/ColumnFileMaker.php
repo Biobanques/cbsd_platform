@@ -10,6 +10,7 @@ class ColumnFileMaker extends LoggableActiveRecord
     public $currentColumn;
     public $newColumn;
     public $type;
+    public $values;
 
 
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
@@ -28,7 +29,8 @@ class ColumnFileMaker extends LoggableActiveRecord
     {
         $result = array(
             array('currentColumn, newColumn, type', 'required'),
-            array('currentColumn, newColumn, type', 'safe', 'on' => 'search, update')
+            array('currentColumn, newColumn, type, values', 'safe', 'on' => 'search, update'),
+            array('values', 'safe')
         );
         return $result;
     }
@@ -41,7 +43,8 @@ class ColumnFileMaker extends LoggableActiveRecord
         return array(
             'currentColumn' => Yii::t('common', 'fileMakerColumn'),
             'newColumn' => Yii::t('common', 'cbsdColumn'),
-            'type' => 'Type'
+            'type' => 'Type',
+            'values' => 'Value'
         );
     }
 
@@ -61,7 +64,7 @@ class ColumnFileMaker extends LoggableActiveRecord
     public function getType() {
         return $this->getTypesQuestions()[$this->type];
     }
-    
+
     public function getCurrentColumnByNewColumn($columnCBSD) {
         return ColumnFileMaker::model()->findByAttributes(array('newColumn' => $columnCBSD))->currentColumn;
     }
