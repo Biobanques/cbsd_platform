@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="col-lg-9">
-        <div id="content" class='content'style="padding : 0px 5px 5px 5px;">
+        <div id="content" class='content' style="padding : 0px 5px 5px 5px;">
             <?php echo $content; ?>
         </div><!-- content -->
     </div>

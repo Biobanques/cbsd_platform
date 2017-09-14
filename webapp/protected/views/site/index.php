@@ -10,3 +10,7 @@ $this->pageTitle = Yii::app()->name;
       <p><?php echo Yii::t('common', 'cbsdDescription') ?></p>
     </div>
 </div>
+<?php 
+if (isset($_SESSION['aaa'])) {
+ print_r($_SESSION['aaa']);
+}

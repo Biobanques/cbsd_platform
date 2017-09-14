@@ -57,7 +57,7 @@ Yii::app()->clientScript->registerScript('loginForm', "
         </div><!-- form -->
     </div>
     <div class="col-lg-5" style="margin-top:70px;">
-        <div align='center'>
+        <div style="text-align:center;">
             <?php echo Yii::t('common', 'noAccount'); ?><br><br>
             <?php
             echo CHtml::button(Yii::t('button', 'subscribe'), array(

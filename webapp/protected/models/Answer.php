@@ -573,23 +573,6 @@ class Answer extends LoggableActiveRecord {
         return $type;
     }
 
-    public function getAllDetailledQuestions() {
-        $result = array();
-        $fiches = Answer::model()->findAll();
-        foreach ($fiches as $fiche) {
-            foreach ($fiche->answers_group as $group) {
-                foreach ($group->answers as $answer) {
-                    $toAdd = new stdClass();
-                    $toAdd->answer = $answer;
-                    $toAdd->fiche = $fiche->name;
-                    $toAdd->group = $group->title_fr;
-                    $result[] = $toAdd;
-                }
-            }
-        }
-        return $result;
-    }
-
     public function getAllDetailledQuestionsByTypeForm($typeForm) {
         $result = array();
         if ($typeForm != null) {
@@ -618,6 +601,23 @@ class Answer extends LoggableActiveRecord {
         foreach ($this->getAllDetailledQuestions() as $question) {
             if ($question->answer->id == $id) {
                 $result = $question->answer;
+            }
+        }
+        return $result;
+    }
+    
+    public function getAllDetailledQuestions() {
+        $result = array();
+        $fiches = Answer::model()->findAll();
+        foreach ($fiches as $fiche) {
+            foreach ($fiche->answers_group as $group) {
+                foreach ($group->answers as $answer) {
+                    $toAdd = new stdClass();
+                    $toAdd->answer = $answer;
+                    $toAdd->fiche = $fiche->name;
+                    $toAdd->group = $group->title_fr;
+                    $result[] = $toAdd;
+                }
             }
         }
         return $result;

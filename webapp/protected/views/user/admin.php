@@ -25,6 +25,20 @@ $('.search-form form').submit(function(){
     return false;
 });
 ");
+Yii::app()->clientScript->registerScript('some-script-id','function aFunctionThatWillBeCalled(id, data){
+    var id = $.fn.yiiGridView.getChecked("user-grid", "User_id");
+    var id = id[0];
+    alert(id);
+    // your jquery code to remember checked rows
+}');
+Yii::app()->clientScript->registerScript('getUnchecked', "
+       function getUncheckeds(){
+            var unch = [];
+            $('[name^=User_id]').not(':checked,[name$=all]').each(function(){unch.push($(this).val());});
+            return unch.toString();
+       }
+       "
+);
 ?>
 
 <h1><?php echo Yii::t('administration', 'registeredUsers'); ?></h1>
@@ -58,8 +72,15 @@ $form = $this->beginWidget('CActiveForm', array(
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'user-grid',
     'dataProvider' => $model->search(),
+    'selectableRows'=>2,
+    'beforeAjaxUpdate'=>'function(id,options){options.data={checkedIds:$.fn.yiiGridView.getChecked("user-grid","User_id").toString(),
+        uncheckedIds:getUncheckeds()};
+        return true;}',
+
+    'ajaxUpdate'=>true,
+    'enablePagination' => true,
     'columns' => array(
-        array('id' => 'User_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
+        array('class' => 'CCheckBoxColumn', 'id'=>'User_id', 'checked'=>'Yii::app()->user->getState($data->_id)'),
         array('header' => $model->attributeLabels()["login"], 'name' => 'login'),
         array('header' => $model->attributeLabels()["nom"], 'name' => 'nom'),
         array('header' => $model->attributeLabels()["prenom"], 'name' => 'prenom'),

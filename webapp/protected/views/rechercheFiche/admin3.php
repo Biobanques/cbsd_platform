@@ -1,3 +1,14 @@
+<?php
+Yii::app()->clientScript->registerScript('getUnchecked', "
+       function getUncheckeds(){
+            var unch = [];
+            $('[name^=User_id]').not(':checked,[name$=all]').each(function(){unch.push($(this).val());});
+            return unch.toString();
+       }
+       "
+);
+?>
+
 <div style="margin-left:20px;">
     <div class="myBreadcrumb">
         <div class="active"><?php echo Yii::t('common', 'queryAnonymous') ?></div>
@@ -22,8 +33,15 @@ $form = $this->beginWidget('CActiveForm', array(
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'searchFiche-grid',
     'dataProvider' => $model->search(),
+    'selectableRows' => 2,
+    'beforeAjaxUpdate'=>'function(id,options){options.data={checkedIds:$.fn.yiiGridView.getChecked("searchFiche-grid","Answer_id_patient").toString(),
+        uncheckedIds:getUncheckeds()};
+        return true;}',
+
+    'ajaxUpdate'=>true,
+    'enablePagination' => true,
     'columns' => array(
-        array('id' => 'Answer_id_patient', 'value' => '$data->id_patient', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
+        array('id' => 'Answer_id_patient', 'value' => '$data->id_patient', 'class' => 'CCheckBoxColumn', 'checked'=>'Yii::app()->user->getState($data->_id)'),
         array('header' => $model->attributeLabels()["id_patient"], 'name' => 'id_patient'),
         array('header' => $model->attributeLabels()["type"], 'name' => 'type'),
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),

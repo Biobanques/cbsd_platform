@@ -181,18 +181,18 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
             </section>
 
             <div class="clear"></div>
-            <div style="height:200px;"/>
-            <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+            <div style="height:200px;"></div>
+            <nav class="navbar navbar-default navbar-fixed-bottom">
                 <div id="footer">
                     <div class="container">
                         <div class="row">
-                            <?php echo CHtml::link(CHtml::image(Base . '/images/LOGO FA.jpg', 'France Alzheimer', array('class' => 'logo')), 'http://www.francealzheimer.org/'); ?>
-                            <?php echo CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class' => 'logo')); ?>
-                            <?php echo CHtml::image(Base . '/images/logo FP.jpg', 'France Parkinson', array('class' => 'logo')); ?>
-                            <?php echo CHtml::image(Base . '/images/logo gie final 10-05-07.jpg', 'GIE Neuro-CEB', array('class' => 'logo')); ?>
-                            <?php echo CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class' => 'logo')); ?>
-                            <?php echo CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class' => 'logo')); ?>
-                            <?php echo CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class' => 'logo')); ?>
+                            <?php echo CHtml::link(CHtml::image(Base . '/images/lecma.jpg', 'Lecma Fondation', array('class' => 'logo')), 'https://www.vaincrealzheimer.org/'); ?>
+                            <?php echo CHtml::link(CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class' => 'logo')), 'https://www.arsep.org/'); ?>
+                            <?php echo CHtml::link(CHtml::image(Base . '/images/logo_FP.jpg', 'France Parkinson', array('class' => 'logo')), 'http://www.franceparkinson.fr/'); ?>
+                            <?php echo CHtml::link(CHtml::image(Base . '/images/logo_gie_final_10-05-07.jpg', 'GIE Neuro-CEB', array('class' => 'logo')), 'http://www.neuroceb.org/'); ?>
+                            <?php echo CHtml::link(CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class' => 'logo')), 'http://www.csc.asso.fr/'); ?>
+                            <?php echo CHtml::link(CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class' => 'logo')), 'http://www.biobanques.eu/'); ?>
+                            <?php echo CHtml::link(CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class' => 'logo')), 'https://www.inserm.fr/'); ?>
                         </div>
                         Copyright &copy; <?php echo date('Y'); ?> by Biobanques. Version 0.5.<br/>
                         All Rights Reserved.
@@ -210,6 +210,5 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/singleDatePicker.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/maintenance.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-
     </body>
 </html>

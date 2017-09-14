@@ -1,8 +1,22 @@
+<?php
+Yii::app()->clientScript->registerScript('columnFileMakerForm', "
+$('#ColumnFileMaker_type').change(function(){
+    var e = document.getElementById('ColumnFileMaker_type').value;
+    if (e == 'radio' || e == 'list' || e == 'checkbox') {
+        $('#valueTypeColumn').show();
+    } else {
+        $('#valueTypeColumn').hide();
+        $('#ColumnFileMaker_values').val('');
+    }
+});
+");
+?>
+
 <div class="form" style="margin-left:30px;">
 
     <?php
     $form = $this->beginWidget('CActiveForm', array(
-        'id' => 'user-form',
+        'id' => 'columnFileMaker-form',
         'enableAjaxValidation' => false,
     ));
     ?>
@@ -36,7 +50,7 @@
     </div>
     
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" id ="valueTypeColumn" style="display:none;">
             <?php echo $form->labelEx($model, 'values'); ?>
             <?php echo $form->textField($model, 'values', array('size' => 20, 'maxlength' => 250)); ?>
             <?php echo $form->error($model, 'values'); ?>

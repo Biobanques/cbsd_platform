@@ -164,14 +164,29 @@ class UserController extends Controller {
      * Manages all models.
      */
     public function actionAdmin() {
+        $test = array();
         $model = new User('search');
         $model->unsetAttributes();
         if (isset($_GET['User'])) {
             $model->setAttributes($_GET['User']);
         }
+        if (isset($_GET['checkedIds'])) {
+            $chkArray = explode(",", $_GET['checkedIds']);
+            $test = array_merge($test, $chkArray);
+            foreach ($chkArray as $arow) {
+                Yii::app()->user->setState($arow, 1);
+            }
+            $_SESSION['aaa'] = $test;
+        }
+        if (isset($_GET['uncheckedIds'])) {
+            $unchkArray = explode(",", $_GET['uncheckedIds']);
+            foreach ($unchkArray as $arownon) {
+                Yii::app()->user->setState($arownon, 0);
+            }
+        }
         if (isset($_POST['rechercher'])) {
             if (isset($_POST['User_id'])) {
-                foreach($_POST['User_id'] as $key => $value) {
+                foreach ($_POST['User_id'] as $key => $value) {
                     $this->loadModel($value)->delete();
                     Yii::app()->user->setFlash('succès', Yii::t('user', 'usersDeleted'));
                 }

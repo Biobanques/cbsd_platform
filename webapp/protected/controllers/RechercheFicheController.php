@@ -120,6 +120,18 @@ class RechercheFicheController extends Controller {
     public function actionAdmin3() {
         $model = new Answer('search');
         $model->unsetAttributes();
+        if (isset($_GET['checkedIds'])) {
+            $chkArray = explode(",", $_GET['checkedIds']);
+            foreach ($chkArray as $arow) {
+                Yii::app()->user->setState($arow, 1);
+            }
+        }
+        if (isset($_GET['uncheckedIds'])) {
+            $unchkArray = explode(",", $_GET['uncheckedIds']);
+            foreach ($unchkArray as $arownon) {
+                Yii::app()->user->setState($arownon, 0);
+            }
+        }
         if (isset($_POST['exporter'])) {
             $filter = array();
             if (isset($_POST['filter'])) {

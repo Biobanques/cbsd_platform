@@ -95,7 +95,6 @@ $('#next').click(function(){
         <p>&nbsp;&nbsp;<?php echo Yii::t('common', 'writeQuestion'); ?></p>
 
         <div class="row">
-
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
                 <?php
@@ -113,19 +112,19 @@ $('#next').click(function(){
             </div>
             <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
         </div>
+
+        <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"></div>
+        <br>
+        <div class="row buttons">
+            <div class="col-lg-7 col-lg-offset-7">
+                <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary')); ?>
+                <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'onclick' => 'location.reload();')); ?>
+            </div>
+        </div>
+
+        <?php $this->endWidget(); ?>
     </div>
 </div>
-
-<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"></div>
-<br>
-<div class="row buttons">
-    <div class="col-lg-7 col-lg-offset-7">
-        <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary')); ?>
-        <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'onclick' => 'location.reload();')); ?>
-    </div>
-</div>
-
-<?php $this->endWidget(); ?>
 
 <?php if (isset($_SESSION['fiche']) && $_SESSION['fiche'] != null) { ?>
     <div class="search-form">
@@ -142,13 +141,9 @@ $('#next').click(function(){
             </div>
         </div><!-- search-form -->
         <?php echo CHtml::hiddenField('hash', '', array('id' => 'hash')); ?>
-        <div class="row buttons">
-            <div class="col-lg-7 col-lg-offset-7">
-                <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary')); ?>
-                <?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading_next", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));?>
-            </div>
+        <div>
+            <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary', 'style' => 'position:fixed')); ?>
         </div>
-
         <?php $this->endWidget(); ?>
 
 

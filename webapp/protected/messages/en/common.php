@@ -287,7 +287,7 @@ return array(
     'resultQuery' => 'Result of the query',
     'projectName' => 'Give a project name',
     'referenceTitle' => 'How to manage reference centers?',
-    'referenceContent' => 'You can create a new reference center by clicking on the link <b><i>\'Create a reference center\'</b></i> above.<br>'
+    'referenceContent' => 'You can create a new reference center by clicking on the link <b><i>\'Create a reference center\'</i></b> above.<br>'
     . 'You can also edit or delete reference centers using pictures at the end of the lines.',
     'period' => 'Period'
 );
