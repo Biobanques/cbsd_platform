@@ -100,6 +100,33 @@ class RechercheFicheController extends Controller {
         } else {
             $this->redirect(array('rechercheFiche/admin'));
         }
+        if (isset($_POST['rechercher'])) {
+            $patientId = array();
+            if (isset($_POST['Answer_id_patient'])) {
+                foreach ($_POST['Answer_id_patient'] as $patient_id) {
+                    $id = Answer::model()->findByPk(new MongoID($patient_id));
+                    if ($id != null) {
+                        array_push($patientId, $id->id_patient);
+                    }
+                }
+                if (isset($_SESSION['checkedIds'])) {
+                    foreach ($_SESSION['checkedIds'] as $patient_idBis) {
+                        $idBis = Answer::model()->findByPk(new MongoID($patient_idBis));
+                        if ($idBis != null) {
+                            array_push($patientId, $idBis->id_patient);
+                        }
+                    }
+                }
+                $regex = '/^';
+                foreach ($patientId as $idPatient) {
+                    $regex .= $idPatient . '$|^';
+                }
+                $regex .= '$/i';
+                $_SESSION['id_patientBis'] = $regex;
+            } else {
+                $this->redirect(array('rechercheFiche/admin3'));
+            }
+        }
         if (isset($_POST['question']) && $_POST['question'] == null) {
             $this->redirect(array('rechercheFiche/admin3'));
         }
@@ -120,17 +147,18 @@ class RechercheFicheController extends Controller {
     public function actionAdmin3() {
         $model = new Answer('search');
         $model->unsetAttributes();
-        if (isset($_GET['checkedIds'])) {
-            $chkArray = explode(",", $_GET['checkedIds']);
-            foreach ($chkArray as $arow) {
-                Yii::app()->user->setState($arow, 1);
+        if (!isset($_GET['ajax'])) {
+            if (isset($_SESSION['checkedIds'])) {
+                foreach ($_SESSION['checkedIds'] as $ar) {
+                    Yii::app()->user->setState($ar, 0);
+                }
             }
         }
-        if (isset($_GET['uncheckedIds'])) {
-            $unchkArray = explode(",", $_GET['uncheckedIds']);
-            foreach ($unchkArray as $arownon) {
-                Yii::app()->user->setState($arownon, 0);
-            }
+        if (isset($_GET['checkedIds']) && !empty($_GET['checkedIds'])) {
+            CommonTools::chkIds($_GET['checkedIds']);
+        }
+        if (isset($_GET['uncheckedIds']) && !empty($_GET['uncheckedIds'])) {
+            CommonTools::unckIds($_GET['uncheckedIds']);
         }
         if (isset($_POST['exporter'])) {
             $filter = array();
@@ -151,7 +179,42 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionResultSearch() {
-        $idPatient = array();
+        if (isset($_POST['rechercher'])) {
+            $patientId = array();
+            if (isset($_POST['Answer_id_patient'])) {
+                foreach ($_POST['Answer_id_patient'] as $patient_id) {
+                    $id = Answer::model()->findByPk(new MongoID($patient_id));
+                    if ($id != null) {
+                        array_push($patientId, $id->id_patient);
+                    }
+                }
+                if (isset($_SESSION['checkedIds'])) {
+                    foreach ($_SESSION['checkedIds'] as $patient_idBis) {
+                        $idBis = Answer::model()->findByPk(new MongoID($patient_idBis));
+                        if ($idBis != null) {
+                            array_push($patientId, $idBis->id_patient);
+                        }
+                    }
+                }
+                $regex = '/^';
+                foreach ($patientId as $idPatient) {
+                    $regex .= $idPatient . '$|^';
+                }
+                $regex .= '$/i';
+                $_SESSION['id_patientBis'] = $regex;
+            } else {
+                $this->redirect(array('rechercheFiche/admin3'));
+            }
+        }
+        if (isset($_POST['question']) && $_POST['question'] == null) {
+            $this->redirect(array('rechercheFiche/admin3'));
+        }
+        if (isset($_POST['Answer'])) {
+            $_SESSION['Answer'] = $_POST['Answer'];
+            $this->redirect(array('rechercheFiche/admin3'));
+        }
+        $this->render('_search_filter');
+        /*$idPatient = array();
         $_SESSION['idPatient'] = null;
         $_SESSION['typeForm'] = null;
         $_SESSION['Period'] = null;
@@ -163,14 +226,27 @@ class RechercheFicheController extends Controller {
             $model->attributes = $_GET['Answer'];
         }
         if (isset($_POST['rechercher'])) {
+            $patientId = array();
             if (isset($_POST['Answer_id_patient'])) {
-                $criteria = new EMongoCriteria;
+                foreach ($_POST['Answer_id_patient'] as $patient_id) {
+                    $id = Answer::model()->findByPk(new MongoID($patient_id));
+                    if ($id != null) {
+                        array_push($patientId, $id->id_patient);
+                    }
+                }
+                if (isset($_SESSION['checkedIds'])) {
+                    foreach ($_SESSION['checkedIds'] as $patient_idBis) {
+                        $idBis = Answer::model()->findByPk(new MongoID($patient_idBis));
+                        if ($idBis != null) {
+                            array_push($patientId, $idBis->id_patient);
+                        }
+                    }
+                }
                 $regex = '/^';
-                foreach ($_POST['Answer_id_patient'] as $idPatient) {
+                foreach ($patientId as $idPatient) {
                     $regex .= $idPatient . '$|^';
                 }
                 $regex .= '$/i';
-                $criteria->addCond('id_patient', '==', new MongoRegex($regex));
                 $_SESSION['id_patientBis'] = $regex;
             } else {
                 $this->redirect(array('rechercheFiche/admin3'));
@@ -178,7 +254,7 @@ class RechercheFicheController extends Controller {
         }
         $this->render('result_search', array(
             'model' => $model
-        ));
+        ));*/
     }
 
     /**

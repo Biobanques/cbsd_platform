@@ -193,5 +193,36 @@ class CommonTools {
         asort($aRCenter, SORT_NATURAL | SORT_FLAG_CASE);
         return $aRCenter;
     }
+    
+    public function chkIds($checkedIds) {
+        if (!isset($_SESSION['checkedIds'])) {
+            $_SESSION['checkedIds'] = array();
+        }
+        $chkArray = explode(",", $checkedIds);
+        foreach ($chkArray as $arow) {
+            if (!in_array($arow, $_SESSION['checkedIds'])) {
+                array_push($_SESSION['checkedIds'], $arow);
+            }
+            Yii::app()->user->setState($arow, 1);
+        }
+    }
+
+    public function unckIds($uncheckedIds) {
+        if (!isset($_SESSION['uncheckedIds'])) {
+            $_SESSION['uncheckedIds'] = array();
+        }
+        $unchkArray = explode(",", $uncheckedIds);
+        foreach ($unchkArray as $arownon) {
+            if ((isset($_SESSION['checkedIds']) && $key = array_search($arownon, $_SESSION['checkedIds'])) !== false) {
+                unset($_SESSION['checkedIds'][$key]);
+                $_SESSION['checkedIds'] = array_values($_SESSION['checkedIds']);
+            }
+            Yii::app()->user->setState($arownon, 0);
+        }
+    }
+    
+    public function setValue($value) {
+        return ($value != "" || $value != null) ? $value : null;
+    }
 
 }

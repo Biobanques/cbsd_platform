@@ -2,7 +2,7 @@
 Yii::app()->clientScript->registerScript('getUnchecked', "
        function getUncheckeds(){
             var unch = [];
-            $('[name^=User_id]').not(':checked,[name$=all]').each(function(){unch.push($(this).val());});
+            $('[name^=Answer_id_patient]').not(':checked,[name$=all]').each(function(){unch.push($(this).val());});
             return unch.toString();
        }
        "
@@ -26,7 +26,7 @@ if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
 
 <?php
 $form = $this->beginWidget('CActiveForm', array(
-    'action' => Yii::app()->createUrl('rechercheFiche/resultsearch'),
+    'action' => Yii::app()->createUrl('rechercheFiche/admin2'),
     'method' => 'post',
         ));
 
@@ -41,7 +41,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'ajaxUpdate'=>true,
     'enablePagination' => true,
     'columns' => array(
-        array('id' => 'Answer_id_patient', 'value' => '$data->id_patient', 'class' => 'CCheckBoxColumn', 'checked'=>'Yii::app()->user->getState($data->_id)'),
+        array('id' => 'Answer_id_patient', 'class' => 'CCheckBoxColumn', 'checked'=>isset($_GET['ajax']) ? 'Yii::app()->user->getState($data->_id)' : '0'),
         array('header' => $model->attributeLabels()["id_patient"], 'name' => 'id_patient'),
         array('header' => $model->attributeLabels()["type"], 'name' => 'type'),
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),

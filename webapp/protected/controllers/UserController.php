@@ -164,30 +164,35 @@ class UserController extends Controller {
      * Manages all models.
      */
     public function actionAdmin() {
-        $test = array();
         $model = new User('search');
         $model->unsetAttributes();
+        if (!isset($_GET['ajax'])) {
+            if (isset($_SESSION['checkedIds'])) {
+                foreach ($_SESSION['checkedIds'] as $ar) {
+                    Yii::app()->user->setState($ar, 0);
+                }
+            }
+        }
         if (isset($_GET['User'])) {
             $model->setAttributes($_GET['User']);
         }
-        if (isset($_GET['checkedIds'])) {
-            $chkArray = explode(",", $_GET['checkedIds']);
-            $test = array_merge($test, $chkArray);
-            foreach ($chkArray as $arow) {
-                Yii::app()->user->setState($arow, 1);
-            }
-            $_SESSION['aaa'] = $test;
+        if (isset($_GET['checkedIds']) && !empty($_GET['checkedIds'])) {
+            CommonTools::chkIds($_GET['checkedIds']);
         }
-        if (isset($_GET['uncheckedIds'])) {
-            $unchkArray = explode(",", $_GET['uncheckedIds']);
-            foreach ($unchkArray as $arownon) {
-                Yii::app()->user->setState($arownon, 0);
-            }
+        if (isset($_GET['uncheckedIds']) && !empty($_GET['uncheckedIds'])) {
+            CommonTools::unckIds($_GET['uncheckedIds']);
         }
         if (isset($_POST['rechercher'])) {
             if (isset($_POST['User_id'])) {
+                if (isset($_SESSION['checkedIds'])) {
+                    foreach ($_SESSION['checkedIds'] as $user_id) {
+                        array_push($_POST['User_id'], $user_id);
+                    }
+                }
                 foreach ($_POST['User_id'] as $key => $value) {
-                    $this->loadModel($value)->delete();
+                    if ($this->loadModel($value) !== null) {
+                        $this->loadModel($value)->delete();
+                    }
                     Yii::app()->user->setFlash('succès', Yii::t('user', 'usersDeleted'));
                 }
             } else {
@@ -206,8 +211,6 @@ class UserController extends Controller {
      */
     public function loadModel($id) {
         $model = User::model()->findByPk(new MongoId($id));
-        if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
     }
 

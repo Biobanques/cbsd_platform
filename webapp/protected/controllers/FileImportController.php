@@ -262,24 +262,24 @@ class FileImportController extends Controller {
             foreach ($vCSV as $cle => $valeur) {
                 switch ($cle) {
                     case "Nom naissance":
-                        $patient->birthName = str_replace("'", " ", (string) $valeur);
+                        $patient->birthName = str_replace("'", " ", CommonTools::setValue($valeur));
                         break;
                     case "Nom usuel":
-                        $patient->useName = str_replace("'", " ", (string) $valeur);
+                        $patient->useName = str_replace("'", " ", CommonTools::setValue($valeur));
                         break;
                     case "Prénoms":
-                        $pos = strpos((string) $valeur, ",");
+                        $pos = strpos(CommonTools::setValue($valeur), ",");
                         if ($pos) {
-                            $patient->firstName = str_replace("'", " ", substr((string) $valeur, 0, $pos));
+                            $patient->firstName = str_replace("'", " ", substr(CommonTools::setValue($valeur), 0, $pos));
                         } else {
-                            $patient->firstName = str_replace("'", " ", (string) $valeur);
+                            $patient->firstName = str_replace("'", " ", CommonTools::setValue($valeur));
                         }
                         break;
                     case "_DateNaissance":
-                        $patient->birthDate = (string) $valeur;
+                        $patient->birthDate = CommonTools::setValue($valeur);
                         break;
                     case "Sexe":
-                        $patient->sex = (string) $valeur;
+                        $patient->sex = CommonTools::setValue($valeur);
                         if ($patient->sex == null) {
                             $patient->sex = "U";
                         }
@@ -289,7 +289,7 @@ class FileImportController extends Controller {
                         break;
                     default:
                         if (!in_array($cle, $attributes) && $cle != null && $cle != "") {
-                            $attributes[$cle] = $valeur;
+                            $attributes[$cle] = CommonTools::setValue($valeur);
                         }
                 }
             }
@@ -323,14 +323,18 @@ class FileImportController extends Controller {
                                         $fileMaker = $columnFileMaker->newColumn;
                                         $neuropath->initSoftAttribute($fileMaker);
                                         $pos = strpos((string) $valueAttr, "-");
-                                        if ($pos && $keyAttr == "PrelevementTissus::Braak_Tau") {
+                                        if (($pos && $keyAttr == "PrelevementTissus::Braak_Tau") || ($pos && $keyAttr == "PrelevementTissus::Thal_amiloide")) {
                                             $neuropath->$fileMaker = $this->convertNumeric(substr($valueAttr, 0, $pos));
                                         } else {
                                             $neuropath->$fileMaker = $this->convertNumeric($valueAttr);
                                         }
                                     } else {
                                         $neuropath->initSoftAttribute($keyAttr);
-                                        $neuropath->$keyAttr = $this->convertNumeric($valueAttr);
+                                        if (($pos && $keyAttr == "PrelevementTissus::Braak_Tau") || ($pos && $keyAttr == "PrelevementTissus::Thal_amiloide")) {
+                                            $neuropath->$keyAttr = $this->convertNumeric(substr($valueAttr, 0, $pos));
+                                        } else {
+                                            $neuropath->$keyAttr = $this->convertNumeric($valueAttr);
+                                        }
                                     }
                                 }
                             }
@@ -496,7 +500,7 @@ class FileImportController extends Controller {
                 break;
             case "VI": return 6;
                 break;
-            default: return $value;
+            default: if (ctype_digit($value)) return (int) $value; else return $value;
         }
     }
 

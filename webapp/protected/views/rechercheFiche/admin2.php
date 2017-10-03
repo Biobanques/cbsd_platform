@@ -1,7 +1,6 @@
 <?php
 $addRoute = Yii::app()->createAbsoluteUrl('answer/addSearchFilter');
 $addRouteQuery = Yii::app()->createAbsoluteUrl('answer/writeQueries');
-$add = Yii::app()->createAbsoluteUrl('answer/test');
 
 Yii::app()->clientScript->registerScript('searchView', "
 $('#addFilterButton').click(function(){
@@ -51,23 +50,6 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
 $('#search_fiche-form').on('click','.question-input',function(event){
     '#'+$('#hash').val(event.target.id);
     location.hash = event.target.id;
-});
-
-$('#next').click(function(){
-    $('#loading_next').show();
-    $.ajax({
-        url:'$add',
-        type:'POST',
-        data:$('#search_fiche-form').serialize(),
-        success:function(result){
-            $('#renderFiche').html(result);
-            var hash = window.location.hash.substr(1);
-            location.hash = hash;
-            $('#loading_next').hide();
-        }
-    });
-
-     return false;
 });
 ");
 ?>
@@ -149,5 +131,3 @@ $('#next').click(function(){
 
     </div>
 <?php } ?>
-
-<div id="test"></div>

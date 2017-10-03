@@ -18,6 +18,13 @@ $('.search-button').click(function(){
     $('.search-form').toggle();
     return false;
 });
+$('#User_id_all').click(function(){
+    $('input:checkbox').attr('checked', true);
+    $.fn.yiiGridView.update('user-grid', {
+        data: $(this).serialize()
+    });
+    return false;
+});
 $('.search-form form').submit(function(){
     $.fn.yiiGridView.update('user-grid', {
         data: $(this).serialize()
@@ -80,7 +87,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'ajaxUpdate'=>true,
     'enablePagination' => true,
     'columns' => array(
-        array('class' => 'CCheckBoxColumn', 'id'=>'User_id', 'checked'=>'Yii::app()->user->getState($data->_id)'),
+        array('class' => 'CCheckBoxColumn', 'id'=>'User_id', 'checked'=>isset($_GET['ajax']) ? 'Yii::app()->user->getState($data->_id)' : '0'),
         array('header' => $model->attributeLabels()["login"], 'name' => 'login'),
         array('header' => $model->attributeLabels()["nom"], 'name' => 'nom'),
         array('header' => $model->attributeLabels()["prenom"], 'name' => 'prenom'),

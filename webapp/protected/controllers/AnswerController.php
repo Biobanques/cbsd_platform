@@ -513,19 +513,4 @@ class AnswerController extends Controller {
         }
     }
 
-    public function actionTest() {
-        $idFiches = array();
-        $countFiche = 0;
-        foreach ($_SESSION['fiches'] as $fiche) {
-            array_push($idFiches, $fiche->_id);
-            $countFiche = count($idFiches);
-        }
-        if ($_SESSION['indexFiche'] < count($idFiches) - 1) {
-            $_SESSION['indexFiche'] += 1;
-        }
-        $fiche = Answer::model()->findByPk(new MongoId($idFiches[$_SESSION['indexFiche']]));
-        $_SESSION['fiche'] = $fiche;
-        echo $_SESSION['fiche']->renderHTML(Yii::app()->language);
-    }
-
 }
