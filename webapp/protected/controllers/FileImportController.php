@@ -57,37 +57,6 @@ class FileImportController extends Controller {
                 Yii::app()->user->setFlash('erreur', Yii::t('common', 'importedFilesNotDeleted'));
             }
         }
-        /* if (isset($_POST['UploadedFile'])) {
-          $date = date('Ymd_H') . 'h' . date('i');
-          $uploadedFile->attributes = $_POST['UploadedFile'];
-          $uploadedFile->filename = CUploadedFile::getInstance($uploadedFile, 'filename');
-          $folderNominatif = CommonProperties::$IMPORT_FOLDER_NOMINATIF;
-          if (substr($folderNominatif, -1) != '/') {
-          $folderNominatif .= '/';
-          }
-          chdir(Yii::app()->basePath . "/" . $folderNominatif);
-          if ($uploadedFile->validate()) {
-          $uploadedFile->filename->saveAs($date . '_' . $uploadedFile->filename->getName());
-          chmod($date . '_' . $uploadedFile->filename->getName(), 0777);
-          $file = "not_imported/" . $date . '_' . $uploadedFile->filename->getName();
-          $filename = str_replace('.xml', '.txt', $file);
-          $this->importNeuropathNominatif($filename);
-          $this->deleteUnvalidNeuropath();
-          $this->deleteImportNeuropathForms();
-          $this->createFicheNeuropath();
-          $fileImport->user = Yii::app()->user->id;
-          $fileImport->filename = $date . '_' . $uploadedFile->filename->getName();
-          $fileImport->filesize = $uploadedFile->filename->getSize();
-          $fileImport->extension = $uploadedFile->filename->getExtensionName();
-          $fileImport->date_import = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
-          $fileImport->imported = $_SESSION['countImported'];
-          $fileImport->not_imported = $_SESSION['countNotImported'];
-          $fileImport->save();
-          Yii::app()->user->setFlash('succès', Yii::t('common', 'fileMakerImported'));
-          } else {
-          Yii::app()->user->setFlash('erreur', Yii::t('common', 'fileMakerNotImported'));
-          }
-          } */
         if (isset($_POST['UploadedFile'])) {
             $date = date('Ymd_H') . 'h' . date('i');
             $uploadedFile->attributes = $_POST['UploadedFile'];

@@ -392,97 +392,46 @@ class AnswerController extends Controller {
      */
     public function actionWriteQueries() {
         $operators = array("equals" => "=", "noteq" => "<>", "less" => "<", "greater" => ">", "lesseq" => "<=", "greatereq" => ">=", "between" => "comprise entre", '$and' => Yii::t('common', 'and'), '$or' => Yii::t('common', 'or'));
-        $mainQuestions = array();
-        $questions = array();
-        $condition = array();
-        $compare = array();
-        $dynamics = array();
+        $keys = array();
         $html = "";
         $htmlQueries = "";
-        $ok = false;
+        $html .= "<ul>";
+        if (isset($_POST['Answer']['id_patient']) && $_POST['Answer']['id_patient'] != null) {
+            $html .= "<li>" . Yii::t('common', 'anonymat') . " = ";
+            foreach ($_POST['Answer']['id_patient'] as $idPatient) {
+                $html .= $idPatient;
+                if ($idPatient != end($_POST['Answer']['id_patient'])) {
+                    $html .= ", ";
+                }
+            }
+            $html .= "</li>";
+        }
+        if (isset($_POST['Answer']['type']) && $_POST['Answer']['type'] != null) {
+            $html .= "<li>" . Yii::t('common', 'formType') . " = ";
+            foreach ($_POST['Answer']['type'] as $typeForm) {
+                $html .= $typeForm;
+                if ($typeForm != end($_POST['Answer']['type'])) {
+                    $html .= ", ";
+                }
+            }
+            $html .= "</li>";
+        }
+        $html .= "</ul>";
+        if (isset($_POST['Answer']['last_updated']) && $_POST['Answer']['last_updated'] != null) {
+            $html .= "<li>" . Yii::t('common', 'period') . " = " . $_POST['Answer']['last_updated'] . "</li>";
+        }
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
-            echo (count($_POST['Answer']) == 1 && $_POST['Answer']['last_updated'] == "") ? "<h4 align=\"center\">" . Yii::t('common', 'noFilterSelected') . "</h4>" : "<h4 align=\"center\">" . Yii::t('common', 'query') . CHtml::image('images/disk.png', 'Export la requête', array('onclick' => 'document.forms["exportForm"].submit();', 'style' => 'float:right;margin-right:10px;margin-top:5px;width:20px;height:auto;')) . "</h4>";
-            foreach ($_POST['Answer'] as $label => $answer) {
-                if ($label == "last_updated" && $answer == "") {
-                    
-                } elseif ($label != "condition" && $label != "compare" && $label != "dynamics") {
-                    if (!is_array($answer)) {
-                        $mainQuestions[$label] = $answer;
-                    } else {
-                        $mainQuestions[$label] = implode(', ', $answer);
-                    }
-                } else {
-                    foreach ($answer as $key => $value) {
-                        if ($label == "condition") {
-                            $condition[$key] = $value;
-                        }
-                        if ($label == "compare") {
-                            $compare[$key] = $value;
-                        }
-                        if ($label == "dynamics") {
-                            $dynamics[$key] = $value;
-                        }
-                        if (!isset($compare[$key])) {
-                            $compare[$key] = "";
-                        }
-                    }
-                    foreach ($dynamics as $k => $v) {
-                        if (gettype($v) == "array") {
-                            $dynamics[$k] = implode(', ', $v);
-                        } elseif (CommonTools::isDate($v)) {
-                            $dynamics[$k] = str_replace('-', strtolower(Yii::t('common', 'and')), $dynamics[$k]);
-                        }
-                    }
-                }
-            }
-            $questions = array_merge_recursive($condition, $compare, $dynamics);
+            $keys = array_keys($_POST['Answer']['dynamics']);
             $html .= "<ul>";
-            if (isset($_SESSION['idPatient']) && $_SESSION['idPatient'] != null) {
-                $html .= "<li>" . Yii::t('common', 'anonymat') . " = ";
-                foreach ($_SESSION['idPatient'] as $idPatient) {
-                    $html .= $idPatient;
-                    if ($idPatient != end($_SESSION['idPatient'])) {
-                        $html .= ", ";
+            foreach ($keys as $kk => $vv) {
+                $compare = null;
+                echo $_POST['Answer']["condition"][$vv];
+                if (isset($_POST['Answer']['compare'])) {
+                    if (isset($_POST['Answer']['compare'][$vv])) {
+                        $compare = $operators[$_POST['Answer']["compare"][$vv]];
                     }
                 }
-                $html .= "</li>";
-            }
-            if (isset($_SESSION['typeForm']) && $_SESSION['typeForm'] != null) {
-                $html .= "<li>" . Yii::t('common', 'formType') . " = ";
-                foreach ($_SESSION['typeForm'] as $typeForm) {
-                    $html .= $typeForm;
-                    if ($typeForm != end($_SESSION['typeForm'])) {
-                        $html .= ", ";
-                    }
-                }
-                $html .= "</li>";
-            }
-            if (isset($_SESSION['Period']) && $_SESSION['Period'] != null) {
-                $html .= "<li>" . Yii::t('common', 'period') . " = " . $_SESSION['Period'] . "</li>";
-            }
-            foreach ($mainQuestions as $label => $answer) {
-                $html .= "<li>" . Answer::model()->attributeLabels()[$label] . " = " . $answer . "</li>";
-                if ($answer != end($mainQuestions)) {
-                    $html .= Yii::t('common', 'and');
-                }
-            }
-            foreach ($questions as $key => $value) {
-                if ($ok) {
-                    $html .= $operators[$questions[$key][0]];
-                } else {
-                    $ok = true;
-                }
-                $html .= "<li>" . Answer::model()->getLabelQuestionById($key);
-                foreach ($value as $label => $answer) {
-                    if ($label != 0) {
-                        if ($label == 1) {
-                            $html .= ($answer != "") ? " " . $operators[$answer] : " = ";
-                        }
-                        if ($label == 2) {
-                            $html .= " " . $answer . "</li>";
-                        }
-                    }
-                }
+                $html .= "- " . $operators[$_POST['Answer']["condition"][$vv]] . "<br><li>" . $vv . " " . (!is_null($compare) ? $compare : "=") . " " . $_POST['Answer']["dynamics"][$vv] . "</li>";
             }
             $html .= "</ul>";
             $htmlQueries .= $html;

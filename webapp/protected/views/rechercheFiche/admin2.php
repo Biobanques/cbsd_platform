@@ -119,7 +119,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
             ));
             ?>
             <div id="renderFiche">
-                <?php echo $_SESSION['fiche']->renderHTML(Yii::app()->language); ?>
+                <?php echo $fiche->renderHTML(Yii::app()->language); ?>
             </div>
         </div><!-- search-form -->
         <?php echo CHtml::hiddenField('hash', '', array('id' => 'hash')); ?>

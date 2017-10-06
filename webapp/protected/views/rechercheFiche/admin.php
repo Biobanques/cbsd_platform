@@ -1,30 +1,5 @@
 <?php
-$addRouteQuery = Yii::app()->createAbsoluteUrl('answer/writeQueries');
 Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-    $('.search-form').toggle();
-    return false;
-});
-
-$('.search-form form').submit(function(){
-    $('#loading_next').show();
-    $.ajax({
-        url:'$addRouteQuery',
-        type:'POST',
-        data:$('#light_search-form').serialize(),
-        success:function(result){
-            $('#queries').show();
-            $('#queries').html('');
-            $('#queries').append(result);
-            $('#showResultQuery').show();
-            $('.search-form').hide();
-        }
-    });
-    $.fn.yiiGridView.update('searchFiche-grid', {
-        data: $(this).serialize()
-    });
-    return false;
-});
 $('#selectCas').click(function(){
     if ($('#Answer_id_patient :selected').length > 0) {
         $('#selectCas').attr('disabled',true);
@@ -118,7 +93,7 @@ $('#resetDate').click(function(){
         <?php
         $form = $this->beginWidget('CActiveForm', array(
             'id' => 'light_search-form',
-            'action' => Yii::app()->createUrl($this->route),
+            'action' => Yii::app()->createUrl('rechercheFiche/admin2'),
             'method' => 'post',
         ));
         ?>

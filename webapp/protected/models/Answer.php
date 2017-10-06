@@ -169,20 +169,6 @@ class Answer extends LoggableActiveRecord {
             $date_to = str_replace('/', '-', $answerFormat['date_to']);
             $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
         }
-        if (isset($_SESSION['idPatient']) || isset($_SESSION['typeForm']) || isset($_SESSION['Period'])) {
-            if (isset($_SESSION['idPatient']) && !empty($_SESSION['idPatient']) && $_SESSION['id_patientBis'] == null) {
-                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_SESSION['idPatient'])));
-            }
-            if (isset($_SESSION['typeForm']) && !empty($_SESSION['typeForm'])) {
-                $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($_SESSION['typeForm'])));
-            }
-            if (isset($_SESSION['Period']) && !empty($_SESSION['Period'])) {
-                $answerFormat = CommonTools::formatDatePicker($_SESSION['Period']);
-                $date_from = str_replace('/', '-', $answerFormat['date_from']);
-                $date_to = str_replace('/', '-', $answerFormat['date_to']);
-                $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
-            }
-        }
 
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             $index = 0;
