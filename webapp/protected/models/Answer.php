@@ -157,6 +157,8 @@ class Answer extends LoggableActiveRecord {
         }
         if (isset($_SESSION['id_patientBis'])) {
             $criteria->id_patient = new MongoRegex($_SESSION['id_patientBis']);
+        } elseif (isset($_SESSION['id_patientAll'])) {
+            $criteria->id_patient = new MongoRegex($_SESSION['id_patientAll']);
         }
 
         if (isset($this->name) && !empty($this->name)) {

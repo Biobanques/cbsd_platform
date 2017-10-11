@@ -44,6 +44,8 @@ class FicheController extends Controller {
      * vue tableau.
      */
     public function actionAdmin() {
+        $_SESSION['id_patientBis'] = null;
+        $_SESSION['id_patientAll'] = null;
         $model = new Answer('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Answer'])) {

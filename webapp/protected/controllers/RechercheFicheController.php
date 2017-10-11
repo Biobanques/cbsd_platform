@@ -41,6 +41,7 @@ class RechercheFicheController extends Controller {
 
     public function actionAdmin() {
         $_SESSION['id_patientBis'] = null;
+        $_SESSION['id_patientAll'] = null;
         $_SESSION['typeForm'] = null;
         $_SESSION['fiches'] = null;
         $_SESSION['fiche'] = null;
@@ -118,6 +119,21 @@ class RechercheFicheController extends Controller {
                 $_SESSION['id_patientBis'] = $regex;
             } else {
                 $this->redirect(array('rechercheFiche/admin3'));
+            }
+        }
+        if (isset($_POST['searchAll']) && isset(Yii::app()->session['criteria'])) {
+            $ficheId = array();
+            $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
+            if ($allFiches != null) {
+                foreach ($allFiches as $fiche) {
+                    array_push($ficheId, $fiche->id_patient);
+                }
+                $regex = '/^';
+                foreach ($ficheId as $idFiche) {
+                    $regex .= $idFiche . '$|^';
+                }
+                $regex .= '$/i';
+                $_SESSION['id_patientAll'] = $regex;
             }
         }
         if (isset($_POST['question']) && $_POST['question'] != null) {

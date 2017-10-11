@@ -68,6 +68,8 @@ class AnswerController extends Controller {
     }
 
     public function actionAffichepatient() {
+        $_SESSION['id_patientBis'] = null;
+        $_SESSION['id_patientAll'] = null;
         $model = new PatientForm;
         $patient = (object) null;
         if (isset($_SESSION['datapatient'])) {
@@ -141,6 +143,9 @@ class AnswerController extends Controller {
         }
         if ($model->validate() && isset($patient->id)) {
             $model->id = $patient->id;
+            if (strpos($patient->birthDate, "-")) {
+                $patient->birthDate = CommonTools::formatDateFR($patient->birthDate);
+            }
             $criteria = new EMongoCriteria();
             $criteria->id_patient = (string) $model->id;
             $criteriaCliniques = new EMongoCriteria($criteria);

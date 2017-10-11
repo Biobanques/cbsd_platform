@@ -8,7 +8,7 @@
             array('value' => '$data["id"]', 'name' => 'Patient Id', 'visible' => Yii::app()->user->isAdmin()),
             array('header' => Yii::t('common', 'birthName'), 'value' => '$data["birthName"]'),
             array('header' => Yii::t('common', 'firstName'), 'value' => '$data["firstName"]'),
-            array('header' => Yii::t('common', 'birthDate'), 'value' => 'CommonTools::formatDateFR($data["birthDate"])')
+            array('header' => Yii::t('common', 'birthDate'), 'value' => '$data["birthDate"]')
         ),
     ));
 }
