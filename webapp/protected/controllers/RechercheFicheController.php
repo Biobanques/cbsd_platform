@@ -55,22 +55,41 @@ class RechercheFicheController extends Controller {
     public function actionAdmin2() {
         $idFiches = array();
         $countFiche = 0;
+        $html = "<ul>";
         if (isset($_POST['Answer'])) {
             $_SESSION['Answer'] = $_POST['Answer'];
             $criteria = new EMongoCriteria;
             if (isset($_POST['Answer']['id_patient']) && $_POST['Answer']['id_patient'] != null) {
                 $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_POST['Answer']['id_patient'])));
+                $html .= "<li>" . Yii::t('common', 'anonymat') . " = ";
+                foreach ($_POST['Answer']['id_patient'] as $idPatient) {
+                    $html .= $idPatient;
+                    if ($idPatient != end($_POST['Answer']['id_patient'])) {
+                        $html .= ", ";
+                    }
+                }
+                $html .= "</li>";
             }
             if (isset($_POST['Answer']['type']) && $_POST['Answer']['type'] != null) {
                 $_SESSION['typeForm'] = $_POST['Answer']['type'];
                 $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($_POST['Answer']['type'])));
+                $html .= "<li>" . Yii::t('common', 'formType') . " = ";
+                foreach ($_POST['Answer']['type'] as $typeForm) {
+                    $html .= $typeForm;
+                    if ($typeForm != end($_POST['Answer']['type'])) {
+                        $html .= ", ";
+                    }
+                }
+                $html .= "</li>";
             }
             if (isset($_POST['Answer']['last_updated']) && $_POST['Answer']['last_updated'] != null) {
                 $answerFormat = CommonTools::formatDatePicker($_POST['Answer']['last_updated']);
                 $date_from = str_replace('/', '-', $answerFormat['date_from']);
                 $date_to = str_replace('/', '-', $answerFormat['date_to']);
                 $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
+                $html .= "<li>" . Yii::t('common', 'period') . " = " . $_POST['Answer']['last_updated'] . "</li>";    
             }
+            $html .= "</ul>";
             $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
             $criteria->sort('type', EMongoCriteria::SORT_ASC);
             $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
@@ -91,9 +110,7 @@ class RechercheFicheController extends Controller {
             }
             $fiche = Answer::model()->findByPk(new MongoId($idFiches[$_SESSION['indexFiche']]));
         }
-        if (isset($fiche) && $fiche != null) {
-            $_SESSION['fiche'] = $fiche;
-        }
+
         if (isset($_POST['rechercher'])) {
             $patientId = array();
             if (isset($_POST['Answer_id_patient'])) {
@@ -142,10 +159,10 @@ class RechercheFicheController extends Controller {
         if (isset($_POST['hash'])) {
             $anchor = $_POST['hash'];
             $this->redirect(array('rechercheFiche/admin2#' . $anchor));
-        } elseif ($_SESSION['fiche'] != null) {
-            $this->render('admin2', array('fiche' => $_SESSION['fiche']));
+        } elseif ($fiche != null) {
+            $this->render('admin2', array('fiche' => $fiche, 'html' => $html));
         } else {
-            $this->render('admin2');
+            $this->render('admin2', array('html' => $html));
         }
     }
 

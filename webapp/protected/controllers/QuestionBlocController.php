@@ -99,11 +99,17 @@ class QuestionBlocController extends Controller {
         $questionnaire = new Questionnaire;
         $questionGroup = new QuestionGroup;
 
+        if (isset($_POST['QuestionBloc'])) {
+            $model->attributes = $_POST['QuestionBloc'];
+        }
+
         if (isset($_POST['QuestionForm'])) {
             $questionModel->attributes = $_POST['QuestionForm'];
             if ($questionModel->save()) {
                 $idQuestion = (string) $questionModel->_id;
                 $model->questions[] = $idQuestion;
+            }
+            if ($model->save()) {
                 Yii::app()->user->setFlash('succès', Yii::t('common', 'questionBlockSaved'));
             } else {
                 Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionBlockNotSaved'));
@@ -193,7 +199,7 @@ class QuestionBlocController extends Controller {
         }
         if (isset($_POST['rechercher'])) {
             if (isset($_POST['QuerstionBloc_id'])) {
-                foreach($_POST['QuerstionBloc_id'] as $key => $value) {
+                foreach ($_POST['QuerstionBloc_id'] as $key => $value) {
                     $this->loadModel($value)->delete();
                     Yii::app()->user->setFlash('succès', Yii::t('common', 'blocksDeleted'));
                 }
@@ -230,7 +236,6 @@ class QuestionBlocController extends Controller {
     }
 
     public function saveBlocNewQuestion($bloc, $questionForm) {
-        var_dump($bloc);
         $cquestion = new Question;
         $cquestion->setAttributesByQuestionForm($questionForm);
         $bloc->questions = $questionForm->id;

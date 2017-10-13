@@ -40,9 +40,7 @@ class AnswerController extends Controller {
                     'exportPDF',
                     'addSearchFilter',
                     'addSearchReplaceFilter',
-                    'writeQueries',
-                    'exportQueries',
-                    'test'
+                    'writeQueries'
                 ),
                 'expression' => '$user->getActiveProfil() != "chercheur"'
             ),
@@ -399,72 +397,20 @@ class AnswerController extends Controller {
         $operators = array("equals" => "=", "noteq" => "<>", "less" => "<", "greater" => ">", "lesseq" => "<=", "greatereq" => ">=", "between" => "comprise entre", '$and' => Yii::t('common', 'and'), '$or' => Yii::t('common', 'or'));
         $keys = array();
         $html = "";
-        $htmlQueries = "";
-        $html .= "<ul>";
-        if (isset($_POST['Answer']['id_patient']) && $_POST['Answer']['id_patient'] != null) {
-            $html .= "<li>" . Yii::t('common', 'anonymat') . " = ";
-            foreach ($_POST['Answer']['id_patient'] as $idPatient) {
-                $html .= $idPatient;
-                if ($idPatient != end($_POST['Answer']['id_patient'])) {
-                    $html .= ", ";
-                }
-            }
-            $html .= "</li>";
-        }
-        if (isset($_POST['Answer']['type']) && $_POST['Answer']['type'] != null) {
-            $html .= "<li>" . Yii::t('common', 'formType') . " = ";
-            foreach ($_POST['Answer']['type'] as $typeForm) {
-                $html .= $typeForm;
-                if ($typeForm != end($_POST['Answer']['type'])) {
-                    $html .= ", ";
-                }
-            }
-            $html .= "</li>";
-        }
-        $html .= "</ul>";
-        if (isset($_POST['Answer']['last_updated']) && $_POST['Answer']['last_updated'] != null) {
-            $html .= "<li>" . Yii::t('common', 'period') . " = " . $_POST['Answer']['last_updated'] . "</li>";
-        }
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
             $keys = array_keys($_POST['Answer']['dynamics']);
             $html .= "<ul>";
             foreach ($keys as $kk => $vv) {
                 $compare = null;
-                echo $_POST['Answer']["condition"][$vv];
                 if (isset($_POST['Answer']['compare'])) {
                     if (isset($_POST['Answer']['compare'][$vv])) {
                         $compare = $operators[$_POST['Answer']["compare"][$vv]];
                     }
                 }
-                $html .= "- " . $operators[$_POST['Answer']["condition"][$vv]] . "<br><li>" . $vv . " " . (!is_null($compare) ? $compare : "=") . " " . $_POST['Answer']["dynamics"][$vv] . "</li>";
+                $html .= "- " . $operators[$_POST['Answer']["condition"][$vv]] . "<li>" . $vv . " " . (!is_null($compare) ? $compare : "=") . " " . $_POST['Answer']["dynamics"][$vv] . "</li>";
             }
             $html .= "</ul>";
-            $htmlQueries .= $html;
-            $htmlQueries .= CHtml::form(Yii::app()->createUrl("answer/exportQueries"), "POST", array('id' => 'exportForm'));
-            $htmlQueries .= CHtml::hiddenField('exportQueries', $html);
-            $htmlQueries .= CHtml::endForm();
-            echo $htmlQueries;
+            echo $html;
         }
     }
-
-    public function actionExportQueries() {
-        if (isset($_POST['exportQueries'])) {
-            $html = Yii::t('common', 'exportQueriesDate');
-            $word = explode(' ', $_POST['exportQueries'], 2);
-            if ($word[0] == Yii::t('common', 'and') || $word[0] == Yii::t('common', 'or')) {
-                $html .= $word[1];
-            } else {
-                $html .= $_POST['exportQueries'];
-            }
-            $html = str_replace("<ul><li>", '- ', $html);
-            $html = str_replace("</li></ul>", '', $html);
-            $html = str_replace("</li><li>", "\n- ", $html);
-            $html = str_replace("</li>" . Yii::t('common', 'and') . "<li>", "\n" . Yii::t('common', 'and') . "\n- ", $html);
-            $html = str_replace("</li>" . Yii::t('common', 'or') . "<li>", "\n" . Yii::t('common', 'and') . "\n- ", $html);
-            $html = str_replace("<ul>" . Yii::t('common', 'and') . "<li>", "- ", $html);
-            $html = str_replace("<ul>" . Yii::t('common', 'or') . "<li>", "- ", $html);
-            Yii::app()->getRequest()->sendFile(date('Ymd_H') . 'h' . date('i') . "_queries_CBSD_Platform.txt", $html, "text/html; charset=UTF-8");
-        }
-    }
-
 }

@@ -8,6 +8,7 @@ $(document).ready(function(){
         $('#valueTypeQuestion').hide();
         $('#QuestionForm_values').val('');
     }
+    $('#QuestionForm_idQuestionGroup option:first-child').attr('selected', true);
 });
 
 $('#QuestionForm_type').change(function(){
@@ -47,7 +48,7 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
 
     <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
 
-    <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-danger')); ?>
+    <?php echo $form->errorSummary($questionForm, null, null, array('class' => 'alert alert-danger')); ?>
 
     <p><b><?php echo Yii::t('common', 'uniqueIdQuestion') ?></b></p>
     <p><b><?php echo Yii::t('common', 'valuesQuestion') ?></b></p>
@@ -58,9 +59,9 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
 
         <div class="row">
             <div class="col-lg-12">
-                <?php echo $form->labelEx($model, 'precomment'); ?>
-                <?php echo $form->textField($model, 'precomment', array("class" => "tooltipster", "title" => Yii::t('common', 'titleQuestion'))); ?>
-                <?php echo $form->error($model, 'precomment'); ?>
+                <?php echo $form->labelEx($questionForm, 'precomment'); ?>
+                <?php echo $form->textField($questionForm, 'precomment', array("class" => "tooltipster", "title" => Yii::t('common', 'titleQuestion'))); ?>
+                <?php echo $form->error($questionForm, 'precomment'); ?>
             </div>        
         </div>
 
@@ -74,53 +75,53 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
 
         <div class="row">
             <div class="col-lg-6">
-                <?php echo $form->labelEx($model, 'id'); ?>
-                <?php echo $form->textField($model, 'id', array('size' => 5, 'maxlength' => 45, "class" => "tooltipster", "title" => Yii::t('common', 'idQuestion'))); ?>
-                <?php echo $form->error($model, 'id'); ?>            
+                <?php echo $form->labelEx($questionForm, 'id'); ?>
+                <?php echo $form->textField($questionForm, 'id', array('size' => 5, 'maxlength' => 45, "class" => "tooltipster", "title" => Yii::t('common', 'idQuestion'))); ?>
+                <?php echo $form->error($questionForm, 'id'); ?>            
             </div>
             <div class="col-lg-6">
-                <?php echo $form->labelEx($model, 'idQuestionGroup'); ?>
-                <?php echo $form->dropDownList($model, 'idQuestionGroup', $model->getArrayGroups(), array('prompt' => '----', 'ajax' => array('type' => 'POST', 'url' => CController::createUrl('formulaire/dynamicquestions&id=' . $model->questionnaire->_id), 'update' => '#' . CHtml::activeId($model, 'idQuestionBefore')), "class" => "tooltipster", "title" => Yii::t('common', 'groupQuestion'))); ?>
-                <?php echo $form->error($model, 'idQuestionGroup'); ?>      
+                <?php echo $form->labelEx($questionForm, 'idQuestionGroup'); ?>
+                <?php echo $form->dropDownList($questionForm, 'idQuestionGroup', $questionForm->getArrayGroups(), array('prompt' => '----', 'ajax' => array('type' => 'POST', 'url' => CController::createUrl('formulaire/dynamicquestions&id=' . $questionForm->questionnaire->_id), 'update' => '#' . CHtml::activeId($questionForm, 'idQuestionBefore')), "class" => "tooltipster", "title" => Yii::t('common', 'groupQuestion'))); ?>
+                <?php echo $form->error($questionForm, 'idQuestionGroup'); ?>      
             </div> 
         </div>
 
         <div class="row">
             <div class="col-lg-6">
-                <?php echo $form->labelEx($model, 'label'); ?>
-                <?php echo $form->textField($model, 'label', array('size' => 5, 'maxlength' => 500, "class" => "tooltipster", "title" => Yii::t('common', 'labelQuestion'))); ?>
-                <?php echo $form->error($model, 'label'); ?>          
+                <?php echo $form->labelEx($questionForm, 'label'); ?>
+                <?php echo $form->textField($questionForm, 'label', array('size' => 5, 'maxlength' => 500, "class" => "tooltipster", "title" => Yii::t('common', 'labelQuestion'))); ?>
+                <?php echo $form->error($questionForm, 'label'); ?>          
             </div>
             <div class="col-lg-6">
-                <?php echo $form->labelEx($model, 'idQuestionBefore'); ?>
-                <?php echo $form->dropDownList($model, 'idQuestionBefore', array()); ?>
-                <?php echo $form->error($model, 'idQuestionBefore'); ?>     
+                <?php echo $form->labelEx($questionForm, 'idQuestionBefore'); ?>
+                <?php echo $form->dropDownList($questionForm, 'idQuestionBefore', array()); ?>
+                <?php echo $form->error($questionForm, 'idQuestionBefore'); ?>     
             </div> 
         </div>
 
         <div class="row">
             <div class="col-lg-6">
-                <?php echo $form->labelEx($model, 'type'); ?>
-                <?php echo $form->dropDownList($model, 'type', $model->getArrayTypes(), array('prompt' => '----', "class" => "tooltipster", "title" => Yii::t('common', 'typeQuestion'))); ?>
-                <?php echo $form->error($model, 'type'); ?>           
+                <?php echo $form->labelEx($questionForm, 'type'); ?>
+                <?php echo $form->dropDownList($questionForm, 'type', $questionForm->getArrayTypes(), array('prompt' => '----', "class" => "tooltipster", "title" => Yii::t('common', 'typeQuestion'))); ?>
+                <?php echo $form->error($questionForm, 'type'); ?>           
             </div>
             <div class="col-lg-6" id ="valueTypeQuestion">
-                <?php echo $form->labelEx($model, 'values'); ?>
-                <?php echo $form->textField($model, 'values'); ?>
-                <?php echo $form->error($model, 'values'); ?>
+                <?php echo $form->labelEx($questionForm, 'values'); ?>
+                <?php echo $form->textField($questionForm, 'values'); ?>
+                <?php echo $form->error($questionForm, 'values'); ?>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-6">
-                <?php echo $form->labelEx($model, 'style'); ?>
-                <?php echo $form->dropDownList($model, 'style', $model->getArrayStyles(), array("class" => "tooltipster", "title" => Yii::t('common', 'positionQuestion'))); ?>
-                <?php echo $form->error($model, 'style'); ?>    
+                <?php echo $form->labelEx($questionForm, 'style'); ?>
+                <?php echo $form->dropDownList($questionForm, 'style', $questionForm->getArrayStyles(), array("class" => "tooltipster", "title" => Yii::t('common', 'positionQuestion'))); ?>
+                <?php echo $form->error($questionForm, 'style'); ?>    
             </div>
             <div class="col-lg-6">
-                <?php echo $form->labelEx($model, 'help'); ?>
-                <?php echo $form->textField($model, 'help', array("class" => "tooltipster", "title" => Yii::t('common', 'helpQuestion'))); ?>
-                <?php echo $form->error($model, 'help'); ?>
+                <?php echo $form->labelEx($questionForm, 'help'); ?>
+                <?php echo $form->textField($questionForm, 'help', array("class" => "tooltipster", "title" => Yii::t('common', 'helpQuestion'))); ?>
+                <?php echo $form->error($questionForm, 'help'); ?>
             </div>
         </div>
     </div>

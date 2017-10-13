@@ -3,6 +3,11 @@ $addRoute = Yii::app()->createAbsoluteUrl('answer/addSearchFilter');
 $addRouteQuery = Yii::app()->createAbsoluteUrl('answer/writeQueries');
 
 Yii::app()->clientScript->registerScript('searchView', "
+$(document).ready(function() {
+    $('.question-input input').prop('readonly', true);
+    $('.question-input input').css('background-color', '#dddddd');
+});
+
 $('#addFilterButton').click(function(){
     $('#addFilterButton').hide();
     $('#loading').show();
@@ -11,6 +16,9 @@ $('#addFilterButton').click(function(){
         type:'POST',
         data:$('#question').serialize(),
         success:function(result){
+            if (result == '') {
+                $('#question').val('');
+            }
             $('#dynamicFilters').show();
             $('#dynamicFilters').append(result);
             $('#addFilterButton').show();
@@ -20,8 +28,8 @@ $('#addFilterButton').click(function(){
             if (n == 1) {
                 $('.condition').hide();
             }
-            }
-         });
+        }
+     });
 
      return false;
 });
@@ -94,8 +102,9 @@ $('#search_fiche-form').on('click','.question-input',function(event){
             </div>
             <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
         </div>
-
+        <div><h4><?php echo Yii::t('common', 'queryAnonymous') ?></h4><?php echo $html; ?>
         <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"></div>
+        </div>
         <br>
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
@@ -108,7 +117,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
     </div>
 </div>
 
-<?php if (isset($_SESSION['fiche']) && $_SESSION['fiche'] != null) { ?>
+<?php if (isset($fiche) && $fiche != null) { ?>
     <div class="search-form">
         <div class="wide form">
             <?php

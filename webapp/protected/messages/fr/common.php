@@ -295,6 +295,5 @@ return array(
     'referenceTitle' => 'Comment gérer les centres de référence?',
     'referenceContent' => 'Vous pouvez créer un nouvel centre de référence en cliquant sur le lien <b><i>\'Créer un centre de référence\'</i></b> ci-dessous.<br>'
     . 'Vous pouvez également modifier ou supprimer des centres de référence en utilisant les images en fin de ligne.',
-    'selection' => 'Pas de selection.',
     'period' => 'Période'
 );

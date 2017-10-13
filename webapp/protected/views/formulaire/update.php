@@ -61,7 +61,7 @@ if ($model->last_modified != null && $model->last_modified != "") {
         <div id="collapse1" class="panel-collapse collapse in">
             <div class="panel-body">
                 <?php
-                echo $this->renderPartial('_form_question', array('model' => $questionForm));
+                echo $this->renderPartial('_form_question', array('questionForm' => $questionForm));
                 ?>
             </div>
         </div>

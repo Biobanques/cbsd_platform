@@ -8,6 +8,7 @@ $('#selectCas').click(function(){
         } else {
             $('#selection').append('<p id=\"CasSelected\">- Cas sélectionnés: ' + $('#Answer_id_patient').val() + '</p><br>');
         }
+        $('br').remove();
     }
     return false;
 });
@@ -19,6 +20,7 @@ $('#selectForm').click(function(){
         } else {
             $('#selection').append('<p id=\"FormSelected\">- Formulaires sélectionnés: ' + $('#Answer_type').val() + '</p><br>');
         }
+        $('br').remove();
     }
     return false;
 });
@@ -30,6 +32,7 @@ $('#selectDate').click(function(){
         } else {
             $('#selection').append('<p id=\"DateSelected\">- Période sélectionnée: ' + $('#Answer_last_updated').val() + '</p><br>');
             }
+            $('br').remove();
     }
     return false;
 });
@@ -54,27 +57,21 @@ $('#resetCas').click(function(){
     $('#Answer_id_patient').val('0');
     $('#selectCas').attr('disabled',false);
     $('#CasSelected').remove();
-    if ($('#selection').text().length == 0) {
-        $('#selection').html('<p id=\"selection\">Pas de sélection.</p>');
-    }
+    $('br').remove();
     return false;
 });
 $('#resetForm').click(function(){
     $('#Answer_type').val('0');
     $('#selectForm').attr('disabled',false);
     $('#FormSelected').remove();
-    if ($('#selection').text().length == 0) {
-        $('#selection').html('<p id=\"selection\">Pas de sélection.</p>');
-    }
+    $('br').remove();
     return false;
 });
 $('#resetDate').click(function(){
     $('#Answer_last_updated') = '';
     $('#selectDate').attr('disabled',false);
     $('#DateSelected').remove();
-    if ($('#selection').text().length == 0) {
-        $('#selection').html('<p id=\"selection\">Pas de sélection.</p>');
-    }
+    $('br').remove();
     return false;
 });
 ");
@@ -134,13 +131,13 @@ $('#resetDate').click(function(){
         </div>
 
         <div class="well">
-            <p id="selection">Pas de sélection.</p>
+            <p id="selection"></p>
         </div>
 
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
                 <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary')); ?>
-                <?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading_next", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));?>
+                <?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading_next", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;")); ?>
             </div>
         </div>
 

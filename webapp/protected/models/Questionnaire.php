@@ -432,7 +432,7 @@ class Questionnaire extends LoggableActiveRecord
                             $group->questions = array();
                             $group->questions[] = $cquestion;
                         } else {
-                            array_unshift($group->questions, $cquestion);
+                            array_push($group->questions, $cquestion);
                         }
                     }
                 }
