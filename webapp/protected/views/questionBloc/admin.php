@@ -25,6 +25,14 @@ $('.search-form form').submit(function(){
 	return false;
 });
 ");
+Yii::app()->clientScript->registerScript('getUnchecked', "
+       function getUncheckeds(){
+            var unch = [];
+            $('[name^=QuestionBloc_id]').not(':checked,[name$=all]').each(function(){unch.push($(this).val());});
+            return unch.toString();
+       }
+       "
+);
 ?>
 
 <h1><?php echo Yii::t('administration', 'manageQuestionsBlock'); ?></h1>
@@ -58,8 +66,15 @@ $form = $this->beginWidget('CActiveForm', array(
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'bloc-grid',
     'dataProvider' => $model->search(),
+    'selectableRows'=>2,
+    'beforeAjaxUpdate'=>'function(id,options){options.data={checkedIds:$.fn.yiiGridView.getChecked("bloc-grid","QuestionBloc_id").toString(),
+        uncheckedIds:getUncheckeds()};
+        return true;}',
+
+    'ajaxUpdate'=>true,
+    'enablePagination' => true,
     'columns' => array(
-        array('id' => 'QuerstionBloc_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
+        array('class' => 'CCheckBoxColumn', 'id' => 'QuestionBloc_id', 'checked'=>isset($_GET['ajax']) ? 'Yii::app()->user->getState($data->_id)' : '0'),
         array('header' => $model->attributeLabels()["title"], 'name' => 'title'),
         array(
             'class' => 'CButtonColumn',

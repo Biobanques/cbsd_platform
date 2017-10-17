@@ -3,6 +3,8 @@ function datePicker(clicked) {
         autoUpdateInput: false,
         applyClass: "btn-primary",
         showDropdowns: true,
+        minDate: "10/10/1900",
+        maxDate: "31/12/2999",
         locale: {
             format: "DD/MM/YYYY",
             applyLabel: 'Valider',

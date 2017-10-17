@@ -1,3 +1,14 @@
+<?php
+Yii::app()->clientScript->registerScript('getUnchecked', "
+       function getUncheckeds(){
+            var unch = [];
+            $('[name^=ReferenceCenter_id]').not(':checked,[name$=all]').each(function(){unch.push($(this).val());});
+            return unch.toString();
+       }
+       "
+);
+?>
+
 <div id="statusMsg">
     <?php if (Yii::app()->user->hasFlash('success')): ?>
         <div class="flash-success">
@@ -14,16 +25,16 @@
 
 <?php
 Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-    $('.search-form').toggle();
-    return false;
-});
-$('.search-form form').submit(function(){
-    $.fn.yiiGridView.update('user-grid', {
-        data: $(this).serialize()
+    $('.search-button').click(function(){
+        $('.search-form').toggle();
+        return false;
     });
-    return false;
-});
+    $('.search-form form').submit(function(){
+        $.fn.yiiGridView.update('user-grid', {
+            data: $(this).serialize()
+        });
+        return false;
+    });
 ");
 ?>
 
@@ -46,8 +57,14 @@ $form = $this->beginWidget('CActiveForm', array(
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'referenceCenter-grid',
     'dataProvider' => $model->search(),
+    'selectableRows' => 2,
+    'beforeAjaxUpdate'=>'function(id,options){options.data={checkedIds:$.fn.yiiGridView.getChecked("referenceCenter-grid","ReferenceCenter_id").toString(),
+        uncheckedIds:getUncheckeds()};
+        return true;}',
+    'ajaxUpdate' => true,
+    'enablePagination' => true,
     'columns' => array(
-        array('id' => 'ReferenceCenter_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
+        array('class' => 'CCheckBoxColumn', 'id' => 'ReferenceCenter_id', 'checked'=>isset($_GET['ajax']) ? 'Yii::app()->user->getState($data->_id)' : '0'),
         array('header' => $model->attributeLabels()["center"], 'name' => 'center'),
         array(
             'class' => 'CButtonColumn',

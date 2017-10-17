@@ -40,13 +40,33 @@ class ReferenceCenterController extends Controller {
     public function actionAdmin() {
         $model = new ReferenceCenter('search');
         $model->unsetAttributes();
+        if (!isset($_GET['ajax'])) {
+            if (isset($_SESSION['checkedIds'])) {
+                foreach ($_SESSION['checkedIds'] as $ar) {
+                    Yii::app()->user->setState($ar, 0);
+                }
+            }
+        }
         if (isset($_GET['User'])) {
             $model->setAttributes($_GET['ReferenceCenter']);
         }
+        if (isset($_GET['checkedIds']) && !empty($_GET['checkedIds'])) {
+            CommonTools::chkIds($_GET['checkedIds']);
+        }
+        if (isset($_GET['uncheckedIds']) && !empty($_GET['uncheckedIds'])) {
+            CommonTools::unckIds($_GET['uncheckedIds']);
+        }
         if (isset($_POST['rechercher'])) {
             if (isset($_POST['ReferenceCenter_id'])) {
-                foreach($_POST['ReferenceCenter_id'] as $key => $value) {
-                    $this->loadModel($value)->delete();
+                if (isset($_SESSION['checkedIds'])) {
+                    foreach ($_SESSION['checkedIds'] as $user_id) {
+                        array_push($_POST['ReferenceCenter_id'], $user_id);
+                    }
+                }
+                foreach ($_POST['ReferenceCenter_id'] as $key => $value) {
+                    if ($this->loadModel($value) !== null) {
+                        $this->loadModel($value)->delete();
+                    }
                     Yii::app()->user->setFlash('succès', Yii::t('common', 'referencesDeleted'));
                 }
             } else {
@@ -97,9 +117,6 @@ class ReferenceCenterController extends Controller {
 
     public function loadModel($id) {
         $model = ReferenceCenter::model()->findByPk(new MongoId($id));
-        if ($model === null) {
-            throw new CHttpException(404, 'The requested page does not exist.');
-        }
         return $model;
     }
     

@@ -136,6 +136,9 @@ class Answer extends LoggableActiveRecord {
         if (isset($this->type) && !empty($this->type)) {
             $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($this->type)));
         }
+        if (isset($_SESSION['typeForm']) && !empty($_SESSION['typeForm'])) {
+            $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($_SESSION['typeForm'])));
+        }
 
         if (isset($this->user) && !empty($this->user)) {
             $regex = CommonTools::regexString($this->user);
@@ -154,6 +157,9 @@ class Answer extends LoggableActiveRecord {
 
         if (isset($this->id_patient) && !empty($this->id_patient)) {
             $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($this->id_patient)));
+        }
+        if (isset($_SESSION['id_patient']) && !empty($_SESSION['id_patient'])) {
+            $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_SESSION['id_patient'])));
         }
         if (isset($_SESSION['id_patientBis'])) {
             $criteria->id_patient = new MongoRegex($_SESSION['id_patientBis']);

@@ -194,12 +194,25 @@ class QuestionBlocController extends Controller {
     public function actionAdmin() {
         $model = new QuestionBloc('search');
         $model->unsetAttributes();
+        if (!isset($_GET['ajax'])) {
+            if (isset($_SESSION['checkedIds'])) {
+                foreach ($_SESSION['checkedIds'] as $ar) {
+                    Yii::app()->user->setState($ar, 0);
+                }
+            }
+        }
         if (isset($_GET['QuestionBloc'])) {
             $model->setAttributes($_GET['QuestionBloc']);
         }
+        if (isset($_GET['checkedIds']) && !empty($_GET['checkedIds'])) {
+            CommonTools::chkIds($_GET['checkedIds']);
+        }
+        if (isset($_GET['uncheckedIds']) && !empty($_GET['uncheckedIds'])) {
+            CommonTools::unckIds($_GET['uncheckedIds']);
+        }
         if (isset($_POST['rechercher'])) {
-            if (isset($_POST['QuerstionBloc_id'])) {
-                foreach ($_POST['QuerstionBloc_id'] as $key => $value) {
+            if (isset($_POST['QuestionBloc_id'])) {
+                foreach ($_POST['QuestionBloc_id'] as $key => $value) {
                     $this->loadModel($value)->delete();
                     Yii::app()->user->setFlash('succès', Yii::t('common', 'blocksDeleted'));
                 }

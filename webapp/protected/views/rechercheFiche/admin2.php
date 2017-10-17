@@ -102,7 +102,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
             </div>
             <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
         </div>
-        <div><h4><?php echo Yii::t('common', 'queryAnonymous') ?></h4><?php echo $html; ?>
+        <div><h4><u><?php echo Yii::t('common', 'queryAnonymous') ?></u></h4><?php echo $html; ?>
         <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"></div>
         </div>
         <br>

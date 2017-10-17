@@ -32,12 +32,6 @@ $('.search-form form').submit(function(){
     return false;
 });
 ");
-Yii::app()->clientScript->registerScript('some-script-id','function aFunctionThatWillBeCalled(id, data){
-    var id = $.fn.yiiGridView.getChecked("user-grid", "User_id");
-    var id = id[0];
-    alert(id);
-    // your jquery code to remember checked rows
-}');
 Yii::app()->clientScript->registerScript('getUnchecked', "
        function getUncheckeds(){
             var unch = [];

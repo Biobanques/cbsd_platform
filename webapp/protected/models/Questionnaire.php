@@ -186,7 +186,7 @@ class Questionnaire extends LoggableActiveRecord
      */
     public function getNomsFiches() {
         $res = array();
-        $fiches = Answer::model()->findAll();
+        $fiches = Questionnaire::model()->findAll();
         foreach ($fiches as $fiche) {
             if (!in_array($fiche->name, $res)) {
                 $res[$fiche->name] = $fiche->name;

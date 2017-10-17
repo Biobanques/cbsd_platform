@@ -25,6 +25,14 @@ $('.search-form form').submit(function(){
     return false;
 });
 ");
+Yii::app()->clientScript->registerScript('getUnchecked', "
+       function getUncheckeds(){
+            var unch = [];
+            $('[name^=Form_id]').not(':checked,[name$=all]').each(function(){unch.push($(this).val());});
+            return unch.toString();
+       }
+       "
+);
 ?>
 
 <h1><?php echo Yii::t('administration', 'forms'); ?></h1>
@@ -58,8 +66,15 @@ $form = $this->beginWidget('CActiveForm', array(
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'formulaire-grid',
     'dataProvider' => $model->search(),
+    'selectableRows'=>2,
+    'beforeAjaxUpdate'=>'function(id,options){options.data={checkedIds:$.fn.yiiGridView.getChecked("formulaire-grid","Form_id").toString(),
+        uncheckedIds:getUncheckeds()};
+        return true;}',
+
+    'ajaxUpdate'=>true,
+    'enablePagination' => true,
     'columns' => array(
-        array('id' => 'Form_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
+        array('class' => 'CCheckBoxColumn', 'id' => 'Form_id', 'checked'=>isset($_GET['ajax']) ? 'Yii::app()->user->getState($data->_id)' : '0'),
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
         array(
             'class' => 'CButtonColumn',

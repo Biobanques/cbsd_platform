@@ -124,6 +124,7 @@ return array(
     'savedPatientForm' => 'The patient form has been saved successfully.',
     'notSavedPatientForm' => 'The patient form has not been saved.',
     'addGeneSuccess' => 'The gene has been added successfully.',
+    'noPatientForm' => 'No patient form has been found.',
     'patientFormSaved' => 'The patient form has been saved successfully.',
     'patientFormNotSaved' => 'The patient form has not been saved.',
     'patientFormDeleted' => 'The patient form has been deleted successfully.',
@@ -289,5 +290,6 @@ return array(
     'referenceTitle' => 'How to manage reference centers?',
     'referenceContent' => 'You can create a new reference center by clicking on the link <b><i>\'Create a reference center\'</i></b> above.<br>'
     . 'You can also edit or delete reference centers using pictures at the end of the lines.',
-    'period' => 'Period'
+    'period' => 'Period',
+    'noRestriction' => 'No restriction'
 );

@@ -40,13 +40,33 @@ class FormulaireController extends Controller {
     public function actionAdmin() {
         $model = new Questionnaire('search');
         $model->unsetAttributes();  // clear any default values
+        if (!isset($_GET['ajax'])) {
+            if (isset($_SESSION['checkedIds'])) {
+                foreach ($_SESSION['checkedIds'] as $ar) {
+                    Yii::app()->user->setState($ar, 0);
+                }
+            }
+        }
         if (isset($_GET['Questionnaire'])) {
             $model->attributes = $_GET['Questionnaire'];
         }
+        if (isset($_GET['checkedIds']) && !empty($_GET['checkedIds'])) {
+            CommonTools::chkIds($_GET['checkedIds']);
+        }
+        if (isset($_GET['uncheckedIds']) && !empty($_GET['uncheckedIds'])) {
+            CommonTools::unckIds($_GET['uncheckedIds']);
+        }
         if (isset($_POST['rechercher'])) {
             if (isset($_POST['Form_id'])) {
-                foreach($_POST['Form_id'] as $key => $value) {
-                    $this->loadModel($value)->delete();
+                if (isset($_SESSION['checkedIds'])) {
+                    foreach ($_SESSION['checkedIds'] as $user_id) {
+                        array_push($_POST['Form_id'], $user_id);
+                    }
+                }
+                foreach ($_POST['Form_id'] as $key => $value) {
+                    if ($this->loadModel($value) !== null) {
+                        $this->loadModel($value)->delete();
+                    }
                     Yii::app()->user->setFlash('succès', Yii::t('form', 'formsDeleted'));
                 }
             } else {

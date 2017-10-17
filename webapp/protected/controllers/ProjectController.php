@@ -83,13 +83,26 @@ class ProjectController extends Controller {
     public function actionAdmin() {
         $model = new Project('search');
         $model->unsetAttributes();
+        if (!isset($_GET['ajax'])) {
+            if (isset($_SESSION['checkedIds'])) {
+                foreach ($_SESSION['checkedIds'] as $ar) {
+                    Yii::app()->user->setState($ar, 0);
+                }
+            }
+        }
         if (isset($_GET['Project'])) {
             $model->setAttributes($_GET['Project']);
         }
+        if (isset($_GET['checkedIds']) && !empty($_GET['checkedIds'])) {
+            CommonTools::chkIds($_GET['checkedIds']);
+        }
+        if (isset($_GET['uncheckedIds']) && !empty($_GET['uncheckedIds'])) {
+            CommonTools::unckIds($_GET['uncheckedIds']);
+        }
         if (isset($_POST['rechercher'])) {
             if (isset($_POST['Project_id'])) {
-                foreach($_POST['Project_id'] as $key => $value) {
-                    $this->loadModelFileImport($value)->delete();
+                foreach ($_POST['Project_id'] as $key => $value) {
+                    $this->loadModel($value)->delete();
                     Yii::app()->user->setFlash('succès', Yii::t('common', 'projectsDeleted'));
                 }
             } else {

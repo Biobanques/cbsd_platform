@@ -127,6 +127,7 @@ return array(
     'notSavedPatientForm' => 'La fiche n\'a pas été sauvegardée.',
     'creation' => 'Création de patient',
     'addGeneSuccess' => 'Le gène a bien été ajouté.',
+    'noPatientForm' => 'Aucune fiche n\'a été trouvée.',
     'patientFormSaved' => 'La fiche a bien été sauvegardé.',
     'patientFormNotSaved' => 'La fiche n\'a pas été sauvegardé.',
     'patientFormDeleted' => 'La fiche a bien été supprimé.',
@@ -295,5 +296,6 @@ return array(
     'referenceTitle' => 'Comment gérer les centres de référence?',
     'referenceContent' => 'Vous pouvez créer un nouvel centre de référence en cliquant sur le lien <b><i>\'Créer un centre de référence\'</i></b> ci-dessous.<br>'
     . 'Vous pouvez également modifier ou supprimer des centres de référence en utilisant les images en fin de ligne.',
-    'period' => 'Période'
+    'period' => 'Période',
+    'noRestriction' => 'Pas de restriction'
 );

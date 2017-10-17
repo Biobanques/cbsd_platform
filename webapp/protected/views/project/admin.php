@@ -24,7 +24,18 @@ $('.search-form form').submit(function(){
     });
     return false;
 });
+
 ");
+?>
+<?php
+Yii::app()->clientScript->registerScript('getUnchecked', "
+       function getUncheckeds(){
+            var unch = [];
+            $('[name^=Project_id]').not(':checked,[name$=all]').each(function(){unch.push($(this).val());});
+            return unch.toString();
+       }
+       "
+);
 ?>
 
 <h1><?php echo Yii::t('administration', 'manageProjects'); ?></h1>
@@ -50,8 +61,15 @@ $form = $this->beginWidget('CActiveForm', array(
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'user-grid',
     'dataProvider' => $model->search(),
+    'selectableRows'=>2,
+    'beforeAjaxUpdate'=>'function(id,options){options.data={checkedIds:$.fn.yiiGridView.getChecked("user-grid","Project_id").toString(),
+        uncheckedIds:getUncheckeds()};
+        return true;}',
+
+    'ajaxUpdate'=>true,
+    'enablePagination' => true,
     'columns' => array(
-        array('id' => 'Project_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
+        array('class' => 'CCheckBoxColumn', 'id' => 'Project_id', 'checked'=>isset($_GET['ajax']) ? 'Yii::app()->user->getState($data->_id)' : '0'),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user'),
         array('header' => $model->attributeLabels()["project_name"], 'name' => 'project_name'),
         array('header' => $model->attributeLabels()["file"], 'name' => 'file'),
