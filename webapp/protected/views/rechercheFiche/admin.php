@@ -68,7 +68,7 @@ $('#resetForm').click(function(){
     return false;
 });
 $('#resetDate').click(function(){
-    $('#Answer_last_updated') = '';
+    $('#Answer_last_updated').val('');
     $('#selectDate').attr('disabled',false);
     $('#DateSelected').remove();
     $('br').remove();

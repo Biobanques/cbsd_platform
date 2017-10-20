@@ -40,7 +40,6 @@ $('#dynamicFilters').on('click','.validateQuery',function(event){
         type:'POST',
         data:$('#light_search-form').serialize(),
         success:function(result){
-        $('#queries').html('');
         $('#queries').append(result);
         }
     })
@@ -103,7 +102,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
             <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
         </div>
         <div><h4><u><?php echo Yii::t('common', 'queryAnonymous') ?></u></h4><?php echo $html; ?>
-        <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"></div>
+        <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"><?php if (isset($_SESSION['formulateQuery'])) { echo $_SESSION['formulateQuery']; }; ?></div>
         </div>
         <br>
         <div class="row buttons">
