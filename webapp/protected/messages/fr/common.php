@@ -289,6 +289,7 @@ return array(
     'newQuestion' => 'Nouvelle rubrique',
     'optional' => 'optionnel',
     'queryAnonymous' => 'Restreindre la requête',
+    'queriedAnonymous' => 'Requêtes restreints',
     'to' => 'à',
     'queryFormulation' => 'Formuler la requête',
     'resultQuery' => 'Résultat de la requête',

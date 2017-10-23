@@ -283,6 +283,7 @@ return array(
     'newQuestion' => 'New question',
     'optional' => 'optional',
     'queryAnonymous' => 'Restrict the query ID',
+    'queriedAnonymous' => 'Restricted queries',
     'to' => 'to',
     'queryFormulation' => 'Formulate the query',
     'resultQuery' => 'Result of the query',

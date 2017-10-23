@@ -45,9 +45,6 @@ class RechercheFicheController extends Controller {
         $_SESSION['id_patient'] = null;
         $_SESSION['typeForm'] = null;
         $_SESSION['last_updated'] = null;
-        $_SESSION['fiches'] = null;
-        $_SESSION['fiche'] = null;
-        $_SESSION['indexFiche'] = null;
         $_SESSION['html'] = null;
         $_SESSION['formulateQuery'] = null;
         $model = new Answer;
@@ -57,8 +54,6 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionAdmin2() {
-        $idFiches = array();
-        $countFiche = 0;
         $fiche = null;
         $html = "<ul>";
         if (isset($_POST['Answer'])) {
@@ -100,7 +95,6 @@ class RechercheFicheController extends Controller {
             $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
             $criteria->sort('type', EMongoCriteria::SORT_ASC);
             $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
-            $_SESSION['fiches'] = $criteria;
         }
         if ($html == "<ul></ul>") {
             $html .= "Pas de restriction.";
@@ -109,30 +103,6 @@ class RechercheFicheController extends Controller {
             $html = $_SESSION['html'];
         } else {
             $_SESSION['html'] = $html;
-        }
-        if (isset($_SESSION['fiches']) && $_SESSION['fiches'] != null) {
-            $fichesBis = Answer::model()->findAll($_SESSION['fiches']);
-            if ($fichesBis == null) {
-                Yii::app()->user->setFlash('erreur', Yii::t('common', 'noPatientForm'));
-                $this->redirect(array('rechercheFiche/admin'));
-            }
-            foreach ($fichesBis as $fiche) {
-                array_push($idFiches, $fiche->_id);
-                $countFiche = count($idFiches);
-            }
-            if (isset($_POST['yt3'])) {
-                if ($_SESSION['indexFiche'] < count($idFiches) - 1) {
-                    $_SESSION['indexFiche'] += 1;
-                }
-            } elseif ($_SESSION['indexFiche'] < 1) {
-                $_SESSION['indexFiche'] = 0;
-            }
-            if (isset($_SESSION['indexFiche']) && $_SESSION['indexFiche'] != null) {
-                $fiche = Answer::model()->findByPk(new MongoId($idFiches[$_SESSION['indexFiche']]));
-                if ($fiche == null) {
-                    $this->redirect(array('rechercheFiche/admin'));
-                }
-            }
         }
 
         if (isset($_POST['rechercher'])) {
@@ -180,11 +150,7 @@ class RechercheFicheController extends Controller {
         if (isset($_POST['question']) && $_POST['question'] != null) {
             $this->redirect(array('rechercheFiche/admin3'));
         }
-        if (isset($_POST['hash'])) {
-            $this->redirect(array('rechercheFiche/admin2#' . $_POST['hash']));
-        } else {
-            $this->render('admin2', array('fiche' => ($fiche != null) ? $fiche : null, 'html' => $html));
-        }
+        $this->render('admin2', array('fiche' => ($fiche != null) ? $fiche : null, 'html' => $html));
     }
 
     public function actionAdmin3() {

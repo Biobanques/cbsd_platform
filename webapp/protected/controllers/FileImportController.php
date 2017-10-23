@@ -201,11 +201,8 @@ class FileImportController extends Controller {
         $countNotImported = 0;
         $_SESSION['countImported'] = null;
         $_SESSION['countNotImported'] = null;
-        $attributes = array();
-        $test = array();
         $res = array();
         $_SESSION['patientFM'] = null;
-        $fp = fopen($uploadedFile->filename, 'r');
         $rows = array_map('str_getcsv', file($uploadedFile->filename));
         $header = array_shift($rows);
         $csv = array();
@@ -216,18 +213,10 @@ class FileImportController extends Controller {
             $test = array();
             $attributes = array();
             $exist = false;
-            $_SESSION['test'] = null;
+            $_SESSION['tissu'] = null;
             $_SESSION['qte'] = null;
             $neuropath = new Neuropath;
-            $patient = (object) null;
-            $patient->id = null;
-            $patient->source = 1; // Banque de cerveaux
-            $patient->sourceId = null;
-            $patient->birthName = null;
-            $patient->useName = null;
-            $patient->firstName = null;
-            $patient->birthDate = null;
-            $patient->sex = null;
+            $patient = $this->initializePatientObject();
             foreach ($vCSV as $cle => $valeur) {
                 switch ($cle) {
                     case "Nom naissance":
@@ -263,7 +252,7 @@ class FileImportController extends Controller {
                 }
             }
             $test[$attributes['PrelevementTissusTranche::Origin_Samples_Tissue']] = $attributes['PrelevementTissusTranche::quantity_available'];
-            $_SESSION['test'] = $attributes['PrelevementTissusTranche::Origin_Samples_Tissue'];
+            $_SESSION['tissu'] = $attributes['PrelevementTissusTranche::Origin_Samples_Tissue'];
             $_SESSION['qte'] = $attributes['PrelevementTissusTranche::quantity_available'];
             unset($attributes['PrelevementTissusTranche::Origin_Samples_Tissue']);
             unset($attributes['PrelevementTissusTranche::quantity_available']);
@@ -318,16 +307,16 @@ class FileImportController extends Controller {
                             $criteria = new EMongoCriteria;
                             $criteria->id_cbsd = $v;
                             $neuropath = Neuropath::model()->find($criteria);
-                            if ($neuropath != null && $_SESSION['test'] != null) {
+                            if ($neuropath != null && $_SESSION['tissu'] != null) {
                                 foreach ($neuropath as $key => $value) {
-                                    if ($key == $_SESSION['test']) {
+                                    if ($key == $_SESSION['tissu']) {
                                         $exist = true;
                                     }
                                 }
                                 if (!$exist) {
-                                    $_SESSION['test'] = str_replace('.', '', $_SESSION['test']);
-                                    $neuropath->initSoftAttribute($_SESSION['test']);
-                                    $neuropath->$_SESSION['test'] = $_SESSION['qte'];
+                                    $_SESSION['tissu'] = str_replace('.', '', $_SESSION['tissu']);
+                                    $neuropath->initSoftAttribute($_SESSION['tissu']);
+                                    $neuropath->$_SESSION['tissu'] = $_SESSION['qte'];
                                     $neuropath->save();
                                 }
                             }
@@ -351,6 +340,19 @@ class FileImportController extends Controller {
         }
         //copy($importedFile, "treated/$importedFile");
         //unlink($importedFile);
+    }
+    
+    public function initializePatientObject() {
+        $patient = (object) null;
+        $patient->id = null;
+        $patient->source = 1; // Banque de cerveaux
+        $patient->sourceId = null;
+        $patient->birthName = null;
+        $patient->useName = null;
+        $patient->firstName = null;
+        $patient->birthDate = null;
+        $patient->sex = null;
+        return $patient;
     }
 
     /*

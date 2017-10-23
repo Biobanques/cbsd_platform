@@ -101,7 +101,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
             </div>
             <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
         </div>
-        <div><h4><u><?php echo Yii::t('common', 'queryAnonymous') ?></u></h4><?php echo $html; ?>
+        <div><h4><u><?php echo Yii::t('common', 'queriedAnonymous') ?></u></h4><?php echo $html; ?>
         <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"><?php if (isset($_SESSION['formulateQuery'])) { echo $_SESSION['formulateQuery']; }; ?></div>
         </div>
         <br>
@@ -115,27 +115,3 @@ $('#search_fiche-form').on('click','.question-input',function(event){
         <?php $this->endWidget(); ?>
     </div>
 </div>
-
-<?php if (isset($fiche) && $fiche != null) { ?>
-    <div class="search-form">
-        <div class="wide form">
-            <?php
-            $form = $this->beginWidget('CActiveForm', array(
-                'id' => 'search_fiche-form',
-                'action' => Yii::app()->createUrl($this->route),
-                'method' => 'post',
-            ));
-            ?>
-            <div id="renderFiche">
-                <?php echo $fiche->renderHTML(Yii::app()->language); ?>
-            </div>
-        </div><!-- search-form -->
-        <?php echo CHtml::hiddenField('hash', '', array('id' => 'hash')); ?>
-        <div>
-            <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary', 'style' => 'position:fixed')); ?>
-        </div>
-        <?php $this->endWidget(); ?>
-
-
-    </div>
-<?php } ?>
