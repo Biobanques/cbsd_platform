@@ -114,9 +114,9 @@ class CommonTools {
     public function regexString($values) {
         $regex = '/';
         foreach ($values as $word) {
-            $regex.= $word;
+            $regex .= $word;
             if ($word != end($values)) {
-                $regex.= '|';
+                $regex .= '|';
             }
         }
         $regex .= '/i';
@@ -130,9 +130,9 @@ class CommonTools {
     public function regexNumeric($values) {
         $regex = '/^';
         foreach ($values as $word) {
-            $regex.= $word;
+            $regex .= $word;
             if ($word != end($values)) {
-                $regex.= '$|^';
+                $regex .= '$|^';
             }
         }
         $regex .= '$/i';
@@ -168,7 +168,7 @@ class CommonTools {
         }
         return $result;
     }
-    
+
     public function getUserLogin() {
         $result = "-";
         $user = User::model()->findByPk(new MongoID(Yii::app()->user->id));
@@ -181,7 +181,7 @@ class CommonTools {
     public function array_swap(&$array, $swap_a, $swap_b) {
         list($array[$swap_a], $array[$swap_b]) = array($array[$swap_b], $array[$swap_a]);
     }
-    
+
     public function getAllReferenceCenter() {
         $aRCenter = array();
         $referenceCenter = ReferenceCenter::model()->findAll();
@@ -193,7 +193,7 @@ class CommonTools {
         asort($aRCenter, SORT_NATURAL | SORT_FLAG_CASE);
         return $aRCenter;
     }
-    
+
     public function chkIds($checkedIds) {
         if (!isset($_SESSION['checkedIds'])) {
             $_SESSION['checkedIds'] = array();
@@ -220,9 +220,18 @@ class CommonTools {
             Yii::app()->user->setState($arownon, 0);
         }
     }
-    
+
     public function setValue($value) {
         return ($value != "" || $value != null) ? $value : null;
+    }
+
+    public function getAllPrelevements() {
+        $prvmt = Prelevement::model()->findAll();
+        $res = array();
+        foreach ($prvmt as $p) {
+            $res[$p->currentColumn] = $p->newColumn;
+        }
+        return $res;
     }
 
 }

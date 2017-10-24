@@ -102,18 +102,14 @@ $('#resetDate').click(function(){
             <div class="row">
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'individualSelection'), 'Answer_id_patient', array('style' => 'width:250px; padding-top:30px;')); ?>
-                    <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("multiple" => "multiple", "onclick" => "restrictQuery()")); ?>
-                    <?php echo CHtml::submitButton(Yii::t('button', 'select'), array('id' => 'selectCas', 'class' => 'btn btn-success')); ?>
-                    <?php echo CHtml::resetButton(Yii::t('button', 'reset'), array('id' => 'resetCas', 'class' => 'btn btn-danger')); ?>
+                    <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%;")); ?>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type', array('style' => 'width:250px; padding-top:30px;')); ?>
-                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("multiple" => "multiple", "onclick" => "restrictQuery()")); ?>
-                    <?php echo CHtml::submitButton(Yii::t('button', 'select'), array('id' => 'selectForm', 'class' => 'btn btn-success')); ?>
-                    <?php echo CHtml::resetButton(Yii::t('button', 'reset'), array('id' => 'resetForm', 'class' => 'btn btn-danger')); ?>
+                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("id" => "multiselect_disabled", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%;")); ?>
                 </div>
             </div>
 
@@ -136,7 +132,7 @@ $('#resetDate').click(function(){
 
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
-                <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary')); ?>
+                <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary', 'onclick' => 'submit()')); ?>
                 <?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading_next", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;")); ?>
             </div>
         </div>

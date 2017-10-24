@@ -66,6 +66,9 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
 
             <!-- use DateRangePicker http://www.daterangepicker.com/ -->
             <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+            
+            <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery.uix.multiselect.css" />
+            <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/common.css" />
 
             <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
@@ -210,5 +213,8 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/singleDatePicker.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/maintenance.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <script src="js/jquery.uix.multiselect.js"></script>
+        <script src="js/locales/jquery.uix.multiselect_fr.js"></script>
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/multiselect.js"></script>
     </body>
 </html>
