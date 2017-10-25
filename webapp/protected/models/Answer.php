@@ -178,6 +178,20 @@ class Answer extends LoggableActiveRecord {
             $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
         }
 
+        if (isset($_SESSION['Available']) && !empty($_SESSION['Available'])) {
+            foreach ($_SESSION['Available'] as $dispo) {
+                $this->dynamics[$dispo] = "Available";
+                $this->condition[$dispo] = '$and';
+            }
+        }
+        
+        if (isset($_SESSION['NotAvailable']) && !empty($_SESSION['NotAvailable'])) {
+            foreach ($_SESSION['NotAvailable'] as $nonDispo) {
+                $this->dynamics[$nonDispo] = "NotAvailable";
+                $this->condition[$nonDispo] = '$and';
+            }
+        }
+
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             $index = 0;
             $nbCriteria = array();

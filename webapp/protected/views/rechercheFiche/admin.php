@@ -109,7 +109,7 @@ $('#resetDate').click(function(){
             <div class="row">
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type', array('style' => 'width:250px; padding-top:30px;')); ?>
-                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("id" => "multiselect_disabled", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%;")); ?>
+                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("id" => "multiselect_groups", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%;")); ?>
                 </div>
             </div>
 

@@ -47,6 +47,8 @@ class RechercheFicheController extends Controller {
         $_SESSION['last_updated'] = null;
         $_SESSION['html'] = null;
         $_SESSION['formulateQuery'] = null;
+        $_SESSION['Available'] = null;
+        $_SESSION['NotAvailable'] = null;
         $model = new Answer;
         $this->render('admin', array(
             'model' => $model
@@ -131,6 +133,12 @@ class RechercheFicheController extends Controller {
             } else {
                 $this->redirect(array('rechercheFiche/admin3'));
             }
+        }
+        if (isset($_POST['Available'])) {
+            $_SESSION['Available'] = $_POST['Available'];
+        }
+        if (isset($_POST['NotAvailable'])) {
+            $_SESSION['NotAvailable'] = $_POST['NotAvailable'];
         }
         if (isset($_POST['searchAll']) && isset(Yii::app()->session['criteria'])) {
             $ficheId = array();
