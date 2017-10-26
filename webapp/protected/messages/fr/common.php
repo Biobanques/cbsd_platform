@@ -70,6 +70,8 @@ return array(
     'restrictPeriod' => 'une période',
     'fileMakerColumn' => 'Colonne FileMaker',
     'cbsdColumn' => 'Colonne CBSD',
+    'available' => 'Disponible',
+    'notAvailable' => 'Non disponible',
     // genre
     'man' => 'Homme',
     'woman' => 'Femme',

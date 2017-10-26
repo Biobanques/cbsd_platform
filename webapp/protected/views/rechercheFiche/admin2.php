@@ -60,6 +60,13 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 });
 ");
 ?>
+
+<style>
+.ui-icon {top: 0 !important;}
+.ui-widget{font-family: Arial,Helvetica,sans-serif; font-size: 1em;}
+
+</style>
+
 <div style="margin-left:20px;">
     <div class="myBreadcrumb">
         <div class="active"><?php echo Yii::t('common', 'queryAnonymous') ?></div>
@@ -103,15 +110,15 @@ $('#search_fiche-form').on('click','.question-input',function(event){
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <?php echo CHtml::label("Available","Available"); ?>
-                <?php echo CHtml::dropDownList("Available", 'prvt_available', CommonTools::getAllPrelevements(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%;")); ?>
+                <?php echo CHtml::label(Yii::t('common', 'available'),"Available", array('style' => 'padding-top:30px;')); ?>
+                <?php echo CHtml::dropDownList("Available", 'prvt_available', CommonTools::getAllPrelevements(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:100px;")); ?>
             </div>
         </div>
         
         <div class="row">
             <div class="col-lg-12">
-                <?php echo CHtml::label("Not_available","Not available"); ?>
-                <?php echo CHtml::dropDownList("NotAvailable", 'prvt_notAvailable', CommonTools::getAllPrelevements(), array("id" => "multiselect_groups", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%;")); ?>
+                <?php echo CHtml::label(Yii::t('common', 'notAvailable'),"Not available", array('style' => 'padding-top:30px;')); ?>
+                <?php echo CHtml::dropDownList("NotAvailable", 'prvt_notAvailable', CommonTools::getAllPrelevements(), array("id" => "multiselect_groups", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:100px;")); ?>
             </div>
         </div>
 

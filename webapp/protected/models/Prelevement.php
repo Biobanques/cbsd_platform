@@ -13,4 +13,15 @@ class Prelevement extends EMongoSoftDocument
     {
         return 'Prelevement';
     }
+    
+    public function getAllPrelevements() {
+        $res = array();
+        $prvmt = Prelevement::model()->findAll();
+        foreach ($prvmt as $p) {
+            if (!in_array($p->currentColumn, $res)) {
+                array_push($res, $p->currentColumn);
+            }
+        }
+        return $res;
+    }
 }

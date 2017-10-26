@@ -476,10 +476,12 @@ class Answer extends LoggableActiveRecord {
      */
     public function getAllQuestionsByTypeForm($typeForm) {
         $result = array();
+        $prvmt = Prelevement::model()->getAllPrelevements();
         $answers = $this->getAllDetailledQuestionsByTypeForm($typeForm);
         foreach ($answers as $answer) {
-            //$result[$answer->answer->id] = "[" . $answer->fiche . "][" . $answer->group . "] " . $answer->answer->label_fr;
-            $result[$answer->answer->id] = "[" . $answer->group . "] " . $answer->answer->label_fr;
+            if (!in_array($answer->answer->id, $prvmt)) {
+                $result[$answer->answer->id] = "[" . $answer->group . "] " . $answer->answer->label_fr;
+            }
         }
         natcasesort($result);
         return $result;

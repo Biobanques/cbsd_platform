@@ -430,3 +430,7 @@ div.search-form
 .even > th{
     font-weight:bold;
 }
+
+.ui-autocomplete { 
+    height: 200px; overflow-y: scroll; overflow-x: hidden;
+}

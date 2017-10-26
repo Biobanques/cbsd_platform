@@ -67,7 +67,9 @@ return array(
     'restrictQuery' => 'a form',
     'restrictPeriod' => 'a period',
     'fileMakerColumn' => 'FileMaker column',
-    'cbsdColumn' => 'CBSD column',  
+    'cbsdColumn' => 'CBSD column',
+    'available' => 'Available',
+    'notAvailable' => 'Not available',
     // genre
     'man' => 'Man',
     'woman' => 'Woman',

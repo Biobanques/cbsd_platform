@@ -1,7 +1,7 @@
 
 
 .uix-multiselect-original { position: absolute; left:-999999px; }
-.uix-multiselect { position: relative; float:left; }
+.uix-multiselect { position: relative; float:left; height: 120px !important; }
 .uix-multiselect .multiselect-selected-list, .uix-multiselect .multiselect-available-list { position:absolute; overflow:hidden; }
 .uix-multiselect .ui-widget-header { overflow:hidden;  white-space:nowrap; padding:2px 4px; }
 .uix-multiselect .ui-widget-header div.header-text { white-space: nowrap; }
@@ -20,5 +20,5 @@
 .uix-multiselect .option-element.ui-state-disabled { font-style:italic; }
 .dragged-element, .dragged-grouped-element { padding:1px 3px; }
 .dragged-grouped-element { padding-left:16px; }
-.uix-multiselect .grouped-option { position:relative; padding-left:16px }
+.uix-multiselect .grouped-option { position:relative; padding-left:16px; }
 .uix-multiselect .grouped-option .ui-icon { position:absolute; left:0; }
