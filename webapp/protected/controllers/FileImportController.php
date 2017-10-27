@@ -26,6 +26,7 @@ class FileImportController extends Controller {
                 'actions' => array(
                     'admin',
                     'create',
+                    'createPrvmt',
                     'update',
                     'delete',
                     'formatColumn',
@@ -112,6 +113,24 @@ class FileImportController extends Controller {
             'model' => $model,
         ));
     }
+    
+    public function actionCreatePrvmt() {
+        $model = new Prelevement;
+        if (isset($_POST['Prelevement'])) {
+            $model->attributes = $_POST['Prelevement'];
+            $model->type = "radio";
+            $model->values = "Available,Not available";
+            if ($model->save()) {
+                Yii::app()->user->setFlash('succès', 'OK');
+                $this->redirect(array('fileImport/formatColumn'));
+            } else {
+                Yii::app()->user->setFlash('erreur', 'KO');
+            }
+        }
+        $this->render('createPrvmt', array(
+            'model' => $model,
+        ));
+    }
 
     /**
      * Updates a particular model.
@@ -157,9 +176,14 @@ class FileImportController extends Controller {
 
     public function actionFormatColumn() {
         $modelColumn = new ColumnFileMaker('search');
+        $prelevement = new Prelevement('search');
         $modelColumn->unsetAttributes();
+        $prelevement->unsetAttributes();
         if (isset($_GET['ColumnFileMaker'])) {
             $modelColumn->setAttributes($_GET['ColumnFileMaker']);
+        }
+        if (isset($_GET['Prelevement'])) {
+            $modelColumn->setAttributes($_GET['Prelevement']);
         }
         if (isset($_POST['rechercher'])) {
             if (isset($_POST['ColumnFileMaker_id'])) {
@@ -172,7 +196,8 @@ class FileImportController extends Controller {
             }
         }
         $this->render('formatColumn', array(
-            'modelColumn' => $modelColumn
+            'modelColumn' => $modelColumn,
+            'prelevement' => $prelevement
         ));
     }
 
@@ -252,7 +277,7 @@ class FileImportController extends Controller {
                 }
             }
             $test[$attributes['PrelevementTissusTranche::Origin_Samples_Tissue']] = $attributes['PrelevementTissusTranche::quantity_available'];
-            $_SESSION['tissu'] = $attributes['PrelevementTissusTranche::Origin_Samples_Tissue'];
+            $_SESSION['tissu'] = trim($attributes['PrelevementTissusTranche::Origin_Samples_Tissue']);
             $_SESSION['qte'] = $attributes['PrelevementTissusTranche::quantity_available'];
             unset($attributes['PrelevementTissusTranche::Origin_Samples_Tissue']);
             unset($attributes['PrelevementTissusTranche::quantity_available']);
@@ -276,22 +301,23 @@ class FileImportController extends Controller {
                             $neuropath->id_cbsd = $vSIP;
                             foreach ($res as $keyAttr => $valueAttr) {
                                 if ($keyAttr != null || $keyAttr != "") {
-                                    $columnFileMaker = ColumnFileMaker::model()->findByAttributes(array('currentColumn' => $keyAttr));
+                                    $keyAttrTrim = trim($keyAttr);
+                                    $columnFileMaker = ColumnFileMaker::model()->findByAttributes(array('currentColumn' => $keyAttrTrim));
                                     if ($columnFileMaker != null) {
                                         $fileMaker = $columnFileMaker->newColumn;
                                         $neuropath->initSoftAttribute($fileMaker);
                                         $pos = strpos((string) $valueAttr, "-");
-                                        if (($pos && $keyAttr == "PrelevementTissus::Braak_Tau") || ($pos && $keyAttr == "PrelevementTissus::Thal_amiloide")) {
+                                        if (($pos && $keyAttrTrim == "PrelevementTissus::Braak_Tau") || ($pos && $keyAttrTrim == "PrelevementTissus::Thal_amiloide")) {
                                             $neuropath->$fileMaker = $this->convertNumeric(substr($valueAttr, 0, $pos));
                                         } else {
                                             $neuropath->$fileMaker = $this->convertNumeric($valueAttr);
                                         }
                                     } else {
-                                        $neuropath->initSoftAttribute($keyAttr);
-                                        if (($pos && $keyAttr == "PrelevementTissus::Braak_Tau") || ($pos && $keyAttr == "PrelevementTissus::Thal_amiloide")) {
-                                            $neuropath->$keyAttr = $this->convertNumeric(substr($valueAttr, 0, $pos));
+                                        $neuropath->initSoftAttribute($keyAttrTrim);
+                                        if (($pos && $keyAttrTrim == "PrelevementTissus::Braak_Tau") || ($pos && $keyAttrTrim == "PrelevementTissus::Thal_amiloide")) {
+                                            $neuropath->$keyAttrTrim = $this->convertNumeric(substr($valueAttr, 0, $pos));
                                         } else {
-                                            $neuropath->$keyAttr = $this->convertNumeric($valueAttr);
+                                            $neuropath->$keyAttrTrim = $this->convertNumeric($valueAttr);
                                         }
                                     }
                                 }
@@ -427,8 +453,11 @@ class FileImportController extends Controller {
                             $answerQuestion->label = (string) $k;
                             $answerQuestion->label_fr = (string) $k;
                             $type = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label));
+                            $typePrvmt = Prelevement::model()->findByAttributes(array('newColumn' => $answerQuestion->label));
                             if ($type != null) {
                                 $answerQuestion->type = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->type;
+                            } elseif ($typePrvmt != null) {
+                                $answerQuestion->type = Prelevement::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->type;
                             } else {
                                 $answerQuestion->type = "input";
                             }
@@ -442,7 +471,11 @@ class FileImportController extends Controller {
                             } elseif ($answerQuestion->type == "number") {
                                 $answerQuestion->answer = new MongoInt32($v);
                             } elseif ($answerQuestion->type == "radio") {
-                                $answerQuestion->values = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->values;
+                                if ($type != null) {
+                                    $answerQuestion->values = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->values;
+                                } else {
+                                    $answerQuestion->values = Prelevement::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->values;
+                                }
                                 $answerQuestion->answer = $v;
                             } else {
                                 $answerQuestion->answer = $v;
@@ -471,7 +504,7 @@ class FileImportController extends Controller {
                 break;
             case "VI": return 6;
                 break;
-            default: if (ctype_digit($value)) return (int) $value; else return $value;
+            default: if (ctype_digit($value)) return (int) $value; else return trim($value);
         }
     }
 

@@ -136,6 +136,6 @@ $('#search_fiche-form').on('click','.question-input',function(event){
     <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"><?php
         if (isset($_SESSION['formulateQuery'])) {
             echo $_SESSION['formulateQuery'];
-        };
+        }
         ?></div>
 </div>

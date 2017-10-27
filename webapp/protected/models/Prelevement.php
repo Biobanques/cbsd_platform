@@ -1,6 +1,6 @@
 <?php
 
-class Prelevement extends EMongoSoftDocument
+class Prelevement extends ColumnFileMaker
 {
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__)

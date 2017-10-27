@@ -181,13 +181,13 @@ class Answer extends LoggableActiveRecord {
         if (isset($_SESSION['Available']) && !empty($_SESSION['Available'])) {
             foreach ($_SESSION['Available'] as $dispo) {
                 $this->dynamics[$dispo] = "Available";
-                $this->condition[$dispo] = '$and';
+                $this->condition[$dispo] = '$or';
             }
         }
         
         if (isset($_SESSION['NotAvailable']) && !empty($_SESSION['NotAvailable'])) {
             foreach ($_SESSION['NotAvailable'] as $nonDispo) {
-                $this->dynamics[$nonDispo] = "NotAvailable";
+                $this->dynamics[$nonDispo] = "Not available";
                 $this->condition[$nonDispo] = '$and';
             }
         }

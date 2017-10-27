@@ -46,6 +46,13 @@ class FicheController extends Controller {
     public function actionAdmin() {
         $_SESSION['id_patientBis'] = null;
         $_SESSION['id_patientAll'] = null;
+        $_SESSION['id_patient'] = null;
+        $_SESSION['typeForm'] = null;
+        $_SESSION['last_updated'] = null;
+        $_SESSION['html'] = null;
+        $_SESSION['formulateQuery'] = null;
+        $_SESSION['Available'] = null;
+        $_SESSION['NotAvailable'] = null;
         $model = new Answer('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Answer'])) {

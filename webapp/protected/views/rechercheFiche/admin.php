@@ -132,7 +132,7 @@ $('#resetDate').click(function(){
 
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
-                <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary', 'onclick' => 'submit()')); ?>
+                <?php echo CHtml::submitButton(Yii::t('button', 'next'), array('id' => 'next', 'class' => 'btn btn-primary', 'onclick' => 'submit(); $("#loading_next").show();')); ?>
                 <?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading_next", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;")); ?>
             </div>
         </div>

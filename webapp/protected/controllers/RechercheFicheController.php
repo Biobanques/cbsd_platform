@@ -49,6 +49,8 @@ class RechercheFicheController extends Controller {
         $_SESSION['formulateQuery'] = null;
         $_SESSION['Available'] = null;
         $_SESSION['NotAvailable'] = null;
+        $_SESSION['htmlAvailable'] = null;
+        $_SESSION['NotAvailable'] = null;
         $model = new Answer;
         $this->render('admin', array(
             'model' => $model
@@ -58,6 +60,7 @@ class RechercheFicheController extends Controller {
     public function actionAdmin2() {
         $fiche = null;
         $html = "<ul>";
+        $htmlPrvmt = "";
         if (isset($_POST['Answer'])) {
             $_SESSION['Answer'] = $_POST['Answer'];
             $criteria = new EMongoCriteria;
@@ -134,12 +137,22 @@ class RechercheFicheController extends Controller {
                 $this->redirect(array('rechercheFiche/admin3'));
             }
         }
+        $htmlPrvmt .= "<ul>";
         if (isset($_POST['Available'])) {
             $_SESSION['Available'] = $_POST['Available'];
+            foreach ($_SESSION['Available'] as $kAvailable => $vAvailable) {
+                $htmlPrvmt .= "<li>" . $vAvailable . " = Available</li>";
+            }
         }
         if (isset($_POST['NotAvailable'])) {
             $_SESSION['NotAvailable'] = $_POST['NotAvailable'];
+            foreach ($_SESSION['NotAvailable'] as $kNotAvailable => $vNotAvailable) {
+                $htmlPrvmt .= "<li>" . $vNotAvailable . " = Not available</li>";
+            }
         }
+        $htmlPrvmt .= "</ul>";
+        $_SESSION['htmlAvailable'] = $htmlPrvmt;
+        
         if (isset($_POST['searchAll']) && isset(Yii::app()->session['criteria'])) {
             $ficheId = array();
             $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
@@ -155,7 +168,7 @@ class RechercheFicheController extends Controller {
                 $_SESSION['id_patientAll'] = $regex;
             }
         }
-        if (isset($_POST['question']) && $_POST['question'] != null) {
+        if (isset($_POST['question']) && $_POST['question'] != null || isset($_POST['Available']) && $_POST['Available'] != null || isset($_POST['NotAvailable']) && $_POST['NotAvailable'] != null) {
             $this->redirect(array('rechercheFiche/admin3'));
         }
         $this->render('admin2', array('fiche' => ($fiche != null) ? $fiche : null, 'html' => $html));

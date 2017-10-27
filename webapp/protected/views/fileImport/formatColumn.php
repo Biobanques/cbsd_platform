@@ -72,3 +72,40 @@ $this->widget('zii.widgets.grid.CGridView', array(
     </div>
 </div>
 <?php $this->endWidget(); ?>
+
+<h1>Prélèvements</h1>
+
+<?php
+echo CHtml::link('Create prelevement', array('fileImport/createPrvmt'));
+?>
+
+<?php
+$form = $this->beginWidget('CActiveForm', array(
+    'action' => Yii::app()->createUrl($this->route),
+    'method' => 'post',
+        ));
+
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'prelevement-grid',
+    'dataProvider' => $prelevement->search(),
+    'columns' => array(
+        array('id' => 'Prelevement_id', 'value' => '$data->_id', 'class' => 'CCheckBoxColumn', 'selectableRows' => 2),
+        array('header' => $prelevement->attributeLabels()["currentColumn"], 'name' => 'currentColumn'),
+        array('header' => $prelevement->attributeLabels()["newColumn"], 'name' => 'newColumn'),
+        array('header' => $prelevement->attributeLabels()["type"], 'name' => 'type', 'value' => '$data->getType()'),
+        array('header' => $prelevement->attributeLabels()["values"], 'name' => 'values', 'value' => '$data->getValues()'),
+        array(
+            'class' => 'CButtonColumn',
+            'template' => '{update}{delete}',
+            'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }'
+        ),
+    ),
+));
+?>
+
+<div class="row">
+    <div class="col-lg-5">
+        <?php echo CHtml::submitButton(Yii::t('button', 'deleteSelectedcolumnFileMakers'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
+    </div>
+</div>
+<?php $this->endWidget(); ?>
