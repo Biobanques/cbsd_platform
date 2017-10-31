@@ -35,14 +35,22 @@ $(function () {
             var values = $.map(ui.optionElements, function (opt) {
                  return $(opt).attr('value');
             }).join(', ');
-            $('#debug_' + k).prepend($('<div></div>').text('Multiselect change event! ' + (ui.optionElements.length == $('#multiselect_' + k).find('option').size() ? 'all ' : '') + (ui.optionElements.length + ' value' + (ui.optionElements.length > 1 ? 's were' : ' was')) + ' ' + (ui.selected ? 'selected' : 'deselected') + ' (' + values + ')'));
+            var attr = $(this).attr("id");
+            var valuesFormatted = values.replace('=', '');
+            var valuesFormatted = valuesFormatted.replace('?', 'question_mark');
+            //$('#debug_' + k).prepend($('<div></div>').text('Multiselect change event! ' + (ui.optionElements.length == $('#multiselect_' + k).find('option').size() ? 'all ' : '') + (ui.optionElements.length + ' value' + (ui.optionElements.length > 1 ? 's were' : ' was')) + ' ' + (ui.selected ? 'selected' : 'deselected') + ' (' + values + ')'));
+            if (ui.selected) {
+                $('#' + attr + '_selection').append('<i id="' + valuesFormatted.replace(/ /g,'') + '">[' + values + ']</i> ');
+            } else {
+                $('#' + valuesFormatted.replace(/ /g,'')).remove();
+            }
         }).on('multiselectSearch', function (evt, ui) {
             $('#debug_' + k).prepend($('<div></div>').text('Multiselect beforesearch event! searching for "' + ui.term + '"'));
         }).closest('form').submit(function (evt) {
-            evt.preventDefault();
-            evt.stopPropagation();
+            //evt.preventDefault();
+            //evt.stopPropagation();
 
-            $('#debug_' + k).prepend($('<div></div>').text("Submit query = " + $(this).serialize()));
+            //$('#debug_' + k).prepend($('<div></div>').text("Submit query = " + $(this).serialize()));
 
             return false;
         });

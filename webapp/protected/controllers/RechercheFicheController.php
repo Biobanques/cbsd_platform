@@ -48,9 +48,7 @@ class RechercheFicheController extends Controller {
         $_SESSION['html'] = null;
         $_SESSION['formulateQuery'] = null;
         $_SESSION['Available'] = null;
-        $_SESSION['NotAvailable'] = null;
         $_SESSION['htmlAvailable'] = null;
-        $_SESSION['NotAvailable'] = null;
         $model = new Answer;
         $this->render('admin', array(
             'model' => $model
@@ -142,12 +140,6 @@ class RechercheFicheController extends Controller {
             $_SESSION['Available'] = $_POST['Available'];
             foreach ($_SESSION['Available'] as $kAvailable => $vAvailable) {
                 $htmlPrvmt .= "<li>" . $vAvailable . " = Available</li>";
-            }
-        }
-        if (isset($_POST['NotAvailable'])) {
-            $_SESSION['NotAvailable'] = $_POST['NotAvailable'];
-            foreach ($_SESSION['NotAvailable'] as $kNotAvailable => $vNotAvailable) {
-                $htmlPrvmt .= "<li>" . $vNotAvailable . " = Not available</li>";
             }
         }
         $htmlPrvmt .= "</ul>";

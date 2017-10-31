@@ -184,13 +184,6 @@ class Answer extends LoggableActiveRecord {
                 $this->condition[$dispo] = '$or';
             }
         }
-        
-        if (isset($_SESSION['NotAvailable']) && !empty($_SESSION['NotAvailable'])) {
-            foreach ($_SESSION['NotAvailable'] as $nonDispo) {
-                $this->dynamics[$nonDispo] = "Not available";
-                $this->condition[$nonDispo] = '$and';
-            }
-        }
 
         if (isset($this->dynamics) && !empty($this->dynamics)) {
             $index = 0;
@@ -858,7 +851,6 @@ class Answer extends LoggableActiveRecord {
                     }
                 }
                 if (!$valueExists) {
-                    $type = $typeQuestion[$columnHeader];
                     $resultLine[] = "";
                 }
             }

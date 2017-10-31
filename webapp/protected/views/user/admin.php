@@ -77,7 +77,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'beforeAjaxUpdate'=>'function(id,options){options.data={checkedIds:$.fn.yiiGridView.getChecked("user-grid","User_id").toString(),
         uncheckedIds:getUncheckeds()};
         return true;}',
-
     'ajaxUpdate'=>true,
     'enablePagination' => true,
     'columns' => array(

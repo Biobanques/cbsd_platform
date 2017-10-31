@@ -277,7 +277,7 @@ class FileImportController extends Controller {
                 }
             }
             $test[$attributes['PrelevementTissusTranche::Origin_Samples_Tissue']] = $attributes['PrelevementTissusTranche::quantity_available'];
-            $_SESSION['tissu'] = trim($attributes['PrelevementTissusTranche::Origin_Samples_Tissue']);
+            $_SESSION['tissu'] =  preg_replace("# +#", " ",trim($attributes['PrelevementTissusTranche::Origin_Samples_Tissue']));
             $_SESSION['qte'] = $attributes['PrelevementTissusTranche::quantity_available'];
             unset($attributes['PrelevementTissusTranche::Origin_Samples_Tissue']);
             unset($attributes['PrelevementTissusTranche::quantity_available']);
@@ -301,7 +301,7 @@ class FileImportController extends Controller {
                             $neuropath->id_cbsd = $vSIP;
                             foreach ($res as $keyAttr => $valueAttr) {
                                 if ($keyAttr != null || $keyAttr != "") {
-                                    $keyAttrTrim = trim($keyAttr);
+                                    $keyAttrTrim = preg_replace("# +#", " ",trim($keyAttr));
                                     $columnFileMaker = ColumnFileMaker::model()->findByAttributes(array('currentColumn' => $keyAttrTrim));
                                     if ($columnFileMaker != null) {
                                         $fileMaker = $columnFileMaker->newColumn;
@@ -453,11 +453,11 @@ class FileImportController extends Controller {
                             $answerQuestion->label = (string) $k;
                             $answerQuestion->label_fr = (string) $k;
                             $type = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label));
-                            $typePrvmt = Prelevement::model()->findByAttributes(array('newColumn' => $answerQuestion->label));
+                            $typePrvmt = Prelevement::model()->findByAttributes(array('currentColumn' => $answerQuestion->label));
                             if ($type != null) {
                                 $answerQuestion->type = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->type;
                             } elseif ($typePrvmt != null) {
-                                $answerQuestion->type = Prelevement::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->type;
+                                $answerQuestion->type = Prelevement::model()->findByAttributes(array('currentColumn' => $answerQuestion->label))->type;
                             } else {
                                 $answerQuestion->type = "input";
                             }
@@ -474,7 +474,7 @@ class FileImportController extends Controller {
                                 if ($type != null) {
                                     $answerQuestion->values = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->values;
                                 } else {
-                                    $answerQuestion->values = Prelevement::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->values;
+                                    $answerQuestion->values = Prelevement::model()->findByAttributes(array('currentColumn' => $answerQuestion->label))->values;
                                 }
                                 $answerQuestion->answer = $v;
                             } else {

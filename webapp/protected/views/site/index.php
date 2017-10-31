@@ -1,7 +1,6 @@
 <?php
 /* @var $this SiteController */
 $this->pageTitle = Yii::app()->name;
-echo $_SESSION['htmlAvailable'];
 ?>
 
 <div class="jumbotron">

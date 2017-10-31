@@ -52,7 +52,6 @@ class FicheController extends Controller {
         $_SESSION['html'] = null;
         $_SESSION['formulateQuery'] = null;
         $_SESSION['Available'] = null;
-        $_SESSION['NotAvailable'] = null;
         $model = new Answer('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Answer'])) {

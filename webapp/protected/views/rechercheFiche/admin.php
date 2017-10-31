@@ -1,77 +1,17 @@
 <?php
 Yii::app()->clientScript->registerScript('search', "
-$('#selectCas').click(function(){
-    if ($('#Answer_id_patient :selected').length > 0) {
-        $('#selectCas').attr('disabled',true);
-        if (document.getElementById('selection').innerText == 'Pas de sélection.') {
-            $('#selection').html('<p id=\"CasSelected\">- Cas sélectionnés: ' + $('#Answer_id_patient').val() + '</p><br>');
-        } else {
-            $('#selection').append('<p id=\"CasSelected\">- Cas sélectionnés: ' + $('#Answer_id_patient').val() + '</p><br>');
-        }
-        $('br').remove();
-    }
-    return false;
-});
-$('#selectForm').click(function(){
-    if ($('#Answer_type :selected').length > 0) {
-        $('#selectForm').attr('disabled',true);
-        if (document.getElementById('selection').innerText == 'Pas de sélection.') {
-            $('#selection').html('<p id=\"FormSelected\">- Formulaires sélectionnés: ' + $('#Answer_type').val() + '</p><br>');
-        } else {
-            $('#selection').append('<p id=\"FormSelected\">- Formulaires sélectionnés: ' + $('#Answer_type').val() + '</p><br>');
-        }
-        $('br').remove();
-    }
-    return false;
-});
 $('#selectDate').click(function(){
     if ($('#Answer_last_updated').val().length > 0) {
         $('#selectDate').attr('disabled',true);
-        if (document.getElementById('selection').innerText == 'Pas de sélection.') {
-            $('#selection').html('<p id=\"DateSelected\">- Période sélectionnée: ' + $('#Answer_last_updated').val() + '</p><br>');
-        } else {
-            $('#selection').append('<p id=\"DateSelected\">- Période sélectionnée: ' + $('#Answer_last_updated').val() + '</p><br>');
-            }
-            $('br').remove();
+        $('#period').html('<i id=\"DateSelected\">- Période sélectionnée: ' + $('#Answer_last_updated').val() + '</i>');
     }
     return false;
 });
 
-$('#Answer_id_patient').change(function(){
-    if ($('#Answer_id_patient :selected').length == 0) {
-        $('#selectCas').attr('disabled',false);
-        $('#CasSelected').remove();
-    }
-    return false;
-});
-
-$('#Answer_type').change(function(){
-    if ($('#Answer_type :selected').length == 0) {
-        $('#selectForm').attr('disabled',false);
-        $('#FormSelected').remove();
-    }
-    return false;
-});
-
-$('#resetCas').click(function(){
-    $('#Answer_id_patient').val('0');
-    $('#selectCas').attr('disabled',false);
-    $('#CasSelected').remove();
-    $('br').remove();
-    return false;
-});
-$('#resetForm').click(function(){
-    $('#Answer_type').val('0');
-    $('#selectForm').attr('disabled',false);
-    $('#FormSelected').remove();
-    $('br').remove();
-    return false;
-});
 $('#resetDate').click(function(){
     $('#Answer_last_updated').val('');
     $('#selectDate').attr('disabled',false);
     $('#DateSelected').remove();
-    $('br').remove();
     return false;
 });
 ");
@@ -98,14 +38,12 @@ $('#resetDate').click(function(){
         <div style="border:1px solid black;">
 
             <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryAnonymous') . " " . Yii::t('common', 'to') ?></b></u></h4>
-
             <div class="row">
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'individualSelection'), 'Answer_id_patient', array('style' => 'width:250px; padding-top:30px;')); ?>
                     <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%; height:100px;")); ?>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type', array('style' => 'width:250px; padding-top:30px;')); ?>
@@ -127,7 +65,9 @@ $('#resetDate').click(function(){
         </div>
 
         <div class="well">
-            <p id="selection"></p>
+                <p id="multiselect_simple_selection">- Cas sélectionné(s): </p>
+                <p id="multiselect_groups_selection">- Formulaires sélectionné(s): </p>
+                <p id="period"><i id="DateSelected">- Période sélectionnée: </i></p>
         </div>
 
         <div class="row buttons">

@@ -62,8 +62,8 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 ?>
 
 <style>
-.ui-icon {top: 0 !important;}
-.ui-widget{font-family: Arial,Helvetica,sans-serif; font-size: 1em;}
+    .ui-icon {top: 0 !important;}
+    .ui-widget{font-family: Arial,Helvetica,sans-serif; font-size: 1em;}
 
 </style>
 
@@ -110,21 +110,14 @@ $('#search_fiche-form').on('click','.question-input',function(event){
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <?php echo CHtml::label(Yii::t('common', 'available'),"Available", array('style' => 'padding-top:30px;')); ?>
-                <?php echo CHtml::dropDownList("Available", 'prvt_available', CommonTools::getAllPrelevements(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:100px;")); ?>
+                <?php echo CHtml::label(Yii::t('common', 'available'), "Available", array('style' => 'padding-top:30px;')); ?>
+                <?php echo CHtml::dropDownList("Available", 'prvt_available', CommonTools::getAllPrelevements(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:160px;")); ?>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-lg-12">
-                <?php echo CHtml::label(Yii::t('common', 'notAvailable'),"Not available", array('style' => 'padding-top:30px;')); ?>
-                <?php echo CHtml::dropDownList("NotAvailable", 'prvt_notAvailable', CommonTools::getAllPrelevements(), array("id" => "multiselect_groups", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:100px;")); ?>
-            </div>
-        </div>
-
+        <br><br><br><br>
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
-                <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'onclick'=>'submit()')); ?>
+                <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'onclick' => 'submit()')); ?>
                 <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'onclick' => 'location.reload();')); ?>
             </div>
         </div>
@@ -132,10 +125,14 @@ $('#search_fiche-form').on('click','.question-input',function(event){
         <?php $this->endWidget(); ?>
     </div>
 </div>
-<div><h4><u><?php echo Yii::t('common', 'queriedAnonymous') ?></u></h4><?php echo $html; ?>
-    <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"><?php
-        if (isset($_SESSION['formulateQuery'])) {
-            echo $_SESSION['formulateQuery'];
-        }
-        ?></div>
+
+<h4><u><?php echo Yii::t('common', 'queriedAnonymous') ?></u></h4>
+<?php echo $html; ?>
+<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;">
+    <p id="multiselect_simple_selection"></p>
+    <?php
+    if (isset($_SESSION['formulateQuery'])) {
+        echo $_SESSION['formulateQuery'];
+    }
+    ?>
 </div>
