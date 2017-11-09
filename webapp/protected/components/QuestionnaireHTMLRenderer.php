@@ -124,7 +124,7 @@ class QuestionnaireHTMLRenderer {
             if ($lang == "both") {
                 $precomment = "<i>" . $question->precomment . "</i><br>" . $question->precomment_fr;
             }
-            $result.="<div class=\"question-precomment\"><u>" . $precomment . "</u></div>";
+            $result.="<div class=\"question-precomment\"><h3><u>" . $precomment . "</u></h3></div>";
         }
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
@@ -172,6 +172,9 @@ class QuestionnaireHTMLRenderer {
             } else {
                 $valueInput = $question->answer;
             }
+        }
+        if (isset($question->defaultValue)) {
+            $valueInput = $question->defaultValue;
         }
         if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
@@ -585,7 +588,7 @@ class QuestionnaireHTMLRenderer {
         }
         $label.="<br><font color=\"blue\"><b><i>" . $question->id . "</i></b></font>";
 
-        $result.="<div class=\"question-label\" id=\"" . $question->id . "\">" . $label;
+        $result.="<div class=\"question-label\" id=\"" . $question->id . "\">" . $label . CHtml::link(CHtml::image(Yii::app()->request->baseUrl . '/images/update.png'));
         if (isset($question->help)) {
             $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
         }

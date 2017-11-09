@@ -69,6 +69,7 @@ class Answer extends LoggableActiveRecord {
      * last date of save action
      */
     public $last_updated;
+    public $last_updated_to;
 
     /**
      * Working variable to add dynamic search filters
@@ -100,7 +101,7 @@ class Answer extends LoggableActiveRecord {
                 'required'
             ),
             array(
-                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,user',
+                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,last_updated_to,user',
                 'safe',
                 'on' => 'search'
             )
@@ -172,16 +173,22 @@ class Answer extends LoggableActiveRecord {
         }
 
         if (isset($this->last_updated) && !empty($this->last_updated)) {
-            $answerFormat = CommonTools::formatDatePicker($this->last_updated);
+            $answerFormat = CommonTools::formatDatePicker($_SESSION['last_updated']);
             $date_from = str_replace('/', '-', $answerFormat['date_from']);
             $date_to = str_replace('/', '-', $answerFormat['date_to']);
             $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
         }
 
         if (isset($_SESSION['Available']) && !empty($_SESSION['Available'])) {
+            $first = true;
             foreach ($_SESSION['Available'] as $dispo) {
                 $this->dynamics[$dispo] = "Available";
-                $this->condition[$dispo] = '$or';
+                if (($first)) {
+                    $this->condition[$dispo] = '$and';
+                    $first = false;
+                } else {
+                    $this->condition[$dispo] = '$or';
+                }
             }
         }
 

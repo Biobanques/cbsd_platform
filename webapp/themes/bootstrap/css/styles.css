@@ -1,7 +1,7 @@
 ul.yiiPager .first,
 ul.yiiPager .last
 {
-	display:inline !important;
+    display:inline !important;
 }
 
 .pagination {
@@ -406,4 +406,8 @@ a img {
 
 :focus {
     outline:0;
+}
+
+input[type="text"] {
+    height: 100% !important;
 }

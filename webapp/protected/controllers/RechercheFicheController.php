@@ -86,13 +86,13 @@ class RechercheFicheController extends Controller {
                 }
                 $html .= "</li>";
             }
-            if (isset($_POST['Answer']['last_updated']) && $_POST['Answer']['last_updated'] != null) {
-                $_SESSION['last_updated'] = $_POST['Answer']['last_updated'];
-                $answerFormat = CommonTools::formatDatePicker($_POST['Answer']['last_updated']);
+            if (isset($_POST['Answer']['last_updated']) && $_POST['Answer']['last_updated'] != null && isset($_POST['Answer']['last_updated_to']) && $_POST['Answer']['last_updated_to'] != null) {
+                $_SESSION['last_updated'] = $_POST['Answer']['last_updated'] . " - " . $_POST['Answer']['last_updated_to'];
+                $answerFormat = CommonTools::formatDatePicker($_SESSION['last_updated']);
                 $date_from = str_replace('/', '-', $answerFormat['date_from']);
                 $date_to = str_replace('/', '-', $answerFormat['date_to']);
                 $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
-                $html .= "<li>" . Yii::t('common', 'period') . " = " . $_POST['Answer']['last_updated'] . "</li>";
+                $html .= "<li>" . Yii::t('common', 'period') . " = " . $_POST['Answer']['last_updated'] . " - " . $_POST['Answer']['last_updated_to'] . "</li>";
             }
             $html .= "</ul>";
             $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
@@ -144,7 +144,7 @@ class RechercheFicheController extends Controller {
         }
         $htmlPrvmt .= "</ul>";
         $_SESSION['htmlAvailable'] = $htmlPrvmt;
-        
+       
         if (isset($_POST['searchAll']) && isset(Yii::app()->session['criteria'])) {
             $ficheId = array();
             $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
@@ -160,7 +160,7 @@ class RechercheFicheController extends Controller {
                 $_SESSION['id_patientAll'] = $regex;
             }
         }
-        if (isset($_POST['question']) && $_POST['question'] != null || isset($_POST['Available']) && $_POST['Available'] != null || isset($_POST['NotAvailable']) && $_POST['NotAvailable'] != null) {
+        if (isset($_POST['question']) && $_POST['question'] != null || isset($_POST['Available']) && $_POST['Available'] != null) {
             $this->redirect(array('rechercheFiche/admin3'));
         }
         $this->render('admin2', array('fiche' => ($fiche != null) ? $fiche : null, 'html' => $html));

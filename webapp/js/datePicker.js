@@ -1,5 +1,6 @@
 function datePicker(clicked) {
     $('input[name="' + clicked + '"]').daterangepicker({
+        singleDatePicker: true,
         autoUpdateInput: false,
         applyClass: "btn-primary",
         showDropdowns: true,
@@ -17,7 +18,7 @@ function datePicker(clicked) {
     $('#restrictSearch').show();
     $('#restrictReset').show();
     $('input[name="' + clicked + '"]').on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+        $(this).val(picker.startDate.format('DD/MM/YYYY'));
         $('#restrictSearch').show();
         $('#restrictReset').show();
     });

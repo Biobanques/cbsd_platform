@@ -234,4 +234,10 @@ class CommonTools {
         return $res;
     }
 
+    public function ucwords_all($str) {
+        return preg_replace_callback('/\b(\w)/', function($m) {
+            return strtoupper($m[0]);
+        }, $str);
+    }
+
 }

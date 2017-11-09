@@ -25,6 +25,7 @@ return array(
     'patientFormsAssociated' => 'Nouvelle requête sur les fiches sélectionnées',
     'exportQuery' => 'Exporter la requête',
     'selectAll' => 'Selectionner tout',
+    'unselectAll' => 'Déselectionner tout',
     'deleteQuery' => 'Effacer la requête',
     'select' => 'Sélectionner',
     'next' => 'Suivant',

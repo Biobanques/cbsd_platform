@@ -111,7 +111,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
         <div class="row">
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'available'), "Available", array('style' => 'padding-top:30px;')); ?>
-                <?php echo CHtml::dropDownList("Available", 'prvt_available', CommonTools::getAllPrelevements(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:160px;")); ?>
+                <?php echo CHtml::dropDownList("Available", 'prvt_available', CommonTools::getAllPrelevements(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:170px;")); ?>
             </div>
         </div>
         <br><br><br><br>
@@ -129,7 +129,8 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 <h4><u><?php echo Yii::t('common', 'queriedAnonymous') ?></u></h4>
 <?php echo $html; ?>
 <div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;">
-    <p id="multiselect_simple_selection"></p>
+    <h4><u>Prélèvement</u></h4>
+    <p id="multiselect_simple_selection2">Available : </p>
     <?php
     if (isset($_SESSION['formulateQuery'])) {
         echo $_SESSION['formulateQuery'];

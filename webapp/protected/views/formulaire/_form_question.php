@@ -50,9 +50,6 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
 
     <?php echo $form->errorSummary($questionForm, null, null, array('class' => 'alert alert-danger')); ?>
 
-    <p><b><?php echo Yii::t('common', 'uniqueIdQuestion') ?></b></p>
-    <p><b><?php echo Yii::t('common', 'valuesQuestion') ?></b></p>
-
     <div style="border:1px solid black;">
 
         <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'addTitleQuestion') ?></b></u>&nbsp;(<?php echo Yii::t('common', 'optional') ?>)</h4>
@@ -106,8 +103,8 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
                 <?php echo $form->error($questionForm, 'type'); ?>           
             </div>
             <div class="col-lg-6" id ="valueTypeQuestion">
-                <?php echo $form->labelEx($questionForm, 'values'); ?>
-                <?php echo $form->textField($questionForm, 'values'); ?>
+                <?php echo $form->labelEx($questionForm, 'values', array("required"=>"required")); ?>
+                <?php echo $form->textField($questionForm, 'values', array("class" => "tooltipster", "title" => Yii::t('common', 'valuesQuestion'))); ?>
                 <?php echo $form->error($questionForm, 'values'); ?>
             </div>
         </div>
@@ -124,12 +121,18 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
                 <?php echo $form->error($questionForm, 'help'); ?>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <?php echo $form->labelEx($questionForm, 'defaultValue'); ?>
+                <?php echo $form->textField($questionForm, 'defaultValue'); ?>
+            </div>
+        </div>
     </div>
 
     <div class="row">
         <div class="col-lg-1 col-lg-offset-10">
             <div class="buttons">
-                <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
+                <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('name'=>'saveBtn', 'class' => 'btn btn-primary')); ?>
             </div>        
         </div>
     </div>

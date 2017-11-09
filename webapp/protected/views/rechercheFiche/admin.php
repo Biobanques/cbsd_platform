@@ -3,13 +3,14 @@ Yii::app()->clientScript->registerScript('search', "
 $('#selectDate').click(function(){
     if ($('#Answer_last_updated').val().length > 0) {
         $('#selectDate').attr('disabled',true);
-        $('#period').html('<i id=\"DateSelected\">- Période sélectionnée: ' + $('#Answer_last_updated').val() + '</i>');
+        $('#period').html('<i id=\"DateSelected\">- Période sélectionnée: ' + $('#Answer_last_updated').val() + ' - ' + $('#Answer_last_updated_to').val() + '</i>');
     }
     return false;
 });
 
 $('#resetDate').click(function(){
     $('#Answer_last_updated').val('');
+    $('#Answer_last_updated_to').val('');
     $('#selectDate').attr('disabled',false);
     $('#DateSelected').remove();
     return false;
@@ -26,7 +27,6 @@ $('#resetDate').click(function(){
 
 <div class="search-form">
     <div class="wide form">
-        <p>*<?php echo Yii::t('common', 'search1') ?></p>
         <?php
         $form = $this->beginWidget('CActiveForm', array(
             'id' => 'light_search-form',
@@ -41,22 +41,22 @@ $('#resetDate').click(function(){
             <div class="row">
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'individualSelection'), 'Answer_id_patient', array('style' => 'width:250px; padding-top:30px;')); ?>
-                    <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%; height:100px;")); ?>
+                    <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%; height:120px;")); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type', array('style' => 'width:250px; padding-top:30px;')); ?>
-                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("id" => "multiselect_groups", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%; height:100px;")); ?>
+                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("id" => "multiselect_groups", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%; height:120px;")); ?>
                 </div>
             </div>
 
             <div class ="row">
                 <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'restrictPeriod'), 'Answer_last_updated', array('style' => 'width:250px; padding-top:10px;')); ?>
-                    <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)")); ?>
-                    <?php echo CHtml::submitButton(Yii::t('button', 'select'), array('id' => 'selectDate', 'class' => 'btn btn-success')); ?>
-                    <?php echo CHtml::resetButton(Yii::t('button', 'reset'), array('id' => 'resetDate', 'class' => 'btn btn-danger')); ?>
+                    <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)", 'placeholder' => 'Du')); ?>
+                    <?php echo CHtml::textField('Answer[last_updated_to]', '', array("onfocus" => "datePicker(this.name)", 'placeholder' => 'Au')); ?>
+                    <?php echo CHtml::submitButton(Yii::t('button', 'select'), array('id' => 'selectDate', 'class' => 'btn btn-success', 'style' => 'background-color: #4cae4c;')); ?>
                 </div>
             </div>
 

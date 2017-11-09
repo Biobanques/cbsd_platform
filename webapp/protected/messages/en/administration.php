@@ -36,6 +36,8 @@ return array(
     'forAddTab' => 'To add a tab of questions',
     'forModifyTab' => 'To modify a questions group',
     'forModifyQuestion' => 'To modify a question',
+    'forUpdateNameForm' => 'To modify the name of the form',
+    'forUpdateBlock' => 'To modify the name of the block',
     'bloc' => 'Block ',
     'importFileMaker' => 'Import FileMaker',
     'createColumn' => 'Create column',

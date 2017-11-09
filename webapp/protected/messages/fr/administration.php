@@ -37,6 +37,8 @@ return array(
     'forAddTab' => 'Pour ajouter un onglet',
     'forModifyTab' => 'Pour modifier un onglet',
     'forModifyQuestion' => 'Pour modifier une question',
+    'forUpdateNameForm' => 'Pour modifier le nom du formulaire',
+    'forUpdateBlock' => 'Pour modifier le nom du bloc',
     'bloc' => 'Bloc ',
     'importFileMaker' => 'Importer la base FileMaker',
     'createColumn' => 'Créer une colonne',

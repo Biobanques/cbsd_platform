@@ -41,6 +41,8 @@ class Question extends LoggableActiveRecord {
      * values if question type is radio and french setted
      */
     public $values_fr;
+    
+    public $defaultValue;
 
     /**
      * help text to add meta information around the question, displayed as an help button
@@ -85,6 +87,7 @@ class Question extends LoggableActiveRecord {
         $this->label_fr = $questionForm->label;
         $this->style = $questionForm->style;
         $this->values = $questionForm->values;
+        $this->defaultValue = $questionForm->defaultValue;
         $this->type = $questionForm->type;
         $this->precomment = $questionForm->precomment;
         $this->precomment_fr = $questionForm->precomment;
@@ -106,7 +109,7 @@ class Question extends LoggableActiveRecord {
                 'required'
             ),
             array(
-                'label,label_fr,type,values,style,precomment,precomment_fr', 'safe'
+                'label,label_fr,type,values,defaultValue,style,precomment,precomment_fr', 'safe'
         ));
     }
 
@@ -119,7 +122,8 @@ class Question extends LoggableActiveRecord {
             'id' => 'Id',
             'label' => 'question',
             'label_fr' => 'question',
-            'help' => 'Info-bulle'
+            'help' => 'Info-bulle',
+            'defaultValue' => 'Valeur par défaut'
         );
     }
     

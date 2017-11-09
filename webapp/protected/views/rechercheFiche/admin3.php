@@ -51,7 +51,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
         array('header' => $model->attributeLabels()["user"], 'name' => 'user', 'value' => '$data->getUserRecorderName()'),
         array('header' => $model->attributeLabels()["last_updated"], 'name' => 'last_updated', 'value' => '$data->getLastUpdated()'),
-        //array('header' => $model->attributeLabels()["examDate"], 'name' => 'examDate', 'value' => '$data->getAnswerByQuestionId("examdate")'),
         array(
             'class' => 'CButtonColumn',
             'template' => '{view}{update}{delete}',

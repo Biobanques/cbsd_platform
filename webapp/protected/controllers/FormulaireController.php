@@ -143,6 +143,10 @@ class FormulaireController extends Controller {
                     $questionForm->help = null;
                 }
                 //traitement ajout de question
+                $questionForm->id = str_replace(' ', '', trim($questionForm->id));
+                $questionForm->values = str_replace(' ', '', trim($questionForm->values));
+                $questionForm->label = ucfirst($questionForm->label);
+                $questionForm->values = CommonTools::ucwords_all($questionForm->values);
                 if ($questionForm->validate()) {
                     $model = $model->saveQuestionnaireNewQuestion($questionForm);
                 } else {
@@ -156,6 +160,7 @@ class FormulaireController extends Controller {
             $questionGroup->attributes = $_POST['QuestionGroup'];
             if ($questionGroup->validatewithId($model)) {
                 //copie du titre sur l option fr
+                $questionGroup->id = str_replace(' ', '', trim($questionGroup->id));
                 $questionGroup->title_fr = $questionGroup->title;
                 if ($questionGroup->validate()) {
                     $model = $model->saveQuestionnaireNewGroup($questionGroup);
@@ -217,6 +222,14 @@ class FormulaireController extends Controller {
                 }
             }
         }
+        if (isset($_POST['old_name'])) {
+            $model->name = ucfirst($_POST['new_name']);
+            if ($model->save()) {
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'nameFormUpdated'));
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'nameFormNotUpdated'));
+            }
+        }
         //  set du model sur la questionForm pour generer l arborescende de position de question
         $questionForm->questionnaire = $model;
         $questionGroup->questionnaire = $model;
@@ -227,7 +240,7 @@ class FormulaireController extends Controller {
             'questionBloc' => $questionBlocForm
         ));
     }
-    
+
     public function loadModel($id) {
         $model = Questionnaire::model()->findByPk(new MongoId($id));
         if ($model === null) {
@@ -393,7 +406,7 @@ class FormulaireController extends Controller {
         }
         return $questionnaire;
     }
-    
+
     public function addQuestionGroupSituation($questionnaire) {
         $qg = new QuestionGroup;
         $qg->id = 'situation';
@@ -462,7 +475,6 @@ class FormulaireController extends Controller {
             $q5->precomment_fr = '';
             $qg->questions[] = $q5;
         }
-        
     }
 
 }

@@ -50,6 +50,8 @@ class QuestionForm extends CFormModel {
      * value sare separated by ;
      */
     public $values;
+    
+    public $defaultValue;
 
     /**
      * comment on the top of the question
@@ -84,7 +86,8 @@ class QuestionForm extends CFormModel {
             array('values', 'length', 'max' => 500),
             array('precomment', 'length', 'max' => 500),
             array('precomment_fr', 'length', 'max' => 500),
-            array('help', 'length', 'max' => 500)
+            array('help', 'length', 'max' => 500),
+            array('label,type,values,defaultValue,style,precomment,precomment_fr', 'safe')
         );
     }
 
@@ -103,6 +106,7 @@ class QuestionForm extends CFormModel {
             'precomment' => Yii::t('common', 'questionTitle'),
             'precomment_fr' => Yii::t('common', 'questionTitle'),
             'help' => Yii::t('common', 'help'),
+            'defaultValue' => 'Valeur par défaut'
         );
     }
 
