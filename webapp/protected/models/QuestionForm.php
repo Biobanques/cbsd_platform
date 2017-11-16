@@ -106,7 +106,7 @@ class QuestionForm extends CFormModel {
             'precomment' => Yii::t('common', 'questionTitle'),
             'precomment_fr' => Yii::t('common', 'questionTitle'),
             'help' => Yii::t('common', 'help'),
-            'defaultValue' => 'Valeur par défaut'
+            'defaultValue' => Yii::t('common', 'defaultValue')
         );
     }
 
@@ -122,7 +122,7 @@ class QuestionForm extends CFormModel {
         $res ['list'] = Yii::t('common', 'list');
         $res ['checkbox'] = Yii::t('common', 'checkbox');
         $res ['text'] = Yii::t('common', 'textarea');
-        $res ['expression'] = Yii::t('common', 'expression');
+        //$res ['expression'] = Yii::t('common', 'expression');
         return $res;
     }
 

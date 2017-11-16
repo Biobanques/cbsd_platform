@@ -43,6 +43,7 @@ return array(
     'createColumn' => 'Create column',
     'updateColumn' => 'Update column',
     'columnFileMaker' => 'Manage FileMaker columns',
+    'createPrelevement' => 'Create sample',
     'majProfil' => 'Update rules for profiles',
     'forPatientForm' => ' for patient forms',
     'historyImport' => 'History of imported files',

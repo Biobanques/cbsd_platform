@@ -75,6 +75,7 @@ return array(
     'newFormName' => 'Nouveau nom du formulaire',
     'oldBlockName' => 'Nom du bloc actuel',
     'newBlockName' => 'Nouveau nom du bloc',
+    'defaultValue' => 'Valeur par défaut',
     // genre
     'man' => 'Homme',
     'woman' => 'Femme',

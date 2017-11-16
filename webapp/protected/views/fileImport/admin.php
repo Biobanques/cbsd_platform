@@ -51,8 +51,8 @@ echo CHtml::link($importFileMaker . Yii::t('administration', 'importFileMaker'),
 <div style="clear:both"></div>
 
 <?php
-$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
-echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
+/*$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
+echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));*/
 ?>
 <div class="search-form" style="display:none">
     <?php
@@ -79,13 +79,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => $model->attributeLabels()["extension"], 'name' => 'extension'),
         array('header' => $model->attributeLabels()["date_import"], 'name' => 'date_import', 'value' => '$data->getDateImport()'),
         array('header' => $model->attributeLabels()["imported"], 'name' => 'imported'),
-        array(
+        /*array(
             'class' => 'CLinkColumn',
             'labelExpression' => '$data->getNonImportedNumber()',
             'urlExpression' => 'Yii::app()->createUrl("fileImport/exportNonImported",array("id"=>$data->_id))',
             'htmlOptions' => array('style' => "text-align:center"),
             'header' => $model->attributeLabels()["not_imported"]
-        )
+        )*/
     ),
 ));
 ?>

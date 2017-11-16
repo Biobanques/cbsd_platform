@@ -44,6 +44,7 @@ return array(
     'createColumn' => 'Créer une colonne',
     'updateColumn' => 'Mettre à jour une colonne',
     'columnFileMaker' => 'Gestion des colonnes FileMaker',
+    'createPrelevement' => 'Créer un prélèvement',
     'majProfil' => 'Mise à jour des droits du profil',
     'forPatientForm' => ' pour les fiches',
     'historyImport' => 'Historique des fichiers importés',

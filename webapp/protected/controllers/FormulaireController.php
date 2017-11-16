@@ -144,7 +144,7 @@ class FormulaireController extends Controller {
                 }
                 //traitement ajout de question
                 $questionForm->id = str_replace(' ', '', trim($questionForm->id));
-                $questionForm->values = str_replace(' ', '', trim($questionForm->values));
+                $questionForm->values = str_replace(', ', ',', trim($questionForm->values));
                 $questionForm->label = ucfirst($questionForm->label);
                 $questionForm->values = CommonTools::ucwords_all($questionForm->values);
                 if ($questionForm->validate()) {
@@ -207,29 +207,50 @@ class FormulaireController extends Controller {
                 }
             }
         }
-        if (isset($_POST['old_question'])) {
-            foreach ($model->questions_group as $onglet) {
-                foreach ($onglet->questions as $question) {
-                    if ($question->id == $_POST['old_question']) {
-                        $question->label = $_POST['new_question'];
-                        $question->label_fr = $_POST['new_question'];
-                        if ($model->save()) {
-                            Yii::app()->user->setFlash('succès', Yii::t('common', 'questionUpdated'));
-                        } else {
-                            Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotUpdated'));
+        if (isset($_POST['updateForm'])) {
+            if (isset($_POST['old_name'])) {
+                $model->name = ucfirst($_POST['new_name']);
+                if ($model->save()) {
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'nameFormUpdated'));
+                } else {
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'nameFormNotUpdated'));
+                }
+            }
+            if (isset($_POST['old_question'])) {
+                foreach ($model->questions_group as $onglet) {
+                    foreach ($onglet->questions as $question) {
+                        if ($question->id == $_POST['old_question']) {
+                            if (isset($_POST['new_question']) && $_POST['new_question'] != "") {
+                                $question->label = $_POST['new_question'];
+                                $question->label_fr = $_POST['new_question'];
+                            }
+                            if (isset($_POST['new_type']) && $_POST['new_type'] != "") {
+                                $question->type = $_POST['new_type'];
+                                if ($question->type != "radio" || $question->type != "list" || $question->type != "checkbox") {
+                                    $question->values = "";
+                                }
+                            }
+                            if (isset($_POST['new_values']) && $_POST['new_values'] != "") {
+                                $question->values = str_replace(', ', ',', trim($_POST['new_values']));
+                                $question->values = CommonTools::ucwords_all($question->values);
+                            }
+                            if (isset($_POST['new_help']) && $_POST['new_help'] != "") {
+                                $question->help = $_POST['new_help'];
+                            }
+                            if (isset($_POST['new_defaultValue']) && $_POST['new_defaultValue'] != "") {
+                                $question->defaultValue = $_POST['new_defaultValue'];
+                            }
+                            if ($model->save()) {
+                                Yii::app()->user->setFlash('succès', Yii::t('common', 'questionUpdated'));
+                            } else {
+                                Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotUpdated'));
+                            }
                         }
                     }
                 }
             }
         }
-        if (isset($_POST['old_name'])) {
-            $model->name = ucfirst($_POST['new_name']);
-            if ($model->save()) {
-                Yii::app()->user->setFlash('succès', Yii::t('common', 'nameFormUpdated'));
-            } else {
-                Yii::app()->user->setFlash('erreur', Yii::t('common', 'nameFormNotUpdated'));
-            }
-        }
+
         //  set du model sur la questionForm pour generer l arborescende de position de question
         $questionForm->questionnaire = $model;
         $questionGroup->questionnaire = $model;

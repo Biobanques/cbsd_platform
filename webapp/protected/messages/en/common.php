@@ -73,6 +73,7 @@ return array(
     'newFormName' => 'New name of the form',
     'oldBlockName' => 'Current name of the block',
     'newBlockName' => 'New name of the block',
+    'defaultValue' => 'Default value',
     // genre
     'man' => 'Man',
     'woman' => 'Woman',

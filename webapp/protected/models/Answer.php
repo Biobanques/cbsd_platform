@@ -238,6 +238,7 @@ class Answer extends LoggableActiveRecord {
         $criteria->sort('type', EMongoCriteria::SORT_ASC);
         $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
         Yii::app()->session['criteria'] = $criteria;
+        $_SESSION['test'] = $this->dynamics;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));

@@ -1,6 +1,6 @@
 <?php
 Yii::app()->clientScript->registerScript('form_question', "
-$('.question-label').on('click', function(event) {
+$('.updateForm').on('click', function(event) {
     $('#updateQuestion').modal();
     $('.col-lg-12 #old_question').val($(this).attr('id'));
 });
@@ -153,7 +153,7 @@ $form = $this->beginWidget('CActiveForm', array(
                         <button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
                     </div>
                     <div class="btn-group" role="group">
-                        <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
+                        <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('name' => 'updateForm', 'class' => 'btn btn-primary')); ?>
                     </div>
                 </div>
             </div>
@@ -189,7 +189,7 @@ $form = $this->beginWidget('CActiveForm', array(
                         <button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
                     </div>
                     <div class="btn-group" role="group">
-                        <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
+                        <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('name' => 'updateForm', 'class' => 'btn btn-primary')); ?>
                     </div>
                 </div>
             </div>

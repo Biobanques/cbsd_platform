@@ -49,6 +49,7 @@ class RechercheFicheController extends Controller {
         $_SESSION['formulateQuery'] = null;
         $_SESSION['Available'] = null;
         $_SESSION['htmlAvailable'] = null;
+        $_SESSION['test'] = null;
         $model = new Answer;
         $this->render('admin', array(
             'model' => $model

@@ -22,8 +22,44 @@
     <div class="row">
         <div class="col-lg-12">
             <?php
-            echo CHtml::label('<span class="required" style="float:right; margin-left:5px">*</span>' . Yii::t('common', 'newLabel'), 'new_question', array('class' => 'required'));
-            echo CHtml::textfield('new_question', '', array("required" => "required"));
+            echo CHtml::label(Yii::t('common', 'newLabel'), 'new_question');
+            echo CHtml::textfield('new_question', '');
+            ?>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <?php
+            echo CHtml::label('Type', 'new_type');
+            echo CHtml::dropDownList('new_type', '', $questionForm->getArrayTypes(), array('prompt' => '----'));
+            ?>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <?php
+            echo CHtml::label(Yii::t('common', 'values'), 'new_type');
+            echo CHtml::textfield('new_values', '');
+            ?>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <?php
+            echo CHtml::label(Yii::t('common', 'help'), 'new_help');
+            echo CHtml::textfield('new_help', '');
+            ?>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <?php
+            echo CHtml::label(Yii::t('common', 'defaultValue'), 'new_defaultValue');
+            echo CHtml::textfield('new_defaultValue', '');
             ?>
         </div>
     </div>

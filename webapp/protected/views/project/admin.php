@@ -41,8 +41,8 @@ Yii::app()->clientScript->registerScript('getUnchecked', "
 <h1><?php echo Yii::t('administration', 'manageProjects'); ?></h1>
 
 <?php
-$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
-echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
+/*$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
+echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));*/
 ?>
 <div class="search-form" style="display:none">
     <?php

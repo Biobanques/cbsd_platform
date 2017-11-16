@@ -31,8 +31,8 @@ echo CHtml::link($imagecreateColumn . Yii::t('administration', 'createColumn'), 
 ?>
 <br />
 <?php
-$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
-echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));
+/*$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
+echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));*/
 ?>
 <div class="search-form" style="display:none">
     <?php
@@ -76,7 +76,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 <h1>Prélèvements</h1>
 
 <?php
-echo CHtml::link('Create prelevement', array('fileImport/createPrvmt'));
+$imagecreatePrvmt = CHtml::image(Yii::app()->baseUrl . '/images/page_add.png', Yii::t('administration', 'createPrelevement'));
+echo CHtml::link($imagecreatePrvmt . Yii::t("administration", 'createPrelevement'), array('fileImport/createPrvmt'));
 ?>
 
 <?php

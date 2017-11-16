@@ -109,6 +109,7 @@ class QuestionnaireHTMLRenderer {
     public function renderQuestionHTML($idquestiongroup, $question, $lang, $isAnswered) {
         $result = "";
         $style = "style=\"\"";
+        $color = (isset($_SESSION['test'][$question->label])) ? "style=\"color:red\";" : "";
         if ($question->style != "") {
             $style = "style=\"" . $question->style . "\"";
         }
@@ -135,7 +136,7 @@ class QuestionnaireHTMLRenderer {
             $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
         }
 
-        $result.="<div class=\"question-label\" >" . $label;
+        $result.="<div class=\"question-label\"" . $color . ">" . $label;
         if (isset($question->help)) {
             $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
         }
@@ -588,7 +589,7 @@ class QuestionnaireHTMLRenderer {
         }
         $label.="<br><font color=\"blue\"><b><i>" . $question->id . "</i></b></font>";
 
-        $result.="<div class=\"question-label\" id=\"" . $question->id . "\">" . $label . CHtml::link(CHtml::image(Yii::app()->request->baseUrl . '/images/update.png'));
+        $result.="<div class=\"question-label\" id=\"" . $question->id . "\">" . $label . CHtml::link(CHtml::image(Yii::app()->request->baseUrl . '/images/update.png'), '#', array("class"=>"updateForm", "id"=>$question->id));
         if (isset($question->help)) {
             $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
         }
@@ -598,11 +599,14 @@ class QuestionnaireHTMLRenderer {
         //affichage de l input selon son type
         $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
         $valueInput = "";
+        if (isset($question->defaultValue)) {
+            $valueInput = $question->defaultValue;
+        }
         if ($question->type == "input") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
         if ($question->type == "number" || $question->type == "expression") {
-            $result.="<input type=\"number\" " . $idInput . " value=\"\"/>";
+            $result.="<input type=\"number\" " . $idInput . " \"" . $valueInput . "\"/>";
         }
         if ($question->type == "date") {
             $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
@@ -627,9 +631,7 @@ class QuestionnaireHTMLRenderer {
             }
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
-                $checked = false;
-
-                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . ">&nbsp;" . $value . "</input><br>";
+                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . (in_array($value, explode(",", $valueInput)) ? 'checked' : '') . ">&nbsp;" . $value . "</input><br>";
             }
         }
         if ($question->type == "text") {
