@@ -411,3 +411,9 @@ a img {
 input[type="text"] {
     height: 100% !important;
 }
+
+#queries {
+    background-color:#E5F1F4;
+    box-shadow: 5px 5px 5px #888888;
+    padding:1px;
+}

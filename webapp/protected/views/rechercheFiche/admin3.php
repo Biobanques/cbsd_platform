@@ -23,10 +23,18 @@ if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
 <?php } else { ?>
     <h1><?php echo Yii::t('common', 'availablePatientForms') ?></h1>
 <?php } ?>
-<div><h4><u><?php echo Yii::t('common', 'queryAnonymous') ?></u></h4><?php if (isset($_SESSION['html'])) { echo $_SESSION['html']; }; ?>
-<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;"><?php if (isset($_SESSION['formulateQuery'])) { echo $_SESSION['formulateQuery']; }; ?><?php if (isset($_SESSION['htmlAvailable'])) { echo $_SESSION['htmlAvailable']; }; ?></div>
+<div id="queries">
+    <h4><u><?php echo Yii::t('common', 'queriedAnonymous') ?></u></h4>
+    <?php echo "<ul>" . $html->html . "</ul>"; ?>
+    <div id="queries">
+        <h4><u>Prélèvement(s) disponible(s)</u></h4>
+        <?php echo "<ul>" . $html->htmlPrvmt . "</ul>"; ?>
+        <?php echo "<h4><u>" . Yii::t('common', 'queryFormulation') . "</u></h4><ul>" . $html->htmlQuestion . "</ul>" ?>
+    </div>
+</div>
+<br>
 <?php echo CHtml::link(Yii::t('button', 'exportCSV'), array('rechercheFiche/exportCsv'), array('class' => 'btn btn-primary')); ?>
-    
+
 <?php echo CHtml::link('Nouvelle requête', array('rechercheFiche/admin'), array('class' => 'btn btn-danger')); ?>
 
 <?php

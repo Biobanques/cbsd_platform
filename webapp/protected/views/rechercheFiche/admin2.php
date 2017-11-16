@@ -98,7 +98,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
                     'name' => 'question',
                     'source' => array_map(function($key, $value) {
                                 return array('label' => $value, 'value' => $key);
-                            }, array_keys(Answer::model()->getAllQuestionsByTypeForm($_SESSION['typeForm'])), Answer::model()->getAllQuestionsByTypeForm($_SESSION['typeForm'])),
+                            }, array_keys(Answer::model()->getAllQuestionsByTypeForm($html->type)), Answer::model()->getAllQuestionsByTypeForm($html->type)),
                     'htmlOptions' => array(
                         'onkeyup' => 'document.getElementById("addFilterButton").disabled = false;'
                 )));
@@ -127,13 +127,9 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 </div>
 
 <h4><u><?php echo Yii::t('common', 'queriedAnonymous') ?></u></h4>
-<?php echo $html; ?>
-<div id="queries" style="background-color:#E5F1F4;box-shadow: 5px 5px 5px #888888;padding:1px;">
-    <h4><u>Prélèvement</u></h4>
+<?php echo "<ul>" . $html->html . "</ul>"; ?>
+<div id="queries">
+    <h4><u>Prélèvement(s) disponible(s)</u></h4>
     <p id="multiselect_simple_selection2">Available : </p>
-    <?php
-    if (isset($_SESSION['formulateQuery'])) {
-        echo $_SESSION['formulateQuery'];
-    }
-    ?>
+    <?php echo "<h4><u>" . Yii::t('common', 'queryFormulation') . "</u></h4><ul>" . $html->htmlQuestion . "</ul>" ?>
 </div>

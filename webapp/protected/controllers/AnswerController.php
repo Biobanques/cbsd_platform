@@ -394,12 +394,12 @@ class AnswerController extends Controller {
      * Write queries (search filter)
      */
     public function actionWriteQueries() {
+        $query = Query::model()->find();
         $operators = array("equals" => "=", "noteq" => "<>", "less" => "<", "greater" => ">", "lesseq" => "<=", "greatereq" => ">=", "between" => "comprise entre", '$and' => Yii::t('common', 'and'), '$or' => Yii::t('common', 'or'));
         $keys = array();
-        $html = "<h4><u>" . Yii::t('common', 'queryFormulation') . "</u></h4><br>";
+        $html = "";
         if (isset($_POST['Answer']) && !empty($_POST['Answer'])) {
             $keys = array_keys($_POST['Answer']['dynamics']);
-            $html .= "<ul>";
             $first = false;
             foreach ($keys as $kk => $vv) {
                 $compare = null;
@@ -411,13 +411,9 @@ class AnswerController extends Controller {
                 $html .= ($first ? "- " . $operators[$_POST['Answer']["condition"][$vv]] : "") . "<li>" . $vv . " " . (!is_null($compare) ? $compare : "=") . " " . $_POST['Answer']["dynamics"][$vv] . "</li>";
                 $first = true;
             }
-            $html .= "</ul>";
-            if (isset($_SESSION['formulateQuery'])) {
-                $_SESSION['formulateQuery'] .= $html;
-            } else {
-                $_SESSION['formulateQuery'] = $html;
-            }
-            echo $html;
+            $query->htmlQuestion .= $html;
+            $query->save();
+            echo "<ul>" . $html . "</ul>";
         }
     }
 }

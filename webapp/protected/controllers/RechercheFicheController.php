@@ -42,15 +42,12 @@ class RechercheFicheController extends Controller {
     public function actionAdmin() {
         $_SESSION['id_patientBis'] = null;
         $_SESSION['id_patientAll'] = null;
-        $_SESSION['id_patient'] = null;
-        $_SESSION['typeForm'] = null;
-        $_SESSION['last_updated'] = null;
-        $_SESSION['html'] = null;
-        $_SESSION['formulateQuery'] = null;
         $_SESSION['Available'] = null;
-        $_SESSION['htmlAvailable'] = null;
-        $_SESSION['test'] = null;
         $model = new Answer;
+        $query = Query::model()->find();
+        if ($query != null) {
+            $query->delete();
+        }
         $this->render('admin', array(
             'model' => $model
         ));
@@ -58,56 +55,7 @@ class RechercheFicheController extends Controller {
 
     public function actionAdmin2() {
         $fiche = null;
-        $html = "<ul>";
-        $htmlPrvmt = "";
-        if (isset($_POST['Answer'])) {
-            $_SESSION['Answer'] = $_POST['Answer'];
-            $criteria = new EMongoCriteria;
-            if (isset($_POST['Answer']['id_patient']) && $_POST['Answer']['id_patient'] != null) {
-                $_SESSION['id_patient'] = $_POST['Answer']['id_patient'];
-                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_POST['Answer']['id_patient'])));
-                $html .= "<li>" . Yii::t('common', 'anonymat') . " = ";
-                foreach ($_POST['Answer']['id_patient'] as $idPatient) {
-                    $html .= $idPatient;
-                    if ($idPatient != end($_POST['Answer']['id_patient'])) {
-                        $html .= ", ";
-                    }
-                }
-                $html .= "</li>";
-            }
-            if (isset($_POST['Answer']['type']) && $_POST['Answer']['type'] != null) {
-                $_SESSION['typeForm'] = $_POST['Answer']['type'];
-                $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($_POST['Answer']['type'])));
-                $html .= "<li>" . Yii::t('common', 'formType') . " = ";
-                foreach ($_POST['Answer']['type'] as $typeForm) {
-                    $html .= $typeForm;
-                    if ($typeForm != end($_POST['Answer']['type'])) {
-                        $html .= ", ";
-                    }
-                }
-                $html .= "</li>";
-            }
-            if (isset($_POST['Answer']['last_updated']) && $_POST['Answer']['last_updated'] != null && isset($_POST['Answer']['last_updated_to']) && $_POST['Answer']['last_updated_to'] != null) {
-                $_SESSION['last_updated'] = $_POST['Answer']['last_updated'] . " - " . $_POST['Answer']['last_updated_to'];
-                $answerFormat = CommonTools::formatDatePicker($_SESSION['last_updated']);
-                $date_from = str_replace('/', '-', $answerFormat['date_from']);
-                $date_to = str_replace('/', '-', $answerFormat['date_to']);
-                $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
-                $html .= "<li>" . Yii::t('common', 'period') . " = " . $_POST['Answer']['last_updated'] . " - " . $_POST['Answer']['last_updated_to'] . "</li>";
-            }
-            $html .= "</ul>";
-            $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
-            $criteria->sort('type', EMongoCriteria::SORT_ASC);
-            $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
-        }
-        if ($html == "<ul></ul>") {
-            $html .= "Pas de restriction.";
-        }
-        if (isset($_SESSION['html'])) {
-            $html = $_SESSION['html'];
-        } else {
-            $_SESSION['html'] = $html;
-        }
+        $htmlres = null;
 
         if (isset($_POST['rechercher'])) {
             $patientId = array();
@@ -136,16 +84,69 @@ class RechercheFicheController extends Controller {
                 $this->redirect(array('rechercheFiche/admin3'));
             }
         }
-        $htmlPrvmt .= "<ul>";
+        $query = Query::model()->find();
+        if ($query == null) {
+            $query = new Query;
+        }
+
+        if (isset($_POST['Answer'])) {
+            $_SESSION['Answer'] = $_POST['Answer'];
+            $criteria = new EMongoCriteria;
+            if (isset($_POST['Answer']['id_patient']) && $_POST['Answer']['id_patient'] != null) {
+                $query->id_patient = $_POST['Answer']['id_patient'];
+                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_POST['Answer']['id_patient'])));
+                $htmlres .= "<li>" . Yii::t('common', 'anonymat') . " = ";
+                foreach ($_POST['Answer']['id_patient'] as $idPatient) {
+                    $htmlres .= $idPatient;
+                    if ($idPatient != end($_POST['Answer']['id_patient'])) {
+                        $htmlres .= ", ";
+                    }
+                }
+                $htmlres .= "</li>";
+            }
+            if (isset($_POST['Answer']['type']) && $_POST['Answer']['type'] != null) {
+                $query->type = $_POST['Answer']['type'];
+                $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($_POST['Answer']['type'])));
+                $htmlres .= "<li>" . Yii::t('common', 'formType') . " = ";
+                foreach ($_POST['Answer']['type'] as $typeForm) {
+                    $htmlres .= $typeForm;
+                    if ($typeForm != end($_POST['Answer']['type'])) {
+                        $htmlres .= ", ";
+                    }
+                }
+                $htmlres .= "</li>";
+            }
+            if (isset($_POST['Answer']['last_updated']) && $_POST['Answer']['last_updated'] != null && isset($_POST['Answer']['last_updated_to']) && $_POST['Answer']['last_updated_to'] != null) {
+                $query->last_updated = $_POST['Answer']['last_updated'] . " - " . $_POST['Answer']['last_updated_to'];
+                $answerFormat = CommonTools::formatDatePicker($query->last_updated);
+                $date_from = str_replace('/', '-', $answerFormat['date_from']);
+                $date_to = str_replace('/', '-', $answerFormat['date_to']);
+                $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
+                $htmlres .= "<li>" . Yii::t('common', 'period') . " = " . $_POST['Answer']['last_updated'] . " - " . $_POST['Answer']['last_updated_to'] . "</li>";
+            }
+            if ($htmlres == "<ul></ul>") {
+                $htmlres .= "Pas de restriction.";
+            }
+            $query->html .= $htmlres;
+            $query->save();
+        }
+
+        $html = Query::model()->find();
+        if ($html->htmlPrvmt == null) {
+            $htmlPrvmt = null;
+        } else {
+            $htmlPrvmt = $html->htmlPrvmt;
+        }
+
         if (isset($_POST['Available'])) {
             $_SESSION['Available'] = $_POST['Available'];
             foreach ($_SESSION['Available'] as $kAvailable => $vAvailable) {
-                $htmlPrvmt .= "<li>" . $vAvailable . " = Available</li>";
+                $htmlPrvmt .= "<li>" . $vAvailable . "</li>";
             }
         }
-        $htmlPrvmt .= "</ul>";
-        $_SESSION['htmlAvailable'] = $htmlPrvmt;
-       
+        $html->htmlPrvmt = $htmlPrvmt;
+        $html->save();
+
         if (isset($_POST['searchAll']) && isset(Yii::app()->session['criteria'])) {
             $ficheId = array();
             $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
@@ -168,6 +169,7 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionAdmin3() {
+        $html = Query::model()->find();
         $model = new Answer('search');
         $model->unsetAttributes();
         if (!isset($_GET['ajax'])) {
@@ -197,7 +199,8 @@ class RechercheFicheController extends Controller {
             $model->setAttributes($_SESSION['Answer']);
         }
         $this->render('admin3', array(
-            'model' => $model
+            'model' => $model,
+            'html' => $html
         ));
     }
 
