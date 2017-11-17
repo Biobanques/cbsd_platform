@@ -15,7 +15,7 @@ return array(
     'reset' => 'Réinitialiser',
     'import' => 'Importer',
     'export' => 'Exporter',
-    'exportCSV' => 'Exporter les cas sélectionnés en CSV',
+    'exportCSV' => 'Exporter en CSV',
     'logicOperator' => 'Opération logique à appliquer à la variable',
     'back' => 'Retour',
     'addGene' => 'Ajouter un gène',

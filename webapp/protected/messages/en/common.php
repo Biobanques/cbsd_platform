@@ -300,5 +300,6 @@ return array(
     'referenceContent' => 'You can create a new reference center by clicking on the link <b><i>\'Create a reference center\'</i></b> above.<br>'
     . 'You can also edit or delete reference centers using pictures at the end of the lines.',
     'period' => 'Period',
-    'noRestriction' => 'No restriction'
+    'noRestriction' => 'No restriction',
+    'availablePrvmt' => 'Available sample(s)'
 );

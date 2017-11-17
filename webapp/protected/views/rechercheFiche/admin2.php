@@ -109,6 +109,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
             <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
         </div>
         <div class="row">
+            <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'availablePrvmt') ?></b></u></h4>
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'available'), "Available", array('style' => 'padding-top:30px;')); ?>
                 <?php echo CHtml::dropDownList("Available", 'prvt_available', CommonTools::getAllPrelevements(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:170px;")); ?>
@@ -129,7 +130,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 <h4><u><?php echo Yii::t('common', 'queriedAnonymous') ?></u></h4>
 <?php echo "<ul>" . $html->html . "</ul>"; ?>
 <div id="queries">
-    <h4><u>Prélèvement(s) disponible(s)</u></h4>
+    <h4><u><?php echo Yii::t('common', 'availablePrvmt') ?></u></h4>
     <p id="multiselect_simple_selection2">Available : </p>
     <?php echo "<h4><u>" . Yii::t('common', 'queryFormulation') . "</u></h4><ul>" . $html->htmlQuestion . "</ul>" ?>
 </div>

@@ -29,7 +29,7 @@ if (Yii::app()->user->getState('activeProfil') == "Administrateur de projet") {
 <span class="btn btn-danger" id="unselect-all"><i class="glyphicon glyphicon-remove"></i>&nbsp;<?php echo Yii::t('button', 'unselectAll'); ?></span>
 <div class="checkboxgroup"> 
     <?php
-    $fiches = Answer::model()->getNomsFichesByFilter($models);
+    $fiches = Answer::model()->getNomsFichesByFilter($_SESSION['models']);
     echo "<h3><u>Variables communes</u></h3>";
     echo CHtml::checkBoxList('filter', 'addFilter', Answer::model()->attributeExportedLabels(), array(
         'labelOptions' => array('style' => 'display:inline'),
@@ -39,7 +39,7 @@ if (Yii::app()->user->getState('activeProfil') == "Administrateur de projet") {
     foreach ($fiches as $key => $value) {
         ?><table><?php
             echo "<h3><u>" . $value . "</u></h3>";
-            echo CHtml::checkBoxList('filter', 'addFilter', Answer::model()->getAllQuestionsByFilterName($models, $value), array(
+            echo CHtml::checkBoxList('filter', 'addFilter', Answer::model()->getAllQuestionsByFilterName($_SESSION['models'], $value), array(
                 'labelOptions' => array('style' => 'display:inline'),
                 'separator' => '',
                 'template' => '<tr><td>{input}&nbsp;{label}</td></tr>'

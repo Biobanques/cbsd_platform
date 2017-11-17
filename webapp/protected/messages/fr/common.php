@@ -306,5 +306,6 @@ return array(
     'referenceContent' => 'Vous pouvez créer un nouvel centre de référence en cliquant sur le lien <b><i>\'Créer un centre de référence\'</i></b> ci-dessous.<br>'
     . 'Vous pouvez également modifier ou supprimer des centres de référence en utilisant les images en fin de ligne.',
     'period' => 'Période',
-    'noRestriction' => 'Pas de restriction'
+    'noRestriction' => 'Pas de restriction',
+    'availablePrvmt' => 'Prélèvement(s) disponible(s)'
 );

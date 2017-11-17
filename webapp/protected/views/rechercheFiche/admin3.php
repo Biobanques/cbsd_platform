@@ -26,14 +26,26 @@ if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
 <div id="queries">
     <h4><u><?php echo Yii::t('common', 'queriedAnonymous') ?></u></h4>
     <?php echo "<ul>" . $html->html . "</ul>"; ?>
-    <div id="queries">
-        <h4><u>Prélèvement(s) disponible(s)</u></h4>
-        <?php echo "<ul>" . $html->htmlPrvmt . "</ul>"; ?>
-        <?php echo "<h4><u>" . Yii::t('common', 'queryFormulation') . "</u></h4><ul>" . $html->htmlQuestion . "</ul>" ?>
+
+    <div class="row">
+        <div class="col-lg-10">
+            <h4><u><?php echo Yii::t('common', 'availablePrvmt') ?></u></h4>
+            <?php echo "<ul>" . $html->htmlPrvmt . "</ul>"; ?>
+            <?php echo "<h4><u>" . Yii::t('common', 'queryFormulation') . "</u></h4><ul>" . $html->htmlQuestion . "</ul>" ?>
+        </div>
+        <div class="col-lg-2">
+            <?php
+            echo CHtml::link(
+                    CHtml::image(Yii::app()->request->baseUrl . '/images/icons8-export-csv-50.png'), Yii::app()->createUrl("rechercheFiche/exportCsv")
+                    , array('style' => "display:block;text-align:center")
+            );
+            ?><span><?php echo Yii::t('button', 'exportCSV') ?></span>
+        </div>
     </div>
+    
 </div>
+    
 <br>
-<?php echo CHtml::link(Yii::t('button', 'exportCSV'), array('rechercheFiche/exportCsv'), array('class' => 'btn btn-primary')); ?>
 
 <?php echo CHtml::link('Nouvelle requête', array('rechercheFiche/admin'), array('class' => 'btn btn-danger')); ?>
 
@@ -82,7 +94,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         <?php echo CHtml::submitButton(Yii::t('button', 'patientFormsAssociated'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
     </div>
     <div class="col-lg-6">
-        <?php echo CHtml::submitButton('Nouvelle requête sur toutes les fiches', array('name' => 'searchAll', 'class' => 'btn btn-primary')); ?>
+<?php echo CHtml::submitButton('Nouvelle requête sur toutes les fiches', array('name' => 'searchAll', 'class' => 'btn btn-primary')); ?>
     </div>
 </div>
 
