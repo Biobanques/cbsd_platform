@@ -40,6 +40,7 @@ $(function () {
             var valuesFormatted = valuesFormatted.replace('?', 'question_mark');
             if (ui.selected) {
                 $('#' + attr + '_selection').append('<i id="' + valuesFormatted.replace(/ /g,'') + '">[' + values + ']</i> ');
+                $('#' + attr + '_selection2').append('<i id="' + valuesFormatted.replace(/ /g,'') + '">[' + values + ']</i> ');
             } else {
                 $('#' + valuesFormatted.replace(/ /g,'')).remove();
             }

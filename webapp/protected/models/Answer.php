@@ -753,6 +753,7 @@ class Answer extends LoggableActiveRecord {
     public function resultToArray($models, $filter) {
         $typeQuestion = array();
         $result = array();
+        $ansQuestion = array();
         $headerLineFixe = $this->attributeExportedLabels();
         $answersList = array();
         foreach ($models as $answer) {
@@ -772,11 +773,8 @@ class Answer extends LoggableActiveRecord {
             foreach ($answer->answers_group as $group) {
                 foreach ($group->answers as $answerQuestion) {
                     //construction du label de colonne
-                    // $label = "[" . $answer->name . "][" . $group->title_fr . "][" . $answerQuestion->label . "]";
                     $label = "(" . $answerQuestion->id . ")" . $answerQuestion->label;
-                    $typeQuestion[$label] = $answerQuestion->type;
                     $value = $answerQuestion->getLiteralAnswer();
-                    $ansQuestion[] = array();
                     $ansQuestion['label'] = $label;
                     $ansQuestion['answer'] = $value;
                     $answersQuestions[] = $ansQuestion;
@@ -786,6 +784,7 @@ class Answer extends LoggableActiveRecord {
             //reconstruction de la
             $answersList[] = $currentAnswer;
         }
+        //var_dump($answersQuestions);
         //formattage des reponses en ligne
         //preparation de la ligne d entete pour touts
         //pour chaque nouveau label de question, on ajoute une colonne
