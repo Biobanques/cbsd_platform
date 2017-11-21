@@ -189,7 +189,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                 <div id="footer">
                     <div class="container">
                         <div class="row">
-                            <?php echo CHtml::link(CHtml::image(Base . '/images/ibisa.png', 'IBISA', array('height' => '70px')), 'https://www.ibisa.net/'); ?>
+                            <?php echo CHtml::link(CHtml::image(Base . '/images/ibisa.png', 'IBISA', array('height' => 70)), 'https://www.ibisa.net/'); ?>
                             <?php echo CHtml::link(CHtml::image(Base . '/images/lecma.jpg', 'Lecma Fondation', array('class' => 'logo')), 'https://www.vaincrealzheimer.org/'); ?>
                             <?php echo CHtml::link(CHtml::image(Base . '/images/Logo-ARSEP-2015.png', 'Arsep Fondation', array('class' => 'logo')), 'https://www.arsep.org/'); ?>
                             <?php echo CHtml::link(CHtml::image(Base . '/images/logo_FP.jpg', 'France Parkinson', array('class' => 'logo')), 'http://www.franceparkinson.fr/'); ?>

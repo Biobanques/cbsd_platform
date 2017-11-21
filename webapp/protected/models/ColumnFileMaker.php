@@ -51,6 +51,7 @@ class ColumnFileMaker extends LoggableActiveRecord
     public function search($caseSensitive = false)
     {
         $criteria = new EMongoCriteria;
+        $criteria->sort('currentColumn', EMongoCriteria::SORT_ASC);
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria

@@ -238,7 +238,9 @@ class Answer extends LoggableActiveRecord {
                 $index++;
             }
         }
-        $query->save();
+        if (Yii::app()->controller->id != "fiche") {
+            $query->save();
+        }
         $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
         $criteria->sort('type', EMongoCriteria::SORT_ASC);
         $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);

@@ -169,7 +169,11 @@ class QuestionnaireHTMLRenderer {
         }
         if ($isAnswered) {
             if ($question->type == "date") {
-                $valueInput = date("d/m/Y", strtotime($question->answer['date']));
+                if ($question->answer['date'] != null) {
+                    $valueInput = date("d/m/Y", strtotime($question->answer['date']));
+                } else {
+                    $valueInput = null;
+                }
             } else {
                 $valueInput = $question->answer;
             }
