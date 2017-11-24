@@ -105,6 +105,14 @@ class Questionnaire extends LoggableActiveRecord
             )
         ));
     }
+    
+    /**
+     * get the description of the form.
+     */
+    public function getDescription($id)
+    {
+        return Questionnaire::model()->findByPk(new MongoID($id))->description;
+    }
 
     /**
      * get an array of form type used by dropDownLIst.

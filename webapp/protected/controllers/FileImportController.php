@@ -469,7 +469,11 @@ class FileImportController extends Controller {
                                     $answerQuestion->answer = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($v)));
                                 }
                             } elseif ($answerQuestion->type == "number") {
-                                $answerQuestion->answer = new MongoInt32($v);
+                                if ($v != null) {
+                                    $answerQuestion->answer = new MongoInt32($v);
+                                } else {
+                                    $answerQuestion->answer = null;
+                                }
                             } elseif ($answerQuestion->type == "radio") {
                                 if ($type != null) {
                                     $answerQuestion->values = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->values;
@@ -492,6 +496,8 @@ class FileImportController extends Controller {
 
     public function convertNumeric($value) {
         switch ($value) {
+            case "": return null;
+                break;
             case "I": return 1;
                 break;
             case "II": return 2;

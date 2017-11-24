@@ -11,9 +11,9 @@ Yii::app()->clientScript->registerScript('getUnchecked', "
 
 <div style="margin-left:20px;">
     <div class="myBreadcrumb">
-        <div class="active"><?php echo Yii::t('common', 'queryAnonymous') ?></div>
-        <div class="active"><?php echo Yii::t('common', 'queryFormulation') ?></div>
-        <div class="active"><?php echo Yii::t('common', 'resultQuery') ?></div>
+        <div class="active"><?php echo CHtml::link(Yii::t('common', 'queryAnonymous'),array('rechercheFiche/admin'), array('style'=>'color:black')); ?></div>
+        <div class="active"><?php echo CHtml::link(Yii::t('common', 'queryFormulation'),array('rechercheFiche/admin2'), array('style'=>'color:black')); ?></div>
+        <div><?php echo Yii::t('common', 'resultQuery') ?></div>
     </div>
 </div>
 

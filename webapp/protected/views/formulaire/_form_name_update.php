@@ -22,8 +22,17 @@
     <div class="row">
         <div class="col-lg-12">
             <?php
-            echo CHtml::label('<span class="required" style="float:right; margin-left:5px">*</span>' . Yii::t('common', 'newFormName'), 'new_name', array('class' => 'required'));
-            echo CHtml::textfield('new_name', '', array("required" => "required"));
+            echo CHtml::label('<span class="required" style="float:right; margin-left:5px">*</span>' . Yii::t('common', 'newFormName'), 'new_name');
+            echo CHtml::textfield('new_name', '');
+            ?>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <?php
+            echo CHtml::label('<span class="required" style="float:right; margin-left:5px">*</span>Description', 'new_name');
+            echo CHtml::textarea('new_description', Questionnaire::model()->getDescription($_GET['id']));
             ?>
         </div>
     </div>

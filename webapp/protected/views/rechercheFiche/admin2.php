@@ -30,9 +30,16 @@ $('#addFilterButton').click(function(){
             }
         }
      });
-
      return false;
 });
+
+$('#resetFilterButton').click(function(){
+    document.getElementById('addFilterButton').disabled = false;
+    $('#question').val('');
+    $('#resetFilterButton').hide();
+    return false;
+});
+
 $('#dynamicFilters').on('click','.validateQuery',function(event){
     $(this).parent().hide();
     $.ajax({
@@ -40,7 +47,8 @@ $('#dynamicFilters').on('click','.validateQuery',function(event){
         type:'POST',
         data:$('#light_search-form').serialize(),
         success:function(result){
-        $('#queries').append(result);
+            $('#queries').append(result);
+            $('#resetFilterButton').show();
         }
     })
     return false;
@@ -69,7 +77,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 
 <div style="margin-left:20px;">
     <div class="myBreadcrumb">
-        <div class="active"><?php echo Yii::t('common', 'queryAnonymous') ?></div>
+        <div class="active"><?php echo CHtml::link(Yii::t('common', 'queryAnonymous'),array('rechercheFiche/admin'), array('style'=>'color:black')); ?></div>
         <div class="active"><?php echo Yii::t('common', 'queryFormulation') ?></div>
         <div><?php echo Yii::t('common', 'resultQuery') ?></div>
     </div>
@@ -99,11 +107,14 @@ $('#search_fiche-form').on('click','.question-input',function(event){
                     'source' => array_map(function($key, $value) {
                                 return array('label' => $value, 'value' => $key);
                             }, array_keys(Answer::model()->getAllQuestionsByTypeForm($html->type)), Answer::model()->getAllQuestionsByTypeForm($html->type)),
-                    'htmlOptions' => array(
-                        'onkeyup' => 'document.getElementById("addFilterButton").disabled = false;'
-                )));
+                    'options' => array(
+                        'showAnim' => 'fold',
+                        'select' => 'js:function(event, ui){ $("#question").attr("readonly", true); '
+                        . 'document.getElementById("addFilterButton").disabled = false;}')
+                ));
                 echo CHtml::button(Yii::t('button', 'logicOperator'), array('id' => 'addFilterButton', 'class' => 'btn btn-info', 'style' => 'margin-left:10px; font-weight:bold;', 'disabled' => 'disabled'));
                 echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
+                echo CHtml::button(Yii::t('button', 'reset'), array('id' => 'resetFilterButton', 'class' => 'btn btn-danger', 'style' => 'margin-left:10px; font-weight:bold; display:none;'));
                 ?>
             </div>
             <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>

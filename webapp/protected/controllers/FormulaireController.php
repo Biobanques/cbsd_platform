@@ -209,7 +209,12 @@ class FormulaireController extends Controller {
         }
         if (isset($_POST['updateForm'])) {
             if (isset($_POST['old_name'])) {
-                $model->name = ucfirst($_POST['new_name']);
+                if ($_POST['new_name'] != "") {
+                    $model->name = ucfirst($_POST['new_name']);
+                } else {
+                    $model->name = $_POST['old_name'];
+                }
+                $model->description = $_POST['new_description'];
                 if ($model->save()) {
                     Yii::app()->user->setFlash('succès', Yii::t('common', 'nameFormUpdated'));
                 } else {
