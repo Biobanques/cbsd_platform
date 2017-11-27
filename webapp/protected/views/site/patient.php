@@ -50,7 +50,7 @@
 
     <div class="row">
         <div class="row buttons">
-            <div class="col-lg-1 col-lg-offset-10">
+            <div class="col-lg-12">
             <?php echo CHtml::submitButton('OK', array('class' => 'btn btn-primary')); ?>
         </div>
         </div>

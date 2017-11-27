@@ -149,6 +149,7 @@ class FormulaireController extends Controller {
                 $questionForm->values = CommonTools::ucwords_all($questionForm->values);
                 if ($questionForm->validate()) {
                     $model = $model->saveQuestionnaireNewQuestion($questionForm);
+                    $questionForm->unsetAttributes();
                 } else {
                     Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotAdded'));
                 }
@@ -188,6 +189,7 @@ class FormulaireController extends Controller {
                         $questionForm->copy($currentQuestion, $computedGroup);
 
                         $model->saveQuestionnaireNewQuestionBloc($questionForm);
+                        $questionForm->unsetAttributes();
                     }
                 }
             } else {
@@ -307,7 +309,6 @@ class FormulaireController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDeleteQuestion($idFormulaire, $idQuestion) {
-        $questionBloc = new QuestionBloc;
         $model = Questionnaire::model()->findByPk(new MongoID($idFormulaire));
         if ($model->deleteQuestion($idQuestion)) {
             if ($model->save()) {
@@ -447,6 +448,7 @@ class FormulaireController extends Controller {
         $q1->style = '';
         $q1->values = '';
         $q1->values_fr = '';
+        $q1->defaultValue = null;
         $q1->help = null;
         $q1->precomment = '';
         $q1->precomment_fr = '';
@@ -459,6 +461,7 @@ class FormulaireController extends Controller {
         $q2->style = 'float:right';
         $q2->values = '';
         $q2->values_fr = '';
+        $q2->defaultValue = null;
         $q2->help = null;
         $q2->precomment = '';
         $q2->precomment_fr = '';
@@ -471,6 +474,7 @@ class FormulaireController extends Controller {
         $q3->style = '';
         $q3->values = '';
         $q3->values_fr = '';
+        $q3->defaultValue = null;
         $q3->help = null;
         $q3->precomment = '';
         $q3->precomment_fr = '';
@@ -483,6 +487,7 @@ class FormulaireController extends Controller {
         $q4->style = 'float:right';
         $q4->values = '';
         $q4->values_fr = '';
+        $q4->defaultValue = null;
         $q4->help = null;
         $q4->precomment = '';
         $q4->precomment_fr = '';
@@ -496,6 +501,7 @@ class FormulaireController extends Controller {
             $q5->style = '';
             $q5->values = '';
             $q5->values_fr = '';
+            $q5->defaultValue = null;
             $q5->help = null;
             $q5->precomment = '';
             $q5->precomment_fr = '';

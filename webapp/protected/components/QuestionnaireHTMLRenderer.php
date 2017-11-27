@@ -499,7 +499,12 @@ class QuestionnaireHTMLRenderer {
                     }
                     $extraActive = "";
                     $extraActive2 = "";
-                    if ($firstTab == false) {
+                    if (isset($_POST['QuestionForm']['idQuestionGroup'])) {
+                        if ($group->id == $_POST['QuestionForm']['idQuestionGroup']) {
+                            $extraActive = "class=\"active\"";
+                            $extraActive2 = " active";
+                        }
+                    } elseif ($firstTab == false) {
                         $firstTab = true;
                         $extraActive = "class=\"active\"";
                         $extraActive2 = " active";
