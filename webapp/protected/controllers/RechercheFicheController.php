@@ -80,7 +80,6 @@ class RechercheFicheController extends Controller {
                 }
                 $regex .= '$/i';
                 $_SESSION['id_patientBis'] = $regex;
-            } else {
                 $this->redirect(array('rechercheFiche/admin3'));
             }
         }

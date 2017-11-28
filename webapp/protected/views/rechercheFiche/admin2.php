@@ -35,8 +35,10 @@ $('#addFilterButton').click(function(){
 
 $('#resetFilterButton').click(function(){
     document.getElementById('addFilterButton').disabled = false;
+    $('#question').prop('readonly', false);
     $('#question').val('');
     $('#resetFilterButton').hide();
+    document.getElementById('addFilterButton').disabled = true;
     return false;
 });
 
@@ -59,6 +61,8 @@ $('#dynamicFilters').on('click','.deleteQuestion',function(event){
     if (n == 1) {
         $('.condition').hide();
     }
+    $('#question').prop('readonly', false);
+    $('#question').val('');
     return false;
 });
 

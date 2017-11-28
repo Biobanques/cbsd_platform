@@ -22,7 +22,7 @@ return array(
     'cancel' => 'Annuler',
     'updateThePatientForm' => 'Mettre à jour la fiche',
     'insert' => 'Saisir',
-    'patientFormsAssociated' => 'Nouvelle requête sur les fiches sélectionnées',
+    'patientFormsAssociated' => 'Afficher les fiches associées au(x) patient(s) sélectionné(s)',
     'exportQuery' => 'Exporter la requête',
     'selectAll' => 'Selectionner tout',
     'unselectAll' => 'Déselectionner tout',
