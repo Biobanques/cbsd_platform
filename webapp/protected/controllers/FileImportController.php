@@ -489,6 +489,7 @@ class FileImportController extends Controller {
                     }
                 }
                 $answer->answers_group[] = $answerGroup;
+                $answer->available = 0;
                 $answer->save();
             }
         }
@@ -496,8 +497,6 @@ class FileImportController extends Controller {
 
     public function convertNumeric($value) {
         switch ($value) {
-            case "": return null;
-                break;
             case "I": return 1;
                 break;
             case "II": return 2;

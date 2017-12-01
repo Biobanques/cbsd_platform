@@ -111,7 +111,9 @@ class QuestionnaireController extends Controller {
                     $answerQuestion->setAnswer($answerArray);
                 }
             }
-        }if ($flagNoInputToSave == false) {
+        }
+        $answer->available = 0;
+        if ($flagNoInputToSave == false) {
             if ($answer->save())
                 Yii::app()->user->setFlash('succès', Yii::t('common', 'patientFormSaved'));
             else {

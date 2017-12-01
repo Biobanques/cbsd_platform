@@ -43,7 +43,15 @@ class RechercheFicheController extends Controller {
         $_SESSION['id_patientBis'] = null;
         $_SESSION['id_patientAll'] = null;
         $_SESSION['Available'] = null;
+        $_SESSION['qmi'] = null;
         $model = new Answer;
+        $criteria = new EMongoCriteria;
+        $criteria->available = 1;
+        $fiches = Answer::model()->findAll($criteria);
+        foreach ($fiches as $f) {
+            $f->available = 0;
+            $f->save();
+        }
         $query = Query::model()->find();
         if ($query != null) {
             $query->delete();
@@ -56,36 +64,63 @@ class RechercheFicheController extends Controller {
     public function actionAdmin2() {
         $fiche = null;
         $htmlres = null;
-
+        $questionnaireMongoId = array();
+        if (isset($_SESSION['checkedIds'])) {
+                foreach ($_SESSION['checkedIds'] as $ar) {
+                    Yii::app()->user->setState($ar, 0);
+                }
+            }
+        $query = Query::model()->find();
+        if ($query == null) {
+            $query = new Query;
+        }
         if (isset($_POST['rechercher'])) {
             $patientId = array();
+            $htmlres .= "<li>" . Yii::t('common', 'anonymat') . " = ";
             if (isset($_POST['Answer_id_patient'])) {
                 foreach ($_POST['Answer_id_patient'] as $patient_id) {
                     $id = Answer::model()->findByPk(new MongoID($patient_id));
                     if ($id != null) {
-                        array_push($patientId, $id->id_patient);
+                        if (!in_array($id->id_patient, $patientId)) {
+                            array_push($patientId, $id->id_patient);
+                        }
+                        if (!in_array($id->questionnaireMongoId, $questionnaireMongoId)) {
+                            array_push($questionnaireMongoId, $id->questionnaireMongoId);
+                        }
+                        
+                        $htmlres .= $id->id_patient . ", ";
                     }
                 }
                 if (isset($_SESSION['checkedIds'])) {
                     foreach ($_SESSION['checkedIds'] as $patient_idBis) {
                         $idBis = Answer::model()->findByPk(new MongoID($patient_idBis));
                         if ($idBis != null) {
-                            array_push($patientId, $idBis->id_patient);
+                            if (!in_array($idBis->id_patient, $patientId)) {
+                                array_push($patientId, $idBis->id_patient);
+                            }
+                            if (!in_array($idBis->questionnaireMongoId, $questionnaireMongoId)) {
+                                array_push($questionnaireMongoId, $idBis->questionnaireMongoId);
+                            }
+                            $htmlres .= $idBis->id_patient;
+                            if ($patient_idBis != end($_SESSION['checkedIds'])) {
+                                $htmlres .= ", ";
+                            }
                         }
                     }
+                    $_SESSION['checkedIds'] = null;
                 }
+                $htmlres .= "</li>";
+                $query->id_patient = $patientId;
+                $query->html = $htmlres . $query->html;
+                $query->save();
                 $regex = '/^';
                 foreach ($patientId as $idPatient) {
                     $regex .= $idPatient . '$|^';
                 }
                 $regex .= '$/i';
                 $_SESSION['id_patientBis'] = $regex;
-                $this->redirect(array('rechercheFiche/admin3'));
+                $_SESSION['qmi'] = $questionnaireMongoId;
             }
-        }
-        $query = Query::model()->find();
-        if ($query == null) {
-            $query = new Query;
         }
 
         if (isset($_POST['Answer'])) {
@@ -183,16 +218,6 @@ class RechercheFicheController extends Controller {
         }
         if (isset($_GET['uncheckedIds']) && !empty($_GET['uncheckedIds'])) {
             CommonTools::unckIds($_GET['uncheckedIds']);
-        }
-        if (isset($_POST['exporter'])) {
-            $filter = array();
-            if (isset($_POST['filter'])) {
-                $filter = $_POST['filter'];
-            }
-            $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
-            $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
-            $csv = new ECSVExport($arAnswers, true, false, null, null);
-            Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
         }
         if (isset($_SESSION['Answer'])) {
             $model->setAttributes($_SESSION['Answer']);

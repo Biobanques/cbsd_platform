@@ -78,6 +78,7 @@ class Answer extends LoggableActiveRecord {
     public $dynamics;
     public $compare;
     public $condition;
+    public $available;
 
     /**
      * use for search by user name
@@ -135,8 +136,82 @@ class Answer extends LoggableActiveRecord {
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
         if (isset($_SESSION['id_patientBis'])) {
-            $criteria->id_patient = new MongoRegex($_SESSION['id_patientBis']);
-            $criteria->type = new MongoRegex('/clinique|neuropathologique/i');
+            $criteriaAvailable = new EMongoCriteria;
+
+            $indexQmi = 0;
+            $nbCriteriaQmi = array();
+            foreach ($_SESSION['qmi'] as $qmi) {                
+                $nbCriteriaQmi = '$criteriaQmi' . $indexQmi;
+                $nbCriteriaQmi = new EMongoCriteria;
+                $nbCriteriaQmi->addCond('questionnaireMongoId', '==', new MongoId($qmi));
+                $model = Answer::model()->find($nbCriteriaQmi);
+                $model->available = 1;
+                $model->save();
+                $indexQmi++;
+            }
+
+            if (isset($_SESSION['Available']) && !empty($_SESSION['Available'])) {
+                $first = true;
+                foreach ($_SESSION['Available'] as $dispo) {
+                    $this->dynamics[$dispo] = "Available";
+                    if (($first)) {
+                        $this->condition[$dispo] = '$and';
+                        $first = false;
+                    } else {
+                        $this->condition[$dispo] = '$or';
+                    }
+                }
+            }
+
+            if (isset($this->dynamics) && !empty($this->dynamics)) {
+                $index = 0;
+                $nbCriteria = array();
+                foreach ($this->dynamics as $questionId => $answerValue) {
+                    if ($index != 0) {
+                        $nbCriteria = '$criteria' . $index;
+                        $nbCriteria = new EMongoCriteria;
+                    }
+                    if (isset($this->compare[$questionId])) {
+                        if ($index == 0) {
+                            if ($this->compare[$questionId] == "between") {
+                                $answerDate = CommonTools::formatDatePicker($answerValue);
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
+                            } elseif ($this->compare[$questionId] == "equals") {
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int) $answerValue));
+                            } else {
+                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            }
+                        } else {
+                            if ($this->compare[$questionId] == "between") {
+                                $answerDate = CommonTools::formatDatePicker($answerValue);
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
+                            } elseif ($this->compare[$questionId] == "equals") {
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int) $answerValue));
+                            } else {
+                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
+                            }
+                        }
+                    } else {
+                        $values = (!is_array($answerValue)) ? split(',', $answerValue) : $answerValue;
+                        if ($index == 0) {
+                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
+                        } else {
+                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
+                        }
+                    }
+                    if ($index != 0) {
+                        $criteria->mergeWith($nbCriteria, $this->condition[$questionId]);
+                    }
+                    $index++;
+                }
+            }
+
+            /* $criteria->id_patient = new MongoRegex($_SESSION['id_patientBis']);
+              $models = Answer::model()->findAll($criteria);
+              foreach ($models as $m) {
+              $m->available = 1;
+              $m->save();
+              } */
         } else {
             $query = Query::model()->find();
             if (isset($this->type) && !empty($this->type)) {
@@ -243,6 +318,10 @@ class Answer extends LoggableActiveRecord {
             if (Yii::app()->controller->id != "fiche") {
                 $query->save();
             }
+        }
+        if (isset($criteriaAvailable)) {
+            $criteriaAvailable->addCond('available', '==', 1);
+            $criteria->mergeWith($criteriaAvailable, '$or');
         }
         $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
         $criteria->sort('type', EMongoCriteria::SORT_ASC);
