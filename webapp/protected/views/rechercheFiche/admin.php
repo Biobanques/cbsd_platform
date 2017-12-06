@@ -56,7 +56,7 @@ $('#resetDate').click(function(){
                     <?php echo CHtml::label(Yii::t('common', 'restrictPeriod'), 'Answer_last_updated', array('style' => 'width:250px; padding-top:10px;')); ?>
                     <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)", 'placeholder' => 'Du')); ?>
                     <?php echo CHtml::textField('Answer[last_updated_to]', '', array("onfocus" => "datePicker(this.name)", 'placeholder' => 'Au')); ?>
-                    <?php echo CHtml::submitButton(Yii::t('button', 'select'), array('id' => 'selectDate', 'class' => 'btn btn-success', 'style' => 'background-color: #4cae4c;')); ?>
+                    <?php echo CHtml::submitButton(Yii::t('button', 'select'), array('id' => 'selectDate', 'class' => 'btn btn-success btn-sm', 'style' => 'background-color: #4cae4c; font-size: 1.0em;')); ?>
                 </div>
             </div>
 

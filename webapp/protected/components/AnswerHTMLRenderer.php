@@ -11,14 +11,13 @@
  * render to display elements of questionnaire
  * @author nicolas
  */
-class AnswerHTMLRenderer
-{
+class AnswerHTMLRenderer {
+
     /**
      * render tab associated to each group for a questionnaire
      * if isAnswered is filled, we are in case of answer.
      */
-    public function renderTabbedGroup($questionnaire, $lang, $isAnswered)
-    {
+    public function renderTabbedGroup($questionnaire, $lang, $isAnswered) {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
         $firstTab = false;
@@ -47,13 +46,13 @@ class AnswerHTMLRenderer
                         $extraActive = "class=\"active\"";
                         $extraActive2 = " active";
                     }
-                    $divTabs.= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
-                    $divPans.= " <div class=\"tab-pane " . $extraActive2 . "\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTML($questionnaire, $group, $lang, $isAnswered) . "</div>";
+                    $divTabs .= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
+                    $divPans .= " <div class=\"tab-pane " . $extraActive2 . "\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTML($questionnaire, $group, $lang, $isAnswered) . "</div>";
                 }
             }
         }
-        $divPans.="</div>";
-        $divTabs.="</ul>";
+        $divPans .= "</div>";
+        $divTabs .= "</ul>";
         return "<div class=\"tabbable\">" . $divTabs . $divPans . "</div>";
     }
 
@@ -65,8 +64,7 @@ class AnswerHTMLRenderer
      * @param type $isAnswered
      * @return string
      */
-    public function renderAnswerGroupHTML($answer, $group, $lang)
-    {
+    public function renderAnswerGroupHTML($answer, $group, $lang) {
         $result = "";
         //en par defaut
         $title = $group->title;
@@ -78,11 +76,11 @@ class AnswerHTMLRenderer
         if ($lang == "both") {
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
-        $result.="<div class=\"question_group\">" . $title . "</div>";
+        $result .= "<div class=\"question_group\">" . $title . "</div>";
         $quests = $group->answers;
         if (isset($quests)) {
             foreach ($quests as $ans) {
-                $result.=AnswerHTMLRenderer::renderAnswerHTML($group->id, $ans, $lang);
+                $result .= AnswerHTMLRenderer::renderAnswerHTML($group->id, $ans, $lang);
             }
         }
         //add question groups that have parents for this group
@@ -90,7 +88,7 @@ class AnswerHTMLRenderer
 
         foreach ($groups as $qg) {
             if ($qg->parent_group == $group->id) {
-                $result.=AnswerHTMLRenderer::renderAnswerGroupHTML($answer, $qg, $lang);
+                $result .= AnswerHTMLRenderer::renderAnswerGroupHTML($answer, $qg, $lang);
             }
         }
         $result .= "<div class=\"end-question-group\"></div>";
@@ -101,8 +99,7 @@ class AnswerHTMLRenderer
      * render html the current question.
      */
 
-    public function renderAnswerHTML($idanswergroup, $answer, $lang)
-    {
+    public function renderAnswerHTML($idanswergroup, $answer, $lang) {
         $result = "";
         $style = "style=\"\"";
         if ($answer->style != "") {
@@ -111,7 +108,7 @@ class AnswerHTMLRenderer
         if ($answer->precomment != "" && $answer->style == "") {
             $style = "style=\"clear:both\"";
         }
-        $result.="<div " . $style . ">";
+        $result .= "<div " . $style . ">";
         if ($answer->precomment != null) {
             $precomment = $answer->precomment;
             if ($lang == "fr") {
@@ -120,7 +117,7 @@ class AnswerHTMLRenderer
             if ($lang == "both") {
                 $precomment = "<i>" . $answer->precomment . "</i><br>" . $answer->precomment_fr;
             }
-            $result.="<div class=\"question-precomment\"><u>" . $precomment . "</u></div>";
+            $result .= "<div class=\"question-precomment\"><u>" . $precomment . "</u></div>";
         }
         //par defaut lang = enif ($lang == "en")
         $label = $answer->label;
@@ -131,26 +128,26 @@ class AnswerHTMLRenderer
             $label = "<i>" . $answer->label . "</i><br>" . $answer->label_fr;
         }
 
-        $result.="<div class=\"question-label\" >" . $label;
+        $result .= "<div class=\"question-label\" >" . $label;
         if (isset($answer->help)) {
-            $result.=HelpDivComponent::getHtml("help-" . $answer->id, $answer->help);
+            $result .= HelpDivComponent::getHtml("help-" . $answer->id, $answer->help);
         }
-        $result.="</div>";
-        $result.="<div class=\"question-input\">";
+        $result .= "</div>";
+        $result .= "<div class=\"question-input\">";
 
         //affichage de l input selon son type
         $idInput = "id=\"" . $idanswergroup . "_" . $answer->id . "\" name=\"Questionnaire[" . $idanswergroup . "_" . $answer->id . "]" . ($answer->type == "checkbox" ? "[]" : "") . "\"";
         if ($answer->type == "input") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
+            $result .= "<input type=\"text\" " . $idInput . " value=\"" . $answer->answer . "\"/>";
         }
         if ($answer->type == "number" || $answer->type == "expression") {
-            $result.="<input type=\"number\" " . $idInput . " value=\"" . $answer->answer . "\" style=\"height:25px;\"/>";
+            $result .= "<input type=\"number\" " . $idInput . " value=\"" . $answer->answer . "\"/>";
         }
         if ($answer->type == "date") {
             if (isset($answer->answer['date'])) {
-                $result.="<input type=\"date\" " . $idInput . " value=\"" . date("d/m/Y", strtotime($answer->answer['date'])) . "\" placeholder=\"Format jj/mm/aaaa\" style=\"height:25px;\"/>";
+                $result .= "<input type=\"date\" " . $idInput . " value=\"" . date("d/m/Y", strtotime($answer->answer['date'])) . "\" placeholder=\"Format jj/mm/aaaa\"/>";
             } else {
-                $result.="<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\" style=\"height:25px;\"/>";
+                $result .= "<input type=\"date\" " . $idInput . " value=\"\" placeholder=\"Format jj/mm/aaaa\"/>";
             }
         }
         if ($answer->type == "radio") {
@@ -163,7 +160,7 @@ class AnswerHTMLRenderer
             $arvalue = split(",", $values);
 
             foreach ($arvalue as $value) {
-                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $answer->answer ? 'checked' : '') . ">&nbsp;" . $value . "</input>&nbsp;";
+                $result .= "<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $answer->answer ? 'checked' : '') . ">&nbsp;" . $value . "</input>&nbsp;";
             }
         }
         if ($answer->type == "checkbox") {
@@ -182,26 +179,26 @@ class AnswerHTMLRenderer
                         }
                     }
                 }
-                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . ">&nbsp;" . $value . "</input><br>";
+                $result .= "<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . ">&nbsp;" . $value . "</input><br>";
             }
         }
         if ($answer->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"100\" " . $idInput . " style=\"width: 220px; height: 70px;\" >" . $answer->answer . "</textarea>";
+            $result .= "<textarea rows=\"4\" cols=\"100\" " . $idInput . ">" . $answer->answer . "</textarea>";
         }
         if ($answer->type == "list") {
             $values = $answer->values;
             $arvalue = split(",", $values);
-            $result.="<select " . $idInput . ">";
-            $result.="<option  value=\"\"></option>";
+            $result .= "<select " . $idInput . ">";
+            $result .= "<option  value=\"\"></option>";
             foreach ($arvalue as $value) {
-                $result.="<option  value=\"" . $value . "\" " . ($answer->answer == $value ? 'selected' : '') . ">" . $value . "</option>";
+                $result .= "<option  value=\"" . $value . "\" " . ($answer->answer == $value ? 'selected' : '') . ">" . $value . "</option>";
             }
-            $result.="</select>";
+            $result .= "</select>";
         }
         //close question input
-        $result.="</div>";
+        $result .= "</div>";
         //close row input
-        $result.="</div>";
+        $result .= "</div>";
         return $result;
     }
 
@@ -209,8 +206,7 @@ class AnswerHTMLRenderer
      * render tab associated to each group for a questionnaire in edit mode
      * if isAnswered is filled, we are in case of answer.
      */
-    public function renderTabbedGroupEditMode($questionnaire, $lang)
-    {
+    public function renderTabbedGroupEditMode($questionnaire, $lang) {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
         $firstTab = false;
@@ -235,13 +231,13 @@ class AnswerHTMLRenderer
                         $extraActive = "class=\"active\"";
                         $extraActive2 = " active";
                     }
-                    $divTabs.= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
-                    $divPans.= " <div class=\"tab-pane " . $extraActive2 . "\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang) . "</div>";
+                    $divTabs .= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
+                    $divPans .= " <div class=\"tab-pane " . $extraActive2 . "\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang) . "</div>";
                 }
             }
         }
-        $divPans.="</div>";
-        $divTabs.="</ul>";
+        $divPans .= "</div>";
+        $divTabs .= "</ul>";
         return "<div class=\"tabbable\">" . $divTabs . $divPans . "</div>";
     }
 
@@ -252,8 +248,7 @@ class AnswerHTMLRenderer
      * @param type $isAnswered
      * @return string
      */
-    public function renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang)
-    {
+    public function renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang) {
         $result = "";
         //en par defaut
         $title = $group->title;
@@ -264,25 +259,25 @@ class AnswerHTMLRenderer
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
         if (Yii::app()->controller->id != "questionBloc") {
-            $imghtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'), array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
+            $imghtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'));
             $lienSupprimer = "<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml . " " . Yii::t('common', 'deleteQuestionGroup'), Yii::app()->createUrl('formulaire/deleteQuestionGroup', array('idFormulaire' => $questionnaire->_id, 'idQuestionGroup' => $group->id))) . "</div>";
 
-            $result.="<div class=\"question_group\">" . $title . $lienSupprimer . "</div>";
+            $result .= "<div class=\"question_group\">" . $title . $lienSupprimer . "</div>";
         } else {
-            $result.="<div class=\"question_group\">" . $title . "</div>";
+            $result .= "<div class=\"question_group\">" . $title . "</div>";
         }
         $quests = $group->questions;
 
         if (isset($quests)) {
             foreach ($quests as $question) {
-                $result.=QuestionnaireHTMLRenderer::renderQuestionHTMLEditMode($questionnaire->_id, $group->id, $question, $lang);
+                $result .= QuestionnaireHTMLRenderer::renderQuestionHTMLEditMode($questionnaire->_id, $group->id, $question, $lang);
             }
         }
         //add question groups that have parents for this group
         $groups = $questionnaire->questions_group;
         foreach ($groups as $qg) {
             if ($qg->parent_group == $group->id) {
-                $result.=QuestionnaireHTMLRenderer::renderQuestionGroupHTMLEditMode($questionnaire, $qg, $lang);
+                $result .= QuestionnaireHTMLRenderer::renderQuestionGroupHTMLEditMode($questionnaire, $qg, $lang);
             }
         }
         $result .= "<div class=\"end-question-group\"></div>";
@@ -294,8 +289,7 @@ class AnswerHTMLRenderer
      * render html the current question.
      */
 
-    public function renderQuestionHTMLEditMode($idMongoQuestionnaire, $idquestiongroup, $question, $lang)
-    {
+    public function renderQuestionHTMLEditMode($idMongoQuestionnaire, $idquestiongroup, $question, $lang) {
         $result = "";
         $style = "style=\"\"";
         if ($question->style != "") {
@@ -304,7 +298,7 @@ class AnswerHTMLRenderer
         if ($question->precomment != "" && $question->style == "") {
             $style = "style=\"clear:both\"";
         }
-        $result.="<div " . $style . ">";
+        $result .= "<div " . $style . ">";
         if ($question->precomment != null) {
             $precomment = $question->precomment;
             if ($lang == "fr") {
@@ -313,7 +307,7 @@ class AnswerHTMLRenderer
             if ($lang == "both") {
                 $precomment = "<i>" . $question->precomment . "</i><br>" . $question->precomment_fr;
             }
-            $result.="<div class=\"question-precomment\"><u>" . $precomment . "</u></div>";
+            $result .= "<div class=\"question-precomment\"><u>" . $precomment . "</u></div>";
         }
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
@@ -323,26 +317,26 @@ class AnswerHTMLRenderer
         if ($lang == "both") {
             $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
         }
-        $label.="<br><font color=\"blue\"><b><i>" . $question->id . "</i></b></font>";
+        $label .= "<br><font color=\"blue\"><b><i>" . $question->id . "</i></b></font>";
 
-        $result.="<div class=\"question-label\" >" . $label;
+        $result .= "<div class=\"question-label\" >" . $label;
         if (isset($question->help)) {
-            $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
+            $result .= HelpDivComponent::getHtml("help-" . $question->id, $question->help);
         }
-        $result.="</div>";
-        $result.="<div class=\"question-input\">";
+        $result .= "</div>";
+        $result .= "<div class=\"question-input\">";
 
         //affichage de l input selon son type
         $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
         $valueInput = "";
         if ($question->type == "input") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"\"/>";
+            $result .= "<input type=\"text\" " . $idInput . " value=\"\"/>";
         }
         if ($question->type == "number" || $question->type == "expression") {
-            $result.="<input type=\"number\" " . $idInput . " value=\"\"/>";
+            $result .= "<input type=\"number\" " . $idInput . " value=\"\"/>";
         }
         if ($question->type == "date") {
-            $result.="<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
+            $result .= "<input type=\"date\" " . $idInput . " value=\"" . $valueInput . "\" placeholder=\"Format jj/mm/aaaa\"/>";
         }
         if ($question->type == "radio") {
 
@@ -354,7 +348,7 @@ class AnswerHTMLRenderer
             $arvalue = split(",", $values);
 
             foreach ($arvalue as $value) {
-                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $valueInput ? 'checked' : '') . ">&nbsp;" . $value . "</input>&nbsp;";
+                $result .= "<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $valueInput ? 'checked' : '') . ">&nbsp;" . $value . "</input>&nbsp;";
             }
         }
         if ($question->type == "checkbox") {
@@ -366,30 +360,28 @@ class AnswerHTMLRenderer
             foreach ($arvalue as $value) {
                 $checked = false;
 
-                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . ">&nbsp;" . $value . "</input><br>";
+                $result .= "<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . ">&nbsp;" . $value . "</input><br>";
             }
         }
         if ($question->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"100\" " . $idInput . " style=\"width: 220px; height: 70px;\" ></textarea>";
+            $result .= "<textarea rows=\"4\" cols=\"100\" " . $idInput . " style=\"width: 220px; height: 70px;\" ></textarea>";
         }
         if ($question->type == "list") {
             $values = $question->values;
             $arvalue = split(",", $values);
-            $result.="<select " . $idInput . ">";
-            $result.="<option  value=\"\"></option>";
+            $result .= "<select " . $idInput . ">";
+            $result .= "<option  value=\"\"></option>";
             foreach ($arvalue as $value) {
-                $result.="<option  value=\"" . $value . "\" " . ($valueInput == $value ? 'selected' : '') . ">" . $value . "</option>";
+                $result .= "<option  value=\"" . $value . "\" " . ($valueInput == $value ? 'selected' : '') . ">" . $value . "</option>";
             }
-            $result.="</select>";
+            $result .= "</select>";
         }
         //close question input
-        //add link delete
-        $imghtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'), array('class' => 'deleteQuestion', 'style' => 'height:20px;width:20px;'));
-        $result.="<div style=\"float:right;margin-left:5px;\">" . CHtml::link($imghtml, Yii::app()->createUrl('formulaire/deleteQuestion', array('idFormulaire' => $idMongoQuestionnaire, 'idQuestion' => $question->id))) . "</div>";
-        $result.="</div>";
+        $result .= "</div>";
 
         //close row input
-        $result.="</div>";
+        $result .= "</div>";
         return $result;
     }
+
 }
