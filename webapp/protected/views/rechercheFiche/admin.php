@@ -3,7 +3,6 @@ Yii::app()->clientScript->registerScript('search', "
 $('#selectDate').click(function(){
     if ($('#Answer_last_updated').val().length > 0) {
         $('#selectDate').attr('disabled',true);
-        $('#period').html('<i id=\"DateSelected\">- Période sélectionnée: ' + $('#Answer_last_updated').val() + ' - ' + $('#Answer_last_updated_to').val() + '</i>');
     }
     return false;
 });
@@ -12,7 +11,6 @@ $('#resetDate').click(function(){
     $('#Answer_last_updated').val('');
     $('#Answer_last_updated_to').val('');
     $('#selectDate').attr('disabled',false);
-    $('#DateSelected').remove();
     return false;
 });
 ");
@@ -40,12 +38,6 @@ $('#resetDate').click(function(){
             <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryAnonymous') . " " . Yii::t('common', 'to') ?></b></u></h4>
             <div class="row">
                 <div class="col-lg-12">
-                    <?php echo CHtml::label(Yii::t('common', 'individualSelection'), 'Answer_id_patient', array('style' => 'width:250px; padding-top:30px;')); ?>
-                    <?php echo $form->dropDownList($model, 'id_patient', Answer::model()->getIdPatientFiches(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%; height:120px;")); ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
                     <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type', array('style' => 'width:250px; padding-top:30px;')); ?>
                     <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("id" => "multiselect_groups", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%; height:120px;")); ?>
                 </div>
@@ -62,12 +54,6 @@ $('#resetDate').click(function(){
 
             <p style="margin-left:10px; color:red;"><?php echo Yii::t('common', 'notRestrict'); ?></p>
 
-        </div>
-
-        <div class="well">
-                <p id="multiselect_simple_selection">- Cas sélectionné(s): </p>
-                <p id="multiselect_groups_selection">- Formulaires sélectionné(s): </p>
-                <p id="period"><i id="DateSelected">- Période sélectionnée: </i></p>
         </div>
 
         <div class="row buttons">

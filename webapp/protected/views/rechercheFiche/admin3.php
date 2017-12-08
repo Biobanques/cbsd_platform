@@ -94,7 +94,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         <?php echo CHtml::submitButton(Yii::t('button', 'patientFormsAssociated'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
     </div>
     <div class="col-lg-6">
-<?php echo CHtml::submitButton('Nouvelle requête sur toutes les fiches', array('name' => 'searchAll', 'class' => 'btn btn-primary')); ?>
+<?php echo CHtml::submitButton(Yii::t('button', 'allPatientForms'), array('name' => 'searchAll', 'class' => 'btn btn-primary')); ?>
     </div>
 </div>
 

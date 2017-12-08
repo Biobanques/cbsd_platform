@@ -22,7 +22,8 @@ return array(
     'cancel' => 'Cancel',
     'updateThePatientForm' => 'Update patient form',
     'insert' => 'Insert',
-    'patientFormsAssociated' => 'Show patient forms associated with selected patient(s)',
+    'patientFormsAssociated' => 'Select all patient forms from selected cases',
+    'allPatientForms' => 'Select all patient forms from all cases',
     'exportQuery' => 'Export query',
     'selectAll' => 'Select All',
     'unselectAll' => 'Unselect all',
@@ -36,6 +37,7 @@ return array(
     'deleteSelectedPatientForms' => 'Delete selected patient forms',
     'deleteSelectedcolumnFileMakers' => 'Delete selected columns',
     'deleteSelectedImportedFiles' => 'Delete selected imported files',
-    'deleteSelectedProjects' => 'Delete selected projects'
+    'deleteSelectedProjects' => 'Delete selected projects',
+    'runQuery' => 'Run the query'
 );
 

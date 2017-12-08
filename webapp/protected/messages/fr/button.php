@@ -22,7 +22,8 @@ return array(
     'cancel' => 'Annuler',
     'updateThePatientForm' => 'Mettre à jour la fiche',
     'insert' => 'Saisir',
-    'patientFormsAssociated' => 'Afficher les fiches associées au(x) patient(s) sélectionné(s)',
+    'patientFormsAssociated' => 'Sélectionner toutes les fiches des cas sélectionnés',
+    'allPatientForms' => 'Sélectionner toutes les fiches de tous les cas',
     'exportQuery' => 'Exporter la requête',
     'selectAll' => 'Selectionner tout',
     'unselectAll' => 'Déselectionner tout',
@@ -36,5 +37,6 @@ return array(
     'deleteSelectedPatientForms' => 'Supprimer les fiches sélectionnées',
     'deleteSelectedcolumnFileMakers' => 'Supprimer les colonnes',
     'deleteSelectedImportedFiles' => 'Supprimer les fichiers importés sélectionnés',
-    'deleteSelectedProjects' => 'Supprimer les projets sélectionnés'
+    'deleteSelectedProjects' => 'Supprimer les projets sélectionnés',
+    'runQuery' => 'Lancer la requête'
 );

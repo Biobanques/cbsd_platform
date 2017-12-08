@@ -81,7 +81,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 
 <div style="margin-left:20px;">
     <div class="myBreadcrumb">
-        <div class="active"><?php echo CHtml::link(Yii::t('common', 'queryAnonymous'),array('rechercheFiche/admin'), array('style'=>'color:black')); ?></div>
+        <div class="active"><?php echo CHtml::link(Yii::t('common', 'queryAnonymous'), array('rechercheFiche/admin'), array('style' => 'color:black')); ?></div>
         <div class="active"><?php echo Yii::t('common', 'queryFormulation') ?></div>
         <div><?php echo Yii::t('common', 'resultQuery') ?></div>
     </div>
@@ -123,17 +123,19 @@ $('#search_fiche-form').on('click','.question-input',function(event){
             </div>
             <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
         </div>
-        <div class="row">
-            <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'availablePrvmt') ?></b></u></h4>
-            <div class="col-lg-12">
-                <?php echo CHtml::label(Yii::t('common', 'available'), "Available", array('style' => 'padding-top:30px;')); ?>
-                <?php echo CHtml::dropDownList("Available", 'prvt_available', CommonTools::getAllPrelevements(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:170px;")); ?>
+        <?php if ($html->type != null && in_array('neuropathologique', $html->type)) { ?>
+            <div class="row">
+                <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'availablePrvmt') ?></b></u></h4>
+                <div class="col-lg-12">
+                    <?php echo CHtml::label(Yii::t('common', 'available'), "Available", array('style' => 'padding-top:30px;')); ?>
+                    <?php echo CHtml::dropDownList("Available", 'prvt_available', CommonTools::getAllPrelevements(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:170px;")); ?>
+                </div>
             </div>
-        </div>
+        <?php } ?>
         <br><br><br><br>
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
-                <?php echo CHtml::submitButton(Yii::t('button', 'search'), array('id' => 'search', 'class' => 'btn btn-primary', 'onclick' => 'submit()')); ?>
+                <?php echo CHtml::submitButton(Yii::t('button', 'runQuery'), array('id' => 'search', 'class' => 'btn btn-primary', 'onclick' => 'submit()')); ?>
                 <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'onclick' => 'location.reload();')); ?>
             </div>
         </div>
@@ -143,9 +145,10 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 </div>
 
 <div id="queries">
-<h4><u><?php echo Yii::t('common', 'queriedAnonymous') ?></u></h4>
-<?php echo "<ul>" . $html->html . "</ul>"; ?>
-    <h4><u><?php echo Yii::t('common', 'availablePrvmt') ?></u></h4>
-    <p id="multiselect_simple_selection2">Available : </p>
-    <?php echo "<h4><u>" . Yii::t('common', 'queryFormulation') . "</u></h4><ul>" . $html->htmlQuestion . "</ul>" ?>
+    <h4><u><?php echo Yii::t('common', 'history') ?></u></h4>
+    <?php echo "<ul>" . $html->html . "</ul>"; ?>
+    <?php if ($html->type != null && in_array('neuropathologique', $html->type)) { ?>
+        <p id="multiselect_simple_selection2">Available samples: </p>
+    <?php } ?>
+    <?php echo "<ul>" . $html->htmlQuestion . "</ul>" ?>
 </div>

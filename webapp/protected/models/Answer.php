@@ -205,13 +205,6 @@ class Answer extends LoggableActiveRecord {
                     $index++;
                 }
             }
-
-            /* $criteria->id_patient = new MongoRegex($_SESSION['id_patientBis']);
-              $models = Answer::model()->findAll($criteria);
-              foreach ($models as $m) {
-              $m->available = 1;
-              $m->save();
-              } */
         } else {
             $query = Query::model()->find();
             if (isset($this->type) && !empty($this->type)) {
@@ -234,9 +227,9 @@ class Answer extends LoggableActiveRecord {
                 $criteria->addCond('login', 'in', $listUsers);
             }
 
-            if (isset($this->id_patient) && !empty($this->id_patient)) {
-                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($this->id_patient)));
-                $query->id_patient = $this->id_patient;
+            if (isset($_SESSION['id_patient']) && !empty($_SESSION['id_patient'])) {
+                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_SESSION['id_patient'])));
+                $query->id_patient = $_SESSION['id_patient'];
             }
 
             if (isset($_SESSION['id_patientAll'])) {

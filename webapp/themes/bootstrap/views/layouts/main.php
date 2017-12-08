@@ -66,7 +66,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
 
             <!-- use DateRangePicker http://www.daterangepicker.com/ -->
             <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-            
+
             <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery.uix.multiselect.css" />
             <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/common.css" />
 
@@ -100,7 +100,14 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                                 <li><a href="<?php echo Yii::app()->createUrl('site/patient'); ?>"><?php echo Yii::t('navbar', 'seizeForm'); ?></a></li>
                             <?php } ?>
                             <?php if (!Yii::app()->user->isGuest && Yii::app()->user->getActiveProfil() != "Clinicien" && Yii::app()->user->getActiveProfil() != "Chercheur") { ?>
-                                <li><a href="<?php echo Yii::app()->createUrl('rechercheFiche/admin'); ?>"><?php echo (Yii::app()->user->getActiveProfil() != "Administrateur de projet") ? Yii::t('navbar', 'searchForm') : Yii::t('navbar', 'projectManager'); ?></a></li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo (Yii::app()->user->getActiveProfil() != "Administrateur de projet") ? Yii::t('navbar', 'searchForm') : Yii::t('navbar', 'projectManager'); ?>
+                                        <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?php echo Yii::app()->createUrl('rechercheFiche/individualCases'); ?>"><?php echo Yii::t('common', 'individualSelection'); ?></a></li>
+                                        <li><a href="<?php echo Yii::app()->createUrl('rechercheFiche/admin'); ?>"><?php echo "Requête"; ?></a></li>
+                                    </ul>
+                                </li>
                             <?php } ?>
                             <?php if (Yii::app()->user->isAdmin() && Yii::app()->controller->action->id != "loginProfil") { ?>
                                 <li><a href="<?php echo Yii::app()->createUrl('administration/index'); ?>"><?php echo Yii::t('navbar', 'administration'); ?></a></li>
@@ -197,7 +204,7 @@ if (Yii::app()->controller->id == "site" && Yii::app()->controller->action->id =
                             <?php echo CHtml::link(CHtml::image(Base . '/images/logo_CSC_quadri.jpg', 'CSC', array('class' => 'logo')), 'http://www.csc.asso.fr/'); ?>
                             <?php echo CHtml::link(CHtml::image(Base . '/images/logobb.png', 'Biobanques', array('class' => 'logo')), 'http://www.biobanques.eu/'); ?>
                             <?php echo CHtml::link(CHtml::image(Base . '/images/logo_inserm.jpg', 'Inserm', array('class' => 'logo')), 'https://www.inserm.fr/'); ?>
-                            
+
                         </div>
                         Copyright &copy; <?php echo date('Y'); ?> by Biobanques. Version 0.5.<br/>
                         All Rights Reserved.

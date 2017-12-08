@@ -30,7 +30,7 @@ class RechercheFicheController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'admin2', 'admin3', 'view', 'update', 'exportCsv', 'searchReplace', 'resultSearch', 'viewOnePage'),
+                'actions' => array('individualCases', 'admin', 'admin2', 'admin3', 'view', 'update', 'exportCsv', 'searchReplace', 'resultSearch', 'viewOnePage'),
                 'expression' => '!Yii::app()->user->isGuest && $user->getActiveProfil() != "Clinicien"'
             ),
             array('deny', // deny all users
@@ -38,8 +38,31 @@ class RechercheFicheController extends Controller {
             ),
         );
     }
+    
+    public function actionIndividualCases() {
+        $_SESSION['id_patientBis'] = null;
+        $_SESSION['id_patientAll'] = null;
+        $_SESSION['Available'] = null;
+        $_SESSION['qmi'] = null;
+        $model = new Answer;
+        $criteria = new EMongoCriteria;
+        $criteria->available = 1;
+        $fiches = Answer::model()->findAll($criteria);
+        foreach ($fiches as $f) {
+            $f->available = 0;
+            $f->save();
+        }
+        $query = Query::model()->find();
+        if ($query != null) {
+            $query->delete();
+        }
+        $this->render('individualCases', array(
+            'model' => $model
+        ));
+    }
 
     public function actionAdmin() {
+        $_SESSION['id_patient'] = null;
         $_SESSION['id_patientBis'] = null;
         $_SESSION['id_patientAll'] = null;
         $_SESSION['Available'] = null;
@@ -127,8 +150,7 @@ class RechercheFicheController extends Controller {
             $_SESSION['Answer'] = $_POST['Answer'];
             $criteria = new EMongoCriteria;
             if (isset($_POST['Answer']['id_patient']) && $_POST['Answer']['id_patient'] != null) {
-                $query->id_patient = $_POST['Answer']['id_patient'];
-                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_POST['Answer']['id_patient'])));
+                $_SESSION['id_patient'] = $query->id_patient = $_POST['Answer']['id_patient'];
                 $htmlres .= "<li>" . Yii::t('common', 'anonymat') . " = ";
                 foreach ($_POST['Answer']['id_patient'] as $idPatient) {
                     $htmlres .= $idPatient;
@@ -140,7 +162,6 @@ class RechercheFicheController extends Controller {
             }
             if (isset($_POST['Answer']['type']) && $_POST['Answer']['type'] != null) {
                 $query->type = $_POST['Answer']['type'];
-                $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($_POST['Answer']['type'])));
                 $htmlres .= "<li>" . Yii::t('common', 'formType') . " = ";
                 foreach ($_POST['Answer']['type'] as $typeForm) {
                     $htmlres .= $typeForm;
