@@ -136,6 +136,7 @@ class Answer extends LoggableActiveRecord {
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
         if (isset($_SESSION['id_patientBis'])) {
+            $criteria->addCond('id_patient', '==', new MongoRegex($_SESSION['id_patientBis']));
             $criteriaAvailable = new EMongoCriteria;
 
             $indexQmi = 0;
@@ -233,7 +234,19 @@ class Answer extends LoggableActiveRecord {
             }
 
             if (isset($_SESSION['id_patientAll'])) {
-                $criteria->id_patient = new MongoRegex($_SESSION['id_patientAll']);
+                //$criteria->id_patient = new MongoRegex($_SESSION['id_patientAll']);
+                $criteriaAvailable = new EMongoCriteria;
+                $nbCriteriaAllQmi = array();
+                $indexAllQmi = 0;
+                foreach ($_SESSION['allqmi'] as $qmi) {                
+                    $nbCriteriaAllQmi = '$criteriaQmi' . $indexAllQmi;
+                    $nbCriteriaAllQmi = new EMongoCriteria;
+                    $nbCriteriaAllQmi->addCond('questionnaireMongoId', '==', new MongoId($qmi));
+                    $model = Answer::model()->find($nbCriteriaAllQmi);
+                    $model->available = 1;
+                    $model->save();
+                    $indexAllQmi++;
+                }
             }
 
             if (isset($this->name) && !empty($this->name)) {

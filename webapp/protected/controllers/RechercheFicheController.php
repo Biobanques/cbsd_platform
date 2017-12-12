@@ -204,10 +204,12 @@ class RechercheFicheController extends Controller {
 
         if (isset($_POST['searchAll']) && isset(Yii::app()->session['criteria'])) {
             $ficheId = array();
+            $ficheMongoId = array();
             $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
             if ($allFiches != null) {
                 foreach ($allFiches as $fiche) {
                     array_push($ficheId, $fiche->id_patient);
+                    array_push($ficheMongoId, $fiche->questionnaireMongoId);
                 }
                 $regex = '/^';
                 foreach ($ficheId as $idFiche) {
@@ -215,6 +217,7 @@ class RechercheFicheController extends Controller {
                 }
                 $regex .= '$/i';
                 $_SESSION['id_patientAll'] = $regex;
+                $_SESSION['allqmi'] = $ficheMongoId;
             }
         }
         if (isset($_POST['question']) && $_POST['question'] != null || isset($_POST['Available']) && $_POST['Available'] != null) {
