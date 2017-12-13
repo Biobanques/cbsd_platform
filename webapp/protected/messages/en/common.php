@@ -302,5 +302,7 @@ return array(
     . 'You can also edit or delete reference centers using pictures at the end of the lines.',
     'period' => 'Period',
     'noRestriction' => 'No restriction',
-    'availablePrvmt' => 'Available sample(s)'
+    'availablePrvmt' => 'Available sample(s)',
+    'history' => 'History',
+    'okQuery' => 'Validate the query'
 );

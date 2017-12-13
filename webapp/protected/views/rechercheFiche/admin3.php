@@ -11,8 +11,8 @@ Yii::app()->clientScript->registerScript('getUnchecked', "
 
 <div style="margin-left:20px;">
     <div class="myBreadcrumb">
-        <div class="active"><?php echo CHtml::link(Yii::t('common', 'queryAnonymous'),array('rechercheFiche/admin'), array('style'=>'color:black')); ?></div>
-        <div class="active"><?php echo CHtml::link(Yii::t('common', 'queryFormulation'),array('rechercheFiche/admin2'), array('style'=>'color:black')); ?></div>
+        <div class="active"><?php echo CHtml::link(Yii::t('common', 'queryAnonymous'), array('rechercheFiche/admin'), array('style' => 'color:black')); ?></div>
+        <div class="active"><?php echo CHtml::link(Yii::t('common', 'queryFormulation'), array('rechercheFiche/admin2'), array('style' => 'color:black')); ?></div>
         <div><?php echo Yii::t('common', 'resultQuery') ?></div>
     </div>
 </div>
@@ -24,14 +24,37 @@ if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
     <h1><?php echo Yii::t('common', 'availablePatientForms') ?></h1>
 <?php } ?>
 <div id="queries">
-    <h4><u><?php echo Yii::t('common', 'queriedAnonymous') ?></u></h4>
-    <?php echo "<ul>" . $html->html . "</ul>"; ?>
+    <h4><u><?php echo Yii::t('common', 'history') ?></u></h4>
 
     <div class="row">
         <div class="col-lg-10">
-            <h4><u><?php echo Yii::t('common', 'availablePrvmt') ?></u></h4>
+            <?php if (isset($html->id_patient) && $html->id_patient != null) { ?>
+                <ul><li>N° anonymat : 
+                        <?php
+                        foreach ($html->id_patient as $id_patient) {
+                            echo $id_patient;
+                            if ($id_patient != end($html->id_patient)) {
+                                echo ", ";
+                            }
+                        }
+                        ?>
+                    </li></ul>
+            <?php } ?>
+            <?php if (isset($html->type) && $html->type != null) { ?>
+                <ul><li>Type du formulaire : 
+                        <?php
+                        foreach ($html->type as $type) {
+                            echo $type;
+                            if ($type != end($html->type)) {
+                                echo ", ";
+                            }
+                        }
+                        ?>
+                    </li></ul>
+            <?php } ?>
+            <?php echo "<ul>" . $html->htmlQuestion . "</ul>" ?>
+            <?php echo Yii::t('common', 'availablePrvmt') . " : " ?>
             <?php echo "<ul>" . $html->htmlPrvmt . "</ul>"; ?>
-            <?php echo "<h4><u>" . Yii::t('common', 'queryFormulation') . "</u></h4><ul>" . $html->htmlQuestion . "</ul>" ?>
         </div>
         <div class="col-lg-2">
             <?php
@@ -42,9 +65,9 @@ if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
             ?><span><?php echo Yii::t('button', 'exportCSV') ?></span>
         </div>
     </div>
-    
+
 </div>
-    
+
 <br>
 
 <?php echo CHtml::link('Nouvelle requête', array('rechercheFiche/admin'), array('class' => 'btn btn-danger')); ?>
@@ -94,7 +117,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         <?php echo CHtml::submitButton(Yii::t('button', 'patientFormsAssociated'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
     </div>
     <div class="col-lg-6">
-<?php echo CHtml::submitButton(Yii::t('button', 'allPatientForms'), array('name' => 'searchAll', 'class' => 'btn btn-primary')); ?>
+        <?php echo CHtml::submitButton(Yii::t('button', 'allPatientForms'), array('name' => 'searchAll', 'class' => 'btn btn-primary')); ?>
     </div>
 </div>
 

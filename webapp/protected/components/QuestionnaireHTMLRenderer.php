@@ -362,7 +362,7 @@ class QuestionnaireHTMLRenderer {
 
         $result .= $imgHtml;
 
-        $result .= CHtml::button('OK', array('class' => 'btn btn-success validateQuery', 'style' => 'margin-left:15px;'));
+        $result .= CHtml::button(Yii::t('common', 'okQuery'), array('class' => 'btn btn-success validateQuery', 'style' => 'margin-left:15px;'));
         //close row input
         $result .= "</div>";
         return $result;

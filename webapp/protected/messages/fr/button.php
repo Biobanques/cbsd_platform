@@ -38,5 +38,6 @@ return array(
     'deleteSelectedcolumnFileMakers' => 'Supprimer les colonnes',
     'deleteSelectedImportedFiles' => 'Supprimer les fichiers importés sélectionnés',
     'deleteSelectedProjects' => 'Supprimer les projets sélectionnés',
-    'runQuery' => 'Lancer la requête'
+    'runQuery' => 'Lancer la requête',
+    'addVariable' => 'Ajouter une variable'
 );

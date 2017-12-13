@@ -575,7 +575,7 @@ class Answer extends LoggableActiveRecord {
         $answers = $this->getAllDetailledQuestionsByTypeForm($typeForm);
         foreach ($answers as $answer) {
             if (!in_array($answer->answer->id, $prvmt)) {
-                $result[$answer->answer->id] = "[" . $answer->group . "] " . $answer->answer->label_fr;
+                $result[$answer->answer->id] = "[" . $answer->fiche . "] " . $answer->answer->label_fr;
             }
         }
         natcasesort($result);

@@ -308,5 +308,7 @@ return array(
     . 'Vous pouvez également modifier ou supprimer des centres de référence en utilisant les images en fin de ligne.',
     'period' => 'Période',
     'noRestriction' => 'Pas de restriction',
-    'availablePrvmt' => 'Prélèvement(s) disponible(s)'
+    'availablePrvmt' => 'Prélèvement(s) disponible(s)',
+    'history' => 'Historique',
+    'okQuery' => 'Valider la requête'
 );

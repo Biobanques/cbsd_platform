@@ -38,6 +38,7 @@ return array(
     'deleteSelectedcolumnFileMakers' => 'Delete selected columns',
     'deleteSelectedImportedFiles' => 'Delete selected imported files',
     'deleteSelectedProjects' => 'Delete selected projects',
-    'runQuery' => 'Run the query'
+    'runQuery' => 'Run the query',
+    'addVariable' => 'Add variable'
 );
 

@@ -55,6 +55,11 @@ $('#resetDate').click(function(){
             <p style="margin-left:10px; color:red;"><?php echo Yii::t('common', 'notRestrict'); ?></p>
 
         </div>
+        
+        <div class="well">
+                <p id="multiselect_groups_selection">- Formulaires sélectionné(s): </p>
+                <p id="period"><i id="DateSelected">- Période sélectionnée: </i></p>
+        </div>
 
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
