@@ -135,13 +135,28 @@ class Answer extends LoggableActiveRecord {
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
-        if (isset($_SESSION['id_patientBis'])) {
+        $query = Query::model()->find();
+        if (isset($_POST['patientAll'])) {
+            $ficheId = array();
+            $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
+            if ($allFiches != null) {
+                foreach ($allFiches as $fiche) {
+                    array_push($ficheId, $fiche->id_patient);
+                }
+                $regex = '/^';
+                foreach ($ficheId as $idFiche) {
+                    $regex .= $idFiche . '$|^';
+                }
+                $regex .= '$/i';
+            }
+            $criteria->addCond('id_patient', '==', new MongoRegex($regex));
+        } elseif (isset($_SESSION['id_patientBis'])) {
             $criteria->addCond('id_patient', '==', new MongoRegex($_SESSION['id_patientBis']));
             $criteriaAvailable = new EMongoCriteria;
 
-            $indexQmi = 0;
+            /*$indexQmi = 0;
             $nbCriteriaQmi = array();
-            foreach ($_SESSION['qmi'] as $qmi) {                
+            foreach ($_SESSION['qmi'] as $qmi) {
                 $nbCriteriaQmi = '$criteriaQmi' . $indexQmi;
                 $nbCriteriaQmi = new EMongoCriteria;
                 $nbCriteriaQmi->addCond('questionnaireMongoId', '==', new MongoId($qmi));
@@ -149,7 +164,7 @@ class Answer extends LoggableActiveRecord {
                 $model->available = 1;
                 $model->save();
                 $indexQmi++;
-            }
+            }*/
 
             if (isset($_SESSION['Available']) && !empty($_SESSION['Available'])) {
                 $first = true;
@@ -165,6 +180,11 @@ class Answer extends LoggableActiveRecord {
             }
 
             if (isset($this->dynamics) && !empty($this->dynamics)) {
+                if ($query->dynamics == null) {
+                    $query->dynamics = $this->dynamics;
+                } else {
+                    $query->dynamics = array_merge($query->dynamics, $this->dynamics);
+                }
                 $index = 0;
                 $nbCriteria = array();
                 foreach ($this->dynamics as $questionId => $answerValue) {
@@ -205,9 +225,11 @@ class Answer extends LoggableActiveRecord {
                     }
                     $index++;
                 }
+                if (Yii::app()->controller->id != "fiche") {
+                    $query->save();
+                }
             }
         } else {
-            $query = Query::model()->find();
             if (isset($this->type) && !empty($this->type)) {
                 $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($this->type)));
                 $query->type = $this->type;
@@ -234,11 +256,11 @@ class Answer extends LoggableActiveRecord {
             }
 
             if (isset($_SESSION['id_patientAll'])) {
-                //$criteria->id_patient = new MongoRegex($_SESSION['id_patientAll']);
+                $criteria->id_patient = new MongoRegex($_SESSION['id_patientAll']);
                 $criteriaAvailable = new EMongoCriteria;
                 $nbCriteriaAllQmi = array();
                 $indexAllQmi = 0;
-                foreach ($_SESSION['allqmi'] as $qmi) {                
+                foreach ($_SESSION['allqmi'] as $qmi) {
                     $nbCriteriaAllQmi = '$criteriaQmi' . $indexAllQmi;
                     $nbCriteriaAllQmi = new EMongoCriteria;
                     $nbCriteriaAllQmi->addCond('questionnaireMongoId', '==', new MongoId($qmi));
@@ -325,10 +347,10 @@ class Answer extends LoggableActiveRecord {
                 $query->save();
             }
         }
-        if (isset($criteriaAvailable)) {
+        /*if (isset($criteriaAvailable)) {
             $criteriaAvailable->addCond('available', '==', 1);
             $criteria->mergeWith($criteriaAvailable, '$or');
-        }
+        }*/
         $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
         $criteria->sort('type', EMongoCriteria::SORT_ASC);
         $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
@@ -571,6 +593,7 @@ class Answer extends LoggableActiveRecord {
      */
     public function getAllQuestionsByTypeForm($typeForm) {
         $result = array();
+        $query = Query::model()->find();
         $prvmt = Prelevement::model()->getAllPrelevements();
         $answers = $this->getAllDetailledQuestionsByTypeForm($typeForm);
         foreach ($answers as $answer) {
@@ -579,6 +602,29 @@ class Answer extends LoggableActiveRecord {
             }
         }
         natcasesort($result);
+        return $result;
+    }
+    
+    public function getAllDetailledQuestionsByTypeForm($typeForm) {
+        $result = array();
+        if ($typeForm != null) {
+            $criteria = new EMongoCriteria;
+            $criteria->type = new MongoRegex(CommonTools::regexString($typeForm));
+            $fiches = Answer::model()->findAll($criteria);
+        } else {
+            $fiches = Answer::model()->findAll();
+        }
+        foreach ($fiches as $fiche) {
+            foreach ($fiche->answers_group as $group) {
+                foreach ($group->answers as $answer) {
+                    $toAdd = new stdClass();
+                    $toAdd->answer = $answer;
+                    $toAdd->fiche = $fiche->name;
+                    $toAdd->group = $group->title_fr;
+                    $result[] = $toAdd;
+                }
+            }
+        }
         return $result;
     }
 
@@ -678,29 +724,6 @@ class Answer extends LoggableActiveRecord {
             }
         }
         return $type;
-    }
-
-    public function getAllDetailledQuestionsByTypeForm($typeForm) {
-        $result = array();
-        if ($typeForm != null) {
-            $criteria = new EMongoCriteria;
-            $criteria->type = new MongoRegex(CommonTools::regexString($typeForm));
-            $fiches = Answer::model()->findAll($criteria);
-        } else {
-            $fiches = Answer::model()->findAll();
-        }
-        foreach ($fiches as $fiche) {
-            foreach ($fiche->answers_group as $group) {
-                foreach ($group->answers as $answer) {
-                    $toAdd = new stdClass();
-                    $toAdd->answer = $answer;
-                    $toAdd->fiche = $fiche->name;
-                    $toAdd->group = $group->title_fr;
-                    $result[] = $toAdd;
-                }
-            }
-        }
-        return $result;
     }
 
     public function findAllDetailledQuestionById($id) {

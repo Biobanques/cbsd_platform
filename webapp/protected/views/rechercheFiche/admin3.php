@@ -1,6 +1,12 @@
 <?php
 Yii::app()->clientScript->registerScript('getUnchecked', "
-       function getUncheckeds(){
+$('#selectAll').click(function(){
+    $('input:checkbox').prop('checked', true);
+    });
+    $('#deselectAll').click(function(){
+    $('input:checkbox').prop('checked', false);
+    });
+function getUncheckeds(){
             var unch = [];
             $('[name^=Answer_id_patient]').not(':checked,[name$=all]').each(function(){unch.push($(this).val());});
             return unch.toString();
@@ -8,7 +14,22 @@ Yii::app()->clientScript->registerScript('getUnchecked', "
        "
 );
 ?>
+<style>
+    button.link {
+        -moz-user-select: text;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1em;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+    }
 
+    button.link:hover span {
+        text-decoration: underline;
+    }
+</style>
 <div style="margin-left:20px;">
     <div class="myBreadcrumb">
         <div class="active"><?php echo CHtml::link(Yii::t('common', 'queryAnonymous'), array('rechercheFiche/admin'), array('style' => 'color:black')); ?></div>
@@ -72,12 +93,13 @@ if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
 
 <?php echo CHtml::link('Nouvelle requête', array('rechercheFiche/admin'), array('class' => 'btn btn-danger')); ?>
 
+<form action="/cbsd_platform/webapp/index.php?r=rechercheFiche/admin3" method="post"><a href="#" id="selectAll">Tout sélectionner</a> | <a href="#" id="deselectAll">Tout désélectionner</a> | <input type="hidden" name="patientAll" value="patientAll"><button class="link" id="patientAll"><span>Toutes les fiches</span></button></form>
+
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl('rechercheFiche/admin2'),
     'method' => 'post',
         ));
-
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'searchFiche-grid',
     'dataProvider' => $model->search(),

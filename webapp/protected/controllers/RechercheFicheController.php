@@ -38,7 +38,7 @@ class RechercheFicheController extends Controller {
             ),
         );
     }
-    
+
     public function actionIndividualCases() {
         $_SESSION['id_patientBis'] = null;
         $_SESSION['id_patientAll'] = null;
@@ -63,6 +63,7 @@ class RechercheFicheController extends Controller {
 
     public function actionAdmin() {
         $_SESSION['id_patient'] = null;
+        $_SESSION['patientAll'] = null;
         $_SESSION['id_patientBis'] = null;
         $_SESSION['id_patientAll'] = null;
         $_SESSION['Available'] = null;
@@ -89,10 +90,10 @@ class RechercheFicheController extends Controller {
         $htmlres = null;
         $questionnaireMongoId = array();
         if (isset($_SESSION['checkedIds'])) {
-                foreach ($_SESSION['checkedIds'] as $ar) {
-                    Yii::app()->user->setState($ar, 0);
-                }
+            foreach ($_SESSION['checkedIds'] as $ar) {
+                Yii::app()->user->setState($ar, 0);
             }
+        }
         $query = Query::model()->find();
         if ($query == null) {
             $query = new Query;
@@ -110,7 +111,7 @@ class RechercheFicheController extends Controller {
                         if (!in_array($id->questionnaireMongoId, $questionnaireMongoId)) {
                             array_push($questionnaireMongoId, $id->questionnaireMongoId);
                         }
-                        
+
                         $htmlres .= $id->id_patient . ", ";
                     }
                 }
@@ -146,6 +147,7 @@ class RechercheFicheController extends Controller {
             }
         }
 
+        // Restreindre la requête -> Formuler la requête
         if (isset($_POST['Answer'])) {
             $_SESSION['Answer'] = $_POST['Answer'];
             $criteria = new EMongoCriteria;
@@ -196,10 +198,10 @@ class RechercheFicheController extends Controller {
         if (isset($_POST['Available'])) {
             $_SESSION['Available'] = $_POST['Available'];
             foreach ($_SESSION['Available'] as $kAvailable => $vAvailable) {
-                $htmlPrvmt .= "<li>" . $vAvailable . "</li>";
+                $htmlPrvmt .= "<li>" . $vAvailable . " = Available</li>";
             }
         }
-        $html->htmlPrvmt = $htmlPrvmt;
+        $html->htmlQuestion .= $htmlPrvmt;
         $html->save();
 
         if (isset($_POST['searchAll']) && isset(Yii::app()->session['criteria'])) {

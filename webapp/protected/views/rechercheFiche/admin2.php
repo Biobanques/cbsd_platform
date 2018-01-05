@@ -118,7 +118,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
                 ));
                 echo CHtml::button(Yii::t('button', 'logicOperator'), array('id' => 'addFilterButton', 'class' => 'btn btn-info btn-sm', 'style' => 'margin-left:10px; margin-bottom:10px; font-size: 1.0em; font-weight:bold;', 'disabled' => 'disabled'));
                 echo CHtml::image(Yii::app()->request->baseUrl . '/images/loading.gif', 'loading', array('id' => "loading", 'style' => "margin-left: 10px; margin-bottom:10px; display:none;"));
-                echo CHtml::button(Yii::t('button', 'addAttribute'), array('id' => 'resetFilterButton', 'class' => 'btn btn-success btn-sm', 'style' => 'margin-left:10px; margin-bottom:10px; font-size: 1.0em; font-weight:bold; display:none;'));
+                echo CHtml::button(Yii::t('button', 'addVariable'), array('id' => 'resetFilterButton', 'class' => 'btn btn-success btn-sm', 'style' => 'margin-left:10px; margin-bottom:10px; font-size: 1.0em; font-weight:bold; display:none;'));
                 ?>
             </div>
             <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
@@ -145,10 +145,33 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 </div>
 
 <div id="queries">
-    <h4><u><?php echo Yii::t('common', 'history') ?></u></h4>
-    <?php echo "<ul>" . $html->html . "</ul>"; ?>
+    <div id="selectedQueries">
+    <h4><u><?php echo "Sélectionné"; ?></u></h4>
     <?php if ($html->type != null && in_array('neuropathologique', $html->type)) { ?>
-        <p id="multiselect_simple_selection2"><?php echo Yii::t('common', 'availablePrvmt') . " : "; ?> </p>
-    <?php } ?>
-      <?php echo "<ul>" . $html->htmlQuestion . "</ul>" ?>
+        <ul id="showPrvmt"><li><p id="multiselect_simple_selection2"></p></li></ul>
+            <?php } ?>
+    </div>
+    <h4><u><?php echo Yii::t('common', 'history') ?></u></h4>
+    <?php
+    if (isset($html->id_patient) && $html->id_patient != null) {
+        echo "<ul><li>N° d'anonymat = ";
+        foreach ($html->id_patient as $v) {
+            echo $v . ", ";
+        }
+        echo "</li></ul>";
+    }
+    ?>
+    <?php
+    if (isset($html->type) && $html->type != null) {
+        echo "<ul><li>Type du formulaire = ";
+        foreach ($html->type as $v) {
+            echo $v;
+            if ($v != end($html->type)) {
+                echo ", ";
+            }
+        }
+        echo "</li></ul>";
+    }
+    ?>
+<?php echo "<ul>" . $html->htmlQuestion . "</ul>" ?>
 </div>
