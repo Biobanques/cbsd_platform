@@ -86,6 +86,7 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionAdmin2() {
+        $_SESSION['test'] = null;
         $fiche = null;
         $htmlres = null;
         $questionnaireMongoId = array();

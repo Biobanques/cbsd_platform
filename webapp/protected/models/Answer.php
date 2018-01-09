@@ -148,23 +148,15 @@ class Answer extends LoggableActiveRecord {
                     $regex .= $idFiche . '$|^';
                 }
                 $regex .= '$/i';
+                $criteria->addCond('id_patient', '==', new MongoRegex($regex));
+                $_SESSION['test'] = $regex;
+            } else {
+                $criteria->addCond('id_patient', '==', "999999999999999");
+                $_SESSION['test'] = "999999999999999";
             }
-            $criteria->addCond('id_patient', '==', new MongoRegex($regex));
         } elseif (isset($_SESSION['id_patientBis'])) {
             $criteria->addCond('id_patient', '==', new MongoRegex($_SESSION['id_patientBis']));
             $criteriaAvailable = new EMongoCriteria;
-
-            /*$indexQmi = 0;
-            $nbCriteriaQmi = array();
-            foreach ($_SESSION['qmi'] as $qmi) {
-                $nbCriteriaQmi = '$criteriaQmi' . $indexQmi;
-                $nbCriteriaQmi = new EMongoCriteria;
-                $nbCriteriaQmi->addCond('questionnaireMongoId', '==', new MongoId($qmi));
-                $model = Answer::model()->find($nbCriteriaQmi);
-                $model->available = 1;
-                $model->save();
-                $indexQmi++;
-            }*/
 
             if (isset($_SESSION['Available']) && !empty($_SESSION['Available'])) {
                 $first = true;
@@ -351,6 +343,10 @@ class Answer extends LoggableActiveRecord {
             $criteriaAvailable->addCond('available', '==', 1);
             $criteria->mergeWith($criteriaAvailable, '$or');
         }*/
+        if (isset($_GET['ajax']) && isset($_SESSION['test'])) {
+            $criteria = new EMongoCriteria;
+            $criteria->addCond('id_patient', '==', new MongoRegex($_SESSION['test']));
+        }
         $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
         $criteria->sort('type', EMongoCriteria::SORT_ASC);
         $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);

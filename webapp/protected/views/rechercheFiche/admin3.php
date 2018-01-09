@@ -133,6 +133,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
     ),
 ));
+if ($model->search()->getTotalItemCount() > 0) {
 ?>
 <div class="row">
     <div class="col-lg-6">
@@ -143,4 +144,4 @@ $this->widget('zii.widgets.grid.CGridView', array(
     </div>
 </div>
 
-<?php $this->endWidget(); ?>
+<?php } $this->endWidget(); ?>
