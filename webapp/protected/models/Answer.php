@@ -158,19 +158,6 @@ class Answer extends LoggableActiveRecord {
             $criteria->addCond('id_patient', '==', new MongoRegex($_SESSION['id_patientBis']));
             $criteriaAvailable = new EMongoCriteria;
 
-            if (isset($_SESSION['Available']) && !empty($_SESSION['Available'])) {
-                $first = true;
-                foreach ($_SESSION['Available'] as $dispo) {
-                    $this->dynamics[$dispo] = "Available";
-                    if (($first)) {
-                        $this->condition[$dispo] = '$and';
-                        $first = false;
-                    } else {
-                        $this->condition[$dispo] = '$or';
-                    }
-                }
-            }
-
             if (isset($this->dynamics) && !empty($this->dynamics)) {
                 if ($query->dynamics == null) {
                     $query->dynamics = $this->dynamics;
@@ -247,22 +234,6 @@ class Answer extends LoggableActiveRecord {
                 $query->id_patient = $_SESSION['id_patient'];
             }
 
-            if (isset($_SESSION['id_patientAll'])) {
-                $criteria->id_patient = new MongoRegex($_SESSION['id_patientAll']);
-                $criteriaAvailable = new EMongoCriteria;
-                $nbCriteriaAllQmi = array();
-                $indexAllQmi = 0;
-                foreach ($_SESSION['allqmi'] as $qmi) {
-                    $nbCriteriaAllQmi = '$criteriaQmi' . $indexAllQmi;
-                    $nbCriteriaAllQmi = new EMongoCriteria;
-                    $nbCriteriaAllQmi->addCond('questionnaireMongoId', '==', new MongoId($qmi));
-                    $model = Answer::model()->find($nbCriteriaAllQmi);
-                    $model->available = 1;
-                    $model->save();
-                    $indexAllQmi++;
-                }
-            }
-
             if (isset($this->name) && !empty($this->name)) {
                 $criteria->addCond('name', '==', new MongoRegex(CommonTools::regexString($this->name)));
             }
@@ -275,24 +246,14 @@ class Answer extends LoggableActiveRecord {
                 $query->last_updated = $answerFormat;
             }
 
-            if (isset($_SESSION['Available']) && !empty($_SESSION['Available'])) {
-                $first = true;
-                foreach ($_SESSION['Available'] as $dispo) {
-                    $this->dynamics[$dispo] = "Available";
-                    if (($first)) {
-                        $this->condition[$dispo] = '$and';
-                        $first = false;
-                    } else {
-                        $this->condition[$dispo] = '$or';
-                    }
-                }
-            }
-
             if (isset($this->dynamics) && !empty($this->dynamics)) {
-                if ($query->dynamics == null) {
-                    $query->dynamics = $this->dynamics;
-                } else {
-                    $query->dynamics = array_merge($query->dynamics, $this->dynamics);
+                if (isset($query->dynamics) && $query->dynamics != null) {
+                    if (isset($_SESSION['id_patientAll'])) {
+                        foreach ($query->dynamics as $dynamicKey => $dynamicValue) {
+                            $this->dynamics[$dynamicKey] = $dynamicValue['answerValue'];
+                            $this->compare[$dynamicKey] = $dynamicValue['compare'];
+                        }
+                    }
                 }
                 $index = 0;
                 $nbCriteria = array();
@@ -330,19 +291,36 @@ class Answer extends LoggableActiveRecord {
                         }
                     }
                     if ($index != 0) {
-                        $criteria->mergeWith($nbCriteria, $this->condition[$questionId]);
+                        if (isset($_SESSION['id_patientAll'])) {
+                            $criteria->mergeWith($nbCriteria, '$or');
+                        } else {
+                            $criteria->mergeWith($nbCriteria, '$and');
+                        }
+                    } else {
+                        if (isset($_SESSION['id_patientAll'])) {
+                            $criteria->mergeWith($nbCriteria, '$and');
+                        }
                     }
                     $index++;
+                    $dynamics = array();
+                    $dynamics['compare'] = !empty($this->compare[$questionId]) ? $this->compare[$questionId] : null;
+                    $dynamics['answerValue'] = $answerValue;
+                    $query->dynamics[$questionId] = $dynamics;
+
+                    if (Yii::app()->controller->id != "fiche") {
+                        $query->save();
+                    }
+                }
+                if (isset($_SESSION['id_patientAll'])) {
+                    $criteriaTest = new EMongoCriteria;
+                    $criteriaTest->id_patient = new MongoRegex($_SESSION['id_patientAll']);
+                    $criteria->mergeWith($criteriaTest, '$and');
                 }
             }
             if (Yii::app()->controller->id != "fiche") {
                 $query->save();
             }
         }
-        /*if (isset($criteriaAvailable)) {
-            $criteriaAvailable->addCond('available', '==', 1);
-            $criteria->mergeWith($criteriaAvailable, '$or');
-        }*/
         if (isset($_GET['ajax']) && isset($_SESSION['test'])) {
             $criteria = new EMongoCriteria;
             $criteria->addCond('id_patient', '==', new MongoRegex($_SESSION['test']));
@@ -589,23 +567,21 @@ class Answer extends LoggableActiveRecord {
      */
     public function getAllQuestionsByTypeForm($typeForm) {
         $result = array();
-        $query = Query::model()->find();
-        $prvmt = Prelevement::model()->getAllPrelevements();
         $answers = $this->getAllDetailledQuestionsByTypeForm($typeForm);
-        foreach ($answers as $answer) {
-            if (!in_array($answer->answer->id, $prvmt)) {
+        if (!empty($answers)) {
+            foreach ($answers as $answer) {
                 $result[$answer->answer->id] = "[" . $answer->fiche . "] " . $answer->answer->label_fr;
             }
+            natcasesort($result);
         }
-        natcasesort($result);
         return $result;
     }
-    
+
     public function getAllDetailledQuestionsByTypeForm($typeForm) {
         $result = array();
         if ($typeForm != null) {
             $criteria = new EMongoCriteria;
-            $criteria->type = new MongoRegex(CommonTools::regexString($typeForm));
+            $criteria->name = $typeForm;
             $fiches = Answer::model()->findAll($criteria);
         } else {
             $fiches = Answer::model()->findAll();
@@ -860,7 +836,6 @@ class Answer extends LoggableActiveRecord {
      * @result array : each line = each model answer
      */
     public function resultToArray($models, $filter) {
-        $typeQuestion = array();
         $result = array();
         $ansQuestion = array();
         $headerLineFixe = $this->attributeExportedLabels();

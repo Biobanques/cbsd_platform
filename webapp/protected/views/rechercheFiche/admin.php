@@ -6,13 +6,6 @@ $('#selectDate').click(function(){
     }
     return false;
 });
-
-$('#resetDate').click(function(){
-    $('#Answer_last_updated').val('');
-    $('#Answer_last_updated_to').val('');
-    $('#selectDate').attr('disabled',false);
-    return false;
-});
 ");
 ?>
 <div style="margin-left:20px;">
@@ -34,31 +27,26 @@ $('#resetDate').click(function(){
         ?>
 
         <div style="border:1px solid black;">
+            
+            <h4 style="margin-left:10px;"><u><b><?php echo "Requête portant sur :" ?></b></u></h4>
 
-            <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryAnonymous') . " " . Yii::t('common', 'to') ?></b></u></h4>
             <div class="row">
                 <div class="col-lg-12">
-                    <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type', array('style' => 'width:250px; padding-top:30px;')); ?>
-                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getArrayType(), array("id" => "multiselect_groups", "class" => "multiselect", "multiple" => "multiple", "style" => "width:60%; height:120px;")); ?>
+                    <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type'); ?>
+                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getNomsFiches()); ?>
                 </div>
             </div>
 
             <div class ="row">
                 <div class="col-lg-12">
-                    <?php echo CHtml::label(Yii::t('common', 'restrictPeriod'), 'Answer_last_updated', array('style' => 'width:250px; padding-top:10px;')); ?>
+                    <?php echo CHtml::label(Yii::t('common', 'restrictPeriod'), 'Answer_last_updated'); ?>
                     <?php echo $form->textField($model, 'last_updated', array("onfocus" => "datePicker(this.name)", 'placeholder' => 'Du')); ?>
                     <?php echo CHtml::textField('Answer[last_updated_to]', '', array("onfocus" => "datePicker(this.name)", 'placeholder' => 'Au')); ?>
-                    <?php echo CHtml::submitButton(Yii::t('button', 'select'), array('id' => 'selectDate', 'class' => 'btn btn-success btn-sm', 'style' => 'background-color: #4cae4c; font-size: 1.0em;')); ?>
                 </div>
             </div>
 
             <p style="margin-left:10px; color:red;"><?php echo Yii::t('common', 'notRestrict'); ?></p>
 
-        </div>
-        
-        <div class="well">
-                <p id="multiselect_groups_selection">- Formulaires sélectionné(s): </p>
-                <p id="period"><i id="DateSelected">- Période sélectionnée: </i></p>
         </div>
 
         <div class="row buttons">

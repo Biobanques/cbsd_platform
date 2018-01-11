@@ -47,6 +47,10 @@ class FicheController extends Controller {
         $_SESSION['id_patientBis'] = null;
         $_SESSION['id_patientAll'] = null;
         $_SESSION['Available'] = null;
+        $_SESSION['id_patient'] = null;
+        $_SESSION['patientAll'] = null;
+        $_SESSION['qmi'] = null;
+        $_SESSION['test'] = null;
         $model = new Answer('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Answer'])) {

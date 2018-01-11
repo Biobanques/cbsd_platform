@@ -200,6 +200,7 @@ class Questionnaire extends LoggableActiveRecord
                 $res[$fiche->name] = $fiche->name;
             }
         }
+        $res["Import Neuropath"] = "Import Neuropath";
         asort($res, SORT_NATURAL | SORT_FLAG_CASE);
         return $res;
     }

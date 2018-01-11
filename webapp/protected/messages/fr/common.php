@@ -67,7 +67,7 @@ return array(
     'notImported' => 'Non importé(s)',
     'individualSelection' => 'Cas individuels',
     'individualSelections' => 'Choisir un ou plusieurs cas individuels',
-    'restrictQuery' => 'Choisir un ou plusieurs formulaires',
+    'restrictQuery' => 'Choisir un formulaire',
     'restrictPeriod' => 'Choisir une période',
     'fileMakerColumn' => 'Colonne FileMaker',
     'cbsdColumn' => 'Colonne CBSD',

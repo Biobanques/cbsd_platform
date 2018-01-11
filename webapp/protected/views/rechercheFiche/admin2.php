@@ -90,7 +90,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 
     <div style="border:1px solid black;">
 
-        <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'queryFormulation') ?></b></u></h4>
+        <h4 style="margin-left:10px;"><u><b><?php echo "Requête portant dans le formulaire sur la variable :" ?></b></u></h4>
 
         <?php
         $form = $this->beginWidget('CActiveForm', array(
@@ -102,6 +102,16 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 
         <p>&nbsp;&nbsp;<?php echo Yii::t('common', 'writeQuestion'); ?></p>
 
+        <?php if (isset($_POST['searchAll'])) { ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type'); ?>
+                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getNomsFiches()); ?>
+                </div>
+            </div>
+
+        <?php } ?>
+
         <div class="row">
             <div class="col-lg-12">
                 <?php echo CHtml::label(Yii::t('common', 'addQuestion'), 'question'); ?>
@@ -110,7 +120,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
                     'name' => 'question',
                     'source' => array_map(function($key, $value) {
                                 return array('label' => $value, 'value' => $key);
-                            }, array_keys(Answer::model()->getAllQuestionsByTypeForm($html->type)), Answer::model()->getAllQuestionsByTypeForm($html->type)),
+                            }, array_keys(Answer::model()->getAllQuestionsByTypeForm($_POST['Answer']['type'])), Answer::model()->getAllQuestionsByTypeForm($_POST['Answer']['type'])),
                     'options' => array(
                         'showAnim' => 'fold',
                         'select' => 'js:function(event, ui){ $("#question").attr("readonly", true); '
@@ -146,10 +156,9 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 
 <div id="queries">
     <div id="selectedQueries">
-    <h4><u><?php echo "Sélectionné"; ?></u></h4>
-    <?php if ($html->type != null && in_array('neuropathologique', $html->type)) { ?>
-        <ul id="showPrvmt"><li><p id="multiselect_simple_selection2"></p></li></ul>
-            <?php } ?>
+        <?php if ($html->type != null && in_array('neuropathologique', $html->type)) { ?>
+            <ul id="showPrvmt"><li><p id="multiselect_simple_selection2"></p></li></ul>
+                <?php } ?>
     </div>
     <h4><u><?php echo Yii::t('common', 'history') ?></u></h4>
     <?php
@@ -163,7 +172,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
     ?>
     <?php
     if (isset($html->type) && $html->type != null) {
-        echo "<ul><li>Type du formulaire = ";
+        echo "<ul><li>Fiche = ";
         foreach ($html->type as $v) {
             echo $v;
             if ($v != end($html->type)) {
@@ -173,5 +182,5 @@ $('#search_fiche-form').on('click','.question-input',function(event){
         echo "</li></ul>";
     }
     ?>
-<?php echo "<ul>" . $html->htmlQuestion . "</ul>" ?>
+    <?php echo "<ul>" . $html->htmlQuestion . "</ul>" ?>
 </div>

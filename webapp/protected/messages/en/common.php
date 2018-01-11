@@ -65,7 +65,7 @@ return array(
     'notImported' => 'Not imported',
     'individualSelection' => 'Individual cases',
     'individualSelections' => 'Choose one or several individual cases',
-    'restrictQuery' => 'Choose one or several forms',
+    'restrictQuery' => 'Choose a form',
     'restrictPeriod' => 'Choose a period',
     'fileMakerColumn' => 'FileMaker column',
     'cbsdColumn' => 'CBSD column',
