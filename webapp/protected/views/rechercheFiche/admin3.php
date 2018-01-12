@@ -67,9 +67,12 @@ if (Yii::app()->user->getActiveProfil() == "administrateur de projet") {
                         ?>
                     </li></ul>
             <?php } ?>
+            <?php
+            if (isset($html->last_updated) && $html->last_updated != null) {
+                echo "<ul><li>Période = " . $html->last_updated . "</li></ul>";
+            }
+            ?>
             <?php echo "<ul>" . $html->htmlQuestion . "</ul>" ?>
-            <?php echo Yii::t('common', 'availablePrvmt') . " : " ?>
-            <?php echo "<ul>" . $html->htmlPrvmt . "</ul>"; ?>
         </div>
         <div class="col-lg-2">
             <?php

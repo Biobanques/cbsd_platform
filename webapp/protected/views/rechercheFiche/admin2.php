@@ -133,15 +133,6 @@ $('#search_fiche-form').on('click','.question-input',function(event){
             </div>
             <div id="dynamicFilters" style="margin-left:50px;display:none;"></div>
         </div>
-        <?php if ($html->type != null && in_array('neuropathologique', $html->type)) { ?>
-            <div class="row">
-                <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'availablePrvmt') ?></b></u></h4>
-                <div class="col-lg-12">
-                    <?php echo CHtml::label(Yii::t('common', 'available'), "Available", array('style' => 'padding-top:30px;')); ?>
-                    <?php echo CHtml::dropDownList("Available", 'prvt_available', CommonTools::getAllPrelevements(), array("id" => "multiselect_simple", "class" => "multiselect", "multiple" => "multiple", "style" => "width:61%; height:170px;")); ?>
-                </div>
-            </div>
-        <?php } ?>
         <br><br><br><br>
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
@@ -155,11 +146,6 @@ $('#search_fiche-form').on('click','.question-input',function(event){
 </div>
 
 <div id="queries">
-    <div id="selectedQueries">
-        <?php if ($html->type != null && in_array('neuropathologique', $html->type)) { ?>
-            <ul id="showPrvmt"><li><p id="multiselect_simple_selection2"></p></li></ul>
-                <?php } ?>
-    </div>
     <h4><u><?php echo Yii::t('common', 'history') ?></u></h4>
     <?php
     if (isset($html->id_patient) && $html->id_patient != null) {
@@ -180,6 +166,11 @@ $('#search_fiche-form').on('click','.question-input',function(event){
             }
         }
         echo "</li></ul>";
+    }
+    ?>
+    <?php
+    if (isset($html->last_updated) && $html->last_updated != null) {
+        echo "<ul><li>Période = " . $html->last_updated . "</li></ul>";
     }
     ?>
     <?php echo "<ul>" . $html->htmlQuestion . "</ul>" ?>

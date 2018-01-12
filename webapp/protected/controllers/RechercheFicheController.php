@@ -62,7 +62,7 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionAdmin() {
-        if (!isset($_POST['searchAll'])) {
+        if (!isset($_POST['searchAll']) && !isset($_POST['rechercher'])) {
             $_SESSION['id_patient'] = null;
             $_SESSION['patientAll'] = null;
             $_SESSION['id_patientBis'] = null;
@@ -80,48 +80,10 @@ class RechercheFicheController extends Controller {
             if ($query != null) {
                 $query->delete();
             }
-        } else {
-            $ficheId = array();
-            $ficheMongoId = array();
-            $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
-            if ($allFiches != null) {
-                foreach ($allFiches as $fiche) {
-                    array_push($ficheId, $fiche->id_patient);
-                    array_push($ficheMongoId, $fiche->questionnaireMongoId);
-                    $fiche->available = 1;
-                    $fiche->save();
-                }
-                $regex = '/^';
-                foreach ($ficheId as $idFiche) {
-                    $regex .= $idFiche . '$|^';
-                }
-                $regex .= '$/i';
-                $_SESSION['id_patientAll'] = $regex;
-            }
-        }
-        $model = new Answer;
-        
-        $this->render('admin', array(
-            'model' => $model
-        ));
-    }
-
-    public function actionAdmin2() {
-        $_SESSION['test'] = null;
-        $fiche = null;
-        $htmlres = null;
-        $questionnaireMongoId = array();
-        if (isset($_SESSION['checkedIds'])) {
-            foreach ($_SESSION['checkedIds'] as $ar) {
-                Yii::app()->user->setState($ar, 0);
-            }
-        }
-        $query = Query::model()->find();
-        if ($query == null) {
-            $query = new Query;
-        }
-        if (isset($_POST['rechercher'])) {
+        } elseif (isset($_POST['rechercher'])) {
             $patientId = array();
+            $htmlres = null;
+            $questionnaireMongoId = array();
             $htmlres .= "<li>" . Yii::t('common', 'anonymat') . " = ";
             if (isset($_POST['Answer_id_patient'])) {
                 foreach ($_POST['Answer_id_patient'] as $patient_id) {
@@ -167,13 +129,51 @@ class RechercheFicheController extends Controller {
                 $_SESSION['id_patientBis'] = $regex;
                 $_SESSION['qmi'] = $questionnaireMongoId;
             }
+        } else {
+            $ficheId = array();
+            $ficheMongoId = array();
+            $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
+            if ($allFiches != null) {
+                foreach ($allFiches as $fiche) {
+                    array_push($ficheId, $fiche->id_patient);
+                    array_push($ficheMongoId, $fiche->questionnaireMongoId);
+                    $fiche->available = 1;
+                    $fiche->save();
+                }
+                $regex = '/^';
+                foreach ($ficheId as $idFiche) {
+                    $regex .= $idFiche . '$|^';
+                }
+                $regex .= '$/i';
+                $_SESSION['id_patientAll'] = $regex;
+            }
+        }
+        $model = new Answer;
+
+        $this->render('admin', array(
+            'model' => $model
+        ));
+    }
+
+    public function actionAdmin2() {
+        $_SESSION['test'] = null;
+        $fiche = null;
+        $htmlres = null;
+        if (isset($_SESSION['checkedIds'])) {
+            foreach ($_SESSION['checkedIds'] as $ar) {
+                Yii::app()->user->setState($ar, 0);
+            }
+        }
+        $query = Query::model()->find();
+        if ($query == null) {
+            $query = new Query;
         }
 
         // Restreindre la requête -> Formuler la requête
         if (isset($_POST['Answer'])) {
             $_SESSION['Answer'] = $_POST['Answer'];
             $criteria = new EMongoCriteria;
-            /*if (isset($_POST['Answer']['id_patient']) && $_POST['Answer']['id_patient'] != null) {
+            if (isset($_POST['Answer']['id_patient']) && $_POST['Answer']['id_patient'] != null) {
                 $_SESSION['id_patient'] = $query->id_patient = $_POST['Answer']['id_patient'];
                 $htmlres .= "<li>" . Yii::t('common', 'anonymat') . " = ";
                 foreach ($_POST['Answer']['id_patient'] as $idPatient) {
@@ -183,7 +183,7 @@ class RechercheFicheController extends Controller {
                     }
                 }
                 $htmlres .= "</li>";
-            }*/
+            }
             if (isset($_POST['Answer']['type']) && $_POST['Answer']['type'] != null) {
                 if ($query->type != null) {
                     array_push($query->type, $_POST['Answer']['type']);
@@ -194,52 +194,20 @@ class RechercheFicheController extends Controller {
                 }
                 $htmlres .= "<li>" . Yii::t('common', 'formType') . " = " . $_POST['Answer']['type'] . "</li>";
             }
-            /*if (isset($_POST['Answer']['last_updated']) && $_POST['Answer']['last_updated'] != null && isset($_POST['Answer']['last_updated_to']) && $_POST['Answer']['last_updated_to'] != null) {
+            if (isset($_POST['Answer']['last_updated']) && $_POST['Answer']['last_updated'] != null && isset($_POST['Answer']['last_updated_to']) && $_POST['Answer']['last_updated_to'] != null) {
                 $query->last_updated = $_POST['Answer']['last_updated'] . " - " . $_POST['Answer']['last_updated_to'];
                 $answerFormat = CommonTools::formatDatePicker($query->last_updated);
                 $date_from = str_replace('/', '-', $answerFormat['date_from']);
                 $date_to = str_replace('/', '-', $answerFormat['date_to']);
                 $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
                 $htmlres .= "<li>" . Yii::t('common', 'period') . " = " . $_POST['Answer']['last_updated'] . " - " . $_POST['Answer']['last_updated_to'] . "</li>";
-            }*/
+            }
             $query->html .= $htmlres;
             $query->save();
         }
 
         $html = Query::model()->find();
-        if ($html->htmlPrvmt == null) {
-            $htmlPrvmt = null;
-        } else {
-            $htmlPrvmt = $html->htmlPrvmt;
-        }
 
-        if (isset($_POST['Available'])) {
-            $_SESSION['Available'] = $_POST['Available'];
-            foreach ($_SESSION['Available'] as $kAvailable => $vAvailable) {
-                $htmlPrvmt .= "<li>" . $vAvailable . " = Available</li>";
-            }
-        }
-        $html->htmlQuestion .= $htmlPrvmt;
-        $html->save();
-
-        /*if (isset($_POST['searchAll']) && isset(Yii::app()->session['criteria'])) {
-            $ficheId = array();
-            $ficheMongoId = array();
-            $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
-            if ($allFiches != null) {
-                foreach ($allFiches as $fiche) {
-                    array_push($ficheId, $fiche->id_patient);
-                    array_push($ficheMongoId, $fiche->questionnaireMongoId);
-                }
-                $regex = '/^';
-                foreach ($ficheId as $idFiche) {
-                    $regex .= $idFiche . '$|^';
-                }
-                $regex .= '$/i';
-                $_SESSION['id_patientAll'] = $regex;
-                $_SESSION['allqmi'] = $ficheMongoId;
-            }
-        }*/
         if (isset($_POST['question']) && $_POST['question'] != null || isset($_POST['Available']) && $_POST['Available'] != null) {
             $this->redirect(array('rechercheFiche/admin3'));
         }

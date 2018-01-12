@@ -156,13 +156,13 @@ class Answer extends LoggableActiveRecord {
             }
         } elseif (isset($_SESSION['id_patientBis'])) {
             $criteria->addCond('id_patient', '==', new MongoRegex($_SESSION['id_patientBis']));
-            $criteriaAvailable = new EMongoCriteria;
 
             if (isset($this->dynamics) && !empty($this->dynamics)) {
-                if ($query->dynamics == null) {
-                    $query->dynamics = $this->dynamics;
-                } else {
-                    $query->dynamics = array_merge($query->dynamics, $this->dynamics);
+                if (isset($query->dynamics) && $query->dynamics != null) {
+                    foreach ($query->dynamics as $dynamicKey => $dynamicValue) {
+                        $this->dynamics[$dynamicKey] = $dynamicValue['answerValue'];
+                        $this->compare[$dynamicKey] = $dynamicValue['compare'];
+                    }
                 }
                 $index = 0;
                 $nbCriteria = array();
@@ -244,6 +244,11 @@ class Answer extends LoggableActiveRecord {
                 $date_to = str_replace('/', '-', $answerFormat['date_to']);
                 $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
                 $query->last_updated = $answerFormat;
+            } elseif (isset($query->last_updated) && !empty($query->last_updated)) {
+                $answerFormat = CommonTools::formatDatePicker($query->last_updated);
+                $date_from = str_replace('/', '-', $answerFormat['date_from']);
+                $date_to = str_replace('/', '-', $answerFormat['date_to']);
+                $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
             }
 
             if (isset($this->dynamics) && !empty($this->dynamics)) {

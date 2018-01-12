@@ -19,7 +19,6 @@ class Query extends LoggableActiveRecord {
     public $dynamics;
     public $html;
     public $htmlQuestion;
-    public $htmlPrvmt;
 
     /**
      * Returns the static model of the specified AR class.
@@ -44,7 +43,7 @@ class Query extends LoggableActiveRecord {
         // will receive user inputs.
         return array(
             // The following rule is used by search().
-            array('id_patient, type, last_updated, dynamics, html, htmlQuestion, htmlPrvmt', 'safe'),
+            array('id_patient, type, last_updated, dynamics, html, htmlQuestion', 'safe'),
         );
     }
 
