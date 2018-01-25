@@ -22,7 +22,7 @@ return array(
     'cancel' => 'Cancel',
     'updateThePatientForm' => 'Update patient form',
     'insert' => 'Insert',
-    'patientFormsAssociated' => 'Select all patient forms from selected cases',
+    'allForms' => 'All forms',
     'allPatientForms' => 'Select all patient forms from all cases',
     'exportQuery' => 'Export query',
     'selectAll' => 'Select All',

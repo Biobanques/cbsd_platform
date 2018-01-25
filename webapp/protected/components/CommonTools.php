@@ -113,10 +113,12 @@ class CommonTools {
      */
     public function regexString($values) {
         $regex = '/';
-        foreach ($values as $word) {
-            $regex .= $word;
-            if ($word != end($values)) {
-                $regex .= '|';
+        if (isset($values) && $values != null && is_array($values)) {
+            foreach ($values as $word) {
+                $regex .= $word;
+                if ($word != end($values)) {
+                    $regex .= '|';
+                }
             }
         }
         $regex .= '/i';

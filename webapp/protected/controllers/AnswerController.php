@@ -408,14 +408,15 @@ class AnswerController extends Controller {
                         $compare = $operators[$_POST['Answer']["compare"][$vv]];
                     }
                 }
-                if (!strpos($query->htmlQuestion, $_POST['Answer']["dynamics"][$vv])) {
+                if (!strpos($query->html, $_POST['Answer']["dynamics"][$vv])) {
                     $html .= ($first ? "- " . $operators[$_POST['Answer']["condition"][$vv]] : "") . "<li>" . $vv . " " . (!is_null($compare) ? $compare : "=") . " " . (is_array($_POST['Answer']["dynamics"][$vv]) ? implode(',', $_POST['Answer']["dynamics"][$vv]) : $_POST['Answer']["dynamics"][$vv]) . "</li>";
                     $first = true;
                 }
             }
-            $query->htmlQuestion .= $html;
+            $query->html .= $html;
             $query->save();
             echo "<ul>" . $html . "</ul>";
         }
     }
+
 }

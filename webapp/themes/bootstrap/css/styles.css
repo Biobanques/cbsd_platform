@@ -409,3 +409,18 @@ a img {
     box-shadow: 5px 5px 5px #888888;
     padding:1px;
 }
+
+button.link {
+    -moz-user-select: text;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+button.link:hover span {
+    text-decoration: underline;
+}

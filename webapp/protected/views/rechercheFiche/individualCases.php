@@ -11,7 +11,7 @@
         <?php
         $form = $this->beginWidget('CActiveForm', array(
             'id' => 'light_search-form',
-            'action' => Yii::app()->createUrl('rechercheFiche/admin2'),
+            'action' => Yii::app()->createUrl('rechercheFiche/admin3'),
             'method' => 'post',
         ));
         ?>

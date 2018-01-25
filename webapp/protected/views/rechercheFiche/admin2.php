@@ -136,7 +136,7 @@ $('#search_fiche-form').on('click','.question-input',function(event){
         <br><br><br><br>
         <div class="row buttons">
             <div class="col-lg-7 col-lg-offset-7">
-                <?php echo CHtml::submitButton(Yii::t('button', 'runQuery'), array('id' => 'search', 'class' => 'btn btn-primary', 'onclick' => 'submit()')); ?>
+                <?php echo CHtml::submitButton(Yii::t('button', 'runQuery'), array('id' => 'search', 'name' => 'runQuery', 'class' => 'btn btn-primary', 'onclick' => 'submit()')); ?>
                 <?php echo CHtml::resetButton(Yii::t('button', 'deleteQuery'), array('id' => 'reset', 'class' => 'btn btn-danger', 'onclick' => 'location.reload();')); ?>
             </div>
         </div>
@@ -145,33 +145,10 @@ $('#search_fiche-form').on('click','.question-input',function(event){
     </div>
 </div>
 
-<div id="queries">
-    <h4><u><?php echo Yii::t('common', 'history') ?></u></h4>
+<?php if (isset($html) && $html != null) { ?>
+    <div id="queries">
+        <h4><u><?php echo Yii::t('common', 'history') ?></u></h4>
+        <?php echo "<ul>" . $html->html . "</ul>"; ?>
+    </div>
     <?php
-    if (isset($html->id_patient) && $html->id_patient != null) {
-        echo "<ul><li>N° d'anonymat = ";
-        foreach ($html->id_patient as $v) {
-            echo $v . ", ";
-        }
-        echo "</li></ul>";
-    }
-    ?>
-    <?php
-    if (isset($html->type) && $html->type != null) {
-        echo "<ul><li>Fiche = ";
-        foreach ($html->type as $v) {
-            echo $v;
-            if ($v != end($html->type)) {
-                echo ", ";
-            }
-        }
-        echo "</li></ul>";
-    }
-    ?>
-    <?php
-    if (isset($html->last_updated) && $html->last_updated != null) {
-        echo "<ul><li>Période = " . $html->last_updated . "</li></ul>";
-    }
-    ?>
-    <?php echo "<ul>" . $html->htmlQuestion . "</ul>" ?>
-</div>
+}

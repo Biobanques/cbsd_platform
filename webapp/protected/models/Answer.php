@@ -154,64 +154,9 @@ class Answer extends LoggableActiveRecord {
                 $criteria->addCond('id_patient', '==', "999999999999999");
                 $_SESSION['test'] = "999999999999999";
             }
-        } elseif (isset($_SESSION['id_patientBis'])) {
-            $criteria->addCond('id_patient', '==', new MongoRegex($_SESSION['id_patientBis']));
-
-            if (isset($this->dynamics) && !empty($this->dynamics)) {
-                if (isset($query->dynamics) && $query->dynamics != null) {
-                    foreach ($query->dynamics as $dynamicKey => $dynamicValue) {
-                        $this->dynamics[$dynamicKey] = $dynamicValue['answerValue'];
-                        $this->compare[$dynamicKey] = $dynamicValue['compare'];
-                    }
-                }
-                $index = 0;
-                $nbCriteria = array();
-                foreach ($this->dynamics as $questionId => $answerValue) {
-                    if ($index != 0) {
-                        $nbCriteria = '$criteria' . $index;
-                        $nbCriteria = new EMongoCriteria;
-                    }
-                    if (isset($this->compare[$questionId])) {
-                        if ($index == 0) {
-                            if ($this->compare[$questionId] == "between") {
-                                $answerDate = CommonTools::formatDatePicker($answerValue);
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
-                            } elseif ($this->compare[$questionId] == "equals") {
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int) $answerValue));
-                            } else {
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
-                            }
-                        } else {
-                            if ($this->compare[$questionId] == "between") {
-                                $answerDate = CommonTools::formatDatePicker($answerValue);
-                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
-                            } elseif ($this->compare[$questionId] == "equals") {
-                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int) $answerValue));
-                            } else {
-                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
-                            }
-                        }
-                    } else {
-                        $values = (!is_array($answerValue)) ? split(',', $answerValue) : $answerValue;
-                        if ($index == 0) {
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
-                        } else {
-                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
-                        }
-                    }
-                    if ($index != 0) {
-                        $criteria->mergeWith($nbCriteria, $this->condition[$questionId]);
-                    }
-                    $index++;
-                }
-                if (Yii::app()->controller->id != "fiche") {
-                    $query->save();
-                }
-            }
         } else {
             if (isset($this->type) && !empty($this->type)) {
                 $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($this->type)));
-                $query->type = $this->type;
             }
 
             if (isset($this->user) && !empty($this->user)) {
@@ -229,9 +174,8 @@ class Answer extends LoggableActiveRecord {
                 $criteria->addCond('login', 'in', $listUsers);
             }
 
-            if (isset($_SESSION['id_patient']) && !empty($_SESSION['id_patient'])) {
-                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($_SESSION['id_patient'])));
-                $query->id_patient = $_SESSION['id_patient'];
+            if (isset($query->id_patient) && !empty($query->id_patient)) {
+                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($query->id_patient)));
             }
 
             if (isset($this->name) && !empty($this->name)) {
@@ -321,6 +265,8 @@ class Answer extends LoggableActiveRecord {
                     $criteriaTest->id_patient = new MongoRegex($_SESSION['id_patientAll']);
                     $criteria->mergeWith($criteriaTest, '$and');
                 }
+            } elseif (isset($query->type)) {
+                $criteria->addCond('name', '==', new MongoRegex(CommonTools::regexString($query->type)));
             }
             if (Yii::app()->controller->id != "fiche") {
                 $query->save();

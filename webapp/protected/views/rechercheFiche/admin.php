@@ -27,7 +27,7 @@ $('#selectDate').click(function(){
         ?>
 
         <div style="border:1px solid black;">
-            
+
             <h4 style="margin-left:10px;"><u><b><?php echo "Requête portant sur :" ?></b></u></h4>
 
             <div class="row">
@@ -60,3 +60,11 @@ $('#selectDate').click(function(){
 
     </div><!-- search-form -->
 </div>
+
+<?php if (isset($_POST['recherche']) || isset($_POST['searchAll'])) { ?>
+    <div id="queries">
+        <h4><u><?php echo Yii::t('common', 'history') ?></u></h4>
+        <?php echo "<ul>" . $query->html . "</ul>"; ?>
+    </div>
+    <?php
+}
