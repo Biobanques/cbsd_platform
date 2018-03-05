@@ -7,7 +7,7 @@
  * @author nmalservet
  *
  */
-class Answer extends LoggableActiveRecord {
+class AnswerBis extends LoggableActiveRecord {
 
     /**
      *
@@ -19,7 +19,7 @@ class Answer extends LoggableActiveRecord {
 
 // This method is required!
     public function getCollectionName() {
-        return 'answer';
+        return 'answerBis';
     }
 
     public $creator;
@@ -78,7 +78,7 @@ class Answer extends LoggableActiveRecord {
     public $dynamics;
     public $compare;
     public $condition;
-    public $idDonor;
+    public $available;
 
     /**
      * use for search by user name
@@ -102,7 +102,7 @@ class Answer extends LoggableActiveRecord {
                 'required'
             ),
             array(
-                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,last_updated_to,user,idDonor',
+                'id,name,answers_group,login,type,id_patient,dynamics,compare,condition,last_updated,last_updated_to,user',
                 'safe',
                 'on' => 'search'
             )
@@ -131,176 +131,6 @@ class Answer extends LoggableActiveRecord {
             'last_updated' => 'Date de saisie',
             'last_modified' => 'Date de mise à jour du questionnaire',
         );
-    }
-
-    public function search($caseSensitive = false) {
-        $criteria = new EMongoCriteria;
-        $query = Query::model()->find();
-        if (isset($_POST['patientAll'])) {
-            $ficheId = array();
-            $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
-            if ($allFiches != null) {
-                foreach ($allFiches as $fiche) {
-                    array_push($ficheId, $fiche->id_patient);
-                }
-                $regex = '/^';
-                foreach ($ficheId as $idFiche) {
-                    $regex .= $idFiche . '$|^';
-                }
-                $regex .= '$/i';
-                $criteria->addCond('id_patient', '==', new MongoRegex($regex));
-                $_SESSION['test'] = $regex;
-            } else {
-                $criteria->addCond('id_patient', '==', "999999999999999");
-                $_SESSION['test'] = "999999999999999";
-            }
-        } else {
-            if (isset($this->type) && !empty($this->type)) {
-                $criteria->addCond('type', '==', new MongoRegex(CommonTools::regexString($this->type)));
-            }
-
-            if (isset($this->user) && !empty($this->user)) {
-                $regex = CommonTools::regexString($this->user);
-                $criteriaUser = new EMongoCriteria;
-                $criteriaUser->nom = new MongoRegex($regex);
-                $criteriaUser->select(array('_id'));
-                $users = User::model()->findAll($criteriaUser);
-                $listUsers = array();
-                if ($users != null) {
-                    foreach ($users as $user) {
-                        $listUsers[] = $user->_id;
-                    }
-                }
-                $criteria->addCond('login', 'in', $listUsers);
-            }
-
-            if (isset($query->id_patient) && !empty($query->id_patient)) {
-                $criteria->addCond('id_patient', '==', new MongoRegex(CommonTools::regexString($query->id_patient)));
-            }
-
-            if (isset($this->name) && !empty($this->name)) {
-                $criteria->addCond('name', '==', new MongoRegex(CommonTools::regexString($this->name)));
-            }
-
-            if (isset($this->last_updated) && !empty($this->last_updated)) {
-                $answerFormat = CommonTools::formatDatePicker($this->last_updated . " - " . $this->last_updated_to);
-                $date_from = str_replace('/', '-', $answerFormat['date_from']);
-                $date_to = str_replace('/', '-', $answerFormat['date_to']);
-                $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
-                $query->last_updated = $answerFormat;
-            } elseif (isset($query->last_updated) && !empty($query->last_updated)) {
-                $answerFormat = CommonTools::formatDatePicker($query->last_updated);
-                $date_from = str_replace('/', '-', $answerFormat['date_from']);
-                $date_to = str_replace('/', '-', $answerFormat['date_to']);
-                $criteria->last_updated->date = array('$gte' => date('Y-m-d', strtotime($date_from)) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($date_to)) . " 23:59:59.000000");
-            }
-
-            if (isset($this->dynamics) && !empty($this->dynamics)) {
-                if (isset($query->dynamics) && $query->dynamics != null) {
-                    if (isset($_SESSION['id_patientAll'])) {
-                        foreach ($query->dynamics as $dynamicKey => $dynamicValue) {
-                            $this->dynamics[$dynamicKey] = $dynamicValue['answerValue'];
-                            $this->compare[$dynamicKey] = $dynamicValue['compare'];
-                        }
-                    }
-                }
-                $index = 0;
-                $nbCriteria = array();
-                foreach ($this->dynamics as $questionId => $answerValue) {
-                    if ($index != 0) {
-                        $nbCriteria = '$criteria' . $index;
-                        $nbCriteria = new EMongoCriteria;
-                    }
-                    if (isset($this->compare[$questionId])) {
-                        if ($index == 0) {
-                            if ($this->compare[$questionId] == "between") {
-                                $answerDate = CommonTools::formatDatePicker($answerValue);
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
-                            } elseif ($this->compare[$questionId] == "equals") {
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int) $answerValue));
-                            } else {
-                                $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
-                            }
-                        } else {
-                            if ($this->compare[$questionId] == "between") {
-                                $answerDate = CommonTools::formatDatePicker($answerValue);
-                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer.date' => array('$gte' => $answerDate['date_from'] . " 00:00:00.000000", '$lte' => $answerDate['date_to'] . " 23:59:59.000000")));
-                            } elseif ($this->compare[$questionId] == "equals") {
-                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => (int) $answerValue));
-                            } else {
-                                $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => array(EMongoCriteria::$operators[$this->compare[$questionId]] => (int) $answerValue)));
-                            }
-                        }
-                    } else {
-                        $values = (!is_array($answerValue)) ? split(',', $answerValue) : $answerValue;
-                        if ($index == 0) {
-                            $criteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
-                        } else {
-                            $nbCriteria->addCond('answers_group.answers', 'elemmatch', array('id' => $questionId, 'answer' => new MongoRegex(CommonTools::regexString($values))));
-                        }
-                    }
-                    if ($index != 0) {
-                        if (isset($_SESSION['id_patientAll'])) {
-                            $criteria->mergeWith($nbCriteria, '$or');
-                        } else {
-                            $criteria->mergeWith($nbCriteria, '$and');
-                        }
-                    } else {
-                        if (isset($_SESSION['id_patientAll'])) {
-                            $criteria->mergeWith($nbCriteria, '$and');
-                        }
-                    }
-                    $index++;
-                    $dynamics = array();
-                    $dynamics['compare'] = !empty($this->compare[$questionId]) ? $this->compare[$questionId] : null;
-                    $dynamics['answerValue'] = $answerValue;
-                    $query->dynamics[$questionId] = $dynamics;
-
-                    if (Yii::app()->controller->id != "fiche") {
-                        $query->save();
-                    }
-                }
-                if (isset($_SESSION['id_patientAll'])) {
-                    $criteriaTest = new EMongoCriteria;
-                    $criteriaTest->id_patient = new MongoRegex($_SESSION['id_patientAll']);
-                    $criteria->mergeWith($criteriaTest, '$and');
-                }
-            } elseif (isset($query->type)) {
-                $criteria->addCond('name', '==', new MongoRegex(CommonTools::regexString($query->type)));
-            }
-            if (Yii::app()->controller->id != "fiche") {
-                $query->save();
-            }
-        }
-        if (isset($_GET['ajax']) && isset($_SESSION['test'])) {
-            $criteria = new EMongoCriteria;
-            $criteria->addCond('id_patient', '==', new MongoRegex($_SESSION['test']));
-        }
-        $criteria->sort('idDonor', EMongoCriteria::SORT_ASC);
-        $criteria->sort('id_patient', EMongoCriteria::SORT_ASC);
-        $criteria->sort('type', EMongoCriteria::SORT_ASC);
-        $criteria->sort('last_updated', EMongoCriteria::SORT_DESC);
-        Yii::app()->session['criteria'] = $criteria;
-        return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria
-        ));
-    }
-
-    public function getComparaisonNumerique() {
-        $res = array();
-        $res ['equals'] = "=";
-        $res ['noteq'] = "<>";
-        $res ['less'] = "<";
-        $res ['greater'] = ">";
-        $res ['lesseq'] = "<=";
-        $res ['greatereq'] = ">=";
-        return $res;
-    }
-
-    public function getComparaisonDate() {
-        $res = array();
-        $res ['between'] = Yii::t('common', 'between');
-        return $res;
     }
 
     /**
@@ -884,143 +714,6 @@ class Answer extends LoggableActiveRecord {
                 foreach ($cQuestions as $cQuestion) {
                     if ($cQuestion['label'] == $columnHeader) {
                         //$resultLine[] = is_array($cQuestion['answer']) ? implode(', ', $cQuestion['answer']) : $cQuestion['answer'];
-                        if (is_array($cQuestion['answer'])) {
-                            if (isset($cQuestion['answer']['date'])) {
-                                $resultLine[] = date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($cQuestion['answer']['date']));
-                            } else {
-                                $resultLine[] = implode(', ', $cQuestion['answer']);
-                            }
-                        } else {
-                            $resultLine[] = $cQuestion['answer'];
-                        }
-                        $valueExists = true;
-                        break;
-                    }
-                }
-                if (!$valueExists) {
-                    $resultLine[] = "";
-                }
-            }
-            $result[] = $resultLine;
-        }
-        return $result;
-    }
-
-    public function resultExport($models, $filter) {
-        $ansQuestion = array();
-        $samQuestion = array();
-        $sampleQuestions = array();
-        $answersList = array();
-        $headerLineFixe = $this->attributeExportedSamples();
-        $neuropath = null;
-        foreach ($models as $answer) {
-            $counter = 0;
-            $nbColumn = 0;
-            $sampledQuestions = array();
-            $currentAnswerBis = array();
-            $neuropath = Neuropath::model()->findByAttributes(array("id_cbsd" => (int) $answer->id_patient));
-            $answersQuestions = array();
-            $count = 0;
-            $sampleQuestions = array();
-            $currentAnswer = array();
-            $birthName = "Nom naissance";
-            $useName = "Nom usuel";
-            $firstName = "Prénoms";
-            $birthDate = "Date naissance";
-            $sexe = "Sexe";
-            $currentAnswer['Nom naissance'] = $neuropath->$birthName;
-            $currentAnswer['Nom usuel'] = $useName;
-            $currentAnswer['Prénoms'] = $firstName;
-            $currentAnswer['Date naissance'] = $birthDate;
-            $currentAnswer['Sexe'] = $sexe;
-            foreach ($neuropath as $k => $v) {
-                if ($k != "_id" && $k != "id_cbsd") {
-                    $columnFileMaker = ColumnFileMaker::model()->findByAttributes(array('newColumn' => explode('_', $k)[0]));
-                    $prelevement = Prelevement::model()->findByAttributes(array('newColumn' => explode('_', $k)[0]));
-                    if ($columnFileMaker != null) {
-                        $typeSample = $columnFileMaker;
-                        $nbColumn++;
-                    } elseif ($prelevement != null) {
-                        $typeSample = $prelevement;
-                        if (strpos($k, '_')) {
-                            $cong = explode('_', $k)[1];
-                        }
-                        $count++;
-                    } else {
-                        $nbColumn++;
-                        $typeSample = null;
-                    }
-                    if ($typeSample != null) {
-                        $label = $typeSample->newColumn;
-                    } elseif ($k != null || $k != "") {
-                        $label = $k;
-                    } else {
-                        $label = "";
-                    }
-                    if ($prelevement != null) {
-                        $counter++;
-                        if ($counter < 2) {
-                            $ansQuestion['label'] = "Origin_Samples_Tissue";
-                            $ansQuestion['answer'] = $label;
-                            $answersQuestions[] = $ansQuestion;
-                            $ansQuestion['label'] = "quantity_available";
-                            $ansQuestion['answer'] = $neuropath->$k;
-                            $answersQuestions[] = $ansQuestion;
-                            $ansQuestion['label'] = "storage_conditions";
-                            $ansQuestion['answer'] = $cong;
-                            $answersQuestions[] = $ansQuestion;
-                        } else {
-                            $samQuestion['label'] = "Origin_Samples_Tissue";
-                            $samQuestion['answer'] = $label;
-                            $sampleQuestions["Echantillons"] = $samQuestion;
-                            $samQuestion['label'] = "quantity_available";
-                            $samQuestion['answer'] = $neuropath->$k;
-                            $sampleQuestions["Qte"] = $samQuestion;
-                            $samQuestion['label'] = "storage_conditions";
-                            $samQuestion['answer'] = $cong;
-                            $sampleQuestions["Cong"] = $samQuestion;
-                            $sampledQuestions[] = $sampleQuestions;
-                        }
-                       
-                    } else {
-                        $ansQuestion['label'] = $label;
-                        $ansQuestion['answer'] = $v;
-                        $answersQuestions[] = $ansQuestion;
-                    }
-                }
-            }
-            $currentAnswer['questions'] = $answersQuestions;
-            $answersList[] = $currentAnswer;
-            if ($sampledQuestions != null) {
-                foreach ($sampledQuestions as $k => $v) {
-                    $answersQuestions = array();
-                    $answersQuestions[] = $v['Echantillons'];
-                    $answersQuestions[] = $v['Qte'];
-                    $answersQuestions[] = $v['Cong'];
-                    $currentAnswerBis['questions'] = $answersQuestions;
-                    $answersList[] = $currentAnswerBis;
-                }
-            }
-        }
-        $headerLineDynamic = array();
-        foreach ($answersList as $cAnswer) {
-            foreach ($cAnswer['questions'] as $qAnswer) {
-                if (!in_array($qAnswer['label'], $headerLineDynamic)) {
-                    $headerLineDynamic[] = $qAnswer['label'];
-                }
-            }
-        }
-        $headerLine = array_merge($headerLineDynamic, $headerLineFixe);
-        $result[] = $headerLine;
-        foreach ($answersList as $cAnswer) {
-            $resultLine = array();
-            $cQuestions = $cAnswer['questions'];
-            //ajout des valeurs à la ligne, si aucune valeur existante pour cette column, ajoute null
-
-            foreach ($headerLineDynamic as $columnHeader) {
-                $valueExists = false;
-                foreach ($cQuestions as $cQuestion) {
-                    if ($cQuestion['label'] == $columnHeader) {
                         if (is_array($cQuestion['answer'])) {
                             if (isset($cQuestion['answer']['date'])) {
                                 $resultLine[] = date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($cQuestion['answer']['date']));

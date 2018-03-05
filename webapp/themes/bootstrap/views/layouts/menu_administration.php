@@ -26,6 +26,7 @@
                         array('label' => Yii::t('administration', 'filemaker')),
                         array('label' => Yii::t('administration', 'columnFileMaker'), 'icon'=>'play', 'url' => array('/fileImport/formatColumn')),
                         array('label' => Yii::t('administration', 'importFilemaker'), 'icon'=>'play', 'url' => array('/fileImport/admin')),
+                        array('label' => "Gestion des doublons", 'icon'=>'play', 'url' => array('/fileImport/adminDoublon')),
                     ),
                     'htmlOptions' => array('class' => 'operations'),
                 ));

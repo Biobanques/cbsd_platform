@@ -254,7 +254,7 @@ class RechercheFicheController extends Controller {
                 $filter = $_POST['filter'];
             }
             $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
-            $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
+            $arAnswers = Answer::model()->resultExport($_SESSION['models'], $filter);
             $csv = new ECSVExport($arAnswers, true, false, null, null);
             if (isset($_POST['project'])) {
                 $project = new Project;

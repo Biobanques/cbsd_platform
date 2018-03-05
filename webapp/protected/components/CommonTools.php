@@ -242,4 +242,16 @@ class CommonTools {
         }, $str);
     }
 
+    public function array_merge_custom($first, $second) {
+        $result = array();
+        foreach ($first as $key => $value) {
+            $result[$key] = $value;
+        }
+        foreach ($second as $key => $value) {
+            $result[$key] = $value;
+        }
+
+        return $result;
+    }
+
 }

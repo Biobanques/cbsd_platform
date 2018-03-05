@@ -1,7 +1,6 @@
 <?php
 /* @var $this SiteController */
 $this->pageTitle = Yii::app()->name;
-if (isset($_SESSION['aaa'])) print_r($_SESSION['aaa']);
 ?>
 
 <div class="jumbotron">
