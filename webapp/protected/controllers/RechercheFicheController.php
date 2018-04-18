@@ -267,7 +267,7 @@ class RechercheFicheController extends Controller {
                 fwrite($fh, $csv->toCSV());
                 fclose($fh);
             }
-            Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
+            //Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
         }
         $model = new Answer('search');
         $model->unsetAttributes();

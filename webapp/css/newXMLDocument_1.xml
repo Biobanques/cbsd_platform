@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?><FMPXMLRESULT xmlns="http://www.filemaker.com/fmpxmlresult">
+    <ERRORCODE>0</ERRORCODE>
+    <PRODUCT BUILD="12-06-2016" NAME="FileMaker" VERSION="Pro 15.0.3"/>
+    <DATABASE DATEFORMAT="D/m/yyyy" LAYOUT="Donneur - Formulaire" NAME="Base NeuroCEB bernard.fmp12" RECORDS="2529" TIMEFORMAT="k:mm:ss "/>
+    <METADATA>
+        <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="id_donor" TYPE="NUMBER"/>
+        <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="PrelevementTissusTranche::Origin_Samples_Tissue" TYPE="TEXT"/>
+        <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="PrelevementTissusTranche::quantity_available" TYPE="TEXT"/>
+        <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="PrelevementTissusTranche::storage_conditions" TYPE="TEXT"/>
+    </METADATA>
+    <RESULTSET FOUND="2529">
+        <ROW MODID="33" RECORDID="1">
+            <COL>
+                <DATA>1</DATA>
+            </COL>
+            <COL></COL>
+            <COL></COL>
+            <COL></COL>
+        </ROW>
+        <ROW MODID="20" RECORDID="2">
+            <COL>
+                <DATA>2</DATA>
+            </COL>
+            <COL>
+                <DATA>MOR tranche 1</DATA>
+                <DATA>MOR tranche 2</DATA>
+                <DATA>MOR tranche 4</DATA>
+                <DATA>MOR tranche 5</DATA>
+                <DATA>MOR tranche 6</DATA>
+                <DATA>MOR tranche 7</DATA>
+                <DATA>MOR tranche 8</DATA>
+                <DATA>MOR tranche 9</DATA>
+                <DATA>MOR tranche 10</DATA>
+                <DATA>MOR tranche 11</DATA>
+                <DATA>MOR tranche 12</DATA>
+                <DATA>MOR tranche 13</DATA>
+                <DATA>MOR tranche 14</DATA>
+                <DATA>hippocampe iso</DATA>
+                <DATA>T1</DATA>
+                <DATA>T1</DATA>
+                <DATA>pédoncule</DATA>
+                <DATA>protubérance 1</DATA>
+                <DATA>protubérance 2</DATA>
+                <DATA>protubérance 3</DATA>
+                <DATA>bulbe haut</DATA>
+                <DATA>bulbe bas</DATA>
+                <DATA>cervelet tranche 1</DATA>
+                <DATA>cervelet tranche 2</DATA>
+                <DATA>cervelet tranche 3</DATA>
+                <DATA>cervelet iso</DATA>
+                <DATA>F2</DATA>
+                <DATA>F2</DATA>
+                <DATA>gyrus cingulaire/corps calleux iso</DATA>
+                <DATA>noyau lenticulaire</DATA>
+                <DATA>thalamus</DATA>
+                <DATA>noyau basal de Meynert</DATA>
+                <DATA>hypothalamus</DATA>
+                <DATA>noyau amygdalien</DATA>
+                <DATA>noyau caudé</DATA>
+                <DATA>substance blanche</DATA>
+                <DATA>pôle frontal</DATA>
+                <DATA>T4</DATA>
+            </COL>
+            <COL>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+            </COL>
+            <COL>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongAzote</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongAzote</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongIso</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongIso</DATA>
+            </COL>
+        </ROW>
+        <ROW MODID="16" RECORDID="3">
+            <COL>
+                <DATA>3</DATA>
+            </COL>
+            <COL></COL>
+            <COL></COL>
+            <COL></COL>
+        </ROW>
+        <ROW MODID="24" RECORDID="4">
+            <COL>
+                <DATA>4</DATA>
+            </COL>
+            <COL></COL>
+            <COL></COL>
+            <COL></COL>
+        </ROW>
+        <ROW MODID="19" RECORDID="5">
+            <COL>
+                <DATA>5</DATA>
+            </COL>
+            <COL>
+                <DATA>MOR tranche 1</DATA>
+                <DATA>MOR tranche 2</DATA>
+                <DATA>MOR tranche 3</DATA>
+                <DATA>MOR tranche 4</DATA>
+                <DATA>MOR tranche 5</DATA>
+                <DATA>MOR tranche 6</DATA>
+                <DATA>MOR tranche 7</DATA>
+                <DATA>MOR tranche 8</DATA>
+                <DATA>MOR tranche 9</DATA>
+                <DATA>MOR tranche 10</DATA>
+                <DATA>MOR tranche 11</DATA>
+                <DATA>MOR tranche 12</DATA>
+                <DATA>cervelet tranche 2</DATA>
+                <DATA>cervelet tranche 3</DATA>
+                <DATA>cervelet tranche 4</DATA>
+            </COL>
+            <COL>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+                <DATA>Available</DATA>
+            </COL>
+            <COL>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+                <DATA>CongCarbo</DATA>
+            </COL>
+        </ROW>
+    </RESULTSET>
+</FMPXMLRESULT>

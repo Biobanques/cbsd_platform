@@ -51,7 +51,10 @@ class FicheController extends Controller {
         $_SESSION['patientAll'] = null;
         $_SESSION['qmi'] = null;
         $_SESSION['test'] = null;
-        Query::model()->find()->delete();
+        $query = Query::model()->find();
+        if ($query != null) {
+            $query->delete();
+        }
         $model = new Answer('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Answer'])) {

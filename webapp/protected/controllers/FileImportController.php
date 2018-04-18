@@ -63,32 +63,57 @@ class FileImportController extends Controller {
             $date = date('Ymd_H') . 'h' . date('i');
             $uploadedFile->attributes = $_POST['UploadedFile'];
             $uploadedFile->filename = CUploadedFile::getInstance($uploadedFile, 'filename');
-            $folderNominatif = CommonProperties::$IMPORT_FOLDER_NOMINATIF;
-            if (substr($folderNominatif, -1) != '/') {
-                $folderNominatif .= '/';
-            }
-            chdir(Yii::app()->basePath . "/" . $folderNominatif);
-            if ($uploadedFile->validate()) {
-                $uploadedFile->filename->saveAs($uploadedFile->filename->getName());
-                chmod($uploadedFile->filename->getName(), 0777);
-                $file = "not_imported/" . $uploadedFile->filename->getName();
-                $this->importNeuropathNominatif($uploadedFile);
-                $this->deleteUnvalidNeuropath();
-                $this->deleteDoublonsNeuropath();
-                $this->deleteImportNeuropathForms();
-                $this->createFicheNeuropath();
-                $this->createFicheNeuropathBis();
-                $fileImport->user = Yii::app()->user->id;
-                $fileImport->filename = $date . '_' . $uploadedFile->filename->getName();
-                $fileImport->filesize = $uploadedFile->filename->getSize();
-                $fileImport->extension = $uploadedFile->filename->getExtensionName();
-                $fileImport->date_import = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
-                $fileImport->imported = 0;
-                $fileImport->not_imported = 0;
-                $fileImport->save();
-                Yii::app()->user->setFlash('succès', Yii::t('common', 'fileMakerImported'));
-            } else {
-                Yii::app()->user->setFlash('erreur', Yii::t('common', 'fileMakerNotImported'));
+            if ($uploadedFile->filename->getExtensionName() == "csv") {
+                $folderNominatif = CommonProperties::$IMPORT_FOLDER_NEUROPATH;
+                if (substr($folderNominatif, -1) != '/') {
+                    $folderNominatif .= '/';
+                }
+                if ($_POST['filetype'] == "Donneur") {
+                    chdir(Yii::app()->basePath . "/" . $folderNominatif . "/adet/");
+                    if ($uploadedFile->validate()) {
+                        $uploadedFile->filename->saveAs($uploadedFile->filename->getName());
+                        chmod($uploadedFile->filename->getName(), 0777);
+                        $file = "not_imported/" . $uploadedFile->filename->getName();
+                        $this->importNeuropathNominatif($uploadedFile);
+                        $this->deleteUnvalidNeuropath();
+                        $this->deleteDoublonsNeuropath();
+                        $this->deleteImportNeuropathForms();
+                        $this->createFicheNeuropath();
+                        $this->createFicheNeuropathBis();
+                        $fileImport->user = Yii::app()->user->id;
+                        $fileImport->filename = $date . '_' . $uploadedFile->filename->getName();
+                        $fileImport->filesize = $uploadedFile->filename->getSize();
+                        $fileImport->extension = $uploadedFile->filename->getExtensionName();
+                        $fileImport->date_import = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
+                        $fileImport->imported = 0;
+                        $fileImport->not_imported = 0;
+                        $fileImport->save();
+                        Yii::app()->user->setFlash('succès', Yii::t('common', 'fileMakerImported'));
+                    } else {
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'fileMakerNotImported'));
+                    }
+                } elseif ($_POST['filetype'] == "Tranche") {
+                    chdir(Yii::app()->basePath . "/" . $folderNominatif . "/tranche/");
+                    if ($uploadedFile->validate()) {
+                        $uploadedFile->filename->saveAs($uploadedFile->filename->getName());
+                        chmod($uploadedFile->filename->getName(), 0777);
+                        $file = "not_imported/" . $uploadedFile->filename->getName();
+                        $this->importNeuropathTranche($uploadedFile);
+                        // TODO : Update Fiche, NO CREATE NEW FICHE
+                        //$this->createFicheNeuropath();
+                        $fileImport->user = Yii::app()->user->id;
+                        $fileImport->filename = $date . '_' . $uploadedFile->filename->getName();
+                        $fileImport->filesize = $uploadedFile->filename->getSize();
+                        $fileImport->extension = $uploadedFile->filename->getExtensionName();
+                        $fileImport->date_import = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
+                        $fileImport->imported = 0;
+                        $fileImport->not_imported = 0;
+                        $fileImport->save();
+                        Yii::app()->user->setFlash('succès', Yii::t('common', 'fileMakerImported'));
+                    } else {
+                        Yii::app()->user->setFlash('erreur', Yii::t('common', 'fileMakerNotImported'));
+                    }
+                }
             }
         }
         $this->render('admin', array(
@@ -223,15 +248,11 @@ class FileImportController extends Controller {
     public function dropNeuropathCollection() {
         return Neuropath::model()->deleteAll();
     }
-  
+
     public function importNeuropathNominatif($uploadedFile) {
-        $res = array();
         $rows = array_map('str_getcsv', file($uploadedFile->filename));
         $header = array_shift($rows);
         $csv = array();
-        $patientBis = array();
-        $tissu = "";
-        $qte = "";
         $neuroExist = false;
         $neuro = Neuropath::model()->findAll();
         if ($neuro != null) {
@@ -241,7 +262,6 @@ class FileImportController extends Controller {
             $csv[] = array_combine($header, $row);
         }
         foreach ($csv as $kCSV => $vCSV) {
-            $prelevements = array();
             $attributes = array();
             $neuropath = new Neuropath;
             $patient = $this->initializePatientObject();
@@ -253,7 +273,7 @@ class FileImportController extends Controller {
                     case "Nom usuel":
                         $patient->useName = str_replace("'", " ", CommonTools::setValue($valeur));
                         break;
-                    case "Prenoms":
+                    case "Prénoms":
                         $pos = strpos(CommonTools::setValue($valeur), ",");
                         if ($pos) {
                             $patient->firstName = str_replace("'", " ", substr(CommonTools::setValue($valeur), 0, $pos));
@@ -279,45 +299,14 @@ class FileImportController extends Controller {
                         }
                 }
             }
-            $tissu = null;
-            $cong = null;
-            $qte = null;
-            if ($attributes['PrelevementTissusTranche::Origin_Samples_Tissue'] != null || $attributes['PrelevementTissusTranche::Origin_Samples_Tissue'] != "") {
-                $prelevements[(string) $attributes['PrelevementTissusTranche::Origin_Samples_Tissue']] = $attributes['PrelevementTissusTranche::quantity_available'];
-                $tissu = (string) preg_replace("# +#", " ", trim($attributes['PrelevementTissusTranche::Origin_Samples_Tissue']));
-                $cong = $attributes['PrelevementTissusTranche::storage_conditions'];
-                $qte = $attributes['PrelevementTissusTranche::quantity_available'];
-            }
-            unset($attributes['PrelevementTissusTranche::Origin_Samples_Tissue']);
-            unset($attributes['PrelevementTissusTranche::quantity_available']);
-            unset($attributes['PrelevementTissusTranche::storage_conditions']);
-            $res = CommonTools::array_merge_custom($attributes, $prelevements);
-            if ($patient->birthName == null && $patient->useName == null && $patient->firstName == null && $patient->birthDate == null && $patient->sex == "U") {
-                $patient->birthName = $patientBis['birthName'];
-                $patient->useName = $patientBis['useName'];
-                $patient->firstName = $patientBis['firstName'];
-                $patient->birthDate = $patientBis['birthDate'];
-                $patient->sex = $patientBis['sex'];
-            } else {
-                $patientBis = null;
-            }
             if ($this->emptyFieldExist($patient) != true) {
-                $patientBis['birthName'] = $patient->birthName;
-                $patientBis['useName'] = $patient->useName;
-                $patientBis['firstName'] = $patient->firstName;
-                $patientBis['birthDate'] = $patient->birthDate;
-                $patientBis['sex'] = $patient->sex;
                 $patientest = CommonTools::wsGetPatient($patient);
-                if (!$neuroExist) {
-                    $this->addNeuropathFirstTime($patient, $res, $patientest, $neuropath, $tissu, $qte, $cong);
-                } else {
-                    $this->addNeuropath($patient, $res, $patientest, $neuropath, $tissu, $qte, $cong);
-                }
+                $this->addNeuropath($patient, $attributes, $patientest, $neuropath);
             }
         }
     }
-
-    public function addNeuropathFirstTime($patient, $res, $patientest, $neuropath, $tissu, $qte, $cong) {
+    
+    public function addNeuropath($patient, $res, $patientest, $neuropath) {
         if ($patientest === 'NoPatient') {
             $patient = CommonTools::wsAddPatient($patient);
             $patientSIP = get_object_vars($patient);
@@ -344,17 +333,8 @@ class FileImportController extends Controller {
                         if ($keyAttr != null || $keyAttr != "") {
                             $keyAttrTrim = preg_replace("# +#", " ", trim($keyAttr));
                             $columnFileMaker = ColumnFileMaker::model()->findByAttributes(array('currentColumn' => $keyAttrTrim));
-                            $prvmt = Prelevement::model()->findByAttributes(array('currentColumn' => $keyAttrTrim));
-                            if ($columnFileMaker != null || $prvmt != null) {
-                                if ($prvmt != null) {
-                                    if ($cong != null) {
-                                        $fileMaker = $prvmt->newColumn . "_" . $cong;
-                                    } else {
-                                        $fileMaker = $prvmt->newColumn;
-                                    }
-                                } else {
-                                    $fileMaker = $columnFileMaker->newColumn;
-                                }
+                            if ($columnFileMaker != null) {
+                                $fileMaker = $columnFileMaker->newColumn;
                                 $neuropath->initSoftAttribute($fileMaker);
                                 $pos = strpos((string) $valueAttr, "-");
                                 if ($valueAttr == "") {
@@ -366,11 +346,6 @@ class FileImportController extends Controller {
                                 }
                             } else {
                                 $pos = strpos((string) $valueAttr, "-");
-                                if ($cong != null) {
-                                    $keyAttrTrim = $keyAttrTrim . "_" . $cong;
-                                } else {
-                                    $keyAttrTrim = $keyAttrTrim;
-                                }
                                 $neuropath->initSoftAttribute($keyAttrTrim);
                                 if ($valueAttr == "") {
                                     $neuropath->$keyAttrTrim = null;
@@ -383,205 +358,69 @@ class FileImportController extends Controller {
                         }
                     }
                     $neuropath->save();
-                }
-            }
-        } else {
-            $patientSIP = get_object_vars($patientest);
-            foreach ($patientSIP as $k => $v) {
-                if ($k == "id") {
-                    $criteria = new EMongoCriteria;
-                    $criteria->id_cbsd = $v;
-                    $neuropath = Neuropath::model()->find($criteria);
-                    if ($neuropath != null && $tissu != null) {
-                        foreach ($neuropath as $key => $value) {
-                            if ($key !== $tissu) {
-                                $prvmt = Prelevement::model()->findByAttributes(array('currentColumn' => $tissu));
-                                if ($prvmt != null) {
-                                    if ($cong != null) {
-                                        $fileMaker = $prvmt->newColumn . "_" . $cong;
-                                    } else {
-                                        $fileMaker = $prvmt->newColumn;
-                                    }
-                                    $neuropath->initSoftAttribute($fileMaker);
-                                    $neuropath->$fileMaker = $qte;
-                                    $neuropath->save();
-                                } else {
-                                    $neuropath->initSoftAttribute($tissu);
-                                    $neuropath->$tissu = $qte;
-                                    $neuropath->save();
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
     }
-
-    public function addNeuropath($patient, $res, $patientest, $neuropath, $tissu, $qte, $cong) {
-        if ($patientest === 'NoPatient') {
-            $patient = CommonTools::wsAddPatient($patient);
-            $patientSIP = get_object_vars($patient);
-            $id = $this->getPatientSIP($patientSIP);
-            $_SESSION['NoPatient'] = $id;
-            foreach ($patientSIP as $kSIP => $vSIP) {
-                if ($kSIP == "id" && $vSIP != "") {
-                    $neuropath->initSoftAttribute("id_cbsd");
-                    $neuropath->id_cbsd = $vSIP;
-                    $birthName = "Nom naissance";
-                    $useName = "Nom usuel";
-                    $firstName = "Prénoms";
-                    $birthDate = "Date naissance";
-                    $sexe = "Sexe";
-                    $neuropath->initSoftAttribute($birthName);
-                    $neuropath->$birthName = $patient->birthName;
-                    $neuropath->initSoftAttribute($useName);
-                    $neuropath->$useName = $patient->useName;
-                    $neuropath->initSoftAttribute($firstName);
-                    $neuropath->$firstName = $patient->firstName;
-                    $neuropath->initSoftAttribute($birthDate);
-                    $neuropath->$birthDate = $patient->birthDate;
-                    $neuropath->initSoftAttribute($sexe);
-                    $neuropath->$sexe = $patient->sex;
-                    foreach ($res as $keyAttr => $valueAttr) {
-                        if ($keyAttr != null || $keyAttr != "") {
-                            $keyAttrTrim = (string) preg_replace("# +#", " ", trim($keyAttr));
-                            $columnFileMaker = ColumnFileMaker::model()->findByAttributes(array('currentColumn' => $keyAttrTrim));
-                            $prvmt = Prelevement::model()->findByAttributes(array('currentColumn' => $keyAttrTrim));
-                            if ($columnFileMaker != null || $prvmt != null) {
-                                if ($prvmt != null) {
-                                    if ($cong != null) {
-                                        $fileMaker = (string) $prvmt->newColumn . "_" . $cong;
-                                    } else {
-                                        $fileMaker = (string) $prvmt->newColumn;
-                                    }
-                                } else {
-                                    $fileMaker = $columnFileMaker->newColumn;
-                                }
-                                $neuropath->initSoftAttribute($fileMaker);
-                                $pos = strpos((string) $valueAttr, "-");
-                                if ($valueAttr == "") {
-                                    $neuropath->$fileMaker = null;
-                                } elseif (($pos && $keyAttrTrim == "PrelevementTissus::Braak_Tau") || ($pos && $keyAttrTrim == "PrelevementTissus::Thal_amiloide")) {
-                                    $neuropath->$fileMaker = $this->convertNumeric(substr($valueAttr, 0, $pos));
-                                } else {
-                                    $neuropath->$fileMaker = $this->convertNumeric($valueAttr);
-                                }
-                            } else {
-                                $neuropath->initSoftAttribute($keyAttrTrim);
-                                if ($valueAttr == "") {
-                                    $neuropath->$keyAttrTrim = null;
-                                } elseif (($pos && $keyAttrTrim == "PrelevementTissus::Braak_Tau") || ($pos && $keyAttrTrim == "PrelevementTissus::Thal_amiloide")) {
-                                    $neuropath->$keyAttrTrim = $this->convertNumeric(substr($valueAttr, 0, $pos));
-                                } else {
-                                    $neuropath->$keyAttrTrim = $this->convertNumeric($valueAttr);
-                                }
-                            }
+    
+    public function importNeuropathTranche($uploadedFile) {
+        $rows = array_map('str_getcsv', file($uploadedFile->filename));
+        $header = array_shift($rows);
+        $csv = array();
+        $neuro = null;
+        foreach ($rows as $row) {
+            $csv[] = array_combine($header, $row);
+        }
+        foreach ($csv as $kCSV => $vCSV) {
+            $tranche = new Tranche;
+            $answer = null;
+            $arrTranche = array();
+            foreach ($vCSV as $cle => $valeur) {
+                switch ($cle) {
+                    case "ID":
+                        $arrTranche["ID"] = $valeur;
+                        break;
+                    case "PrelevementTissus::id_donor":
+                        $arrTranche["id_donor"] = $valeur;
+                        $neuro = Neuropath::model()->findByAttributes(array("id_donor" => (int) $valeur));
+                        if ($neuro != null) {
+                            $answer = Answer::model()->findByAttributes(array("id_patient" => (string) $neuro->id_cbsd));
                         }
-                    }
-                    $neuropath->save();
+                        break;
+                    case "Origin_Samples_Tissue":
+                        $arrTranche["Origin_Samples_Tissue"] = $valeur;
+                        break;
+                    case "quantity_available":
+                        $arrTranche["quantity_available"] = $valeur;
+                        break;
+                    case "storage_conditions":
+                        $arrTranche["storage_conditions"] = $valeur;
+                        break;
+                    default:
                 }
             }
-        } else {
-            $patientSIP = get_object_vars($patientest);
-            $id = $this->getPatientSIP($patientSIP);
-            if (isset($_SESSION['NoPatient']) && $_SESSION['NoPatient'] == $id) {
-                $criteria = new EMongoCriteria;
-                $criteria->id_cbsd = $id;
-                $neuropath = Neuropath::model()->find($criteria);
-                if ($neuropath != null && $tissu != null && isset($_SESSION['patientId']) && $_SESSION['patientId'] == $id && $_SESSION['NoPatient'] == 1) {
-                    foreach ($neuropath as $key => $value) {
-                        if ($key !== $tissu) {
-                            if ($cong != null) {
-                                $tissu = (string) str_replace('.', '', $tissu) . "_" . $cong;
-                            } else {
-                                $tissu = (string) str_replace('.', '', $tissu);
-                            }
-                            $neuropath->initSoftAttribute($tissu);
-                            $neuropath->$tissu = $qte;
-                            $neuropath->save();
-                        }
-                    }
+            
+            foreach ($arrTranche as $key => $value) {
+                if (isset($tranche->$key)) {
+                    $tranche->initSoftAttribute($key);
+                    $tranche->$key = $value;
                 }
-            } else {
-                $criteria = new EMongoCriteria;
-                $criteria->id_cbsd = $id;
-                $neuropathBis = NeuropathBis::model()->find($criteria);
-                if ($neuropathBis === null) {
-                    $neuropathBis = new NeuropathBis;
-                    $neuropathBis->initSoftAttribute("id_cbsd");
-                    foreach ($patientSIP as $k => $v) {
-                        if ($k == "id") {
-                            $neuropathBis->id_cbsd = $v;
-                            $birthName = "Nom naissance";
-                            $useName = "Nom usuel";
-                            $firstName = "Prénoms";
-                            $birthDate = "Date naissance";
-                            $sexe = "Sexe";
-                            $neuropathBis->initSoftAttribute($birthName);
-                            $neuropathBis->$birthName = $patient->birthName;
-                            $neuropathBis->initSoftAttribute($useName);
-                            $neuropathBis->$useName = $patient->useName;
-                            $neuropathBis->initSoftAttribute($firstName);
-                            $neuropathBis->$firstName = $patient->firstName;
-                            $neuropathBis->initSoftAttribute($birthDate);
-                            $neuropathBis->$birthDate = $patient->birthDate;
-                            $neuropathBis->initSoftAttribute($sexe);
-                            $neuropathBis->$sexe = $patient->sex;
-                        }
-                    }
+            }
+            if (isset($tranche) && $tranche != null) {
+                $tranche->save();
+            }
+            if ($answer != null) {
+                foreach ($answer->answers_group as $ans) {
+                    $answerQuestion = new AnswerQuestion;
+                    $answerQuestion->id = (string) $arrTranche["Origin_Samples_Tissue"] . "_" . (string) $arrTranche["storage_conditions"];
+                    $answerQuestion->label = (string) $arrTranche["Origin_Samples_Tissue"] . "_" . (string) $arrTranche["storage_conditions"];
+                    $answerQuestion->label_fr = (string) $arrTranche["Origin_Samples_Tissue"] . "_" . (string) $arrTranche["storage_conditions"];
+                    $answerQuestion->type = "radio";
+                    $answerQuestion->values = "Available,Not available";
+                    $answerQuestion->answer = $arrTranche["quantity_available"];
+                    $ans->answers[] = $answerQuestion;
                 }
-                foreach ($res as $keyAttr => $valueAttr) {
-                    if ($keyAttr != null || $keyAttr != "") {
-                        $keyAttrTrim = (string) preg_replace("# +#", " ", trim($keyAttr));
-                        $columnFileMaker = ColumnFileMaker::model()->findByAttributes(array('currentColumn' => (string) $keyAttrTrim));
-                        $prvmt = Prelevement::model()->findByAttributes(array('currentColumn' => (string) $keyAttrTrim));
-                        if ($columnFileMaker != null || $prvmt != null) {
-                            if ($prvmt != null) {
-                                if ($cong != null) {
-                                    $fileMaker = (string) str_replace('.', '', $prvmt->newColumn) . "_" . $cong;
-                                } else {
-                                    $fileMaker = (string) str_replace('.', '', $prvmt->newColumn);
-                                }
-                            } else {
-                                $fileMaker = (string) str_replace('.', '', $columnFileMaker->newColumn);
-                            }
-                            $criteriaNeuro = new EMongoCriteria;
-                            $criteriaNeuro->id_cbsd = $id;
-
-                            $neuropathBis->initSoftAttribute((string) $fileMaker);
-                            $pos = strpos((string) $valueAttr, "-");
-                            if ($valueAttr != "") {
-                                if ($fileMaker !== "id_donor") {
-                                    if (($pos && $keyAttrTrim == "PrelevementTissus::Braak_Tau") || ($pos && $keyAttrTrim == "PrelevementTissus::Thal_amiloide")) {
-                                        $neuropathBis->$fileMaker = $this->convertNumeric(substr($valueAttr, 0, $pos));
-                                    } else {
-                                        $neuropathBis->$fileMaker = $this->convertNumeric($valueAttr);
-                                    }
-                                } else {
-                                    $neuropathBis->id_donor = $this->convertNumeric($valueAttr);
-                                }
-                            }
-                        } else {
-                            $attr = (string) str_replace('.', '', $fileMaker);
-                            if (!isset($neuropathBis->$attr)) {
-                                $neuropathBis->initSoftAttribute((string) $attr);
-                                if ($valueAttr != "") {
-                                    if ($fileMaker !== "id_donor") {
-                                        if (($pos && $attr == "PrelevementTissus::Braak_Tau") || ($pos && $attr == "PrelevementTissus::Thal_amiloide")) {
-                                            $neuropathBis->$attr = $this->convertNumeric(substr($valueAttr, 0, $pos));
-                                        } else {
-                                            $neuropathBis->$attr = $this->convertNumeric($valueAttr);
-                                        }
-                                    } else {
-                                        $neuropathBis->id_donor = $this->convertNumeric($valueAttr);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                $neuropathBis->save();
+                $answer->save();
             }
         }
     }

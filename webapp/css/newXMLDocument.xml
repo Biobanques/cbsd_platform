@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fmp="http://www.filemaker.com/fmpxmlresult" exclude-result-prefixes="fmp">
+    <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
+    <xsl:template match="/">
+        <root type="GIE-NeuroCEB">
+            <samples>
+                <xsl:for-each select="fmp:FMPXMLRESULT/fmp:RESULTSET/fmp:ROW">
+                    <sample>
+                        <notes>
+                            <note>
+                                <key>id_donor</key>
+                                <value>
+                                    <xsl:value-of select="fmp:COL[1]/fmp:DATA"/>
+                                </value>
+                                <note>
+                                    <key>Origin_sample_tissue</key>
+                                    <value>
+                                        <xsl:for-each select="fmp:FMPXMLRESULT/fmp:RESULTSET/fmp:ROW/fmp:COL[2]">
+                                            <xsl:value-of select="fmp:COL[2]/fmp:DATA"/>
+                                        </xsl:for-each>
+                                    </value>
+                                </note>
+                                <note>
+                                <key>Quantity available</key>
+                                <value>
+                                    <xsl:value-of select="fmp:COL[3]/fmp:DATA"/>
+                                </value>
+                            </note>
+                            <note>
+                                <key>Congélation</key>
+                                <value>
+                                    <xsl:value-of select="fmp:COL[4]/fmp:DATA"/>
+                                </value>
+                            </note>
+                            </note>
+                        </notes>
+                    </sample>
+                </xsl:for-each>
+            </samples>
+        </root>
+    </xsl:template>
+</xsl:stylesheet>

@@ -132,6 +132,14 @@ class Answer extends LoggableActiveRecord {
             'last_modified' => 'Date de mise à jour du questionnaire',
         );
     }
+    
+    public function attributeExportedSamples() {
+        return array(
+            'Echantillons' => 'PrelevementTissusTranche::Origin_Samples_Tissue',
+            'Quantite' => 'PrelevementTissusTranche::quantity_available',
+            'Cong' => 'PrelevementTissusTranche::storage_conditions'
+        );
+    }
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
@@ -911,14 +919,15 @@ class Answer extends LoggableActiveRecord {
         $samQuestion = array();
         $sampleQuestions = array();
         $answersList = array();
-        $headerLineFixe = $this->attributeExportedSamples();
         $neuropath = null;
+        $tranche = null;
         foreach ($models as $answer) {
             $counter = 0;
             $nbColumn = 0;
             $sampledQuestions = array();
             $currentAnswerBis = array();
             $neuropath = Neuropath::model()->findByAttributes(array("id_cbsd" => (int) $answer->id_patient));
+            $tranche = Tranche::model()->findAllByAttributes(array("id_donor" => (int) $neuropath->id_donor));
             $answersQuestions = array();
             $count = 0;
             $sampleQuestions = array();
@@ -936,60 +945,24 @@ class Answer extends LoggableActiveRecord {
             foreach ($neuropath as $k => $v) {
                 if ($k != "_id" && $k != "id_cbsd") {
                     $columnFileMaker = ColumnFileMaker::model()->findByAttributes(array('newColumn' => explode('_', $k)[0]));
-                    $prelevement = Prelevement::model()->findByAttributes(array('newColumn' => explode('_', $k)[0]));
                     if ($columnFileMaker != null) {
-                        $typeSample = $columnFileMaker;
-                        $nbColumn++;
-                    } elseif ($prelevement != null) {
-                        $typeSample = $prelevement;
-                        if (strpos($k, '_')) {
-                            $cong = explode('_', $k)[1];
-                        }
-                        $count++;
-                    } else {
-                        $nbColumn++;
-                        $typeSample = null;
-                    }
-                    if ($typeSample != null) {
-                        $label = $typeSample->newColumn;
-                    } elseif ($k != null || $k != "") {
-                        $label = $k;
-                    } else {
-                        $label = "";
-                    }
-                    if ($prelevement != null) {
-                        $counter++;
-                        if ($counter < 2) {
-                            $ansQuestion['label'] = "Origin_Samples_Tissue";
-                            $ansQuestion['answer'] = $label;
-                            $answersQuestions[] = $ansQuestion;
-                            $ansQuestion['label'] = "quantity_available";
-                            $ansQuestion['answer'] = $neuropath->$k;
-                            $answersQuestions[] = $ansQuestion;
-                            $ansQuestion['label'] = "storage_conditions";
-                            $ansQuestion['answer'] = $cong;
-                            $answersQuestions[] = $ansQuestion;
-                        } else {
-                            $samQuestion['label'] = "Origin_Samples_Tissue";
-                            $samQuestion['answer'] = $label;
-                            $sampleQuestions["Echantillons"] = $samQuestion;
-                            $samQuestion['label'] = "quantity_available";
-                            $samQuestion['answer'] = $neuropath->$k;
-                            $sampleQuestions["Qte"] = $samQuestion;
-                            $samQuestion['label'] = "storage_conditions";
-                            $samQuestion['answer'] = $cong;
-                            $sampleQuestions["Cong"] = $samQuestion;
-                            $sampledQuestions[] = $sampleQuestions;
-                        }
-                       
-                    } else {
-                        $ansQuestion['label'] = $label;
+                        $ansQuestion['label'] = $columnFileMaker->newColumn;
                         $ansQuestion['answer'] = $v;
+                        print_r($ansQuestion);
+                    }
+                    if ($k == "id_donor") {
+                        $answersQuestions[0] = $ansQuestion;
+                    } else {
                         $answersQuestions[] = $ansQuestion;
                     }
                 }
             }
-            $currentAnswer['questions'] = $answersQuestions;
+            foreach ($tranche as $trancheK => $trancheV) {
+                
+            }
+        }
+        
+            /*$currentAnswer['questions'] = $answersQuestions;
             $answersList[] = $currentAnswer;
             if ($sampledQuestions != null) {
                 foreach ($sampledQuestions as $k => $v) {
@@ -1010,8 +983,7 @@ class Answer extends LoggableActiveRecord {
                 }
             }
         }
-        $headerLine = array_merge($headerLineDynamic, $headerLineFixe);
-        $result[] = $headerLine;
+        $result[] = $headerLineDynamic;
         foreach ($answersList as $cAnswer) {
             $resultLine = array();
             $cQuestions = $cAnswer['questions'];
@@ -1039,8 +1011,8 @@ class Answer extends LoggableActiveRecord {
                 }
             }
             $result[] = $resultLine;
-        }
-        return $result;
+        }*/
+        //return $result;
     }
 
 }

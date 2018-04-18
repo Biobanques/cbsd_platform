@@ -29,7 +29,7 @@ class UploadedFile extends LoggableActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('filename', 'file', 'types'=>'csv', 'safe' => true)
+            array('filename', 'file', 'types'=>'csv,xml', 'safe' => true)
         );
     }
     

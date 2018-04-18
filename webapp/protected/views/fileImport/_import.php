@@ -11,6 +11,13 @@
     ?>
 
     <?php echo $form->errorSummary($uploadedFile); ?>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <?php echo CHtml::label('Type de fichier', 'filetype'); ?>
+            <?php echo CHtml::radioButtonList('filetype', '', array('Donneur' => 'Donneur', 'Tranche' => 'Tranche'), array('labelOptions' => array('style' => 'display:inline'))); ?>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-12">
