@@ -30,7 +30,7 @@ class RechercheFicheController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('individualCases', 'admin', 'admin2', 'admin3', 'view', 'update', 'exportCsv', 'searchReplace', 'resultSearch', 'viewOnePage'),
+                'actions' => array('individualCases', 'admin', 'admin2', 'admin3', 'searchTranche', 'view', 'update', 'exportCsv', 'searchReplace', 'resultSearch', 'viewOnePage'),
                 'expression' => '!Yii::app()->user->isGuest && $user->getActiveProfil() != "Clinicien"'
             ),
             array('deny', // deny all users
@@ -57,6 +57,9 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionAdmin() {
+        if (isset($_POST['searchTranche'])) {
+            $this->redirect(array('rechercheFiche/searchTranche'));
+        }
         $query = Query::model()->find();
         if (!isset($_POST['searchAll']) && !isset($_POST['rechercher'])) {
             $_SESSION['id_patient'] = null;
@@ -80,7 +83,6 @@ class RechercheFicheController extends Controller {
                     array_push($ficheId, $fiche->id_patient);
                     array_push($query->id_patient, $fiche->id_patient);
                     array_push($ficheMongoId, $fiche->questionnaireMongoId);
-                    $fiche->available = 1;
                     $fiche->save();
                     $query->save();
                 }
@@ -185,6 +187,54 @@ class RechercheFicheController extends Controller {
         $this->render('admin3', array(
             'model' => $model,
             'html' => $html
+        ));
+    }
+
+    public function actionSearchTranche() {
+        $model = new Tranche;
+        $query = Query::model()->find();
+        $query->id_patient = array();
+        $idDonor = array();
+        $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
+        if ($allFiches != null) {
+            foreach ($allFiches as $fiche) {
+                array_push($query->id_patient, $fiche->id_patient);
+                $neuropath = Neuropath::model()->findByAttributes(array('id_cbsd' => (int) $fiche->id_patient));
+                if ($neuropath != null) {
+                    array_push($idDonor, $neuropath->id_donor);
+                }
+                $query->save();
+            }
+            $regex = '/^';
+            foreach ($idDonor as $value) {
+                $regex .= $value . '$';
+                if ($value !== end($idDonor)) {
+                    $regex .= '|^';
+                }
+            }
+            $regex .= '/i';
+        }
+        $criteria = new EMongoCriteria;
+        if ($idDonor != null) {
+            $criteria->id_donor = new MongoRegex($regex);
+        }
+        if (isset($_POST['Tranche']['id']) && $_POST['Tranche']['id'] != null) {
+            $criteria->id = $_POST['Tranche']['id'];
+        }
+        if (isset($_POST['Tranche']['originSamplesTissue']) && $_POST['Tranche']['originSamplesTissue'] != null) {
+            $criteria->originSamplesTissue = $_POST['Tranche']['originSamplesTissue'];
+        }
+        if (isset($_POST['Tranche']['quantityAvailable']) && $_POST['Tranche']['quantityAvailable'] != null) {
+            $criteria->quantityAvailable = $_POST['Tranche']['quantityAvailable'];
+        }
+        if (isset($_POST['Tranche']['storageConditions']) && $_POST['Tranche']['storageConditions'] != null) {
+            $criteria->storageConditions = $_POST['Tranche']['storageConditions'];
+        }
+        print_r($criteria);
+        $tranche = Tranche::model()->findAll($criteria);
+        echo count($tranche);
+        $this->render('searchTranche', array(
+            'model' => $model
         ));
     }
 

@@ -374,36 +374,28 @@ class FileImportController extends Controller {
         foreach ($csv as $kCSV => $vCSV) {
             $tranche = new Tranche;
             $answer = null;
-            $arrTranche = array();
             foreach ($vCSV as $cle => $valeur) {
                 switch ($cle) {
                     case "ID":
-                        $arrTranche["ID"] = $valeur;
+                        $tranche->id = $valeur;
                         break;
                     case "PrelevementTissus::id_donor":
-                        $arrTranche["id_donor"] = $valeur;
+                        $tranche->id_donor = $valeur;
                         $neuro = Neuropath::model()->findByAttributes(array("id_donor" => (int) $valeur));
                         if ($neuro != null) {
                             $answer = Answer::model()->findByAttributes(array("id_patient" => (string) $neuro->id_cbsd));
                         }
                         break;
                     case "Origin_Samples_Tissue":
-                        $arrTranche["Origin_Samples_Tissue"] = $valeur;
+                        $tranche->originSamplesTissue = $valeur;
                         break;
                     case "quantity_available":
-                        $arrTranche["quantity_available"] = $valeur;
+                        $tranche->quantityAvailable = $valeur;
                         break;
                     case "storage_conditions":
-                        $arrTranche["storage_conditions"] = $valeur;
+                        $tranche->storageConditions = $valeur;
                         break;
                     default:
-                }
-            }
-            
-            foreach ($arrTranche as $key => $value) {
-                if (isset($tranche->$key)) {
-                    $tranche->initSoftAttribute($key);
-                    $tranche->$key = $value;
                 }
             }
             if (isset($tranche) && $tranche != null) {
@@ -412,12 +404,12 @@ class FileImportController extends Controller {
             if ($answer != null) {
                 foreach ($answer->answers_group as $ans) {
                     $answerQuestion = new AnswerQuestion;
-                    $answerQuestion->id = (string) $arrTranche["Origin_Samples_Tissue"] . "_" . (string) $arrTranche["storage_conditions"];
-                    $answerQuestion->label = (string) $arrTranche["Origin_Samples_Tissue"] . "_" . (string) $arrTranche["storage_conditions"];
-                    $answerQuestion->label_fr = (string) $arrTranche["Origin_Samples_Tissue"] . "_" . (string) $arrTranche["storage_conditions"];
+                    $answerQuestion->id = (string) $tranche->originSamplesTissue . "_" . (string) $tranche->storageConditions;
+                    $answerQuestion->label = (string) $tranche->originSamplesTissue . "_" . (string) $tranche->storageConditions;
+                    $answerQuestion->label_fr = (string) $tranche->originSamplesTissue . "_" . (string) $tranche->storageConditions;
                     $answerQuestion->type = "radio";
                     $answerQuestion->values = "Available,Not available";
-                    $answerQuestion->answer = $arrTranche["quantity_available"];
+                    $answerQuestion->answer = $tranche->quantityAvailable;
                     $ans->answers[] = $answerQuestion;
                 }
                 $answer->save();

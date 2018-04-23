@@ -75,8 +75,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 if ($model->search()->getTotalItemCount() > 0) {
     ?>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <?php echo CHtml::submitButton("Ajouter un autre formulaire (OU logique)", array('name' => 'searchAll', 'class' => 'btn btn-primary')); ?>
+        </div>
+        <div class="col-lg-6">
+            <?php echo CHtml::submitButton("Recherche sur les tranches", array('name' => 'searchTranche', 'class' => 'btn btn-primary')); ?>
         </div>
     </div>
 
