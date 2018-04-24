@@ -132,7 +132,7 @@ class Answer extends LoggableActiveRecord {
             'last_modified' => 'Date de mise à jour du questionnaire',
         );
     }
-    
+
     public function attributeExportedSamples() {
         return array(
             'Echantillons' => 'PrelevementTissusTranche::Origin_Samples_Tissue',
@@ -144,6 +144,20 @@ class Answer extends LoggableActiveRecord {
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria;
         $query = Query::model()->find();
+        if (isset($_SESSION['tranche'])) {
+            $neuropath = null;
+            $idCbsd = array();
+            foreach ($_SESSION['tranche'] as $tranche) {
+                $neuropath = Neuropath::model()->findByAttributes(array('id_donor' => (int) $tranche->id_donor));
+                array_push($idCbsd, $neuropath->id_cbsd);
+            }
+            $regex = '/^';
+            foreach ($idCbsd as $id) {
+                $regex .= $id . '$|^';
+            }
+            $regex .= '$/i';
+            $criteria->addCond('id_patient', '==', new MongoRegex($regex));
+        } else
         if (isset($_POST['patientAll'])) {
             $ficheId = array();
             $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
@@ -961,57 +975,57 @@ class Answer extends LoggableActiveRecord {
                 
             }
         }
-        
-            /*$currentAnswer['questions'] = $answersQuestions;
-            $answersList[] = $currentAnswer;
-            if ($sampledQuestions != null) {
-                foreach ($sampledQuestions as $k => $v) {
-                    $answersQuestions = array();
-                    $answersQuestions[] = $v['Echantillons'];
-                    $answersQuestions[] = $v['Qte'];
-                    $answersQuestions[] = $v['Cong'];
-                    $currentAnswerBis['questions'] = $answersQuestions;
-                    $answersList[] = $currentAnswerBis;
-                }
-            }
-        }
-        $headerLineDynamic = array();
-        foreach ($answersList as $cAnswer) {
-            foreach ($cAnswer['questions'] as $qAnswer) {
-                if (!in_array($qAnswer['label'], $headerLineDynamic)) {
-                    $headerLineDynamic[] = $qAnswer['label'];
-                }
-            }
-        }
-        $result[] = $headerLineDynamic;
-        foreach ($answersList as $cAnswer) {
-            $resultLine = array();
-            $cQuestions = $cAnswer['questions'];
-            //ajout des valeurs à la ligne, si aucune valeur existante pour cette column, ajoute null
 
-            foreach ($headerLineDynamic as $columnHeader) {
-                $valueExists = false;
-                foreach ($cQuestions as $cQuestion) {
-                    if ($cQuestion['label'] == $columnHeader) {
-                        if (is_array($cQuestion['answer'])) {
-                            if (isset($cQuestion['answer']['date'])) {
-                                $resultLine[] = date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($cQuestion['answer']['date']));
-                            } else {
-                                $resultLine[] = implode(', ', $cQuestion['answer']);
-                            }
-                        } else {
-                            $resultLine[] = $cQuestion['answer'];
-                        }
-                        $valueExists = true;
-                        break;
-                    }
-                }
-                if (!$valueExists) {
-                    $resultLine[] = "";
-                }
-            }
-            $result[] = $resultLine;
-        }*/
+        /* $currentAnswer['questions'] = $answersQuestions;
+          $answersList[] = $currentAnswer;
+          if ($sampledQuestions != null) {
+          foreach ($sampledQuestions as $k => $v) {
+          $answersQuestions = array();
+          $answersQuestions[] = $v['Echantillons'];
+          $answersQuestions[] = $v['Qte'];
+          $answersQuestions[] = $v['Cong'];
+          $currentAnswerBis['questions'] = $answersQuestions;
+          $answersList[] = $currentAnswerBis;
+          }
+          }
+          }
+          $headerLineDynamic = array();
+          foreach ($answersList as $cAnswer) {
+          foreach ($cAnswer['questions'] as $qAnswer) {
+          if (!in_array($qAnswer['label'], $headerLineDynamic)) {
+          $headerLineDynamic[] = $qAnswer['label'];
+          }
+          }
+          }
+          $result[] = $headerLineDynamic;
+          foreach ($answersList as $cAnswer) {
+          $resultLine = array();
+          $cQuestions = $cAnswer['questions'];
+          //ajout des valeurs à la ligne, si aucune valeur existante pour cette column, ajoute null
+
+          foreach ($headerLineDynamic as $columnHeader) {
+          $valueExists = false;
+          foreach ($cQuestions as $cQuestion) {
+          if ($cQuestion['label'] == $columnHeader) {
+          if (is_array($cQuestion['answer'])) {
+          if (isset($cQuestion['answer']['date'])) {
+          $resultLine[] = date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($cQuestion['answer']['date']));
+          } else {
+          $resultLine[] = implode(', ', $cQuestion['answer']);
+          }
+          } else {
+          $resultLine[] = $cQuestion['answer'];
+          }
+          $valueExists = true;
+          break;
+          }
+          }
+          if (!$valueExists) {
+          $resultLine[] = "";
+          }
+          }
+          $result[] = $resultLine;
+          } */
         //return $result;
     }
 

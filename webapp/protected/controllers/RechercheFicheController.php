@@ -62,6 +62,7 @@ class RechercheFicheController extends Controller {
         }
         $query = Query::model()->find();
         if (!isset($_POST['searchAll']) && !isset($_POST['rechercher'])) {
+            $_SESSION['tranche'] = null;
             $_SESSION['id_patient'] = null;
             $_SESSION['patientAll'] = null;
             $_SESSION['id_patientAll'] = null;
@@ -191,6 +192,7 @@ class RechercheFicheController extends Controller {
     }
 
     public function actionSearchTranche() {
+        $_SESSION['tranche'] = null;
         $model = new Tranche;
         $query = Query::model()->find();
         $query->id_patient = array();
@@ -218,9 +220,6 @@ class RechercheFicheController extends Controller {
         if ($idDonor != null) {
             $criteria->id_donor = new MongoRegex($regex);
         }
-        if (isset($_POST['Tranche']['id']) && $_POST['Tranche']['id'] != null) {
-            $criteria->id = $_POST['Tranche']['id'];
-        }
         if (isset($_POST['Tranche']['originSamplesTissue']) && $_POST['Tranche']['originSamplesTissue'] != null) {
             $criteria->originSamplesTissue = $_POST['Tranche']['originSamplesTissue'];
         }
@@ -230,9 +229,11 @@ class RechercheFicheController extends Controller {
         if (isset($_POST['Tranche']['storageConditions']) && $_POST['Tranche']['storageConditions'] != null) {
             $criteria->storageConditions = $_POST['Tranche']['storageConditions'];
         }
-        print_r($criteria);
         $tranche = Tranche::model()->findAll($criteria);
-        echo count($tranche);
+        $_SESSION['tranche'] = $tranche;
+        if (isset($_POST['Tranche'])) {
+            $this->redirect(array("rechercheFiche/admin3"));
+        }
         $this->render('searchTranche', array(
             'model' => $model
         ));

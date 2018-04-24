@@ -11,11 +11,6 @@
 
     <div class="row">
         <div class="col-lg-4">
-            <?php echo $form->labelEx($model, 'id'); ?>
-            <?php echo $form->textField($model, 'id', array('size' => 20, 'maxlength' => 250)); ?>
-            <?php echo $form->error($model, 'id'); ?>
-        </div>
-        <div class="col-lg-4">
             <?php echo $form->labelEx($model, 'id_donor'); ?>
             <?php echo $form->textField($model, 'id_donor', array('size' => 20, 'maxlength' => 250)); ?>
             <?php echo $form->error($model, 'id_donor'); ?>

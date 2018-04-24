@@ -48,6 +48,25 @@ echo CHtml::link(Yii::t('common', 'htmlView'), array('fiche/viewOnePage', 'id' =
 </div>
 
 <hr />
+<?php
+$modelTranche = new Tranche;
+$neuropath = Neuropath::model()->findByAttributes(array("id_cbsd" => (int) $model->id_patient));
+$criteria = new EMongoCriteria();
+$criteriaClinique = new EMongoCriteria($criteria);
+$criteriaClinique->id_donor = (string) $neuropath->id_donor;
+$dataProviderClinique = new EMongoDocumentDataProvider('Tranche');
+$dataProviderClinique->setCriteria($criteriaClinique); ?>
+
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'dataProvider' => $dataProviderClinique,
+    'columns' => array(
+        array('header' => $modelTranche->attributeLabels()["originSamplesTissue"], 'name' => 'originSamplesTissue'),
+        array('header' => $modelTranche->attributeLabels()["quantityAvailable"], 'name' => 'quantityAvailable'),
+        array('header' => $modelTranche->attributeLabels()["storageConditions"], 'name' => 'storageConditions')
+    ),
+));
+?>
 
 <div style="display:inline; margin:40%; width: 100px; ">
     <?php

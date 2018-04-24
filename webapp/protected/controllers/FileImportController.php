@@ -639,11 +639,8 @@ class FileImportController extends Controller {
                     $answerQuestion->label = (string) $k;
                     $answerQuestion->label_fr = (string) $k;
                     $type = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label));
-                    $typePrvmt = Prelevement::model()->findByAttributes(array('newColumn' => strtok($answerQuestion->label, '_')));
                     if ($type != null) {
                         $answerQuestion->type = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->type;
-                    } elseif ($typePrvmt != null) {
-                        $answerQuestion->type = Prelevement::model()->findByAttributes(array('newColumn' => strtok($answerQuestion->label, '_')))->type;
                     } else {
                         $answerQuestion->type = "input";
                     }
@@ -663,8 +660,6 @@ class FileImportController extends Controller {
                     } elseif ($answerQuestion->type == "radio") {
                         if ($type != null) {
                             $answerQuestion->values = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->values;
-                        } else {
-                            $answerQuestion->values = Prelevement::model()->findByAttributes(array('newColumn' => strtok($answerQuestion->label, '_')))->values;
                         }
                         $answerQuestion->answer = $v;
                     } else {
