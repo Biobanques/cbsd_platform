@@ -149,7 +149,9 @@ class Answer extends LoggableActiveRecord {
             $idCbsd = array();
             foreach ($_SESSION['tranche'] as $tranche) {
                 $neuropath = Neuropath::model()->findByAttributes(array('id_donor' => (int) $tranche->id_donor));
-                array_push($idCbsd, $neuropath->id_cbsd);
+                if (!in_array($neuropath->id_cbsd, $idCbsd)) {
+                    array_push($idCbsd, $neuropath->id_cbsd);
+                }
             }
             $regex = '/^';
             foreach ($idCbsd as $id) {
@@ -157,8 +159,7 @@ class Answer extends LoggableActiveRecord {
             }
             $regex .= '$/i';
             $criteria->addCond('id_patient', '==', new MongoRegex($regex));
-        } else
-        if (isset($_POST['patientAll'])) {
+        } elseif (isset($_POST['patientAll'])) {
             $ficheId = array();
             $allFiches = Answer::model()->findAll(Yii::app()->session['criteria']);
             if ($allFiches != null) {

@@ -51,6 +51,7 @@ class FicheController extends Controller {
         $_SESSION['patientAll'] = null;
         $_SESSION['qmi'] = null;
         $_SESSION['test'] = null;
+        $_SESSION['tranche'] = null;
         $query = Query::model()->find();
         if ($query != null) {
             $query->delete();
