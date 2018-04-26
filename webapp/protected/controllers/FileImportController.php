@@ -401,7 +401,7 @@ class FileImportController extends Controller {
             if (isset($tranche) && $tranche != null) {
                 $tranche->save();
             }
-            if ($answer != null) {
+            /*if ($answer != null) {
                 foreach ($answer->answers_group as $ans) {
                     $answerQuestion = new AnswerQuestion;
                     $answerQuestion->id = (string) $tranche->originSamplesTissue . "_" . (string) $tranche->storageConditions;
@@ -413,7 +413,7 @@ class FileImportController extends Controller {
                     $ans->answers[] = $answerQuestion;
                 }
                 $answer->save();
-            }
+            }*/
         }
     }
 

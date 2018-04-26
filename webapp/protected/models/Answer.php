@@ -132,7 +132,7 @@ class Answer extends LoggableActiveRecord {
             'last_modified' => 'Date de mise à jour du questionnaire',
         );
     }
-
+    
     public function attributeExportedSamples() {
         return array(
             'Echantillons' => 'PrelevementTissusTranche::Origin_Samples_Tissue',
@@ -934,15 +934,14 @@ class Answer extends LoggableActiveRecord {
         $samQuestion = array();
         $sampleQuestions = array();
         $answersList = array();
+        $headerLineFixe = $this->attributeExportedSamples();
         $neuropath = null;
-        $tranche = null;
         foreach ($models as $answer) {
             $counter = 0;
             $nbColumn = 0;
             $sampledQuestions = array();
             $currentAnswerBis = array();
             $neuropath = Neuropath::model()->findByAttributes(array("id_cbsd" => (int) $answer->id_patient));
-            $tranche = Tranche::model()->findAllByAttributes(array("id_donor" => (int) $neuropath->id_donor));
             $answersQuestions = array();
             $count = 0;
             $sampleQuestions = array();
@@ -960,74 +959,115 @@ class Answer extends LoggableActiveRecord {
             foreach ($neuropath as $k => $v) {
                 if ($k != "_id" && $k != "id_cbsd") {
                     $columnFileMaker = ColumnFileMaker::model()->findByAttributes(array('newColumn' => explode('_', $k)[0]));
+                    $prelevement = Prelevement::model()->findByAttributes(array('newColumn' => explode('_', $k)[0]));
                     if ($columnFileMaker != null) {
-                        $ansQuestion['label'] = $columnFileMaker->newColumn;
-                        $ansQuestion['answer'] = $v;
-                        print_r($ansQuestion);
-                    }
-                    if ($k == "id_donor") {
-                        $answersQuestions[0] = $ansQuestion;
+                        $typeSample = $columnFileMaker;
+                        $nbColumn++;
+                    } elseif ($prelevement != null) {
+                        $typeSample = $prelevement;
+                        if (strpos($k, '_')) {
+                            $cong = explode('_', $k)[1];
+                        }
+                        $count++;
                     } else {
+                        $nbColumn++;
+                        $typeSample = null;
+                    }
+                    if ($typeSample != null) {
+                        $label = $typeSample->newColumn;
+                    } elseif ($k != null || $k != "") {
+                        $label = $k;
+                    } else {
+                        $label = "";
+                    }
+                    if ($prelevement != null) {
+                        $counter++;
+                        if ($counter < 2) {
+                            $ansQuestion['label'] = "Origin_Samples_Tissue";
+                            $ansQuestion['answer'] = $label;
+                            $answersQuestions[] = $ansQuestion;
+                            $ansQuestion['label'] = "quantity_available";
+                            $ansQuestion['answer'] = $neuropath->$k;
+                            $answersQuestions[] = $ansQuestion;
+                            $ansQuestion['label'] = "storage_conditions";
+                            $ansQuestion['answer'] = $cong;
+                            $answersQuestions[] = $ansQuestion;
+                        } else {
+                            $samQuestion['label'] = "Origin_Samples_Tissue";
+                            $samQuestion['answer'] = $label;
+                            $sampleQuestions["Echantillons"] = $samQuestion;
+                            $samQuestion['label'] = "quantity_available";
+                            $samQuestion['answer'] = $neuropath->$k;
+                            $sampleQuestions["Qte"] = $samQuestion;
+                            $samQuestion['label'] = "storage_conditions";
+                            $samQuestion['answer'] = $cong;
+                            $sampleQuestions["Cong"] = $samQuestion;
+                            $sampledQuestions[] = $sampleQuestions;
+                        }
+                       
+                    } else {
+                        $ansQuestion['label'] = $label;
+                        $ansQuestion['answer'] = $v;
                         $answersQuestions[] = $ansQuestion;
                     }
                 }
             }
-            foreach ($tranche as $trancheK => $trancheV) {
-                
+            $currentAnswer['questions'] = $answersQuestions;
+            $answersList[] = $currentAnswer;
+            if ($sampledQuestions != null) {
+                foreach ($sampledQuestions as $k => $v) {
+                    $answersQuestions = array();
+                    $answersQuestions[] = $v['Echantillons'];
+                    $answersQuestions[] = $v['Qte'];
+                    $answersQuestions[] = $v['Cong'];
+                    $currentAnswerBis['questions'] = $answersQuestions;
+                    $answersList[] = $currentAnswerBis;
+                }
             }
         }
+        $headerLineDynamic = array();
+        foreach ($answersList as $cAnswer) {
+            foreach ($cAnswer['questions'] as $qAnswer) {
+                if (!in_array($qAnswer['label'], $headerLineDynamic)) {
+                    $headerLineDynamic[] = $qAnswer['label'];
+                }
+            }
+        }
+        $headerLine = array_merge($headerLineDynamic, $headerLineFixe);
+        $result[] = $headerLine;
+        foreach ($answersList as $cAnswer) {
+            $resultLine = array();
+            $cQuestions = $cAnswer['questions'];
+            //ajout des valeurs à la ligne, si aucune valeur existante pour cette column, ajoute null
 
-        /* $currentAnswer['questions'] = $answersQuestions;
-          $answersList[] = $currentAnswer;
-          if ($sampledQuestions != null) {
-          foreach ($sampledQuestions as $k => $v) {
-          $answersQuestions = array();
-          $answersQuestions[] = $v['Echantillons'];
-          $answersQuestions[] = $v['Qte'];
-          $answersQuestions[] = $v['Cong'];
-          $currentAnswerBis['questions'] = $answersQuestions;
-          $answersList[] = $currentAnswerBis;
-          }
-          }
-          }
-          $headerLineDynamic = array();
-          foreach ($answersList as $cAnswer) {
-          foreach ($cAnswer['questions'] as $qAnswer) {
-          if (!in_array($qAnswer['label'], $headerLineDynamic)) {
-          $headerLineDynamic[] = $qAnswer['label'];
-          }
-          }
-          }
-          $result[] = $headerLineDynamic;
-          foreach ($answersList as $cAnswer) {
-          $resultLine = array();
-          $cQuestions = $cAnswer['questions'];
-          //ajout des valeurs à la ligne, si aucune valeur existante pour cette column, ajoute null
-
-          foreach ($headerLineDynamic as $columnHeader) {
-          $valueExists = false;
-          foreach ($cQuestions as $cQuestion) {
-          if ($cQuestion['label'] == $columnHeader) {
-          if (is_array($cQuestion['answer'])) {
-          if (isset($cQuestion['answer']['date'])) {
-          $resultLine[] = date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($cQuestion['answer']['date']));
-          } else {
-          $resultLine[] = implode(', ', $cQuestion['answer']);
-          }
-          } else {
-          $resultLine[] = $cQuestion['answer'];
-          }
-          $valueExists = true;
-          break;
-          }
-          }
-          if (!$valueExists) {
-          $resultLine[] = "";
-          }
-          }
-          $result[] = $resultLine;
-          } */
-        //return $result;
+            foreach ($headerLineDynamic as $columnHeader) {
+                $valueExists = false;
+                foreach ($cQuestions as $cQuestion) {
+                    if ($cQuestion['label'] == $columnHeader) {
+                        if (is_array($cQuestion['answer'])) {
+                            if (isset($cQuestion['answer']['date'])) {
+                                $resultLine[] = date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($cQuestion['answer']['date']));
+                            } else {
+                                $resultLine[] = implode(', ', $cQuestion['answer']);
+                            }
+                        } else {
+                            $resultLine[] = $cQuestion['answer'];
+                        }
+                        $valueExists = true;
+                        break;
+                    }
+                }
+                if (!$valueExists) {
+                    $resultLine[] = "";
+                }
+            }
+            $result[] = $resultLine;
+        }
+        return $result;
+    }
+    
+    public function resultExportTranche($models, $filter) {
+        
     }
 
 }
