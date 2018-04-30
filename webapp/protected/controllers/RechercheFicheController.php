@@ -319,6 +319,9 @@ class RechercheFicheController extends Controller {
                 fclose($fh);
             }
             Yii::app()->getRequest()->sendFile($filename, "\xEF\xBB\xBF" . $csv->toCSV(), "text/csv; charset=UTF-8", false);
+        } elseif (isset($_POST['exportTranche'])) {
+            $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform_TRANCHE.csv';
+            $arAnswers = Answer::model()->resultExportTranche($_SESSION['models']);
         }
         $model = new Answer('search');
         $model->unsetAttributes();

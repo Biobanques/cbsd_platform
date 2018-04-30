@@ -1,6 +1,6 @@
 <?php
 
-class Tranche extends EMongoSoftDocument
+class Tranche extends LoggableActiveRecord
 {
     public $id;
     public $id_donor;

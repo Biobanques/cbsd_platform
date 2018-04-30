@@ -65,5 +65,12 @@ if (Yii::app()->user->getState('activeProfil') == "Administrateur de projet") {
 }
 ?>
 </div><br>
+<div class="row">
+    <div class="col-lg-6">
 <?php echo CHtml::submitButton('Exporter', array('name' => 'exporter', 'class' => 'btn btn-primary')); ?>
+    </div>
+    <div class="col-lg-6">
+<?php echo CHtml::submitButton('Exporter les tranches', array('name' => 'exportTranche', 'class' => 'btn btn-primary')); ?>
+    </div>
+</div>
 <?php $this->endWidget(); ?>

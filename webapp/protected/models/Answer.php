@@ -929,7 +929,7 @@ class Answer extends LoggableActiveRecord {
         return $result;
     }
 
-    public function resultExport($models, $filter) {
+    public function resultExport($models) {
         $ansQuestion = array();
         $samQuestion = array();
         $sampleQuestions = array();
@@ -1066,8 +1066,50 @@ class Answer extends LoggableActiveRecord {
         return $result;
     }
     
-    public function resultExportTranche($models, $filter) {
-        
+    public function resultExportTranche($models) {
+        $result = array();
+        $ansQuestion = array();
+        $headerLineFixe = Tranche::model()->attributeLabels();
+        $answersList = array();
+        foreach ($models as $answer) {
+            //chaque ligne est un tableau de colonne
+            $neuropath = Neuropath::model()->findByAttributes(array("id_cbsd" => (int) $answer->id_patient));
+            $criteria = new EMongoCriteria;
+            $criteria->id_donor = (string) $neuropath->id_donor;
+            $tranche = Tranche::model()->findAll($criteria);
+            $listAttributes = array();
+            $dataProvider = array();
+            foreach ($tranche as $tranc) {
+                foreach ($tranc->attributes as $attributeName => $attributeValue) {
+                    $listAttributes[$attributeName] = $attributeName;
+                }
+            }
+            foreach ($tranche as $tranc) {
+                $datas = array();
+                foreach ($listAttributes as $attribute) {
+                    if (isset($tranc->$attribute)) {
+                        if (!is_object($tranc->$attribute)) {
+                            $datas[$attribute] = $tranc->$attribute;
+                        }
+                    } else {
+                        $datas[$attribute] = "";
+                    }
+                }
+                $dataProvider[] = $datas;
+            }
+        }
+        //print_r($dataProvider);
+        $filename = 'biobanks_list.csv';
+        $csv = new ECSVExport($dataProvider);
+        $toExclude = array();
+        $toExport = $tranc->attributeLabels();
+        foreach ($listAttributes as $attribute) {
+            if (!isset($toExport[$attribute]))
+                $toExclude[] = $attribute;
+        }
+        $csv->setExclude($toExclude);
+         $csv->exportCurrentPageOnly();
+        Yii::app()->getRequest()->sendFile($filename, $csv->toCSV(), "text/csv", false);
     }
 
 }
