@@ -1071,6 +1071,7 @@ class Answer extends LoggableActiveRecord {
         $ansQuestion = array();
         $headerLineFixe = Tranche::model()->attributeLabels();
         $answersList = array();
+        $dataProvider = array();
         foreach ($models as $answer) {
             //chaque ligne est un tableau de colonne
             $neuropath = Neuropath::model()->findByAttributes(array("id_cbsd" => (int) $answer->id_patient));
@@ -1078,7 +1079,6 @@ class Answer extends LoggableActiveRecord {
             $criteria->id_donor = (string) $neuropath->id_donor;
             $tranche = Tranche::model()->findAll($criteria);
             $listAttributes = array();
-            $dataProvider = array();
             foreach ($tranche as $tranc) {
                 foreach ($tranc->attributes as $attributeName => $attributeValue) {
                     $listAttributes[$attributeName] = $attributeName;
@@ -1098,8 +1098,7 @@ class Answer extends LoggableActiveRecord {
                 $dataProvider[] = $datas;
             }
         }
-        //print_r($dataProvider);
-        $filename = 'biobanks_list.csv';
+        $filename = 'export_tranche.csv';
         $csv = new ECSVExport($dataProvider);
         $toExclude = array();
         $toExport = $tranc->attributeLabels();

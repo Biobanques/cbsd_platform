@@ -49,6 +49,8 @@ echo CHtml::link(Yii::t('common', 'htmlView'), array('fiche/viewOnePage', 'id' =
 
 <hr />
 <?php
+if ($model->name == "Import Neuropath") {
+    echo "<h3 style=\"text-align:center;\" >Prélèvement Tissue Tranche</h3>";
 $modelTranche = new Tranche;
 $neuropath = Neuropath::model()->findByAttributes(array("id_cbsd" => (int) $model->id_patient));
 $criteria = new EMongoCriteria();
@@ -60,11 +62,19 @@ $dataProvider = new EMongoDocumentDataProvider('Tranche', array('criteria' => $c
 $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $dataProvider,
     'columns' => array(
+        array('header' => $modelTranche->attributeLabels()["presenceCession"], 'name' => 'presenceCession'),
+        array('header' => $modelTranche->attributeLabels()["hemisphere"], 'name' => 'hemisphere'),
+        array('header' => $modelTranche->attributeLabels()["idPrelevement"], 'name' => 'idPrelevement'),
+        array('header' => $modelTranche->attributeLabels()["nameSamplesTissue"], 'name' => 'nameSamplesTissue'),
         array('header' => $modelTranche->attributeLabels()["originSamplesTissue"], 'name' => 'originSamplesTissue'),
+        array('header' => $modelTranche->attributeLabels()["prelevee"], 'name' => 'prelevee'),
+        array('header' => $modelTranche->attributeLabels()["nAnonymat"], 'name' => 'nAnonymat'),
+        array('header' => $modelTranche->attributeLabels()["qualite"], 'name' => 'qualite'),
         array('header' => $modelTranche->attributeLabels()["quantityAvailable"], 'name' => 'quantityAvailable'),
         array('header' => $modelTranche->attributeLabels()["storageConditions"], 'name' => 'storageConditions')
     ),
 ));
+}
 ?>
 
 <div style="display:inline; margin:40%; width: 100px; ">

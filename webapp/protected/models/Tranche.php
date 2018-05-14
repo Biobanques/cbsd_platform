@@ -4,8 +4,18 @@ class Tranche extends LoggableActiveRecord
 {
     public $id;
     public $id_donor;
+    public $presenceCession;
+    public $hemisphere;
+    public $idPrelevement;
+    public $nameSamplesTissue;
     public $originSamplesTissue;
+    public $prelevee;
+    public $nAnonymat;
+    public $qualite;
     public $quantityAvailable;
+    public $remarques;
+    public $selection;
+    public $selectionnee;
     public $storageConditions;
     
     // This has to be defined in every model, this is same as with standard Yii ActiveRecord
@@ -26,13 +36,15 @@ class Tranche extends LoggableActiveRecord
     public function rules() {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
-        return array(
+        $result = array(
+            array('id_donor', 'required'),
             array(
-                'id,id_donor,originSamplesTissue,quantityAvailable,storageConditions',
+                'id_donor,presenceCession,hemisphere,idPrelevement,nameSamplesTissue,originSamplesTissue,prelevee,nAnonymat,qualite,quantityAvailable,remarques,selection,selectionnee,storageConditions',
                 'safe',
-                'on' => 'search'
+                'on' => 'search, update'
             )
         );
+        return $result;
     }
 
     /**
@@ -44,7 +56,14 @@ class Tranche extends LoggableActiveRecord
             'id_donor' => "Identifiant du donneur",
             'originSamplesTissue' => "Origin Samples Tissue",
             'quantityAvailable' => "Quantity available",
-            'storageConditions' => "Storage conditions"
+            'storageConditions' => "Storage conditions",
+            'presenceCession' => "Présence cession",
+            'hemisphere' => "Hémisphère",
+            'idPrelevement' => "Identifiant du prélèvement",
+            'nameSamplesTissue' => "Nom de l'échantillon",
+            'prelevee' => "Prélevée",
+            'nAnonymat' => "N° anonymat",
+            'qualite' => "Qualité"
         );
     }
 }

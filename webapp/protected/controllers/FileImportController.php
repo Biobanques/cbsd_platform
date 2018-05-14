@@ -386,11 +386,41 @@ class FileImportController extends Controller {
                             $answer = Answer::model()->findByAttributes(array("id_patient" => (string) $neuro->id_cbsd));
                         }
                         break;
+                    case "_PresenceCession":
+                        $tranche->presenceCession = $valeur;
+                        break;
+                    case "Hémishpère":
+                        $tranche->hemisphere = $valeur;
+                        break;
+                    case "idPrelevement":
+                        $tranche->idPrelevement = $valeur;
+                        break;
+                    case "Name_Samples_Tissue":
+                        $tranche->nameSamplesTissue = $valeur;
+                        break;
                     case "Origin_Samples_Tissue":
                         $tranche->originSamplesTissue = $valeur;
                         break;
+                    case "Prélevée":
+                        $tranche->prelevee = $valeur;
+                        break;
+                    case "Prélèvement tissus_Numéro anonymat":
+                        $tranche->nAnonymat = $valeur;
+                        break;
+                    case "Qualité":
+                        $tranche->qualite = $valeur;
+                        break;
                     case "quantity_available":
                         $tranche->quantityAvailable = $valeur;
+                        break;
+                    case "Remarques":
+                        $tranche->remarques = $valeur;
+                        break;
+                    case "Selection":
+                        $tranche->selection = $valeur;
+                        break;
+                    case "Sélectionnée":
+                        $tranche->selectionnee = $valeur;
                         break;
                     case "storage_conditions":
                         $tranche->storageConditions = $valeur;

@@ -190,6 +190,13 @@ class AnswerController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        $modelTranche = new Tranche;
+        if (isset($_POST['Tranche'])) {
+            $modelTranche->attributes = $_POST['Tranche'];
+            if ($modelTranche->save()) {
+                    Yii::app()->user->setFlash('succès', "OK");
+                }
+        }
         if (Yii::app()->user->id != $model->login) {
             switch ($model->type) {
                 case "clinique" :
