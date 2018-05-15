@@ -40,8 +40,7 @@ class Tranche extends LoggableActiveRecord
             array('id_donor', 'required'),
             array(
                 'id_donor,presenceCession,hemisphere,idPrelevement,nameSamplesTissue,originSamplesTissue,prelevee,nAnonymat,qualite,quantityAvailable,remarques,selection,selectionnee,storageConditions',
-                'safe',
-                'on' => 'search, update'
+                'safe'
             )
         );
         return $result;
@@ -64,6 +63,13 @@ class Tranche extends LoggableActiveRecord
             'prelevee' => "Prélevée",
             'nAnonymat' => "N° anonymat",
             'qualite' => "Qualité"
+        );
+    }
+    
+    public function setQuantityAvailable() {
+        return array(
+            'Available' => 'Available',
+            'Not available' => 'Not available'
         );
     }
 }

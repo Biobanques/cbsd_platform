@@ -103,54 +103,19 @@
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="wide form">
-    <?php
-    $form = $this->beginWidget('CActiveForm', array(
-        'id' => 'trancheUpdate-form',
-        'method' => 'post',
-        'enableAjaxValidation' => false,
-    ));
-    ?>
-
-                        <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
-
-                        <?php echo $form->errorSummary($modelTranche, null, null, array('class' => 'alert alert-danger')); ?>
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <?php echo $form->labelEx($modelTranche, 'id_donor'); ?>
-                                <?php echo $form->textField($modelTranche, 'id_donor', array('size' => 20, 'maxlength' => 250)); ?>
-                                <?php echo $form->error($modelTranche, 'id_donor'); ?>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <?php echo $form->labelEx($modelTranche, 'originSamplesTissue'); ?>
-                                <?php echo $form->textField($modelTranche, 'originSamplesTissue', array('size' => 20, 'maxlength' => 250)); ?>
-                                <?php echo $form->error($modelTranche, 'originSamplesTissue'); ?>
-                            </div>
-                            <div class="col-lg-12">
-                                <?php echo $form->labelEx($modelTranche, 'quantityAvailable'); ?>
-                                <?php echo $form->textField($modelTranche, 'quantityAvailable', array('size' => 20, 'maxlength' => 250)); ?>
-                                <?php echo $form->error($modelTranche, 'quantityAvailable'); ?>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <?php echo $form->labelEx($modelTranche, 'storageConditions'); ?>
-                                <?php echo $form->textField($modelTranche, 'storageConditions', array('size' => 20, 'maxlength' => 250)); ?>
-                                <?php echo $form->error($modelTranche, 'storageConditions'); ?>
-                            </div>
-                        </div>
-
-                    </div><!-- form -->
+                    <?php
+                    $form = $this->beginWidget('CActiveForm', array(
+                        'id' => 'trancheUpdate-form',
+                        'method' => 'post',
+                        'enableAjaxValidation' => false,
+                    ));
+                    echo $this->renderPartial('_updateTranche', array('modelTranche' => $modelTranche, 'patient' => $patient, 'form' => $form));
+                    ?>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
-                        <?php $this->endWidget(); ?>
+                    <?php $this->endWidget(); ?>
                 </div>
             </div>
         </div>
