@@ -87,7 +87,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 <div class="row">
     <div class="col-lg-5">
-        <?php echo CHtml::submitButton(Yii::t('button', 'deleteSelectedForms'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
+        <?php echo CHtml::submitButton(Yii::t('button', 'deleteSelectedDatas'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
     </div>
 </div>
 <?php $this->endWidget(); ?>

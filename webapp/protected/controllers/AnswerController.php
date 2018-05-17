@@ -193,8 +193,20 @@ class AnswerController extends Controller {
         $modelTranche = new Tranche;
         if (isset($_POST['Tranche'])) {
             $modelTranche->attributes = $_POST['Tranche'];
+            $existTranche = false;
+            $incTranche = 0;
+            while ($existTranche == false) {
+                $countTranche = count(Tranche::model()->findAll());
+                $resTranche = Tranche::model()->findByAttributes(array("id" => $countTranche));
+                if ($resTranche != null) {
+                    $incTranche++;
+                } else {
+                    $existTranche = true;
+                }
+                $modelTranche->id = $countTranche + $incTranche;
+            }
             if ($modelTranche->save()) {
-                    Yii::app()->user->setFlash('succès', "OK");
+                    Yii::app()->user->setFlash('succès', "L'échantillon a bien été crée.");
                 }
         }
         if (Yii::app()->user->id != $model->login) {

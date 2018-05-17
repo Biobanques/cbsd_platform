@@ -49,7 +49,7 @@ return array(
     'values' => 'Valeurs',
     'questionFloat' => 'Alignement de la question',
     'questionPosition' => 'La question devra apparaître en dessous de',
-    'addTitleQuestion' => 'Pour ajouter un titre au dessus de la question',
+    'addTitleQuestion' => 'Pour ajouter un titre à la rubrique',
     'questionTitle' => 'Titre de la question',
     'help' => 'Infobulle',
     'idBlock' => 'Id du bloc',

@@ -78,7 +78,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => $model->attributeLabels()["filesize"], 'name' => 'filesize', 'value' => 'CommonTools::formatSizeUnits($data["filesize"])'),
         array('header' => $model->attributeLabels()["extension"], 'name' => 'extension'),
         array('header' => $model->attributeLabels()["date_import"], 'name' => 'date_import', 'value' => '$data->getDateImport()'),
-        array('header' => $model->attributeLabels()["imported"], 'name' => 'imported'),
+        //array('header' => $model->attributeLabels()["imported"], 'name' => 'imported'),
         /*array(
             'class' => 'CLinkColumn',
             'labelExpression' => '$data->getNonImportedNumber()',
@@ -92,7 +92,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 <div class="row">
     <div class="col-lg-5">
-        <?php echo CHtml::submitButton(Yii::t('button', 'deleteSelectedImportedFiles'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
+        <?php echo CHtml::submitButton(Yii::t('button', 'deleteSelectedDatas'), array('name' => 'rechercher', 'class' => 'btn btn-primary')); ?>
     </div>
 </div>
 <?php $this->endWidget(); ?>

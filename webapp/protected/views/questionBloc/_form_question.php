@@ -49,9 +49,6 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
 
     <?php echo $form->errorSummary($model, null, null, array('class' => 'alert alert-danger')); ?>
 
-    <p><b><?php echo Yii::t('common', 'uniqueIdQuestion') ?></b></p>
-    <p><b><?php echo Yii::t('common', 'valuesQuestion') ?></b></p>
-
     <div style="border:1px solid black;">
 
         <h4 style="margin-left:10px;"><u><b><?php echo Yii::t('common', 'newQuestion') ?></b></u></h4>

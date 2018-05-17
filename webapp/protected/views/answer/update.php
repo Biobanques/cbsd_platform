@@ -92,37 +92,33 @@
         ));
     }
     ?>
+    <?php if (isset($modelTranche)) { ?>
+        <div class="span4 proj-div" data-toggle="modal" data-target="#GSCCModal">Ajouter un échantillon</div>
 
-    <div class="span4 proj-div" data-toggle="modal" data-target="#GSCCModal">Ajouter une tranche</div>
-
-    <div id="GSCCModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                </div>
-                <div class="modal-body">
-                    <?php
-                    $form = $this->beginWidget('CActiveForm', array(
-                        'id' => 'trancheUpdate-form',
-                        'method' => 'post',
-                        'enableAjaxValidation' => false,
-                    ));
-                    echo $this->renderPartial('_updateTranche', array('modelTranche' => $modelTranche, 'patient' => $patient, 'form' => $form));
-                    ?>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
-                    <?php $this->endWidget(); ?>
+        <div id="GSCCModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <?php
+                        $form = $this->beginWidget('CActiveForm', array(
+                            'id' => 'trancheUpdate-form',
+                            'method' => 'post',
+                            'enableAjaxValidation' => false,
+                        ));
+                        echo $this->renderPartial('_updateTranche', array('modelTranche' => $modelTranche, 'patient' => $patient, 'form' => $form));
+                        ?>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('class' => 'btn btn-primary')); ?>
+                        <?php $this->endWidget(); ?>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
-    <hr />
-
-
+    <?php } ?>
 </div>

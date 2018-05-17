@@ -515,7 +515,7 @@ class QuestionnaireHTMLRenderer {
             }
         }
         $divPans .= "</div>";
-        $divTabs .= "</ul>";
+        $divTabs .= "<li><a href=\"#\" id=\"tabForm\" role=\"tab\" style='background-color:#5cb85c;'><b>+</b> Ajouter un onglet</a></li></ul>";
         return "<div class=\"tabbable\">" . $divTabs . $divPans . "</div>";
     }
 

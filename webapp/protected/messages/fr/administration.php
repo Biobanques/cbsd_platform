@@ -33,7 +33,7 @@ return array(
     'userUpdate' => 'Mise à jour de l\'utilisateur',
     'form' => 'Formulaire ',
     'forAddQuestion' => 'Pour ajouter une rubrique',
-    'forAddQuestionBlock' => 'Pour ajouter un bloc de questions déjà existant',
+    'forAddQuestionBlock' => 'Pour ajouter un onglet déjà existant',
     'forAddTab' => 'Pour ajouter un onglet',
     'forModifyTab' => 'Pour modifier un onglet',
     'forModifyQuestion' => 'Pour modifier une question',
