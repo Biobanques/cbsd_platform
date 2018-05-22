@@ -155,9 +155,7 @@ class FormulaireController extends Controller {
                 }
             } else {
                 Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotAdded'));
-                echo CHtml::tag('button',
-                array('class'=>'classname', 'id'=>'test', 'hidden'=>'hidden', 'value'=>$questionForm->idQuestionGroup));
-;
+                echo CHtml::tag('button', array('class' => 'classname', 'id' => 'test', 'hidden' => 'hidden', 'value' => $questionForm->idQuestionGroup));
             }
         }
         if (isset($_POST['QuestionGroup'])) {
@@ -514,4 +512,3 @@ class FormulaireController extends Controller {
     }
 
 }
-

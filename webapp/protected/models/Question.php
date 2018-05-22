@@ -41,7 +41,6 @@ class Question extends LoggableActiveRecord {
      * values if question type is radio and french setted
      */
     public $values_fr;
-    
     public $defaultValue;
 
     /**
@@ -109,7 +108,7 @@ class Question extends LoggableActiveRecord {
                 'required'
             ),
             array(
-                'label,label_fr,type,values,defaultValue,style,precomment,precomment_fr', 'safe'
+                'label,label_fr,type,values,defaultValue,style,precomment,precomment_fr,help', 'safe'
         ));
     }
 
@@ -126,7 +125,7 @@ class Question extends LoggableActiveRecord {
             'defaultValue' => 'Valeur par défaut'
         );
     }
-    
+
     /**
      * get an array of types of questions possibles
      */

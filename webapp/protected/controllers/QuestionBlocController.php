@@ -101,6 +101,11 @@ class QuestionBlocController extends Controller {
 
         if (isset($_POST['QuestionBloc'])) {
             $model->attributes = $_POST['QuestionBloc'];
+            if ($model->save()) {
+                Yii::app()->user->setFlash('succès', Yii::t('common', 'questionBlockSaved'));
+            } else {
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionBlockNotSaved'));
+            }
         }
 
         if (isset($_POST['QuestionForm'])) {
@@ -108,11 +113,15 @@ class QuestionBlocController extends Controller {
             if ($questionModel->save()) {
                 $idQuestion = (string) $questionModel->_id;
                 $model->questions[] = $idQuestion;
-            }
-            if ($model->save()) {
-                Yii::app()->user->setFlash('succès', Yii::t('common', 'questionBlockSaved'));
+                if ($model->save()) {
+                    Yii::app()->user->setFlash('succès', Yii::t('common', 'questionAdded'));
+                } else {
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotAdded'));
+                    echo CHtml::tag('button', array('class' => 'classname', 'id' => 'test', 'hidden' => 'hidden', 'value' => $questionForm->idQuestionGroup));
+                }
             } else {
-                Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionBlockNotSaved'));
+                Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotAdded'));
+                echo CHtml::tag('button', array('class' => 'classname', 'id' => 'test', 'hidden' => 'hidden', 'value' => $questionForm->idQuestionGroup));
             }
         }
 

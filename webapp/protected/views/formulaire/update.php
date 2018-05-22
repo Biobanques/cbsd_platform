@@ -293,7 +293,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h1 class="modal-title"><?php echo Yii::t('administration', 'forAddTab') ?></h1>
+                <h1 class="modal-title"><?php echo Yii::t('administration', 'forAddQuestion') ?></h1>
             </div>
             <div class="modal-body">
                 <div class="prefs-form">

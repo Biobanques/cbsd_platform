@@ -77,7 +77,7 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
                 <?php echo $form->error($questionForm, 'id'); ?>           
             </div>
             <div class="col-lg-6">
-                <?php echo CHtml::hiddenField('Test','test',array('type'=>"hidden")); ?>
+                <?php echo CHtml::hiddenField('Test', 'test', array('type' => "hidden")); ?>
                 <?php echo $form->labelEx($questionForm, 'idQuestionGroup'); ?>
                 <?php echo $form->dropDownList($questionForm, 'idQuestionGroup', $questionForm->getArrayGroups(), array('readOnly' => true)); ?>
                 <?php echo "<br>" . CHtml::checkBoxList('', '', array('oui' => 'Positionner la question'), array('prompt' => '----', 'labelOptions' => array('style' => 'display:inline'), 'ajax' => array('type' => 'POST', 'url' => CController::createUrl('formulaire/dynamicquestions&id=' . $questionForm->questionnaire->_id), 'update' => '#' . CHtml::activeId($questionForm, 'idQuestionBefore')), "class" => "tooltipster", "title" => Yii::t('common', 'groupQuestion'))); ?>
@@ -105,7 +105,7 @@ $('div .alert alert-error').removeClass('alert alert-error').addClass('alert ale
                 <?php echo $form->error($questionForm, 'type'); ?>          
             </div>
             <div class="col-lg-6" id ="valueTypeQuestion">
-                <?php echo $form->labelEx($questionForm, 'values', array("required"=>"required")); ?>
+                <?php echo $form->labelEx($questionForm, 'values', array("required" => "required")); ?>
                 <?php echo $form->textField($questionForm, 'values', array("class" => "tooltipster", "title" => Yii::t('common', 'valuesQuestion'))); ?>
                 <?php echo $form->error($questionForm, 'values'); ?>
             </div>
