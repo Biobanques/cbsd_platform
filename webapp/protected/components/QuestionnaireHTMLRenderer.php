@@ -516,7 +516,7 @@ class QuestionnaireHTMLRenderer {
         }
         $divPans .= "</div>";
         if (Yii::app()->controller->id != "questionBloc") {
-            $divTabs .= "<li><a href=\"#\" id=\"tabForm\" role=\"tab\" style='background-color:#5cb85c;'><b>+</b> Ajouter un onglet</a></li>";
+            $divTabs .= "<li><a href=\"#\" id=\"tabForm\" role=\"tab\" style='background-color:#5cb85c;'>&boxplus; Ajouter un onglet</a></li>";
         }
         $divTabs .= "</ul>";
         return "<div class=\"tabbable\">" . $divTabs . $divPans . "</div>";
@@ -547,10 +547,10 @@ class QuestionnaireHTMLRenderer {
             $_SESSION['id'] = $questionnaire->_id;
             $_SESSION['tab'] = $group->id;
             $result .= "<div class=\"question_group\">" . $title . $lienSupprimer . "</div><a class=\"btn\" style='background-color:#5cb85c;color: black;' onclick=\"$('#updateQuestionForm').modal();var period_val = $('.nav > .active > a > input').val();$('#QuestionForm_idQuestionGroup').val(period_val);
-    \">+ Ajouter une rubrique</a><br><br>";
+    \">&boxplus; Ajouter une rubrique</a><br><br>";
         } else {
             $result .= "<div class=\"question_group\">" . $title . "</div><a class=\"btn\" style='background-color:#5cb85c;color: black;' onclick=\"$('#updateQuestionForm').modal();var period_val = $('.nav > .active > a > input').val();$('#QuestionForm_idQuestionGroup').val(period_val);
-    \">+ Ajouter une rubrique</a><br><br>";
+    \">&boxplus; Ajouter une rubrique</a><br><br>";
         }
         $quests = $group->questions;
 
