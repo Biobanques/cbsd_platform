@@ -272,9 +272,9 @@ class QuestionnaireHTMLRenderer {
         if ($lang == "both") {
             $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
         }
-        /*$result .= "<div class=\"condition\"><div style=\"clear:both;\"></div>";
-        $result .= CHtml::dropDownList("Answer[condition][" . $question->id . "]", 'addCondition', array('$and' => Yii::t('common', 'and'), '$or' => Yii::t('common', 'or')), array('style' => 'width:auto'));
-        $result .= "<div style=\"clear:both;\"></div></div>";*/
+        /* $result .= "<div class=\"condition\"><div style=\"clear:both;\"></div>";
+          $result .= CHtml::dropDownList("Answer[condition][" . $question->id . "]", 'addCondition', array('$and' => Yii::t('common', 'and'), '$or' => Yii::t('common', 'or')), array('style' => 'width:auto'));
+          $result .= "<div style=\"clear:both;\"></div></div>"; */
 
         $result .= "<label for=\"Answer_dynamics_" . $question->id . "\" style=\"font-style:italic; color:blue;\">" . $label;
         if (isset($question->help)) {
@@ -495,7 +495,7 @@ class QuestionnaireHTMLRenderer {
                         }
                     }
                     if ($lang == "both") {
-                        $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
+                        $title = "<i>" . $group->title . "</i><br> " . $group->title_fr;
                     }
                     $extraActive = "";
                     $extraActive2 = "";
@@ -509,7 +509,7 @@ class QuestionnaireHTMLRenderer {
                         $extraActive = "class=\"active\"";
                         $extraActive2 = " active";
                     }
-                    $divTabs .= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
+                    $divTabs .= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "<input type=\"hidden\" value=\"" . $group->id . "\"></a></li>";
                     $divPans .= " <div class=\"tab-pane " . $extraActive2 . "\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTMLEditMode($questionnaire, $group, $lang) . "</div>";
                 }
             }
@@ -538,10 +538,13 @@ class QuestionnaireHTMLRenderer {
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
         if (Yii::app()->controller->id != "questionBloc") {
+            $imghtmlUpdate = CHtml::image(Yii::app()->request->baseUrl . '/images/update.png');
             $imghtml = CHtml::image('images/cross.png', Yii::t('common', 'deleteQuestion'), array('class' => 'deleteQuestion'));
-            $lienSupprimer = "<div style=\"float:right\">" . CHtml::link($imghtml . " " . Yii::t('common', 'deleteQuestionGroup'), Yii::app()->createUrl('formulaire/deleteQuestionGroup', array('idFormulaire' => $questionnaire->_id, 'idQuestionGroup' => $group->id))) . "</div>";
-
-            $result .= "<div class=\"question_group\">" . $title . $lienSupprimer . "</div>";
+            $lienSupprimer = "<div style=\"float:right\">" . CHtml::link($imghtmlUpdate . ' ' . "Modifier le titre de l'onglet", '#', array("class" => "updateTabForm")) . CHtml::link($imghtml . " " . Yii::t('common', 'deleteQuestionGroup'), Yii::app()->createUrl('formulaire/deleteQuestionGroup', array('idFormulaire' => $questionnaire->_id, 'idQuestionGroup' => $group->id)), array('style' => 'margin-left: 30px;')) . "</div>";
+            $_SESSION['id'] = $questionnaire->_id;
+            $_SESSION['tab'] = $group->id;
+            $result .= "<div class=\"question_group\">" . $title . $lienSupprimer . "</div><a class=\"btn\" style='background-color:#5cb85c;color: black;' onclick=\"$('#updateQuestionForm').modal();var period_val = $('.nav > .active > a > input').val();$('#QuestionForm_idQuestionGroup').val(period_val);
+    \">+ Ajouter une rubrique</a><br><br>";
         } else {
             $result .= "<div class=\"question_group\">" . $title . "</div>";
         }

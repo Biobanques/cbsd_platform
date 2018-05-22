@@ -424,3 +424,7 @@ button.link {
 button.link:hover span {
     text-decoration: underline;
 }
+
+.modal-backdrop.in {
+    opacity: 0.9 !important ;
+}

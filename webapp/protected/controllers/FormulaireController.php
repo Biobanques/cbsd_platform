@@ -155,6 +155,9 @@ class FormulaireController extends Controller {
                 }
             } else {
                 Yii::app()->user->setFlash('erreur', Yii::t('common', 'questionNotAdded'));
+                echo CHtml::tag('button',
+                array('class'=>'classname', 'id'=>'test', 'hidden'=>'hidden', 'value'=>$questionForm->idQuestionGroup));
+;
             }
         }
         if (isset($_POST['QuestionGroup'])) {
@@ -199,6 +202,7 @@ class FormulaireController extends Controller {
         if (isset($_POST['old_onglet'])) {
             foreach ($model->questions_group as $onglet) {
                 if ($onglet->id == $_POST['old_onglet']) {
+                    $onglet->id = str_replace(' ', '_', $_POST['new_onglet']);
                     $onglet->title = $_POST['new_onglet'];
                     $onglet->title_fr = $_POST['new_onglet'];
                     if ($model->save()) {
@@ -510,3 +514,4 @@ class FormulaireController extends Controller {
     }
 
 }
+

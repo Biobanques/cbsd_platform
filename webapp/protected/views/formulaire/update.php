@@ -1,8 +1,22 @@
 <?php
 Yii::app()->clientScript->registerScript('form_question', "
+$(document).ready(function() {
+    if($('.classname').prop('id')=='test')
+    {
+        $('#updateQuestionForm').modal();
+        var valueIdQuestionGroup = $('#test').val();
+        $('#QuestionForm_idQuestionGroup').selectmenu('refresh').val(valueIdQuestionGroup).attr('selected', 'selected');
+    }
+});
+
 $('.updateForm').on('click', function(event) {
     $('#updateQuestion').modal();
     $('.col-lg-12 #old_question').val($(this).attr('id'));
+});
+
+$('.updateTabForm').on('click', function(event) {
+    $('#updateTabFormUpdate').modal();
+    $('.col-lg-12 #old_onglet').val($(this).attr('id'));
 });
 
 $('#nameForm').on('click', function(event) {
@@ -34,29 +48,11 @@ $('#tabForm').on('click', function(event) {
 $('#createTabForm').on('click', function(event) {
     $('#updateForm').modal('hide');
     $('#updateTabForm').modal();
-    var str = $('h3').text();
-    var replaceObj = {
-        Formulaire : '',
-        Form : ''
-    };
-    str = str.replace(/Formulaire|Form/gi, function(matched){
-        return replaceObj[matched];
-    });
-    $('.col-lg-12 #old_name').val(str.trim());
 });
 
 $('#addExistingTabForm').on('click', function(event) {
     $('#updateForm').modal('hide');
     $('#updateBlockForm').modal();
-    var str = $('h3').text();
-    var replaceObj = {
-        Formulaire : '',
-        Form : ''
-    };
-    str = str.replace(/Formulaire|Form/gi, function(matched){
-        return replaceObj[matched];
-    });
-    $('.col-lg-12 #old_name').val(str.trim());
 });
 
 $('#QuestionBlocForm_title').change(function(){
@@ -75,99 +71,36 @@ height: 25px;
 ");
 ?>
 
-    <h3 align="center" id="nameForm"><?php echo Yii::t('administration', 'form') . $model->name; ?>&nbsp;<?php echo CHtml::link(CHtml::image(Yii::app()->request->baseUrl . '/images/update.png')); ?></h3>
-    <p><b>Description: </b><?php echo $model->description; ?></p>
+<h3 align="center" id="nameForm"><?php echo Yii::t('administration', 'form') . $model->name; ?>&nbsp;<?php echo CHtml::link(CHtml::image(Yii::app()->request->baseUrl . '/images/update.png')); ?></h3>
+<p><b>Description: </b><?php echo $model->description; ?></p>
+<?php
+if ($model->last_modified != null && $model->last_modified != "") {
+    $q = Questionnaire::model()->findByPk(new MongoId($_GET['id']));
+    echo "<p><b>" . Yii::t('common', 'lastModifiedDate') . ": </b>" . date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($q->last_modified['date'])) . "</p>";
+}
+?>
+<p><?php echo "<b>" . Yii::t('common', 'createdBy') . "</b>: " . $model->creator; ?></p>
+<hr />
+
+<?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-danger')); ?>
+<div class="form">
     <?php
-    if ($model->last_modified != null && $model->last_modified != "") {
-        $q = Questionnaire::model()->findByPk(new MongoId($_GET['id']));
-        echo "<p><b>" . Yii::t('common', 'lastModifiedDate') . ": </b>" . date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($q->last_modified['date'])) . "</p>";
-    }
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'questionnaire-form',
+        'enableAjaxValidation' => false,
+    ));
     ?>
-    <p><?php echo "<b>" . Yii::t('common', 'createdBy') . "</b>: " . $model->creator; ?></p>
-    <hr />
-
-    <?php echo CHtml::errorSummary($model, null, null, array('class' => 'alert alert-danger')); ?>
-    <div class="form">
+    <br>
+    <div>
         <?php
-        $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'questionnaire-form',
-            'enableAjaxValidation' => false,
-        ));
-        ?>
-        <br>
-        <div>
-            <?php
-            echo $model->renderTabbedGroupEditMode(Yii::app()->language);
-            ?>
-        </div>
-        <?php
-        $this->endWidget();
+        echo $model->renderTabbedGroupEditMode(Yii::app()->language);
         ?>
     </div>
-<hr/>
-
-<div class="panel-group" id="accordion">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                <?php echo Yii::t('administration', 'forAddTab') ?>
-            </h4>
-        </div>
-        <div id="collapse3" class="panel-collapse collapse">
-            <div class="panel-body">
-                <?php
-                echo $this->renderPartial('_form_question_group', array('model' => $questionGroup));
-                ?>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                <?php echo Yii::t('administration', 'Pour modifier le titre d\'un onglet') ?>
-            </h4>
-        </div>
-        <div id="collapse4" class="panel-collapse collapse">
-            <div class="panel-body">
-                <?php
-                echo $this->renderPartial('_form_question_group_update', array('questionGroup' => $questionGroup));
-                ?>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                <?php echo Yii::t('administration', 'forAddQuestionBlock') ?>
-            </h4>
-        </div>
-        <div id="collapse2" class="panel-collapse collapse">
-            <div class="panel-body">
-                <?php
-                echo $this->renderPartial('_form_question_bloc', array('questionBloc' => $questionBloc, 'model' => $model, 'questionGroup' => $questionGroup));
-                ?>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                <?php echo Yii::t('administration', 'Pour ajouter une rubrique') ?>
-            </h4>
-        </div>
-        <div id="collapse1" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <?php
-                echo $this->renderPartial('_form_question', array('questionForm' => $questionForm));
-                ?>
-            </div>
-        </div>
-    </div>
-
-    
-
-
+    <?php
+    $this->endWidget();
+    ?>
 </div>
+<hr/>
 
 <?php
 $form = $this->beginWidget('CActiveForm', array(
@@ -216,7 +149,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h1 class="modal-title"><?php echo Yii::t('administration', 'forModifyQuestion') ?></h1>
+                <h1 class="modal-title"><?php echo Yii::t('administration', 'forModifyDescription') ?></h1>
             </div>
             <div class="modal-body">
                 <div class="prefs-form">
@@ -242,11 +175,11 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php $this->endWidget(); ?>
 
 <?php
-    $form = $this->beginWidget('CActiveForm', array(
-        'id' => 'updateTab-form',
-        'enableAjaxValidation' => false,
-    ));
-    ?>
+$form = $this->beginWidget('CActiveForm', array(
+    'id' => 'updateTab-form',
+    'enableAjaxValidation' => false,
+        ));
+?>
 <div id="updateTabForm"  class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -278,11 +211,47 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php $this->endWidget(); ?>
 
 <?php
-    $form = $this->beginWidget('CActiveForm', array(
-        'id' => 'updateBlock-form',
-        'enableAjaxValidation' => false,
-    ));
-    ?>
+$form = $this->beginWidget('CActiveForm', array(
+    'id' => 'updateTab-form',
+    'enableAjaxValidation' => false,
+        ));
+?>
+<div id="updateTabFormUpdate"  class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h1 class="modal-title"><?php echo Yii::t('administration', 'forAddTab') ?></h1>
+            </div>
+            <div class="modal-body">
+                <div class="prefs-form">
+                    <?php echo $this->renderPartial('_form_question_group_update', array('questionGroup' => $questionGroup)); ?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"  role="button"><?php echo Yii::t('button', 'cancel'); ?></button>
+                    </div>
+                    <div class="btn-group btn-delete hidden" role="group">
+                        <button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('name' => 'updateForm', 'class' => 'btn btn-primary')); ?>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<?php $this->endWidget(); ?>
+
+<?php
+$form = $this->beginWidget('CActiveForm', array(
+    'id' => 'updateBlock-form',
+    'enableAjaxValidation' => false,
+        ));
+?>
 <div id="updateBlockForm"  class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -293,6 +262,42 @@ $form = $this->beginWidget('CActiveForm', array(
             <div class="modal-body">
                 <div class="prefs-form">
                     <?php echo $this->renderPartial('_form_question_bloc', array('questionBloc' => $questionBloc, 'model' => $model, 'questionGroup' => $questionGroup)); ?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"  role="button"><?php echo Yii::t('button', 'cancel'); ?></button>
+                    </div>
+                    <div class="btn-group btn-delete hidden" role="group">
+                        <button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <?php echo CHtml::submitButton(Yii::t('button', 'saveBtn'), array('name' => 'updateForm', 'class' => 'btn btn-primary')); ?>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<?php $this->endWidget(); ?>
+
+<?php
+$form = $this->beginWidget('CActiveForm', array(
+    'id' => 'updateQuestion-form',
+    'enableAjaxValidation' => false,
+        ));
+?>
+<div id="updateQuestionForm"  class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h1 class="modal-title"><?php echo Yii::t('administration', 'forAddTab') ?></h1>
+            </div>
+            <div class="modal-body">
+                <div class="prefs-form">
+                    <?php echo $this->renderPartial('_form_question', array('questionForm' => $questionForm)); ?>
                 </div>
             </div>
             <div class="modal-footer">
