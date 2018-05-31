@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-lg-12">
             <?php echo CHtml::label(Yii::t('common', 'currentQuestionGroup'), 'old_onglet'); ?>
-            <?php echo CHtml::dropDownList('old_onglet', '', $questionGroup->getOnglets(), array("prompt" => "----", "required" => "required")); ?>
+            <?php echo CHtml::textfield('old_onglet', '', array("required" => "required", 'readOnly' => true)); ?>
         </div>
     </div>
 

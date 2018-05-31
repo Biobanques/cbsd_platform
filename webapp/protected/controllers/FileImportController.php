@@ -98,9 +98,11 @@ class FileImportController extends Controller {
                         $uploadedFile->filename->saveAs($uploadedFile->filename->getName());
                         chmod($uploadedFile->filename->getName(), 0777);
                         $file = "not_imported/" . $uploadedFile->filename->getName();
-                        $this->importNeuropathTranche($uploadedFile);
-                        // TODO : Update Fiche, NO CREATE NEW FICHE
-                        //$this->createFicheNeuropath();
+                        if (Tranche::model()->findAll() == null) {
+                            $this->importNeuropathTranche($uploadedFile, true);
+                        } else {
+                            $this->importNeuropathTranche($uploadedFile, false);
+                        }
                         $fileImport->user = Yii::app()->user->id;
                         $fileImport->filename = $date . '_' . $uploadedFile->filename->getName();
                         $fileImport->filesize = $uploadedFile->filename->getSize();
@@ -363,7 +365,7 @@ class FileImportController extends Controller {
         }
     }
     
-    public function importNeuropathTranche($uploadedFile) {
+    public function importNeuropathTranche($uploadedFile, $first) {
         $rows = array_map('str_getcsv', file($uploadedFile->filename));
         $header = array_shift($rows);
         $csv = array();
@@ -372,7 +374,11 @@ class FileImportController extends Controller {
             $csv[] = array_combine($header, $row);
         }
         foreach ($csv as $kCSV => $vCSV) {
-            $tranche = new Tranche;
+            if ($first) {
+                $tranche = new Tranche;
+            } else {
+                $tranche = new TrancheBis;
+            }
             $answer = null;
             foreach ($vCSV as $cle => $valeur) {
                 switch ($cle) {
@@ -431,19 +437,6 @@ class FileImportController extends Controller {
             if (isset($tranche) && $tranche != null) {
                 $tranche->save();
             }
-            /*if ($answer != null) {
-                foreach ($answer->answers_group as $ans) {
-                    $answerQuestion = new AnswerQuestion;
-                    $answerQuestion->id = (string) $tranche->originSamplesTissue . "_" . (string) $tranche->storageConditions;
-                    $answerQuestion->label = (string) $tranche->originSamplesTissue . "_" . (string) $tranche->storageConditions;
-                    $answerQuestion->label_fr = (string) $tranche->originSamplesTissue . "_" . (string) $tranche->storageConditions;
-                    $answerQuestion->type = "radio";
-                    $answerQuestion->values = "Available,Not available";
-                    $answerQuestion->answer = $tranche->quantityAvailable;
-                    $ans->answers[] = $answerQuestion;
-                }
-                $answer->save();
-            }*/
         }
     }
 

@@ -80,9 +80,10 @@ class QuestionnaireController extends Controller {
         $answer->id_patient = (string) $patients->id;
         $flagNoInputToSave = true;
         foreach ($answer->answers_group as $answer_group) {
-            foreach ($answer_group->answers as $answerQuestion) {
-                $input = $answer_group->id . "_" . $answerQuestion->id;
-                if (isset($_POST['Questionnaire'][$input])) {
+            if (is_array($answer_group->answers)) {
+                foreach ($answer_group->answers as $answerQuestion) {
+                    $input = $answer_group->id . "_" . $answerQuestion->id;
+                    if (isset($_POST['Questionnaire'][$input])) {
                         $flagNoInputToSave = false;
                         if ($answerQuestion->type != "number" && $answerQuestion->type != "expression" && $answerQuestion->type != "date") {
                             $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
@@ -91,24 +92,25 @@ class QuestionnaireController extends Controller {
                         } else {
                             $answerQuestion->setAnswerNumerique($_POST['Questionnaire'][$input]);
                         }
-                }
-//if array, specific save action
-                if ($answerQuestion->type == "array") {
-//construct each id input an dget the result to store it
-                    $rows = $answerQuestion->rows;
-                    $arrows = split(",", $rows);
-                    $cols = $answerQuestion->columns;
-                    $arcols = split(",", $cols);
-                    $answerArray = "";
-                    foreach ($arrows as $row) {
-                        foreach ($arcols as $col) {
-                            $idunique = $idquestiongroup . "_" . $question->id . "_" . $row . "_" . $col;
-                            if (isset($_POST['Questionnaire'][$idunique])) {
-                                $answerArray.=$_POST['Questionnaire'][$idunique] . ",";
+                    }
+                    //if array, specific save action
+                    if ($answerQuestion->type == "array") {
+                        //construct each id input an dget the result to store it
+                        $rows = $answerQuestion->rows;
+                        $arrows = split(",", $rows);
+                        $cols = $answerQuestion->columns;
+                        $arcols = split(",", $cols);
+                        $answerArray = "";
+                        foreach ($arrows as $row) {
+                            foreach ($arcols as $col) {
+                                $idunique = $idquestiongroup . "_" . $question->id . "_" . $row . "_" . $col;
+                                if (isset($_POST['Questionnaire'][$idunique])) {
+                                    $answerArray .= $_POST['Questionnaire'][$idunique] . ",";
+                                }
                             }
                         }
+                        $answerQuestion->setAnswer($answerArray);
                     }
-                    $answerQuestion->setAnswer($answerArray);
                 }
             }
         }
@@ -174,4 +176,3 @@ class QuestionnaireController extends Controller {
     }
 
 }
-

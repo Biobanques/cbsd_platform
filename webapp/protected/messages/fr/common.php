@@ -274,7 +274,7 @@ return array(
     'standardView' => 'Vue standard',
     'exportPdf' => 'Exporter au format PDF',
     'uniqueIdForm' => 'Id doit être unique.',
-    'chooseQuestionBlock' => 'Choisissez un bloc de questions à inclure dans le formulaire ',
+    'chooseQuestionBlock' => 'Choisissez un bloc de rubriques à inclure dans le formulaire ',
     'deleteQuestionGroup' => 'Supprimer l\'onglet de rubriques',
     'deleteQuestion' => 'Supprimer la question',
     'notRestrict' => '*Si vous ne restreignez pas la requête, la recherche portera sur l\'ensemble de la base.',

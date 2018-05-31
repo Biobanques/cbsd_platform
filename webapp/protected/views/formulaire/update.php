@@ -16,7 +16,8 @@ $('.updateForm').on('click', function(event) {
 
 $('.updateTabForm').on('click', function(event) {
     $('#updateTabFormUpdate').modal();
-    $('.col-lg-12 #old_onglet').val($(this).attr('id'));
+    var period_val = $('.nav > .active > a > input').val();
+    $('.col-lg-12 #old_onglet').val(period_val);
 });
 
 $('#nameForm').on('click', function(event) {
@@ -221,7 +222,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h1 class="modal-title"><?php echo Yii::t('administration', 'forAddTab') ?></h1>
+                <h1 class="modal-title"><?php echo Yii::t('administration', 'createTab') ?></h1>
             </div>
             <div class="modal-body">
                 <div class="prefs-form">

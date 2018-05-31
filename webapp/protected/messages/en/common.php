@@ -268,7 +268,7 @@ return array(
     'exportPdf' => 'Export as PDF',
     'creation' => 'Creation of patient',
     'uniqueIdForm' => 'Id must be unique.',
-    'chooseQuestionBlock' => 'Choose a block of questions to include in the form ',
+    'chooseQuestionBlock' => 'Choose a block of rubrics to include in the form ',
     'deleteQuestionGroup' => 'Delete rubrics group',
     'deleteQuestion' => 'Delete question',
     'notRestrict' => '*If you do not restrict the query, it will involve all the database.',
