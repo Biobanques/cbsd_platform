@@ -1,6 +1,6 @@
 <?php
 
-class TrancheBis extends Tranche
+class TrancheBis extends EMongoSoftDocument
 {
     public $id;
     public $id_donor;
@@ -28,5 +28,18 @@ class TrancheBis extends Tranche
     public function getCollectionName()
     {
         return 'TrancheBis';
+    }
+    
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        $result = array(
+            array('id_donor', 'required'),
+            array(
+                'id_donor,presenceCession,hemisphere,idPrelevement,nameSamplesTissue,originSamplesTissue,prelevee,nAnonymat,qualite,quantityAvailable,remarques,selection,selectionnee,storageConditions',
+                'safe'
+            )
+        );
+        return $result;
     }
 }

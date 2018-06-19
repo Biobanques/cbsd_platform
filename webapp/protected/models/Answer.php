@@ -148,7 +148,7 @@ class Answer extends LoggableActiveRecord {
             $neuropath = null;
             $idCbsd = array();
             foreach ($_SESSION['tranche'] as $tranche) {
-                $neuropath = Neuropath::model()->findByAttributes(array('id_donor' => (int) $tranche->id_donor));
+                $neuropath = Neuropath::model()->findByAttributes(array('id_donor' => (string) $tranche->id_donor));
                 if (!in_array($neuropath->id_cbsd, $idCbsd)) {
                     array_push($idCbsd, $neuropath->id_cbsd);
                 }
@@ -598,7 +598,7 @@ class Answer extends LoggableActiveRecord {
         $answers = $this->getAllDetailledQuestionsByFilter($model);
         foreach ($answers as $answer) {
             //$result[$answer->answer->id] = "[" . $answer->fiche . "][" . $answer->group . "] " . $answer->answer->label_fr;
-            $result["(" . $answer->answer->id . ")" . $answer->answer->label_fr] = "(" . $answer->fiche . ")" . $answer->answer->label_fr . " <font color='#0C5D86'>(" . $answer->answer->id . ")</font>";
+            $result["(" . $answer->answer->id . ")" . $answer->answer->label_fr] = "(" . $answer->fiche . ")" . "<font color='#0C5D86'>(" . $answer->answer->id . ")</font>" . $answer->answer->label_fr;
         }
         natcasesort($result);
         return $result;
@@ -858,8 +858,16 @@ class Answer extends LoggableActiveRecord {
 
         //formatage de chaque ligne
         $intersect = array();
+        $test = array();
+        foreach ($filter as $k => $v) {
+            if ($key = array_search($v, $this->attributeExportedLabels())) {
+                $filter[array_search($v, $filter)] = $key;
+            }
+        }
         $intersect = array_intersect($headerLineDynamic, $filter);
+        
         $headerLine = array_merge($headerLineFixe, $intersect);
+        //print_r($headerLine);
         if (!in_array('id_patient', $filter)) {
             unset($headerLine['id_patient']);
         }
@@ -1067,10 +1075,6 @@ class Answer extends LoggableActiveRecord {
     }
     
     public function resultExportTranche($models) {
-        $result = array();
-        $ansQuestion = array();
-        $headerLineFixe = Tranche::model()->attributeLabels();
-        $answersList = array();
         $dataProvider = array();
         foreach ($models as $answer) {
             //chaque ligne est un tableau de colonne
@@ -1101,10 +1105,11 @@ class Answer extends LoggableActiveRecord {
         $filename = 'export_tranche.csv';
         $csv = new ECSVExport($dataProvider);
         $toExclude = array();
-        $toExport = $tranc->attributeLabels();
+        $toExport = Tranche::model()->attributeLabels();
         foreach ($listAttributes as $attribute) {
-            if (!isset($toExport[$attribute]))
+            if (!isset($toExport[$attribute])) {
                 $toExclude[] = $attribute;
+            }
         }
         $csv->setExclude($toExclude);
          $csv->exportCurrentPageOnly();

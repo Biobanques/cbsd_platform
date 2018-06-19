@@ -7,7 +7,7 @@
  * @author Bernard TE
  *
  */
-class Query extends LoggableActiveRecord {
+class Query extends EMongoDocument {
 
     /**
      * 

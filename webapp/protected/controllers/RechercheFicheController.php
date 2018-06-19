@@ -299,11 +299,17 @@ class RechercheFicheController extends Controller {
      * export csv liste des fiches disponibles
      */
     public function actionExportCsv() {
+        /*if (isset($_POST['hiddenFields'])) {
+            $test = array();
+            $test = explode('&&', $_POST['hiddenFields']);
+        }*/
         if (isset($_POST['exporter'])) {
             $filter = array();
-            if (isset($_POST['filter'])) {
-                $filter = $_POST['filter'];
-            }
+            //if (isset($_POST['filter'])) {
+                if (isset($_POST['hiddenFields'])) {
+            $filter = explode('&&', $_POST['hiddenFields']);
+        }
+            //}
             $filename = date('Ymd_H') . 'h' . date('i') . '_liste_fiches_CBSD_Platform.csv';
             $arAnswers = Answer::model()->resultToArray($_SESSION['models'], $filter);
             $csv = new ECSVExport($arAnswers, true, false, null, null);

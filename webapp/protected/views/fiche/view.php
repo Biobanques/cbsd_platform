@@ -52,9 +52,9 @@ echo CHtml::link(Yii::t('common', 'htmlView'), array('fiche/viewOnePage', 'id' =
 if ($model->name == "Import Neuropath") {
     echo "<h3 style=\"text-align:center;\" >Prélèvement Tissue Tranche</h3>";
 $modelTranche = new Tranche;
-$neuropath = Neuropath::model()->findByAttributes(array("id_cbsd" => (int) $model->id_patient));
+$neuropath = Neuropath::model()->findByAttributes(array("id_cbsd" => $model->id_patient));
 $criteria = new EMongoCriteria();
-$criteria->id_donor = (string) $neuropath->id_donor;
+$criteria->id_donor = $neuropath->id_donor;
 $dataProvider = new EMongoDocumentDataProvider('Tranche', array('criteria' => $criteria));
 ?>
 

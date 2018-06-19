@@ -67,4 +67,58 @@
         ?>
     </div>
 </div>
+<div class="row">
+    <?php
+    echo "<h3 style=\"text-align:center;\" >Prélèvement Tissue Tranche</h3>";
+$modelTranche = new Tranche;
+$criteria = new EMongoCriteria();
+$criteria->id_donor = $modelAnswer->id_donor;
+$dataProvider = new EMongoDocumentDataProvider('Tranche', array('criteria' => $criteria));
+?>
+
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'dataProvider' => $dataProvider,
+    'columns' => array(
+        array('header' => $modelTranche->attributeLabels()["presenceCession"], 'name' => 'presenceCession'),
+        array('header' => $modelTranche->attributeLabels()["hemisphere"], 'name' => 'hemisphere'),
+        array('header' => $modelTranche->attributeLabels()["idPrelevement"], 'name' => 'idPrelevement'),
+        array('header' => $modelTranche->attributeLabels()["nameSamplesTissue"], 'name' => 'nameSamplesTissue'),
+        array('header' => $modelTranche->attributeLabels()["originSamplesTissue"], 'name' => 'originSamplesTissue'),
+        array('header' => $modelTranche->attributeLabels()["prelevee"], 'name' => 'prelevee'),
+        array('header' => $modelTranche->attributeLabels()["nAnonymat"], 'name' => 'nAnonymat'),
+        array('header' => $modelTranche->attributeLabels()["qualite"], 'name' => 'qualite'),
+        array('header' => $modelTranche->attributeLabels()["quantityAvailable"], 'name' => 'quantityAvailable'),
+        array('header' => $modelTranche->attributeLabels()["storageConditions"], 'name' => 'storageConditions')
+    ),
+));
+?>
+</div>
+<div class="row">
+    <?php
+    echo "<h3 style=\"text-align:center;\" >Prélèvement Tissue Tranche BIS</h3>";
+$modelTranche = new Tranche;
+$criteria = new EMongoCriteria();
+$criteria->id_donor = $modelAnswerBis->id_donor;
+$dataProvider = new EMongoDocumentDataProvider('TrancheBis', array('criteria' => $criteria));
+?>
+
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'dataProvider' => $dataProvider,
+    'columns' => array(
+        array('header' => $modelTranche->attributeLabels()["presenceCession"], 'name' => 'presenceCession'),
+        array('header' => $modelTranche->attributeLabels()["hemisphere"], 'name' => 'hemisphere'),
+        array('header' => $modelTranche->attributeLabels()["idPrelevement"], 'name' => 'idPrelevement'),
+        array('header' => $modelTranche->attributeLabels()["nameSamplesTissue"], 'name' => 'nameSamplesTissue'),
+        array('header' => $modelTranche->attributeLabels()["originSamplesTissue"], 'name' => 'originSamplesTissue'),
+        array('header' => $modelTranche->attributeLabels()["prelevee"], 'name' => 'prelevee'),
+        array('header' => $modelTranche->attributeLabels()["nAnonymat"], 'name' => 'nAnonymat'),
+        array('header' => $modelTranche->attributeLabels()["qualite"], 'name' => 'qualite'),
+        array('header' => $modelTranche->attributeLabels()["quantityAvailable"], 'name' => 'quantityAvailable'),
+        array('header' => $modelTranche->attributeLabels()["storageConditions"], 'name' => 'storageConditions')
+    ),
+));
+?>
+</div>
 <?php } else { echo "<h3> Pas de doublons.</h3>"; }
