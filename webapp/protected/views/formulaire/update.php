@@ -1,6 +1,7 @@
 <?php
 Yii::app()->clientScript->registerScript('form_question', "
 $(document).ready(function() {
+    $(window).scrollTop($('#nameForm').offset().top).scrollLeft($('#nameForm').offset().left);
     if($('.classname').prop('id')=='test')
     {
         $('#updateQuestionForm').modal();

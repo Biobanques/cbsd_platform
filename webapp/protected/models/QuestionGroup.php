@@ -19,13 +19,6 @@ class QuestionGroup extends EMongoEmbeddedDocument {
      */
     public $parent_group;
 
-    /**
-     * display rule
-     * condition to display the question group
-     * @return type
-     */
-    public $display_rule;
-
     public function behaviors() {
         return array('embeddedArrays' => array(
                 'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',

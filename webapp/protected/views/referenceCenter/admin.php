@@ -1,5 +1,8 @@
 <?php
 Yii::app()->clientScript->registerScript('getUnchecked', "
+$(function() {
+    $(window).scrollTop($('.info').offset().top).scrollLeft($('.info').offset().left);
+});
        function getUncheckeds(){
             var unch = [];
             $('[name^=ReferenceCenter_id]').not(':checked,[name$=all]').each(function(){unch.push($(this).val());});

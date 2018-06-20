@@ -14,6 +14,9 @@
 
 <?php
 Yii::app()->clientScript->registerScript('search', "
+$(function() {
+    $(window).scrollTop($('.info').offset().top).scrollLeft($('.info').offset().left);
+});
 $('.search-button').click(function(){
     $('.search-form').toggle();
     return false;

@@ -9,6 +9,13 @@
     }
 </style>
 
+<?php Yii::app()->clientScript->registerScript('adminDoublon', "
+$(function() {
+    $(window).scrollTop($('.info').offset().top).scrollLeft($('.info').offset().left);
+});
+");
+?>
+
 <h1>Gestion des doublons</h1>
 <div class="info">
     <div class="title"><?php echo Yii::t('doublon', 'infoTitle') ?></div>

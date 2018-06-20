@@ -1,6 +1,7 @@
 <?php
 Yii::app()->clientScript->registerScript('formulaire_view', "
 $(document).ready(function() {
+    $(window).scrollTop($('#titleForm').offset().top).scrollLeft($('#titleForm').offset().left);
     var inputs = document.getElementsByTagName('input');
     var textareas = document.getElementsByTagName('textarea');
     var selectlist = document.getElementsByTagName('select');
@@ -21,7 +22,7 @@ $(document).ready(function() {
 ");
 ?>
 
-<h3 align="center"><?php echo Yii::t('administration', 'form') . $model->name; ?></h3>
+<h3 id="titleForm" align="center"><?php echo Yii::t('administration', 'form') . $model->name; ?></h3>
 <p><b>Description: </b><?php echo $model->description; ?></p>
 <?php
 if ($model->last_modified != null && $model->last_modified != "") {

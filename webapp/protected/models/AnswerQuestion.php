@@ -61,9 +61,6 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
      */
     public $precomment_fr;
     
-    public $fiche_id;
-
-
     /**
      *
      * @return array validation rules for model attributes.
@@ -95,8 +92,7 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
             'type' => 'type',
             'values' => 'values',
             'answer' => 'answer',
-            'precomment_fr' => 'precomment_fr',
-            'fiche_id' => 'fiche_id'
+            'precomment_fr' => 'precomment_fr'
         );
     }
 

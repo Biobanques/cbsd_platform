@@ -1,4 +1,10 @@
-<h3 align="center"><?php echo Yii::t('administration', 'bloc') . $model->title; ?></h3>
+<?php Yii::app()->clientScript->registerScript('search', "
+$(function() {
+    $(window).scrollTop($('#titleBloc').offset().top).scrollLeft($('#titleBloc').offset().left);
+});
+"); ?>
+
+<h3 id="titleBloc" align="center"><?php echo Yii::t('administration', 'bloc') . $model->title; ?></h3>
 
 <hr />
 

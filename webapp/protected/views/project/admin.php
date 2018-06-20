@@ -14,12 +14,15 @@
 
 <?php
 Yii::app()->clientScript->registerScript('search', "
+$(function() {
+    $(window).scrollTop($('#project-grid').offset().top).scrollLeft($('#project-grid').offset().left);
+});
 $('.search-button').click(function(){
     $('.search-form').toggle();
     return false;
 });
 $('.search-form form').submit(function(){
-    $.fn.yiiGridView.update('user-grid', {
+    $.fn.yiiGridView.update('project-grid', {
         data: $(this).serialize()
     });
     return false;
@@ -41,25 +44,13 @@ Yii::app()->clientScript->registerScript('getUnchecked', "
 <h1><?php echo Yii::t('administration', 'manageProjects'); ?></h1>
 
 <?php
-/*$imagesearch = CHtml::image(Yii::app()->baseUrl . '/images/zoom.png', Yii::t('administration', 'advancedsearch'));
-echo CHtml::link($imagesearch . Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button'));*/
-?>
-<div class="search-form" style="display:none">
-    <?php
-    /* $this->renderPartial('_search', array(
-      'model' => $model,
-      )); */
-    ?>
-</div><!-- search-form -->
-
-<?php
 $form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl($this->route),
     'method' => 'post',
         ));
 
 $this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'user-grid',
+    'id' => 'project-grid',
     'dataProvider' => $model->search(),
     'selectableRows'=>2,
     'beforeAjaxUpdate'=>'function(id,options){options.data={checkedIds:$.fn.yiiGridView.getChecked("user-grid","Project_id").toString(),

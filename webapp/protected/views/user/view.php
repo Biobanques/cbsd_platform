@@ -1,4 +1,10 @@
-<h1><?php echo Yii::t('administration', 'user') . " " . $model->prenom . " " . $model->nom; ?></h1>
+<?php Yii::app()->clientScript->registerScript('search', "
+$(function() {
+    $(window).scrollTop($('#userInfo').offset().top).scrollLeft($('#userInfo').offset().left);
+});
+"); ?>
+
+<h1 id="userInfo"><?php echo Yii::t('administration', 'user') . " " . $model->prenom . " " . $model->nom; ?></h1>
 
 <div class="row">
     <div class="col-lg-12">
