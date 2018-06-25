@@ -260,7 +260,7 @@ return array(
     'welcome' => 'Bienvenue ',
     'welcomeTo' => 'Bienvenue sur ',
     'cbsdDescription' => 'CBSDPlatform vous permet de gérer les formulaires standardisés pour les informations cliniques, génétiques et neuropathologiques.',
-    'searchPatientForm' => 'Cet outil vous permet de retrouver ou de créer une fiche patient à partir de l\'identité de celui-ci.',
+    'searchPatientForm' => 'Cet outil vous permet de créer ou de retrouver une fiche patient à partir de l\'identité de celui-ci.',
     'viewPatientForms' => 'voici les fiches dont vous disposez pour ce patient.',
     'patientFilled' => 'Fiches patient renseignées ',
     'patientClinical' => 'Fiches cliniques',

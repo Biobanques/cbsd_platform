@@ -148,24 +148,6 @@ class FileImportController extends Controller {
         ));
     }
 
-    public function actionCreatePrvmt() {
-        $model = new Prelevement;
-        if (isset($_POST['Prelevement'])) {
-            $model->attributes = $_POST['Prelevement'];
-            $model->type = "radio";
-            $model->values = "Available,Not available";
-            if ($model->save()) {
-                Yii::app()->user->setFlash('succès', 'OK');
-                $this->redirect(array('fileImport/formatColumn'));
-            } else {
-                Yii::app()->user->setFlash('erreur', 'KO');
-            }
-        }
-        $this->render('createPrvmt', array(
-            'model' => $model,
-        ));
-    }
-
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -210,14 +192,9 @@ class FileImportController extends Controller {
 
     public function actionFormatColumn() {
         $modelColumn = new ColumnFileMaker('search');
-        $prelevement = new Prelevement('search');
         $modelColumn->unsetAttributes();
-        $prelevement->unsetAttributes();
         if (isset($_GET['ColumnFileMaker'])) {
             $modelColumn->setAttributes($_GET['ColumnFileMaker']);
-        }
-        if (isset($_GET['Prelevement'])) {
-            $modelColumn->setAttributes($_GET['Prelevement']);
         }
         if (isset($_POST['rechercher'])) {
             if (isset($_POST['ColumnFileMaker_id'])) {
@@ -230,8 +207,7 @@ class FileImportController extends Controller {
             }
         }
         $this->render('formatColumn', array(
-            'modelColumn' => $modelColumn,
-            'prelevement' => $prelevement
+            'modelColumn' => $modelColumn
         ));
     }
 
@@ -565,7 +541,7 @@ class FileImportController extends Controller {
             }
         }
     }
-  
+
     public function existDiffTranche($id_trancheBis) {
         $diff = false;
         if ($id_trancheBis != null) {
@@ -591,7 +567,7 @@ class FileImportController extends Controller {
         }
         return $diff;
     }
-   
+
     public function deleteTrancheWithoutNeuropath() {
         $id_trancheBis = TrancheBis::model()->findAll();
         foreach ($id_trancheBis as $idTranc) {
@@ -724,11 +700,8 @@ class FileImportController extends Controller {
                             $answerQuestion->label = (string) $k;
                             $answerQuestion->label_fr = (string) $k;
                             $type = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label));
-                            $typePrvmt = Prelevement::model()->findByAttributes(array('newColumn' => strtok($answerQuestion->label, '_')));
                             if ($type != null) {
                                 $answerQuestion->type = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->type;
-                            } elseif ($typePrvmt != null) {
-                                $answerQuestion->type = Prelevement::model()->findByAttributes(array('newColumn' => strtok($answerQuestion->label, '_')))->type;
                             } else {
                                 $answerQuestion->type = "input";
                             }
@@ -748,8 +721,6 @@ class FileImportController extends Controller {
                             } elseif ($answerQuestion->type == "radio") {
                                 if ($type != null) {
                                     $answerQuestion->values = ColumnFileMaker::model()->findByAttributes(array('newColumn' => $answerQuestion->label))->values;
-                                } else {
-                                    $answerQuestion->values = Prelevement::model()->findByAttributes(array('newColumn' => strtok($answerQuestion->label, '_')))->values;
                                 }
                                 $answerQuestion->answer = $v;
                             } else {
@@ -910,7 +881,7 @@ class FileImportController extends Controller {
         $neuropathBis->delete();
         return $newNeuropath;
     }
-  
+
     public function copyTrancheBisToTranche($idDonor) {
         $oldTranche = Tranche::model()->findAllByAttributes(array('id_donor' => $idDonor));
         if ($oldTranche != null) {
@@ -921,7 +892,7 @@ class FileImportController extends Controller {
         $trancheBis = TrancheBis::model()->findAllByAttributes(array('id_donor' => $idDonor));
         foreach ($trancheBis as $trancBis) {
             $newTranche = new Tranche;
-            foreach ($trancBis as $k=> $v) {
+            foreach ($trancBis as $k => $v) {
                 if (!isset($trancBis->$k)) {
                     $newTranche->initSoftAttribute($k);
                 }

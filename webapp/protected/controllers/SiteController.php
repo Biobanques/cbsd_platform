@@ -108,53 +108,57 @@ class SiteController extends Controller {
      * Displays the login page
      */
     public function actionLogin() {
-        $model = new LoginForm;
+        if (Yii::app()->user->id == null) {
+            $model = new LoginForm;
 
-        $userLog = new UserLog;
+            $userLog = new UserLog;
 
-        // if it is ajax validation request
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-
-        // collect user input data
-        if (isset($_POST['LoginForm'])) {
-            $model->attributes = $_POST['LoginForm'];
-            $criteria = new EMongoCriteria;
-            $criteria->login = $model->username;
-            $criteria->password = $model->password;
-            $user = User::model()->find($criteria);
-            // validate user input and redirect to the previous page if valid
-            if ($model->validate()) {
-                if (count($user->profil) == 0) {
-                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'contactAdministrator'));
-                } elseif ($model->login()) {
-                    if (Yii::app()->user->isMaster()) {
-                        $nbDay = CommonTools::fromRegisterDateToNow();
-                        if ($nbDay >= 0 && $nbDay <= 7) {
-                            $day = 7 - $nbDay;
-                            if ($day == 0) {
-                                Yii::app()->user->setFlash('info', Yii::t('common', 'deleteAccount'));
-                            } else {
-                                Yii::app()->user->setFlash('info', Yii::t('common', 'deletedAccount1') . $day . Yii::t('common', 'deletedAccount2'));
-                            }
-                        } else {
-                            User::model()->findByPk(new MongoId(Yii::app()->user->id))->delete();
-                            Yii::app()->user->setFlash('info', Yii::t('common', 'deletedAccount'));
-                            $this->redirect(array('site/login'));
-                        }
-                    }
-                    $userLog->user = $model->username;
-                    $userLog->ipAddress = $_SERVER['REMOTE_ADDR'];
-                    $userLog->profil = Yii::app()->user->getActiveProfil();
-                    $userLog->connectionDate = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
-                    $userLog->save();
-                    $this->redirect(array('site/index'));
-                }
-            } else {
-                Yii::app()->user->setFlash('erreur', Yii::t('common', 'incorrectLoginPassword'));
+            // if it is ajax validation request
+            if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
+                echo CActiveForm::validate($model);
+                Yii::app()->end();
             }
+
+            // collect user input data
+            if (isset($_POST['LoginForm'])) {
+                $model->attributes = $_POST['LoginForm'];
+                $criteria = new EMongoCriteria;
+                $criteria->login = $model->username;
+                $criteria->password = $model->password;
+                $user = User::model()->find($criteria);
+                // validate user input and redirect to the previous page if valid
+                if ($model->validate()) {
+                    if (count($user->profil) == 0) {
+                        Yii::app()->user->setFlash('erreur', Yii::t('common', 'contactAdministrator'));
+                    } elseif ($model->login()) {
+                        if (Yii::app()->user->isMaster()) {
+                            $nbDay = CommonTools::fromRegisterDateToNow();
+                            if ($nbDay >= 0 && $nbDay <= 7) {
+                                $day = 7 - $nbDay;
+                                if ($day == 0) {
+                                    Yii::app()->user->setFlash('info', Yii::t('common', 'deleteAccount'));
+                                } else {
+                                    Yii::app()->user->setFlash('info', Yii::t('common', 'deletedAccount1') . $day . Yii::t('common', 'deletedAccount2'));
+                                }
+                            } else {
+                                User::model()->findByPk(new MongoId(Yii::app()->user->id))->delete();
+                                Yii::app()->user->setFlash('info', Yii::t('common', 'deletedAccount'));
+                                $this->redirect(array('site/login'));
+                            }
+                        }
+                        $userLog->user = $model->username;
+                        $userLog->ipAddress = $_SERVER['REMOTE_ADDR'];
+                        $userLog->profil = Yii::app()->user->getActiveProfil();
+                        $userLog->connectionDate = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
+                        $userLog->save();
+                        $this->redirect(array('site/index'));
+                    }
+                } else {
+                    Yii::app()->user->setFlash('erreur', Yii::t('common', 'incorrectLoginPassword'));
+                }
+            }
+        } else {
+            $this->redirect(array('site/index'));
         }
         // display the login form
         $this->render('login', array('model' => $model));

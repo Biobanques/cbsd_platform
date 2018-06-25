@@ -156,7 +156,7 @@ class WebUser extends CWebUser
 
     public function isAuthorizedViewSearchNavbar()
     {
-        return !in_array($this->getState('activeProfil'), "Clinicien") ? true : false; 
+        return !in_array($this->getState('activeProfil'), array("Clinicien")) ? true : false; 
     }
     
     public function isAuthorizedViewAdminNavbar()

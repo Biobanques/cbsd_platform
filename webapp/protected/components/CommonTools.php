@@ -227,15 +227,6 @@ class CommonTools {
         return ($value != "" || $value != null) ? $value : null;
     }
 
-    public function getAllPrelevements() {
-        $prvmt = Prelevement::model()->findAll();
-        $res = array();
-        foreach ($prvmt as $p) {
-            $res[$p->currentColumn] = $p->newColumn;
-        }
-        return $res;
-    }
-
     public function ucwords_all($str) {
         return preg_replace_callback('/\b(\w)/', function($m) {
             return strtoupper($m[0]);
