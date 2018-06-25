@@ -39,23 +39,6 @@ class RechercheFicheController extends Controller {
         );
     }
 
-    public function actionIndividualCases() {
-        $query = Query::model()->find();
-        if (!isset($_POST['searchAll']) && !isset($_POST['rechercher'])) {
-            $_SESSION['id_patient'] = null;
-            $_SESSION['patientAll'] = null;
-            $_SESSION['id_patientAll'] = null;
-            $_SESSION['criteria'] = null;
-            if ($query != null) {
-                $query->delete();
-            }
-        }
-        $model = new Answer;
-        $this->render('individualCases', array(
-            'model' => $model
-        ));
-    }
-
     public function actionAdmin() {
         if (isset($_POST['searchTranche'])) {
             $this->redirect(array('rechercheFiche/searchTranche'));
