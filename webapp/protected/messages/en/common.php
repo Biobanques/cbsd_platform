@@ -44,6 +44,7 @@ return array(
     'label' => 'Label',
     'questionType' => 'Question type',
     'questionGroup' => 'Questions group',
+    'value' => 'Value',
     'values' => 'Values',
     'questionFloat' => 'Position of the question',
     'questionPosition' => 'The question shall be shown below',
@@ -214,6 +215,7 @@ return array(
     'nameFormNotUpdated' => 'The name of the form has not been updated.',
     'nameBlockUpdated' => 'The name of the block has not been updated.',
     'nameBlockNotUpdated' => 'The name of the block has not been updated.',
+    "loginAgain" => 'Your session has expired. Please login again.',
     
     // text
     'signin' => 'Sign in',

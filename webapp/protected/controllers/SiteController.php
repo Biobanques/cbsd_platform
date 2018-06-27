@@ -98,6 +98,13 @@ class SiteController extends Controller {
      */
     public function actionPatient() {
         $model = new PatientForm;
+        $criteria = new EMongoCriteria;
+        $criteria->login = Yii::app()->user->name;
+        $modelUser = User::model()->find($criteria);
+        if ($modelUser == null) {
+            Yii::app()->user->setFlash('erreur', Yii::t('common', 'loginAgain'));
+            $this->redirect(array('site/login'));
+        }
         if (isset($_POST['PatientForm'])) {
             $model->attributes = $_POST['PatientForm'];
         }

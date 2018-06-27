@@ -32,8 +32,8 @@ $('#selectDate').click(function(){
 
             <div class="row">
                 <div class="col-lg-12">
-                    <?php echo CHtml::label(Yii::t('common', 'restrictQuery'), 'Answer_type'); ?>
-                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getNomsFiches()); ?>
+                    <?php echo CHtml::label('<span class="required" style="float:right; margin-left:5px">*</span>' . Yii::t('common', 'restrictQuery'), 'Answer_type'); ?>
+                    <?php echo $form->dropDownList($model, 'type', Questionnaire::model()->getNomsFiches(), array('prompt' => '---', 'required' => 'required')); ?>
                 </div>
             </div>
 

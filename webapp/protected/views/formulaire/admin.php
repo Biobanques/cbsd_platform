@@ -81,8 +81,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => $model->attributeLabels()["name"], 'name' => 'name'),
         array(
             'class' => 'CButtonColumn',
-            'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }',
-            'htmlOptions' => array('style' => 'width: 70px')
+            'template' => '{update}{delete}',
+            'afterDelete' => 'function(link,success,data){ if(success) $("#statusMsg").html(data); }'
         ),
     ),
 ));

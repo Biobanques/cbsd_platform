@@ -44,7 +44,7 @@ class ColumnFileMaker extends LoggableActiveRecord
             'currentColumn' => Yii::t('common', 'fileMakerColumn'),
             'newColumn' => Yii::t('common', 'cbsdColumn'),
             'type' => 'Type',
-            'values' => 'Value'
+            'values' => Yii::t('common', 'value'),
         );
     }
 

@@ -32,6 +32,7 @@ return array(
     'next' => 'Next',
     'deleteSelectedDatas' => 'Delete selected datas',
     'runQuery' => 'Run the query',
-    'addVariable' => 'Add variable'
+    'addVariable' => 'Add variable',
+    'deleteSelectedProjects' => 'Delete selected projects'
 );
 

@@ -25,40 +25,13 @@ class QuestionBlocController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'index', 'view', 'update', 'admin', 'delete', 'deleteQuestion'),
+                'actions' => array('create', 'index', 'update', 'admin', 'delete', 'deleteQuestion'),
                 'expression' => '$user->getActiveProfil() == "Administrateur"'
             ),
             array('deny', // deny all users
                 'users' => array('*'),
             ),
         );
-    }
-
-    /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionView($id) {
-        $model = $this->loadModel($id);
-        $questionnaire = new Questionnaire;
-        $questionGroup = new QuestionGroup;
-
-        $questionGroup->id = $model->title;
-        $questionGroup->title = $model->title;
-        $questionGroup->title_fr = $questionGroup->title;
-        $questionGroup->questions = array();
-        if (isset($model->questions) && ($model->questions != null) && (count($model->questions) > 0)) {
-            foreach ($model->questions as $question => $value) {
-                $currentQuestion = Question::model()->findByPk(new MongoId($value));
-                $currentQuestion->label_fr = $currentQuestion->label;
-                $questionGroup->questions[] = $currentQuestion;
-            }
-        }
-        $this->saveQuestionnaireNewGroup($questionnaire, $questionGroup);
-        $this->render('view', array(
-            'model' => $model,
-            'questionnaire' => $questionnaire
-        ));
     }
 
     /**

@@ -32,5 +32,6 @@ return array(
     'next' => 'Suivant',
     'deleteSelectedDatas' => 'Supprimer les données sélectionnés',
     'runQuery' => 'Lancer la requête',
-    'addVariable' => 'Ajouter une variable'
+    'addVariable' => 'Ajouter une variable',
+    'deleteSelectedProjects' => 'Supprimer les projets sélectionnés'
 );

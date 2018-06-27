@@ -46,6 +46,7 @@ return array(
     'label' => 'Etiquette',
     'questionType' => 'Type de la question',
     'questionGroup' => 'Onglet de questions',
+    'value' => 'Valeur',
     'values' => 'Valeurs',
     'questionFloat' => 'Alignement de la question',
     'questionPosition' => 'La question devra apparaître en dessous de',
@@ -217,6 +218,7 @@ return array(
     'nameFormNotUpdated' => 'Le nom du formulaire n\'a pas été mis à jour.',
     'nameBlockUpdated' => 'Le nom du bloc a bien été mis à jour.',
     'nameBlockNotUpdated' => 'Le nom du bloc n\'a pas été mis à jour.',
+    "loginAgain" => 'Votre session a expiré. Merci de vous identifier à nouveau.',
     // text
     'signin' => 'Connexion utilisateur',
     'noAccount' => 'Vous n\'êtes pas encore inscrit?',

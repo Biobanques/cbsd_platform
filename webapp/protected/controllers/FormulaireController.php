@@ -25,7 +25,7 @@ class FormulaireController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('create', 'update', 'admin', 'view', 'delete', 'deleteQuestion', 'deleteQuestionGroup', 'dynamicquestions'),
+                'actions' => array('create', 'update', 'admin', 'delete', 'deleteQuestion', 'deleteQuestionGroup', 'dynamicquestions'),
                 'expression' => '$user->getActiveProfil() == "Administrateur"'
             ),
             array('deny', // deny all users
@@ -75,17 +75,6 @@ class FormulaireController extends Controller {
         }
 
         $this->render('admin', array(
-            'model' => $model,
-        ));
-    }
-
-    /**
-     * Affiche un formulaire ,en  lecture uniquement
-     * @param $id the ID of the model to be displayed
-     */
-    public function actionView($id) {
-        $model = Questionnaire::model()->findByPk(new MongoID($id));
-        $this->render('view', array(
             'model' => $model,
         ));
     }

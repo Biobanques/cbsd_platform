@@ -53,7 +53,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'project-grid',
     'dataProvider' => $model->search(),
     'selectableRows'=>2,
-    'beforeAjaxUpdate'=>'function(id,options){options.data={checkedIds:$.fn.yiiGridView.getChecked("user-grid","Project_id").toString(),
+    'beforeAjaxUpdate'=>'function(id,options){options.data={checkedIds:$.fn.yiiGridView.getChecked("project-grid","Project_id").toString(),
         uncheckedIds:getUncheckeds()};
         return true;}',
 
