@@ -60,7 +60,6 @@ class FileImportController extends Controller {
             }
         }
         if (isset($_POST['UploadedFile'])) {
-            $date = date('Ymd_H') . 'h' . date('i');
             $uploadedFile->attributes = $_POST['UploadedFile'];
             $uploadedFile->filename = CUploadedFile::getInstance($uploadedFile, 'filename');
             if ($uploadedFile->filename->getExtensionName() == "csv") {
@@ -74,7 +73,7 @@ class FileImportController extends Controller {
                         $uploadedFile->filename->saveAs($uploadedFile->filename->getName());
                         chmod($uploadedFile->filename->getName(), 0777);
                         $file = "not_imported/" . $uploadedFile->filename->getName();
-                        $this->importNeuropathNominatif($uploadedFile);
+                        $arrImported = $this->importNeuropathNominatif($uploadedFile);
                         $this->deleteUnvalidNeuropath();
                         $answer = Answer::model()->find();
                         if ($answer == null) {
@@ -83,12 +82,12 @@ class FileImportController extends Controller {
                             $this->createFicheNeuropathBis();
                         }
                         $fileImport->user = Yii::app()->user->id;
-                        $fileImport->filename = $date . '_' . $uploadedFile->filename->getName();
+                        $fileImport->filename = $uploadedFile->filename->getName();
                         $fileImport->filesize = $uploadedFile->filename->getSize();
                         $fileImport->extension = $uploadedFile->filename->getExtensionName();
                         $fileImport->date_import = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
-                        $fileImport->imported = 0;
-                        $fileImport->not_imported = 0;
+                        $fileImport->imported = $arrImported['countImported'];
+                        $fileImport->not_imported = $arrImported['countNotImported'];
                         $fileImport->save();
                         Yii::app()->user->setFlash('succès', Yii::t('common', 'fileMakerImported'));
                     } else {
@@ -101,19 +100,19 @@ class FileImportController extends Controller {
                         chmod($uploadedFile->filename->getName(), 0777);
                         $file = "not_imported/" . $uploadedFile->filename->getName();
                         if (Tranche::model()->findAll() == null) {
-                            $this->importNeuropathTranche($uploadedFile, true);
+                            $arrImported = $this->importNeuropathTranche($uploadedFile, true);
                         } else {
-                            $this->importNeuropathTranche($uploadedFile, false);
+                            $arrImported = $this->importNeuropathTranche($uploadedFile, false);
                         }
                         $this->deleteDoublonsNeuropath();
                         $this->deleteTrancheWithoutNeuropath();
                         $fileImport->user = Yii::app()->user->id;
-                        $fileImport->filename = $date . '_' . $uploadedFile->filename->getName();
+                        $fileImport->filename = $uploadedFile->filename->getName();
                         $fileImport->filesize = $uploadedFile->filename->getSize();
                         $fileImport->extension = $uploadedFile->filename->getExtensionName();
                         $fileImport->date_import = DateTime::createFromFormat(CommonTools::FRENCH_SHORT_DATE_FORMAT, date(CommonTools::FRENCH_SHORT_DATE_FORMAT));
-                        $fileImport->imported = 0;
-                        $fileImport->not_imported = 0;
+                        $fileImport->imported = $arrImported['countImported'];
+                        $fileImport->not_imported = $arrImported['countNotImported'];
                         $fileImport->save();
                         Yii::app()->user->setFlash('succès', Yii::t('common', 'fileMakerImported'));
                     } else {
@@ -235,7 +234,11 @@ class FileImportController extends Controller {
         $rows = array_map('str_getcsv', file($uploadedFile->filename));
         $header = array_shift($rows);
         $csv = array();
+        $hd = "";
         $neuroExist = false;
+        $arrImported = array();
+        $arrImported['countImported'] = 0;
+        $arrImported['countNotImported'] = 0;
         $neuro = Neuropath::model()->findAll();
         if ($neuro != null) {
             $neuroExist = true;
@@ -243,6 +246,17 @@ class FileImportController extends Controller {
         foreach ($rows as $row) {
             $csv[] = array_combine($header, $row);
         }
+        end($header);
+        $key = key($header);
+        foreach ($header as $k => $v) {
+            if ($key != $k) {
+            $hd .=  $v . ',';
+            } else {
+                $hd .=  $v;
+            }
+        }
+        file_put_contents("not_imported/$uploadedFile->filename", $hd, FILE_APPEND);
+        file_put_contents("not_imported/$uploadedFile->filename", "\n", FILE_APPEND);
         foreach ($csv as $kCSV => $vCSV) {
             $attributes = array();
             if (!$neuroExist) {
@@ -286,14 +300,39 @@ class FileImportController extends Controller {
                 }
             }
             if ($this->emptyFieldExist($patient) != true) {
+                $arrImported['countImported']++;
                 $patientest = CommonTools::wsGetPatient($patient);
                 if (!$neuroExist) {
                     $this->addNeuropath($patient, $attributes, $patientest, $neuropath);
                 } else {
                     $this->addNeuropathBis($patient, $attributes, $patientest, $neuropath);
                 }
+            } else {
+                $arrImported['countNotImported']++;
+                $this->writePatientsNotImported($vCSV, $uploadedFile->filename);
             }
         }
+        return $arrImported;
+    }
+  
+    /*
+     * Ecrit dans un fichier les patients qui n'ont pas pu être importé ("A SIP item is missing in the file")
+     */
+
+    public function writePatientsNotImported($vCSV, $filename) {
+        $file = "not_imported/$filename";
+        $p = "";
+        end($vCSV);
+        $key = key($vCSV);
+        foreach ($vCSV as $k => $v) {
+            if ($key != $k) {
+                $p .= $v . ',';
+            } else {
+                $p .= $v;
+            }
+        }
+        file_put_contents($file, $p, FILE_APPEND);
+        file_put_contents($file, "\n", FILE_APPEND);
     }
 
     public function addNeuropath($patient, $res, $patientest, $neuropath) {
@@ -434,9 +473,24 @@ class FileImportController extends Controller {
         $header = array_shift($rows);
         $csv = array();
         $neuro = null;
+        $hd = "";
+        $arrImported = array();
+        $arrImported['countImported'] = 0;
+        $arrImported['countNotImported'] = 0;
         foreach ($rows as $row) {
             $csv[] = array_combine($header, $row);
         }
+        end($header);
+        $key = key($header);
+        foreach ($header as $k => $v) {
+            if ($key != $k) {
+            $hd .=  $v . ',';
+            } else {
+                $hd .=  $v;
+            }
+        }
+        file_put_contents("not_imported/$uploadedFile->filename", $hd, FILE_APPEND);
+        file_put_contents("not_imported/$uploadedFile->filename", "\n", FILE_APPEND);
         foreach ($csv as $kCSV => $vCSV) {
             if ($first) {
                 $tranche = new Tranche;
@@ -499,9 +553,14 @@ class FileImportController extends Controller {
                 }
             }
             if (isset($tranche) && $tranche != null && $tranche->id_donor != null) {
+                $arrImported['countImported']++;
                 $tranche->save();
+            } else {
+                $arrImported['countNotImported']++;
+                $this->writePatientsNotImported($vCSV, $uploadedFile->filename);
             }
         }
+        return $arrImported;
     }
 
     public function deleteDoublonsNeuropath() {
@@ -613,14 +672,6 @@ class FileImportController extends Controller {
                 return true;
             }
         }
-    }
-
-    /*
-     * Ecrit dans un fichier les patients qui n'ont pas pu être importé ("A SIP item is missing in the file")
-     */
-
-    public function writePatientsNotImported($patient, $file) {
-        file_put_contents($file, print_r($patient, true), FILE_APPEND);
     }
 
     public function deleteUnvalidNeuropath() {
@@ -930,26 +981,48 @@ class FileImportController extends Controller {
         $fileImport = FileImport::model()->findByPk(new MongoId($id));
         $file = $fileImport->filename;
         $filePath = CommonProperties::$EXPORT_NON_IMPORTED_PATH;
+        $filePathTranche = CommonProperties::$EXPORT_NON_IMPORTED_PATH_TRANCHE;
         if (substr($filePath, -1) != '/') {
             $filePath .= '/';
         }
-        chdir(Yii::app()->basePath . "/" . $filePath);
-        $filename = str_replace('.xml', '.txt', $file);
-        if (file_exists($filename)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename=' . basename($filename));
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($filename));
-            ob_clean();
-            flush();
-            readfile($filename);
-        } else {
-            Yii::app()->user->setFlash('erreur', 'Le projet n\'a pas été supprimé.');
+        if (substr($filePathTranche, -1) != '/') {
+            $filePathTranche .= '/';
+        }
+        if (chdir(Yii::app()->basePath . "/" . $filePath)) {
+            if (file_exists($file)) {
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename=' . basename($file));
+                header('Content-Transfer-Encoding: binary');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($file));
+                ob_clean();
+                flush();
+                readfile($file);
+            } else {
+                if (chdir(Yii::app()->basePath . "/" . $filePathTranche)) {
+                    if (file_exists($file)) {
+                        header('Content-Description: File Transfer');
+                        header('Content-Type: application/octet-stream');
+                        header('Content-Disposition: attachment; filename=' . basename($file));
+                        header('Content-Transfer-Encoding: binary');
+                        header('Expires: 0');
+                        header('Cache-Control: must-revalidate');
+                        header('Pragma: public');
+                        header('Content-Length: ' . filesize($file));
+                        ob_clean();
+                        flush();
+                        readfile($file);
+                    }
+                } else {
+                    Yii::app()->user->setFlash('erreur', 'Le fichier n\'existe pas.');
+                }
+            }
         }
     }
 
 }
+
+

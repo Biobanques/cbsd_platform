@@ -81,14 +81,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => $model->attributeLabels()["filesize"], 'name' => 'filesize', 'value' => 'CommonTools::formatSizeUnits($data["filesize"])'),
         array('header' => $model->attributeLabels()["extension"], 'name' => 'extension'),
         array('header' => $model->attributeLabels()["date_import"], 'name' => 'date_import', 'value' => '$data->getDateImport()'),
-        //array('header' => $model->attributeLabels()["imported"], 'name' => 'imported'),
-        /*array(
+        array('header' => $model->attributeLabels()["imported"], 'name' => 'imported'),
+        array(
             'class' => 'CLinkColumn',
             'labelExpression' => '$data->getNonImportedNumber()',
             'urlExpression' => 'Yii::app()->createUrl("fileImport/exportNonImported",array("id"=>$data->_id))',
             'htmlOptions' => array('style' => "text-align:center"),
             'header' => $model->attributeLabels()["not_imported"]
-        )*/
+        )
     ),
 ));
 ?>
